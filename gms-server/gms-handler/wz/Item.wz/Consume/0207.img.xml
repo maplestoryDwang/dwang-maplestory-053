@@ -12,7 +12,7 @@
             </canvas>
             <int name="price" value="250"/>
             <int name="slotMax" value="500"/>
-            <double name="unitPrice" value="0.3"/>
+            <double name="unitPrice" value="0,3"/>
             <int name="incPAD" value="15"/>
             <int name="reqLevel" value="10"/>
         </imgdir>
@@ -41,7 +41,7 @@
             </canvas>
             <int name="price" value="500"/>
             <int name="slotMax" value="500"/>
-            <double name="unitPrice" value="0.4"/>
+            <double name="unitPrice" value="0,4"/>
             <int name="incPAD" value="17"/>
             <int name="reqLevel" value="10"/>
         </imgdir>
@@ -70,7 +70,7 @@
             </canvas>
             <int name="price" value="1000"/>
             <int name="slotMax" value="700"/>
-            <double name="unitPrice" value="0.5"/>
+            <double name="unitPrice" value="0,5"/>
             <int name="incPAD" value="19"/>
             <int name="reqLevel" value="10"/>
         </imgdir>
@@ -99,7 +99,7 @@
             </canvas>
             <int name="price" value="1500"/>
             <int name="slotMax" value="500"/>
-            <double name="unitPrice" value="0.6"/>
+            <double name="unitPrice" value="0,6"/>
             <int name="incPAD" value="21"/>
             <int name="reqLevel" value="10"/>
         </imgdir>
@@ -128,7 +128,7 @@
             </canvas>
             <int name="price" value="2500"/>
             <int name="slotMax" value="1000"/>
-            <double name="unitPrice" value="0.6"/>
+            <double name="unitPrice" value="0,6"/>
             <int name="incPAD" value="23"/>
             <int name="reqLevel" value="10"/>
         </imgdir>
@@ -157,7 +157,7 @@
             </canvas>
             <int name="price" value="10000"/>
             <int name="slotMax" value="1000"/>
-            <double name="unitPrice" value="0.7"/>
+            <double name="unitPrice" value="0,7"/>
             <int name="incPAD" value="25"/>
             <int name="reqLevel" value="10"/>
         </imgdir>
@@ -184,7 +184,7 @@
             </canvas>
             <int name="price" value="20000"/>
             <int name="slotMax" value="800"/>
-            <double name="unitPrice" value="0.8"/>
+            <double name="unitPrice" value="0,8"/>
             <int name="incPAD" value="27"/>
             <int name="reqLevel" value="10"/>
         </imgdir>
