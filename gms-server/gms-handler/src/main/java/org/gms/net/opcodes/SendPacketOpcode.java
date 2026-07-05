@@ -23,32 +23,113 @@ package org.gms.net.opcodes;
 
 import java.util.List;
 
-public enum SendOpcode implements Opcode {
+public enum SendPacketOpcode implements Opcode {
 
+    // GENERAL
+    PING(0x09), // 心跳包
+
+    // LOGIN
     LOGIN_STATUS(0x00), // 登录状态
+    SERVERLIST(0x05), // 服务器列表
+    CHAR_NAME_RESPONSE(0x06), // 角色名检查回应
+    ADD_NEW_CHAR_ENTRY(0x07), // 建立新角色回应
+    DELETE_CHAR_RESPONSE(0x08), // 删除角色回应
+    SERVER_IP(0x0C), // 服务器IP(进入游戏世界)                  check
+    PIN_OPERATION(0x0D), // PIN码操作
+    SERVERSTATUS(0x12), // 服务器状态
+    CHARLIST(0x13), // 角色列表
+    RELOG_RESPONSE(0x15), // 重新登录回应
+
+    // CHANNEL
+    CHANGE_CHANNEL(0x03), // 更改频道
+    MODIFY_INVENTORY_ITEM(0x18), // 更新/修改背包道具
+    UPDATE_STATS(0x23), // 更新角色属性(HP/MP/EXP等)
+    GIVE_BUFF(0x3A), // 给予角色Buff
+    CANCEL_BUFF(0x24), // 取消角色Buff
+    UPDATE_SKILLS(0x2F), // 更新技能等级
+    FAME_RESPONSE(0x31), // 人气度操作回应
+    SHOW_STATUS_INFO(0x32), // 显示系统信息提示
+    SHOW_MESO_GAIN(0x33), // 显示获得金币提示
+    SHOW_QUEST_COMPLETION(0x1F), // 显示任务完成
+    SPAWN_PORTAL(0x29), // 初始化传送门
+    CHAR_INFO(0x2A), // 角色信息查看回应
+    BUDDYLIST(0x2B), // 好友列表操作
+    PARTY_OPERATION(0x38), // 组队操作回应
+    SERVERMESSAGE(0x2D), // 滚动公告/顶部横幅
+    AVATAR_MEGA(0x19), // 喇叭(大喇叭/全服喇叭)
+    WARP_TO_MAP(0x4D), // 切换地图/进入游戏
+    MULTICHAT(0x55), // 频道/组队/公会多功能聊天
+    WHISPER(0x5E), // 密聊回应/寻找玩家
+    CLOCK(0x61), // 显示时钟倒计时
+    SPAWN_PLAYER(0x65), // 地图加载玩家(生成别的玩家)
+    REMOVE_PLAYER_FROM_MAP(0x70), // 地图移除玩家
+    CHATTEXT(0x71), // 玩家普通聊天显示
+    UPDATE_CHAR_BOX(0xFFFF), // 更新角色盒子(如开店/小游戏气泡)
+    SPAWN_SPECIAL_MAPOBJECT(0x72), // 生成特殊地图对象(如风魔手里剑)
+    REMOVE_SPECIAL_MAPOBJECT(0x73), // 移除特殊地图对象
+    MOVE_SUMMON(0x74), // 移动召唤兽
+    SUMMON_ATTACK(0x75), // 召唤兽攻击
+    DAMAGE_SUMMON(0x77), // 召唤兽受击伤害
+    SHOW_SCROLL_EFFECT(0x7A), // 显示卷轴强化效果
+    MOVE_PLAYER(0x84), // 移动玩家同步
+    CLOSE_RANGE_ATTACK(0x87), // 玩家近战攻击同步
+    RANGED_ATTACK(0x8D), // 玩家远程攻击同步
+    MAGIC_ATTACK(0x93), // 玩家魔法攻击同步
+    DAMAGE_PLAYER(0x89), // 玩家受伤同步
+    CANCEL_FOREIGN_BUFF(0x8A), // 取消可见的其他玩家Buff
+    UPDATE_PARTYMEMBER_HP(0x8B), // 更新组队成员HP显示
+    FACIAL_EXPRESSION(0x8C), // 玩家面部表情同步
+    UPDATE_CHAR_LOOK(0x92), // 更新玩家外观(换装同步)
+    SHOW_FOREIGN_EFFECT(0x85), // 显示其他玩家的效果(升级/技能等)
+    GIVE_FOREIGN_BUFF(0x86), // 给予可见的其他玩家Buff
+    SHOW_ITEM_GAIN_INCHAT(0x67), // 聊天栏提示获得道具
+    UPDATE_QUEST_INFO(0x6C), // 更新任务状态信息
+    SPAWN_MONSTER(0x96), // 地图生成怪物
+    MOVE_MONSTER_RESPONSE(0x9C), // 移动怪物回应
+    DAMAGE_MONSTER(0x9D), // 怪物受到伤害
+    SPAWN_MONSTER_CONTROL(0xA4), // 获取怪物控制权(由客户端计算怪物AI)
+    KILL_MONSTER(0xA5), // 杀死/移除怪物
+    MOVE_MONSTER(0x97), // 怪物移动同步
+    APPLY_MONSTER_STATUS(0x9A), // 给怪物施加异常状态
+    CANCEL_MONSTER_STATUS(0x9B), // 取消怪物异常状态
+    SHOW_MONSTER_HP(0x98), // 显示怪物血条
+    SPAWN_NPC(0xA7), // 地图生成NPC
+    SPAWN_NPC_REQUEST_CONTROLLER(0xAC), // 获取NPC控制权
+    DROP_ITEM_FROM_MAPOBJECT(0xB8), // 地图掉落道具
+    REMOVE_ITEM_FROM_MAP(0xB9), // 移除地图上的道具(捡起/消失)
+    SPAWN_MIST(0xBD), // 生成烟雾效果(如毒雾)
+    REMOVE_MIST(0xBE), // 移除烟雾效果
+    SPAWN_DOOR(0xBF), // 生成时空门
+    REMOVE_DOOR(0xC0), // 移除时空门
+    OPEN_NPC_SHOP(0xD6), // 打开NPC商店窗口
+    CONFIRM_SHOP_TRANSACTION(0xD7), // 商店交易回应
+    OPEN_STORAGE(0xD8), // 打开仓库窗口
+    NPC_TALK(0xC2), // NPC 对话弹窗
+    PLAYER_INTERACTION(0xDD), // 玩家互动窗口(交易/雇佣商店/游戏)
+    KEYMAP(0xF6), // 刷新键盘快捷键配置
+
+
+
+
+    /*
+    原版
+     */
+
+
     GUEST_ID_LOGIN(0x01), // 游客ID登录
     ACCOUNT_INFO(0x02), // 账户信息
-    SERVERSTATUS(0x03), // 服务器状态（CHECK_USER_LIMIT_RESULT）
     GENDER_DONE(0x04), // 性别设置结果（SET_ACCOUNT_RESULT）
-    CONFIRM_EULA_RESULT(0x05), // EULA确认结果
-    CHECK_PINCODE(0x06), // 检查PIN码
+    CONFIRM_EULA_RESULT(-1), // EULA确认结果
+
+//    CHECK_PINCODE(0x06), // 检查PIN码
     UPDATE_PINCODE(0x07), // 更新PIN码
 
     VIEW_ALL_CHAR(0x08), // 查看所有角色
-    SELECT_CHARACTER_BY_VAC(0x09), // 通过VAC选择角色
+    SELECT_CHARACTER_BY_VAC(-1), // 通过VAC选择角色
 
-    SERVERLIST(0x0A), // 服务器列表
-    CHARLIST(0x0B), // 角色列表
-    SERVER_IP(0x0C), // 服务器IP
-    CHAR_NAME_RESPONSE(0x0D), // 角色名称响应
-    ADD_NEW_CHAR_ENTRY(0x0E), // 添加新角色条目
-    DELETE_CHAR_RESPONSE(0x0F), // 删除角色响应
-    CHANGE_CHANNEL(0x10), // 更改频道
-    PING(0x11), // 心跳检测
-    KOREAN_INTERNET_CAFE_SHIT(0x12), // 韩国互联网咖啡无关紧要的内容，忽略
+    KOREAN_INTERNET_CAFE_SHIT(-1), // 韩国互联网咖啡无关紧要的内容，忽略
     CHANNEL_SELECTED(0x14), // 频道已选择
     HACKSHIELD_REQUEST(0x15), // 可能是RELOG_RESPONSE，无所谓
-    RELOG_RESPONSE(0x16), // 重新登录响应
     CHECK_CRC_RESULT(0x19), // CRC检查结果
     LAST_CONNECTED_WORLD(0x1A), // 上次连接的世界
     RECOMMENDED_WORLD_MESSAGE(0x1B), // 推荐世界消息
@@ -58,14 +139,9 @@ public enum SendOpcode implements Opcode {
     INVENTORY_OPERATION(0x1D), // 物品栏操作
     INVENTORY_GROW(0x1E), // 扩展物品栏
     STAT_CHANGED(0x1F), // 状态改变
-    GIVE_BUFF(0x20), // 施加增益效果
-    CANCEL_BUFF(0x21), // 移除增益效果
     FORCED_STAT_SET(0x22), // 强制设置状态
     FORCED_STAT_RESET(0x23), // 强制重置状态
-    UPDATE_SKILLS(0x24), // 更新技能
     SKILL_USE_RESULT(0x25), // 技能使用结果
-    FAME_RESPONSE(0x26), // 声望响应
-    SHOW_STATUS_INFO(0x27), // 显示状态信息
     OPEN_FULL_CLIENT_DOWNLOAD_LINK(0x28), // 打开完整客户端下载链接
     MEMO_RESULT(0x29), // 备忘录结果
     MAP_TRANSFER_RESULT(0x2A), // 地图转移结果
@@ -83,13 +159,8 @@ public enum SendOpcode implements Opcode {
     TRADE_MONEY_LIMIT(0x39), // 交易金钱限制
     SET_GENDER(0x3A), // 设置性别
     GUILD_BBS_PACKET(0x3B), // 公会公告板数据包
-    CHAR_INFO(0x3D), // 角色信息
-    PARTY_OPERATION(0x3E), // 组队操作
-    BUDDYLIST(0x3F), // 好友列表
     GUILD_OPERATION(0x41), // 公会操作
     ALLIANCE_OPERATION(0x42), // 联盟操作
-    SPAWN_PORTAL(0x43), // 生成传送门
-    SERVERMESSAGE(0x44), // 服务器消息
     INCUBATOR_RESULT(0x45), // 孵化器结果
     SHOP_SCANNER_RESULT(0x46), // 商店扫描结果
     SHOP_LINK_RESULT(0x47), // 商店链接结果
@@ -164,8 +235,6 @@ public enum SendOpcode implements Opcode {
     BLOCKED_MAP(0x83), // 被阻止的地图
     BLOCKED_SERVER(0x84), // 被阻止的服务器
     FORCED_MAP_EQUIP(0x85), // 强制地图装备
-    MULTICHAT(0x86), // 多人聊天
-    WHISPER(0x87), // 密语
     SPOUSE_CHAT(0x88), // 配偶聊天
     SUMMON_ITEM_INAVAILABLE(0x89), // 在此地图无法使用召唤物品
 
@@ -179,7 +248,6 @@ public enum SendOpcode implements Opcode {
     ADMIN_RESULT(0x90), // 管理员结果
     OX_QUIZ(0x91), // QUIZ（OX问答）
     GMEVENT_INSTRUCTIONS(0x92), // DESC（游戏事件说明）
-    CLOCK(0x93), // 时钟
     CONTI_MOVE(0x94), // 连续移动
     CONTI_STATE(0x95), // 连续状态
     SET_QUEST_CLEAR(0x96), // 设置任务完成
@@ -191,14 +259,9 @@ public enum SendOpcode implements Opcode {
     PYRAMID_GAUGE(0x9D), // 金字塔计数器
     PYRAMID_SCORE(0x9E), // 金字塔分数
     QUICKSLOT_INIT(0x9F),//LP_QuickslotMappedInit // 快捷栏初始化
-    SPAWN_PLAYER(0xA0), // 生成玩家
-    REMOVE_PLAYER_FROM_MAP(0xA1), // 从地图移除玩家
-    CHATTEXT(0xA2), // 聊天文本（类型0）
     CHATTEXT1(0xA3), // 聊天文本（类型1）
     CHALKBOARD(0xA4), // 黑板
-    UPDATE_CHAR_BOX(0xA5), // 更新角色盒子
     SHOW_CONSUME_EFFECT(0xA6), // 显示消耗效果
-    SHOW_SCROLL_EFFECT(0xA7), // 显示卷轴效果
 
     SPAWN_PET(0xA8), // 生成宠物
     MOVE_PET(0xAA), // 移动宠物
@@ -206,43 +269,25 @@ public enum SendOpcode implements Opcode {
     PET_NAMECHANGE(0xAC), // 更改宠物名字
     PET_EXCEPTION_LIST(0xAD), // 宠物异常列表
     PET_COMMAND(0xAE), // 宠物命令
-    SPAWN_SPECIAL_MAPOBJECT(0xAF), // 生成特殊地图对象
-    REMOVE_SPECIAL_MAPOBJECT(0xB0), // 移除特殊地图对象
-    MOVE_SUMMON(0xB1), // 移动召唤兽
-    SUMMON_ATTACK(0xB2), // 召唤兽攻击
-    DAMAGE_SUMMON(0xB3), // 召唤兽受到伤害
     SUMMON_SKILL(0xB4), // 召唤兽技能
     SPAWN_DRAGON(0xB5), // 生成龙
     MOVE_DRAGON(0xB6), // 移动龙
     REMOVE_DRAGON(0xB7), // 移除龙
-    MOVE_PLAYER(0xB9), // 移动玩家
-    CLOSE_RANGE_ATTACK(0xBA), // 近战攻击
-    RANGED_ATTACK(0xBB), // 远程攻击
-    MAGIC_ATTACK(0xBC), // 魔法攻击
     ENERGY_ATTACK(0xBD), // 能量攻击
     SKILL_EFFECT(0xBE), // 技能效果
     CANCEL_SKILL_EFFECT(0xBF), // 取消技能效果
-    DAMAGE_PLAYER(0xC0), // 玩家受到伤害
-    FACIAL_EXPRESSION(0xC1), // 表情符号
     SHOW_ITEM_EFFECT(0xC2), // 显示物品效果
     SHOW_CHAIR(0xC4), // 显示椅子
-    UPDATE_CHAR_LOOK(0xC5), // 更新角色外观
-    SHOW_FOREIGN_EFFECT(0xC6), // 显示远程效果
-    GIVE_FOREIGN_BUFF(0xC7), // 给予远程增益效果
-    CANCEL_FOREIGN_BUFF(0xC8), // 取消远程增益效果
-    UPDATE_PARTYMEMBER_HP(0xC9), // 更新组队成员HP
     GUILD_NAME_CHANGED(0xCA), // 公会名称改变
     GUILD_MARK_CHANGED(0xCB), // 公会标志改变
     THROW_GRENADE(0xCC), // 抛掷手榴弹
     CANCEL_CHAIR(0xCD), // 取消椅子
-    SHOW_ITEM_GAIN_INCHAT(0xCE), // 在聊天中显示获得物品
     LP_UserTeleport(0xCF), // 武道馆传送准备  还有其他的情况啊，谁写的的注释？？？
 
 
     LUCKSACK_PASS(0xD0), // 幸运袋成功
     LUCKSACK_FAIL(0xD1), // 幸运袋失败
     MESO_BAG_MESSAGE(0xD2), // 金币背包消息
-    UPDATE_QUEST_INFO(0xD3), // 更新任务信息
     ON_NOTIFY_HP_DEC_BY_FIELD(0xD4), // 通知字段减少HP
     PLAYER_HINT(0xD6), // 玩家提示
     MAKER_RESULT(0xD9), // 制作器结果
@@ -254,38 +299,21 @@ public enum SendOpcode implements Opcode {
     TALK_GUIDE(0xE0), // 引导者对话
     SHOW_COMBO(0xE1), // 显示连击
     COOLDOWN(0xEA), // 冷却时间
-    SPAWN_MONSTER(0xEC), // 生成怪物
-    KILL_MONSTER(0xED), // 击杀怪物
-    SPAWN_MONSTER_CONTROL(0xEE), // 控制生成怪物
-    MOVE_MONSTER(0xEF), // 移动怪物
-    MOVE_MONSTER_RESPONSE(0xF0), // 移动怪物响应
-    APPLY_MONSTER_STATUS(0xF2), // 应用怪物状态
-    CANCEL_MONSTER_STATUS(0xF3), // 取消怪物状态
     RESET_MONSTER_ANIMATION(0xF4),//LOL? o.o // 重置怪物动画
     //Something with mob, but can't figure out00 // 与怪物有关，但无法确定
-    DAMAGE_MONSTER(0xF6), // 怪物受到伤害
     ARIANT_THING(0xF9), // ARIANT相关操作
-    SHOW_MONSTER_HP(0xFA), // 显示怪物HP
     CATCH_MONSTER(0xFB), // 捕捉怪物
     CATCH_MONSTER_WITH_ITEM(0xFC), // 使用物品捕捉怪物
     SHOW_MAGNET(0xFD), // 显示磁铁效果
-    SPAWN_NPC(0x101), // 生成NPC
     REMOVE_NPC(0x102), // 移除NPC
-    SPAWN_NPC_REQUEST_CONTROLLER(0x103), // 请求控制NPC生成
     NPC_ACTION(0x104), // NPC动作
     SET_NPC_SCRIPTABLE(0x107), // 设置NPC可脚本化
     SPAWN_HIRED_MERCHANT(0x109), // 生成雇佣商人
     DESTROY_HIRED_MERCHANT(0x10A), // 销毁雇佣商人
     UPDATE_HIRED_MERCHANT(0x10B), // 更新雇佣商人
-    DROP_ITEM_FROM_MAPOBJECT(0x10C), // 从地图对象掉落物品
-    REMOVE_ITEM_FROM_MAP(0x10D), // 从地图移除物品
     CANNOT_SPAWN_KITE(0x10E), // 无法生成风筝
     SPAWN_KITE(0x10F), // 生成风筝
     REMOVE_KITE(0x110), // 移除风筝
-    SPAWN_MIST(0x111), // 生成迷雾
-    REMOVE_MIST(0x112), // 移除迷雾
-    SPAWN_DOOR(0x113), // 生成门
-    REMOVE_DOOR(0x114), // 移除门
     REACTOR_HIT(0x115), // 反应堆被击中
     REACTOR_SPAWN(0x117), // 生成反应堆
     REACTOR_DESTROY(0x118), // 销毁反应堆
@@ -311,9 +339,6 @@ public enum SendOpcode implements Opcode {
     WITCH_TOWER_SCORE_UPDATE(0x12D),    // thanks lrenex // 巫师塔得分更新
     HORNTAIL_CAVE(0x12E), // 角龙头洞
     ZAKUM_SHRINE(0x12F), // 泽库姆神殿
-    NPC_TALK(0x130), // NPC对话
-    OPEN_NPC_SHOP(0x131), // 打开NPC商店
-    CONFIRM_SHOP_TRANSACTION(0x132), // 确认商店交易
     ADMIN_SHOP_MESSAGE(0x133),//lame :P // 管理员商店消息
     ADMIN_SHOP(0x134), // 管理员商店
     STORAGE(0x135), // 仓库
@@ -321,7 +346,6 @@ public enum SendOpcode implements Opcode {
     FREDRICK(0x137), // Fredrick操作
     RPS_GAME(0x138), // 石头剪刀布游戏
     MESSENGER(0x139), // 消息传递
-    PLAYER_INTERACTION(0x13A), // 玩家互动
 
     TOURNAMENT(0x13B), // 锦标赛
     TOURNAMENT_MATCH_TABLE(0x13C), // 锦标赛匹配表
@@ -347,7 +371,6 @@ public enum SendOpcode implements Opcode {
     CASHSHOP_CASH_ITEM_GACHAPON_RESULT(0x14D), // 现金商店现金物品扭蛋结果
     CASHSHOP_CASH_GACHAPON_OPEN_RESULT(0x14E), // 现金商店现金扭蛋打开结果
 
-    KEYMAP(0x14F), // 键盘映射
     AUTO_HP_POT(0x150), // 自动使用HP药水
     AUTO_MP_POT(0x151), // 自动使用MP药水
     SEND_TV(0x155), // 发送电视
@@ -364,7 +387,7 @@ public enum SendOpcode implements Opcode {
     ;
     private int code = -2;
 
-    SendOpcode(int code) {
+    SendPacketOpcode(int code) {
         this.code = code;
     }
 
@@ -380,12 +403,12 @@ public enum SendOpcode implements Opcode {
 
 
     private static final List<Integer> ignoreLists = List.of(
-            PING.getValue(),
-            MOVE_PET.getValue(),
-            UPDATE_PARTYMEMBER_HP.getValue(),
-            NPC_ACTION.getValue(),
-            SPAWN_NPC.getValue(),
-            MOVE_MONSTER_RESPONSE.getValue()
+//            PING.getValue(),
+//            MOVE_PET.getValue(),
+//            UPDATE_PARTYMEMBER_HP.getValue(),
+//            NPC_ACTION.getValue(),
+//            SPAWN_NPC.getValue(),
+//            MOVE_MONSTER_RESPONSE.getValue()
 
 
     );

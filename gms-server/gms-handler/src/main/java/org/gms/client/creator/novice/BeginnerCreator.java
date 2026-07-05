@@ -33,8 +33,8 @@ import org.gms.constants.id.MapId;
  */
 public class BeginnerCreator extends CharacterFactory {
 
-    private static CharacterFactoryRecipe createRecipe(Job job, int level, int map, int top, int bottom, int shoes, int weapon) {
-        CharacterFactoryRecipe recipe = new CharacterFactoryRecipe(job, level, map, top, bottom, shoes, weapon);
+    private static CharacterFactoryRecipe createRecipe(Job job, int level, int map, int top, int bottom, int shoes, int weapon, int str, int dex, int inte, int luk) {
+        CharacterFactoryRecipe recipe = new CharacterFactoryRecipe(job, level, map, top, bottom, shoes, weapon, str, dex, inte, luk);
         giveItem(recipe, ItemId.BEGINNERS_GUIDE, 1, InventoryType.ETC);
         return recipe;
     }
@@ -43,7 +43,7 @@ public class BeginnerCreator extends CharacterFactory {
         recipe.addStartingItem(itemid, quantity, itemType);
     }
 
-    public static int createCharacter(Client c, String name, int face, int hair, int skin, int top, int bottom, int shoes, int weapon, int gender) {
+    public static int createCharacter(Client c, String name, int face, int hair, int skin, int top, int bottom, int shoes, int weapon, int gender, int str, int dex, int inte, int luk) {
 
         int iMapID = MapId.MUSHROOM_TOWN;
         if (GameConfig.getServerBoolean("use_beidou_beginner_map"))
@@ -51,6 +51,6 @@ public class BeginnerCreator extends CharacterFactory {
             iMapID = MapId.BEIDOU_BEGINNER;
         }
 
-        return createNewCharacter(c, name, face, hair, skin, gender, createRecipe(Job.BEGINNER, 1, iMapID, top, bottom, shoes, weapon));
+        return createNewCharacter(c, name, face, hair, skin, gender, createRecipe(Job.BEGINNER, 1, iMapID, top, bottom, shoes, weapon, str, dex ,inte, luk));
     }
 }

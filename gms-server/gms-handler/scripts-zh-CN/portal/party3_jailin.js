@@ -77,6 +77,6 @@ function enter(pi) {
         return true;
     }
     // 使用打开关过关
-    ret = enterNoMobs(pi);
+    ret = enterLeverSequence(pi);
     return ret;
 }

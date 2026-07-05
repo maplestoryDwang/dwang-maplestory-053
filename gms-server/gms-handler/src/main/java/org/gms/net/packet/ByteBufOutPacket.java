@@ -1,18 +1,16 @@
 package org.gms.net.packet;
 
-import org.gms.client.Client;
 import org.gms.constants.string.CharsetConstants;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import net.jcip.annotations.NotThreadSafe;
 import org.gms.net.opcodes.Opcode;
-import org.gms.net.opcodes.SendOpcode;
+import org.gms.net.opcodes.SendPacketOpcode;
 import org.gms.util.ThreadLocalUtil;
 
 import java.awt.*;
 import java.util.Arrays;
-import java.util.Optional;
 
 @NotThreadSafe
 public class ByteBufOutPacket implements OutPacket {
@@ -28,7 +26,16 @@ public class ByteBufOutPacket implements OutPacket {
         this.byteBuf = byteBuf;
     }
 
-    public ByteBufOutPacket(SendOpcode op, int initialCapacity) {
+    /**
+     * 只设置长度
+     * @param initialCapacity
+     */
+    public ByteBufOutPacket(int initialCapacity) {
+        ByteBuf byteBuf = Unpooled.buffer(initialCapacity);
+        this.byteBuf = byteBuf;
+    }
+
+    public ByteBufOutPacket(SendPacketOpcode op, int initialCapacity) {
         ByteBuf byteBuf = Unpooled.buffer(initialCapacity);
         byteBuf.writeShortLE((short) op.getValue());
         this.byteBuf = byteBuf;
@@ -46,6 +53,15 @@ public class ByteBufOutPacket implements OutPacket {
 
     @Override
     public void writeByte(int value) {
+        writeByte((byte) value);
+    }
+
+    @Override
+    public void write(byte[] value) {
+        byteBuf.writeBytes(value);
+    }
+    @Override
+    public void write(int value) {
         writeByte((byte) value);
     }
 

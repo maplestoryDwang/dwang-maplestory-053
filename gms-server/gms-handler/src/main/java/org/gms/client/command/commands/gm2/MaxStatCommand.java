@@ -25,7 +25,7 @@ package org.gms.client.command.commands.gm2;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.Stat;
+import org.gms.client.MapleStat;
 import org.gms.client.command.Command;
 import org.gms.config.GameConfig;
 import org.gms.util.I18nUtil;
@@ -48,8 +48,8 @@ public class MaxStatCommand extends Command {
         player.updateStrDexIntLuk(Short.MAX_VALUE);
         player.setFame(13337);
         player.updateMaxHpMaxMp(30000, 30000);
-        player.updateSingleStat(Stat.LEVEL, 255);
-        player.updateSingleStat(Stat.FAME, 13337);
+        player.updateSingleStat(MapleStat.LEVEL, 255);
+        player.updateSingleStat(MapleStat.FAME, 13337);
         player.yellowMessage(I18nUtil.getMessage("MaxStatCommand.message2"));
     }
 }

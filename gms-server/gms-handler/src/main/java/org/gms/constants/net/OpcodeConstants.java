@@ -21,7 +21,7 @@ package org.gms.constants.net;
 
 import org.gms.net.opcodes.Opcode;
 import org.gms.net.opcodes.RecvOpcode;
-import org.gms.net.opcodes.SendOpcode;
+import org.gms.net.opcodes.SendPacketOpcode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class OpcodeConstants {
 
     public static void generateOpcodeNames() {
         switch (ServerConstants.VERSION) {
-            case 83  -> init(SendOpcode.values(), RecvOpcode.values());
+            case 53  -> init(SendPacketOpcode.values(), RecvOpcode.values());
             default  -> throw new RuntimeException("不支援的版本: " + ServerConstants.VERSION);
         }
     }

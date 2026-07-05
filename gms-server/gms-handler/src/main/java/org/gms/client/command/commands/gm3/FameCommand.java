@@ -25,7 +25,7 @@ package org.gms.client.command.commands.gm3;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.Stat;
+import org.gms.client.MapleStat;
 import org.gms.client.command.Command;
 import org.gms.util.I18nUtil;
 import org.gms.util.StringUtil;
@@ -45,7 +45,7 @@ public class FameCommand extends Command {
 
         if (params.length == 1) {
             player.setFame(Integer.parseInt(params[0]));
-            player.updateSingleStat(Stat.FAME, player.getFame());
+            player.updateSingleStat(MapleStat.FAME, player.getFame());
             player.message(I18nUtil.getMessage("FameCommand.message3"));
         } else {
             Character victim = c.getWorldServer().getPlayerStorage().getCharacterByName(params[0]);
@@ -56,7 +56,7 @@ public class FameCommand extends Command {
                 player.message(I18nUtil.getMessage("BombCommand.message3", params[0]));
             } else {
                 victim.setFame(Integer.parseInt(params[1]));
-                victim.updateSingleStat(Stat.FAME, victim.getFame());
+                victim.updateSingleStat(MapleStat.FAME, victim.getFame());
                 player.message(I18nUtil.getMessage("FameCommand.message3"));
             }
         }

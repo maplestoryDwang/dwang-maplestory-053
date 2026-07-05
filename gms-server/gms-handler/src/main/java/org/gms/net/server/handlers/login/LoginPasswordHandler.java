@@ -46,11 +46,6 @@ public final class LoginPasswordHandler implements PacketHandler {
 
     @Override
     public final void handlePacket(InPacket p, Client c) {
-        String remoteHost = c.getRemoteAddress();
-        if (remoteHost.contentEquals("null")) {
-            c.sendPacket(PacketCreator.getLoginFailed(14));          // thanks Alchemist for noting remoteHost could be null
-            return;
-        }
 
         String login = p.readString();
         String pwd = p.readString();
@@ -122,7 +117,7 @@ public final class LoginPasswordHandler implements PacketHandler {
     }
 
     private static void login(Client c) {
-        c.sendPacket(PacketCreator.getAuthSuccess(c));//why the fk did I do c.getAccountName()?
+        c.sendPacket(PacketCreator.getAuthSuccessRequestPin(c));//why the fk did I do c.getAccountName()?
         Server.getInstance().registerLoginState(c);
     }
 }

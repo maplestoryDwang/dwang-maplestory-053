@@ -1,13 +1,15 @@
 package org.gms.net.packet;
 
 import org.gms.net.opcodes.Opcode;
-import org.gms.net.opcodes.SendOpcode;
 
 import java.awt.*;
 
 public interface OutPacket extends Packet {
     void writeByte(byte value);
     void writeByte(int value);
+    void write(byte[] value);
+    public void write (int b);
+
     void writeBytes(byte[] value);
     void writeShort(int value);
     void writeInt(int value);
@@ -21,5 +23,12 @@ public interface OutPacket extends Packet {
 
     static OutPacket create(Opcode opcode) {
         return new ByteBufOutPacket(opcode);
+    }
+
+    static OutPacket createBySize(int initialCapacity) {
+        return new ByteBufOutPacket(initialCapacity);
+    }
+    static OutPacket createBySize() {
+        return new ByteBufOutPacket(32);
     }
 }

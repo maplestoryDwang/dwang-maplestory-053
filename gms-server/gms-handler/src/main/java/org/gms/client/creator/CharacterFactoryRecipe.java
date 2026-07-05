@@ -60,15 +60,39 @@ public class CharacterFactoryRecipe {
         this.bottom = bottom;
         this.shoes = shoes;
         this.weapon = weapon;
-
         if (!GameConfig.getServerBoolean("use_starting_ap_4")) {
             if (GameConfig.getServerBoolean("use_auto_assign_starters_ap")) {
-                str = 12;
-                dex = 5;
+                this.str = 12;
+                this.dex = 5;
             } else {
                 ap = 9;
             }
         }
+    }
+
+    public CharacterFactoryRecipe(Job job, int level, int map, int top, int bottom, int shoes, int weapon, int str, int dex, int inte, int luk) {
+        this.job = job;
+        this.level = level;
+        this.map = map;
+        this.top = top;
+        this.bottom = bottom;
+        this.shoes = shoes;
+        this.weapon = weapon;
+        this.str = str;
+        this.dex = dex;
+        this.int_ = inte;
+        this.luk = luk;
+
+
+
+//        if (!GameConfig.getServerBoolean("use_starting_ap_4")) {
+//            if (GameConfig.getServerBoolean("use_auto_assign_starters_ap")) {
+//                this.str = 12;
+//                this.dex = 5;
+//            } else {
+//                ap = 9;
+//            }
+//        }
     }
 
     public void setStr(int v) {

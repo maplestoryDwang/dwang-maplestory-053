@@ -2,7 +2,7 @@ package org.gms.net.server.guild;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.net.opcodes.SendOpcode;
+import org.gms.net.opcodes.SendPacketOpcode;
 import org.gms.net.packet.OutPacket;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.Server;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class GuildPackets {
     public static Packet showGuildInfo(Character chr) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x1A); //signature for showing guild info
         if (chr == null) { //show empty guild (used for leaving, expelled)
             p.writeByte(0);
@@ -64,7 +64,7 @@ public class GuildPackets {
     }
 
     public static Packet guildMemberOnline(int guildId, int chrId, boolean bOnline) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x3d);
         p.writeInt(guildId);
         p.writeInt(chrId);
@@ -73,7 +73,7 @@ public class GuildPackets {
     }
 
     public static Packet guildInvite(int guildId, String charName) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x05);
         p.writeInt(guildId);
         p.writeString(charName);
@@ -81,7 +81,7 @@ public class GuildPackets {
     }
 
     public static Packet createGuildMessage(String masterName, String guildName) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x3);
         p.writeInt(0);
         p.writeString(masterName);
@@ -103,7 +103,7 @@ public class GuildPackets {
      * @return The guild message packet.
      */
     public static Packet genericGuildMessage(byte code) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(code);
         return p;
     }
@@ -119,14 +119,14 @@ public class GuildPackets {
      * @return The guild message packet.
      */
     public static Packet responseGuildMessage(byte code, String targetName) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(code);
         p.writeString(targetName);
         return p;
     }
 
     public static Packet newGuildMember(GuildCharacter mgc) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x27);
         p.writeInt(mgc.getGuildId());
         p.writeInt(mgc.getId());
@@ -142,7 +142,7 @@ public class GuildPackets {
 
     //someone leaving, mode == 0x2c for leaving, 0x2f for expelled
     public static Packet memberLeft(GuildCharacter mgc, boolean bExpelled) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(bExpelled ? 0x2f : 0x2c);
         p.writeInt(mgc.getGuildId());
         p.writeInt(mgc.getId());
@@ -152,7 +152,7 @@ public class GuildPackets {
 
     //rank change
     public static Packet changeRank(GuildCharacter mgc) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x40);
         p.writeInt(mgc.getGuildId());
         p.writeInt(mgc.getId());
@@ -161,7 +161,7 @@ public class GuildPackets {
     }
 
     public static Packet guildNotice(int guildId, String notice) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x44);
         p.writeInt(guildId);
         p.writeString(notice);
@@ -169,7 +169,7 @@ public class GuildPackets {
     }
 
     public static Packet guildMemberLevelJobUpdate(GuildCharacter mgc) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x3C);
         p.writeInt(mgc.getGuildId());
         p.writeInt(mgc.getId());
@@ -179,7 +179,7 @@ public class GuildPackets {
     }
 
     public static Packet rankTitleChange(int guildId, String[] ranks) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x3E);
         p.writeInt(guildId);
         for (int i = 0; i < 5; i++) {
@@ -189,7 +189,7 @@ public class GuildPackets {
     }
 
     public static Packet guildDisband(int guildId) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x32);
         p.writeInt(guildId);
         p.writeByte(1);
@@ -197,7 +197,7 @@ public class GuildPackets {
     }
 
     public static Packet guildQuestWaitingNotice(byte channel, int waitingPos) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x4C);
         p.writeByte(channel - 1);
         p.writeByte(waitingPos);
@@ -205,7 +205,7 @@ public class GuildPackets {
     }
 
     public static Packet guildEmblemChange(int guildId, short bg, byte bgcolor, short logo, byte logoColor) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x42);
         p.writeInt(guildId);
         p.writeShort(bg);
@@ -216,7 +216,7 @@ public class GuildPackets {
     }
 
     public static Packet guildCapacityChange(int guildId, int capacity) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x3A);
         p.writeInt(guildId);
         p.writeByte(capacity);
@@ -233,7 +233,7 @@ public class GuildPackets {
     }
 
     public static Packet BBSThreadList(ResultSet rs, int start) throws SQLException {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_BBS_PACKET);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_BBS_PACKET);
         p.writeByte(0x06);
         if (!rs.last()) {
             p.writeByte(0);
@@ -263,7 +263,7 @@ public class GuildPackets {
     }
 
     public static Packet showThread(int localthreadid, ResultSet threadRS, ResultSet repliesRS) throws SQLException, RuntimeException {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_BBS_PACKET);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_BBS_PACKET);
         p.writeByte(0x07);
         p.writeInt(localthreadid);
         p.writeInt(threadRS.getInt("postercid"));
@@ -291,7 +291,7 @@ public class GuildPackets {
     }
 
     public static Packet showGuildRanks(int npcid, ResultSet rs) throws SQLException {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x49);
         p.writeInt(npcid);
         if (!rs.last()) { //no guilds o.o
@@ -312,7 +312,7 @@ public class GuildPackets {
     }
 
     public static Packet showPlayerRanks(int npcid, List<Pair<String, Integer>> worldRanking) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x49);
         p.writeInt(npcid);
         if (worldRanking.isEmpty()) {
@@ -332,7 +332,7 @@ public class GuildPackets {
     }
 
     public static Packet updateGP(int guildId, int GP) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_OPERATION);
         p.writeByte(0x48);
         p.writeInt(guildId);
         p.writeInt(GP);
@@ -370,7 +370,7 @@ public class GuildPackets {
     }
 
     public static Packet getAllianceInfo(Alliance alliance) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x0C);
         p.writeByte(1);
         p.writeInt(alliance.getId());
@@ -388,7 +388,7 @@ public class GuildPackets {
     }
 
     public static Packet updateAllianceInfo(Alliance alliance, int world) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x0F);
         p.writeInt(alliance.getId());
         p.writeString(alliance.getName());
@@ -408,7 +408,7 @@ public class GuildPackets {
     }
 
     public static Packet getGuildAlliances(Alliance alliance, int worldId) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x0D);
         p.writeInt(alliance.getGuilds().size());
         for (Integer guild : alliance.getGuilds()) {
@@ -418,7 +418,7 @@ public class GuildPackets {
     }
 
     public static Packet addGuildToAlliance(Alliance alliance, int newGuild, Client c) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x12);
         p.writeInt(alliance.getId());
         p.writeString(alliance.getName());
@@ -437,7 +437,7 @@ public class GuildPackets {
     }
 
     public static Packet allianceMemberOnline(Character mc, boolean online) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x0E);
         p.writeInt(mc.getGuild().getAllianceId());
         p.writeInt(mc.getGuildId());
@@ -447,7 +447,7 @@ public class GuildPackets {
     }
 
     public static Packet allianceNotice(int id, String notice) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x1C);
         p.writeInt(id);
         p.writeString(notice);
@@ -455,7 +455,7 @@ public class GuildPackets {
     }
 
     public static Packet changeAllianceRankTitle(int alliance, String[] ranks) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x1A);
         p.writeInt(alliance);
         for (int i = 0; i < 5; i++) {
@@ -465,7 +465,7 @@ public class GuildPackets {
     }
 
     public static Packet updateAllianceJobLevel(Character mc) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x18);
         p.writeInt(mc.getGuild().getAllianceId());
         p.writeInt(mc.getGuildId());
@@ -476,7 +476,7 @@ public class GuildPackets {
     }
 
     public static Packet removeGuildFromAlliance(Alliance alliance, int expelledGuild, int worldId) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x10);
         p.writeInt(alliance.getId());
         p.writeString(alliance.getName());
@@ -496,14 +496,14 @@ public class GuildPackets {
     }
 
     public static Packet disbandAlliance(int alliance) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x1D);
         p.writeInt(alliance);
         return p;
     }
 
     public static Packet allianceInvite(int allianceid, Character chr) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x03);
         p.writeInt(allianceid);
         p.writeString(chr.getName());
@@ -512,13 +512,13 @@ public class GuildPackets {
     }
 
     public static Packet GuildBoss_HealerMove(short nY) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_BOSS_HEALER_MOVE);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_BOSS_HEALER_MOVE);
         p.writeShort(nY); //New Y Position
         return p;
     }
 
     public static Packet GuildBoss_PulleyStateChange(byte nState) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_BOSS_PULLEY_STATE_CHANGE);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_BOSS_PULLEY_STATE_CHANGE);
         p.writeByte(nState);
         return p;
     }
@@ -529,14 +529,14 @@ public class GuildPackets {
      * @param guildName The Guild name, blank for nothing.
      */
     public static Packet guildNameChanged(int chrid, String guildName) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_NAME_CHANGED);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_NAME_CHANGED);
         p.writeInt(chrid);
         p.writeString(guildName);
         return p;
     }
 
     public static Packet guildMarkChanged(int chrId, Guild guild) {
-        OutPacket p = OutPacket.create(SendOpcode.GUILD_MARK_CHANGED);
+        OutPacket p = OutPacket.create(SendPacketOpcode.GUILD_MARK_CHANGED);
         p.writeInt(chrId);
         p.writeShort(guild.getLogoBG());
         p.writeByte(guild.getLogoBGColor());
@@ -547,7 +547,7 @@ public class GuildPackets {
 
 
     public static Packet sendShowInfo(int allianceid, int playerid) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x02);
         p.writeInt(allianceid);
         p.writeInt(playerid);
@@ -555,7 +555,7 @@ public class GuildPackets {
     }
 
     public static Packet sendInvitation(int allianceid, int playerid, final String guildname) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x05);
         p.writeInt(allianceid);
         p.writeInt(playerid);
@@ -564,7 +564,7 @@ public class GuildPackets {
     }
 
     public static Packet sendChangeGuild(int allianceid, int playerid, int guildid, int option) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x07);
         p.writeInt(allianceid);
         p.writeInt(guildid);
@@ -574,7 +574,7 @@ public class GuildPackets {
     }
 
     public static Packet sendChangeLeader(int allianceid, int playerid, int victim) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x08);
         p.writeInt(allianceid);
         p.writeInt(playerid);
@@ -583,7 +583,7 @@ public class GuildPackets {
     }
 
     public static Packet sendChangeRank(int allianceid, int playerid, int int1, byte byte1) {
-        OutPacket p = OutPacket.create(SendOpcode.ALLIANCE_OPERATION);
+        OutPacket p = OutPacket.create(SendPacketOpcode.ALLIANCE_OPERATION);
         p.writeByte(0x09);
         p.writeInt(allianceid);
         p.writeInt(playerid);

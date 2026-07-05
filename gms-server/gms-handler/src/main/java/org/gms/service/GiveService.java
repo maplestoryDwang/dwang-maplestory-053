@@ -2,7 +2,7 @@ package org.gms.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.gms.client.Character;
-import org.gms.client.Stat;
+import org.gms.client.MapleStat;
 import org.gms.client.inventory.*;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.constants.inventory.ItemConstants;
@@ -413,7 +413,7 @@ public class GiveService {
 
     private void giveFameChr(Character chr, Integer fame) {
         chr.setFame(fame);
-        chr.updateSingleStat(Stat.FAME, fame);
+        chr.updateSingleStat(MapleStat.FAME, fame);
         chr.message(I18nUtil.getMessage("Give.Fame.Chr", fame));
         log.info(I18nUtil.getLogMessage("Give.Fame.Chr.info1", chr.getId(), chr.getName(), fame));
     }

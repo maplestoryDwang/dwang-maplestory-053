@@ -68,7 +68,8 @@ function action(mode, type, selection) {
                         break;
                     }
                 }
-                if (hasAll) {
+                // 只能持有一个，持有多个会报错
+                if (hasAll && !cm.haveItem(4161014)) {
                     // 询问是否用10页合成日记本（额外选项，不影响原奖励）
                     cm.sendYesNo("我注意到你收集了我散落的日记残页。你是否愿意将10张残页交给我，让我为你合成完整的《女神的日记本》？\r\n（合成后你依然可以获得原有的通关奖励）");
                     exchangeConfirmed = true;

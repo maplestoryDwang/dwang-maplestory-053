@@ -43,7 +43,7 @@ function start(mode, type, selection)
 		    if (mode == 0)
 		    {
 		    	qm.forceStartQuest();
-                qm.gainMeso(100000);			
+//                qm.gainMeso(100000);
 		    	qm.forceCompleteQuest();
 				qm.dispose();
 		    }
@@ -80,7 +80,7 @@ function start(mode, type, selection)
 			{
 				qm.sendOk("咦，你竟然不是新手。很遗憾我不能带你前往青苹果乐园了，不过我依然可以给你一部分启动资金：\r\n #fUI/CashShop.img/CashItem/0# x100000");
 				qm.forceStartQuest();
-                qm.gainMeso(100000);			
+//                qm.gainMeso(100000);
 		    	qm.forceCompleteQuest();
 				qm.dispose();
 			}
@@ -98,7 +98,7 @@ function end(mode, type, selection)
 	    {
 			//第一层对话
             qm.sendOk("看来你已经见过小睡了，欢迎来到北斗，这是给你的启动资金，希望对您的冒险有所帮助\r\n\r\n#fUI/CashShop.img/CSDiscount/bonus# 金币: 100000");
-            qm.gainMeso(100000);			
+//            qm.gainMeso(100000);
 			qm.forceCompleteQuest();
             qm.dispose();			
 	    }

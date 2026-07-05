@@ -91,7 +91,6 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.lang.ref.WeakReference;
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.List;
 import java.util.*;
@@ -1198,14 +1197,14 @@ public class Character extends AbstractCharacterObject {
             addMaxMPMaxHP(addhp, addmp, true);
             recalcLocalStats();
 
-            List<Pair<Stat, Integer>> statup = new ArrayList<>(7);
-            statup.add(new Pair<>(Stat.HP, hp));
-            statup.add(new Pair<>(Stat.MP, mp));
-            statup.add(new Pair<>(Stat.MAXHP, clientMaxHp));
-            statup.add(new Pair<>(Stat.MAXMP, clientMaxMp));
-            statup.add(new Pair<>(Stat.AVAILABLEAP, remainingAp));
-            statup.add(new Pair<>(Stat.AVAILABLESP, remainingSp[GameConstants.getSkillBook(job.getId())]));
-            statup.add(new Pair<>(Stat.JOB, job.getId()));
+            List<Pair<MapleStat, Integer>> statup = new ArrayList<>(7);
+            statup.add(new Pair<>(MapleStat.HP, hp));
+            statup.add(new Pair<>(MapleStat.MP, mp));
+            statup.add(new Pair<>(MapleStat.MAXHP, clientMaxHp));
+            statup.add(new Pair<>(MapleStat.MAXMP, clientMaxMp));
+            statup.add(new Pair<>(MapleStat.AVAILABLEAP, remainingAp));
+            statup.add(new Pair<>(MapleStat.AVAILABLESP, remainingSp[GameConstants.getSkillBook(job.getId())]));
+            statup.add(new Pair<>(MapleStat.JOB, job.getId()));
             sendPacket(PacketCreator.updatePlayerStats(statup, true, this));
         } finally {
             statWlock.unlock();
@@ -2895,11 +2894,11 @@ public class Character extends AbstractCharacterObject {
             expgain = this.gachaExp.getAndSet(0);
         }
         gainExp(expgain, false, true);
-        updateSingleStat(Stat.GACHAEXP, this.gachaExp.get());
+        updateSingleStat(MapleStat.GACHAEXP, this.gachaExp.get());
     }
 
     public void addGachaExp(int gain) {
-        updateSingleStat(Stat.GACHAEXP, gachaExp.addAndGet(gain));
+        updateSingleStat(MapleStat.GACHAEXP, gachaExp.addAndGet(gain));
     }
 
     public void gainExp(int gain) {
@@ -2967,7 +2966,7 @@ public class Character extends AbstractCharacterObject {
                 total = Integer.MAX_VALUE - exp.get();
                 leftover = nextExp - Integer.MAX_VALUE;
             }
-            updateSingleStat(Stat.EXP, exp.addAndGet((int) total));
+            updateSingleStat(MapleStat.EXP, exp.addAndGet((int) total));
             totalExpGained += total;
             if (show) {
                 announceExpGain(gain, equip, party, inChat, white);
@@ -2988,7 +2987,7 @@ public class Character extends AbstractCharacterObject {
                 }
                 if (level == getMaxLevel()) {
                     setExp(0);
-                    updateSingleStat(Stat.EXP, 0);
+                    updateSingleStat(MapleStat.EXP, 0);
                     break;
                 }
                 if (GameConfig.getServerBoolean("use_level_up_protect")) break;
@@ -3042,7 +3041,7 @@ public class Character extends AbstractCharacterObject {
         delta = fameRes.getRight();
         if (delta != 0) {
             int thisFame = fameRes.getLeft();
-            updateSingleStat(Stat.FAME, thisFame);
+            updateSingleStat(MapleStat.FAME, thisFame);
 
             if (fromPlayer != null) {
                 fromPlayer.sendPacket(PacketCreator.giveFameResponse(mode, getName(), thisFame));
@@ -3086,7 +3085,7 @@ public class Character extends AbstractCharacterObject {
         }
 
         if (gain != 0) {
-            updateSingleStat(Stat.MESO, (int) nextMeso, enableActions);
+            updateSingleStat(MapleStat.MESO, (int) nextMeso, enableActions);
             if (show) {
                 sendPacket(PacketCreator.getShowMesoGain(gain, inChat));
             }
@@ -5912,17 +5911,17 @@ public class Character extends AbstractCharacterObject {
             recalcLocalStats();
             changeHpMp(localMaxHp, localMaxMp, true);
 
-            List<Pair<Stat, Integer>> statup = new ArrayList<>(10);
-            statup.add(new Pair<>(Stat.AVAILABLEAP, remainingAp));
-            statup.add(new Pair<>(Stat.AVAILABLESP, remainingSp[GameConstants.getSkillBook(job.getId())]));
-            statup.add(new Pair<>(Stat.HP, hp));
-            statup.add(new Pair<>(Stat.MP, mp));
-            statup.add(new Pair<>(Stat.EXP, exp.get()));
-            statup.add(new Pair<>(Stat.LEVEL, level));
-            statup.add(new Pair<>(Stat.MAXHP, clientMaxHp));
-            statup.add(new Pair<>(Stat.MAXMP, clientMaxMp));
-            statup.add(new Pair<>(Stat.STR, attrStr));
-            statup.add(new Pair<>(Stat.DEX, attrDex));
+            List<Pair<MapleStat, Integer>> statup = new ArrayList<>(10);
+            statup.add(new Pair<>(MapleStat.AVAILABLEAP, remainingAp));
+            statup.add(new Pair<>(MapleStat.AVAILABLESP, remainingSp[GameConstants.getSkillBook(job.getId())]));
+            statup.add(new Pair<>(MapleStat.HP, hp));
+            statup.add(new Pair<>(MapleStat.MP, mp));
+            statup.add(new Pair<>(MapleStat.EXP, exp.get()));
+            statup.add(new Pair<>(MapleStat.LEVEL, level));
+            statup.add(new Pair<>(MapleStat.MAXHP, clientMaxHp));
+            statup.add(new Pair<>(MapleStat.MAXMP, clientMaxMp));
+            statup.add(new Pair<>(MapleStat.STR, attrStr));
+            statup.add(new Pair<>(MapleStat.DEX, attrDex));
 
             sendPacket(PacketCreator.updatePlayerStats(statup, true, this));
         } finally {
@@ -7053,12 +7052,12 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    public List<Pair<Stat, Integer>> recalcLocalStats() {
+    public List<Pair<MapleStat, Integer>> recalcLocalStats() {
         effLock.lock();
         chrLock.lock();
         statWlock.lock();
         try {
-            List<Pair<Stat, Integer>> hpmpupdate = new ArrayList<>(2);
+            List<Pair<MapleStat, Integer>> hpmpupdate = new ArrayList<>(2);
             int oldlocalmaxhp = localMaxHp;
             int oldlocalmaxmp = localMaxMp;
 
@@ -7066,7 +7065,7 @@ public class Character extends AbstractCharacterObject {
 
             if (GameConfig.getServerBoolean("use_fixed_ratio_hpmp_update")) {
                 if (localMaxHp != oldlocalmaxhp) {
-                    Pair<Stat, Integer> hpUpdate;
+                    Pair<MapleStat, Integer> hpUpdate;
 
                     if (transientHp == Float.NEGATIVE_INFINITY) {
                         hpUpdate = calcHpRatioUpdate(localMaxHp, oldlocalmaxhp);
@@ -7078,7 +7077,7 @@ public class Character extends AbstractCharacterObject {
                 }
 
                 if (localMaxMp != oldlocalmaxmp) {
-                    Pair<Stat, Integer> mpUpdate;
+                    Pair<MapleStat, Integer> mpUpdate;
 
                     if (transientMp == Float.NEGATIVE_INFINITY) {
                         mpUpdate = calcMpRatioUpdate(localMaxMp, oldlocalmaxmp);
@@ -7104,7 +7103,7 @@ public class Character extends AbstractCharacterObject {
         statWlock.lock();
         try {
             int oldmaxhp = localMaxHp;
-            List<Pair<Stat, Integer>> hpmpupdate = recalcLocalStats();
+            List<Pair<MapleStat, Integer>> hpmpupdate = recalcLocalStats();
             enforceMaxHpMp();
 
             if (!hpmpupdate.isEmpty()) {
@@ -8091,18 +8090,18 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    private Pair<Stat, Integer> calcHpRatioUpdate(int newHp, int oldHp) {
+    private Pair<MapleStat, Integer> calcHpRatioUpdate(int newHp, int oldHp) {
         int delta = newHp - oldHp;
         this.hp = calcHpRatioUpdate(hp, oldHp, delta);
 
         hpChangeAction(Short.MIN_VALUE);
-        return new Pair<>(Stat.HP, hp);
+        return new Pair<>(MapleStat.HP, hp);
     }
 
-    private Pair<Stat, Integer> calcMpRatioUpdate(int newMp, int oldMp) {
+    private Pair<MapleStat, Integer> calcMpRatioUpdate(int newMp, int oldMp) {
         int delta = newMp - oldMp;
         this.mp = calcMpRatioUpdate(mp, oldMp, delta);
-        return new Pair<>(Stat.MP, mp);
+        return new Pair<>(MapleStat.MP, mp);
     }
 
     private static int calcTransientRatio(float transientpoint) {
@@ -8110,16 +8109,16 @@ public class Character extends AbstractCharacterObject {
         return !(ret <= 0 && transientpoint > 0.0f) ? ret : 1;
     }
 
-    private Pair<Stat, Integer> calcHpRatioTransient() {
+    private Pair<MapleStat, Integer> calcHpRatioTransient() {
         this.hp = calcTransientRatio(transientHp * localMaxHp);
 
         hpChangeAction(Short.MIN_VALUE);
-        return new Pair<>(Stat.HP, hp);
+        return new Pair<>(MapleStat.HP, hp);
     }
 
-    private Pair<Stat, Integer> calcMpRatioTransient() {
+    private Pair<MapleStat, Integer> calcMpRatioTransient() {
         this.mp = calcTransientRatio(transientMp * localMaxMp);
-        return new Pair<>(Stat.MP, mp);
+        return new Pair<>(MapleStat.MP, mp);
     }
 
     private int calcHpRatioUpdate(int curpoint, int maxpoint, int diffpoint) {
@@ -8964,11 +8963,11 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    public void updateSingleStat(Stat stat, int newval) {
+    public void updateSingleStat(MapleStat stat, int newval) {
         updateSingleStat(stat, newval, false);
     }
 
-    private void updateSingleStat(Stat stat, int newval, boolean itemReaction) {
+    private void updateSingleStat(MapleStat stat, int newval, boolean itemReaction) {
         sendPacket(PacketCreator.updatePlayerStats(Collections.singletonList(new Pair<>(stat, Integer.valueOf(newval))), itemReaction, this));
     }
 

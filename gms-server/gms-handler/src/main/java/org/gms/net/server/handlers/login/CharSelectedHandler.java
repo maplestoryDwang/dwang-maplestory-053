@@ -54,25 +54,8 @@ public final class CharSelectedHandler extends AbstractPacketHandler {
         int charId = p.readInt();
 
         String macs = p.readString();
-        String hostString = p.readString();
-
-        final Hwid hwid;
-        try {
-            hwid = Hwid.fromHostString(hostString);
-        } catch (IllegalArgumentException e) {
-            log.warn("Invalid host string: {}", hostString, e);
-            c.sendPacket(PacketCreator.getAfterLoginError(17));
-            return;
-        }
-
         c.updateMacs(macs);
-        c.updateHwid(hwid);
 
-        AntiMulticlientResult res = SessionCoordinator.getInstance().attemptGameSession(c, c.getAccID(), hwid);
-        if (res != AntiMulticlientResult.SUCCESS) {
-            c.sendPacket(PacketCreator.getAfterLoginError(parseAntiMulticlientError(res)));
-            return;
-        }
 
         if (c.hasBannedMac() || c.hasBannedHWID()) {
             SessionCoordinator.getInstance().closeSession(c, true);

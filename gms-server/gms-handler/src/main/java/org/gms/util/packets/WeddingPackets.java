@@ -10,7 +10,7 @@ import org.gms.client.Character;
 import org.gms.client.inventory.Item;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
-import org.gms.net.opcodes.SendOpcode;
+import org.gms.net.opcodes.SendPacketOpcode;
 import org.gms.net.packet.OutPacket;
 import org.gms.net.packet.Packet;
 import org.slf4j.Logger;
@@ -211,7 +211,7 @@ public class WeddingPackets extends PacketCreator {
      * @return mplew
      */
     public static Packet onMarriageRequest(String name, int playerid) {
-        OutPacket p = OutPacket.create(SendOpcode.MARRIAGE_REQUEST);
+        OutPacket p = OutPacket.create(SendPacketOpcode.MARRIAGE_REQUEST);
         p.writeByte(0); //mode, 0 = engage, 1 = cancel, 2 = answer.. etc
         p.writeString(name); // name
         p.writeInt(playerid); // playerid
@@ -239,7 +239,7 @@ public class WeddingPackets extends PacketCreator {
      * @return mplew (MaplePacket) Byte array to be converted and read for byte[]->ImageIO
      */
     public static Packet onTakePhoto(String ReservedGroomName, String ReservedBrideName, int m_dwField, List<Character> m_dwUsers) { // OnIFailedAtWeddingPhotos
-        OutPacket p = OutPacket.create(SendOpcode.WEDDING_PHOTO);// v53 header, convert -> v83
+        OutPacket p = OutPacket.create(SendPacketOpcode.WEDDING_PHOTO);// v53 header, convert -> v83
         p.writeString(ReservedGroomName);
         p.writeString(ReservedBrideName);
         p.writeInt(m_dwField); // field id?
@@ -280,7 +280,7 @@ public class WeddingPackets extends PacketCreator {
      * @return mplew
      */
     public static Packet OnMarriageResult(int marriageId, Character chr, boolean wedding) {
-        OutPacket p = OutPacket.create(SendOpcode.MARRIAGE_RESULT);
+        OutPacket p = OutPacket.create(SendPacketOpcode.MARRIAGE_RESULT);
         p.writeByte(11);
         p.writeInt(marriageId);
         p.writeInt(chr.getGender() == 0 ? chr.getId() : chr.getPartnerId());
@@ -306,7 +306,7 @@ public class WeddingPackets extends PacketCreator {
      * @return mplew
      */
     public static Packet OnMarriageResult(final byte msg) {
-        OutPacket p = OutPacket.create(SendOpcode.MARRIAGE_RESULT);
+        OutPacket p = OutPacket.create(SendPacketOpcode.MARRIAGE_RESULT);
         p.writeByte(msg);
         if (msg == 36) {
             p.writeByte(1);
@@ -323,7 +323,7 @@ public class WeddingPackets extends PacketCreator {
      * @return mplew
      */
     public static Packet OnNotifyWeddingPartnerTransfer(int partner, int mapid) {
-        OutPacket p = OutPacket.create(SendOpcode.NOTIFY_MARRIED_PARTNER_MAP_TRANSFER);
+        OutPacket p = OutPacket.create(SendPacketOpcode.NOTIFY_MARRIED_PARTNER_MAP_TRANSFER);
         p.writeInt(mapid);
         p.writeInt(partner);
         return p;
@@ -341,7 +341,7 @@ public class WeddingPackets extends PacketCreator {
      * @return mplew
      */
     public static Packet OnWeddingProgress(boolean setBlessEffect, int groom, int bride, byte step) {
-        OutPacket p = OutPacket.create(setBlessEffect ? SendOpcode.WEDDING_CEREMONY_END : SendOpcode.WEDDING_PROGRESS);
+        OutPacket p = OutPacket.create(setBlessEffect ? SendPacketOpcode.WEDDING_CEREMONY_END : SendPacketOpcode.WEDDING_PROGRESS);
         if (!setBlessEffect) { // in order for ceremony packet to send, byte step = 2 must be sent first
             p.writeByte(step);
         }
@@ -358,7 +358,7 @@ public class WeddingPackets extends PacketCreator {
      * @return mplew
      */
     public static Packet sendWeddingInvitation(String groom, String bride) {
-        OutPacket p = OutPacket.create(SendOpcode.MARRIAGE_RESULT);
+        OutPacket p = OutPacket.create(SendPacketOpcode.MARRIAGE_RESULT);
         p.writeByte(15);
         p.writeString(groom);
         p.writeString(bride);
@@ -367,7 +367,7 @@ public class WeddingPackets extends PacketCreator {
     }
 
     public static Packet sendWishList() { // fuck my life
-        OutPacket p = OutPacket.create(SendOpcode.MARRIAGE_REQUEST);
+        OutPacket p = OutPacket.create(SendPacketOpcode.MARRIAGE_REQUEST);
         p.writeByte(9);
         return p;
     }
@@ -381,7 +381,7 @@ public class WeddingPackets extends PacketCreator {
      * @return mplew
      */
     public static Packet onWeddingGiftResult(byte mode, List<String> itemnames, List<Item> items) {
-        OutPacket p = OutPacket.create(SendOpcode.WEDDING_GIFT_RESULT);
+        OutPacket p = OutPacket.create(SendPacketOpcode.WEDDING_GIFT_RESULT);
         p.writeByte(mode);
         switch (mode) {
             case 0xC: // 12 : You cannot give more than one present for each wishlist 

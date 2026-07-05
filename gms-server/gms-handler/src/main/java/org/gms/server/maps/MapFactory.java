@@ -285,6 +285,7 @@ public class MapFactory {
 
         }
 
+        // 反应物出现
         if (mapData.getChildByPath("reactor") != null) {
             for (Data reactor : mapData.getChildByPath("reactor")) {
                 String id = DataTool.getString(reactor.getChildByPath("id"));

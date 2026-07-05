@@ -25,7 +25,106 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum RecvOpcode implements Opcode {
-    CUSTOM_PACKET(0x3713),//13 37 lol // 自定义封包
+    // GENERAL
+    PONG(0x0A), // 心跳回应
+
+    // LOGIN
+    AFTER_LOGIN(0x03), // 登录后处理
+    SERVERLIST_REREQUEST(0x04), // 重新请求服务器列表
+    CHECK_CHAR_NAME(0x09), // 检查角色名
+    CREATE_CHAR(0x0E), // 创建角色
+    DELETE_CHAR(0x0F), // 删除角色
+    SERVERSTATUS_REQUEST(0x13), // 请求服务器状态
+    CHAR_SELECT(0x16), // 选择角色
+    SERVERLIST_REQUEST(0x18), // 请求服务器列表
+    CHARLIST_REQUEST(0x19), // 请求角色列表
+    RELOG(0x1A), // 重新登录
+    LOGIN_PASSWORD(0x1B), // 登录密码
+
+    // CHANNEL
+    PLAYER_LOGGEDIN(0x14), // 玩家登录进频道
+    STRANGE_DATA(0x11), // 异常数据
+    CHANGE_MAP(0x2F), // 切换地图
+    CHANGE_CHANNEL(0x27), // 切换频道
+    ENTER_CASH_SHOP(0x28), // 进入商城
+    MOVE_PLAYER(0x35), // 移动玩家
+    CLOSE_RANGE_ATTACK(0x59), // 近战攻击
+    RANGED_ATTACK(0x36), // 远程攻击
+    STORAGE(0x20), // 仓库操作
+    NPC_TALK_MORE(0x21), // NPC 对话继续
+    NPC_SHOP(0x22), // NPC 商店
+    NPC_TALK(0x23), // NPC 对话
+    MAGIC_ATTACK(0x2E), // 魔法攻击
+    TAKE_DAMAGE(0x2A), // 受到伤害
+    GENERAL_CHAT(0x2C), // 普通聊天
+    FACE_EXPRESSION(0x5C), // 面部表情
+    ITEM_MOVE(0x62), // 移动道具
+    USE_ITEM(0x63), // 使用道具
+    CANCEL_ITEM_EFFECT(0x49), // 取消道具效果
+    USE_CASH_ITEM(0x53), // 使用现金道具
+    USE_RETURN_SCROLL(0x64), // 使用回城卷轴
+    USE_UPGRADE_SCROLL(0x65), // 使用强化卷轴
+    DISTRIBUTE_AP(0x66), // 分配能力点(AP)
+    HEAL_OVER_TIME(0x67), // 定时恢复(HP/MP)
+    DISTRIBUTE_SP(0x4D), // 分配技能点(SP)
+    SPECIAL_MOVE(0x51), // 特殊动作/技能
+    CANCEL_BUFF(0x4E), // 取消Buff
+    MESO_DROP(0x68), // 丢金币
+    GIVE_FAME(0x69), // 人气度操作
+    CHAR_INFO_REQUEST(0x44), // 请求查看角色信息
+    CHANGE_MAP_SPECIAL(0x47), // 特殊地图切换(如传送门)
+    QUEST_ACTION(0x6B), // 任务操作
+    PARTYCHAT(0x3A), // 组队聊天
+    WHISPER(0x58), // 密聊
+    PLAYER_INTERACTION(0x3E), // 玩家互动(小游戏/交易)
+    PARTY_OPERATION(0x31), // 组队操作
+    DENY_PARTY_REQUEST(0x32), // 拒绝组队邀请
+    BUDDYLIST_MODIFY(0x33), // 好友列表修改
+    USE_DOOR(0x41), // 使用时空门
+    CHANGE_KEYMAP(0x75), // 修改快捷键设置
+    SUMMON_ATTACK(0x7B), // 召唤兽攻击
+    MOVE_SUMMON(0x7C), // 移动召唤兽
+    DAMAGE_SUMMON(0x79), // 召唤兽受击
+    MOVE_LIFE(0x9D), // 移动NPC/怪物(常用于控制权同步)
+    ITEM_PICKUP(0x89), // 拾取道具
+    ENTER_MTS(0x77); // 进入MTS(拍卖所)
+
+    private int code = -2;
+
+    RecvOpcode(int code) {
+        this.code = code;
+    }
+
+    @Override
+    public int getValue() {
+        return code;
+    }
+
+    @Override
+    public String getName() {
+        return this.name();
+    }
+
+
+    private static final List<Integer> ignoreLists = List.of(
+//            PONG.getValue(),
+//            FACE_EXPRESSION.getValue(),
+//            MOVE_PLAYER.getValue(),
+//            NPC_ACTION.getValue(),
+//            MOVE_PET.getValue(),
+//            MOVE_LIFE.getValue()
+
+
+    );
+
+    public static boolean recvIgnore(int opcode){
+        return ignoreLists.contains(opcode);
+    }
+
+
+
+    /*
+        CUSTOM_PACKET(0x3713),//13 37 lol // 自定义封包
 
     LOGIN_PASSWORD(0x01), // 登录密码
     GUEST_LOGIN(0x02), // 游客登录
@@ -209,38 +308,5 @@ public enum RecvOpcode implements Opcode {
     USE_HAMMER(0x104), // 使用锤子
 
     SET_HPMPALERT(0x1000), // 设置HP/MP警报
-    ;
-
-    private int code = -2;
-
-    RecvOpcode(int code) {
-        this.code = code;
-    }
-
-    @Override
-    public int getValue() {
-        return code;
-    }
-
-    @Override
-    public String getName() {
-        return this.name();
-    }
-
-
-    private static final List<Integer> ignoreLists = List.of(
-            PONG.getValue(),
-            FACE_EXPRESSION.getValue(),
-            MOVE_PLAYER.getValue(),
-            NPC_ACTION.getValue(),
-            MOVE_PET.getValue(),
-            MOVE_LIFE.getValue()
-
-
-    );
-
-    public static boolean recvIgnore(int opcode){
-        return ignoreLists.contains(opcode);
-    }
-
+     */
 }

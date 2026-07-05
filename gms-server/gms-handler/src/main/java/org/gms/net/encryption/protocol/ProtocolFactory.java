@@ -10,6 +10,7 @@ public class ProtocolFactory {
 
     public ProtocolFactory(ClientCyphers clientCyphers){
         // 在这里注册版本与对应的处理器
+        PROTOCOLS.put(ProtocolConstants.GMS_V53, new GMSV83PacketProtocol(clientCyphers));
         PROTOCOLS.put(ProtocolConstants.GMS_V83, new GMSV83PacketProtocol(clientCyphers));
     }
 

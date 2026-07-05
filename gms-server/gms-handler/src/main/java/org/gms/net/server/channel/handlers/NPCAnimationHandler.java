@@ -23,7 +23,7 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
 import org.gms.net.AbstractPacketHandler;
-import org.gms.net.opcodes.SendOpcode;
+import org.gms.net.opcodes.SendPacketOpcode;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.OutPacket;
 
@@ -34,7 +34,7 @@ public final class NPCAnimationHandler extends AbstractPacketHandler {
             return;
         }
 
-        OutPacket op = OutPacket.create(SendOpcode.NPC_ACTION);
+        OutPacket op = OutPacket.create(SendPacketOpcode.NPC_ACTION);
         int length = p.available();
         if (length == 6) { // NPC Talk
             op.writeInt(p.readInt());

@@ -35,15 +35,26 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 public final class DeleteCharHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(DeleteCharHandler.class);
 
+    // 用生日删除的
     @Override
     public void handlePacket(InPacket p, Client c) {
-        String pic = p.readString();
+        int idate = p.readInt();
         int cid = p.readInt();
-        if (c.checkPic(pic)) {
+
+        int year = idate / 10000;
+        int month = (idate - year * 10000) / 100;
+        int day = idate - year * 10000 - month * 100;
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month - 1, day);
+        boolean shallDelete = c.checkBirthDate(cal);
+
+        if (shallDelete) {
             //check for family, guild leader, pending marriage, world transfer
             try (Connection con = DatabaseConnection.getConnection();
                  PreparedStatement ps = con.prepareStatement("SELECT `world`, `guildid`, `guildrank`, `familyId` FROM characters WHERE id = ?");

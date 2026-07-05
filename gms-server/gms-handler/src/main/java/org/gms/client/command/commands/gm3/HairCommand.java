@@ -25,7 +25,7 @@ package org.gms.client.command.commands.gm3;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.Stat;
+import org.gms.client.MapleStat;
 import org.gms.client.command.Command;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.server.ItemInformationProvider;
@@ -54,7 +54,7 @@ public class HairCommand extends Command {
                 }
 
                 player.setHair(itemId);
-                player.updateSingleStat(Stat.HAIR, itemId);
+                player.updateSingleStat(MapleStat.HAIR, itemId);
                 player.equipChanged();
             } else {
                 int itemId = Integer.parseInt(params[1]);
@@ -69,7 +69,7 @@ public class HairCommand extends Command {
                 }
                 if (victim != null) {
                     victim.setHair(itemId);
-                    victim.updateSingleStat(Stat.HAIR, itemId);
+                    victim.updateSingleStat(MapleStat.HAIR, itemId);
                     victim.equipChanged();
                 } else {
                     player.message(I18nUtil.getMessage("BombCommand.message3", params[0]));

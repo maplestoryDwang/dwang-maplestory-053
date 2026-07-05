@@ -31,7 +31,6 @@ import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.game.NextLevelType;
 import org.gms.constants.id.MapId;
-import org.gms.constants.id.NpcId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.LanguageConstants;
 import org.gms.manager.ServerManager;
@@ -57,8 +56,6 @@ import org.gms.server.SkillbookInformationProvider.SkillBookEntry;
 import org.gms.server.events.gm.Event;
 import org.gms.server.expeditions.Expedition;
 import org.gms.server.expeditions.ExpeditionType;
-import org.gms.server.gachapon.Gachapon;
-import org.gms.server.gachapon.Gachapon.GachaponItem;
 import org.gms.server.life.LifeFactory;
 import org.gms.server.life.PlayerNPC;
 import org.gms.server.maps.MapManager;
@@ -328,19 +325,19 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public void setHair(int hair) {
         getPlayer().setHair(hair);
-        getPlayer().updateSingleStat(Stat.HAIR, hair);
+        getPlayer().updateSingleStat(MapleStat.HAIR, hair);
         getPlayer().equipChanged();
     }
 
     public void setFace(int face) {
         getPlayer().setFace(face);
-        getPlayer().updateSingleStat(Stat.FACE, face);
+        getPlayer().updateSingleStat(MapleStat.FACE, face);
         getPlayer().equipChanged();
     }
 
     public void setSkin(int color) {
         getPlayer().setSkinColor(SkinColor.getById(color));
-        getPlayer().updateSingleStat(Stat.SKIN, color);
+        getPlayer().updateSingleStat(MapleStat.SKIN, color);
         getPlayer().equipChanged();
     }
 
