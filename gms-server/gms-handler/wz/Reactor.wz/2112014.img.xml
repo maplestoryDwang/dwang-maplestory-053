@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2112014.img">
+<imgdir name="2112014.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="큰상자로 열쇠7개를 내려놓으면 불의원석이 나온다."/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="177" height="118">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="80" y="118"/>
     </canvas>
     <imgdir name="event">
@@ -19,17 +19,17 @@
       </imgdir>
     </imgdir>
     <imgdir name="hit">
-      <canvas name="0" width="234" height="126">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="108" y="126"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="1" width="183" height="137">
+      <canvas name="1" format="1" scale="0">
         <vector name="origin" x="79" y="137"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="2" width="226" height="73">
+      <canvas name="2" format="1" scale="0">
         <vector name="origin" x="79" y="73"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
@@ -37,7 +37,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="226" height="73">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="79" y="73"/>
       <int name="z" value="0"/>
       <int name="delay" value="120"/>

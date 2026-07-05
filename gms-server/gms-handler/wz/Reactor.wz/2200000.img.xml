@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2200000.img">
+<imgdir name="2200000.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="221024400"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="101" height="77">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="50" y="75"/>
       <int name="z" value="0"/>
     </canvas>
@@ -15,22 +15,22 @@
       </imgdir>
     </imgdir>
     <imgdir name="hit">
-      <canvas name="0" width="101" height="77">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="50" y="75"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="1" width="122" height="81">
+      <canvas name="1" format="1" scale="0">
         <vector name="origin" x="61" y="79"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="2" width="132" height="92">
+      <canvas name="2" format="1" scale="0">
         <vector name="origin" x="66" y="90"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="3" width="137" height="92">
+      <canvas name="3" format="1" scale="0">
         <vector name="origin" x="67" y="90"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
@@ -38,7 +38,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="101" height="77">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="50" y="75"/>
       <int name="z" value="0"/>
     </canvas>

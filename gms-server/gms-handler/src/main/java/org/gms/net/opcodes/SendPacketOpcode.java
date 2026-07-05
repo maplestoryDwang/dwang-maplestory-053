@@ -34,7 +34,10 @@ public enum SendPacketOpcode implements Opcode {
     CHAR_NAME_RESPONSE(0x06), // 角色名检查回应
     ADD_NEW_CHAR_ENTRY(0x07), // 建立新角色回应
     DELETE_CHAR_RESPONSE(0x08), // 删除角色回应
-    SERVER_IP(0x0C), // 服务器IP(进入游戏世界)                  check
+
+    // check ↓
+    SERVER_IP(0x0C), // 服务器IP(进入游戏世界)
+
     PIN_OPERATION(0x0D), // PIN码操作
     SERVERSTATUS(0x12), // 服务器状态
     CHARLIST(0x13), // 角色列表
@@ -53,8 +56,12 @@ public enum SendPacketOpcode implements Opcode {
     SHOW_QUEST_COMPLETION(0x1F), // 显示任务完成
     SPAWN_PORTAL(0x29), // 初始化传送门
     CHAR_INFO(0x2A), // 角色信息查看回应
+
+    // check ↓
     BUDDYLIST(0x2B), // 好友列表操作
     PARTY_OPERATION(0x38), // 组队操作回应
+
+    // check ↓
     SERVERMESSAGE(0x2D), // 滚动公告/顶部横幅
     AVATAR_MEGA(0x19), // 喇叭(大喇叭/全服喇叭)
     WARP_TO_MAP(0x4D), // 切换地图/进入游戏
@@ -77,6 +84,8 @@ public enum SendPacketOpcode implements Opcode {
     MAGIC_ATTACK(0x93), // 玩家魔法攻击同步
     DAMAGE_PLAYER(0x89), // 玩家受伤同步
     CANCEL_FOREIGN_BUFF(0x8A), // 取消可见的其他玩家Buff
+
+    // check ↓
     UPDATE_PARTYMEMBER_HP(0x8B), // 更新组队成员HP显示
     FACIAL_EXPRESSION(0x8C), // 玩家面部表情同步
     UPDATE_CHAR_LOOK(0x92), // 更新玩家外观(换装同步)
@@ -93,7 +102,10 @@ public enum SendPacketOpcode implements Opcode {
     APPLY_MONSTER_STATUS(0x9A), // 给怪物施加异常状态
     CANCEL_MONSTER_STATUS(0x9B), // 取消怪物异常状态
     SHOW_MONSTER_HP(0x98), // 显示怪物血条
+
+    // check ↓
     SPAWN_NPC(0xA7), // 地图生成NPC
+    // check ↓
     SPAWN_NPC_REQUEST_CONTROLLER(0xAC), // 获取NPC控制权
     DROP_ITEM_FROM_MAPOBJECT(0xB8), // 地图掉落道具
     REMOVE_ITEM_FROM_MAP(0xB9), // 移除地图上的道具(捡起/消失)
@@ -106,13 +118,27 @@ public enum SendPacketOpcode implements Opcode {
     OPEN_STORAGE(0xD8), // 打开仓库窗口
     NPC_TALK(0xC2), // NPC 对话弹窗
     PLAYER_INTERACTION(0xDD), // 玩家互动窗口(交易/雇佣商店/游戏)
-    KEYMAP(0xF6), // 刷新键盘快捷键配置
+
+    // check ↓
+    KEYMAP(0xF6), // 刷新键盘快捷键配置  ok
 
 
+    // check ↓
+    REACTOR_HIT(0xB3), // 反应堆被击中
+    // check ↓
+    REACTOR_SPAWN(0xB2), // 生成反应堆
+    // check ↓
+    REACTOR_DESTROY(0xB4), // 销毁反应堆
+    // check ↓
+    MEMO_RESULT(0x25), // 备忘录结果   ok
+    // check ↓
+    CLAIM_STATUS_CHANGED(0x26), // 领取状态改变  Ok 2F->26
 
+    // check ↓
+    SET_TAMING_MOB_INFO(0x27), // 设置驯服怪物信息
 
     /*
-    原版
+    北斗
      */
 
 
@@ -143,13 +169,10 @@ public enum SendPacketOpcode implements Opcode {
     FORCED_STAT_RESET(0x23), // 强制重置状态
     SKILL_USE_RESULT(0x25), // 技能使用结果
     OPEN_FULL_CLIENT_DOWNLOAD_LINK(0x28), // 打开完整客户端下载链接
-    MEMO_RESULT(0x29), // 备忘录结果
     MAP_TRANSFER_RESULT(0x2A), // 地图转移结果
-    WEDDING_PHOTO(0x2B), // 结婚照片（ANTI_MACRO_RESULT在某些版本可能是这个）
-    CLAIM_RESULT(0x2D), // 领取结果
+    WEDDING_PHOTO(-1), // 结婚照片（ANTI_MACRO_RESULT在某些版本可能是这个）
+    CLAIM_RESULT(-1), // 领取结果
     CLAIM_AVAILABLE_TIME(0x2E), // 领取可用时间
-    CLAIM_STATUS_CHANGED(0x2F), // 领取状态改变
-    SET_TAMING_MOB_INFO(0x30), // 设置驯服怪物信息
     QUEST_CLEAR(0x31), // 任务完成
     ENTRUSTED_SHOP_CHECK_RESULT(0x32), // 委托商店检查结果
     SKILL_LEARN_ITEM_RESULT(0x33), // 学习技能物品结果
@@ -171,7 +194,7 @@ public enum SendPacketOpcode implements Opcode {
     NOTIFY_MARRIED_PARTNER_MAP_TRANSFER(0x4B), // 通知结婚伴侣地图转移
 
     CASH_PET_FOOD_RESULT(0x4C), // 宠物食物结果
-    SET_WEEK_EVENT_MESSAGE(0x4D), // 设置周活动消息
+    SET_WEEK_EVENT_MESSAGE(-1), // 设置周活动消息
     SET_POTION_DISCOUNT_RATE(0x4E), // 设置药水折扣率
 
     BRIDLE_MOB_CATCH_FAIL(0x4F), // 鞍具捕捉怪物失败
@@ -219,6 +242,8 @@ public enum SendPacketOpcode implements Opcode {
     RANDOM_MORPH_RES(0x77), // 随机变身结果
     CANCEL_NAME_CHANGE_BY_OTHER(0x78), // 由他人取消更改名字
     SET_EXTRA_PENDANT_SLOT(0x79), // 设置额外饰品插槽
+
+    // 53没有这个接口
     SCRIPT_PROGRESS_MESSAGE(0x7A), // 脚本进度消息
     DATA_CRC_CHECK_FAILED(0x7B), // 数据CRC检查失败
     MACRO_SYS_DATA_INIT(0x7C), // 宏系统数据初始化
@@ -250,7 +275,7 @@ public enum SendPacketOpcode implements Opcode {
     GMEVENT_INSTRUCTIONS(0x92), // DESC（游戏事件说明）
     CONTI_MOVE(0x94), // 连续移动
     CONTI_STATE(0x95), // 连续状态
-    SET_QUEST_CLEAR(0x96), // 设置任务完成
+    SET_QUEST_CLEAR(-1), // 设置任务完成   ===========================    0x96
     SET_QUEST_TIME(0x97), // 设置任务时间
     ARIANT_RESULT(0x98),    // thanks lrenex // ARIANT结果
     SET_OBJECT_STATE(0x99), // 设置物体状态
@@ -260,13 +285,13 @@ public enum SendPacketOpcode implements Opcode {
     PYRAMID_SCORE(0x9E), // 金字塔分数
     QUICKSLOT_INIT(0x9F),//LP_QuickslotMappedInit // 快捷栏初始化
     CHATTEXT1(0xA3), // 聊天文本（类型1）
-    CHALKBOARD(0xA4), // 黑板
+    CHALKBOARD(-1), // 黑板   ===========================      0xA4
     SHOW_CONSUME_EFFECT(0xA6), // 显示消耗效果
 
     SPAWN_PET(0xA8), // 生成宠物
     MOVE_PET(0xAA), // 移动宠物
     PET_CHAT(0xAB), // 宠物对话
-    PET_NAMECHANGE(0xAC), // 更改宠物名字
+    PET_NAMECHANGE(-1), // 更改宠物名字
     PET_EXCEPTION_LIST(0xAD), // 宠物异常列表
     PET_COMMAND(0xAE), // 宠物命令
     SUMMON_SKILL(0xB4), // 召唤兽技能
@@ -276,7 +301,7 @@ public enum SendPacketOpcode implements Opcode {
     ENERGY_ATTACK(0xBD), // 能量攻击
     SKILL_EFFECT(0xBE), // 技能效果
     CANCEL_SKILL_EFFECT(0xBF), // 取消技能效果
-    SHOW_ITEM_EFFECT(0xC2), // 显示物品效果
+    SHOW_ITEM_EFFECT(-1), // 显示物品效果
     SHOW_CHAIR(0xC4), // 显示椅子
     GUILD_NAME_CHANGED(0xCA), // 公会名称改变
     GUILD_MARK_CHANGED(0xCB), // 公会标志改变
@@ -314,9 +339,7 @@ public enum SendPacketOpcode implements Opcode {
     CANNOT_SPAWN_KITE(0x10E), // 无法生成风筝
     SPAWN_KITE(0x10F), // 生成风筝
     REMOVE_KITE(0x110), // 移除风筝
-    REACTOR_HIT(0x115), // 反应堆被击中
-    REACTOR_SPAWN(0x117), // 生成反应堆
-    REACTOR_DESTROY(0x118), // 销毁反应堆
+
     SNOWBALL_STATE(0x119), // 雪球状态
     HIT_SNOWBALL(0x11A), // 击中雪球
     SNOWBALL_MESSAGE(0x11B), // 雪球消息

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2008007.img">
+<imgdir name="2008007.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="레버"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="86" height="94">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="43" y="47"/>
       <int name="z" value="0"/>
     </canvas>
@@ -15,17 +15,17 @@
       </imgdir>
     </imgdir>
     <imgdir name="hit">
-      <canvas name="0" width="86" height="94">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="43" y="47"/>
         <int name="z" value="0"/>
         <int name="delay" value="80"/>
       </canvas>
-      <canvas name="1" width="89" height="94">
+      <canvas name="1" format="1" scale="0">
         <vector name="origin" x="46" y="47"/>
         <int name="z" value="0"/>
         <int name="delay" value="80"/>
       </canvas>
-      <canvas name="2" width="86" height="94">
+      <canvas name="2" format="1" scale="0">
         <vector name="origin" x="43" y="47"/>
         <int name="z" value="0"/>
         <int name="delay" value="80"/>
@@ -33,7 +33,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="86" height="94">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="43" y="47"/>
       <int name="z" value="0"/>
     </canvas>

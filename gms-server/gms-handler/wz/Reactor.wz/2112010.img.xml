@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2112010.img">
+<imgdir name="2112010.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="팥죽"/>
     <string name="link" value="2112007"/>

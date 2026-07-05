@@ -64,12 +64,13 @@ public class EventScriptManager extends AbstractScriptManager {
      * @param scripts 事件脚本名称数组
      */
     public EventScriptManager(final Channel channel, String[] scripts) {
-        for (String script : scripts) {
-            if (!script.isEmpty()) {
-                events.put(script, initializeEventEntry(script, channel)); // 加载并存储每个脚本
-            }
-        }
-
+//        for (String script : scripts) {
+//            if (!script.isEmpty()) {
+//                events.put(script, initializeEventEntry(script, channel)); // 加载并存储每个脚本
+//            }
+//        }
+        // todo 初始化事件
+        log.info(" 当前不启动任何事件");
         init(); // 初始化所有事件
         fallback = events.remove("0_EXAMPLE"); // 移除并保留后备事件
     }

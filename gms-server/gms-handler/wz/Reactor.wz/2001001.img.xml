@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2001001.img">
+<imgdir name="2001001.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="파파픽시의 화분"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="106" height="54">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="53" y="-9"/>
       <int name="z" value="0"/>
     </canvas>
@@ -19,7 +19,7 @@
       </imgdir>
     </imgdir>
     <imgdir name="hit">
-      <canvas name="0" width="106" height="54">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="53" y="-9"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
@@ -27,7 +27,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="106" height="54">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="53" y="-9"/>
       <int name="z" value="0"/>
     </canvas>

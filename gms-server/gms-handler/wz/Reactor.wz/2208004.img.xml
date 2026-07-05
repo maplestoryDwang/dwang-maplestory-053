@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2208004.img">
+<imgdir name="2208004.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="핼리오스탑 엘리베이터"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="197" height="89">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="125" y="85"/>
       <int name="z" value="-2"/>
     </canvas>
     <imgdir name="hit">
-      <canvas name="0" width="197" height="89">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="125" y="85"/>
         <int name="z" value="-2"/>
         <int name="delay" value="100"/>
       </canvas>
-      <canvas name="1" width="197" height="89">
+      <canvas name="1" format="1" scale="0">
         <vector name="origin" x="125" y="85"/>
         <int name="z" value="-2"/>
         <int name="delay" value="100"/>
       </canvas>
-      <canvas name="2" width="197" height="89">
+      <canvas name="2" format="1" scale="0">
         <vector name="origin" x="125" y="85"/>
         <int name="z" value="-2"/>
         <int name="delay" value="100"/>
       </canvas>
-      <canvas name="3" width="197" height="89">
+      <canvas name="3" format="1" scale="0">
         <vector name="origin" x="125" y="85"/>
         <int name="z" value="-2"/>
         <int name="delay" value="100"/>
       </canvas>
-      <canvas name="4" width="197" height="89">
+      <canvas name="4" format="1" scale="0">
         <vector name="origin" x="125" y="85"/>
         <int name="z" value="-2"/>
         <int name="delay" value="100"/>
@@ -48,7 +48,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="197" height="89">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="125" y="85"/>
       <int name="z" value="-2"/>
       <int name="delay" value="120"/>

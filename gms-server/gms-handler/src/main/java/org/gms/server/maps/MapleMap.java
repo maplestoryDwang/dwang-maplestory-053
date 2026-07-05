@@ -2585,10 +2585,9 @@ public class MapleMap {
         if (mapEffect != null) {
             mapEffect.sendStartData(chr.getClient());
         }
-        chr.sendPacket(PacketCreator.resetForcedStats());
-        if (MapId.isGodlyStatMap(mapid)) {
-            chr.sendPacket(PacketCreator.aranGodlyStats());
-        }
+        // todo 暂时不知道干嘛得 20260705
+//        chr.sendPacket(PacketCreator.resetForcedStats());
+
         if (chr.getEventInstance() != null && chr.getEventInstance().isTimerStarted()) {
             chr.sendPacket(PacketCreator.getClock((int) (chr.getEventInstance().getTimeLeft() / 1000)));
         }

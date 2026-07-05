@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2221004.img">
+<imgdir name="2221004.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="놀부네 지붕:놀부의 박씨를 떨어뜨려서 박을 소환한다."/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="1" height="1">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="0" y="0"/>
     </canvas>
     <imgdir name="event">
@@ -20,7 +20,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="1" height="1">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="0" y="0"/>
     </canvas>
   </imgdir>

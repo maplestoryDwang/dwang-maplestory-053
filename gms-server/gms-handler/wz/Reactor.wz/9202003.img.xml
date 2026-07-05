@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="9202003.img">
+<imgdir name="9202003.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="음식 접시"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="86" height="56">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="45" y="47"/>
       <int name="z" value="0"/>
     </canvas>
@@ -15,22 +15,22 @@
       </imgdir>
     </imgdir>
     <imgdir name="hit">
-      <canvas name="0" width="86" height="56">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="45" y="47"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="1" width="86" height="69">
+      <canvas name="1" format="1" scale="0">
         <vector name="origin" x="45" y="60"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="2" width="86" height="56">
+      <canvas name="2" format="1" scale="0">
         <vector name="origin" x="45" y="47"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="3" width="88" height="70">
+      <canvas name="3" format="1" scale="0">
         <vector name="origin" x="45" y="60"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
@@ -38,7 +38,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="86" height="56">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="45" y="47"/>
       <int name="z" value="0"/>
     </canvas>
@@ -56,7 +56,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="2">
-    <canvas name="0" width="86" height="56">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="45" y="47"/>
       <int name="z" value="0"/>
     </canvas>
@@ -74,7 +74,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="3">
-    <canvas name="0" width="86" height="56">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="45" y="47"/>
       <int name="z" value="0"/>
     </canvas>
@@ -85,17 +85,17 @@
       </imgdir>
     </imgdir>
     <imgdir name="hit">
-      <canvas name="0" width="86" height="73">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="45" y="64"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="1" width="86" height="63">
+      <canvas name="1" format="1" scale="0">
         <vector name="origin" x="45" y="54"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="2" width="86" height="56">
+      <canvas name="2" format="1" scale="0">
         <vector name="origin" x="45" y="47"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
@@ -103,7 +103,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="4">
-    <canvas name="0" width="1" height="1">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="0" y="0"/>
     </canvas>
   </imgdir>

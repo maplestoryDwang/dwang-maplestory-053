@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2001003.img">
+<imgdir name="2001003.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="투명리액터:여신탑의 샐리온2"/>
     <string name="link" value="2001002"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2200002.img">
+<imgdir name="2200002.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="922010201로 추방"/>
     <string name="link" value="2202002"/>

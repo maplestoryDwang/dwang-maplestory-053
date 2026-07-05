@@ -23,6 +23,7 @@ package org.gms.util;
 
 import org.gms.constants.string.CharsetConstants;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HexFormat;
 
 /**
@@ -85,5 +86,41 @@ public class HexTool {
 
     private static boolean isSpecialCharacter(byte asciiCode) {
         return asciiCode >= 0 && asciiCode <= 31;
+    }
+
+    public static byte[] getByteArrayFromHexString(String hex) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int nexti = 0;
+        int nextb = 0;
+        boolean highoc = true;
+        outer:
+        for(;;) {
+            int number = -1;
+            while (number == -1) {
+                if (nexti == hex.length()) {
+                    break outer;
+                }
+                char chr = hex.charAt(nexti);
+                if (chr >= '0' && chr <= '9') {
+                    number = chr - '0';
+                } else if (chr >= 'a' && chr <= 'f') {
+                    number = chr - 'a' + 10;
+                } else if (chr >= 'A' && chr <= 'F') {
+                    number = chr - 'A' + 10;
+                } else {
+                    number = -1;
+                }
+                nexti++;
+            }
+            if (highoc) {
+                nextb = number << 4;
+                highoc = false;
+            } else {
+                nextb |= number;
+                highoc = true;
+                baos.write(nextb);
+            }
+        }
+        return baos.toByteArray();
     }
 }

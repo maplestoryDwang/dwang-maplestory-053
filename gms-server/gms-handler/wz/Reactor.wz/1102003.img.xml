@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="1102003.img">
+<imgdir name="1102003.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="플로리나비치 나무상자"/>
     <string name="link" value="0002000"/>

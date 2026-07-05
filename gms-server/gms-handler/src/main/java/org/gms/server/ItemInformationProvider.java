@@ -2386,4 +2386,8 @@ public class ItemInformationProvider {
         }
         return retItems;
     }
+
+    public boolean isThrowingStar(int itemId) {
+        return itemId >= 2070000 && itemId < 2080000;
+    }
 }

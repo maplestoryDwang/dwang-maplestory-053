@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2098001.img">
+<imgdir name="2098001.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="표창제거"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="4" height="4">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="0" y="0"/>
     </canvas>
     <imgdir name="event">
@@ -19,7 +19,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="4" height="4">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="-1" y="32"/>
     </canvas>
     <vector name="origin" x="0" y="0"/>

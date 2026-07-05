@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2002013.img">
+<imgdir name="2002013.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="여섯번째 조각 상자"/>
     <string name="link" value="2002011"/>

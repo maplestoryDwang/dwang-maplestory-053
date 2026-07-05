@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="8001000.img">
+<imgdir name="8001000.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="쇼와조각상"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="321" height="67">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="160" y="33"/>
       <int name="z" value="0"/>
     </canvas>
@@ -21,7 +21,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="321" height="67">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="160" y="33"/>
       <int name="z" value="0"/>
     </canvas>

@@ -315,7 +315,7 @@ public class Character extends AbstractCharacterObject {
     @Setter
     private Mount mapleMount;
     private Party party;
-    private final Pet[] pets = new Pet[3];
+    private final Pet[] pets = new Pet[1];
     @Getter
     @Setter
     private PlayerShop playerShop = null;

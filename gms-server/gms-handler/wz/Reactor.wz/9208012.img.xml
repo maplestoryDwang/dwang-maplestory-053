@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="9208012.img">
+<imgdir name="9208012.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="비밀통로3"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="217" height="146">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="72" y="129"/>
       <int name="z" value="0"/>
     </canvas>
     <imgdir name="hit">
-      <canvas name="0" width="217" height="146">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="72" y="129"/>
         <int name="z" value="0"/>
         <int name="dleay" value="100"/>
       </canvas>
-      <canvas name="1" width="217" height="146">
+      <canvas name="1" format="1" scale="0">
         <vector name="origin" x="72" y="129"/>
         <int name="z" value="0"/>
         <int name="dleay" value="100"/>
       </canvas>
-      <canvas name="2" width="217" height="146">
+      <canvas name="2" format="1" scale="0">
         <vector name="origin" x="72" y="129"/>
         <int name="z" value="0"/>
         <int name="dleay" value="100"/>
       </canvas>
-      <canvas name="3" width="217" height="146">
+      <canvas name="3" format="1" scale="0">
         <vector name="origin" x="72" y="129"/>
         <int name="z" value="0"/>
         <int name="dleay" value="100"/>
       </canvas>
-      <canvas name="4" width="217" height="146">
+      <canvas name="4" format="1" scale="0">
         <vector name="origin" x="72" y="129"/>
         <int name="z" value="0"/>
         <int name="dleay" value="100"/>
       </canvas>
-      <canvas name="5" width="217" height="146">
+      <canvas name="5" format="1" scale="0">
         <vector name="origin" x="72" y="129"/>
         <int name="z" value="0"/>
         <int name="dleay" value="100"/>
       </canvas>
-      <canvas name="6" width="217" height="146">
+      <canvas name="6" format="1" scale="0">
         <vector name="origin" x="72" y="129"/>
         <int name="z" value="0"/>
         <int name="dleay" value="100"/>
       </canvas>
-      <canvas name="7" width="217" height="146">
+      <canvas name="7" format="1" scale="0">
         <vector name="origin" x="72" y="129"/>
         <int name="z" value="0"/>
         <int name="dleay" value="100"/>
@@ -62,7 +62,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="217" height="146">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="72" y="129"/>
       <int name="z" value="0"/>
     </canvas>

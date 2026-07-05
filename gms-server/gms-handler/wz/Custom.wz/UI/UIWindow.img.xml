@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="UIWindow.img">
-    <imgdir name="SysOpt">
-        <canvas name="backgrnd" width="299" height="396">
-            <vector name="origin" x="0" y="0"/>
-        </canvas>
-    </imgdir>
-</imgdir>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="1021001.img">
+<imgdir name="1021001.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="유적의 상자 : 어둠의 머슬스톤"/>
     <string name="link" value="1020000"/>

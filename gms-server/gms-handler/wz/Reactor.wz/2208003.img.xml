@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2208003.img">
+<imgdir name="2208003.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="보스맵으로 들어가는 문의 등불"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="270" height="100">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="135" y="50"/>
       <int name="z" value="0"/>
       <int name="a0" value="255"/>
       <int name="a1" value="255"/>
     </canvas>
     <imgdir name="hit">
-      <canvas name="0" width="270" height="100">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="135" y="50"/>
         <int name="z" value="0"/>
         <int name="a0" value="255"/>
@@ -21,14 +21,14 @@
     </imgdir>
   </imgdir>
   <imgdir name="1">
-    <canvas name="0" width="270" height="100">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="135" y="50"/>
       <int name="z" value="0"/>
       <int name="a0" value="0"/>
       <int name="a1" value="0"/>
     </canvas>
     <imgdir name="hit">
-      <canvas name="0" width="270" height="100">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="135" y="50"/>
         <int name="z" value="0"/>
         <int name="a0" value="0"/>

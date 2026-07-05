@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2212000.img">
+<imgdir name="2212000.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="1호부품박스"/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="154" height="93">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="77" y="92"/>
       <int name="z" value="0"/>
     </canvas>
@@ -15,12 +15,12 @@
       </imgdir>
     </imgdir>
     <imgdir name="hit">
-      <canvas name="0" width="154" height="93">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="77" y="92"/>
         <int name="z" value="0"/>
         <int name="delay" value="150"/>
       </canvas>
-      <canvas name="1" width="179" height="124">
+      <canvas name="1" format="1" scale="0">
         <vector name="origin" x="102" y="122"/>
         <int name="z" value="0"/>
         <int name="delay" value="150"/>
@@ -56,7 +56,7 @@
       </imgdir>
     </imgdir>
     <imgdir name="hit">
-      <canvas name="0" width="154" height="93">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="77" y="92"/>
         <int name="z" value="0"/>
         <int name="a0" value="255"/>
@@ -66,7 +66,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="4">
-    <canvas name="0" width="1" height="1">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="0" y="0"/>
     </canvas>
   </imgdir>

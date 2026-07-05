@@ -259,16 +259,18 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                 }
             }
             player.sendKeymap();
-            player.sendQuickmap();
-            player.sendMacros();
+
+//            player.sendQuickmap();
+//            player.sendMacros();
 
             // pot bindings being passed through other characters on the account detected thanks to Croosade dev team
-            KeyBinding autohpPot = player.getKeymap().get(91);
-            player.sendPacket(PacketCreator.sendAutoHpPot(autohpPot != null ? autohpPot.getAction() : 0));
+//            KeyBinding autohpPot = player.getKeymap().get(91);
+//            player.sendPacket(PacketCreator.sendAutoHpPot(autohpPot != null ? autohpPot.getAction() : 0));
+//
+//            KeyBinding autompPot = player.getKeymap().get(92);
+//            player.sendPacket(PacketCreator.sendAutoMpPot(autompPot != null ? autompPot.getAction() : 0));
 
-            KeyBinding autompPot = player.getKeymap().get(92);
-            player.sendPacket(PacketCreator.sendAutoMpPot(autompPot != null ? autompPot.getAction() : 0));
-
+            // 进入地图 NPC添加等等
             player.getMap().addPlayer(player);
             player.visitMap(player.getMap());
 
@@ -282,27 +284,28 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
             }
             c.sendPacket(PacketCreator.updateBuddylist(bl.getBuddies()));
 
-            c.sendPacket(PacketCreator.loadFamily(player));
-            if (player.getFamilyId() > 0) {
-                Family f = wserv.getFamily(player.getFamilyId());
-                if (f != null) {
-                    FamilyEntry familyEntry = f.getEntryByID(player.getId());
-                    if (familyEntry != null) {
-                        familyEntry.setCharacter(player);
-                        player.setFamilyEntry(familyEntry);
-
-                        c.sendPacket(PacketCreator.getFamilyInfo(familyEntry));
-                        familyEntry.announceToSenior(PacketCreator.sendFamilyLoginNotice(player.getName(), true), true);
-                    } else {
-                        log.error(I18nUtil.getLogMessage("PlayerLoggedinHandler.error.message1"), player.getName(), f.getID());
-                    }
-                } else {
-                    log.error(I18nUtil.getLogMessage("PlayerLoggedinHandler.error.message2"), player.getName(), player.getFamilyId());
-                    c.sendPacket(PacketCreator.getFamilyInfo(null));
-                }
-            } else {
-                c.sendPacket(PacketCreator.getFamilyInfo(null));
-            }
+            // todo 加载家族
+//            c.sendPacket(PacketCreator.loadFamily(player));
+//            if (player.getFamilyId() > 0) {
+//                Family f = wserv.getFamily(player.getFamilyId());
+//                if (f != null) {
+//                    FamilyEntry familyEntry = f.getEntryByID(player.getId());
+//                    if (familyEntry != null) {
+//                        familyEntry.setCharacter(player);
+//                        player.setFamilyEntry(familyEntry);
+//
+//                        c.sendPacket(PacketCreator.getFamilyInfo(familyEntry));
+//                        familyEntry.announceToSenior(PacketCreator.sendFamilyLoginNotice(player.getName(), true), true);
+//                    } else {
+//                        log.error(I18nUtil.getLogMessage("PlayerLoggedinHandler.error.message1"), player.getName(), f.getID());
+//                    }
+//                } else {
+//                    log.error(I18nUtil.getLogMessage("PlayerLoggedinHandler.error.message2"), player.getName(), player.getFamilyId());
+//                    c.sendPacket(PacketCreator.getFamilyInfo(null));
+//                }
+//            } else {
+//                c.sendPacket(PacketCreator.getFamilyInfo(null));
+//            }
 
             if (player.getGuildId() > 0) {
                 Guild playerGuild = server.getGuild(player.getGuildId(), player.getWorld(), player);
@@ -372,10 +375,10 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                 c.sendPacket(PacketCreator.requestBuddylistAdd(pendingBuddyRequest.getId(), c.getPlayer().getId(), pendingBuddyRequest.getName()));
             }
 
-            c.sendPacket(PacketCreator.updateGender(player));
+//            c.sendPacket(PacketCreator.updateGender(player));
             player.checkMessenger();
             c.sendPacket(PacketCreator.enableReport());
-            player.changeSkillLevel(SkillFactory.getSkill(10000000 * player.getJobType() + 12), (byte) (player.getLinkedLevel() / 10), 20, -1);
+//            player.changeSkillLevel(SkillFactory.getSkill(10000000 * player.getJobType() + 12), (byte) (player.getLinkedLevel() / 10), 20, -1);
             player.checkBerserk(player.isHidden());
 
             if (newcomer) {
@@ -398,7 +401,8 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                     }
                     */
                 if (player.isGM()) {
-                    Server.getInstance().broadcastGMMessage(c.getWorld(), PacketCreator.earnTitleMessage((player.gmLevel() < 6 ? "GM " : "Admin ") + player.getName() + " 登录了游戏"));
+                    // 没有
+//                    Server.getInstance().broadcastGMMessage(c.getWorld(), PacketCreator.earnTitleMessage((player.gmLevel() < 6 ? "GM " : "Admin ") + player.getName() + " 登录了游戏"));
                 } else {
                     if (GameConfig.getServerBoolean("use_login_notification")) {
                         String msg = I18nUtil.getMessage("Character.login.globalNotice", player.getName());

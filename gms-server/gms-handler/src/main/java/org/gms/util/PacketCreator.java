@@ -35,14 +35,8 @@ import org.gms.client.Ring;
 import org.gms.client.Skill;
 import org.gms.client.SkillMacro;
 import org.gms.client.MapleStat;
-import org.gms.client.inventory.Equip;
+import org.gms.client.inventory.*;
 import org.gms.client.inventory.Equip.ScrollResult;
-import org.gms.client.inventory.Inventory;
-import org.gms.client.inventory.InventoryType;
-import org.gms.client.inventory.Item;
-import org.gms.client.inventory.ItemFactory;
-import org.gms.client.inventory.ModifyInventory;
-import org.gms.client.inventory.Pet;
 import org.gms.client.keybind.KeyBinding;
 import org.gms.client.keybind.QuickslotBinding;
 import org.gms.constants.game.CommodityFlag;
@@ -107,6 +101,8 @@ import org.gms.server.movement.LifeMovementFragment;
 import java.awt.*;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
@@ -123,6 +119,8 @@ public class PacketCreator {
     private final static long DEFAULT_TIME = 150842304000000000L;//00 80 05 BB 46 E6 17 02
     public final static long ZERO_TIME = 94354848000000000L;//00 40 E0 FD 3B 37 4F 01
     private final static long PERMANENT = 150841440000000000L; // 00 C0 9B 90 7D E5 17 02
+    private final static byte[] ITEM_MAGIC = new byte[] { (byte) 0x80, 5 };
+    private final static byte[] CHAR_INFO_MAGIC = new byte[] { (byte) 0xff, (byte) 0xc9, (byte) 0x9a, 0x3b };
 
     public static long getTime(long utcTimestamp) {
         if (utcTimestamp < 0 && utcTimestamp >= -3) {
@@ -168,9 +166,44 @@ public class PacketCreator {
             }
         }
     }
+    // 复制
+    private static void addCharStats(OutPacket mplew, Character chr) {
+        mplew.writeInt(chr.getId()); // character id
+//        mplew.writeAsciiString(chr.getName());
+        mplew.write(chr.getName().getBytes(Charset.forName("US-ASCII")));
+        for (int x = chr.getName().length(); x < 13; x++) { // fill to maximum
+            // name length
+            mplew.write(0);
+        }
 
+        mplew.write(chr.getGender()); // gender (0 = male, 1 = female)
+        mplew.write(chr.getSkinColor().getId()); // skin color
+        mplew.writeInt(chr.getFace()); // face
+        mplew.writeInt(chr.getHair()); // hair
+        mplew.writeInt(0);
+        mplew.writeInt(0);
+
+        mplew.write(chr.getLevel()); // level
+        mplew.writeShort(chr.getJob().getId()); // job
+        // mplew.writeShort(422);
+        mplew.writeShort(chr.getStr()); // str
+        mplew.writeShort(chr.getDex()); // dex
+        mplew.writeShort(chr.getInt()); // int
+        mplew.writeShort(chr.getLuk()); // luk
+        mplew.writeShort(chr.getHp()); // hp (?)
+        mplew.writeShort(chr.getMaxHp()); // maxhp
+        mplew.writeShort(chr.getMp()); // mp (?)
+        mplew.writeShort(chr.getMaxMp()); // maxmp
+        mplew.writeShort(chr.getRemainingAp()); // remaining ap
+        mplew.writeShort(chr.getRemainingSp()); // remaining sp
+        mplew.writeInt(chr.getExp()); // current exp
+        mplew.writeShort(chr.getFame()); // fame
+        mplew.writeInt(chr.getMapId()); // current map id
+        mplew.write(chr.getInitialSpawnPoint()); // spawnpoint
+    }
     // dwang check
-    private static void addCharStats(OutPacket p, Character chr) {
+
+    private static void addCharStatsOld(OutPacket p, Character chr) {
         p.writeInt(chr.getId()); // character id
         p.writeFixedString(StringUtil.getRightPaddedStr(chr.getName(), '\0', 13));
         p.writeByte(chr.getGender()); // gender (0 = male, 1 = female)
@@ -222,30 +255,32 @@ public class PacketCreator {
         addCharEquips(p, chr);
     }
 
+    // check dwang
     private static void addCharacterInfo(OutPacket p, Character chr) {
-        p.writeLong(-1);
-        p.writeByte(0);
+//        p.writeLong(-1);
+//        p.writeByte(0);
         addCharStats(p, chr);
-        p.writeByte(chr.getBuddylist().getCapacity());
 
-        if (chr.getLinkedName() == null) {
-            p.writeByte(0);
-        } else {
-            p.writeByte(1);
-            p.writeString(chr.getLinkedName());
-        }
-
+        p.write(0x14); //???
         p.writeInt(chr.getMeso());
+
         addInventoryInfo(p, chr);
+
         addSkillInfo(p, chr);
         addQuestInfo(p, chr);
-        addMiniGameInfo(p, chr);
-        addRingInfo(p, chr);
-        addTeleportInfo(p, chr);
-        addMonsterBookInfo(p, chr);
-        addNewYearInfo(p, chr);
-        addAreaInfo(p, chr);//assuming it stayed here xd
-        p.writeShort(0);
+
+        p.write(new byte[8]);
+        for (int x = 0; x < 15; x++)
+            p.write(CHAR_INFO_MAGIC);
+
+        // todo need add
+//        addMiniGameInfo(p, chr);
+//        addRingInfo(p, chr);
+//        addTeleportInfo(p, chr);
+//        addMonsterBookInfo(p, chr);
+//        addNewYearInfo(p, chr);
+//        addAreaInfo(p, chr);//assuming it stayed here xd
+//        p.writeShort(0);
     }
 
     private static void addNewYearInfo(OutPacket p, Character chr) {
@@ -359,7 +394,9 @@ public class PacketCreator {
         p.writeInt(chr.getJobRankMove()); // move (negative is downwards)
     }
 
+
     private static void addQuestInfo(OutPacket p, Character chr) {
+        p.writeShort(0); // start quest info
         List<QuestStatus> started = chr.getStartedQuests();
         int startedSize = 0;
         for (QuestStatus qs : started) {
@@ -368,32 +405,132 @@ public class PacketCreator {
             }
             startedSize++;
         }
-        p.writeShort(startedSize);
-        for (QuestStatus qs : started) {
-            p.writeShort(qs.getQuest().getId());
-            p.writeString(qs.getProgressData());
-
-            short infoNumber = qs.getInfoNumber();
-            if (infoNumber > 0) {
-                QuestStatus iqs = chr.getQuest(infoNumber);
-                p.writeShort(infoNumber);
-                p.writeString(iqs.getProgressData());
-            }
+        p.writeShort(started.size());
+        for (QuestStatus q : started) {
+            p.writeInt(q.getQuest().getId());
         }
         List<QuestStatus> completed = chr.getCompletedQuests();
         p.writeShort(completed.size());
-        for (QuestStatus qs : completed) {
-            p.writeShort(qs.getQuest().getId());
-            p.writeLong(getTime(qs.getCompletionTime()));
+        for (QuestStatus q : completed) {
+            p.writeShort(q.getQuest().getId());
+            p.writeLong(getTime(q.getCompletionTime()));
         }
     }
+//    private static void addQuestInfo(OutPacket p, Character chr) {
+//        List<QuestStatus> started = chr.getStartedQuests();
+//        int startedSize = 0;
+//        for (QuestStatus qs : started) {
+//            if (qs.getInfoNumber() > 0) {
+//                startedSize++;
+//            }
+//            startedSize++;
+//        }
+//        p.writeShort(startedSize);
+//        for (QuestStatus qs : started) {
+//            p.writeShort(qs.getQuest().getId());
+//            p.writeString(qs.getProgressData());
+//
+//            short infoNumber = qs.getInfoNumber();
+//            if (infoNumber > 0) {
+//                QuestStatus iqs = chr.getQuest(infoNumber);
+//                p.writeShort(infoNumber);
+//                p.writeString(iqs.getProgressData());
+//            }
+//        }
+//        List<QuestStatus> completed = chr.getCompletedQuests();
+//        p.writeShort(completed.size());
+//        for (QuestStatus qs : completed) {
+//            p.writeShort(qs.getQuest().getId());
+//            p.writeLong(getTime(qs.getCompletionTime()));
+//        }
+//    }
 
+    private static void addExpirationTime(OutPacket mplew, long time, boolean showexpirationtime) {
+        mplew.writeInt(KoreanDateUtil.getKoreanTimestamp(time));
+        mplew.write(showexpirationtime ? 1 : 2);
+    }
     private static void addExpirationTime(final OutPacket p, long time) {
         p.writeLong(getTime(time)); // offset expiration time issue found thanks to Thora
     }
 
+    // check 完全复制
     private static void addItemInfo(OutPacket p, Item item) {
-        addItemInfo(p, item, false);
+//        addItemInfo(p, item, false);
+        addItemInfo(p, item, false, false);
+    }
+
+    // ok
+    private static void addItemInfo(OutPacket mplew, Item item, boolean zeroPosition,
+                                    boolean leaveOut) {
+        ItemInformationProvider ii = ItemInformationProvider.getInstance();
+        byte pos = (byte) item.getPosition();
+        boolean masking = false;
+        if (zeroPosition) {
+            if (!leaveOut)
+                mplew.write(0);
+        } else if (pos <= (byte) -1) {
+            pos *= -1;
+            if (pos > 100) {
+                masking = true;
+                mplew.write(0);
+                mplew.write(pos - 100);
+            } else {
+                mplew.write(pos);
+            }
+        } else {
+            mplew.write(item.getPosition());
+        }
+
+        mplew.write(item.getItemType());
+        mplew.writeInt(item.getItemId());
+        if (masking) {
+            // 07.03.2008 06:49... o.o
+            mplew.write(HexTool.getByteArrayFromHexString("01 41 B4 38 00 00 00 00 00 80 20 6F"));
+        } else {
+            mplew.writeShort(0);
+            mplew.write(ITEM_MAGIC);
+        }
+        //TODO: Item.getExpirationTime
+        addExpirationTime(mplew, 0, false);
+//        addExpirationTime(mplew, item.getExpiration());
+
+        if (item.getItemType() == ItemType.EQUIP) {
+            Equip equip = (Equip) item;
+            mplew.write(equip.getUpgradeSlots());
+            mplew.write(equip.getLevel());
+            mplew.writeShort(equip.getStr()); // str
+            mplew.writeShort(equip.getDex()); // dex
+            mplew.writeShort(equip.getInt()); // int
+            mplew.writeShort(equip.getLuk()); // luk
+            mplew.writeShort(equip.getHp()); // hp
+            mplew.writeShort(equip.getMp()); // mp
+            mplew.writeShort(equip.getWatk()); // watk
+            mplew.writeShort(equip.getMatk()); // matk
+            mplew.writeShort(equip.getWdef()); // wdef
+            mplew.writeShort(equip.getMdef()); // mdef
+            mplew.writeShort(equip.getAcc()); // accuracy
+            mplew.writeShort(equip.getAvoid()); // avoid
+            mplew.writeShort(equip.getHands()); // hands
+            mplew.writeShort(equip.getSpeed()); // speed
+            mplew.writeShort(equip.getJump()); // jump
+            mplew.writeString(equip.getOwner());
+            // 0 normal; 1 locked
+            mplew.write(0);
+            if (!masking) {
+                mplew.write(0);
+                mplew.writeInt(0); // values of these don't seem to matter at all
+                mplew.writeInt(0);
+            }
+        } else {
+            mplew.writeShort(item.getQuantity());
+            mplew.writeString(item.getOwner());
+            mplew.writeShort(0); // this seems to end the item entry
+            // but only if its not a THROWING STAR :))9 O.O!
+            if (ii.isThrowingStar(item.getItemId())) {
+                // mplew.write(HexTool.getByteArrayFromHexString("A8 3A 00 00 41 00 00 20"));
+                mplew.write(HexTool.getByteArrayFromHexString("A1 6D 05 01 00 00 00 7D"));
+            }
+        }
     }
 
     protected static void addItemInfo(final OutPacket p, Item item, boolean zeroPosition) {
@@ -494,25 +631,24 @@ public class PacketCreator {
         for (byte i = 1; i <= 5; i++) {
             p.writeByte(chr.getInventory(InventoryType.getByType(i)).getSlotLimit());
         }
-        p.writeLong(getTime(-2));
+
+
         Inventory iv = chr.getInventory(InventoryType.EQUIPPED);
         Collection<Item> equippedC = iv.list();
-        List<Item> equipped = new ArrayList<>(equippedC.size());
-        List<Item> equippedCash = new ArrayList<>(equippedC.size());
+        List<Item> equipped = new ArrayList<Item>(equippedC.size());
         for (Item item : equippedC) {
-            if (item.getPosition() <= -100) {
-                equippedCash.add(item);
-            } else {
-                equipped.add(item);
-            }
+            equipped.add((Item) item);
         }
+        Collections.sort(equipped);
+
         for (Item item : equipped) {    // equipped doesn't actually need sorting, thanks Pllsz
             addItemInfo(p, item);
         }
-        p.writeShort(0); // start of equip cash
-        for (Item item : equippedCash) {
-            addItemInfo(p, item);
-        }
+        // 53没有点装
+//        p.writeShort(0); // start of equip cash
+//        for (Item item : equippedCash) {
+//            addItemInfo(p, item);
+//        }
         p.writeShort(0); // start of equip inventory
         for (Item item : chr.getInventory(InventoryType.EQUIP).list()) {
             addItemInfo(p, item);
@@ -552,17 +688,18 @@ public class PacketCreator {
             }
             p.writeInt(skill.getKey().getId());
             p.writeInt(skill.getValue().skillLevel);
-            addExpirationTime(p, skill.getValue().expiration);
+//            addExpirationTime(p, skill.getValue().expiration);
             if (skill.getKey().isFourthJob()) {
                 p.writeInt(skill.getValue().masterLevel);
             }
         }
-        p.writeShort(chr.getAllCooldowns().size());
-        for (PlayerCoolDownValueHolder cooling : chr.getAllCooldowns()) {
-            p.writeInt(cooling.skillId);
-            int timeLeft = (int) (cooling.length + cooling.startTime - System.currentTimeMillis());
-            p.writeShort(timeLeft / 1000);
-        }
+
+//        p.writeShort(chr.getAllCooldowns().size());
+//        for (PlayerCoolDownValueHolder cooling : chr.getAllCooldowns()) {
+//            p.writeInt(cooling.skillId);
+//            int timeLeft = (int) (cooling.length + cooling.startTime - System.currentTimeMillis());
+//            p.writeShort(timeLeft / 1000);
+//        }
     }
 
     private static void addMonsterBookInfo(OutPacket p, Character chr) {
@@ -993,20 +1130,103 @@ public class PacketCreator {
      *
      * @param chr The character to get info about.
      * @return The character info packet.
+     * ok 暂时的
      */
-    public static Packet getCharInfo(Character chr) {
-        final OutPacket p = OutPacket.create(SendPacketOpcode.SET_FIELD);
+    public static Packet getCharInfoold(Character chr) {
+        final OutPacket p = OutPacket.create(SendPacketOpcode.WARP_TO_MAP);
         p.writeInt(chr.getClient().getChannel() - 1);
         p.writeByte(1);
         p.writeByte(1);
-        p.writeShort(0);
-        for (int i = 0; i < 3; i++) {
-            p.writeInt(Randomizer.nextInt());
-        }
+        p.writeInt(new Random().nextInt()); // seed the maplestory rng with a random number <3
+        p.write(HexTool.getByteArrayFromHexString("F4 83 6B 3D BA 9A 4F A1 FF FF"));
+
         addCharacterInfo(p, chr);
-        p.writeLong(getTime(System.currentTimeMillis()));
+//        p.writeLong(getTime(System.currentTimeMillis()));
+        p.write(HexTool.getByteArrayFromHexString("90 63 3A 0D C5 5D C8 01"));
+
         return p;
     }
+
+    public static Packet getCharInfo(Character chr) {
+        final OutPacket mplew = OutPacket.create(SendPacketOpcode.WARP_TO_MAP);
+        mplew.writeInt(chr.getClient().getChannel() - 1);
+        mplew.write(1);
+        mplew.write(1);
+        mplew.writeInt(new Random().nextInt()); // seed the maplestory rng with a random number <3
+        mplew.write(HexTool.getByteArrayFromHexString("F4 83 6B 3D BA 9A 4F A1 FF FF"));
+        addCharStats(mplew, chr);
+
+        mplew.write(0x14); //???
+        mplew.writeInt(chr.getMeso()); // mesos
+
+        // start inventoryInfo
+        mplew.write(100); // equip slots
+        mplew.write(100); // use slots
+        mplew.write(100); // set-up slots
+        mplew.write(100); // etc slots
+        mplew.write(100); // cash slots
+
+        Inventory iv = chr.getInventory(InventoryType.EQUIPPED);
+        Collection<Item> equippedC = iv.list();
+        List<Item> equipped = new ArrayList<Item>(equippedC.size());
+        for (Item item : equippedC) {
+            equipped.add((Item) item);
+        }
+        Collections.sort(equipped);
+
+        for (Item item : equipped) {
+            addItemInfo(mplew, item);
+        }
+        mplew.writeShort(0); // start of equip inventory
+        iv = chr.getInventory(InventoryType.EQUIP);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+        mplew.write(0); // start of use inventory
+        // addItemInfo(mplew, new Item(2020028, (byte) 8, (short) 1));
+        iv = chr.getInventory(InventoryType.USE);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+        mplew.write(0); // start of set-up inventory
+        iv = chr.getInventory(InventoryType.SETUP);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+        mplew.write(0); // start of etc inventory
+        iv = chr.getInventory(InventoryType.ETC);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+        mplew.write(0); // start of cash inventory
+        iv = chr.getInventory(InventoryType.CASH);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+
+        mplew.write(0); // start of skills
+
+        Map<Skill, SkillEntry> skills = chr.getSkills();
+        mplew.writeShort(skills.size());
+        for (Entry<Skill, SkillEntry> skill : skills.entrySet()) {
+            mplew.writeInt(skill.getKey().getId());
+            mplew.writeInt(skill.getValue().skillLevel);
+            if (skill.getKey().isFourthJob()) {
+                mplew.writeInt(skill.getValue().masterLevel);
+            }
+        }
+
+        mplew.writeShort(0); // start quest info
+        addQuestInfo(mplew, chr);
+
+        mplew.write(new byte[8]);
+        for (int x = 0; x < 15; x++)
+            mplew.write(CHAR_INFO_MAGIC);
+        mplew.write(HexTool.getByteArrayFromHexString("90 63 3A 0D C5 5D C8 01"));
+
+        return mplew;
+    }
+
 
     /**
      * Gets an empty stat update.
@@ -1373,7 +1593,6 @@ public class PacketCreator {
         p.writeShort(life.getFh());
         p.writeShort(life.getRx0());
         p.writeShort(life.getRx1());
-        p.writeByte(1);
         return p;
     }
 
@@ -1388,7 +1607,6 @@ public class PacketCreator {
         p.writeShort(life.getFh());
         p.writeShort(life.getRx0());
         p.writeShort(life.getRx1());
-        p.writeBool(miniMap);
         return p;
     }
 
@@ -2988,7 +3206,6 @@ public class PacketCreator {
             p.writeInt((int) skill.getDuration());
         }
         p.writeShort(0); // ??? wk charges have 600 here o.o
-        p.writeShort(900);//Delay
         p.writeByte(1);
         return p;
     }
@@ -3368,7 +3585,6 @@ public class PacketCreator {
         p.writeByte(4); // ?
         p.writeInt(npc);
         p.writeByte(msgType);
-        p.writeByte(speaker);
         p.writeString(talk);
         p.writeBytes(HexTool.toBytes(endBytes));
         return p;
@@ -3390,7 +3606,6 @@ public class PacketCreator {
         p.writeByte(4); // ?
         p.writeInt(npc);
         p.writeByte(7);
-        p.writeByte(0); //speaker
         p.writeString(talk);
         p.writeByte(styles.length);
         for (int style : styles) {
@@ -3404,7 +3619,6 @@ public class PacketCreator {
         p.writeByte(4); // ?
         p.writeInt(npc);
         p.writeByte(3);
-        p.writeByte(0); //speaker
         p.writeString(talk);
         p.writeInt(def);
         p.writeInt(min);
@@ -3418,7 +3632,6 @@ public class PacketCreator {
         p.writeByte(4); // Doesn't matter
         p.writeInt(npc);
         p.writeByte(2);
-        p.writeByte(0); //speaker
         p.writeString(talk);
         p.writeString(def);//:D
         p.writeInt(0);
@@ -3429,7 +3642,6 @@ public class PacketCreator {
         p.writeByte(4); // ?
         p.writeInt(npc);
         p.writeByte(3);
-        p.writeByte(speaker); //speaker
         p.writeString(talk);
         p.writeInt(def);
         p.writeInt(min);
@@ -3443,7 +3655,6 @@ public class PacketCreator {
         p.writeByte(4); // Doesn't matter
         p.writeInt(npc);
         p.writeByte(2);
-        p.writeByte(speaker); //speaker
         p.writeString(talk);
         p.writeString(def);//:D
         p.writeInt(0);
@@ -3473,7 +3684,6 @@ public class PacketCreator {
         p.writeByte(nSpeakerTypeID);
         p.writeInt(nSpeakerTemplateID);
         p.writeByte(0x7);
-        p.writeByte(0);
         p.writeByte(nResCode);
         if (nResCode == 0x0) {//fail has no bytes <3
             p.writeInt(nType);
@@ -4136,8 +4346,6 @@ public class PacketCreator {
                 p.writeFixedString(getRightPaddedStr(buddy.getName(), '\0', 13));
                 p.writeByte(0); // opposite status
                 p.writeInt(buddy.getChannel() - 1);
-                p.writeFixedString(getRightPaddedStr(buddy.getGroup(), '\0', 13));
-                p.writeInt(0);//mapid?
             }
         }
         for (int x = 0; x < buddylist.size(); x++) {
@@ -4158,14 +4366,10 @@ public class PacketCreator {
         p.writeInt(chrIdFrom);
         p.writeString(nameFrom);
         p.writeInt(chrIdFrom);
-        p.writeFixedString(getRightPaddedStr(nameFrom, '\0', 11));
-        p.writeByte(0x09);
-        p.writeByte(0xf0);
-        p.writeByte(0x01);
-        p.writeInt(0x0f);
-        p.writeFixedString("Default Group");
-        p.writeByte(0);
-        p.writeInt(chrId);
+        p.writeFixedString(getRightPaddedStr(nameFrom, '\0', 13));
+        p.write(1);
+        p.write(31);
+        p.writeInt(0);
         return p;
     }
 
@@ -5378,7 +5582,6 @@ public class PacketCreator {
         p.writeShort(npc.getFH());
         p.writeShort(npc.getRX0());
         p.writeShort(npc.getRX1());
-        p.writeByte(1);
         return p;
     }
 

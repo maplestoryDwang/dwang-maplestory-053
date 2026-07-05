@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="1072000.img">
+<imgdir name="1072000.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="마녀의 풀..오른쪽에서 때려야한다."/>
   </imgdir>
   <imgdir name="0">
-    <canvas name="0" width="61" height="68">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="30" y="34"/>
       <int name="z" value="0"/>
     </canvas>
@@ -15,27 +15,27 @@
       </imgdir>
     </imgdir>
     <imgdir name="hit">
-      <canvas name="0" width="61" height="68">
+      <canvas name="0" format="1" scale="0">
         <vector name="origin" x="30" y="34"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="1" width="73" height="72">
+      <canvas name="1" format="1" scale="0">
         <vector name="origin" x="44" y="38"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="2" width="62" height="68">
+      <canvas name="2" format="1" scale="0">
         <vector name="origin" x="29" y="34"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="3" width="60" height="68">
+      <canvas name="3" format="1" scale="0">
         <vector name="origin" x="31" y="34"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
       </canvas>
-      <canvas name="4" width="61" height="68">
+      <canvas name="4" format="1" scale="0">
         <vector name="origin" x="30" y="34"/>
         <int name="z" value="0"/>
         <int name="delay" value="120"/>
@@ -66,7 +66,7 @@
       <uol name="2" value="../../0/hit/2"/>
       <uol name="3" value="../../0/hit/3"/>
       <uol name="4" value="../../0/hit/4"/>
-      <canvas name="5" width="61" height="68">
+      <canvas name="5" format="1" scale="0">
         <vector name="origin" x="30" y="34"/>
         <int name="z" value="0"/>
         <int name="a0" value="255"/>
@@ -76,7 +76,7 @@
     </imgdir>
   </imgdir>
   <imgdir name="3">
-    <canvas name="0" width="1" height="1">
+    <canvas name="0" format="1" scale="0">
       <vector name="origin" x="0" y="0"/>
     </canvas>
   </imgdir>

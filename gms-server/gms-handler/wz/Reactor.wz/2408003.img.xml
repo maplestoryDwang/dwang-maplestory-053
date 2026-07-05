@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="2408003.img">
+<imgdir name="2408003.img" indent="2" media="NONE">
   <imgdir name="info">
     <string name="info" value="투명리엑터:화면흔들기"/>
     <string name="link" value="9201000"/>
