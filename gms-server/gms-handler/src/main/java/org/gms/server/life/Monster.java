@@ -1023,7 +1023,7 @@ public class Monster extends AbstractLoadedLife {
         return controller.get();
     }
 
-    private void setController(Character controller) {
+    public void setController(Character controller) {
         this.controller = new WeakReference<>(controller);
     }
 

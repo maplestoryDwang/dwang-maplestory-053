@@ -44,7 +44,7 @@ public final class HealOvertimeHandler extends AbstractPacketHandler {
 
         AutobanManager abm = chr.getAutoBanManager();
         int timestamp = Server.getInstance().getCurrentTimestamp();
-        p.skip(8);
+        p.skip(4);
 
         short healHP = p.readShort();
         if (healHP != 0) {
@@ -61,6 +61,7 @@ public final class HealOvertimeHandler extends AbstractPacketHandler {
             }
 
             chr.addHP(healHP);
+            // 显示加血的字体
             chr.getMap().broadcastMessage(chr, PacketCreator.showHpHealed(chr.getId(), healHP), false);
             abm.spam(0, timestamp);
         }

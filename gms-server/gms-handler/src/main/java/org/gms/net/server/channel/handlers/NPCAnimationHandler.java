@@ -41,7 +41,9 @@ public final class NPCAnimationHandler extends AbstractPacketHandler {
             op.writeByte(p.readByte());   // 2 bytes, thanks resinate
             op.writeByte(p.readByte());
         } else if (length > 6) { // NPC Move
-            byte[] bytes = p.readBytes(length - 9);
+            //   CMovePath::Flush((v4 + 428), &v11, 0, 0);
+            //       -> CMovePath::Encode(this, a2);
+            byte[] bytes = p.readBytes(length - 9);  // 为什么是9？  上面的6 + 3（为什么是3？）
             op.writeBytes(bytes);
         }
         c.sendPacket(op);

@@ -44,8 +44,11 @@ public class NPC extends AbstractLoadedLife {
 
     @Override
     public void sendSpawnData(Client client) {
-        client.sendPacket(PacketCreator.spawnNPC(this));
-        client.sendPacket(PacketCreator.spawnNPCRequestController(this, true));
+        client.sendPacket(PacketCreator.spawnNPC(this, false));
+        client.sendPacket(PacketCreator.spawnNPC(this, true));
+
+//        client.sendPacket(PacketCreator.spawnNPC(this));
+//        client.sendPacket(PacketCreator.spawnNPCRequestController(this, true));
     }
 
     @Override

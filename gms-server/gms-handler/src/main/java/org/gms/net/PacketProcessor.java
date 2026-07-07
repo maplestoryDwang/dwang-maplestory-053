@@ -145,9 +145,9 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.AFTER_LOGIN, new AfterLoginHandler());                       //   check
         registerHandler(RecvOpcode.SERVERLIST_REREQUEST, new ServerlistRequestHandler());       //   check
         registerHandler(RecvOpcode.CHARLIST_REQUEST, new CharlistRequestHandler());             //   check
-        registerHandler(RecvOpcode.CHAR_SELECT, new CharSelectedHandler());
+        registerHandler(RecvOpcode.CHAR_SELECT, new CharSelectedHandler());                     //   check
         registerHandler(RecvOpcode.LOGIN_PASSWORD, new LoginPasswordHandler());                //   check
-        registerHandler(RecvOpcode.RELOG, new RelogRequestHandler());
+        registerHandler(RecvOpcode.RELOG, new RelogRequestHandler());                          //   check
         registerHandler(RecvOpcode.SERVERLIST_REQUEST, new ServerlistRequestHandler());        //   check
         registerHandler(RecvOpcode.SERVERSTATUS_REQUEST, new ServerStatusRequestHandler());    //   check
         registerHandler(RecvOpcode.CHECK_CHAR_NAME, new CheckCharNameHandler());               //   check
@@ -172,8 +172,8 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.STRANGE_DATA, LoginRequiringNoOpHandler.getInstance());
         registerHandler(RecvOpcode.GENERAL_CHAT, new GeneralChatHandler());
         registerHandler(RecvOpcode.WHISPER, new WhisperHandler());
-        registerHandler(RecvOpcode.NPC_TALK, new NPCTalkHandler());
-        registerHandler(RecvOpcode.NPC_TALK_MORE, new NPCMoreTalkHandler());
+        registerHandler(RecvOpcode.NPC_TALK, new NPCTalkHandler());                                         //   check
+        registerHandler(RecvOpcode.NPC_TALK_MORE, new NPCMoreTalkHandler());                                //   check
         registerHandler(RecvOpcode.QUEST_ACTION, new QuestActionHandler());
 //        registerHandler(RecvOpcode.GRENADE_EFFECT, new GrenadeEffectHandler());
         registerHandler(RecvOpcode.NPC_SHOP, new NPCShopHandler());
@@ -187,7 +187,7 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.RANGED_ATTACK, new RangedAttackHandler());
         registerHandler(RecvOpcode.MAGIC_ATTACK, new MagicDamageHandler());
         registerHandler(RecvOpcode.TAKE_DAMAGE, new TakeDamageHandler());
-        registerHandler(RecvOpcode.MOVE_PLAYER, new MovePlayerHandler());
+        registerHandler(RecvOpcode.MOVE_PLAYER, new MovePlayerHandler());                                    //   check
         registerHandler(RecvOpcode.USE_CASH_ITEM, new UseCashItemHandler(channelDeps.noteService()));
         registerHandler(RecvOpcode.USE_ITEM, new UseItemHandler());
         registerHandler(RecvOpcode.USE_RETURN_SCROLL, new UseItemHandler());
@@ -228,7 +228,7 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.BBS_OPERATION, new BBSOperationHandler());
 //        registerHandler(RecvOpcode.SKILL_EFFECT, new SkillEffectHandler());
 //        registerHandler(RecvOpcode.MESSENGER, new MessengerHandler());
-//        registerHandler(RecvOpcode.NPC_ACTION, new NPCAnimationHandler());
+        registerHandler(RecvOpcode.NPC_ACTION, new NPCAnimationHandler());
 //        registerHandler(RecvOpcode.CHECK_CASH, new TouchingCashShopHandler());
 //        registerHandler(RecvOpcode.CASHSHOP_OPERATION, new CashOperationHandler(channelDeps.noteService()));
 //        registerHandler(RecvOpcode.COUPON_CODE, new CouponCodeHandler());

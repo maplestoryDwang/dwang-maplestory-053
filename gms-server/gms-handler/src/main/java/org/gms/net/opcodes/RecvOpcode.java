@@ -85,9 +85,13 @@ public enum RecvOpcode implements Opcode {
     SUMMON_ATTACK(0x7B), // 召唤兽攻击
     MOVE_SUMMON(0x7C), // 移动召唤兽
     DAMAGE_SUMMON(0x79), // 召唤兽受击
+    NPC_ACTION(0x98), // NPC移动
+
     MOVE_LIFE(0x9D), // 移动NPC/怪物(常用于控制权同步)
     ITEM_PICKUP(0x89), // 拾取道具
     ENTER_MTS(0x77); // 进入MTS(拍卖所)
+
+
 
     private int code = -2;
 
@@ -283,7 +287,6 @@ public enum RecvOpcode implements Opcode {
     MOB_DAMAGE_MOB_FRIENDLY(0xC0), // 怪物对友好怪物造成伤害
     MONSTER_BOMB(0xC1), // 怪物炸弹
     MOB_DAMAGE_MOB(0xC2), // 怪物对怪物造成伤害
-    NPC_ACTION(0xC5), // NPC动作
     ITEM_PICKUP(0xCA), // 捡起物品
     DAMAGE_REACTOR(0xCD), // 反应堆受到伤害
     TOUCHING_REACTOR(0xCE), // 触碰反应堆

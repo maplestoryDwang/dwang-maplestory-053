@@ -50,6 +50,10 @@ public enum MonsterStatus {
     VENOMOUS_WEAPON(0x1000000),
     BLIND(0x2000000), // just added
     SEAL_SKILL(0x4000000),
+
+
+
+    // 下面这三个53用不到
     INERTMOB(0x10000000),
     WEAPON_REFLECT(0x20000000, true),
     MAGIC_REFLECT(0x40000000, true);

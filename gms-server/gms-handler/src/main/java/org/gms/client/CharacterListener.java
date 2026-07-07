@@ -42,6 +42,7 @@ public class CharacterListener implements AbstractCharacterListener {
     }
 
     @Override
+    // todo 改变角色状态
     public void onAnnounceStatPoolUpdate() {
         List<Pair<MapleStat, Integer>> statup = new ArrayList<>(8);
         for (Map.Entry<MapleStat, Integer> s : character.statUpdates.entrySet()) {

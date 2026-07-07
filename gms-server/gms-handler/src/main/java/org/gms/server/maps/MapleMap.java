@@ -129,7 +129,8 @@ public class MapleMap {
     private Pair<Integer, Integer> xLimits;  // caches the min and max x's with available footholds
     private final Rectangle mapArea = new Rectangle();
     private final int mapid;
-    private final AtomicInteger runningOid = new AtomicInteger(1000000001);
+//    private final AtomicInteger runningOid = new AtomicInteger(1000000001);
+    private final AtomicInteger runningOid = new AtomicInteger(100);
     private final int returnMapId;
     private final int channel;
     private final int world;
@@ -2067,6 +2068,10 @@ public class MapleMap {
         addSelfDestructive(monster);
     }
 
+    /**
+     * 扎昆手臂回血？
+     * @param monster
+     */
     public void makeMonsterReal(final Monster monster) {
         monster.setFake(false);
         broadcastMessage(PacketCreator.makeMonsterReal(monster));
@@ -2387,6 +2392,39 @@ public class MapleMap {
         }
     }
 
+    /**
+     * Adds a player to this map and sends nescessary data
+     *
+     * @param chr
+     */
+    public void addPlayer53(Character chr) {
+        //log.warn("[dc] [level2] Player {} enters map {}", new Object[] { chr.getName(), mapid });
+        synchronized (characters) {
+            this.characters.add(chr);
+        }
+        synchronized (this.mapobjects) {
+            if (!chr.isHidden()) {
+                broadcastMessage(chr, (PacketCreator.spawnPlayerMapobject(chr)), false);
+            }
+            sendObjectPlacement(chr.getClient());
+            // spawn self
+            chr.sendPacket((PacketCreator.spawnPlayerMapobject(chr)));
+            this.mapobjects.put(Integer.valueOf(chr.getObjectId()), chr);
+        }
+        if (chr.getPlayerShop() != null) {
+            addMapObject(chr.getPlayerShop());
+        }
+        StatEffect summonStat = chr.getStatForBuff(BuffStat.SUMMON);
+        if (summonStat != null) {
+            Summon summon = chr.getSummons().get(summonStat.getSourceId());
+            summon.setPosition(chr.getPosition());
+            summon.sendSpawnData(chr.getClient());
+            chr.addVisibleMapObject(summon);
+            addMapObject(summon);
+        }
+        chr.receivePartyMemberHP();
+    }
+
     public void addPlayer(final Character chr) {
         int chrSize;
         Party party = chr.getParty();
@@ -2540,12 +2578,14 @@ public class MapleMap {
         } else {
             broadcastSpawnPlayerMapObjectMessage(chr, chr, true);
         }
-
+        // 召唤NPC
         sendObjectPlacement(chr.getClient());
 
         if (isStartingEventMap() && !eventStarted()) {
             chr.getMap().getPortal("join00").setPortalStatus(false);
         }
+
+        // 强制装备
         if (hasForcedEquip()) {
             chr.sendPacket(PacketCreator.showForcedEquip(-1));
         }
@@ -2839,7 +2879,23 @@ public class MapleMap {
      * @param {double} rangeSq - 广播的最大距离平方值。The maximum distance squared for broadcasting.
      * @param {Point} rangedFrom - 广播的起点位置。The starting point for broadcasting.
      */
+
     private void broadcastMessage(Character source, Packet packet, double rangeSq, Point rangedFrom) {
+        synchronized (characters) {
+            for (Character chr : characters) {
+                if (chr != source) {
+                    if (rangeSq < Double.POSITIVE_INFINITY) {
+                        if (rangedFrom.distanceSq(chr.getPosition()) <= rangeSq) {
+                            chr.sendPacket(packet);
+                        }
+                    } else {
+                        chr.sendPacket(packet);
+                    }
+                }
+            }
+        }
+    }
+    private void broadcastMessage83(Character source, Packet packet, double rangeSq, Point rangedFrom) {
         chrRLock.lock();
         try {
             Iterator<Character> iterator = characters.iterator();
@@ -3028,6 +3084,66 @@ public class MapleMap {
         }
     }
 
+
+    private void sendObjectPlacement53(Client mapleClient) {
+        for (MapObject o : mapobjects.values()) {
+            if (isNonRangedType(o.getType())) {
+                o.sendSpawnData(mapleClient);
+            } else if (o.getType() == MapObjectType.MONSTER) {
+                updateMonsterController((Monster) o);
+            }
+        }
+        Character chr = mapleClient.getPlayer();
+
+        if (chr != null) {
+            for (MapObject o : getMapObjectsInRange(chr.getPosition(), Character.MAX_VIEW_RANGE_SQ,
+                    rangedMapobjectTypes)) {
+                o.sendSpawnData(chr.getClient());
+                chr.addVisibleMapObject(o);
+            }
+        } else {
+            log.info("sendObjectPlacement invoked with null char");
+        }
+    }
+
+    /**
+     * Automagically finds a new controller for the given monster from the chars on the map...
+     *
+     * @param monster
+     */
+    private void updateMonsterController(Monster monster) {
+        synchronized (monster) {
+            if (!monster.isAlive()) {
+                return;
+            }
+            if (monster.getController() != null) {
+                // monster has a controller already, check if he's still on this map
+                if (monster.getController().getMap() != this) {
+                    log.warn("Monstercontroller wasn't on same map");
+                    monster.getController().stopControllingMonster(monster);
+                } else {
+                    // controller is on the map, monster has an controller, everything is fine
+                    return;
+                }
+            }
+            int mincontrolled = -1;
+            Character newController = null;
+            synchronized (characters) {
+                for (Character chr : characters) {
+                    if (!chr.isHidden() && (chr.getControlledMonsters().size() < mincontrolled || mincontrolled == -1)) {
+                        if (!chr.getName().equals("FaekChar")) { // TODO remove me for production release
+                            mincontrolled = chr.getControlledMonsters().size();
+                            newController = chr;
+                        }
+                    }
+                }
+            }
+            if (newController != null) // was a new controller found? (if not no one is on the map)
+            {
+                newController.controlMonster(monster, false);
+            }
+        }
+    }
     private void sendObjectPlacement(Client c) {
         Character chr = c.getPlayer();
         Collection<MapObject> objects;

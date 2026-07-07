@@ -184,7 +184,8 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public void sendSimple(String text) {
         nextLevelContext.clear();
-        getClient().sendPacket(PacketCreator.getNPCTalk(npc, (byte) 4, text, "", (byte) 0));
+//        getClient().sendPacket(PacketCreator.getNPCTalk(npc, (byte) 4, text, "", (byte) 0));
+        getClient().sendPacket(PacketCreator.getNPCTalk(npc, (byte) 5, text, "", (byte) 0));
     }
 
     public void sendNext(String text, byte speaker) {

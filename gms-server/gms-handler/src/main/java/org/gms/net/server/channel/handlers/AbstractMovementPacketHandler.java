@@ -24,15 +24,10 @@ package org.gms.net.server.channel.handlers;
 import org.gms.client.Character;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.server.movement.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.maps.AnimatedMapObject;
-import org.gms.server.movement.AbsoluteLifeMovement;
-import org.gms.server.movement.ChangeEquip;
-import org.gms.server.movement.JumpDownMovement;
-import org.gms.server.movement.LifeMovementFragment;
-import org.gms.server.movement.RelativeLifeMovement;
-import org.gms.server.movement.TeleportMovement;
 import org.gms.exception.EmptyMovementException;
 
 import java.awt.*;
@@ -156,6 +151,18 @@ public abstract class AbstractMovementPacketHandler extends AbstractPacketHandle
         return res;
     }
 
+    protected void updatePosition(List<LifeMovementFragment> movement, AnimatedMapObject target, int yoffset) {
+        for (LifeMovementFragment move : movement) {
+            if (move instanceof LifeMovement ) {
+                if (move instanceof AbsoluteLifeMovement) {
+                    Point position = ((LifeMovement) move).getPosition();
+                    position.y += yoffset;
+                    target.setPosition(position);
+                }
+                target.setStance(((LifeMovement) move).getNewstate());
+            }
+        }
+    }
     protected void updatePosition(InPacket p, AnimatedMapObject target, int yOffset) throws EmptyMovementException {
 
         byte numCommands = p.readByte();

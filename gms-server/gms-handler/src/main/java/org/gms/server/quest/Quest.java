@@ -292,6 +292,7 @@ public class Quest {
 
         for (AbstractQuestRequirement r : startReqs.values()) {
             if (!r.check(chr, npcid)) {
+                log.info("无法开始任务,name: {}, questId:{}, 不满足:{}", this.name, this.id, r.getType());
                 return false;
             }
         }

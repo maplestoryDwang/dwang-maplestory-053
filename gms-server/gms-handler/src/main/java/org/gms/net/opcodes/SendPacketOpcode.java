@@ -26,13 +26,19 @@ import java.util.List;
 public enum SendPacketOpcode implements Opcode {
 
     // GENERAL
+    // check ↓
     PING(0x09), // 心跳包
 
     // LOGIN
+    // check ↓
     LOGIN_STATUS(0x00), // 登录状态
+    // check ↓
     SERVERLIST(0x05), // 服务器列表
+    // check ↓
     CHAR_NAME_RESPONSE(0x06), // 角色名检查回应
+    // check ↓
     ADD_NEW_CHAR_ENTRY(0x07), // 建立新角色回应
+    // check ↓
     DELETE_CHAR_RESPONSE(0x08), // 删除角色回应
 
     // check ↓
@@ -40,13 +46,21 @@ public enum SendPacketOpcode implements Opcode {
 
     PIN_OPERATION(0x0D), // PIN码操作
     SERVERSTATUS(0x12), // 服务器状态
+    // check ↓
     CHARLIST(0x13), // 角色列表
+    // check ↓
     RELOG_RESPONSE(0x15), // 重新登录回应
 
     // CHANNEL
     CHANGE_CHANNEL(0x03), // 更改频道
-    MODIFY_INVENTORY_ITEM(0x18), // 更新/修改背包道具
-    UPDATE_STATS(0x23), // 更新角色属性(HP/MP/EXP等)
+//    MODIFY_INVENTORY_ITEM(0x18), // 更新/修改背包道具
+    INVENTORY_OPERATION(0x18), // 物品栏操作
+
+
+//    UPDATE_STATS(0x23), // 更新角色属性(HP/MP/EXP等)
+    STAT_CHANGED(0x23), // 状态改变  53没有
+
+
     GIVE_BUFF(0x3A), // 给予角色Buff
     CANCEL_BUFF(0x24), // 取消角色Buff
     UPDATE_SKILLS(0x2F), // 更新技能等级
@@ -92,10 +106,13 @@ public enum SendPacketOpcode implements Opcode {
     SHOW_FOREIGN_EFFECT(0x85), // 显示其他玩家的效果(升级/技能等)
     GIVE_FOREIGN_BUFF(0x86), // 给予可见的其他玩家Buff
     SHOW_ITEM_GAIN_INCHAT(0x67), // 聊天栏提示获得道具
+
     UPDATE_QUEST_INFO(0x6C), // 更新任务状态信息
+    // check ↓
     SPAWN_MONSTER(0x96), // 地图生成怪物
     MOVE_MONSTER_RESPONSE(0x9C), // 移动怪物回应
     DAMAGE_MONSTER(0x9D), // 怪物受到伤害
+    // check ↓
     SPAWN_MONSTER_CONTROL(0xA4), // 获取怪物控制权(由客户端计算怪物AI)
     KILL_MONSTER(0xA5), // 杀死/移除怪物
     MOVE_MONSTER(0x97), // 怪物移动同步
@@ -137,8 +154,13 @@ public enum SendPacketOpcode implements Opcode {
     // check ↓
     SET_TAMING_MOB_INFO(0x27), // 设置驯服怪物信息
 
+    FIELD_EFFECT(0x53), // 场景效果  083 =》 0x8A
+
+
+
+
     /*
-    北斗
+    北斗=====================================================
      */
 
 
@@ -162,9 +184,7 @@ public enum SendPacketOpcode implements Opcode {
     CHECK_SPW_RESULT(0x1C), // SPW检查结果
 
     /*CWvsContext::OnPacket*/
-    INVENTORY_OPERATION(0x1D), // 物品栏操作
     INVENTORY_GROW(0x1E), // 扩展物品栏
-    STAT_CHANGED(0x1F), // 状态改变
     FORCED_STAT_SET(0x22), // 强制设置状态
     FORCED_STAT_RESET(0x23), // 强制重置状态
     SKILL_USE_RESULT(0x25), // 技能使用结果
@@ -174,7 +194,7 @@ public enum SendPacketOpcode implements Opcode {
     CLAIM_RESULT(-1), // 领取结果
     CLAIM_AVAILABLE_TIME(0x2E), // 领取可用时间
     QUEST_CLEAR(0x31), // 任务完成
-    ENTRUSTED_SHOP_CHECK_RESULT(0x32), // 委托商店检查结果
+    ENTRUSTED_SHOP_CHECK_RESULT(-1), // 委托商店检查结果 0x32
     SKILL_LEARN_ITEM_RESULT(0x33), // 学习技能物品结果
     GATHER_ITEM_RESULT(0x34), // 收集物品结果
     SORT_ITEM_RESULT(0x35), // 整理物品结果
@@ -201,7 +221,7 @@ public enum SendPacketOpcode implements Opcode {
     IMITATED_NPC_RESULT(0x50), // 仿冒NPC结果
     IMITATED_NPC_DATA(0x51), // 仿冒NPC数据
     LIMITED_NPC_DISABLE_INFO(0x52), // 限时NPC禁用信息
-    MONSTER_BOOK_SET_CARD(0x53), // 怪物图鉴设置卡片
+    MONSTER_BOOK_SET_CARD(-1), // 怪物图鉴设置卡片
     MONSTER_BOOK_SET_COVER(0x54), // 怪物图鉴设置封面
     HOUR_CHANGED(0x55), // 时间变化
     MINIMAP_ON_OFF(0x56), // 小地图开关
@@ -220,7 +240,7 @@ public enum SendPacketOpcode implements Opcode {
     FAMILY_JOIN_REQUEST_RESULT(0x62), // 家族加入请求结果
     FAMILY_JOIN_ACCEPTED(0x63), // 家族加入接受
     FAMILY_PRIVILEGE_LIST(0x64), // 家族权限列表
-    FAMILY_REP_GAIN(0x65), // 家族声望获得
+    FAMILY_REP_GAIN(-1), // 家族声望获得
     FAMILY_NOTIFY_LOGIN_OR_LOGOUT(0x66), // 通知家族成员登录或登出
     FAMILY_SET_PRIVILEGE(0x67), // 设置家族权限
     FAMILY_SUMMON_REQUEST(0x68), // 家族召唤请求
@@ -249,7 +269,7 @@ public enum SendPacketOpcode implements Opcode {
     MACRO_SYS_DATA_INIT(0x7C), // 宏系统数据初始化
 
     /*CStage::OnPacket*/
-    SET_FIELD(0x7D), // 设置字段
+    SET_FIELD(-1), // 设置字段
     SET_ITC(0x7E), // 设置ITC
     SET_CASH_SHOP(0x7F), // 设置现金商店
 
@@ -259,14 +279,13 @@ public enum SendPacketOpcode implements Opcode {
     CLEAR_BACK_EFFECT(0x82), // 清除背景特效
     BLOCKED_MAP(0x83), // 被阻止的地图
     BLOCKED_SERVER(0x84), // 被阻止的服务器
-    FORCED_MAP_EQUIP(0x85), // 强制地图装备
+    FORCED_MAP_EQUIP(-1), // 强制地图装备   没找到
     SPOUSE_CHAT(0x88), // 配偶聊天
     SUMMON_ITEM_INAVAILABLE(0x89), // 在此地图无法使用召唤物品
 
-    FIELD_EFFECT(0x8A), // 场景效果
-    FIELD_OBSTACLE_ONOFF(0x8B), // 场景障碍物开关
-    FIELD_OBSTACLE_ONOFF_LIST(0x8C), // 场景障碍物开关列表
-    FIELD_OBSTACLE_ALL_RESET(0x8D), // 重置所有场景障碍物
+    FIELD_OBSTACLE_ONOFF(-1), // 场景障碍物开关                       没找到
+    FIELD_OBSTACLE_ONOFF_LIST(-1), // 场景障碍物开关列表               没找到
+    FIELD_OBSTACLE_ALL_RESET(-1), // 重置所有场景障碍物                 没找到
     BLOW_WEATHER(0x8E), // 吹风天气效果
     PLAY_JUKEBOX(0x8F), // 播放点唱机
 
@@ -331,7 +350,7 @@ public enum SendPacketOpcode implements Opcode {
     CATCH_MONSTER_WITH_ITEM(0xFC), // 使用物品捕捉怪物
     SHOW_MAGNET(0xFD), // 显示磁铁效果
     REMOVE_NPC(0x102), // 移除NPC
-    NPC_ACTION(0x104), // NPC动作
+    NPC_ACTION(0x104), // NPC_MOVE
     SET_NPC_SCRIPTABLE(0x107), // 设置NPC可脚本化
     SPAWN_HIRED_MERCHANT(0x109), // 生成雇佣商人
     DESTROY_HIRED_MERCHANT(0x10A), // 销毁雇佣商人

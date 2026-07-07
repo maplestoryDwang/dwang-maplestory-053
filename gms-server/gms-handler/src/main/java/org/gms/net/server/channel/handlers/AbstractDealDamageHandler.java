@@ -56,6 +56,7 @@ import org.gms.server.maps.MapObject;
 import org.gms.server.maps.MapObjectType;
 import org.gms.server.maps.MapleMap;
 import org.gms.util.PacketCreator;
+import org.gms.util.Pair;
 import org.gms.util.Randomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -654,6 +655,52 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             map.broadcastMessage(PacketCreator.damageMonster(monster.getObjectId(), damage), monster.getPosition());
             map.damageMonster(attacker, monster, damage);
         }
+    }
+    public AttackInfo parseDamageClose053(InPacket lea, boolean ranged) {
+        AttackInfo ret = new AttackInfo();
+
+        lea.readByte();
+        ret.numAttackedAndDamage = lea.readByte();
+        ret.numAttacked = (ret.numAttackedAndDamage >>> 4) & 0xF; // guess why there are no skills damaging more than
+        // 15 monsters...
+        ret.numDamage = ret.numAttackedAndDamage & 0xF; // how often each single monster was attacked o.o
+        ret.allDamage = new HashMap<>();
+        ret.skill = lea.readInt();
+        lea.readByte(); // always 0 (?)
+        ret.stance = lea.readByte();
+
+        if (ranged) {
+            lea.readShort();
+            lea.readShort(); // somehow related to crits? this is the only value that changes between two otherwise
+            // identical attacks
+            // System.out.println(Integer.toBinaryString(wui & 0xFFFF) + "_" + Integer.toHexString(wui & 0xFFFF));
+            lea.skip(7);
+            // System.out.println("Unk1: " + HexTool.toString(lea.read(7)));
+        } else {
+            lea.skip(6);
+        }
+
+        // TODO we need information if an attack was a crit or not but it does not seem to be in this packet - find out
+        // if it is o.o
+        // noncrit strafe
+        // 24 00 01 14 FE FE 30 00 00 97 04 06 99 2F EE 00 04 00 00 00 41 6B 00 00 00 06 81 00 01 00 00 5F 00 00 00 5F 00 D2 02 A3 19 00 00 43 0C 00 00 AD 0B 00 00 DB 12 00 00 64 00 5F 00
+        //
+        // fullcrit strafe:
+        // 24 00 01 14 FE FE 30 00 00 97 04 06 F5 C3 EE 00 04 00 00 00 41 6B 00 00 00 06 81 00 01 00 00 5F 00 00 00 5F 00 D2 02 6E 0F 00 00 EA 12 00 00 58 15 00 00 56 11 00 00 64 00 5F 00
+
+        for (int i = 0; i < ret.numAttacked; i++) {
+            int oid = lea.readInt();
+            lea.skip(14); // seems to contain some position info o.o
+
+            List<Integer> allDamageNumbers = new ArrayList<Integer>();
+            for (int j = 0; j < ret.numDamage; j++) {
+                int damage = lea.readInt();
+                allDamageNumbers.add(Integer.valueOf(damage));
+            }
+//            ret.allDamage.add(new Pair<Integer, List<Integer>>(Integer.valueOf(oid), allDamageNumbers));
+            ret.allDamage.put(Integer.valueOf(oid), allDamageNumbers);
+        }
+        return ret;
     }
 
     protected AttackInfo parseDamage(InPacket p, Character chr, boolean ranged, boolean magic) {

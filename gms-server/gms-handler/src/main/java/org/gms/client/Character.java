@@ -110,6 +110,7 @@ import static java.util.concurrent.TimeUnit.*;
 
 public class Character extends AbstractCharacterObject {
     private static final Logger log = LoggerFactory.getLogger(Character.class);
+    public static final double MAX_VIEW_RANGE_SQ = 850 * 850;
 
     @Getter
     @Setter
@@ -279,7 +280,8 @@ public class Character extends AbstractCharacterObject {
     @Getter
     @Setter
     private String search = null;
-    private final AtomicBoolean mapTransitioning = new AtomicBoolean(true);  // player client is currently trying to change maps or log in the game map //玩家客户端当前正在尝试更改地图或登录游戏地图
+//    private final AtomicBoolean mapTransitioning = new AtomicBoolean(true);  // player client is currently trying to change maps or log in the game map //玩家客户端当前正在尝试更改地图或登录游戏地图
+    private final AtomicBoolean mapTransitioning = new AtomicBoolean(false);  // player client is currently trying to change maps or log in the game map //玩家客户端当前正在尝试更改地图或登录游戏地图
     private final AtomicBoolean awayFromWorld = new AtomicBoolean(true);  // player is online, but on cash shop or mts
     private final AtomicInteger exp = new AtomicInteger();
     private final AtomicInteger gachaExp = new AtomicInteger();
@@ -1873,6 +1875,16 @@ public class Character extends AbstractCharacterObject {
                 cpnLock.unlock();
             }
         }
+    }
+    /**
+     * Adds this monster to the controlled list. The monster must exist on the Map.
+     *
+     * @param monster
+     */
+    public void controlMonster(Monster monster, boolean aggro) {
+        monster.setController(this);
+        controlled.add(monster);
+        client.sendPacket(PacketCreator.controlMonster(monster, false, aggro));
     }
 
     public void stopControllingMonster(Monster monster) {
@@ -5473,6 +5485,10 @@ public class Character extends AbstractCharacterObject {
         return summons.get(id);
     }
 
+    public Map<Integer, Summon> getSummons() {
+        return summons;
+    }
+
     public boolean isSummonsEmpty() {
         return summons.isEmpty();
     }
@@ -7668,7 +7684,7 @@ public class Character extends AbstractCharacterObject {
                 List<Pet> petList = new LinkedList<>();
                 petLock.lock();
                 try {
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 1; i++) {
                         if (pets[i] != null) {
                             petList.add(pets[i]);
                         }

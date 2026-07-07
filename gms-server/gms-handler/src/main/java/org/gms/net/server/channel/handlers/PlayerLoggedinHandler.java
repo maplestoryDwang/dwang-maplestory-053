@@ -21,16 +21,8 @@
  */
 package org.gms.net.server.channel.handlers;
 
-import org.gms.client.BuddyList;
-import org.gms.client.BuddylistEntry;
+import org.gms.client.*;
 import org.gms.client.Character;
-import org.gms.client.CharacterNameAndId;
-import org.gms.client.Client;
-import org.gms.client.Disease;
-import org.gms.client.Family;
-import org.gms.client.FamilyEntry;
-import org.gms.client.Mount;
-import org.gms.client.SkillFactory;
 import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
@@ -67,6 +59,7 @@ import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -176,22 +169,6 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
 
             boolean allowLogin = true;
 
-                /*  is this check really necessary?
-                if (state == Client.LOGIN_SERVER_TRANSITION || state == Client.LOGIN_NOTLOGGEDIN) {
-                    List<String> charNames = c.loadCharacterNames(c.getWorld());
-                    if(!newcomer) {
-                        charNames.remove(player.getName());
-                    }
-
-                    for (String charName : charNames) {
-                        if(wserv.getPlayerStorage().getCharacterByName(charName) != null) {
-                            allowLogin = false;
-                            break;
-                        }
-                    }
-                }
-                */
-
             int accId = c.getAccID();
             if (tryAcquireAccount(accId)) { // Sync this to prevent wrong login state for double loggedin handling
                 try {
@@ -233,9 +210,11 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                 // 后续如需扩展系统设置字段，可在该包尾部追加，保持前两个字节为 HP/MP 警报。
                 player.sendPacket(PacketCreator.updateClientSettings(hpAlert, mpAlert));
             }
+            // 发msg  serverMessage
             cserv.addPlayer(player);
             wserv.addPlayer(player);
             player.setEnteredChannelWorld();
+
 
             List<PlayerBuffValueHolder> buffs = server.getPlayerBuffStorage().getBuffsFromStorage(cid);
             if (buffs != null) {
@@ -248,7 +227,8 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                 player.silentApplyDiseases(diseases);
             }
 
-            c.sendPacket(PacketCreator.getCharInfo(player));    //这里发送登录成功封包
+            //这里发送登录成功封包
+            c.sendPacket(PacketCreator.getCharInfo(player));
             if (player.isHidden()) {
                 if (!GameConfig.getServerBoolean("use_auto_hide_gm")) {
                     player.toggleHide(true);
@@ -258,7 +238,7 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                     player.toggleHide(true);    //设置GM角色隐身
                 }
             }
-            player.sendKeymap();
+
 
 //            player.sendQuickmap();
 //            player.sendMacros();
@@ -283,7 +263,7 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                 bl.put(ble);
             }
             c.sendPacket(PacketCreator.updateBuddylist(bl.getBuddies()));
-
+            player.sendKeymap();
             // todo 加载家族
 //            c.sendPacket(PacketCreator.loadFamily(player));
 //            if (player.getFamilyId() > 0) {
@@ -377,7 +357,7 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
 
 //            c.sendPacket(PacketCreator.updateGender(player));
             player.checkMessenger();
-            c.sendPacket(PacketCreator.enableReport());
+//            c.sendPacket(PacketCreator.enableReport());
 //            player.changeSkillLevel(SkillFactory.getSkill(10000000 * player.getJobType() + 12), (byte) (player.getLinkedLevel() / 10), 20, -1);
             player.checkBerserk(player.isHidden());
 

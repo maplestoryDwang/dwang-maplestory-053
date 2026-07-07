@@ -156,6 +156,9 @@ public class MonsterInformationProvider {
         return ret;
     }
 
+    /*
+    爆率
+     */
     public final List<MonsterDropEntry> retrieveDrop(final int monsterId) {
         if (drops.containsKey(monsterId)) {
             return drops.get(monsterId);

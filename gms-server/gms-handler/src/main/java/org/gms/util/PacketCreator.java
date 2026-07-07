@@ -396,7 +396,6 @@ public class PacketCreator {
 
 
     private static void addQuestInfo(OutPacket p, Character chr) {
-        p.writeShort(0); // start quest info
         List<QuestStatus> started = chr.getStartedQuests();
         int startedSize = 0;
         for (QuestStatus qs : started) {
@@ -446,6 +445,7 @@ public class PacketCreator {
 //    }
 
     private static void addExpirationTime(OutPacket mplew, long time, boolean showexpirationtime) {
+        // todo 这里要韩国时间差
         mplew.writeInt(KoreanDateUtil.getKoreanTimestamp(time));
         mplew.write(showexpirationtime ? 1 : 2);
     }
@@ -1248,6 +1248,9 @@ public class PacketCreator {
     public static Packet updatePlayerStats(List<Pair<MapleStat, Integer>> stats, boolean enableActions, Character chr) {
         OutPacket p = OutPacket.create(SendPacketOpcode.STAT_CHANGED);
         p.writeBool(enableActions);
+
+        p.write(0);  // odinms新增
+
         int updateMask = 0;
         for (Pair<MapleStat, Integer> statupdate : stats) {
             updateMask |= statupdate.getLeft().getValue();
@@ -1295,11 +1298,25 @@ public class PacketCreator {
      * @param chr        The character warping to <code>to</code>
      * @return The map change packet.
      */
+
+//    public static Packet getWarpToMap(MapleMap to, int spawnPoint, Character chr) {
+//        final OutPacket mplew = OutPacket.create(SendPacketOpcode.WARP_TO_MAP);
+//        mplew.writeInt(chr.getClient().getChannel() - 1);
+//        mplew.writeShort(0x2);
+//        mplew.writeInt(to.getId());
+//        mplew.write(spawnPoint);
+//        mplew.writeShort(chr.getHp()); // hp (???)
+//        mplew.write(0);
+//        long questMask = 0x1ffffffffffffffL;
+//        mplew.writeLong(questMask);
+//
+//        return mplew;
+//    }
+
     public static Packet getWarpToMap(MapleMap to, int spawnPoint, Character chr) {
-        final OutPacket p = OutPacket.create(SendPacketOpcode.SET_FIELD);
+        final OutPacket p = OutPacket.create(SendPacketOpcode.WARP_TO_MAP);
         p.writeInt(chr.getClient().getChannel() - 1);
-        p.writeInt(0);//updated
-        p.writeByte(0);//updated
+        p.writeShort(0x2);
         p.writeInt(to.getId());
         p.writeByte(spawnPoint);
         p.writeShort(chr.getHp());
@@ -1309,22 +1326,25 @@ public class PacketCreator {
             p.writeInt(chr.getPosition().x);
             p.writeInt(chr.getPosition().y);
         }
-        p.writeLong(getTime(Server.getInstance().getCurrentTime()));
+        long questMask = 0x1ffffffffffffffL;
+        p.writeLong(questMask);
         return p;
     }
 
     public static Packet getWarpToMap(MapleMap to, int spawnPoint, Point spawnPosition, Character chr) {
-        final OutPacket p = OutPacket.create(SendPacketOpcode.SET_FIELD);
+        final OutPacket p = OutPacket.create(SendPacketOpcode.WARP_TO_MAP);
         p.writeInt(chr.getClient().getChannel() - 1);
-        p.writeInt(0);//updated
-        p.writeByte(0);//updated
+        p.writeShort(0x2);
+
+
         p.writeInt(to.getId());
         p.writeByte(spawnPoint);
         p.writeShort(chr.getHp());
         p.writeBool(true);
         p.writeInt(spawnPosition.x);    // spawn position placement thanks to Arnah (Vertisy)
         p.writeInt(spawnPosition.y);
-        p.writeLong(getTime(Server.getInstance().getCurrentTime()));
+        long questMask = 0x1ffffffffffffffL;
+        p.writeLong(questMask);
         return p;
     }
 
@@ -1583,13 +1603,36 @@ public class PacketCreator {
         return p;
     }
 
+    public static Packet spawnNPC(NPC life, boolean requestController) {
+        // B1 00 01 04 00 00 00 34 08 00 00 99 FF 35 00 01 0B 00 67 FF CB FF
+        OutPacket mplew = null;
+
+        if (requestController) {
+            mplew = OutPacket.create(SendPacketOpcode.SPAWN_NPC_REQUEST_CONTROLLER);
+            mplew.write(1); // ?
+        } else {
+            mplew = OutPacket.create(SendPacketOpcode.SPAWN_NPC);
+
+        }
+        mplew.writeInt(life.getObjectId());
+        mplew.writeInt(life.getId());
+        mplew.writeShort(life.getPosition().x);
+        mplew.writeShort(life.getCy());
+        mplew.write(1); // type ?
+        mplew.writeShort(life.getFh());
+        mplew.writeShort(life.getRx0());
+        mplew.writeShort(life.getRx1());
+
+        return mplew;
+    }
     public static Packet spawnNPC(NPC life) {
         OutPacket p = OutPacket.create(SendPacketOpcode.SPAWN_NPC);
         p.writeInt(life.getObjectId());
         p.writeInt(life.getId());
         p.writeShort(life.getPosition().x);
         p.writeShort(life.getCy());
-        p.writeBool(life.getF() != 1);
+//        p.writeBool(life.getF() != 1);
+        p.write(1); // type ?
         p.writeShort(life.getFh());
         p.writeShort(life.getRx0());
         p.writeShort(life.getRx1());
@@ -1603,7 +1646,8 @@ public class PacketCreator {
         p.writeInt(life.getId());
         p.writeShort(life.getPosition().x);
         p.writeShort(life.getCy());
-        p.writeBool(life.getF() != 1);
+//        p.writeBool(life.getF() != 1);
+        p.write(1); // type ?
         p.writeShort(life.getFh());
         p.writeShort(life.getRx0());
         p.writeShort(life.getRx1());
@@ -1645,18 +1689,6 @@ public class PacketCreator {
         return spawnMonsterInternal(life, true, newSpawn, aggro, 0, false);
     }
 
-    /**
-     * Removes a monster invisibility.
-     *
-     * @param life
-     * @return
-     */
-    public static Packet removeMonsterInvisibility(Monster life) {
-        final OutPacket p = OutPacket.create(SendPacketOpcode.SPAWN_MONSTER_CONTROL);
-        p.writeByte(1);
-        p.writeInt(life.getObjectId());
-        return p;
-    }
 
     /**
      * Makes a monster invisible for Ariant PQ.
@@ -1668,6 +1700,7 @@ public class PacketCreator {
         return spawnMonsterInternal(life, true, false, false, 0, true);
     }
 
+    // decode + decode4
     private static void encodeParentlessMobSpawnEffect(OutPacket p, boolean newSpawn, int effect) {
         if (effect > 0) {
             p.writeByte(effect);
@@ -1693,9 +1726,11 @@ public class PacketCreator {
 
         for (Entry<MonsterStatus, MonsterStatusEffect> s : stati.entrySet()) {
             MonsterStatusEffect mse = s.getValue();
+            // decode2
             p.writeShort(mse.getStati().get(s.getKey()));
 
             MobSkill mobSkill = mse.getMobSkill();
+            // decode4
             if (mobSkill != null) {
                 writeMobSkillId(p, mobSkill.getId());
 
@@ -1708,18 +1743,8 @@ public class PacketCreator {
                 p.writeInt(skill != null ? skill.getId() : 0);
             }
 
+            // decode 2
             p.writeShort(-1);    // duration
-        }
-
-        // reflect packet structure found thanks to Arnah (Vertisy)
-        if (pCounter != -1) {
-            p.writeInt(pCounter);// wPCounter_
-        }
-        if (mCounter != -1) {
-            p.writeInt(mCounter);// wMCounter_
-        }
-        if (pCounter != -1 || mCounter != -1) {
-            p.writeInt(100);// nCounterProb_
         }
     }
 
@@ -1732,8 +1757,10 @@ public class PacketCreator {
      * @param aggro             Aggressive mob?
      * @param effect            The spawn effect to use.
      * @return The spawn/control packet.
+     *     // check ↓
      */
     private static Packet spawnMonsterInternal(Monster life, boolean requestController, boolean newSpawn, boolean aggro, int effect, boolean makeInvis) {
+        // 隐藏？ 53没有
         if (makeInvis) {
             OutPacket p = OutPacket.create(SendPacketOpcode.SPAWN_MONSTER_CONTROL);
             p.writeByte(0);
@@ -1744,7 +1771,7 @@ public class PacketCreator {
         final OutPacket p;
         if (requestController) {
             p = OutPacket.create(SendPacketOpcode.SPAWN_MONSTER_CONTROL);
-            p.writeByte(aggro ? 2 : 1);
+            p.writeByte(aggro ? 2 : 1); // > 1 才能动 跟随玩家
         } else {
             p = OutPacket.create(SendPacketOpcode.SPAWN_MONSTER);
         }
@@ -1753,12 +1780,21 @@ public class PacketCreator {
         p.writeByte(life.getController() == null ? 5 : 1);
         p.writeInt(life.getId());
 
+
+
+
+        // ------------------------------------------
+        // CMob::SetTemporaryStat
+        // ------------------------------------------
         if (requestController) {
             encodeTemporary(p, life.getStati());    // thanks shot for noticing encode temporary buffs missing
         } else {
-            p.skip(16);
+//            p.skip(16);
+            p.writeInt(0);   // 53版本 代替应该是4字节跳过
         }
-
+        // ------------------------------------------
+        // CMob::Init  ok
+        // ------------------------------------------
         p.writePos(life.getPosition());
         p.writeByte(life.getStance());
         p.writeShort(0); //Origin FH //life.getStartFh()
@@ -1766,10 +1802,22 @@ public class PacketCreator {
 
 
         /**
-         * -4: Fake -3: Appear after linked mob is dead -2: Fade in 1: Smoke 3:
-         * King Slime spawn 4: Summoning rock thing, used for 3rd job? 6:
-         * Magical shit 7: Smoke shit 8: 'The Boss' 9/10: Grim phantom shit?
-         * 11/12: Nothing? 13: Frankenstein 14: Angry ^ 15: Orb animation thing,
+         *   if ( (char)v8 == -3 || v8 >= 0 )
+         *     dwOption = CInPacket::Decode4(v4);
+         * -4: Fake
+         * -3: Appear after linked mob is dead
+         * -2: Fade in
+         * 1: Smoke
+         * 3: King Slime spawn
+         * 4: Summoning rock thing, used for 3rd job?
+         * 6: Magical shit
+         * 7: Smoke shit
+         * 8: 'The Boss'
+         * 9/10: Grim phantom shit?
+         * 11/12: Nothing?
+         * 13: Frankenstein
+         * 14: Angry ^
+         * 15: Orb animation thing,
          * ?? 16: ?? 19: Mushroom castle boss thing
          */
 
@@ -1785,8 +1833,7 @@ public class PacketCreator {
             encodeParentlessMobSpawnEffect(p, newSpawn, effect);
         }
 
-        p.writeByte(life.getTeam());
-        p.writeInt(0); // getItemEffect
+        p.writeByte(life.getTeam());                                 // m_nTeamForMCarnival
         return p;
     }
 
@@ -1804,18 +1851,16 @@ public class PacketCreator {
         p.writeByte(5);
         p.writeInt(life.getId());
         encodeTemporary(p, life.getStati());
+
+        // init
         p.writePos(life.getPosition());
         p.writeByte(life.getStance());
         p.writeShort(0);//life.getStartFh()
         p.writeShort(life.getFh());
-        if (effect > 0) {
-            p.writeByte(effect);
-            p.writeByte(0);
-            p.writeShort(0);
-        }
-        p.writeShort(-2);
-        p.writeByte(life.getTeam());
-        p.writeInt(0);
+
+        encodeParentlessMobSpawnEffect(p,  true, effect);
+        p.writeByte(life.getTeam());                                 // m_nTeamForMCarnival
+
         return p;
     }
 
@@ -1830,13 +1875,23 @@ public class PacketCreator {
         p.writeInt(life.getObjectId());
         p.writeByte(5);
         p.writeInt(life.getId());
+
+        // 这两个二选一
         encodeTemporary(p, life.getStati());
+//        p.writeInt(0);
+
+
+        // CMob::Init
         p.writePos(life.getPosition());
         p.writeByte(life.getStance());
         p.writeShort(0);//life.getStartFh()
         p.writeShort(life.getFh());
-        p.writeShort(-1);
-        p.writeInt(0);
+
+        //  v9 = (char)CInPacket::Decode1(iPacket);
+        //  if ( (char)v9 == -3 || v9 >= 0 )
+        //    dwOption = CInPacket::Decode4(iPacket);
+        p.writeByte(-1);
+        p.writeByte(0);
         return p;
     }
 
@@ -2278,6 +2333,77 @@ public class PacketCreator {
         return p;
     }
 
+
+    public static Packet spawnPlayerMapobject(Character chr) {
+        // 62 00 24 46 32 00 05 00 42 65 79 61 6E 00 00 00 00 00 00 00 00 00 00
+        // 00 00 00 00 00 00 00 00 20 4E 00 00 00 44 75 00 00 01 2A 4A 0F 00 04
+        // 60 BF 0F 00 05 A2 05 10 00 07 2B 5C 10 00 09 E7 D0 10 00 0B 39 53 14
+        // 00 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+        // DE 01 73 FF 00 00 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00
+        // 00 00 00 00
+
+        OutPacket mplew = OutPacket.create(SendPacketOpcode.SPAWN_PLAYER);
+
+        mplew.writeInt(chr.getId());
+        mplew.writeString(chr.getName());
+        mplew.writeString(""); // guild
+        mplew.write(new byte[6]);
+
+        long buffmask = 0;
+        Integer buffvalue = null;
+
+        if (chr.getBuffedValue(BuffStat.DARKSIGHT) != null && !chr.isHidden()) {
+            buffmask |= BuffStat.DARKSIGHT.getValue();
+        }
+        if (chr.getBuffedValue(BuffStat.COMBO) != null) {
+            buffmask |= BuffStat.COMBO.getValue();
+            buffvalue = Integer.valueOf(chr.getBuffedValue(BuffStat.COMBO).intValue());
+        }
+        if (chr.getBuffedValue(BuffStat.MONSTER_RIDING) != null) {
+            buffmask |= BuffStat.MONSTER_RIDING.getValue();
+        }
+        if (chr.getBuffedValue(BuffStat.SHADOWPARTNER) != null) {
+            buffmask |= BuffStat.SHADOWPARTNER.getValue();
+        }
+        mplew.writeLong(buffmask);
+
+        if (buffvalue != null)
+            mplew.write(buffvalue.byteValue());
+
+        addCharLook(mplew, chr, false);
+        mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00 00 00 00 00 00 00 00"));
+        mplew.writeShort(chr.getPosition().x);
+        mplew.writeShort(chr.getPosition().y);
+        mplew.write(chr.getStance());
+        // 04 34 00 00
+        // mplew.writeInt(1); // dunno p00 (?)
+        if (chr.getPet(0) != null) {
+            mplew.writeInt(0x01000000);
+            mplew.writeInt(chr.getPet(0).getItemId());
+            mplew.writeString(chr.getPet(0).getName());
+            // 38 EVTL. Y
+            // mplew.write(HexTool.getByteArrayFromHexString("72 FB 38 00 00 00 00 00 09 03 04 00 18 34 00 00 00 01 00
+            // 00 00"));
+            mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00 00 00 00"));
+            mplew.writeShort(0);
+            mplew.writeShort(chr.getPosition().y);
+            mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00 00 00 00 00"));
+        } else {
+            mplew.writeInt(0);
+            mplew.writeInt(1);
+        }
+
+        mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00 00 00 00"));
+        if (chr.getPlayerShop() != null && chr.getPlayerShop().isOwner(chr)) {
+            addAnnounceBox(mplew, chr.getPlayerShop(), chr.getPlayerShop().getVisitors().length);
+        } else {
+            mplew.write(0);
+        }
+        mplew.write(new byte[5]);
+        // System.out.println(HexTool.toString(mplew.getPacket().getBytes()));
+        return mplew;
+    }
+
     private static void encodeNewYearCardInfo(OutPacket p, Character chr) {
         Set<NewYearCardRecord> newyears = chr.getReceivedNewYearRecords();
         if (!newyears.isEmpty()) {
@@ -2509,7 +2635,17 @@ public class PacketCreator {
             move.serialize(p);
         }
     }
+    public static Packet movePlayer(int cid, List<LifeMovementFragment> moves) {
+        OutPacket mplew = OutPacket.create(SendPacketOpcode.MOVE_PLAYER);
 
+        mplew.writeInt(cid);
+        // mplew.write(HexTool.getByteArrayFromHexString("24 00 3F FD")); //?
+        mplew.writeInt(0);
+
+        serializeMovementList(mplew, moves);
+
+        return mplew;
+    }
     public static Packet movePlayer(int chrId, InPacket movementPacket, long movementDataLength) {
         OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_PLAYER);
         p.writeInt(chrId);
@@ -3136,7 +3272,8 @@ public class PacketCreator {
 
     public static Packet updateQuestInfo(short quest, int npc) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_QUEST_INFO);
-        p.writeByte(8); //0x0A in v95
+//        p.writeByte(8); //0x0A in v95
+        p.writeByte(6); //0x0A in v95
         p.writeShort(quest);
         p.writeInt(npc);
         p.writeInt(0);
@@ -3296,7 +3433,8 @@ public class PacketCreator {
         p.writeLong(secondmask);
     }
 
-    private static void writeLongEncodeTemporaryMask(final OutPacket p, Collection<MonsterStatus> stati) {
+    // 83是128位判断。16个字节
+    private static void writeLongEncodeTemporaryMaskV83(final OutPacket p, Collection<MonsterStatus> stati) {
         int[] masks = new int[4];
 
         for (MonsterStatus statup : stati) {
@@ -3310,6 +3448,21 @@ public class PacketCreator {
             p.writeInt(mask);
         }
     }
+
+    // 53就是4字节判断即可
+    private static void writeLongEncodeTemporaryMask(final OutPacket p, Collection<MonsterStatus> stati) {
+        int mask = 0;
+
+        for (MonsterStatus statup : stati) {
+            // 直接将所有选中的状态 Value 进行按位或运算
+            // 注意：这里的 MonsterStatus.getValue() 返回的必须是在 32位整型范围内的值（如 1, 2, 4, 8, ... 0x4000000）
+            mask |= statup.getValue();
+        }
+
+        // 客户端对应的正是这个 a2，只写一个 int 即可
+        p.writeInt(mask);
+    }
+
 
     public static Packet cancelDebuff(long mask) {
         OutPacket p = OutPacket.create(SendPacketOpcode.CANCEL_BUFF);
@@ -6785,6 +6938,12 @@ public class PacketCreator {
         return sendDuey(operation, null);
     }
 
+    /**
+     * 和杜伊对话 发送快递给好友
+     * @param operation
+     * @param packages
+     * @return
+     */
     public static Packet sendDuey(int operation, List<DueyPackage> packages) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.PARCEL);
         p.writeByte(operation);
