@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<imgdir name="Field.img">
+    <imgdir name="Party1">
+        <sound name="Clear"/>
+        <sound name="Failed"/>
+    </imgdir>
+    <imgdir name="Coconut">
+        <sound name="Broken"/>
+        <sound name="Hit"/>
+        <sound name="Fall"/>
+        <sound name="Failed"/>
+        <sound name="Victory"/>
+    </imgdir>
+    <imgdir name="Cokeplay">
+        <sound name="Broken"/>
+        <sound name="Hit"/>
+        <sound name="Fall"/>
+        <sound name="Failed"/>
+        <sound name="Victory"/>
+    </imgdir>
+</imgdir>

@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<imgdir name="MapEff.img" indent="2" media="NONE">
-  <imgdir name="Bubbling">
-    <canvas name="0" format="1" scale="0">
-      <vector name="origin" x="-11" y="22"/>
-      <int name="delay" value="100"/>
-    </canvas>
-    <canvas name="1" format="1" scale="0">
-      <vector name="origin" x="-11" y="31"/>
-      <int name="delay" value="100"/>
-    </canvas>
-    <canvas name="2" format="1" scale="0">
-      <vector name="origin" x="-12" y="78"/>
-      <int name="delay" value="100"/>
-    </canvas>
-    <canvas name="3" format="1" scale="0">
-      <vector name="origin" x="-7" y="103"/>
-      <int name="delay" value="100"/>
-    </canvas>
-    <canvas name="4" format="1" scale="0">
-      <vector name="origin" x="-11" y="20"/>
-      <int name="delay" value="400"/>
-    </canvas>
-  </imgdir>
-  <imgdir name="Viewrange">
-    <canvas name="0" format="1" scale="0">
-      <vector name="origin" x="158" y="179"/>
-      <int name="z" value="0"/>
-    </canvas>
-    <canvas name="1" format="1" scale="0">
-      <vector name="origin" x="158" y="180"/>
-      <int name="z" value="0"/>
-    </canvas>
-    <canvas name="2" format="1" scale="0">
-      <vector name="origin" x="297" y="323"/>
-      <int name="z" value="0"/>
-    </canvas>
-  </imgdir>
+<imgdir name="MapEff.img">
+    <imgdir name="Bubbling">
+        <canvas name="0" width="8" height="14">
+            <vector name="origin" x="-11" y="22"/>
+            <int name="delay" value="100"/>
+        </canvas>
+        <canvas name="1" width="13" height="21">
+            <vector name="origin" x="-11" y="31"/>
+            <int name="delay" value="100"/>
+        </canvas>
+        <canvas name="2" width="13" height="38">
+            <vector name="origin" x="-12" y="78"/>
+            <int name="delay" value="100"/>
+        </canvas>
+        <canvas name="3" width="22" height="35">
+            <vector name="origin" x="-7" y="103"/>
+            <int name="delay" value="100"/>
+        </canvas>
+        <canvas name="4" width="1" height="1">
+            <vector name="origin" x="-11" y="20"/>
+            <int name="delay" value="400"/>
+        </canvas>
+    </imgdir>
+    <imgdir name="Viewrange">
+        <canvas name="0" width="316" height="316">
+            <vector name="origin" x="158" y="179"/>
+            <int name="z" value="0"/>
+        </canvas>
+        <canvas name="1" width="316" height="316">
+            <vector name="origin" x="158" y="180"/>
+            <int name="z" value="0"/>
+        </canvas>
+        <canvas name="2" width="600" height="600">
+            <vector name="origin" x="297" y="323"/>
+            <int name="z" value="0"/>
+        </canvas>
+    </imgdir>
 </imgdir>
