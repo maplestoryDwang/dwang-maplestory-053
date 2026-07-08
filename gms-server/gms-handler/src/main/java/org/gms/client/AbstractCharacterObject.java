@@ -222,7 +222,7 @@ public abstract class AbstractCharacterObject extends AbstractAnimatedMapObject 
         listener.onAnnounceStatPoolUpdate();
     }
 
-    protected void setHp(int newHp) {
+    public void setHp(int newHp) {
         int oldHp = hp;
 
         int thp = newHp;
@@ -240,7 +240,7 @@ public abstract class AbstractCharacterObject extends AbstractAnimatedMapObject 
         dispatchHpChanged(oldHp);
     }
 
-    protected void setMp(int newMp) {
+    public void setMp(int newMp) {
         int tmp = newMp;
         if (tmp < 0) {
             tmp = 0;

@@ -402,12 +402,12 @@ public class Reactor extends AbstractMapObject {
                     if (reactorType < 999 && reactorType != -1) {  // 类型2=只能从右侧击中(沼泽植物), 00是左侧空中 02是左侧地面
                         if (!(reactorType == 2 && (stance == 0 || stance == 2))) {  // 获取下一状态
                             for (byte b = 0; b < stats.getStateSize(state); b++) {  // 遍历状态
-                                List<Integer> activeSkills = stats.getActiveSkills(state, b);
-                                if (activeSkills != null) {
-                                    if (!activeSkills.contains(skillid)) {
-                                        continue;  // 技能不匹配则跳过
-                                    }
-                                }
+//                                List<Integer> activeSkills = stats.getActiveSkills(state, b);
+//                                if (activeSkills != null) {
+//                                    if (!activeSkills.contains(skillid)) {
+//                                        continue;  // 技能不匹配则跳过
+//                                    }
+//                                }
 
                                 this.state = stats.getNextState(state, b);  // 设置下一状态
                                 byte nextState = stats.getNextState(state, b);

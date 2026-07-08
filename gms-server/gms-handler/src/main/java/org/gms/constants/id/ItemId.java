@@ -93,6 +93,9 @@ public class ItemId {
 
     // Starter
     public static final int BEGINNERS_GUIDE = 4161001;
+    public static final int BEGINNERS_HAT = 1002562;
+    public static final int BEGINNERS_OVERALL = 1052081;
+    public static final int BEGINNERS_SHOES = 1072097;
     public static final int LEGENDS_GUIDE = 4161048;
     public static final int NOBLESSE_GUIDE = 4161047;
 

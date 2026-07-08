@@ -38,8 +38,8 @@ public final class ReactorHitHandler extends AbstractPacketHandler {
         int oid = p.readInt();
         int charPos = p.readInt();
         short stance = p.readShort();
-        p.skip(4);
-        int skillid = p.readInt();
+//        p.skip(4);
+        int skillid = 0;
         Reactor reactor = c.getPlayer().getMap().getReactorByOid(oid);
         if (reactor != null) {
             reactor.hitReactor(true, charPos, stance, skillid, c);

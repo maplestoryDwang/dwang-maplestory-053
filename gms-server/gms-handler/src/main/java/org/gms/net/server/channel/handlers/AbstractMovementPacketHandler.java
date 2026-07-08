@@ -37,7 +37,7 @@ import java.util.List;
 public abstract class AbstractMovementPacketHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(AbstractMovementPacketHandler.class);
 
-    protected List<LifeMovementFragment> parseMovement(InPacket p) throws EmptyMovementException {
+    public List<LifeMovementFragment> parseMovement(InPacket p) throws EmptyMovementException {
         List<LifeMovementFragment> res = new ArrayList<>();
         byte numCommands = p.readByte();
         if (numCommands < 1) {

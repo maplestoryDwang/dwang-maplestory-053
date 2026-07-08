@@ -43,7 +43,7 @@ function action(mode, type, selection) {
         cm.sendNext("接下来，我会把你从这里送出去，祝您一路顺风。");
     } else {
         // cm.warp(40000, 0);
-        cm.warp(0);
+        cm.warp(0,2);
         cm.dispose();
     }
 }

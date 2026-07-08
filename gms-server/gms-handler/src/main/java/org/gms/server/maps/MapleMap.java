@@ -499,7 +499,34 @@ public class MapleMap {
         removeMapObject(obj.getObjectId());
     }
 
-    private Point calcPointBelow(Point initial) {
+
+    /**
+     * 怪物掉落坐标
+     * @param initial
+     * @return
+     */
+    private Point calcPointBelow (Point initial) {
+        Foothold fh = footholds.findBelow(initial);
+        if (fh == null) {
+            return null;
+        }
+        int dropY = fh.getY1();
+        if (!fh.isWall() && fh.getY1() != fh.getY2()) {
+            double s1 = Math.abs(fh.getY2() - fh.getY1());
+            double s2 = Math.abs(fh.getX2() - fh.getX1());
+            double s4 = Math.abs(initial.x - fh.getX1());
+            double alpha = Math.atan(s2 / s1);
+            double beta = Math.atan(s1 / s2);
+            double s5 = Math.cos(alpha) * (s4 / Math.cos(beta));
+            if (fh.getY2() < fh.getY1()) {
+                dropY = fh.getY1() - (int) s5;
+            } else {
+                dropY = fh.getY1() + (int) s5;
+            }
+        }
+        return new Point(initial.x, dropY);
+    }
+    private Point calcPointBelowV83(Point initial) {
         Foothold fh = footholds.findBelow(initial);
         if (fh == null) {
             return null;
@@ -555,7 +582,7 @@ public class MapleMap {
             int dx = distx / 2;
 
             int searchx = homex + dx;
-            if ((res = calcPointBelow(new Point(searchx, y))) != null) {
+            if ((res = calcPointBelowV83(new Point(searchx, y))) != null) {
                 awayx = searchx;
                 dropPos = res;
             } else {
@@ -566,14 +593,14 @@ public class MapleMap {
         return (dropPos != null) ? dropPos : fallback;
     }
 
-    public Point calcDropPos(Point initial, Point fallback) {
+    public Point calcDropPos083(Point initial, Point fallback) {
         if (initial.x < xLimits.left) {
             initial.x = xLimits.left;
         } else if (initial.x > xLimits.right) {
             initial.x = xLimits.right;
         }
 
-        Point ret = calcPointBelow(new Point(initial.x, initial.y - 85));   // actual drop ranges: default - 120, explosive - 360
+        Point ret = calcPointBelowV83(new Point(initial.x, initial.y - 85));   // actual drop ranges: default - 120, explosive - 360
         if (ret == null) {
             ret = bsearchDropPos(initial, fallback);
         }
@@ -585,8 +612,16 @@ public class MapleMap {
         return ret;
     }
 
+    // V053 简单粗暴，直接向上丢
+    public Point calcDropPos(Point initial, Point fallback) {
+        Point ret = calcPointBelow(new Point(initial.x, initial.y - 99));
+        if (ret == null) return fallback;
+        return ret;
+    }
+
+
     public boolean canDeployDoor(Point pos) {
-        Point toStep = calcPointBelow(pos);
+        Point toStep = calcPointBelowV83(pos);
         return toStep != null && toStep.distance(pos) <= 42;
     }
 
@@ -1128,8 +1163,8 @@ public class MapleMap {
         }
     }
 
-    private void spawnDrop(final Item idrop, final Point dropPos, final MapObject dropper, final Character chr, final byte droptype, final short questid) {
-        final MapItem mdrop = new MapItem(idrop, dropPos, dropper, chr, chr.getClient(), droptype, false, questid);
+    private void spawnDrop(final Item idrop, final Point dropPosTo, final MapObject dropper, final Character chr, final byte droptype, final short questid) {
+        final MapItem mdrop = new MapItem(idrop, dropPosTo, dropper, chr, chr.getClient(), droptype, false, questid);
         mdrop.setDropTime(Server.getInstance().getCurrentTime());
         spawnAndAddRangedMapObject(mdrop, c -> {
             Character chr1 = c.getPlayer();
@@ -1137,14 +1172,16 @@ public class MapleMap {
             if (chr1.needQuestItem(questid, idrop.getItemId())) {
                 mdrop.lockItem();
                 try {
-                    c.sendPacket(PacketCreator.dropItemFromMapObject(chr1, mdrop, dropper.getPosition(), dropPos, (byte) 1));
+                    c.sendPacket(PacketCreator.dropItemFromMapObject(chr1, mdrop, dropper.getPosition(), dropPosTo, (byte) 1));
                 } finally {
                     mdrop.unlockItem();
                 }
             }
         }, null);
 
+        // 初始化物品掉落计时
         instantiateItemDrop(mdrop);
+        // reactors掉落计时
         activateItemReactors(mdrop, chr.getClient());
     }
 
@@ -1859,7 +1896,7 @@ public class MapleMap {
 
     public void spawnMonsterOnGroundBelow(Monster mob, Point pos) {
         Point spos = new Point(pos.x, pos.y - 1);
-        spos = calcPointBelow(spos);
+        spos = calcPointBelowV83(spos);
         spos.y--;
         mob.setPosition(spos);
         spawnMonster(mob);
@@ -1867,7 +1904,7 @@ public class MapleMap {
 
     public void spawnCPQMonster(Monster mob, Point pos, int team) {
         Point spos = new Point(pos.x, pos.y - 1);
-        spos = calcPointBelow(spos);
+        spos = calcPointBelowV83(spos);
         spos.y--;
         mob.setPosition(spos);
         mob.setTeam(team);
@@ -1886,13 +1923,13 @@ public class MapleMap {
 
     public Point getGroundBelow(Point pos) {
         Point spos = new Point(pos.x, pos.y - 14); // Using -14 fixes spawning pets causing a lot of issues.
-        spos = calcPointBelow(spos);
+        spos = calcPointBelowV83(spos);
         spos.y--;//shouldn't be null!
         return spos;
     }
 
     public Point getPointBelow(Point pos) {
-        return calcPointBelow(pos);
+        return calcPointBelowV83(pos);
     }
 
     public void spawnRevives(final Monster monster) {
@@ -2036,7 +2073,7 @@ public class MapleMap {
     public void spawnMonsterWithEffect(final Monster monster, final int effect, Point pos) {
         monster.setMap(this);
         Point spos = new Point(pos.x, pos.y - 1);
-        spos = calcPointBelow(spos);
+        spos = calcPointBelowV83(spos);
         if (spos == null) {
             return;
         }
@@ -3289,7 +3326,7 @@ public class MapleMap {
      * @param mobTime
      */
     public void addMonsterSpawn(Monster monster, int mobTime, int team) {
-        Point newpos = calcPointBelow(monster.getPosition());
+        Point newpos = calcPointBelowV83(monster.getPosition());
         newpos.y -= 1;
         SpawnPoint sp = new SpawnPoint(monster, newpos, !monster.isMobile(), mobTime, mobInterval, team);
         monsterSpawn.add(sp);
@@ -3299,7 +3336,7 @@ public class MapleMap {
     }
 
     public void addAllMonsterSpawn(Monster monster, int mobTime, int team) {
-        Point newpos = calcPointBelow(monster.getPosition());
+        Point newpos = calcPointBelowV83(monster.getPosition());
         newpos.y -= 1;
         SpawnPoint sp = new SpawnPoint(monster, newpos, !monster.isMobile(), mobTime, mobInterval, team);
         allMonsterSpawn.add(sp);
@@ -3308,7 +3345,7 @@ public class MapleMap {
     public void removeMonsterSpawn(int mobId, int x, int y) {
         // assumption: spawn points identifies by tuple (lifeid, x, y)
 
-        Point checkpos = calcPointBelow(new Point(x, y));
+        Point checkpos = calcPointBelowV83(new Point(x, y));
         checkpos.y -= 1;
 
         List<SpawnPoint> toRemove = new LinkedList<>();
@@ -3331,7 +3368,7 @@ public class MapleMap {
     public void removeAllMonsterSpawn(int mobId, int x, int y) {
         // assumption: spawn points identifies by tuple (lifeid, x, y)
 
-        Point checkpos = calcPointBelow(new Point(x, y));
+        Point checkpos = calcPointBelowV83(new Point(x, y));
         checkpos.y -= 1;
 
         List<SpawnPoint> toRemove = new LinkedList<>();

@@ -1031,7 +1031,7 @@ public class Monster extends AbstractLoadedLife {
         return !fake && controllerHasAggro;
     }
 
-    private void setControllerHasAggro(boolean controllerHasAggro) {
+    public void setControllerHasAggro(boolean controllerHasAggro) {
         if (!fake) {
             this.controllerHasAggro = controllerHasAggro;
         }
@@ -1041,7 +1041,7 @@ public class Monster extends AbstractLoadedLife {
         return !fake && controllerKnowsAboutAggro;
     }
 
-    private void setControllerKnowsAboutAggro(boolean controllerKnowsAboutAggro) {
+    public void setControllerKnowsAboutAggro(boolean controllerKnowsAboutAggro) {
         if (!fake) {
             this.controllerKnowsAboutAggro = controllerKnowsAboutAggro;
         }
@@ -2215,5 +2215,22 @@ public class Monster extends AbstractLoadedLife {
         }
 
         this.getMap().dismissRemoveAfter(this);
+    }
+
+    public void switchController (Character newController, boolean immediateAggro) {
+        Character controller = getController();
+        if (controller == newController) {
+            return;
+        }
+        if (controller != null) {
+            controller.stopControllingMonster(this);
+            controller.sendPacket(PacketCreator.stopControllingMonster(getObjectId()));
+        }
+        newController.controlMonster(this, immediateAggro);
+        setController(newController);
+        if (immediateAggro) {
+            setControllerHasAggro(true);
+        }
+        setControllerKnowsAboutAggro(false);
     }
 }

@@ -60,6 +60,8 @@ public enum RecvOpcode implements Opcode {
     FACE_EXPRESSION(0x5C), // 面部表情
     ITEM_MOVE(0x62), // 移动道具
     USE_ITEM(0x63), // 使用道具
+
+    CALC_Damage_Stat_Request(0x6C), // 计算伤害状态请求
     CANCEL_ITEM_EFFECT(0x49), // 取消道具效果
     USE_CASH_ITEM(0x53), // 使用现金道具
     USE_RETURN_SCROLL(0x64), // 使用回城卷轴
@@ -89,10 +91,14 @@ public enum RecvOpcode implements Opcode {
 
     MOVE_LIFE(0x9D), // 移动NPC/怪物(常用于控制权同步)
     ITEM_PICKUP(0x89), // 拾取道具
-    ENTER_MTS(0x77); // 进入MTS(拍卖所)
+    ENTER_MTS(0x77),// 进入MTS(拍卖所)
+
+    // CReactorPool::OnPacket
+    DAMAGE_REACTOR(0x8C), // 反应堆受到伤害
 
 
 
+    ;
     private int code = -2;
 
     RecvOpcode(int code) {

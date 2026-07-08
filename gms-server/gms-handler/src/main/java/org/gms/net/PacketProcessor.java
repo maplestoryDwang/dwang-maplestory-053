@@ -183,13 +183,14 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.PLAYER_LOGGEDIN, new PlayerLoggedinHandler(channelDeps.noteService()));
         registerHandler(RecvOpcode.CHANGE_MAP, new ChangeMapHandler());
         registerHandler(RecvOpcode.MOVE_LIFE, new MoveLifeHandler());
-        registerHandler(RecvOpcode.CLOSE_RANGE_ATTACK, new CloseRangeDamageHandler());
+        registerHandler(RecvOpcode.CLOSE_RANGE_ATTACK, new CloseRangeDamageHandler());                       //   check
         registerHandler(RecvOpcode.RANGED_ATTACK, new RangedAttackHandler());
         registerHandler(RecvOpcode.MAGIC_ATTACK, new MagicDamageHandler());
         registerHandler(RecvOpcode.TAKE_DAMAGE, new TakeDamageHandler());
         registerHandler(RecvOpcode.MOVE_PLAYER, new MovePlayerHandler());                                    //   check
         registerHandler(RecvOpcode.USE_CASH_ITEM, new UseCashItemHandler(channelDeps.noteService()));
         registerHandler(RecvOpcode.USE_ITEM, new UseItemHandler());
+        registerHandler(RecvOpcode.CALC_Damage_Stat_Request, new DefaultUsedPacketHandler());
         registerHandler(RecvOpcode.USE_RETURN_SCROLL, new UseItemHandler());
         registerHandler(RecvOpcode.USE_UPGRADE_SCROLL, new ScrollHandler());
 //        registerHandler(RecvOpcode.USE_SUMMON_BAG, new UseSummonBagHandler());
@@ -222,7 +223,7 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.USE_ITEMEFFECT, new UseItemEffectHandler());
 //        registerHandler(RecvOpcode.USE_CHAIR, new UseChairHandler());
 //        registerHandler(RecvOpcode.CANCEL_CHAIR, new CancelChairHandler());
-//        registerHandler(RecvOpcode.DAMAGE_REACTOR, new ReactorHitHandler());
+        registerHandler(RecvOpcode.DAMAGE_REACTOR, new ReactorHitHandler());
 //        registerHandler(RecvOpcode.GUILD_OPERATION, new GuildOperationHandler());
 //        registerHandler(RecvOpcode.DENY_GUILD_REQUEST, new DenyGuildRequestHandler());
 //        registerHandler(RecvOpcode.BBS_OPERATION, new BBSOperationHandler());

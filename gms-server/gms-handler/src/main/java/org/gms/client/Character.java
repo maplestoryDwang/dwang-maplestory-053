@@ -893,6 +893,8 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void hide(boolean hide, boolean login) {
+
+/*
         if (isGM() && hide != this.hidden) {
             if (!hide) {
                 this.hidden = false;
@@ -920,7 +922,7 @@ public class Character extends AbstractCharacterObject {
                 this.releaseControlledMonsters();
             }
             enableActions();
-        }
+        }*/
     }
 
     public void hide(boolean hide) {
@@ -1729,7 +1731,7 @@ public class Character extends AbstractCharacterObject {
         }
         if (getMap(to.getId(), true) == null) return; //判断地图不存在则直接返回并发送提示消息。
 
-        this.mapTransitioning.set(true);
+//        this.mapTransitioning.set(true);
         // 显式清空“传送距离校验上下文”，避免跨图后旧上下文残留
         clearTeleportDistanceContext();
 

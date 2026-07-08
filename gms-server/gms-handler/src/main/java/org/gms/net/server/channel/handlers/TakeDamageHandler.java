@@ -21,11 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.gms.net.server.channel.handlers;
 
-import org.gms.client.BuffStat;
+import org.gms.client.*;
 import org.gms.client.Character;
-import org.gms.client.Client;
-import org.gms.client.Skill;
-import org.gms.client.SkillFactory;
 import org.gms.client.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
@@ -38,6 +35,7 @@ import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.skills.Aran;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.StatEffect;
@@ -62,7 +60,82 @@ import java.util.Optional;
 public final class TakeDamageHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(TakeDamageHandler.class);
 
+
     @Override
+    public void handlePacket(InPacket slea, Client c) {
+        // damage from map object
+        // 26 00 EB F2 2B 01 FE 25 00 00 00 00 00
+        // damage from monster
+        // 26 00 0F 60 4C 00 FF 48 01 00 00 B5 89 5D 00 CC CC CC CC 00 00 00 00
+
+        slea.readInt();
+        int damagefrom = slea.readByte();
+        int damage = slea.readInt();
+        int oid = 0;
+        int monsteridfrom = 0;
+        if (damagefrom != -2) {
+            monsteridfrom = slea.readInt();
+            oid = slea.readInt();
+        }
+
+        Character player = c.getPlayer();
+
+        if (damage < 0 || damage > 60000) {
+            return;
+        }
+        if (damage > 0 && !player.isHidden()) {
+            if (damagefrom == -1 && damage > 0) {
+                Integer pguard = player.getBuffedValue(BuffStat.POWERGUARD);
+                if (pguard != null) {
+                    // why do we have to do this? -.- the client shows the damage...
+                    Monster attacker = (Monster) player.getMap().getMapObject(oid);
+                    if (attacker != null && !attacker.isBoss()) {
+                        int bouncedamage = (int) (damage * (pguard.doubleValue() / 100));
+                        bouncedamage = Math.min(bouncedamage, attacker.getMaxHp() / 10);
+                        player.getMap().damageMonster(player, attacker, bouncedamage);
+                        damage -= bouncedamage;
+                        player.getMap().broadcastMessage(player, PacketCreator.damageMonster(oid, bouncedamage), false, true);
+                    }
+                }
+            }
+            Integer mguard = player.getBuffedValue(BuffStat.MAGIC_GUARD);
+            Integer mesoguard = player.getBuffedValue(BuffStat.MESOGUARD);
+            if (mguard != null) {
+                List<Pair<MapleStat, Integer>> stats = new ArrayList<Pair<MapleStat , Integer>>(2);
+                int mploss = (int) (damage * (mguard.doubleValue() / 100.0));
+                int hploss = damage - mploss;
+                if (mploss > player.getMp()) {
+                    hploss += mploss - player.getMp();
+                    mploss = player.getMp();
+                }
+
+                player.setHp(player.getHp() - hploss);
+                player.setMp(player.getMp() - mploss);
+                stats.add(new Pair<MapleStat, Integer>(MapleStat.HP, player.getHp()));
+                stats.add(new Pair<MapleStat, Integer>(MapleStat.MP, player.getMp()));
+                c.sendPacket(PacketCreator.updatePlayerStats(stats, false, player));
+            } else if(mesoguard != null) {
+                damage = (damage % 2 == 0) ? damage / 2 : (damage / 2) + 1;
+                int mesoloss = (int) (damage * (mesoguard.doubleValue() / 100.0));
+                if(player.getMeso() < mesoloss) {
+                    player.gainMeso(-player.getMeso(), false);
+                    player.cancelBuffStats(BuffStat.MESOGUARD);
+                } else {
+                    player.gainMeso(-mesoloss, false);
+                }
+                player.addHP(-damage);
+            } else {
+                player.addHP(-damage);
+            }
+
+        }
+        // player.getMap().broadcastMessage(null, MaplePacketCreator.damagePlayer(oid, 30000, damage));
+        if (!player.isHidden()) {
+            player.getMap().broadcastMessage(player,
+                    PacketCreator.damagePlayer(damagefrom, monsteridfrom, player.getId(), damage), false);
+        }
+    }
+/*    @Override
     public void handlePacket(InPacket p, Client c) {
         List<Character> banishPlayers = new ArrayList<>();
 
@@ -321,5 +394,5 @@ public final class TakeDamageHandler extends AbstractPacketHandler {
         for (Character player : banishPlayers) {  // chill, if this list ever gets non-empty an attacker does exist, trust me :)
             player.changeMapBanish(attacker.getBanish().getMap(), attacker.getBanish().getPortal(), attacker.getBanish().getMsg());
         }
-    }
+    }*/
 }

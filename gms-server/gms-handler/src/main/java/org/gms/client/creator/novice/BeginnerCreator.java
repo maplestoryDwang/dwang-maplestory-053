@@ -36,6 +36,9 @@ public class BeginnerCreator extends CharacterFactory {
     private static CharacterFactoryRecipe createRecipe(Job job, int level, int map, int top, int bottom, int shoes, int weapon, int str, int dex, int inte, int luk) {
         CharacterFactoryRecipe recipe = new CharacterFactoryRecipe(job, level, map, top, bottom, shoes, weapon, str, dex, inte, luk);
         giveItem(recipe, ItemId.BEGINNERS_GUIDE, 1, InventoryType.ETC);
+        giveItem(recipe, ItemId.BEGINNERS_HAT, 1, InventoryType.EQUIP);
+        giveItem(recipe, ItemId.BEGINNERS_OVERALL, 1, InventoryType.EQUIP);
+//        giveItem(recipe, ItemId.BEGINNERS_SHOES, 1, InventoryType.CASH);
         return recipe;
     }
 

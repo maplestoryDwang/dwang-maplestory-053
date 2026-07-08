@@ -25,13 +25,18 @@ import java.util.List;
 
 public enum SendPacketOpcode implements Opcode {
 
+    // LOGIN
+    // check ↓
+    LOGIN_STATUS(0x00), // 登录状态
+
+    // CHANNEL
+    // check ↓
+    CHANGE_CHANNEL(0x03), // 更改频道
+
     // GENERAL
     // check ↓
     PING(0x09), // 心跳包
 
-    // LOGIN
-    // check ↓
-    LOGIN_STATUS(0x00), // 登录状态
     // check ↓
     SERVERLIST(0x05), // 服务器列表
     // check ↓
@@ -51,24 +56,26 @@ public enum SendPacketOpcode implements Opcode {
     // check ↓
     RELOG_RESPONSE(0x15), // 重新登录回应
 
-    // CHANNEL
-    CHANGE_CHANNEL(0x03), // 更改频道
+
+    /*CWvsContext::OnPacket*/
 //    MODIFY_INVENTORY_ITEM(0x18), // 更新/修改背包道具
+    // check ↓
     INVENTORY_OPERATION(0x18), // 物品栏操作
 
 
 //    UPDATE_STATS(0x23), // 更新角色属性(HP/MP/EXP等)
-    STAT_CHANGED(0x23), // 状态改变  53没有
+    STAT_CHANGED(0x23), // 状态改变  和org.gms.client.MapleStat关联
 
 
     GIVE_BUFF(0x3A), // 给予角色Buff
     CANCEL_BUFF(0x24), // 取消角色Buff
     UPDATE_SKILLS(0x2F), // 更新技能等级
     FAME_RESPONSE(0x31), // 人气度操作回应
-    SHOW_STATUS_INFO(0x32), // 显示系统信息提示
+    SHOW_STATUS_INFO(0x32), // 显示系统信息提示    右下角提示框，经验、拣到的东西等等
     SHOW_MESO_GAIN(0x33), // 显示获得金币提示
     SHOW_QUEST_COMPLETION(0x1F), // 显示任务完成
     SPAWN_PORTAL(0x29), // 初始化传送门
+    // check ↓
     CHAR_INFO(0x2A), // 角色信息查看回应
 
     // check ↓
@@ -124,7 +131,9 @@ public enum SendPacketOpcode implements Opcode {
     SPAWN_NPC(0xA7), // 地图生成NPC
     // check ↓
     SPAWN_NPC_REQUEST_CONTROLLER(0xAC), // 获取NPC控制权
+    // check ↓
     DROP_ITEM_FROM_MAPOBJECT(0xB8), // 地图掉落道具
+    // check ↓
     REMOVE_ITEM_FROM_MAP(0xB9), // 移除地图上的道具(捡起/消失)
     SPAWN_MIST(0xBD), // 生成烟雾效果(如毒雾)
     REMOVE_MIST(0xBE), // 移除烟雾效果
@@ -186,7 +195,7 @@ public enum SendPacketOpcode implements Opcode {
     /*CWvsContext::OnPacket*/
     INVENTORY_GROW(0x1E), // 扩展物品栏
     FORCED_STAT_SET(0x22), // 强制设置状态
-    FORCED_STAT_RESET(0x23), // 强制重置状态
+    FORCED_STAT_RESET(-1), // 强制重置状态0x23
     SKILL_USE_RESULT(0x25), // 技能使用结果
     OPEN_FULL_CLIENT_DOWNLOAD_LINK(0x28), // 打开完整客户端下载链接
     MAP_TRANSFER_RESULT(0x2A), // 地图转移结果
@@ -289,7 +298,7 @@ public enum SendPacketOpcode implements Opcode {
     BLOW_WEATHER(0x8E), // 吹风天气效果
     PLAY_JUKEBOX(0x8F), // 播放点唱机
 
-    ADMIN_RESULT(0x90), // 管理员结果
+    ADMIN_RESULT(-1), // 管理员结果                                 没找到
     OX_QUIZ(0x91), // QUIZ（OX问答）
     GMEVENT_INSTRUCTIONS(0x92), // DESC（游戏事件说明）
     CONTI_MOVE(0x94), // 连续移动

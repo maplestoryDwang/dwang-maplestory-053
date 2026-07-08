@@ -2025,7 +2025,7 @@ public class PacketCreator {
         final OutPacket p = OutPacket.create(SendPacketOpcode.SHOW_STATUS_INFO);
         if (!inChat) {
             p.writeByte(0);
-            p.writeShort(1); //v83
+            p.write(1); //v83
         } else {
             p.writeByte(5);
         }
@@ -2091,9 +2091,15 @@ public class PacketCreator {
         return p;
     }
 
+    /**
+     * 显示存在的drop给新来的USER展示
+     * @param drop
+     * @param giveOwnership
+     * @return
+     */
     public static Packet updateMapItemObject(MapItem drop, boolean giveOwnership) {
         OutPacket p = OutPacket.create(SendPacketOpcode.DROP_ITEM_FROM_MAPOBJECT);
-        p.writeByte(2);
+        p.writeByte(2); // 1 with animation, 2 without o.o
         p.writeInt(drop.getObjectId());
         p.writeBool(drop.getMeso() > 0);
         p.writeInt(drop.getItemId());
@@ -2103,7 +2109,13 @@ public class PacketCreator {
         p.writeInt(giveOwnership ? 0 : -1);
 
         if (drop.getMeso() == 0) {
-            addExpirationTime(p, drop.getItem().getExpiration());
+//            addExpirationTime(p, drop.getItem().getExpiration());
+
+            p.write(ITEM_MAGIC);
+            //TODO getTheExpirationTimeFromSomewhere o.o
+            addExpirationTime(p, System.currentTimeMillis(), false);
+            // mplew.write(1);
+            p.write(0);
         }
         p.writeBool(!drop.isPlayerDrop());
         return p;
@@ -2123,14 +2135,23 @@ public class PacketCreator {
         p.writeInt(drop.getClientsideOwnerId()); // owner charid/partyid :)
         p.writeByte(dropType); // 0 = timeout for non-owner, 1 = timeout for non-owner's party, 2 = FFA, 3 = explosive/FFA
         p.writePos(dropto);
-        p.writeInt(drop.getDropper().getObjectId()); // dropper oid, found thanks to Li Jixue
+        p.writeInt(drop.getDropper().getObjectId()); // dropper oid, found thanks to Li Jixue 用于getmob
 
         if (mod != 2) {
             p.writePos(dropfrom);
             p.writeShort(0);//Fh?
         }
+
+
+        //  v3 = *(_DWORD *)(v113 + 48) == 0; --v113 + 48是meso
+        //  CInPacket::DecodeBuffer((void *)(v113 + 128), v87.cyVal.Hi);
+        //  8个字节
         if (drop.getMeso() == 0) {
-            addExpirationTime(p, drop.getItem().getExpiration());
+            p.write(ITEM_MAGIC);
+            //TODO getTheExpirationTimeFromSomewhere o.o
+            addExpirationTime(p, System.currentTimeMillis(), false);
+            p.write(0);
+
         }
         p.writeByte(drop.isPlayerDrop() ? 0 : 1); //pet EQP pickup
         return p;
@@ -2663,6 +2684,26 @@ public class PacketCreator {
         return p;
     }
 
+    //V53
+    public static Packet moveMonster(int useskill, int skill, int oid, Point startPos, List<LifeMovementFragment> moves) {
+        /*
+         * A0 00 C8 00 00 00 00 FF 00 00 00 00 48 02 7D FE 02 00 1C 02 7D FE 9C FF 00 00 2A 00 03 BD 01 00 DC 01 7D FE
+         * 9C FF 00 00 2B 00 03 7B 02
+         */
+        final OutPacket mplew = OutPacket.create(SendPacketOpcode.MOVE_MONSTER);
+        // mplew.writeShort(0xA2); // 47 a0
+        mplew.writeInt(oid);
+        mplew.write(useskill);
+        mplew.writeInt(skill);
+        mplew.write(0);
+        mplew.writeShort(startPos.x);
+        mplew.writeShort(startPos.y);
+
+        serializeMovementList(mplew, moves);
+
+        return mplew;
+    }
+
     public static Packet moveMonster(int oid, boolean skillPossible, int skill, int skillId, int skillLevel, int pOption,
                                      Point startPos, InPacket movementPacket, long movementDataLength) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_MONSTER);
@@ -2982,6 +3023,22 @@ public class PacketCreator {
         return p;
     }
 
+
+    public static Packet damagePlayer(int skill, int monsteridfrom, int cid, int damage) {
+        // 82 00 30 C0 23 00 FF 00 00 00 00 B4 34 03 00 01 00 00 00 00 00 00
+        final OutPacket mplew = OutPacket.create(SendPacketOpcode.DAMAGE_PLAYER);
+        // mplew.writeShort(0x84); // 47 82
+        mplew.writeInt(cid);
+        mplew.write(skill);
+        mplew.writeInt(0);
+        mplew.writeInt(monsteridfrom);
+        mplew.write(1);
+        mplew.write(0);
+        mplew.write(0); // > 0 = heros will effect
+        mplew.writeInt(damage);
+
+        return mplew;
+    }
     public static Packet damagePlayer(int skill, int monsteridfrom, int cid, int damage, int fake, int direction, boolean pgmr, int pgmr_1, boolean is_pg, int oid, int pos_x, int pos_y) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.DAMAGE_PLAYER);
         p.writeInt(cid);
@@ -3102,6 +3159,7 @@ public class PacketCreator {
         p.writeShort(chr.getJob().getId());
         p.writeShort(chr.getFame());
         p.writeByte(chr.getMarriageRing() != null ? 1 : 0);
+
         String guildName = "";
         String allianceName = "";
         if (chr.getGuildId() > 0) {
@@ -3114,24 +3172,26 @@ public class PacketCreator {
             }
         }
         p.writeString(guildName);
-        p.writeString(allianceName);  // does not seem to work
-        p.writeByte(0); // pMedalInfo, thanks to Arnah (Vertisy)
+//        p.writeString(allianceName);  // does not seem to work
+//        p.writeByte(0); // pMedalInfo, thanks to Arnah (Vertisy)
 
         // CUIUserInfo::SetMultiPetInfo
         Pet[] pets = chr.getPets();
-        for (byte i = 0; i < 3; i++) {
-            if (pets[i] != null) {
-                p.writeBool(true);
-                p.writeInt(pets[i].getItemId()); // petid
-                p.writeString(pets[i].getName());
-                p.writeByte(pets[i].getLevel()); // pet level
-                p.writeShort(pets[i].getTameness()); // pet tameness
-                p.writeByte(pets[i].getFullness()); // pet fullness
-                p.writeShort(0);
-                p.writeInt(chr.getPetEquipItemId(i));
-            }
+//        for (byte i = 0; i < 1; i++) {
+        byte i = 0;
+        if (pets[i] != null) {
+            p.writeBool(true);
+            p.writeInt(pets[i].getItemId()); // petid
+            p.writeString(pets[i].getName());
+            p.writeByte(pets[i].getLevel()); // pet level
+            p.writeShort(pets[i].getTameness()); // pet tameness
+            p.writeByte(pets[i].getFullness()); // pet fullness
+            p.writeShort(0);
+            p.writeInt(chr.getPetEquipItemId(i));
+        } else {
+            p.writeByte(0); //
         }
-        p.writeByte(0); //end of pets
+//        }
 
         Item mount;     //mounts can potentially crash the client if the player's level is not properly checked
         if (chr.getMapleMount() != null && (mount = chr.getInventory(InventoryType.EQUIPPED).getItem((short) -18)) != null && ItemInformationProvider.getInstance().getEquipLevelReq(mount.getItemId()) <= chr.getLevel()) {
@@ -3143,12 +3203,13 @@ public class PacketCreator {
         } else {
             p.writeByte(0);
         }
+        // 愿望单
         p.writeByte(chr.getCashShop().getWishList().size());
         for (int sn : chr.getCashShop().getWishList()) {
             p.writeInt(sn);
         }
 
-        MonsterBook book = chr.getMonsterBook();
+        /*MonsterBook book = chr.getMonsterBook();
         p.writeInt(book.getBookLevel());
         p.writeInt(book.getNormalCard());
         p.writeInt(book.getSpecialCard());
@@ -3172,7 +3233,7 @@ public class PacketCreator {
         p.writeShort(medalQuests.size());
         for (Short s : medalQuests) {
             p.writeShort(s);
-        }
+        }*/
         return p;
     }
 
@@ -3247,7 +3308,10 @@ public class PacketCreator {
         final OutPacket p = OutPacket.create(SendPacketOpcode.SHOW_STATUS_INFO);
         p.writeByte(1);
         p.writeShort(quest);
-        p.writeByte(0);
+        p.writeShort(0);
+        p.write(0);
+        p.writeInt(0);
+        p.writeInt(0);
         return p;
     }
 
@@ -3904,6 +3968,10 @@ public class PacketCreator {
         return p;
     }
 
+    /*
+        加点完客户端发送 CP_108
+        return CUser::OnCalcDamageStatSetRequest(pExceptionObject);
+     */
     public static Packet updateSkill(int skillId, int level, int masterlevel, long expiration) {
         OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_SKILLS);
         p.writeByte(1);
@@ -3911,8 +3979,8 @@ public class PacketCreator {
         p.writeInt(skillId);
         p.writeInt(level);
         p.writeInt(masterlevel);
-        addExpirationTime(p, expiration);
-        p.writeByte(4);
+//        addExpirationTime(p, expiration);
+        p.write(1);
         return p;
     }
 
