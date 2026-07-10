@@ -89,6 +89,9 @@ public final class SpecialMoveHandler extends AbstractPacketHandler {
                     cooldownTime /= 60;
                 }
 
+                // todo CD 测试技能只有5S
+                cooldownTime = 5;
+
                 c.sendPacket(PacketCreator.skillCooldown(skillid, cooldownTime));
                 chr.addCooldown(skillid, currentServerTime(), SECONDS.toMillis(cooldownTime));
             }

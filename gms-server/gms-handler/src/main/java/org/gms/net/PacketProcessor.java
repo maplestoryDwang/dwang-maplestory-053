@@ -168,7 +168,7 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.NAME_TRANSFER, new TransferNameHandler());
         registerHandler(RecvOpcode.CHECK_CHAR_NAME, new TransferNameResultHandler());
 //        registerHandler(RecvOpcode.WORLD_TRANSFER, new TransferWorldHandler());
-        registerHandler(RecvOpcode.CHANGE_CHANNEL, new ChangeChannelHandler());
+        registerHandler(RecvOpcode.CHANGE_CHANNEL, new ChangeChannelHandler());                              //   check
         registerHandler(RecvOpcode.STRANGE_DATA, LoginRequiringNoOpHandler.getInstance());
         registerHandler(RecvOpcode.GENERAL_CHAT, new GeneralChatHandler());
         registerHandler(RecvOpcode.WHISPER, new WhisperHandler());
@@ -176,7 +176,7 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.NPC_TALK_MORE, new NPCMoreTalkHandler());                                //   check
         registerHandler(RecvOpcode.QUEST_ACTION, new QuestActionHandler());
 //        registerHandler(RecvOpcode.GRENADE_EFFECT, new GrenadeEffectHandler());
-        registerHandler(RecvOpcode.NPC_SHOP, new NPCShopHandler());
+        registerHandler(RecvOpcode.NPC_SHOP, new NPCShopHandler());                                          //   check
 //        registerHandler(RecvOpcode.ITEM_SORT, new InventoryMergeHandler());
         registerHandler(RecvOpcode.ITEM_MOVE, new ItemMoveHandler());
         registerHandler(RecvOpcode.MESO_DROP, new MesoDropHandler());
@@ -223,13 +223,13 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.USE_ITEMEFFECT, new UseItemEffectHandler());
 //        registerHandler(RecvOpcode.USE_CHAIR, new UseChairHandler());
 //        registerHandler(RecvOpcode.CANCEL_CHAIR, new CancelChairHandler());
-        registerHandler(RecvOpcode.DAMAGE_REACTOR, new ReactorHitHandler());
+        registerHandler(RecvOpcode.DAMAGE_REACTOR, new ReactorHitHandler());                                            //   check
 //        registerHandler(RecvOpcode.GUILD_OPERATION, new GuildOperationHandler());
 //        registerHandler(RecvOpcode.DENY_GUILD_REQUEST, new DenyGuildRequestHandler());
 //        registerHandler(RecvOpcode.BBS_OPERATION, new BBSOperationHandler());
 //        registerHandler(RecvOpcode.SKILL_EFFECT, new SkillEffectHandler());
 //        registerHandler(RecvOpcode.MESSENGER, new MessengerHandler());
-        registerHandler(RecvOpcode.NPC_ACTION, new NPCAnimationHandler());
+        registerHandler(RecvOpcode.NPC_ACTION, new NPCAnimationHandler());                                              //   check
 //        registerHandler(RecvOpcode.CHECK_CASH, new TouchingCashShopHandler());
 //        registerHandler(RecvOpcode.CASHSHOP_OPERATION, new CashOperationHandler(channelDeps.noteService()));
 //        registerHandler(RecvOpcode.COUPON_CODE, new CouponCodeHandler());

@@ -656,8 +656,10 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             map.damageMonster(attacker, monster, damage);
         }
     }
-    public AttackInfo parseDamageClose053(InPacket lea, boolean ranged) {
-        AttackInfo ret = new AttackInfo();
+//    public AttackInfo parseDamage(InPacket lea, boolean ranged) {
+    protected AttackInfo parseDamage(InPacket lea, Character chr, boolean ranged, boolean magic) {
+
+            AttackInfo ret = new AttackInfo();
 
         lea.readByte();
         ret.numAttackedAndDamage = lea.readByte();
@@ -680,13 +682,6 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             lea.skip(6);
         }
 
-        // TODO we need information if an attack was a crit or not but it does not seem to be in this packet - find out
-        // if it is o.o
-        // noncrit strafe
-        // 24 00 01 14 FE FE 30 00 00 97 04 06 99 2F EE 00 04 00 00 00 41 6B 00 00 00 06 81 00 01 00 00 5F 00 00 00 5F 00 D2 02 A3 19 00 00 43 0C 00 00 AD 0B 00 00 DB 12 00 00 64 00 5F 00
-        //
-        // fullcrit strafe:
-        // 24 00 01 14 FE FE 30 00 00 97 04 06 F5 C3 EE 00 04 00 00 00 41 6B 00 00 00 06 81 00 01 00 00 5F 00 00 00 5F 00 D2 02 6E 0F 00 00 EA 12 00 00 58 15 00 00 56 11 00 00 64 00 5F 00
 
         for (int i = 0; i < ret.numAttacked; i++) {
             int oid = lea.readInt();
@@ -703,7 +698,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
         return ret;
     }
 
-    protected AttackInfo parseDamage(InPacket p, Character chr, boolean ranged, boolean magic) {
+    protected AttackInfo parseDamage083(InPacket p, Character chr, boolean ranged, boolean magic) {
         //2C 00 00 01 91 A1 12 00 A5 57 62 FC E2 75 99 10 00 47 80 01 04 01 C6 CC 02 DD FF 5F 00
 
 

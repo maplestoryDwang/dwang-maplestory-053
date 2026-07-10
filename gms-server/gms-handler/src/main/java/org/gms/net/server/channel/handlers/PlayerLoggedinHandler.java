@@ -383,6 +383,10 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                 if (player.isGM()) {
                     // 没有
 //                    Server.getInstance().broadcastGMMessage(c.getWorld(), PacketCreator.earnTitleMessage((player.gmLevel() < 6 ? "GM " : "Admin ") + player.getName() + " 登录了游戏"));
+
+                    // 只能加普通隐身
+                    SkillFactory.getSkill(5101004).getEffect(1).applyTo(player);
+
                 } else {
                     if (GameConfig.getServerBoolean("use_login_notification")) {
                         String msg = I18nUtil.getMessage("Character.login.globalNotice", player.getName());

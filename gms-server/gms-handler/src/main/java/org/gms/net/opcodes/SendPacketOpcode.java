@@ -166,6 +166,12 @@ public enum SendPacketOpcode implements Opcode {
     FIELD_EFFECT(0x53), // 场景效果  083 =》 0x8A
 
 
+    /**
+     *
+     * CUserLocal::OnPacket
+     *
+     */
+    COOLDOWN(0x6F), // 冷却时间
 
 
     /*
@@ -351,7 +357,7 @@ public enum SendPacketOpcode implements Opcode {
     SPAWN_GUIDE(0xDF), // 生成引导者
     TALK_GUIDE(0xE0), // 引导者对话
     SHOW_COMBO(0xE1), // 显示连击
-    COOLDOWN(0xEA), // 冷却时间
+
     RESET_MONSTER_ANIMATION(0xF4),//LOL? o.o // 重置怪物动画
     //Something with mob, but can't figure out00 // 与怪物有关，但无法确定
     ARIANT_THING(0xF9), // ARIANT相关操作

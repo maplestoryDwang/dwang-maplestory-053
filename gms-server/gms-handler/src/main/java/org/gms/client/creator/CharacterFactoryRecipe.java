@@ -21,6 +21,7 @@ package org.gms.client.creator;
 
 import org.gms.client.Job;
 import org.gms.client.Skill;
+import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;
@@ -145,8 +146,11 @@ public class CharacterFactoryRecipe {
             p = new AtomicInteger(0);
             runningTypePosition.put(itemType, p);
         }
-
-        itemsWithType.add(new Pair<>(new Item(itemid, (short) p.getAndIncrement(), (short) quantity), itemType));
+        if (itemType.equals(InventoryType.EQUIP) || itemType.equals(InventoryType.EQUIPPED)) {
+            itemsWithType.add(new Pair<>(new Equip(itemid, (short) p.getAndIncrement(), (short) quantity), itemType));
+        } else {
+            itemsWithType.add(new Pair<>(new Item(itemid, (short) p.getAndIncrement(), (short) quantity), itemType));
+        }
     }
 
     public Job getJob() {

@@ -21,20 +21,8 @@
 package org.gms.util;
 
 import com.mybatisflex.annotation.Column;
-import org.gms.client.BuddylistEntry;
-import org.gms.client.BuffStat;
+import org.gms.client.*;
 import org.gms.client.Character;
-import org.gms.client.Client;
-import org.gms.client.Disease;
-import org.gms.client.FamilyEntitlement;
-import org.gms.client.FamilyEntry;
-import org.gms.client.MonsterBook;
-import org.gms.client.Mount;
-import org.gms.client.QuestStatus;
-import org.gms.client.Ring;
-import org.gms.client.Skill;
-import org.gms.client.SkillMacro;
-import org.gms.client.MapleStat;
 import org.gms.client.inventory.*;
 import org.gms.client.inventory.Equip.ScrollResult;
 import org.gms.client.keybind.KeyBinding;
@@ -1230,7 +1218,7 @@ public class PacketCreator {
 
     /**
      * Gets an empty stat update.
-     *
+     * 状态清空
      * @return The empty stat update packet.
      */
     public static Packet enableActions() {
@@ -3249,6 +3237,32 @@ public class PacketCreator {
      */
     //1F 00 00 00 00 00 03 00 00 40 00 00 00 E0 00 00 00 00 00 00 00 00 E0 01 8E AA 4F 00 00 C2 EB 0B E0 01 8E AA 4F 00 00 C2 EB 0B 0C 00 8E AA 4F 00 00 C2 EB 0B 44 02 8E AA 4F 00 00 C2 EB 0B 44 02 8E AA 4F 00 00 C2 EB 0B 00 00 E0 7A 1D 00 8E AA 4F 00 00 00 00 00 00 00 00 03
     public static Packet giveBuff(int buffid, int bufflength, List<Pair<BuffStat, Integer>> statups) {
+
+        final OutPacket mplew = OutPacket.create(SendPacketOpcode.GIVE_BUFF);
+        long mask = getLongMask(statups);
+        mplew.writeLong(mask);
+        for (Pair<BuffStat, Integer> statup : statups) {
+            mplew.writeShort(statup.getRight().shortValue());
+            mplew.writeInt(buffid);
+            mplew.writeInt(bufflength);
+        }
+
+
+        mplew.writeShort(0); // ??? wk charges have 600 here �.o
+        mplew.write(0);         // combo 600, too
+
+        return mplew;
+
+    }
+    private static <E extends LongValueHolder> long getLongMask(List<Pair<E, Integer>> statups) {
+        long mask = 0;
+        for (Pair<E, Integer> statup : statups) {
+            mask |= statup.getLeft().getValue();
+        }
+        return mask;
+    }
+
+    public static Packet giveBuff083(int buffid, int bufflength, List<Pair<BuffStat, Integer>> statups) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.GIVE_BUFF);
         boolean special = false;
         writeLongMask(p, statups);
@@ -3260,7 +3274,7 @@ public class PacketCreator {
             p.writeInt(buffid);
             p.writeInt(bufflength);
         }
-        p.writeInt(0);
+        p.writeShort(0);
         p.writeByte(0);
         p.writeInt(statups.get(0).getRight()); //Homing beacon ...
 
@@ -3469,32 +3483,21 @@ public class PacketCreator {
         return p;
     }
 
+    // 053没有first second的说法
     private static void writeLongMask(final OutPacket p, List<Pair<BuffStat, Integer>> statups) {
         long firstmask = 0;
-        long secondmask = 0;
         for (Pair<BuffStat, Integer> statup : statups) {
-            if (statup.getLeft().isFirst()) {
                 firstmask |= statup.getLeft().getValue();
-            } else {
-                secondmask |= statup.getLeft().getValue();
-            }
         }
         p.writeLong(firstmask);
-        p.writeLong(secondmask);
     }
 
     private static void writeLongMaskFromList(OutPacket p, List<BuffStat> statups) {
         long firstmask = 0;
-        long secondmask = 0;
         for (BuffStat statup : statups) {
-            if (statup.isFirst()) {
                 firstmask |= statup.getValue();
-            } else {
-                secondmask |= statup.getValue();
-            }
         }
         p.writeLong(firstmask);
-        p.writeLong(secondmask);
     }
 
     // 83是128位判断。16个字节
@@ -3530,7 +3533,6 @@ public class PacketCreator {
 
     public static Packet cancelDebuff(long mask) {
         OutPacket p = OutPacket.create(SendPacketOpcode.CANCEL_BUFF);
-        p.writeLong(0);
         p.writeLong(mask);
         p.writeByte(0);
         return p;
