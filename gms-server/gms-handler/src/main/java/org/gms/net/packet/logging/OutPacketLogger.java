@@ -6,6 +6,7 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
+import org.gms.net.opcodes.OpcodeUtil;
 import org.gms.net.opcodes.SendPacketOpcode;
 import org.gms.net.packet.OutPacket;
 import org.gms.net.packet.Packet;
@@ -34,7 +35,7 @@ public class OutPacketLogger extends ChannelOutboundHandlerAdapter implements Pa
 
         final short opcode = LoggingUtil.readFirstShort(content);
 
-        if (SendPacketOpcode.sendIgnore(opcode)){
+        if (OpcodeUtil.sendIgnore(opcode)){
 
         } else if (packetLength <= LOG_CONTENT_THRESHOLD ) {
             String opcodeHex = Integer.toHexString(opcode).toUpperCase();

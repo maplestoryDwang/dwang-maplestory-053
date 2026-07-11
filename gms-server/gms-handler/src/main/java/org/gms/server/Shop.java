@@ -58,16 +58,15 @@ public class Shop {
     private final int token = ItemId.GOLDEN_MAPLE_LEAF;
 
     static {
+        // 增加所有鏢
         for (int throwingStarId : ItemId.allThrowingStarIds()) {
             rechargeableItems.add(throwingStarId);
         }
-        rechargeableItems.add(ItemId.BLAZE_CAPSULE);
-        rechargeableItems.add(ItemId.GLAZE_CAPSULE);
-        rechargeableItems.add(ItemId.BALANCED_FURY);
+//        rechargeableItems.add(ItemId.BLAZE_CAPSULE);             // doesn't exist in gms 053
+//        rechargeableItems.add(ItemId.GLAZE_CAPSULE);            // doesn't exist in gms 053
+//        rechargeableItems.add(ItemId.BALANCED_FURY);            // doesn't exist in gms 053
         rechargeableItems.remove(ItemId.DEVIL_RAIN_THROWING_STAR); // doesn't exist
-        for (int bulletId : ItemId.allBulletIds()) {
-            rechargeableItems.add(bulletId);
-        }
+//
     }
 
     private Shop(int id, int npcId) {

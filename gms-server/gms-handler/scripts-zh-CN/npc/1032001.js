@@ -48,7 +48,7 @@ function start() {
     } else {
         if (cm.getJobId() == 0) {
             actionx["1stJob"] = true;
-            cm.sendNext("想成为一个#r魔法师#k吗？有一些标准需要满足，因为我们不能接受每个人... #b你的等级至少应该是8#k，首要目标是获得" + cm.getFirstJobStatRequirement(jobType) + "。让我们看看。");   // thanks Vcoc for noticing a need to state and check requirements on first job adv starting message
+            cm.sendNext("想成为一个#r魔法师#k吗？有一些标准需要满足，因为我们不能接受每个人... #b你的等级至少应该是8#k，首要目标是获得#r" + cm.getFirstJobStatRequirement(jobType) + "#k。让我们看看。");   // thanks Vcoc for noticing a need to state and check requirements on first job adv starting message
         } else if (cm.getLevel() >= 30 && cm.getJobId() == 200) {
             actionx["2ndJob"] = true;
             if (cm.haveItem(4031012)) {
@@ -124,7 +124,7 @@ function action(mode, type, selection) {
     if (actionx["1stJob"]) {
         if (status == 0) {
             if (cm.getLevel() >= 8 && cm.canGetFirstJob(jobType)) {
-                cm.sendYesNo("哦...！你看起来就像是我们团队的一员... 你只需要一点邪恶的心思，然后... 是的... 那么，你觉得怎么样？想成为魔法师吗？");
+                cm.sendYesNo("你满足基本的要求，所以你打算成为#r魔法师#k吗?");
             } else {
                 cm.sendOk("再多训练一会儿，直到你达到基本要求，我就可以教你成为#r魔法师#k的方法。");
                 cm.dispose();

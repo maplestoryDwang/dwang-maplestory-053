@@ -17,3 +17,8 @@ GMS V053，base on 083
 
 爆率查询
 org.gms.server.life.MonsterInformationProvider.retrieveDrop
+
+
+任務經驗倍率：use_quest_rate需要開啓
+删除不存在的飞镖
+DELETE from shopitems  where itemId >= 2330000  and itemId < 2340000 

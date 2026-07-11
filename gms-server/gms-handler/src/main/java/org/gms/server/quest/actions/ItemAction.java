@@ -149,7 +149,7 @@ public class ItemAction extends AbstractQuestAction {
                     }
                 }
             }
-
+            // 先丟棄任務道具
             InventoryManipulator.removeById(chr.getClient(), type, itemid, quantity, true, false);
             chr.sendPacket(PacketCreator.getShowItemGain(itemid, (short) count, true));
         }

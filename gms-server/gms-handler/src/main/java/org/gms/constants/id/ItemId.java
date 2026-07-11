@@ -70,7 +70,7 @@ public class ItemId {
     // Throwing star
     public static final int SUBI_THROWING_STARS = 2070000;
     public static final int HWABI_THROWING_STARS = 2070007;
-    public static final int BALANCED_FURY = 2070018;
+    public static final int BALANCED_FURY = 2070018;   // 平衡之怒
     public static final int CRYSTAL_ILBI_THROWING_STARS = 2070016;
     private static final int THROWING_STAR_MIN = SUBI_THROWING_STARS;
     private static final int THROWING_STAR_MAX = 2070016;
@@ -95,7 +95,7 @@ public class ItemId {
     public static final int BEGINNERS_GUIDE = 4161001;
     public static final int BEGINNERS_HAT = 1002562;
     public static final int BEGINNERS_OVERALL = 1052081;
-    public static final int BEGINNERS_SHOES = 1072097;
+    public static final int BEGINNERS_WEAPON = 1302067;  //  枫叶庆典旗
     public static final int LEGENDS_GUIDE = 4161048;
     public static final int NOBLESSE_GUIDE = 4161047;
 

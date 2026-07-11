@@ -25,6 +25,7 @@ import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;
+import org.gms.server.ItemInformationProvider;
 import org.gms.util.Pair;
 
 import java.util.LinkedHashMap;
@@ -147,7 +148,9 @@ public class CharacterFactoryRecipe {
             runningTypePosition.put(itemType, p);
         }
         if (itemType.equals(InventoryType.EQUIP) || itemType.equals(InventoryType.EQUIPPED)) {
-            itemsWithType.add(new Pair<>(new Equip(itemid, (short) p.getAndIncrement(), (short) quantity), itemType));
+            ItemInformationProvider ii = ItemInformationProvider.getInstance();
+            Item nEquip = ii.getEquipById(itemid);
+            itemsWithType.add(new Pair<>(nEquip, itemType));
         } else {
             itemsWithType.add(new Pair<>(new Item(itemid, (short) p.getAndIncrement(), (short) quantity), itemType));
         }

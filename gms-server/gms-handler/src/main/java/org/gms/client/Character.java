@@ -2113,6 +2113,7 @@ public class Character extends AbstractCharacterObject {
                         // Add NX to account, show effect and make item disappear
                         int nxGain = (mapitem.getItemId() == ItemId.NX_CARD_100 ? 100 : 250) * mItem.getQuantity(); //使点券支持按数量相乘
                         this.getCashShop().gainCash(CashShop.NX_CREDIT, nxGain);
+                        dropMessage(5, String.format("get %d gain, have %d gain", nxGain, this.getCashShop().getNxCredit()));  // 顯示點卷信息
 
                         if (GameConfig.getServerBoolean("use_announce_nx_coupon_loot")) {       //捡到点券是否展示
                             showHint(I18nUtil.getMessage("Character.pickupItem.message1", nxGain, this.getCashShop().getCash(CashShop.NX_CREDIT)), 300);
@@ -8821,11 +8822,11 @@ public class Character extends AbstractCharacterObject {
             case FORFEIT:
                 sendPacket(PacketCreator.forfeitQuest((Short) objs[0]));
                 break;
-
+            // 告訴客戶端任務完成
             case COMPLETE:
                 sendPacket(PacketCreator.completeQuest((Short) objs[0], (Long) objs[1]));
                 break;
-
+            // 任務完成之後NPC還會有對話
             case INFO:
                 QuestStatus qs = (QuestStatus) objs[0];
                 sendPacket(PacketCreator.updateQuestInfo(qs.getQuest().getId(), qs.getNpc()));

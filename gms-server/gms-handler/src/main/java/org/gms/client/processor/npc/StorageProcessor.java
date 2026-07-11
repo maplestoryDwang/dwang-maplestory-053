@@ -191,13 +191,7 @@ public class StorageProcessor {
                     }
                     break;
                 }
-                case 6: // Arrange items
-                    if (GameConfig.getServerBoolean("use_storage_item_sort")) {
-                        storage.arrangeItems(c);
-                    }
-                    c.sendPacket(PacketCreator.enableActions());
-                    break;
-                case 7: { // Mesos
+                case 6: { // Mesos
                     int meso = p.readInt();
                     int storageMesos = storage.getMeso();
                     int playerMesos = chr.getMeso();
@@ -234,7 +228,7 @@ public class StorageProcessor {
                     }
                     break;
                 }
-                case 8: // Close (unless the player decides to enter cash shop)
+                case 7: // Close (unless the player decides to enter cash shop)
                     storage.close();
                     break;
                 }

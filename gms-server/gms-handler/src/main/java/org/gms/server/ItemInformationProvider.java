@@ -357,7 +357,7 @@ public class ItemInformationProvider {
         return ret;
     }
 
-    public short getSlotMax(Client c, int itemId) {
+    public short getSlotMax083(Client c, int itemId) {
         Short slotMax = slotMaxCache.get(itemId);
         if (slotMax != null) {
             return (short) (slotMax + getExtraSlotMaxFromPlayer(c, itemId));
@@ -383,6 +383,32 @@ public class ItemInformationProvider {
 
         slotMaxCache.put(itemId, ret);
         return (short) (ret + getExtraSlotMaxFromPlayer(c, itemId));
+    }
+
+
+    public short getSlotMax(Client c, int itemId) {
+        if (slotMaxCache.containsKey(itemId))
+            return slotMaxCache.get(itemId);
+        short ret = 0;
+        Data item = getItemData(itemId);
+        if (item != null) {
+            Data smEntry = item.getChildByPath("info/slotMax");
+            if (smEntry == null) {
+                InventoryType inventoryType = ItemConstants.getInventoryType(itemId);
+                if (inventoryType.getType() == InventoryType.EQUIP.getType())
+                    ret = 1;
+                else
+                    ret = 100;
+            } else {
+                if (isThrowingStar(itemId))
+                    ret = 1;
+                else if (DataTool.getInt(smEntry) == 0)
+                    ret = 1;
+                ret = (short) DataTool.getInt(smEntry);
+            }
+        }
+        slotMaxCache.put(itemId, ret);
+        return ret;
     }
 
     public int getMeso(int itemId) {

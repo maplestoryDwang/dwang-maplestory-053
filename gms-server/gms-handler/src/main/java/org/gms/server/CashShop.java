@@ -79,6 +79,10 @@ public class CashShop {
     private static final AccountService accountService = ServerManager.getApplicationContext().getBean(AccountService.class);
     private static final CharacterService characterService = ServerManager.getApplicationContext().getBean(CharacterService.class);
 
+    public int getNxCredit() {
+        return nxCredit;
+    }
+
     public CashShop(int accountId, int characterId, int jobType) {
         this.accountId = accountId;
         this.characterId = characterId;

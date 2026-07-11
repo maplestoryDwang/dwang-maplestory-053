@@ -54,6 +54,10 @@ public enum RecvOpcode implements Opcode {
     NPC_TALK_MORE(0x21), // NPC 对话继续
     NPC_SHOP(0x22), // NPC 商店
     NPC_TALK(0x23), // NPC 对话
+
+    CANCEL_CHAIR(0x2B), // 使用椅子  CUser::OnSitRequest
+    USE_CHAIR(0x2D), // 使用椅子  CUser::OnPortableChairSitRequest
+    USE_STAT_CHAIR(0x4A), // 使用椅子加滿血觸發  CUser::OnUserStatChangeByPortableChairRequest
     MAGIC_ATTACK(0x2E), // 魔法攻击
     TAKE_DAMAGE(0x2A), // 受到伤害
     GENERAL_CHAT(0x2C), // 普通聊天

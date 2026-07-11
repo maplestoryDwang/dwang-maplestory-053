@@ -221,8 +221,8 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.SUMMON_ATTACK, new SummonDamageHandler());
         registerHandler(RecvOpcode.BUDDYLIST_MODIFY, new BuddylistModifyHandler());
 //        registerHandler(RecvOpcode.USE_ITEMEFFECT, new UseItemEffectHandler());
-//        registerHandler(RecvOpcode.USE_CHAIR, new UseChairHandler());
-//        registerHandler(RecvOpcode.CANCEL_CHAIR, new CancelChairHandler());
+        registerHandler(RecvOpcode.USE_CHAIR, new UseChairHandler());
+        registerHandler(RecvOpcode.CANCEL_CHAIR, new CancelChairHandler());
         registerHandler(RecvOpcode.DAMAGE_REACTOR, new ReactorHitHandler());                                            //   check
 //        registerHandler(RecvOpcode.GUILD_OPERATION, new GuildOperationHandler());
 //        registerHandler(RecvOpcode.DENY_GUILD_REQUEST, new DenyGuildRequestHandler());

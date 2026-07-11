@@ -142,6 +142,8 @@ public enum SendPacketOpcode implements Opcode {
     OPEN_NPC_SHOP(0xD6), // 打开NPC商店窗口
     CONFIRM_SHOP_TRANSACTION(0xD7), // 商店交易回应
     OPEN_STORAGE(0xD8), // 打开仓库窗口
+    STORAGE(0xD8), // 仓库
+
     NPC_TALK(0xC2), // NPC 对话弹窗
     PLAYER_INTERACTION(0xDD), // 玩家互动窗口(交易/雇佣商店/游戏)
 
@@ -164,6 +166,10 @@ public enum SendPacketOpcode implements Opcode {
     SET_TAMING_MOB_INFO(0x27), // 设置驯服怪物信息
 
     FIELD_EFFECT(0x53), // 场景效果  083 =》 0x8A
+
+    // check ↓
+    SHOW_CHAIR(0x91), // 显示椅子
+    CANCEL_CHAIR(0x66), // 取消椅子
 
 
     /**
@@ -192,7 +198,7 @@ public enum SendPacketOpcode implements Opcode {
 
     KOREAN_INTERNET_CAFE_SHIT(-1), // 韩国互联网咖啡无关紧要的内容，忽略
     CHANNEL_SELECTED(0x14), // 频道已选择
-    HACKSHIELD_REQUEST(0x15), // 可能是RELOG_RESPONSE，无所谓
+    HACKSHIELD_REQUEST(-1), // 可能是RELOG_RESPONSE，无所谓
     CHECK_CRC_RESULT(0x19), // CRC检查结果
     LAST_CONNECTED_WORLD(0x1A), // 上次连接的世界
     RECOMMENDED_WORLD_MESSAGE(0x1B), // 推荐世界消息
@@ -215,7 +221,7 @@ public enum SendPacketOpcode implements Opcode {
     SORT_ITEM_RESULT(0x35), // 整理物品结果
     SUE_CHARACTER_RESULT(0x37), // 控诉角色结果
     TRADE_MONEY_LIMIT(0x39), // 交易金钱限制
-    SET_GENDER(0x3A), // 设置性别
+    SET_GENDER(-1), // 设置性别
     GUILD_BBS_PACKET(0x3B), // 公会公告板数据包
     GUILD_OPERATION(0x41), // 公会操作
     ALLIANCE_OPERATION(0x42), // 联盟操作
@@ -256,7 +262,7 @@ public enum SendPacketOpcode implements Opcode {
     FAMILY_JOIN_ACCEPTED(0x63), // 家族加入接受
     FAMILY_PRIVILEGE_LIST(0x64), // 家族权限列表
     FAMILY_REP_GAIN(-1), // 家族声望获得
-    FAMILY_NOTIFY_LOGIN_OR_LOGOUT(0x66), // 通知家族成员登录或登出
+    FAMILY_NOTIFY_LOGIN_OR_LOGOUT(-1), // 通知家族成员登录或登出
     FAMILY_SET_PRIVILEGE(0x67), // 设置家族权限
     FAMILY_SUMMON_REQUEST(0x68), // 家族召唤请求
 
@@ -336,11 +342,10 @@ public enum SendPacketOpcode implements Opcode {
     SKILL_EFFECT(0xBE), // 技能效果
     CANCEL_SKILL_EFFECT(0xBF), // 取消技能效果
     SHOW_ITEM_EFFECT(-1), // 显示物品效果
-    SHOW_CHAIR(0xC4), // 显示椅子
     GUILD_NAME_CHANGED(0xCA), // 公会名称改变
     GUILD_MARK_CHANGED(0xCB), // 公会标志改变
     THROW_GRENADE(0xCC), // 抛掷手榴弹
-    CANCEL_CHAIR(0xCD), // 取消椅子
+//    CANCEL_CHAIR(0xCD), // 取消椅子
     LP_UserTeleport(0xCF), // 武道馆传送准备  还有其他的情况啊，谁写的的注释？？？
 
 
@@ -348,7 +353,7 @@ public enum SendPacketOpcode implements Opcode {
     LUCKSACK_FAIL(0xD1), // 幸运袋失败
     MESO_BAG_MESSAGE(0xD2), // 金币背包消息
     ON_NOTIFY_HP_DEC_BY_FIELD(0xD4), // 通知字段减少HP
-    PLAYER_HINT(0xD6), // 玩家提示
+    PLAYER_HINT(-1), // 玩家提示
     MAKER_RESULT(0xD9), // 制作器结果
     KOREAN_EVENT(0xDB), // 韩国活动
     OPEN_UI(0xDC), // 打开UI
@@ -398,7 +403,6 @@ public enum SendPacketOpcode implements Opcode {
     ZAKUM_SHRINE(0x12F), // 泽库姆神殿
     ADMIN_SHOP_MESSAGE(0x133),//lame :P // 管理员商店消息
     ADMIN_SHOP(0x134), // 管理员商店
-    STORAGE(0x135), // 仓库
     FREDRICK_MESSAGE(0x136), // Fredrick消息
     FREDRICK(0x137), // Fredrick操作
     RPS_GAME(0x138), // 石头剪刀布游戏
@@ -458,20 +462,5 @@ public enum SendPacketOpcode implements Opcode {
         return this.name();
     }
 
-
-    private static final List<Integer> ignoreLists = List.of(
-//            PING.getValue(),
-//            MOVE_PET.getValue(),
-//            UPDATE_PARTYMEMBER_HP.getValue(),
-//            NPC_ACTION.getValue(),
-//            SPAWN_NPC.getValue(),
-//            MOVE_MONSTER_RESPONSE.getValue()
-
-
-    );
-
-    public static boolean sendIgnore(int opcode){
-        return ignoreLists.contains(opcode);
-    }
 
 }

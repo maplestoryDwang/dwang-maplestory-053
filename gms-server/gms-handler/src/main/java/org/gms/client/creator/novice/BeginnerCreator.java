@@ -38,6 +38,7 @@ public class BeginnerCreator extends CharacterFactory {
         giveItem(recipe, ItemId.BEGINNERS_GUIDE, 1, InventoryType.ETC);
         giveItem(recipe, ItemId.BEGINNERS_HAT, 1, InventoryType.EQUIP);
         giveItem(recipe, ItemId.BEGINNERS_OVERALL, 1, InventoryType.EQUIP);
+        giveItem(recipe, ItemId.BEGINNERS_WEAPON, 1, InventoryType.EQUIP);
 //        giveItem(recipe, ItemId.BEGINNERS_SHOES, 1, InventoryType.CASH);
         return recipe;
     }

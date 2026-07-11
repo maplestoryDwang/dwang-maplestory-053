@@ -342,16 +342,15 @@ public class PacketCreator {
         p.writeByte(0xFF);
 
 
-        Item cWeapon = equip.getItem((short) -111);
-        p.writeInt(cWeapon != null ? cWeapon.getItemId() : 0);   // cashweapon
-
-        // todo 053是否有3宠物？
-        for (int i = 0; i < 1; i++) {
-            if (chr.getPet(i) != null) {
-                p.writeInt(chr.getPet(i).getItemId());
-            } else {
-                p.writeInt(0);
-            }
+        Item cWeapon = equip.getItem((byte) -111);
+        if (cWeapon != null)
+            p.writeInt(cWeapon.getItemId());
+        else
+            p.writeInt(0); // cashweapon
+        if (chr.getPet(0) != null) {
+            p.writeInt(chr.getPet(0).getItemId());
+        } else {
+            p.writeInt(0); // pet
         }
     }
 
@@ -365,15 +364,15 @@ public class PacketCreator {
     // check
     private static void addCharEntry(OutPacket p, Character chr, boolean viewall) {
         addCharStats(p, chr);
-        addCharLook(p, chr, false);
-        if (!viewall) {
-            p.writeByte(0);
-        }
-
-//        if (chr.isGM() || chr.isGmJob()) {  // thanks Daddy Egg (Ubaware), resinate for noticing GM jobs crashing on non-GM players account
+        addCharLook(p, chr, false);  //AvatarLook::Decode
+//        if (!viewall) {
 //            p.writeByte(0);
-//            return;
 //        }
+
+        if (chr.isGM() || chr.isGmJob()) {  // thanks Daddy Egg (Ubaware), resinate for noticing GM jobs crashing on non-GM players account
+            p.writeByte(0);
+            return;
+        }
 
         p.writeByte(1); // world rank enabled (next 4 ints are not sent if disabled) Short??
         p.writeInt(chr.getRank()); // world rank
@@ -383,26 +382,6 @@ public class PacketCreator {
     }
 
 
-    private static void addQuestInfo(OutPacket p, Character chr) {
-        List<QuestStatus> started = chr.getStartedQuests();
-        int startedSize = 0;
-        for (QuestStatus qs : started) {
-            if (qs.getInfoNumber() > 0) {
-                startedSize++;
-            }
-            startedSize++;
-        }
-        p.writeShort(started.size());
-        for (QuestStatus q : started) {
-            p.writeInt(q.getQuest().getId());
-        }
-        List<QuestStatus> completed = chr.getCompletedQuests();
-        p.writeShort(completed.size());
-        for (QuestStatus q : completed) {
-            p.writeShort(q.getQuest().getId());
-            p.writeLong(getTime(q.getCompletionTime()));
-        }
-    }
 //    private static void addQuestInfo(OutPacket p, Character chr) {
 //        List<QuestStatus> started = chr.getStartedQuests();
 //        int startedSize = 0;
@@ -412,25 +391,45 @@ public class PacketCreator {
 //            }
 //            startedSize++;
 //        }
-//        p.writeShort(startedSize);
-//        for (QuestStatus qs : started) {
-//            p.writeShort(qs.getQuest().getId());
-//            p.writeString(qs.getProgressData());
-//
-//            short infoNumber = qs.getInfoNumber();
-//            if (infoNumber > 0) {
-//                QuestStatus iqs = chr.getQuest(infoNumber);
-//                p.writeShort(infoNumber);
-//                p.writeString(iqs.getProgressData());
-//            }
+//        p.writeShort(started.size());
+//        for (QuestStatus q : started) {
+//            p.writeInt(q.getQuest().getId());
 //        }
 //        List<QuestStatus> completed = chr.getCompletedQuests();
 //        p.writeShort(completed.size());
-//        for (QuestStatus qs : completed) {
-//            p.writeShort(qs.getQuest().getId());
-//            p.writeLong(getTime(qs.getCompletionTime()));
+//        for (QuestStatus q : completed) {
+//            p.writeShort(q.getQuest().getId());
+//            p.writeLong(getTime(q.getCompletionTime()));
 //        }
 //    }
+    private static void addQuestInfo(OutPacket p, Character chr) {
+        List<QuestStatus> started = chr.getStartedQuests();
+        int startedSize = 0;
+        for (QuestStatus qs : started) {
+            if (qs.getInfoNumber() > 0) {
+                startedSize++;
+            }
+            startedSize++;
+        }
+        p.writeShort(startedSize);
+        for (QuestStatus qs : started) {
+            p.writeShort(qs.getQuest().getId());
+            p.writeString(qs.getProgressData());
+
+            short infoNumber = qs.getInfoNumber();
+            if (infoNumber > 0) {
+                QuestStatus iqs = chr.getQuest(infoNumber);
+                p.writeShort(infoNumber);
+                p.writeString(iqs.getProgressData());
+            }
+        }
+        List<QuestStatus> completed = chr.getCompletedQuests();
+        p.writeShort(completed.size());
+        for (QuestStatus qs : completed) {
+            p.writeShort(qs.getQuest().getId());
+            p.writeLong(getTime(qs.getCompletionTime()));
+        }
+    }
 
     private static void addExpirationTime(OutPacket mplew, long time, boolean showexpirationtime) {
         // todo 这里要韩国时间差
@@ -1204,12 +1203,18 @@ public class PacketCreator {
             }
         }
 
-        mplew.writeShort(0); // start quest info
+        mplew.writeShort(0); // colddown 0
+
         addQuestInfo(mplew, chr);
 
-        mplew.write(new byte[8]);
-        for (int x = 0; x < 15; x++)
-            mplew.write(CHAR_INFO_MAGIC);
+//        mplew.write(new byte[8]);  //Couple info + minigameinfo
+        addMiniGameInfo(mplew, chr);
+        addRingInfo(mplew, chr);
+
+//        for (int x = 0; x < 15; x++)  //  addTeleportInfo
+//            mplew.write(CHAR_INFO_MAGIC);
+        addTeleportInfo(mplew, chr);
+
         mplew.write(HexTool.getByteArrayFromHexString("90 63 3A 0D C5 5D C8 01"));
 
         return mplew;
@@ -2291,7 +2296,7 @@ public class PacketCreator {
         p.writeShort(0);//chr.getFh()
         p.writeByte(0);
         Pet[] pet = chr.getPets();
-        for (byte i = 0; i < 3; i++) {
+        for (byte i = 0; i < 1; i++) {
             if (pet[i] != null) {
                 addPetInfo(p, pet[i], false, chr.hasPetNameTag(i), chr.hasPetChatballoon(i));
             }
@@ -2810,29 +2815,31 @@ public class PacketCreator {
         return (int) (Double.doubleToLongBits(d) >> 48);
     }
 
+
+
     public static Packet getNPCShop(Client c, int sid, List<ShopItem> items) {
         ItemInformationProvider ii = ItemInformationProvider.getInstance();
-        final OutPacket p = OutPacket.create(SendPacketOpcode.OPEN_NPC_SHOP);
-        p.writeInt(sid);
-        p.writeShort(items.size()); // item count
+        final OutPacket mplew = OutPacket.create(SendPacketOpcode.OPEN_NPC_SHOP);
+        mplew.writeInt(sid);
+        mplew.writeShort(items.size()); // item count
         for (ShopItem item : items) {
-            p.writeInt(item.getItemId());
-            p.writeInt(item.getPrice());
-            p.writeInt(item.getPrice() == 0 ? item.getPitch() : 0); //Perfect Pitch
-            p.writeInt(0); //Can be used x minutes after purchase
-            p.writeInt(0); //Hmm
-            if (!ItemConstants.isRechargeable(item.getItemId())) {
-                p.writeShort(1); // stacksize o.o
-                p.writeShort(item.getBuyable());
+            mplew.writeInt(item.getItemId());
+            mplew.writeInt(item.getPrice());
+            if (!ii.isThrowingStar(item.getItemId())) {
+                mplew.writeShort(1); // stacksize o.o
+                mplew.writeShort(item.getBuyable());
             } else {
-                p.writeShort(0);
-                p.writeInt(0);
-                p.writeShort(doubleToShortBits(ii.getUnitPrice(item.getItemId())));
-                p.writeShort(ii.getSlotMax(c, item.getItemId()));
+                mplew.writeShort(0);
+                mplew.writeInt(0);
+                // o.O getPrice sometimes returns the unitPrice not the price
+                mplew.writeShort(doubleToShortBits(ii.getUnitPrice(item.getItemId())));
+                mplew.writeShort(ii.getSlotMax(c, item.getItemId()));
             }
         }
-        return p;
+
+        return mplew;
     }
+
 
     /* 00 = /
      * 01 = You don't have enough in stock
@@ -3342,6 +3349,10 @@ public class PacketCreator {
         return p;
     }
 
+
+
+
+
     /**
      * @param quest
      * @param npc
@@ -3351,7 +3362,7 @@ public class PacketCreator {
     public static Packet updateQuestInfo(short quest, int npc) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_QUEST_INFO);
 //        p.writeByte(8); //0x0A in v95
-        p.writeByte(6); //0x0A in v95
+        p.writeByte(6); // start
         p.writeShort(quest);
         p.writeInt(npc);
         p.writeInt(0);
@@ -4036,22 +4047,19 @@ public class PacketCreator {
     }
 
     public static Packet getStorage(int npcId, byte slots, Collection<Item> items, int meso) {
-        final OutPacket p = OutPacket.create(SendPacketOpcode.STORAGE);
-        p.writeByte(0x16);
-        p.writeInt(npcId);
-        p.writeByte(slots);
-        p.writeShort(0x7E);
-        p.writeShort(0);
-        p.writeInt(0);
-        p.writeInt(meso);
-        p.writeShort(0);
-        p.writeByte((byte) items.size());
+        final OutPacket mplew = OutPacket.create(SendPacketOpcode.OPEN_STORAGE);
+        mplew.write(0x13);
+        mplew.writeInt(npcId);
+        mplew.write(slots);
+        mplew.writeShort(0x7E);
+        mplew.writeInt(meso);
+        mplew.write(HexTool.getByteArrayFromHexString("00 00 00"));
+        mplew.write((byte) items.size());
         for (Item item : items) {
-            addItemInfo(p, item, true);
+            addItemInfo(mplew, item, true, true);
         }
-        p.writeShort(0);
-        p.writeByte(0);
-        return p;
+        mplew.write(0);
+        return mplew;
     }
 
     /*
@@ -4067,43 +4075,43 @@ public class PacketCreator {
 
     public static Packet mesoStorage(byte slots, int meso) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.STORAGE);
-        p.writeByte(0x13);
+        p.writeByte(0x10);
         p.writeByte(slots);
         p.writeShort(2);
-        p.writeShort(0);
-        p.writeInt(0);
         p.writeInt(meso);
         return p;
     }
 
     public static Packet storeStorage(byte slots, InventoryType type, Collection<Item> items) {
-        final OutPacket p = OutPacket.create(SendPacketOpcode.STORAGE);
-        p.writeByte(0xD);
-        p.writeByte(slots);
-        p.writeShort(type.getBitfieldEncoding());
-        p.writeShort(0);
-        p.writeInt(0);
-        p.writeByte(items.size());
+        final OutPacket mplew = OutPacket.create(SendPacketOpcode.STORAGE);
+        mplew.write(0xB);
+        mplew.write(slots);
+        mplew.writeShort(type.getBitfieldEncoding());
+        mplew.write(items.size());
         for (Item item : items) {
-            addItemInfo(p, item, true);
+            addItemInfo(mplew, item, true, true);
+            //mplew.write(0);
         }
-        return p;
+
+
+        return mplew;
     }
 
     public static Packet takeOutStorage(byte slots, InventoryType type, Collection<Item> items) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.STORAGE);
-        p.writeByte(0x9);
+        p.writeByte(0x8);
         p.writeByte(slots);
         p.writeShort(type.getBitfieldEncoding());
-        p.writeShort(0);
-        p.writeInt(0);
         p.writeByte(items.size());
         for (Item item : items) {
-            addItemInfo(p, item, true);
+//            addItemInfo(p, item, true);
+            addItemInfo(p, item, true, true);
+
         }
         return p;
     }
 
+    // 053 没有
     public static Packet arrangeStorage(byte slots, Collection<Item> items) {
         OutPacket p = OutPacket.create(SendPacketOpcode.STORAGE);
         p.writeByte(0xF);
@@ -6730,7 +6738,8 @@ public class PacketCreator {
 
     public static Packet updateQuestFinish(short quest, int npc, short nextquest) { //Check
         final OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_QUEST_INFO); //0xF2 in v95
-        p.writeByte(8);//0x0A in v95
+//        p.writeByte(8);//0x0A in v95
+        p.writeByte(6);//0x0A in v95
         p.writeShort(quest);
         p.writeInt(npc);
         p.writeShort(nextquest);

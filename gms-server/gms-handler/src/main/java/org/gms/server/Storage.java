@@ -23,6 +23,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.ItemFactory;
 import org.gms.constants.game.GameConstants;
+import org.gms.constants.inventory.ItemConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.provider.Data;
@@ -172,6 +173,23 @@ public class Storage {
             lock.unlock();
         }
     }
+    public Item takeOut(byte slot) {
+        lock.lock();
+        try {
+            ItemInformationProvider ii = ItemInformationProvider.getInstance();
+            Item ret = items.remove(slot);
+            InventoryType type = ItemConstants.getInventoryType(ret.getItemId());
+            typeItems.put(type, new ArrayList<Item>(filterItems(type)));
+
+            return ret;
+        } finally {
+            lock.unlock();
+        }
+
+
+    }
+
+
 
     public boolean store(Item item) {
         lock.lock();

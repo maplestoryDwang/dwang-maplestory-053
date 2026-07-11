@@ -5,6 +5,7 @@ import org.gms.constants.net.OpcodeConstants;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.gms.net.opcodes.OpcodeUtil;
 import org.gms.net.opcodes.RecvOpcode;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.Packet;
@@ -32,7 +33,7 @@ public class InPacketLogger extends ChannelInboundHandlerAdapter implements Pack
         final int packetLength = content.length;
 
         final short opcode = LoggingUtil.readFirstShort(content);
-        if (RecvOpcode.recvIgnore(opcode)) {
+        if (OpcodeUtil.recvIgnore(opcode)) {
             return;
         } else if (packetLength <= LOG_CONTENT_THRESHOLD) {
             final String opcodeHex = Integer.toHexString(opcode).toUpperCase();
