@@ -2113,7 +2113,7 @@ public class Character extends AbstractCharacterObject {
                         // Add NX to account, show effect and make item disappear
                         int nxGain = (mapitem.getItemId() == ItemId.NX_CARD_100 ? 100 : 250) * mItem.getQuantity(); //使点券支持按数量相乘
                         this.getCashShop().gainCash(CashShop.NX_CREDIT, nxGain);
-                        dropMessage(5, String.format("get %d gain, have %d gain", nxGain, this.getCashShop().getNxCredit()));  // 顯示點卷信息
+                        dropMessage(5, String.format("get %d nxCredit, have %d nxCredit", nxGain, this.getCashShop().getNxCredit()));  // 顯示點卷信息
 
                         if (GameConfig.getServerBoolean("use_announce_nx_coupon_loot")) {       //捡到点券是否展示
                             showHint(I18nUtil.getMessage("Character.pickupItem.message1", nxGain, this.getCashShop().getCash(CashShop.NX_CREDIT)), 300);

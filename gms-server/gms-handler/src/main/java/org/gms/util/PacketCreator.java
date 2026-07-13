@@ -1147,11 +1147,9 @@ public class PacketCreator {
         mplew.writeInt(chr.getMeso()); // mesos
 
         // start inventoryInfo
-        mplew.write(100); // equip slots
-        mplew.write(100); // use slots
-        mplew.write(100); // set-up slots
-        mplew.write(100); // etc slots
-        mplew.write(100); // cash slots
+        for (byte i = 1; i <= 5; i++) {
+            mplew.writeByte(chr.getInventory(InventoryType.getByType(i)).getSlotLimit());
+        }
 
         Inventory iv = chr.getInventory(InventoryType.EQUIPPED);
         Collection<Item> equippedC = iv.list();
