@@ -88,7 +88,7 @@ public class EnterCashShopHandler extends AbstractPacketHandler {
             // 打开商城
             c.sendPacket(PacketCreator.openCashShop(c, false));  // ok
 
-            // 展示商城商品
+            // 展示商城商城仓库
             c.sendPacket(PacketCreator.showCashInventory(c));    // ok
             // 显示是否有人送礼物
             c.sendPacket(PacketCreator.showGifts(mc.getCashShop().loadGifts()));  // ok

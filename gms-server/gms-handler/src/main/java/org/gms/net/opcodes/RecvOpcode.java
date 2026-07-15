@@ -100,6 +100,8 @@ public enum RecvOpcode implements Opcode {
     // CReactorPool::OnPacket
     DAMAGE_REACTOR(0x8C), // 反应堆受到伤害
 
+    CHECK_CASH(0xAA), // 现金商店操作
+    CASHSHOP_OPERATION(0xAB), // 现金商店操作
 
 
     ;
@@ -311,7 +313,6 @@ public enum RecvOpcode implements Opcode {
     PARTY_SEARCH_START(0xDE), // 开始组队搜索
     PARTY_SEARCH_UPDATE(0xDF), // 更新组队搜索
     CHECK_CASH(0xE4), // 检查现金
-    CASHSHOP_OPERATION(0xE5), // 现金商店操作
     COUPON_CODE(0xE6), // 优惠券代码
     OPEN_ITEMUI(0xEC), // 打开物品界面
     CLOSE_ITEMUI(0xED), // 关闭物品界面

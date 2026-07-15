@@ -158,12 +158,12 @@ public class PacketCreator {
     // 复制GW_CharacterStat::Decode
     private static void addCharStats(OutPacket mplew, Character chr) {
         mplew.writeInt(chr.getId()); // character id
-//        mplew.writeAsciiString(chr.getName());
-        mplew.write(chr.getName().getBytes(Charset.forName("US-ASCII")));
-        for (int x = chr.getName().length(); x < 13; x++) { // fill to maximum
-            // name length
-            mplew.write(0);
-        }
+        mplew.writeFixedString(StringUtil.getRightPaddedStr(chr.getName(), '\0', 13));
+//        mplew.write(chr.getName().getBytes(Charset.forName("US-ASCII")));
+//        for (int x = chr.getName().length(); x < 13; x++) { // fill to maximum
+//            // name length
+//            mplew.write(0);
+//        }
 
         mplew.write(chr.getGender()); // gender (0 = male, 1 = female)
         mplew.write(chr.getSkinColor().getId()); // skin color
@@ -255,9 +255,12 @@ public class PacketCreator {
 
 //        mplew.write(0x14); //???
         mplew.writeByte(chr.getBuddylist().getCapacity());
+
+        //
         mplew.writeInt(chr.getMeso()); // mesos
 
         // start inventoryInfo
+        // GW_ItemSlotBase 0x80
         for (byte i = 1; i <= 5; i++) {
             mplew.writeByte(chr.getInventory(InventoryType.getByType(i)).getSlotLimit());
         }
@@ -269,7 +272,7 @@ public class PacketCreator {
             equipped.add((Item) item);
         }
         Collections.sort(equipped);
-
+        // 穿着的 0x04
         for (Item item : equipped) {
             addItemInfo(mplew, item);
         }
@@ -306,12 +309,10 @@ public class PacketCreator {
 
         addQuestInfo(mplew, chr);
 
-//        mplew.write(new byte[8]);  //Couple info + minigameinfo
         addMiniGameInfo(mplew, chr);
         addRingInfo(mplew, chr);
 
-//        for (int x = 0; x < 15; x++)  //  addTeleportInfo
-//            mplew.write(CHAR_INFO_MAGIC);
+
         addTeleportInfo(mplew, chr);
     }
 
@@ -476,7 +477,7 @@ public class PacketCreator {
     }
 
     private static void addExpirationTime(OutPacket mplew, long time, boolean showexpirationtime) {
-        // todo 这里要韩国时间差
+        // todo 这里要韩国时间差 5个字节
         mplew.writeInt(KoreanDateUtil.getKoreanTimestamp(time));
         mplew.write(showexpirationtime ? 1 : 2);
     }
@@ -486,8 +487,166 @@ public class PacketCreator {
 
     // check 完全复制
     private static void addItemInfo(OutPacket p, Item item) {
-//        addItemInfo(p, item, false);
-        addItemInfo(p, item, false, false);
+        addItemInfoV2(p, item, false, false);
+//        addItemInfo(p, item, false, false);
+    }
+
+    // 北斗写法修改
+    private static void addItemInfoV2(OutPacket mplew, Item item, boolean zeroPosition,
+                                    boolean leaveOut) {
+        ItemInformationProvider ii = ItemInformationProvider.getInstance();
+        boolean masking = false;
+//        byte pos = (byte) item.getPosition();
+//        if (zeroPosition) {
+//            if (!leaveOut)
+//                mplew.write(0);
+//        } else if (pos <= (byte) -1) {
+//            pos *= -1;
+//            if (pos > 100) {
+//                masking = true;
+//                mplew.write(0);                     // 穿上的点状进来这
+//                mplew.write(pos - 100);
+//            } else {
+//                mplew.write(pos);
+//            }
+//        } else {
+//            mplew.write(item.getPosition());
+//        }
+
+        boolean isCash = ii.isCash(item.getItemId());
+        boolean isPet = item.getPetId() > -1;
+        boolean isRing = false;
+        Equip equip = null;
+        short pos = item.getPosition();
+        byte itemType = item.getItemType();
+        if (itemType == 1) {
+            equip = (Equip) item;
+            isRing = equip.getRingId() > -1;
+        }
+        if (!zeroPosition) {
+            if (equip != null) {
+                if (pos < 0) {
+                    pos *= -1;
+                }
+                if (pos > 100) {
+                    masking = true;
+//                    mplew.write(0);                     // 穿上的点状进来这
+//                    mplew.write(pos - 100);
+                    mplew.write(pos - 100 );
+//                    mplew.writeShort(pos > 100 ? pos - 100 : pos);
+
+                } else {
+                    mplew.write(pos);                     // 穿的其他装备
+                }
+            } else {
+                mplew.writeByte(pos);
+            }
+        }
+
+
+
+
+
+        // GW_ItemSlotBase::RawDecode
+        mplew.write(item.getItemType());
+        mplew.writeInt(item.getItemId());
+
+//        if (masking) {
+//            // liCashItemSN
+//
+//            // 07.03.2008 06:49... o.o
+//            mplew.write(HexTool.getByteArrayFromHexString("01 41 B4 38 00 00 00 00 00 80 20 6F"));
+//        } else {
+//            mplew.writeShort(0);
+//            mplew.write(ITEM_MAGIC);
+//        }
+//        //TODO: Item.getExpirationTime
+//        addExpirationTime(mplew, 0, false);
+
+
+//        boolean b = isCash && masking;
+        boolean b = isCash;
+        mplew.writeBool(b);
+        if (b) {
+            mplew.writeLong(isPet ? item.getPetId() : isRing ? equip.getRingId() : item.getCashId());
+//            mplew.writeLong(item.getSN());        // todo 这个值到底应该写什么？
+        }
+        addExpirationTime(mplew, item.getExpiration());
+
+//        mplew.writeShort(0);
+//        mplew.write(ITEM_MAGIC);
+//        addExpirationTime(mplew, 0, false);
+
+        // GW_ItemSlotBase::RawDecode  end
+
+        // 宠物
+        if (isPet) {
+            Pet pet = item.getPet();
+            mplew.writeFixedString(StringUtil.getRightPaddedStr(pet.getName(), '\0', 13));
+            mplew.writeByte(pet.getLevel());
+            mplew.writeShort(pet.getTameness());
+            mplew.writeByte(pet.getFullness());
+            addExpirationTime(mplew, item.getExpiration());
+            mplew.writeShort(pet.getPetAttribute()); // PetAttribute noticed by lrenex & Spoon
+            mplew.writeShort(0); // PetSkill
+            mplew.writeInt(18000); // RemainLife
+            mplew.writeShort(0); // attribute
+            return;
+        }
+
+        if (item.getItemType() == ItemType.EQUIP) {
+//            Equip equip = (Equip) item;
+            mplew.write(equip.getUpgradeSlots());
+            mplew.write(equip.getLevel());
+            mplew.writeShort(equip.getStr()); // str
+            mplew.writeShort(equip.getDex()); // dex
+            mplew.writeShort(equip.getInt()); // int
+            mplew.writeShort(equip.getLuk()); // luk
+            mplew.writeShort(equip.getHp()); // hp
+            mplew.writeShort(equip.getMp()); // mp
+            mplew.writeShort(equip.getWatk()); // watk
+            mplew.writeShort(equip.getMatk()); // matk
+            mplew.writeShort(equip.getWdef()); // wdef
+            mplew.writeShort(equip.getMdef()); // mdef
+            mplew.writeShort(equip.getAcc()); // accuracy
+            mplew.writeShort(equip.getAvoid()); // avoid
+            mplew.writeShort(equip.getHands()); // hands
+            mplew.writeShort(equip.getSpeed()); // speed
+            mplew.writeShort(equip.getJump()); // jump
+            mplew.writeString(equip.getOwner());
+
+            mplew.writeShort(equip.getFlag()); //Item Flags
+
+            if (!isCash) {
+                mplew.writeLong(item.getSN()); // liSN
+            }
+
+//            mplew.writeLong(0);
+
+            // 0 normal; 1 locked
+//            mplew.write(0);
+//            if (!masking) {                          // 没穿的点装
+//                mplew.write(0);
+//                mplew.writeInt(0); // values of these don't seem to matter at all
+//                mplew.writeInt(0);
+//            }
+
+
+
+            return;
+        } else {
+            // 普通物品
+            mplew.writeShort(item.getQuantity());
+            mplew.writeString(item.getOwner());
+            mplew.writeShort(0); // this seems to end the item entry
+            // but only if its not a THROWING STAR :))9 O.O!
+            if (ii.isThrowingStar(item.getItemId())) {
+                // todo 自己改的
+                //                mplew.write(HexTool.getByteArrayFromHexString("A1 6D 05 01 00 00 00 7D"));
+                mplew.writeInt(2);
+                mplew.writeBytes(new byte[]{(byte) 0x54, 0, 0, (byte) 0x34});
+            }
+        }
     }
 
     // ok
@@ -503,7 +662,7 @@ public class PacketCreator {
             pos *= -1;
             if (pos > 100) {
                 masking = true;
-                mplew.write(0);
+                mplew.write(0);                     // 穿上的点状进来这
                 mplew.write(pos - 100);
             } else {
                 mplew.write(pos);
@@ -511,10 +670,13 @@ public class PacketCreator {
         } else {
             mplew.write(item.getPosition());
         }
-
+        // GW_ItemSlotBase::RawDecode
         mplew.write(item.getItemType());
         mplew.writeInt(item.getItemId());
+
         if (masking) {
+            // liCashItemSN
+
             // 07.03.2008 06:49... o.o
             mplew.write(HexTool.getByteArrayFromHexString("01 41 B4 38 00 00 00 00 00 80 20 6F"));
         } else {
@@ -1158,10 +1320,12 @@ public class PacketCreator {
             mplew.writeInt(Randomizer.nextInt());
         }
 
+       //CharacterData::Decode(&v10->t, iPacket, 0);
         addCharacterInfo(mplew, chr);
 
 
-
+        // CInPacket::DecodeBuffer(v74, 8);
+        // CInPacket::DecodeBuffer(iPacket, &paramFieldInit.ftServer, 8u);
         mplew.write(HexTool.getByteArrayFromHexString("90 63 3A 0D C5 5D C8 01"));
 
         return mplew;

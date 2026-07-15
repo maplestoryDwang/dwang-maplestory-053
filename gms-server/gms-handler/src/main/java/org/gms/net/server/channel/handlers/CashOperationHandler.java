@@ -95,18 +95,19 @@ public final class CashOperationHandler extends AbstractPacketHandler {
         if (c.tryacquireClient()) {     // thanks Thora for finding out an exploit within cash operations
             try {
                 final int action = p.readByte();
-                if (action == 0x03 || action == 0x1E) { // buy
+                if (action == 0x02 || action == 0x1A) { // buy
                     p.readByte();
-                    final int useNX = p.readInt();
+                    final int useNX = CashShop.NX_CREDIT;
                     final int snCS = p.readInt();
                     ModifiedCashItemDO cItem = CashItemFactory.getItem(snCS);
+                    // 没传支付方法应该只能点卷支付
                     if (!canBuy(chr, cItem, cs.getCash(useNX))) {
                         log.error("Denied to sell cash item with SN {}", snCS); // preventing NPE here thanks to MedicOP
                         c.enableCSActions();
                         return;
                     }
 
-                    if (action == 0x03) { // Item
+                    if (action == 0x02) { // Item
                         if (ItemConstants.isCashStore(cItem.getItemId()) && chr.getLevel() < 16) {
                             c.enableCSActions();
                             return;
@@ -138,7 +139,8 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                         c.sendPacket(PacketCreator.showBoughtCashPackage(cashPackage, c.getAccID()));
                     }
                     c.sendPacket(PacketCreator.showCash(chr));
-                } else if (action == 0x04) {//TODO check for gender with gift
+//                } else if (action == 0x04) {//TODO check for gender with gift
+                } else if (action == 3) {//TODO check for gender with gift
                     int birthday = p.readInt();
                     ModifiedCashItemDO cItem = CashItemFactory.getItem(p.readInt());
                     CharacterService characterService = ServerManager.getApplicationContext().getBean(CharacterService.class);
@@ -170,7 +172,8 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                     if (receiver != null) {
                         noteService.show(receiver);
                     }
-                } else if (action == 0x05) { // Modify wish list
+                } else if (action == 4) { // Modify wish list
+//                } else if (action == 0x05) { // Modify wish list
                     cs.clearWishList();
                     for (byte i = 0; i < 10; i++) {
                         int sn = p.readInt();
@@ -180,9 +183,11 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                         }
                     }
                     c.sendPacket(PacketCreator.showWishList(chr, true));
-                } else if (action == 0x06) { // Increase Inventory Slots
+                } else if (action == 5) { // Increase Inventory Slots
+//                } else if (action == 0x06) { // Increase Inventory Slots
                     p.skip(1);
-                    int cash = p.readInt();
+//                    int cash = p.readInt();
+                    int cash = CashShop.NX_CREDIT;
                     byte mode = p.readByte();
                     if (mode == 0) {
                         byte type = p.readByte();
@@ -226,9 +231,10 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                             log.warn("Could not add {} slots of type {} for chr {}", qty, type, Character.makeMapleReadable(chr.getName()));
                         }
                     }
-                } else if (action == 0x07) { // Increase Storage Slots
+//                } else if (action == 0x07) { // Increase Storage Slots
+                } else if (action == 6) { // Increase Storage Slots
                     p.skip(1);
-                    int cash = p.readInt();
+                    int cash = CashShop.NX_CREDIT;
                     byte mode = p.readByte();
                     if (mode == 0) {
                         if (cs.getCash(cash) < 4000) {
@@ -296,7 +302,8 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                         c.enableCSActions();
                         return;
                     }
-                } else if (action == 0x0D) { // Take from Cash Inventory
+//                } else if (action == 0x0D) { // Take from Cash Inventory
+                } else if (action == 10) { // Take from Cash Inventory
                     Item item = cs.findByCashId(p.readInt());
                     if (item == null) {
                         c.enableCSActions();
@@ -313,7 +320,8 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                             }
                         }
                     }
-                } else if (action == 0x0E) { // Put into Cash Inventory
+//                } else if (action == 0x0E) { // Put into Cash Inventory
+                } else if (action == 11) { // Put into Cash Inventory
                     int cashId = p.readInt();
                     p.skip(4);
 
@@ -531,7 +539,8 @@ public final class CashOperationHandler extends AbstractPacketHandler {
     }
 
     private static boolean canBuy(Character chr, ModifiedCashItemDO item, int cash) {
-        if (item != null && item.isSelling() && item.getPrice() <= cash) {
+//        if (item != null && item.isSelling() && item.getPrice() <= cash) {
+        if (item != null &&  item.getPrice() <= cash) {
             log.info("玩家 {} 购买了现金道具 {} (SN {}) 花费 {}", chr, ItemInformationProvider.getInstance().getName(item.getItemId()), item.getSn(), item.getPrice());
             return true;
         } else {

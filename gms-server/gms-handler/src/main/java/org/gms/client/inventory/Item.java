@@ -32,7 +32,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Item implements Comparable<Item> {
 
-    private static final AtomicInteger runningCashId = new AtomicInteger(777000000);  // pets & rings shares cashid values
+//    private static final AtomicInteger runningCashId = new AtomicInteger(777000000);  // pets & rings shares cashid values
+    private static final AtomicInteger runningCashId = new AtomicInteger(10000001);  // pets & rings shares cashid values
 
     private final int id;
     private int cashId;
