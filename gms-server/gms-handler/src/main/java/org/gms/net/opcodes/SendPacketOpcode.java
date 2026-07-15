@@ -80,12 +80,15 @@ public enum SendPacketOpcode implements Opcode {
 
     // check ↓
     BUDDYLIST(0x2B), // 好友列表操作
-    PARTY_OPERATION(0x38), // 组队操作回应
+
+    /**
+     * 组队操作回应
+     */
+    PARTY_OPERATION(0x38),
 
     // check ↓
     SERVERMESSAGE(0x2D), // 滚动公告/顶部横幅
     AVATAR_MEGA(0x19), // 喇叭(大喇叭/全服喇叭)
-    WARP_TO_MAP(0x4D), // 切换地图/进入游戏
     MULTICHAT(0x55), // 频道/组队/公会多功能聊天
     WHISPER(0x5E), // 密聊回应/寻找玩家
     CLOCK(0x61), // 显示时钟倒计时
@@ -178,6 +181,41 @@ public enum SendPacketOpcode implements Opcode {
      *
      */
     COOLDOWN(0x6F), // 冷却时间
+
+
+    /*CStage::OnPacket*/
+
+    /**
+     * 切换地图/进入游戏
+     */
+    WARP_TO_MAP(0x4D),
+    /**
+     * 进入拍卖
+     */
+    SET_ITC(0x4E),
+    /**
+     * 进入现金商店
+     */
+    SET_CASH_SHOP(0x4F),
+
+
+
+
+    /*CCashShop::OnPackett*/
+
+    CHARGE_PARAM_RESULT(0xEC), // 充值参数结果
+    QUERY_CASH_RESULT(0xED), // 查询现金结果
+    CASHSHOP_OPERATION(0xEE), // 现金商店操作
+
+    CASHSHOP_PURCHASE_EXP_CHANGED(-1),   // found thanks to Arnah (Vertisy) // 现金商店购买经验变化
+    CASHSHOP_GIFT_INFO_RESULT(-1), // 现金商店礼物信息结果
+    CASHSHOP_CHECK_NAME_CHANGE(-1), // 检查现金商店姓名更改
+    CASHSHOP_CHECK_NAME_CHANGE_POSSIBLE_RESULT(-1), // 检查现金商店姓名更改可能性结果
+    CASHSHOP_REGISTER_NEW_CHARACTER_RESULT(-1), // 注册新角色结果
+    CASHSHOP_CHECK_TRANSFER_WORLD_POSSIBLE_RESULT(-1), // 检查转移世界可能性结果
+    CASHSHOP_GACHAPON_STAMP_RESULT(-1), // 现金商店扭蛋印章结果
+    CASHSHOP_CASH_ITEM_GACHAPON_RESULT(-1), // 现金商店现金物品扭蛋结果
+    CASHSHOP_CASH_GACHAPON_OPEN_RESULT(-1), // 现金商店现金扭蛋打开结果
 
 
     /*
@@ -289,10 +327,7 @@ public enum SendPacketOpcode implements Opcode {
     DATA_CRC_CHECK_FAILED(0x7B), // 数据CRC检查失败
     MACRO_SYS_DATA_INIT(0x7C), // 宏系统数据初始化
 
-    /*CStage::OnPacket*/
-    SET_FIELD(-1), // 设置字段
-    SET_ITC(0x7E), // 设置ITC
-    SET_CASH_SHOP(0x7F), // 设置现金商店
+
 
     /*CField::OnPacket*/
     SET_BACK_EFFECT(0x80), // 设置背景特效
@@ -419,18 +454,7 @@ public enum SendPacketOpcode implements Opcode {
 
     PARCEL(0x142), // 礼包
 
-    CHARGE_PARAM_RESULT(0x143), // 充值参数结果
-    QUERY_CASH_RESULT(0x144), // 查询现金结果
-    CASHSHOP_OPERATION(0x145), // 现金商店操作
-    CASHSHOP_PURCHASE_EXP_CHANGED(0x146),   // found thanks to Arnah (Vertisy) // 现金商店购买经验变化
-    CASHSHOP_GIFT_INFO_RESULT(0x147), // 现金商店礼物信息结果
-    CASHSHOP_CHECK_NAME_CHANGE(0x148), // 检查现金商店姓名更改
-    CASHSHOP_CHECK_NAME_CHANGE_POSSIBLE_RESULT(0x149), // 检查现金商店姓名更改可能性结果
-    CASHSHOP_REGISTER_NEW_CHARACTER_RESULT(0x14A), // 注册新角色结果
-    CASHSHOP_CHECK_TRANSFER_WORLD_POSSIBLE_RESULT(0x14B), // 检查转移世界可能性结果
-    CASHSHOP_GACHAPON_STAMP_RESULT(0x14C), // 现金商店扭蛋印章结果
-    CASHSHOP_CASH_ITEM_GACHAPON_RESULT(0x14D), // 现金商店现金物品扭蛋结果
-    CASHSHOP_CASH_GACHAPON_OPEN_RESULT(0x14E), // 现金商店现金扭蛋打开结果
+
 
     AUTO_HP_POT(0x150), // 自动使用HP药水
     AUTO_MP_POT(0x151), // 自动使用MP药水

@@ -46,7 +46,7 @@ public enum RecvOpcode implements Opcode {
     STRANGE_DATA(0x11), // 异常数据
     CHANGE_MAP(0x2F), // 切换地图
     CHANGE_CHANNEL(0x27), // 切换频道
-    ENTER_CASH_SHOP(0x28), // 进入商城
+    ENTER_CASH_SHOP(0x28), // 进入商城    CUser::OnMigrateToCashShopRequest
     MOVE_PLAYER(0x35), // 移动玩家
     CLOSE_RANGE_ATTACK(0x59), // 近战攻击
     RANGED_ATTACK(0x36), // 远程攻击

@@ -170,19 +170,19 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.WORLD_TRANSFER, new TransferWorldHandler());
         registerHandler(RecvOpcode.CHANGE_CHANNEL, new ChangeChannelHandler());                              //   check
         registerHandler(RecvOpcode.STRANGE_DATA, LoginRequiringNoOpHandler.getInstance());
-        registerHandler(RecvOpcode.GENERAL_CHAT, new GeneralChatHandler());
+        registerHandler(RecvOpcode.GENERAL_CHAT, new GeneralChatHandler());                                 //   check
         registerHandler(RecvOpcode.WHISPER, new WhisperHandler());
         registerHandler(RecvOpcode.NPC_TALK, new NPCTalkHandler());                                         //   check
         registerHandler(RecvOpcode.NPC_TALK_MORE, new NPCMoreTalkHandler());                                //   check
-        registerHandler(RecvOpcode.QUEST_ACTION, new QuestActionHandler());
+        registerHandler(RecvOpcode.QUEST_ACTION, new QuestActionHandler());                                 //   check
 //        registerHandler(RecvOpcode.GRENADE_EFFECT, new GrenadeEffectHandler());
         registerHandler(RecvOpcode.NPC_SHOP, new NPCShopHandler());                                          //   check
 //        registerHandler(RecvOpcode.ITEM_SORT, new InventoryMergeHandler());
-        registerHandler(RecvOpcode.ITEM_MOVE, new ItemMoveHandler());
+        registerHandler(RecvOpcode.ITEM_MOVE, new ItemMoveHandler());                                        //   check
         registerHandler(RecvOpcode.MESO_DROP, new MesoDropHandler());
         registerHandler(RecvOpcode.PLAYER_LOGGEDIN, new PlayerLoggedinHandler(channelDeps.noteService()));
-        registerHandler(RecvOpcode.CHANGE_MAP, new ChangeMapHandler());
-        registerHandler(RecvOpcode.MOVE_LIFE, new MoveLifeHandler());
+        registerHandler(RecvOpcode.CHANGE_MAP, new ChangeMapHandler());                                        //   check
+        registerHandler(RecvOpcode.MOVE_LIFE, new MoveLifeHandler());                                          //   check
         registerHandler(RecvOpcode.CLOSE_RANGE_ATTACK, new CloseRangeDamageHandler());                       //   check
         registerHandler(RecvOpcode.RANGED_ATTACK, new RangedAttackHandler());
         registerHandler(RecvOpcode.MAGIC_ATTACK, new MagicDamageHandler());
@@ -204,25 +204,25 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.CANCEL_ITEM_EFFECT, new CancelItemEffectHandler());
         registerHandler(RecvOpcode.PLAYER_INTERACTION, new PlayerInteractionHandler());
 //        registerHandler(RecvOpcode.RPS_ACTION, new RPSActionHandler());
-        registerHandler(RecvOpcode.DISTRIBUTE_AP, new DistributeAPHandler());
-        registerHandler(RecvOpcode.DISTRIBUTE_SP, new DistributeSPHandler());
+        registerHandler(RecvOpcode.DISTRIBUTE_AP, new DistributeAPHandler());                                 //   check
+        registerHandler(RecvOpcode.DISTRIBUTE_SP, new DistributeSPHandler());                                 //   check
         registerHandler(RecvOpcode.CHANGE_KEYMAP, new KeymapChangeHandler());
         registerHandler(RecvOpcode.CHANGE_MAP_SPECIAL, new ChangeMapSpecialHandler());
-        registerHandler(RecvOpcode.STORAGE, new StorageHandler());
+        registerHandler(RecvOpcode.STORAGE, new StorageHandler());                                            //   check
         registerHandler(RecvOpcode.GIVE_FAME, new GiveFameHandler());
         registerHandler(RecvOpcode.PARTY_OPERATION, new PartyOperationHandler());
         registerHandler(RecvOpcode.DENY_PARTY_REQUEST, new DenyPartyRequestHandler());
 //        registerHandler(RecvOpcode.MULTI_CHAT, new MultiChatHandler());
         registerHandler(RecvOpcode.USE_DOOR, new DoorHandler());
         registerHandler(RecvOpcode.ENTER_MTS, new EnterMTSHandler());
-//        registerHandler(RecvOpcode.ENTER_CASHSHOP, new EnterCashShopHandler());
+        registerHandler(RecvOpcode.ENTER_CASH_SHOP, new EnterCashShopHandler());
         registerHandler(RecvOpcode.DAMAGE_SUMMON, new DamageSummonHandler());
         registerHandler(RecvOpcode.MOVE_SUMMON, new MoveSummonHandler());
         registerHandler(RecvOpcode.SUMMON_ATTACK, new SummonDamageHandler());
         registerHandler(RecvOpcode.BUDDYLIST_MODIFY, new BuddylistModifyHandler());
 //        registerHandler(RecvOpcode.USE_ITEMEFFECT, new UseItemEffectHandler());
-        registerHandler(RecvOpcode.USE_CHAIR, new UseChairHandler());
-        registerHandler(RecvOpcode.CANCEL_CHAIR, new CancelChairHandler());
+        registerHandler(RecvOpcode.USE_CHAIR, new UseChairHandler());                                                   //   check
+        registerHandler(RecvOpcode.CANCEL_CHAIR, new CancelChairHandler());                                             //   check
         registerHandler(RecvOpcode.DAMAGE_REACTOR, new ReactorHitHandler());                                            //   check
 //        registerHandler(RecvOpcode.GUILD_OPERATION, new GuildOperationHandler());
 //        registerHandler(RecvOpcode.DENY_GUILD_REQUEST, new DenyGuildRequestHandler());

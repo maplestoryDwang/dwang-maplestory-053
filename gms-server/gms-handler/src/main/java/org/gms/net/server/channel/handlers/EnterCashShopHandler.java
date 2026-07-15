@@ -85,11 +85,17 @@ public class EnterCashShopHandler extends AbstractPacketHandler {
             mc.forfeitExpirableQuests();
             mc.cancelQuestExpirationTask();
 
-            c.sendPacket(PacketCreator.openCashShop(c, false));
-            c.sendPacket(PacketCreator.showCashInventory(c));
-            c.sendPacket(PacketCreator.showGifts(mc.getCashShop().loadGifts()));
-            c.sendPacket(PacketCreator.showWishList(mc, false));
-            c.sendPacket(PacketCreator.showCash(mc));
+            // 打开商城
+            c.sendPacket(PacketCreator.openCashShop(c, false));  // ok
+
+            // 展示商城商品
+            c.sendPacket(PacketCreator.showCashInventory(c));    // ok
+            // 显示是否有人送礼物
+            c.sendPacket(PacketCreator.showGifts(mc.getCashShop().loadGifts()));  // ok
+            // 获取愿望单
+            c.sendPacket(PacketCreator.showWishList(mc, false));   //ok
+            // 显示个人的点卷信息
+            c.sendPacket(PacketCreator.showCash(mc));   // ok
 
             c.getChannelServer().removePlayer(mc);
             mc.getMap().removePlayer(mc);

@@ -64,6 +64,7 @@ import org.gms.net.server.world.PartyOperation;
 import org.gms.net.server.world.World;
 import org.gms.server.*;
 import org.gms.server.CashShop.CashItemFactory;
+import org.gms.server.cashshop.CashItemResultType;
 import org.gms.server.events.gm.Snowball;
 import org.gms.server.life.MobSkill;
 import org.gms.server.life.MobSkillId;
@@ -154,7 +155,7 @@ public class PacketCreator {
             }
         }
     }
-    // 复制
+    // 复制GW_CharacterStat::Decode
     private static void addCharStats(OutPacket mplew, Character chr) {
         mplew.writeInt(chr.getId()); // character id
 //        mplew.writeAsciiString(chr.getName());
@@ -244,31 +245,74 @@ public class PacketCreator {
     }
 
     // check dwang
-    private static void addCharacterInfo(OutPacket p, Character chr) {
-//        p.writeLong(-1);
-//        p.writeByte(0);
-        addCharStats(p, chr);
+    private static void addCharacterInfo(OutPacket mplew, Character chr) {
 
-        p.write(0x14); //???
-        p.writeInt(chr.getMeso());
+        // CharacterData::Decode mask
+        mplew.write(HexTool.getByteArrayFromHexString("FF FF"));
 
-        addInventoryInfo(p, chr);
+        //  GW_CharacterStat::Decode
+        addCharStats(mplew, chr);
 
-        addSkillInfo(p, chr);
-        addQuestInfo(p, chr);
+//        mplew.write(0x14); //???
+        mplew.writeByte(chr.getBuddylist().getCapacity());
+        mplew.writeInt(chr.getMeso()); // mesos
 
-        p.write(new byte[8]);
-        for (int x = 0; x < 15; x++)
-            p.write(CHAR_INFO_MAGIC);
+        // start inventoryInfo
+        for (byte i = 1; i <= 5; i++) {
+            mplew.writeByte(chr.getInventory(InventoryType.getByType(i)).getSlotLimit());
+        }
 
-        // todo need add
-//        addMiniGameInfo(p, chr);
-//        addRingInfo(p, chr);
-//        addTeleportInfo(p, chr);
-//        addMonsterBookInfo(p, chr);
-//        addNewYearInfo(p, chr);
-//        addAreaInfo(p, chr);//assuming it stayed here xd
-//        p.writeShort(0);
+        Inventory iv = chr.getInventory(InventoryType.EQUIPPED);
+        Collection<Item> equippedC = iv.list();
+        List<Item> equipped = new ArrayList<Item>(equippedC.size());
+        for (Item item : equippedC) {
+            equipped.add((Item) item);
+        }
+        Collections.sort(equipped);
+
+        for (Item item : equipped) {
+            addItemInfo(mplew, item);
+        }
+        mplew.writeShort(0); // start of equip inventory
+        iv = chr.getInventory(InventoryType.EQUIP);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+        mplew.write(0); // start of use inventory
+        // addItemInfo(mplew, new Item(2020028, (byte) 8, (short) 1));
+        iv = chr.getInventory(InventoryType.USE);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+        mplew.write(0); // start of set-up inventory
+        iv = chr.getInventory(InventoryType.SETUP);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+        mplew.write(0); // start of etc inventory
+        iv = chr.getInventory(InventoryType.ETC);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+        mplew.write(0); // start of cash inventory
+        iv = chr.getInventory(InventoryType.CASH);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+
+        addSkillInfo(mplew, chr);
+
+        mplew.writeShort(0); // colddown 0
+
+        addQuestInfo(mplew, chr);
+
+//        mplew.write(new byte[8]);  //Couple info + minigameinfo
+        addMiniGameInfo(mplew, chr);
+        addRingInfo(mplew, chr);
+
+//        for (int x = 0; x < 15; x++)  //  addTeleportInfo
+//            mplew.write(CHAR_INFO_MAGIC);
+        addTeleportInfo(mplew, chr);
     }
 
     private static void addNewYearInfo(OutPacket p, Character chr) {
@@ -658,35 +702,19 @@ public class PacketCreator {
         }
     }
 
-    private static void addSkillInfo(OutPacket p, Character chr) {
-        p.writeByte(0); // start of skills
+    private static void addSkillInfo(OutPacket mplew, Character chr) {
+        mplew.write(0); // start of skills
+
         Map<Skill, SkillEntry> skills = chr.getSkills();
-        int skillsSize = skills.size();
-        // We don't want to include any hidden skill in this, so subtract them from the size list and ignore them.
+        mplew.writeShort(skills.size());
         for (Entry<Skill, SkillEntry> skill : skills.entrySet()) {
-            if (GameConstants.isHiddenSkills(skill.getKey().getId())) {
-                skillsSize--;
-            }
-        }
-        p.writeShort(skillsSize);
-        for (Entry<Skill, SkillEntry> skill : skills.entrySet()) {
-            if (GameConstants.isHiddenSkills(skill.getKey().getId())) {
-                continue;
-            }
-            p.writeInt(skill.getKey().getId());
-            p.writeInt(skill.getValue().skillLevel);
-//            addExpirationTime(p, skill.getValue().expiration);
+            mplew.writeInt(skill.getKey().getId());
+            mplew.writeInt(skill.getValue().skillLevel);
             if (skill.getKey().isFourthJob()) {
-                p.writeInt(skill.getValue().masterLevel);
+                mplew.writeInt(skill.getValue().masterLevel);
             }
         }
 
-//        p.writeShort(chr.getAllCooldowns().size());
-//        for (PlayerCoolDownValueHolder cooling : chr.getAllCooldowns()) {
-//            p.writeInt(cooling.skillId);
-//            int timeLeft = (int) (cooling.length + cooling.startTime - System.currentTimeMillis());
-//            p.writeShort(timeLeft / 1000);
-//        }
     }
 
     private static void addMonsterBookInfo(OutPacket p, Character chr) {
@@ -1119,99 +1147,20 @@ public class PacketCreator {
      * @return The character info packet.
      * ok 暂时的
      */
-    public static Packet getCharInfoold(Character chr) {
-        final OutPacket p = OutPacket.create(SendPacketOpcode.WARP_TO_MAP);
-        p.writeInt(chr.getClient().getChannel() - 1);
-        p.writeByte(1);
-        p.writeByte(1);
-        p.writeInt(new Random().nextInt()); // seed the maplestory rng with a random number <3
-        p.write(HexTool.getByteArrayFromHexString("F4 83 6B 3D BA 9A 4F A1 FF FF"));
-
-        addCharacterInfo(p, chr);
-//        p.writeLong(getTime(System.currentTimeMillis()));
-        p.write(HexTool.getByteArrayFromHexString("90 63 3A 0D C5 5D C8 01"));
-
-        return p;
-    }
-
     public static Packet getCharInfo(Character chr) {
         final OutPacket mplew = OutPacket.create(SendPacketOpcode.WARP_TO_MAP);
         mplew.writeInt(chr.getClient().getChannel() - 1);
         mplew.write(1);
-        mplew.write(1);
-        mplew.writeInt(new Random().nextInt()); // seed the maplestory rng with a random number <3
-        mplew.write(HexTool.getByteArrayFromHexString("F4 83 6B 3D BA 9A 4F A1 FF FF"));
-        addCharStats(mplew, chr);
-
-        mplew.write(0x14); //???
-        mplew.writeInt(chr.getMeso()); // mesos
-
-        // start inventoryInfo
-        for (byte i = 1; i <= 5; i++) {
-            mplew.writeByte(chr.getInventory(InventoryType.getByType(i)).getSlotLimit());
+        mplew.write(1);  // true表示登录加载
+//        mplew.writeInt(new Random().nextInt()); // seed the maplestory rng with a random number <3
+//        mplew.write(HexTool.getByteArrayFromHexString("F4 83 6B 3D BA 9A 4F A1 FF FF"));
+        for (int i = 0; i < 3; i++) {
+            mplew.writeInt(Randomizer.nextInt());
         }
 
-        Inventory iv = chr.getInventory(InventoryType.EQUIPPED);
-        Collection<Item> equippedC = iv.list();
-        List<Item> equipped = new ArrayList<Item>(equippedC.size());
-        for (Item item : equippedC) {
-            equipped.add((Item) item);
-        }
-        Collections.sort(equipped);
+        addCharacterInfo(mplew, chr);
 
-        for (Item item : equipped) {
-            addItemInfo(mplew, item);
-        }
-        mplew.writeShort(0); // start of equip inventory
-        iv = chr.getInventory(InventoryType.EQUIP);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
-        mplew.write(0); // start of use inventory
-        // addItemInfo(mplew, new Item(2020028, (byte) 8, (short) 1));
-        iv = chr.getInventory(InventoryType.USE);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
-        mplew.write(0); // start of set-up inventory
-        iv = chr.getInventory(InventoryType.SETUP);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
-        mplew.write(0); // start of etc inventory
-        iv = chr.getInventory(InventoryType.ETC);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
-        mplew.write(0); // start of cash inventory
-        iv = chr.getInventory(InventoryType.CASH);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
 
-        mplew.write(0); // start of skills
-
-        Map<Skill, SkillEntry> skills = chr.getSkills();
-        mplew.writeShort(skills.size());
-        for (Entry<Skill, SkillEntry> skill : skills.entrySet()) {
-            mplew.writeInt(skill.getKey().getId());
-            mplew.writeInt(skill.getValue().skillLevel);
-            if (skill.getKey().isFourthJob()) {
-                mplew.writeInt(skill.getValue().masterLevel);
-            }
-        }
-
-        mplew.writeShort(0); // colddown 0
-
-        addQuestInfo(mplew, chr);
-
-//        mplew.write(new byte[8]);  //Couple info + minigameinfo
-        addMiniGameInfo(mplew, chr);
-        addRingInfo(mplew, chr);
-
-//        for (int x = 0; x < 15; x++)  //  addTeleportInfo
-//            mplew.write(CHAR_INFO_MAGIC);
-        addTeleportInfo(mplew, chr);
 
         mplew.write(HexTool.getByteArrayFromHexString("90 63 3A 0D C5 5D C8 01"));
 
@@ -6008,7 +5957,7 @@ public class PacketCreator {
 
     public static Packet showWorldTransferSuccess(Item item, int accountId) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
-        p.writeByte(0xA0);
+        p.writeByte(CashItemResultType.TransferWorld_Done.getValue());
         addCashItemInformation(p, item, accountId);
         return p;
     }
@@ -6043,7 +5992,7 @@ public class PacketCreator {
 
     public static Packet showNameChangeSuccess(Item item, int accountId) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
-        p.writeByte(0x9E);
+        p.writeByte(CashItemResultType.NameChangeBuy_Done.getValue());
         addCashItemInformation(p, item, accountId);
         return p;
     }
@@ -6160,7 +6109,7 @@ public class PacketCreator {
 
     public static Packet showCouponRedeemedItems(int accountId, int maplePoints, int mesos, List<Item> cashItems, List<Pair<Integer, Integer>> items) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
-        p.writeByte(0x59);
+        p.writeByte(CashItemResultType.UseCoupon_Done.getValue());
         p.writeByte((byte) cashItems.size());
         for (Item item : cashItems) {
             addCashItemInformation(p, item, accountId);
@@ -6940,7 +6889,7 @@ public class PacketCreator {
     public static Packet showBoughtCashPackage(List<Item> cashPackage, int accountId) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
-        p.writeByte(0x89);
+        p.writeByte(CashItemResultType.BuyPackage_Done.getValue());
         p.writeByte(cashPackage.size());
 
         for (Item item : cashPackage) {
@@ -6952,9 +6901,14 @@ public class PacketCreator {
         return p;
     }
 
+    /**
+     * 购买任务用品
+     * @param itemId
+     * @return
+     */
     public static Packet showBoughtQuestItem(int itemId) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
-        p.writeByte(0x8D);
+        p.writeByte(CashItemResultType.BuyNormal_Done.getValue());
         p.writeInt(1);
         p.writeShort(1);
         p.writeByte(0x0B);
@@ -7422,7 +7376,7 @@ public class PacketCreator {
         p.writeInt(7000);
         return p;
     }
-
+    // 应该是好的
     public static void addCashItemInformation(OutPacket p, Item item, int accountId) {
         addCashItemInformation(p, item, accountId, null);
     }
@@ -7458,9 +7412,9 @@ public class PacketCreator {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
         if (update) {
-            p.writeByte(0x55);
+            p.writeByte(CashItemResultType.SetWish_Done.getValue());  //OnCashItemResSetWishDone
         } else {
-            p.writeByte(0x4F);
+            p.writeByte(CashItemResultType.LoadWish_Done.getValue());  //OnCashItemResLoadWishDone
         }
 
         for (int sn : mc.getCashShop().getWishList()) {
@@ -7474,10 +7428,16 @@ public class PacketCreator {
         return p;
     }
 
+    /**
+     * 购买完成
+     * @param item
+     * @param accountId
+     * @return
+     */
     public static Packet showBoughtCashItem(Item item, int accountId) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
-        p.writeByte(0x57);
+        p.writeByte(CashItemResultType.Buy_Done.getValue());
         addCashItemInformation(p, item, accountId);
 
         return p;
@@ -7485,7 +7445,7 @@ public class PacketCreator {
 
     public static Packet showBoughtCashRing(Item ring, String recipient, int accountId) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
-        p.writeByte(0x87);
+        p.writeByte(CashItemResultType.Couple_Done.getValue());
         addCashItemInformation(p, ring, accountId);
         p.writeString(recipient);
         p.writeInt(ring.getItemId());
@@ -7544,10 +7504,14 @@ public class PacketCreator {
      * E6 = item cannot be purchased with MaplePoints
      * E7 = lol sorry for the inconvenience, eh?
      * E8 = cannot purchase by anyone under 7
+     *
+     *
+     * 实际上每个都有自己的信息不一定非要用 5C
+     *
      */
     public static Packet showCashShopMessage(byte message) {
         OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
-        p.writeByte(0x5C);
+        p.writeByte(CashItemResultType.Gift_Failed.getValue());// ?
         p.writeByte(message);
         return p;
     }
@@ -7557,16 +7521,16 @@ public class PacketCreator {
         List<Item> inventory = c.getPlayer().getCashShop().getInventory();
         int itemCount = Math.min(inventory.size(), CashShop.MAX_CASH_INVENTORY_SAFE);
 
-        p.writeByte(0x4B);
+        p.writeByte(CashItemResultType.LoadLocker_Done.getValue());
         p.writeShort(itemCount);
 
         for (int i = 0; i < itemCount; i++) {
             Item item = inventory.get(i);
-            addCashItemInformation(p, item, c.getAccID());
+            addCashItemInformation(p, item, c.getAccID());  // 55字节，应该是一样的
         }
 
-        p.writeShort(c.getPlayer().getStorage().getSlots());
-        p.writeShort(c.getCharacterSlots());
+        p.writeShort(c.getPlayer().getStorage().getSlots());  // nTrunkCount
+//        p.writeShort(c.getCharacterSlots());   // 53 没有
 
         return p;
     }
@@ -7574,7 +7538,7 @@ public class PacketCreator {
     public static Packet showGifts(List<Pair<Item, String>> gifts) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
-        p.writeByte(0x4D);
+        p.writeByte(CashItemResultType.LoadGift_Done.getValue());
         p.writeShort(gifts.size());
 
         for (Pair<Item, String> gift : gifts) {
@@ -7587,7 +7551,7 @@ public class PacketCreator {
     public static Packet showGiftSucceed(String to, ModifiedCashItemDO item) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
-        p.writeByte(0x5E); //0x5D, Couldn't be sent
+        p.writeByte(CashItemResultType.Gift_Done.getValue()); //0x5D, Couldn't be sent
         p.writeString(to);
         p.writeInt(item.getItemId());
         p.writeShort(item.getCount());
@@ -7599,7 +7563,7 @@ public class PacketCreator {
     public static Packet showBoughtInventorySlots(int type, short slots) {
         OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
-        p.writeByte(0x60);
+        p.writeByte(CashItemResultType.IncSlotCount_Done.getValue());
         p.writeByte(type);
         p.writeShort(slots);
 
@@ -7609,60 +7573,76 @@ public class PacketCreator {
     public static Packet showBoughtStorageSlots(short slots) {
         OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
-        p.writeByte(0x62);
+        p.writeByte(CashItemResultType.IncTrunkCount_Done.getValue());
         p.writeShort(slots);
 
         return p;
     }
 
+    // 053 cant add characterSlot
     public static Packet showBoughtCharacterSlot(short slots) {
         OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
-        p.writeByte(0x64);
+        p.writeByte(-1);
         p.writeShort(slots);
 
         return p;
     }
 
+    /**
+     * L TO S
+     * @param item
+     * @return
+     */
     public static Packet takeFromCashInventory(Item item) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
-        p.writeByte(0x68);
+        p.writeByte(CashItemResultType.MoveLtoS_Done.getValue());
         p.writeShort(item.getPosition());
         addItemInfo(p, item, true);
 
         return p;
     }
 
+    /**
+     * S TO L
+     * @param item
+     * @param accountId
+     * @return
+     */
+    public static Packet putIntoCashInventory(Item item, int accountId) {
+        final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
+
+        p.writeByte(CashItemResultType.MoveStoL_Done.getValue());
+        addCashItemInformation(p, item, accountId);
+
+        return p;
+    }
+
     public static Packet deleteCashItem(Item item) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
-        p.writeByte(0x6C);
+        p.writeByte(CashItemResultType.Destroy_Done.getValue());
         p.writeLong(item.getCashId());
         return p;
     }
 
     public static Packet refundCashItem(Item item, int maplePoints) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
-        p.writeByte(0x85);
+        p.writeByte(CashItemResultType.Rebate_Done.getValue());
         p.writeLong(item.getCashId());
         p.writeInt(maplePoints);
         return p;
     }
 
-    public static Packet putIntoCashInventory(Item item, int accountId) {
-        final OutPacket p = OutPacket.create(SendPacketOpcode.CASHSHOP_OPERATION);
 
-        p.writeByte(0x6A);
-        addCashItemInformation(p, item, accountId);
-
-        return p;
-    }
 
     public static Packet openCashShop(Client c, boolean mts) throws Exception {
         final OutPacket p = OutPacket.create(mts ? SendPacketOpcode.SET_ITC : SendPacketOpcode.SET_CASH_SHOP);
 
         addCharacterInfo(p, c.getPlayer());
 
+        //    v5 = CCashShop::CCashShop(v4, packet);
+        //    ======  CCashShop::LoadData(int this, int packet)  ======
         if (!mts) {
             p.writeByte(1);
         }
@@ -7677,14 +7657,29 @@ public class PacketCreator {
                     (byte) 0x70, (byte) 0xAA, (byte) 0xA7, (byte) 0xC5,
                     (byte) 0x4E, (byte) 0xC1, (byte) 0xCA, 1});
         } else {
-            p.writeInt(0);
-            Collection<ModifiedCashItemDO> items = CashItemFactory.getModifiedCashItems().values();
+
+            // CWvsContext::SetSaleInfo
+            int nNotSaleCount = 0;
+            p.writeInt(nNotSaleCount);  // 控制不卖的商品nNotSaleCount
+            if (nNotSaleCount > 0) {
+                // 写入不卖的ID？
+                // CInPacket::DecodeBuffer(iPacket, (unsigned __int8 *)i, 4 * v13);
+            }
+
+            Collection<ModifiedCashItemDO> items = CashItemFactory.getModifiedCashItems().values(); // 空的
             p.writeShort(items.size());//Guess what
             for (ModifiedCashItemDO item : items) {
+
+                //  v13 = CInPacket::Decode4(packet); +
+                //  CS_COMMODITY::DecodeModifiedData
                 writeModifiedCashItem(p, item);
             }
-            p.skip(121);
 
+            //  (CInPacket::DecodeBuffer)(v21 + 80, 1080u);
+            p.skip(1);
+            p.skip(120);
+
+            // 显示销量最好的top 8
             List<List<Integer>> mostSellers = c.getWorldServer().getMostSellerCashItems();
             for (int i = 1; i <= 8; i++) {
                 List<Integer> mostSellersTab = mostSellers.get(i);
@@ -7698,8 +7693,11 @@ public class PacketCreator {
                 }
             }
 
-            p.writeInt(0);
-            p.writeShort(0);
+            p.writeShort(0);   // CCashShop::DecodeStock
+            p.writeShort(0);   // CCashShop::DecodeLimitGoods
+//            p.writeShort(0); gms53少一个
+
+            // ======  CCashShop::LoadData(a2); end  ======
             p.writeByte(0);
             p.writeInt(75);
         }

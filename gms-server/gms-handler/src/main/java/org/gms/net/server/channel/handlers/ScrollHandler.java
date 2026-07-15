@@ -45,6 +45,8 @@ import java.util.List;
 /**
  * @author Matze
  * @author Frz
+ *
+ * CQWUInventory::OnUpgradeItemRequest
  */
 public final class ScrollHandler extends AbstractPacketHandler {
 
@@ -56,11 +58,17 @@ public final class ScrollHandler extends AbstractPacketHandler {
                 short scrollSlot = p.readShort(); // 读取卷轴所在的槽位
                 short equipSlot = p.readShort(); // 读取装备所在的槽位
                 byte ws = (byte) p.readShort(); // 读取一些标志位
+                byte legendarySpiritByte = (byte) p.readByte(); // 最后一个标志位是LegendarySpirit
                 boolean whiteScroll = false; // 是否使用白色卷轴
                 boolean legendarySpirit = false; // 是否使用传奇精神技能
 
                 if ((ws & 2) == 2) {
                     whiteScroll = true;
+                }
+
+                // 看起来像是匠人之魂
+                if (legendarySpiritByte > 0) {
+                    legendarySpirit = true;
                 }
 
                 ItemInformationProvider ii = ItemInformationProvider.getInstance(); // 获取物品信息提供者实例
