@@ -687,6 +687,14 @@ public class InventoryManipulator {
         }
         if (source == null) {
             return;
+
+            // 兼容好像只会返回-1 正常是不用的
+//            short src2 = (short) (src-100);
+//            source = (Equip) eqpdInv.getItem(src2);
+//            if (source == null) {
+//                return;
+//            }
+
         }
         if (target != null && src <= 0) {
             c.sendPacket(PacketCreator.getInventoryFull());

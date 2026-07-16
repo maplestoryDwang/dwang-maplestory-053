@@ -261,47 +261,8 @@ public class PacketCreator {
 
         // start inventoryInfo
         // GW_ItemSlotBase 0x80
-        for (byte i = 1; i <= 5; i++) {
-            mplew.writeByte(chr.getInventory(InventoryType.getByType(i)).getSlotLimit());
-        }
+        addInventoryInfo(mplew, chr);
 
-        Inventory iv = chr.getInventory(InventoryType.EQUIPPED);
-        Collection<Item> equippedC = iv.list();
-        List<Item> equipped = new ArrayList<Item>(equippedC.size());
-        for (Item item : equippedC) {
-            equipped.add((Item) item);
-        }
-        Collections.sort(equipped);
-        // 穿着的 0x04
-        for (Item item : equipped) {
-            addItemInfo(mplew, item);
-        }
-        mplew.writeShort(0); // start of equip inventory
-        iv = chr.getInventory(InventoryType.EQUIP);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
-        mplew.write(0); // start of use inventory
-        // addItemInfo(mplew, new Item(2020028, (byte) 8, (short) 1));
-        iv = chr.getInventory(InventoryType.USE);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
-        mplew.write(0); // start of set-up inventory
-        iv = chr.getInventory(InventoryType.SETUP);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
-        mplew.write(0); // start of etc inventory
-        iv = chr.getInventory(InventoryType.ETC);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
-        mplew.write(0); // start of cash inventory
-        iv = chr.getInventory(InventoryType.CASH);
-        for (Item item : iv.list()) {
-            addItemInfo(mplew, item);
-        }
 
         addSkillInfo(mplew, chr);
 
@@ -368,9 +329,9 @@ public class PacketCreator {
             } else if (pos > 100 && pos != 111) { // don't ask. o.o
                 pos -= 100;
                 if (myEquip.get(pos) != null) {
-                    maskedEquip.put(pos, myEquip.get(pos));
+                    maskedEquip.put(pos, myEquip.get(pos)); //被挡住的id
                 }
-                myEquip.put(pos, item.getItemId());
+                myEquip.put(pos, item.getItemId());// 外关
             } else if (myEquip.get(pos) != null) {
                 maskedEquip.put(pos, item.getItemId());
             }
@@ -486,6 +447,7 @@ public class PacketCreator {
     }
 
     // check 完全复制
+    //
     private static void addItemInfo(OutPacket p, Item item) {
         addItemInfoV2(p, item, false, false);
 //        addItemInfo(p, item, false, false);
@@ -531,8 +493,9 @@ public class PacketCreator {
                 if (pos > 100) {
                     masking = true;
 //                    mplew.write(0);                     // 穿上的点状进来这
-//                    mplew.write(pos - 100);
-                    mplew.write(pos - 100 );
+//                    mplew.writeShort(pos - 100);
+                    mplew.write(pos - 100 );          // 反回来是错的只有-1而不是-101
+//                    mplew.write(pos );                 // 这种情况根本不显示点装
 //                    mplew.writeShort(pos > 100 ? pos - 100 : pos);
 
                 } else {
@@ -547,8 +510,8 @@ public class PacketCreator {
 
 
 
-        // GW_ItemSlotBase::RawDecode
         mplew.write(item.getItemType());
+        // GW_ItemSlotBase::RawDecode
         mplew.writeInt(item.getItemId());
 
 //        if (masking) {
@@ -568,7 +531,7 @@ public class PacketCreator {
         boolean b = isCash;
         mplew.writeBool(b);
         if (b) {
-            mplew.writeLong(isPet ? item.getPetId() : isRing ? equip.getRingId() : item.getCashId());
+            mplew.writeLong(isPet ? item.getPetId() : isRing ? equip.getRingId() : item.getCashId()); // sn
 //            mplew.writeLong(item.getSN());        // todo 这个值到底应该写什么？
         }
         addExpirationTime(mplew, item.getExpiration());
@@ -616,10 +579,15 @@ public class PacketCreator {
             mplew.writeString(equip.getOwner());
 
             mplew.writeShort(equip.getFlag()); //Item Flags
-
+            // 改了这个才能正常在商城拿出那入东西
+            //  if ( !*((_QWORD *)this + 3) )
             if (!isCash) {
                 mplew.writeLong(item.getSN()); // liSN
+//                mplew.writeLong(isPet ? item.getPetId() : isRing ? equip.getRingId() : item.getCashId()); // sn
+            } else {
+
             }
+
 
 //            mplew.writeLong(0);
 
@@ -636,6 +604,7 @@ public class PacketCreator {
             return;
         } else {
             // 普通物品
+            // GW_ItemSlotBundle::RawDecode
             mplew.writeShort(item.getQuantity());
             mplew.writeString(item.getOwner());
             mplew.writeShort(0); // this seems to end the item entry
@@ -727,146 +696,75 @@ public class PacketCreator {
     }
 
     protected static void addItemInfo(final OutPacket p, Item item, boolean zeroPosition) {
-        ItemInformationProvider ii = ItemInformationProvider.getInstance();
-        boolean isCash = ii.isCash(item.getItemId());
-        boolean isPet = item.getPetId() > -1;
-        boolean isRing = false;
-        Equip equip = null;
-        short pos = item.getPosition();
-        byte itemType = item.getItemType();
-        if (itemType == 1) {
-            equip = (Equip) item;
-            isRing = equip.getRingId() > -1;
-        }
-        if (!zeroPosition) {
-            if (equip != null) {
-                if (pos < 0) {
-                    pos *= -1;
-                }
-                p.writeShort(pos > 100 ? pos - 100 : pos);
-            } else {
-                p.writeByte(pos);
-            }
-        }
-        p.writeByte(itemType);
-        p.writeInt(item.getItemId());
-        p.writeBool(isCash);
-        if (isCash) {
-            p.writeLong(isPet ? item.getPetId() : isRing ? equip.getRingId() : item.getCashId());
-        }
-        addExpirationTime(p, item.getExpiration());
-        if (isPet) {
-            Pet pet = item.getPet();
-            p.writeFixedString(StringUtil.getRightPaddedStr(pet.getName(), '\0', 13));
-            p.writeByte(pet.getLevel());
-            p.writeShort(pet.getTameness());
-            p.writeByte(pet.getFullness());
-            addExpirationTime(p, item.getExpiration());
-            p.writeShort(pet.getPetAttribute()); // PetAttribute noticed by lrenex & Spoon
-            p.writeShort(0); // PetSkill
-            p.writeInt(18000); // RemainLife
-            p.writeShort(0); // attribute
-            return;
-        }
-        if (equip == null) {
-            p.writeShort(item.getQuantity());
-            p.writeString(item.getOwner());
-            p.writeShort(item.getFlag()); // flag
-
-            if (ItemConstants.isRechargeable(item.getItemId())) {
-                p.writeInt(2);
-                p.writeBytes(new byte[]{(byte) 0x54, 0, 0, (byte) 0x34});
-            }
-            return;
-        }
-        p.writeByte(equip.getUpgradeSlots()); // upgrade slots
-        p.writeByte(equip.getLevel()); // level
-        p.writeShort(equip.getStr()); // str
-        p.writeShort(equip.getDex()); // dex
-        p.writeShort(equip.getInt()); // int
-        p.writeShort(equip.getLuk()); // luk
-        p.writeShort(equip.getHp()); // hp
-        p.writeShort(equip.getMp()); // mp
-        p.writeShort(equip.getWatk()); // watk
-        p.writeShort(equip.getMatk()); // matk
-        p.writeShort(equip.getWdef()); // wdef
-        p.writeShort(equip.getMdef()); // mdef
-        p.writeShort(equip.getAcc()); // accuracy
-        p.writeShort(equip.getAvoid()); // avoid
-        p.writeShort(equip.getHands()); // hands
-        p.writeShort(equip.getSpeed()); // speed
-        p.writeShort(equip.getJump()); // jump
-        p.writeString(equip.getOwner()); // owner name
-        p.writeShort(equip.getFlag()); //Item Flags
-
-        if (isCash) {
-            for (int i = 0; i < 10; i++) {
-                p.writeByte(0x40);
-            }
-        } else {
-            int itemLevel = equip.getItemLevel();
-
-            long expNibble = (ExpTable.getExpNeededForLevel(ii.getEquipLevelReq(item.getItemId())) * equip.getItemExp());
-            expNibble /= ExpTable.getEquipExpNeededForLevel(itemLevel);
-
-            p.writeByte(0);
-            p.writeByte(itemLevel); //Item Level
-            p.writeInt((int) expNibble);
-            p.writeInt(equip.getVicious()); //WTF NEXON ARE YOU SERIOUS?
-            p.writeLong(0);
-        }
-        p.writeLong(getTime(-2));
-        p.writeInt(-1);
-
+        addItemInfoV2(p, item, zeroPosition, false);
     }
 
-    private static void addInventoryInfo(OutPacket p, Character chr) {
+    private static void addInventoryInfo(OutPacket mplew, Character chr) {
         for (byte i = 1; i <= 5; i++) {
-            p.writeByte(chr.getInventory(InventoryType.getByType(i)).getSlotLimit());
+            mplew.writeByte(chr.getInventory(InventoryType.getByType(i)).getSlotLimit());
         }
-
 
         Inventory iv = chr.getInventory(InventoryType.EQUIPPED);
         Collection<Item> equippedC = iv.list();
-        List<Item> equipped = new ArrayList<Item>(equippedC.size());
-        for (Item item : equippedC) {
-            equipped.add((Item) item);
-        }
-        Collections.sort(equipped);
 
-        for (Item item : equipped) {    // equipped doesn't actually need sorting, thanks Pllsz
-            addItemInfo(p, item);
+        // 0x04
+        // 过滤出两种
+        List<Item> equippedE = new ArrayList();
+        List<Item> equippedCash = new ArrayList();
+        ItemInformationProvider ii = ItemInformationProvider.getInstance();
+        equippedC.forEach(item-> {
+            boolean isCash = ii.isCash(item.getItemId());
+            if (isCash) {
+                equippedCash.add(item);
+            } else {
+                equippedE.add(item);
+            }
+
+        });
+        for (Item item : equippedE) {
+            addItemInfo(mplew, item);
         }
-        // 53没有点装
-//        p.writeShort(0); // start of equip cash
-//        for (Item item : equippedCash) {
-//            addItemInfo(p, item);
-//        }
-        p.writeShort(0); // start of equip inventory
-        for (Item item : chr.getInventory(InventoryType.EQUIP).list()) {
-            addItemInfo(p, item);
+        mplew.write(0); // end of Equipped
+        for (Item item : equippedCash) {
+            addItemInfo(mplew, item);
         }
-        p.writeInt(0);
-        for (Item item : chr.getInventory(InventoryType.USE).list()) {
-            addItemInfo(p, item);
+        mplew.write(0); // end of Equipped cash
+
+
+
+        iv = chr.getInventory(InventoryType.EQUIP);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
         }
-        p.writeByte(0);
-        for (Item item : chr.getInventory(InventoryType.SETUP).list()) {
-            addItemInfo(p, item);
+        mplew.write(0); // end of EQUIP inventory
+
+        iv = chr.getInventory(InventoryType.USE);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
         }
-        p.writeByte(0);
-        for (Item item : chr.getInventory(InventoryType.ETC).list()) {
-            addItemInfo(p, item);
+        mplew.write(0); // end of set-up USE
+
+        iv = chr.getInventory(InventoryType.SETUP);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
         }
-        p.writeByte(0);
-        for (Item item : chr.getInventory(InventoryType.CASH).list()) {
-            addItemInfo(p, item);
+        mplew.write(0); // end of SETUP inventory
+
+        iv = chr.getInventory(InventoryType.ETC);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
         }
+        mplew.write(0); // end of ETC inventory
+
+
+        iv = chr.getInventory(InventoryType.CASH);
+        for (Item item : iv.list()) {
+            addItemInfo(mplew, item);
+        }
+        mplew.write(0); // end of CASH
     }
 
     private static void addSkillInfo(OutPacket mplew, Character chr) {
-        mplew.write(0); // start of skills
-
         Map<Skill, SkillEntry> skills = chr.getSkills();
         mplew.writeShort(skills.size());
         for (Entry<Skill, SkillEntry> skill : skills.entrySet()) {
