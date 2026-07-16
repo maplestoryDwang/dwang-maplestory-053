@@ -225,9 +225,11 @@ public enum SendPacketOpcode implements Opcode {
     // ok
 
     SPAWN_PET(0x7C), // 生成宠物
-    PET_CHAT(0x7D), // 宠物对话
+    PET_CHAT(0x7D), // 宠物对话 OnAction
     PET_NAMECHANGE(0x7F), // 更改宠物名字
     PET_EXCEPTION_LIST(0x80), // 宠物异常列表
+
+    // ok
     MOVE_PET(0x81), // 移动宠物
     PET_COMMAND(0x82), // 宠物命令
 
@@ -341,14 +343,14 @@ public enum SendPacketOpcode implements Opcode {
     // 53没有这个接口
     SCRIPT_PROGRESS_MESSAGE(0x7A), // 脚本进度消息
     DATA_CRC_CHECK_FAILED(0x7B), // 数据CRC检查失败
-    MACRO_SYS_DATA_INIT(0x7C), // 宏系统数据初始化
+    MACRO_SYS_DATA_INIT(-1), // 宏系统数据初始化
 
 
 
     /*CField::OnPacket*/
     SET_BACK_EFFECT(0x80), // 设置背景特效
     SET_MAP_OBJECT_VISIBLE(0x81), // 设置地图对象可见性
-    CLEAR_BACK_EFFECT(0x82), // 清除背景特效
+    CLEAR_BACK_EFFECT(-1), // 清除背景特效
     BLOCKED_MAP(0x83), // 被阻止的地图
     BLOCKED_SERVER(0x84), // 被阻止的服务器
     FORCED_MAP_EQUIP(-1), // 强制地图装备   没找到

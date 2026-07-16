@@ -54,7 +54,7 @@ public final class PetFoodHandler extends AbstractPacketHandler {
         int previousFullness = 100;
         byte slot = 0;
         Pet[] pets = chr.getPets();
-        for (byte i = 0; i < 3; i++) {
+        for (byte i = 0; i < 1; i++) {
             if (pets[i] != null) {
                 if (pets[i].getFullness() < previousFullness) {
                     slot = i;

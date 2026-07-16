@@ -34,7 +34,6 @@ public final class PetAutoPotHandler extends AbstractPacketHandler {
     @Override
     public final void handlePacket(InPacket p, Client c) {
         p.readByte();
-        p.readLong();
         p.readInt();
         short slot = p.readShort();
         int itemId = p.readInt();

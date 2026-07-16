@@ -33,15 +33,21 @@ import org.gms.util.PacketCreator;
 import java.util.Set;
 
 /**
+ * 寵物揀去
+ *
  * @author TheRamon
  * @author Ronan
+ * @author dwang
+ *
  */
 public final class PetLootHandler extends AbstractPacketHandler {
     @Override
     public final void handlePacket(InPacket p, Client c) {
         Character chr = c.getPlayer();
 
-        byte petIndex = chr.getPetIndex(p.readInt());
+//        byte petIndex = chr.getPetIndex(p.readInt());
+
+        byte petIndex = 0;
         Pet pet = chr.getPet(petIndex);
         if (pet == null || !pet.isSummoned()) {
             c.sendPacket(PacketCreator.enableActions());

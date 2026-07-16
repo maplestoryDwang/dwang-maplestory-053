@@ -7195,17 +7195,18 @@ public class Character extends AbstractCharacterObject {
                     }
                 }
             }
-            if (shift_left) {
-                if (slot > -1) {
-                    for (int i = slot; i < 1; i++) {
-                        if (i != 2) {
-                            pets[i] = pets[i + 1];
-                        } else {
-                            pets[i] = null;
-                        }
-                    }
-                }
-            }
+            // 只有一個不需要平移
+//            if (shift_left) {
+//                if (slot > -1) {
+//                    for (int i = slot; i < 1; i++) {
+//                        if (i != 2) {
+//                            pets[i] = pets[i + 1];
+//                        } else {
+//                            pets[i] = null;
+//                        }
+//                    }
+//                }
+//            }
         } finally {
             petLock.unlock();
         }

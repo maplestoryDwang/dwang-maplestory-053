@@ -444,7 +444,7 @@ public final class UseCashItemHandler extends AbstractPacketHandler {
 
         } else if (itemType == 524) {//宠物食品
             boolean isUse = false;
-            for (byte i = 0; i < 3; i++) {
+            for (byte i = 0; i < 1; i++) {
                 Pet pet = player.getPet(i);
                 if (pet != null) {
                     Pair<Integer, Boolean> pair = pet.canConsume(itemId);

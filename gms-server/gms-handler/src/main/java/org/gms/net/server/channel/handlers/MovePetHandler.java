@@ -38,11 +38,19 @@ import java.util.List;
 import java.util.Set;
 
 public final class MovePetHandler extends AbstractMovementPacketHandler {
+
+    // BMS的 CMovePath::Decode
     @Override
     public final void handlePacket(InPacket p, Client c) {
-        int petId = p.readInt();
-        p.readLong();
+//        int petId = p.readInt();
+//        p.readLong();
+
 //        Point startPos = StreamUtil.readShortPoint(slea);
+        short _ZtlSecureTear_m_x = p.readShort();
+        short _ZtlSecureTear_m_y = p.readShort();
+
+
+
         List<LifeMovementFragment> res;
 
         try {
@@ -50,13 +58,13 @@ public final class MovePetHandler extends AbstractMovementPacketHandler {
         } catch (EmptyMovementException e) {
             return;
         }
+
         Character player = c.getPlayer();
-        byte slot = player.getPetIndex(petId);
-        if (slot == -1) {
-            return;
-        }
+        byte slot = 0;
+
+        // 這個是給別人看的
         player.getPet(slot).updatePosition(res);
-        player.getMap().broadcastMessage(player, PacketCreator.movePet(player.getId(), petId, slot, res), false);
+        player.getMap().broadcastMessage(player, PacketCreator.movePet(player.getId(),_ZtlSecureTear_m_x,_ZtlSecureTear_m_y , res), false);
         if (GameConfig.getServerBoolean("pet_itemvac")) {
             // 根据游戏config参数确定是否开启宠吸
             itemVac(player,slot);

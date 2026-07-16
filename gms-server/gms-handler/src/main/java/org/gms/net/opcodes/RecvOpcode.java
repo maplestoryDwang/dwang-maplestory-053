@@ -103,6 +103,39 @@ public enum RecvOpcode implements Opcode {
     ITEM_PICKUP(0x89), // 拾取道具
     ENTER_MTS(0x77),// 进入MTS(拍卖所)
 
+    /**
+     *       case 0x7F:
+     *         CPet::OnDropPickUpRequest(a3);
+     *         break;
+     *       case 0x80:
+     *         CPet::OnInteractionRequest(a3);
+     *         break;
+     *       case 0x81:
+     *         CPet::OnStatChangeItemUseRequest(a3);
+     *         break;
+     *       case 0x82:
+     *         CPet::OnAction(a3);
+     *         break;
+     *       case 0x83:
+     *         CUser::OnPetUpdateExceptionListRequest(a3);
+     *         break;
+     *       case 0x84:
+     *         CPet::OnMove(v3, a3);
+     *         break;
+     */
+    PET_LOOT(0x7F), // 宠物拾取
+    PET_COMMAND(0x80), // 宠物命令
+    PET_AUTO_POT(0x81), // 宠物自动使用药水
+    PET_CHAT(0x82), // 宠物对话 OnAction
+    PET_EXCLUDE_ITEMS(0x83), // 宠物排除物品
+    MOVE_PET(0x84), // 移动宠物
+
+    PET_FOOD(0x4C), // 宠物食物
+
+
+
+
+
     // CReactorPool::OnPacket
     DAMAGE_REACTOR(0x8C), // 反应堆受到伤害
 

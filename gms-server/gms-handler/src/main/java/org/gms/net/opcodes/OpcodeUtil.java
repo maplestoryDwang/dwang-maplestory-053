@@ -25,6 +25,7 @@ public class OpcodeUtil {
            RecvOpcode.FACE_EXPRESSION.getValue(),
            RecvOpcode.MOVE_PLAYER.getValue(),
            RecvOpcode.NPC_ACTION.getValue(),
+           RecvOpcode.MOVE_PET.getValue(),
            RecvOpcode.MOVE_LIFE.getValue()
 
     );

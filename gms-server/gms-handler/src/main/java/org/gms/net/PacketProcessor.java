@@ -234,11 +234,13 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.CASHSHOP_OPERATION, new CashOperationHandler(channelDeps.noteService()));
 //        registerHandler(RecvOpcode.COUPON_CODE, new CouponCodeHandler());
         registerHandler(RecvOpcode.SPAWN_PET, new SpawnPetHandler());  //CUser::OnActivatePetRequest(this, (int)pExceptionObject);
-//        registerHandler(RecvOpcode.MOVE_PET, new MovePetHandler());
-//        registerHandler(RecvOpcode.PET_CHAT, new PetChatHandler());
-//        registerHandler(RecvOpcode.PET_COMMAND, new PetCommandHandler());
-//        registerHandler(RecvOpcode.PET_FOOD, new PetFoodHandler());
-//        registerHandler(RecvOpcode.PET_LOOT, new PetLootHandler());
+        registerHandler(RecvOpcode.MOVE_PET, new MovePetHandler());                                                    //   check
+        registerHandler(RecvOpcode.PET_CHAT, new PetChatHandler());                                                    //   check
+        registerHandler(RecvOpcode.PET_COMMAND, new PetCommandHandler());                                              //   check
+        registerHandler(RecvOpcode.PET_FOOD, new PetFoodHandler());                                                    //   check
+        registerHandler(RecvOpcode.PET_LOOT, new PetLootHandler());                                                    //   check
+        registerHandler(RecvOpcode.PET_AUTO_POT, new PetAutoPotHandler());                                             //   check
+//        registerHandler(RecvOpcode.PET_EXCLUDE_ITEMS, new PetExcludeItemsHandler());
 
 
 //        registerHandler(RecvOpcode.AUTO_AGGRO, new AutoAggroHandler());
@@ -252,7 +254,6 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.MTS_OPERATION, new MTSHandler());
 //        registerHandler(RecvOpcode.RING_ACTION, new RingActionHandler(channelDeps.noteService()));
 //        registerHandler(RecvOpcode.SPOUSE_CHAT, new SpouseChatHandler());
-//        registerHandler(RecvOpcode.PET_AUTO_POT, new PetAutoPotHandler());
 //        registerHandler(RecvOpcode.PET_EXCLUDE_ITEMS, new PetExcludeItemsHandler());
 //        registerHandler(RecvOpcode.OWL_ACTION, new UseOwlOfMinervaHandler());
 //        registerHandler(RecvOpcode.OWL_WARP, new OwlWarpHandler());

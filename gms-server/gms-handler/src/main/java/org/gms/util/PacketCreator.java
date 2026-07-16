@@ -33,7 +33,6 @@ import org.gms.model.pojo.NewYearCardRecord;
 import org.gms.client.status.MonsterStatus;
 import org.gms.client.status.MonsterStatusEffect;
 import org.gms.config.GameConfig;
-import org.gms.constants.game.ExpTable;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
@@ -49,7 +48,6 @@ import org.gms.net.packet.ByteBufOutPacket;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.OutPacket;
 import org.gms.net.packet.Packet;
-import org.gms.net.server.PlayerCoolDownValueHolder;
 import org.gms.net.server.Server;
 import org.gms.net.server.channel.Channel;
 import org.gms.net.server.channel.handlers.PlayerInteractionHandler;
@@ -90,8 +88,6 @@ import org.gms.server.movement.LifeMovementFragment;
 import java.awt.*;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
@@ -650,31 +646,49 @@ public class PacketCreator {
         }
 
         Inventory iv = chr.getInventory(InventoryType.EQUIPPED);
-        Collection<Item> equippedC = iv.list();
 
         // 0x04
         // 过滤出两种
-        List<Item> equippedE = new ArrayList();
-        List<Item> equippedCash = new ArrayList();
-        ItemInformationProvider ii = ItemInformationProvider.getInstance();
-        equippedC.forEach(item-> {
-            boolean isCash = ii.isCash(item.getItemId());
-            if (isCash) {
+//        List<Item> equippedE = new ArrayList();
+//        List<Item> equippedCash = new ArrayList();
+//        ItemInformationProvider ii = ItemInformationProvider.getInstance();
+//        equippedC.forEach(item-> {
+//            boolean isCash = ii.isCash(item.getItemId());
+//            if (isCash) {
+//                equippedCash.add(item);
+//            } else {
+//                equippedE.add(item);
+//            }
+//
+//        });
+//        for (Item item : equippedE) {
+//            addItemInfo(mplew, item);
+//        }
+//        mplew.write(0); // end of Equipped
+//        for (Item item : equippedCash) {
+//            addItemInfo(mplew, item);
+//        }
+//        mplew.write(0); // end of Equipped cash
+
+
+        Collection<Item> equippedC = iv.list();
+        List<Item> equipped = new ArrayList<>(equippedC.size());
+        List<Item> equippedCash = new ArrayList<>(equippedC.size());
+        for (Item item : equippedC) {
+            if (item.getPosition() <= -100) {
                 equippedCash.add(item);
             } else {
-                equippedE.add(item);
+                equipped.add(item);
             }
-
-        });
-        for (Item item : equippedE) {
+        }
+        for (Item item : equipped) {    // equipped doesn't actually need sorting, thanks Pllsz
             addItemInfo(mplew, item);
         }
-        mplew.write(0); // end of Equipped
+        mplew.write(0); // start of equip cash
         for (Item item : equippedCash) {
             addItemInfo(mplew, item);
         }
-        mplew.write(0); // end of Equipped cash
-
+        mplew.write(0); // start of equip inventory
 
 
         iv = chr.getInventory(InventoryType.EQUIP);
@@ -3135,7 +3149,7 @@ public class PacketCreator {
             p.writeByte(pets[i].getLevel()); // pet level
             p.writeShort(pets[i].getTameness()); // pet tameness
             p.writeByte(pets[i].getFullness()); // pet fullness
-            p.writeShort(0);
+            p.writeShort(0); // todo pet skill
             p.writeInt(chr.getPetEquipItemId(i));
         } else {
             p.writeByte(0); //
@@ -4882,10 +4896,11 @@ public class PacketCreator {
         return p;
     }
 
-    public static Packet movePet(int cid, int pid, byte slot, List<LifeMovementFragment> moves) {
+    public static Packet movePet(int cid, short _ZtlSecureTear_m_x, short _ZtlSecureTear_m_y, List<LifeMovementFragment> moves) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_PET);
         p.writeInt(cid);
-        p.writeInt(pid);
+        p.writeShort(_ZtlSecureTear_m_x);
+        p.writeShort(_ZtlSecureTear_m_y);
         // todo 這個要檢查
         serializeMovementList(p, moves);
         return p;
@@ -4906,6 +4921,7 @@ public class PacketCreator {
         p.writeInt(cid);
         p.writeByte(1);
         p.writeBool(success);
+        p.writeBool(hasChatBalloon);
         return p;
     }
 
