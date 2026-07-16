@@ -233,12 +233,14 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.CHECK_CASH, new TouchingCashShopHandler());
         registerHandler(RecvOpcode.CASHSHOP_OPERATION, new CashOperationHandler(channelDeps.noteService()));
 //        registerHandler(RecvOpcode.COUPON_CODE, new CouponCodeHandler());
-//        registerHandler(RecvOpcode.SPAWN_PET, new SpawnPetHandler());
+        registerHandler(RecvOpcode.SPAWN_PET, new SpawnPetHandler());  //CUser::OnActivatePetRequest(this, (int)pExceptionObject);
 //        registerHandler(RecvOpcode.MOVE_PET, new MovePetHandler());
 //        registerHandler(RecvOpcode.PET_CHAT, new PetChatHandler());
 //        registerHandler(RecvOpcode.PET_COMMAND, new PetCommandHandler());
 //        registerHandler(RecvOpcode.PET_FOOD, new PetFoodHandler());
 //        registerHandler(RecvOpcode.PET_LOOT, new PetLootHandler());
+
+
 //        registerHandler(RecvOpcode.AUTO_AGGRO, new AutoAggroHandler());
 //        registerHandler(RecvOpcode.MONSTER_BOMB, new MonsterBombHandler());
 //        registerHandler(RecvOpcode.CANCEL_DEBUFF, new CancelDebuffHandler());

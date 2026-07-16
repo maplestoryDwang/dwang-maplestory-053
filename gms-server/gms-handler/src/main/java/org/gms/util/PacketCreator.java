@@ -457,23 +457,6 @@ public class PacketCreator {
     private static void addItemInfoV2(OutPacket mplew, Item item, boolean zeroPosition,
                                     boolean leaveOut) {
         ItemInformationProvider ii = ItemInformationProvider.getInstance();
-        boolean masking = false;
-//        byte pos = (byte) item.getPosition();
-//        if (zeroPosition) {
-//            if (!leaveOut)
-//                mplew.write(0);
-//        } else if (pos <= (byte) -1) {
-//            pos *= -1;
-//            if (pos > 100) {
-//                masking = true;
-//                mplew.write(0);                     // 穿上的点状进来这
-//                mplew.write(pos - 100);
-//            } else {
-//                mplew.write(pos);
-//            }
-//        } else {
-//            mplew.write(item.getPosition());
-//        }
 
         boolean isCash = ii.isCash(item.getItemId());
         boolean isPet = item.getPetId() > -1;
@@ -491,12 +474,7 @@ public class PacketCreator {
                     pos *= -1;
                 }
                 if (pos > 100) {
-                    masking = true;
-//                    mplew.write(0);                     // 穿上的点状进来这
-//                    mplew.writeShort(pos - 100);
                     mplew.write(pos - 100 );          // 反回来是错的只有-1而不是-101
-//                    mplew.write(pos );                 // 这种情况根本不显示点装
-//                    mplew.writeShort(pos > 100 ? pos - 100 : pos);
 
                 } else {
                     mplew.write(pos);                     // 穿的其他装备
@@ -514,20 +492,6 @@ public class PacketCreator {
         // GW_ItemSlotBase::RawDecode
         mplew.writeInt(item.getItemId());
 
-//        if (masking) {
-//            // liCashItemSN
-//
-//            // 07.03.2008 06:49... o.o
-//            mplew.write(HexTool.getByteArrayFromHexString("01 41 B4 38 00 00 00 00 00 80 20 6F"));
-//        } else {
-//            mplew.writeShort(0);
-//            mplew.write(ITEM_MAGIC);
-//        }
-//        //TODO: Item.getExpirationTime
-//        addExpirationTime(mplew, 0, false);
-
-
-//        boolean b = isCash && masking;
         boolean b = isCash;
         mplew.writeBool(b);
         if (b) {
@@ -535,14 +499,10 @@ public class PacketCreator {
 //            mplew.writeLong(item.getSN());        // todo 这个值到底应该写什么？
         }
         addExpirationTime(mplew, item.getExpiration());
-
-//        mplew.writeShort(0);
-//        mplew.write(ITEM_MAGIC);
-//        addExpirationTime(mplew, 0, false);
-
         // GW_ItemSlotBase::RawDecode  end
 
         // 宠物
+        // W_ItemSlotPet::RawDecode
         if (isPet) {
             Pet pet = item.getPet();
             mplew.writeFixedString(StringUtil.getRightPaddedStr(pet.getName(), '\0', 13));
@@ -552,11 +512,10 @@ public class PacketCreator {
             addExpirationTime(mplew, item.getExpiration());
             mplew.writeShort(pet.getPetAttribute()); // PetAttribute noticed by lrenex & Spoon
             mplew.writeShort(0); // PetSkill
-            mplew.writeInt(18000); // RemainLife
-            mplew.writeShort(0); // attribute
             return;
         }
 
+        // GW_ItemSlotEquip::RawDecode
         if (item.getItemType() == ItemType.EQUIP) {
 //            Equip equip = (Equip) item;
             mplew.write(equip.getUpgradeSlots());
@@ -588,20 +547,6 @@ public class PacketCreator {
 
             }
 
-
-//            mplew.writeLong(0);
-
-            // 0 normal; 1 locked
-//            mplew.write(0);
-//            if (!masking) {                          // 没穿的点装
-//                mplew.write(0);
-//                mplew.writeInt(0); // values of these don't seem to matter at all
-//                mplew.writeInt(0);
-//            }
-
-
-
-            return;
         } else {
             // 普通物品
             // GW_ItemSlotBundle::RawDecode
@@ -4900,12 +4845,10 @@ public class PacketCreator {
         return p;
     }
 
+    /*
+    CPet::Init
+     */
     private static void addPetInfo(final OutPacket p, Pet pet, boolean showpet, boolean hasNameTag, boolean hasChatBalloon) {
-        p.writeByte(1);
-        if (showpet) {
-            p.writeByte(0);
-        }
-
         p.writeInt(pet.getItemId());
         p.writeString(pet.getName());
         p.writeLong(pet.getUniqueId());
@@ -4916,16 +4859,25 @@ public class PacketCreator {
         p.writeBool(hasChatBalloon);
     }
 
-    public static Packet showPet(Character chr, Pet pet, boolean remove, boolean hunger) {
+    /**
+     *
+     * @param chr
+     * @param pet
+     * @param remote  决定是CUserRemote::OnPetActivated 还是 CUserLocal::OnPetActivated
+     * @param hunger
+     * @return
+     */
+    public static Packet showPet(Character chr, Pet pet, boolean remote, boolean hunger) {
+        boolean isLocal = !remote;
         byte petIndex = chr.getPetIndex(pet);
         OutPacket p = OutPacket.create(SendPacketOpcode.SPAWN_PET);
         p.writeInt(chr.getId());
-        p.writeByte(petIndex);
-        if (remove) {
-            p.writeByte(0);
-            p.writeBool(hunger);
-        } else {
+        p.writeBool(isLocal);
+        if (isLocal) {
+            // CPet::EncodeEnterPacket(&v17);
             addPetInfo(p, pet, true, chr.hasPetNameTag(petIndex), chr.hasPetChatballoon(petIndex));
+        } else {
+            p.writeByte(0);
         }
         return p;
     }
@@ -4933,8 +4885,8 @@ public class PacketCreator {
     public static Packet movePet(int cid, int pid, byte slot, List<LifeMovementFragment> moves) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_PET);
         p.writeInt(cid);
-        p.writeByte(slot);
         p.writeInt(pid);
+        // todo 這個要檢查
         serializeMovementList(p, moves);
         return p;
     }
@@ -4942,7 +4894,6 @@ public class PacketCreator {
     public static Packet petChat(int cid, byte index, int act, String text, boolean hasChatBalloon) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.PET_CHAT);
         p.writeInt(cid);
-        p.writeByte(index);
         p.writeByte(0);
         p.writeByte(act);
         p.writeString(text);
@@ -4953,10 +4904,8 @@ public class PacketCreator {
     public static Packet petFoodResponse(int cid, byte index, boolean success, boolean hasChatBalloon) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.PET_COMMAND);
         p.writeInt(cid);
-        p.writeByte(index);
         p.writeByte(1);
         p.writeBool(success);
-        p.writeBool(hasChatBalloon);
         return p;
     }
 
@@ -4971,7 +4920,6 @@ public class PacketCreator {
     public static Packet commandResponse(int cid, byte index, boolean talk, int animation, boolean balloonType) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.PET_COMMAND);
         p.writeInt(cid);
-        p.writeByte(index);
         p.writeByte(0);
         p.writeByte(animation);
         p.writeBool(!talk);
@@ -4999,7 +4947,6 @@ public class PacketCreator {
     public static Packet changePetName(Character chr, String newname, byte slot) {
         OutPacket p = OutPacket.create(SendPacketOpcode.PET_NAMECHANGE);
         p.writeInt(chr.getId());
-        p.writeByte(slot);
         p.writeString(newname);
         p.writeBool(chr.hasPetNameTag(slot));
         return p;
@@ -5008,7 +4955,6 @@ public class PacketCreator {
     public static Packet loadExceptionList(final int cid, final int petId, final byte petIdx, final List<Integer> data) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.PET_EXCEPTION_LIST);
         p.writeInt(cid);
-        p.writeByte(petIdx);
         p.writeLong(petId);
         p.writeByte(data.size());
         for (final Integer ids : data) {
@@ -5024,9 +4970,12 @@ public class PacketCreator {
         int mask = 0;
         mask |= MapleStat.PET.getValue();
         p.writeByte(0);
+
+        p.write(0);  // odinms新增
+
         p.writeInt(mask);
         Pet[] pets = chr.getPets();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             if (pets[i] != null) {
                 p.writeLong(pets[i].getUniqueId());
             } else {

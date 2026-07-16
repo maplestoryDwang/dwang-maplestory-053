@@ -747,7 +747,7 @@ public class Character extends AbstractCharacterObject {
     public void addPet(Pet pet) {
         petLock.lock();
         try {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 1; i++) {
                 if (pets[i] == null) {
                     pets[i] = pet;
                     return;
@@ -5019,7 +5019,7 @@ public class Character extends AbstractCharacterObject {
         petLock.lock();
         try {
             int ret = 0;
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 1; i++) {
                 if (pets[i] != null) {
                     ret++;
                 }
@@ -7186,7 +7186,7 @@ public class Character extends AbstractCharacterObject {
         petLock.lock();
         try {
             int slot = -1;
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 1; i++) {
                 if (pets[i] != null) {
                     if (pets[i].getUniqueId() == pet.getUniqueId()) {
                         pets[i] = null;
@@ -7197,7 +7197,7 @@ public class Character extends AbstractCharacterObject {
             }
             if (shift_left) {
                 if (slot > -1) {
-                    for (int i = slot; i < 3; i++) {
+                    for (int i = slot; i < 1; i++) {
                         if (i != 2) {
                             pets[i] = pets[i + 1];
                         } else {
@@ -8583,18 +8583,7 @@ public class Character extends AbstractCharacterObject {
     }
 
 
-    public void shiftPetsRight() {
-        petLock.lock();
-        try {
-            if (pets[2] == null) {
-                pets[2] = pets[1];
-                pets[1] = pets[0];
-                pets[0] = null;
-            }
-        } finally {
-            petLock.unlock();
-        }
-    }
+
 
     private long getDojoTimeLeft() {
         return client.getChannelServer().getDojoFinishTime(map.getId()) - Server.getInstance().getCurrentTime();
@@ -8721,7 +8710,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void unEquipAllPets() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             Pet pet = getPet(i);
             if (pet != null) {
                 unEquipPet(pet, true);

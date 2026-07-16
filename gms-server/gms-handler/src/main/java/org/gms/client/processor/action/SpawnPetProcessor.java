@@ -40,7 +40,7 @@ import java.awt.*;
 public class SpawnPetProcessor {
     private static final DataProvider dataRoot = DataProviderFactory.getDataProvider(WZFiles.ITEM);
 
-    public static void processSpawnPet(Client c, byte slot, boolean lead) {
+    public static void processSpawnPet(Client c, short slot) {
         if (c.tryacquireClient()) {
             try {
                 Character chr = c.getPlayer();
@@ -75,9 +75,9 @@ public class SpawnPetProcessor {
                     if (chr.getSkillLevel(SkillFactory.getSkill(8)) == 0 && chr.getPet(0) != null) {
                         chr.unEquipPet(chr.getPet(0), false);
                     }
-                    if (lead) {
-                        chr.shiftPetsRight();
-                    }
+//                    if (lead) {
+//                        chr.shiftPetsRight();
+//                    }
                     Point pos = chr.getPosition();
                     pos.y -= 12;
                     pet.setPos(pos);

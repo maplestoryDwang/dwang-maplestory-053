@@ -78,6 +78,12 @@ public enum RecvOpcode implements Opcode {
     MESO_DROP(0x68), // 丢金币
     GIVE_FAME(0x69), // 人气度操作
     CHAR_INFO_REQUEST(0x44), // 请求查看角色信息
+
+    SPAWN_PET(0x45), // 生成宠物
+
+    CANCEL_DEBUFF(0x46), // 取消减益效果
+
+
     CHANGE_MAP_SPECIAL(0x47), // 特殊地图切换(如传送门)
     QUEST_ACTION(0x6B), // 任务操作
     PARTYCHAT(0x3A), // 组队聊天

@@ -1441,6 +1441,11 @@ public class World {
         return cashLeaderboards;
     }
 
+    /**
+     * 记录宠物饥饿信息
+     * @param chr
+     * @param petSlot
+     */
     public void registerPetHunger(Character chr, byte petSlot) {
         if (chr.isGM() && GameConfig.getServerBoolean("gm_pets_never_hungry") || GameConfig.getServerBoolean("pets_never_hungry")) {
             return;

@@ -218,8 +218,24 @@ public enum SendPacketOpcode implements Opcode {
     CASHSHOP_CASH_GACHAPON_OPEN_RESULT(-1), // 现金商店现金扭蛋打开结果
 
 
+
+
+
+    // CUser::OnPetPacket
+    // ok
+
+    SPAWN_PET(0x7C), // 生成宠物
+    PET_CHAT(0x7D), // 宠物对话
+    PET_NAMECHANGE(0x7F), // 更改宠物名字
+    PET_EXCEPTION_LIST(0x80), // 宠物异常列表
+    MOVE_PET(0x81), // 移动宠物
+    PET_COMMAND(0x82), // 宠物命令
+
     /*
-    北斗=====================================================
+    ==========================================================================================================
+    =====================================================北斗==================================================
+    ==========================================================================================================
+
      */
 
 
@@ -363,12 +379,9 @@ public enum SendPacketOpcode implements Opcode {
     CHALKBOARD(-1), // 黑板   ===========================      0xA4
     SHOW_CONSUME_EFFECT(0xA6), // 显示消耗效果
 
-    SPAWN_PET(0xA8), // 生成宠物
-    MOVE_PET(0xAA), // 移动宠物
-    PET_CHAT(0xAB), // 宠物对话
-    PET_NAMECHANGE(-1), // 更改宠物名字
-    PET_EXCEPTION_LIST(0xAD), // 宠物异常列表
-    PET_COMMAND(0xAE), // 宠物命令
+
+
+
     SUMMON_SKILL(0xB4), // 召唤兽技能
     SPAWN_DRAGON(0xB5), // 生成龙
     MOVE_DRAGON(0xB6), // 移动龙

@@ -33,7 +33,7 @@ public class OpcodeUtil {
      */
     private static final List<Integer> ignoreLists = List.of(
             SendPacketOpcode.PING.getValue(),
-            SendPacketOpcode.MOVE_PET.getValue(),
+//            SendPacketOpcode.MOVE_PET.getValue(),
             SendPacketOpcode.UPDATE_PARTYMEMBER_HP.getValue(),
             SendPacketOpcode.NPC_ACTION.getValue(),
             SendPacketOpcode.MOVE_MONSTER_RESPONSE.getValue()
