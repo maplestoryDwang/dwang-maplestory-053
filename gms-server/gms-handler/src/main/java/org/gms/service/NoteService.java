@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.gms.client.Character;
 import org.gms.dao.entity.NotesDO;
 import org.gms.dao.mapper.NotesMapper;
-import org.gms.net.packet.out.ShowNotesPacket;
+import org.gms.net.packet.outbound.ShowNotesPacket;
 import org.gms.net.server.Server;
 import org.springframework.stereotype.Service;
 

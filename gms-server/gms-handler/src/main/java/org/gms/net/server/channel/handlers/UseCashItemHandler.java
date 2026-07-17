@@ -50,7 +50,7 @@ import org.gms.constants.id.MapId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
-import org.gms.net.packet.out.SendNoteSuccessPacket;
+import org.gms.net.packet.outbound.SendNoteSuccessPacket;
 import org.gms.net.server.Server;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;

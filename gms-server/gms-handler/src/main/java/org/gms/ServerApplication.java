@@ -28,11 +28,8 @@ public class ServerApplication {
             log.error("自动创建数据库失败：", e);
             return;
         }
-//        SpringApplication.run(ServerApplication.class, args);
+        SpringApplication.run(ServerApplication.class, args);
 
-        ConfigurableApplicationContext context = SpringApplication.run(ServerApplication.class, args);
-//        MigrationSqlService characterService = context.getBean(MigrationSqlService.class);
-//        characterService.exportAccountToSqlFile(2, "E:\\back.sql");
     }
 
     /**
