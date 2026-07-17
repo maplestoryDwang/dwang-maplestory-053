@@ -243,8 +243,9 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.PET_EXCLUDE_ITEMS, new PetExcludeItemsHandler());
 
 
-//        registerHandler(RecvOpcode.AUTO_AGGRO, new AutoAggroHandler());
-//        registerHandler(RecvOpcode.MONSTER_BOMB, new MonsterBombHandler());
+        registerHandler(RecvOpcode.AUTO_AGGRO, new AutoAggroHandler());                                                 //   check
+
+        registerHandler(RecvOpcode.MONSTER_BOMB, new MonsterBombHandler());
 //        registerHandler(RecvOpcode.CANCEL_DEBUFF, new CancelDebuffHandler());
 //        registerHandler(RecvOpcode.USE_SKILL_BOOK, new SkillBookHandler());
 //        registerHandler(RecvOpcode.SKILL_MACRO, new SkillMacroHandler());
@@ -295,8 +296,8 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.PLAYER_MAP_TRANSFER, new PlayerMapTransitionHandler());
 //        registerHandler(RecvOpcode.USE_MAPLELIFE, new UseMapleLifeHandler());
 //        registerHandler(RecvOpcode.USE_CATCH_ITEM, new UseCatchItemHandler());
-//        registerHandler(RecvOpcode.FIELD_DAMAGE_MOB, new FieldDamageMobHandler());
-//        registerHandler(RecvOpcode.MOB_DAMAGE_MOB_FRIENDLY, new MobDamageMobFriendlyHandler());
+        registerHandler(RecvOpcode.FIELD_DAMAGE_MOB, new FieldDamageMobHandler());
+        registerHandler(RecvOpcode.MOB_DAMAGE_MOB_FRIENDLY, new MobDamageMobFriendlyHandler());
 //        registerHandler(RecvOpcode.PARTY_SEARCH_REGISTER, new PartySearchRegisterHandler());
 //        registerHandler(RecvOpcode.PARTY_SEARCH_START, new PartySearchStartHandler());
 //        registerHandler(RecvOpcode.PARTY_SEARCH_UPDATE, new PartySearchUpdateHandler());

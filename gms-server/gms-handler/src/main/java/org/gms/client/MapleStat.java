@@ -21,10 +21,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.gms.client;
 
+/**
+ * GW_CharacterStat::DecodeChangeStat
+ */
 public enum MapleStat {
     SKIN(0x1),
     FACE(0x2),
     HAIR(0x4),
+    PET(0x8),  // index0 的宠物
+
     LEVEL(0x10),
     JOB(0x20),
     STR(0x40),
@@ -40,7 +45,7 @@ public enum MapleStat {
     EXP(0x10000),
     FAME(0x20000),
     MESO(0x40000),
-    PET(0x180008),
+//    PET(0x180008),
     GACHAEXP(0x200000);
     private final int i;
 

@@ -2573,6 +2573,8 @@ public class MapleMap {
             if (pet != null) {
                 pet.setPos(getGroundBelow(chr.getPosition()));
                 chr.sendPacket(PacketCreator.showPet(chr, pet, false, false));
+                // 发了这个状态才有装备显示
+                chr.sendPacket(PacketCreator.petStatUpdate(chr));
             } else {
                 break;
             }

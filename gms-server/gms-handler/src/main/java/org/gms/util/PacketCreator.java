@@ -4986,8 +4986,7 @@ public class PacketCreator {
         int mask = 0;
         mask |= MapleStat.PET.getValue();
         p.writeByte(0);
-
-        p.write(0);  // odinms新增
+        p.write(0);  // odinms新增  //传1就是要计算伤害
 
         p.writeInt(mask);
         Pet[] pets = chr.getPets();
@@ -4998,7 +4997,7 @@ public class PacketCreator {
                 p.writeLong(0);
             }
         }
-        p.writeByte(0);
+        p.writeByte(0);   // CUserLocal::SetSecondaryStatChangedPoint(v6);
         return p;
     }
 

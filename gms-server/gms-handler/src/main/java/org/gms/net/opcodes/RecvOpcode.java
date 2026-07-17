@@ -99,7 +99,41 @@ public enum RecvOpcode implements Opcode {
     DAMAGE_SUMMON(0x79), // 召唤兽受击
     NPC_ACTION(0x98), // NPC移动
 
-    MOVE_LIFE(0x9D), // 移动NPC/怪物(常用于控制权同步)
+
+    /**
+     *       case 0x9B:
+     *         result = CMob::OnDropPickUpRequest(v11, pExceptionObject, v4);
+     *         break;
+     *       case 0x9C:
+     *         result = CLifePool::OnMobHitByObstacle((int)v11, v4);
+     *         break;
+     *       case 0x9D:
+     *         result = CField::OnMobMove((int *)this[1], pExceptionObject, (int)v11, (void *)v4);
+     *         break;
+     *       case 0x9E:
+     *         result = CLifePool::OnMobHitByMob((int)v11, v4);
+     *         break;
+     *       case 0x9F:
+     *         result = CLifePool::OnMobSelfDestruct((int)v11, v4);
+     *         break;
+     *       default:
+     *         result = a3 - 160;
+     *         if ( a3 == 160 )
+     *           result = CMob::OnApplyCtrl(pExceptionObject, v4);
+     *         break;
+     */
+    // CLifePool::OnMobPacket
+    MOVE_LIFE(0x9D), // 移动NPC/怪物(常用于控制权同步)   CField::OnMobMove
+
+    /**
+     * 自动仇恨，修改怪物的仇恨对象
+     */
+    AUTO_AGGRO(0xA0),
+    FIELD_DAMAGE_MOB(0x9C), // 场景中怪物受到伤害           OnMobHitByObstacle
+    MOB_DAMAGE_MOB_FRIENDLY(0x9E), // 怪物对友好怪物造成伤害 OnMobHitByMob
+    MONSTER_BOMB(0x9F), // 怪物炸弹    OnMobSelfDestruct
+
+
     ITEM_PICKUP(0x89), // 拾取道具
     ENTER_MTS(0x77),// 进入MTS(拍卖所)
 
