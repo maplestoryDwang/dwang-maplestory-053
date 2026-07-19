@@ -2645,6 +2645,20 @@ public class PacketCreator {
         return p;
     }
 
+    public static Packet moveSummon53 (int cid, int summonSkill, Point startPos, List<LifeMovementFragment> moves) {
+        final OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_SUMMON);
+        p.writeInt(cid);
+        p.writeInt(summonSkill);
+        p.writePos(startPos);
+        p.writeShort(startPos.x);
+        p.writeShort(startPos.y);
+
+        serializeMovementList(p, moves);
+
+        return p;
+    }
+
+
     //V53
     public static Packet moveMonster(int useskill, int skill, int oid, Point startPos, List<LifeMovementFragment> moves) {
         /*
@@ -2685,7 +2699,6 @@ public class PacketCreator {
         //b2 00 29 f7 00 00 9a a3 04 00 c8 04 01 94 a3 04 00 06 ff 2b 00
         p.writeInt(cid);
         p.writeInt(summonOid);
-        p.writeByte(0);     // char level
         p.writeByte(direction);
         p.writeByte(allDamage.size());
         for (SummonAttackEntry attackEntry : allDamage) {
@@ -4406,16 +4419,10 @@ public class PacketCreator {
     }
 
     private static void writeIntMask(OutPacket p, Map<MonsterStatus, Integer> stats) {
-        int firstmask = 0;
         int secondmask = 0;
         for (MonsterStatus stat : stats.keySet()) {
-            if (stat.isFirst()) {
-                firstmask |= stat.getValue();
-            } else {
-                secondmask |= stat.getValue();
-            }
+            secondmask |= stat.getValue();
         }
-        p.writeInt(firstmask);
         p.writeInt(secondmask);
     }
 
@@ -4423,8 +4430,8 @@ public class PacketCreator {
         Map<MonsterStatus, Integer> stati = mse.getStati();
         final OutPacket p = OutPacket.create(SendPacketOpcode.APPLY_MONSTER_STATUS);
         p.writeInt(oid);
-        p.writeLong(0);
         writeIntMask(p, stati);
+
         for (Map.Entry<MonsterStatus, Integer> stat : stati.entrySet()) {
             p.writeShort(stat.getValue());
             if (mse.isMonsterSkill()) {
@@ -4434,26 +4441,31 @@ public class PacketCreator {
             }
             p.writeShort(-1); // might actually be the buffTime but it's not displayed anywhere
         }
-        int size = stati.size(); // size
-        if (reflection != null) {
-            for (Integer ref : reflection) {
-                p.writeInt(ref);
-            }
-            if (reflection.size() > 0) {
-                size /= 2; // This gives 2 buffs per reflection but it's really one buff
-            }
-        }
-        p.writeByte(size); // size
-        p.writeInt(0);
+        p.writeShort(0); // delay in ms
+        p.write(1); // ?
+
+
+//        int size = stati.size(); // size
+//        if (reflection != null) {
+//            for (Integer ref : reflection) {
+//                p.writeInt(ref);
+//            }
+//            if (reflection.size() > 0) {
+//                size /= 2; // This gives 2 buffs per reflection but it's really one buff
+//            }
+//        }
+//        p.writeByte(size); // size
+//        p.writeInt(0);
         return p;
     }
 
     public static Packet cancelMonsterStatus(int oid, Map<MonsterStatus, Integer> stats) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CANCEL_MONSTER_STATUS);
         p.writeInt(oid);
-        p.writeLong(0);
         writeIntMask(p, stats);
-        p.writeInt(0);
+//        p.writeInt(0);
+        p.write(1);
+
         return p;
     }
 

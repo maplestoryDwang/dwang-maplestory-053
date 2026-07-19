@@ -94,9 +94,13 @@ public enum RecvOpcode implements Opcode {
     BUDDYLIST_MODIFY(0x33), // 好友列表修改
     USE_DOOR(0x41), // 使用时空门
     CHANGE_KEYMAP(0x75), // 修改快捷键设置
+
+
     SUMMON_ATTACK(0x7B), // 召唤兽攻击
     MOVE_SUMMON(0x7C), // 移动召唤兽
     DAMAGE_SUMMON(0x79), // 召唤兽受击
+
+    
     NPC_ACTION(0x98), // NPC移动
 
 

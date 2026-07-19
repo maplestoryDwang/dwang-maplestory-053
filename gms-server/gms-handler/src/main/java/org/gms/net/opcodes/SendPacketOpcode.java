@@ -122,12 +122,23 @@ public enum SendPacketOpcode implements Opcode {
     SPAWN_MONSTER(0x96), // 地图生成怪物
     MOVE_MONSTER_RESPONSE(0x9C), // 移动怪物回应
     DAMAGE_MONSTER(0x9D), // 怪物受到伤害
-    // check ↓
-    SPAWN_MONSTER_CONTROL(0xA4), // 获取怪物控制权(由客户端计算怪物AI)
+
+    /**
+     * 获取怪物控制权(由客户端计算怪物AI)
+     */
+    SPAWN_MONSTER_CONTROL(0xA4), // check
     KILL_MONSTER(0xA5), // 杀死/移除怪物
     MOVE_MONSTER(0x97), // 怪物移动同步
-    APPLY_MONSTER_STATUS(0x9A), // 给怪物施加异常状态
-    CANCEL_MONSTER_STATUS(0x9B), // 取消怪物异常状态
+
+    /**
+     * 给怪物施加异常状态
+     */
+    APPLY_MONSTER_STATUS(0x9A), //  check
+
+    /**
+     * 取消怪物异常状态
+     */
+    CANCEL_MONSTER_STATUS(0x9B), // check
     SHOW_MONSTER_HP(0x98), // 显示怪物血条
 
     // check ↓
@@ -319,7 +330,7 @@ public enum SendPacketOpcode implements Opcode {
     FAMILY_PRIVILEGE_LIST(0x64), // 家族权限列表
     FAMILY_REP_GAIN(-1), // 家族声望获得
     FAMILY_NOTIFY_LOGIN_OR_LOGOUT(-1), // 通知家族成员登录或登出
-    FAMILY_SET_PRIVILEGE(0x67), // 设置家族权限
+    FAMILY_SET_PRIVILEGE(-1), // 设置家族权限
     FAMILY_SUMMON_REQUEST(0x68), // 家族召唤请求
 
     NOTIFY_LEVELUP(0x69), // 通知等级提升
@@ -372,7 +383,7 @@ public enum SendPacketOpcode implements Opcode {
     SET_QUEST_TIME(0x97), // 设置任务时间
     ARIANT_RESULT(0x98),    // thanks lrenex // ARIANT结果
     SET_OBJECT_STATE(0x99), // 设置物体状态
-    STOP_CLOCK(0x9A), // 停止时钟
+    STOP_CLOCK(-1), // 停止时钟
     ARIANT_ARENA_SHOW_RESULT(0x9B), // ARIANT竞技场显示结果
     PYRAMID_GAUGE(0x9D), // 金字塔计数器
     PYRAMID_SCORE(0x9E), // 金字塔分数

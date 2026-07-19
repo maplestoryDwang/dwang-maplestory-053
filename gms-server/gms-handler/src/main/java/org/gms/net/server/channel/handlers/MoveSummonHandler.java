@@ -25,17 +25,26 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.net.packet.InPacket;
 import org.gms.server.maps.Summon;
+import org.gms.server.movement.LifeMovementFragment;
 import org.gms.util.PacketCreator;
 import org.gms.exception.EmptyMovementException;
 
 import java.awt.*;
 import java.util.Collection;
+import java.util.List;
 
 public final class MoveSummonHandler extends AbstractMovementPacketHandler {
     @Override
-    public final void handlePacket(InPacket p, Client c) {
-        int oid = p.readInt();
-        Point startPos = new Point(p.readShort(), p.readShort());
+    public void handlePacket(InPacket slea, Client c) {
+        int oid = slea.readInt();
+        Point startPos = new Point(slea.readShort(), slea.readShort());
+        List<LifeMovementFragment> res = null;
+        try {
+            res = parseMovement(slea);
+        } catch (EmptyMovementException e) {
+            throw new RuntimeException(e);
+        }
+
         Character player = c.getPlayer();
         Collection<Summon> summons = player.getSummonsValues();
         Summon summon = null;
@@ -46,15 +55,35 @@ public final class MoveSummonHandler extends AbstractMovementPacketHandler {
             }
         }
         if (summon != null) {
-            try {
-                int movementDataStart = p.getPosition();
-                updatePosition(p, summon, 0);
-                long movementDataLength = p.getPosition() - movementDataStart; //how many bytes were read by updatePosition
-                p.seek(movementDataStart);
-
-                player.getMap().broadcastMessage(player, PacketCreator.moveSummon(player.getId(), oid, startPos, p, movementDataLength), summon.getPosition());
-            } catch (EmptyMovementException e) {
-            }
+            updatePosition(res, summon, 0);
+            // player = ((MapleCharacter) c.getPlayer().getMap().getMapObject(30000));
+            player.getMap().broadcastMessage(player, PacketCreator.moveSummon53(player.getId(), oid, startPos, res), summon.getPosition());
         }
     }
+
+//    @Override
+//    public final void handlePacket(InPacket p, Client c) {
+//        int oid = p.readInt();
+//        Point startPos = new Point(p.readShort(), p.readShort());
+//        Character player = c.getPlayer();
+//        Collection<Summon> summons = player.getSummonsValues();
+//        Summon summon = null;
+//        for (Summon sum : summons) {
+//            if (sum.getObjectId() == oid) {
+//                summon = sum;
+//                break;
+//            }
+//        }
+//        if (summon != null) {
+//            try {
+//                int movementDataStart = p.getPosition();
+//                updatePosition(p, summon, 0);
+//                long movementDataLength = p.getPosition() - movementDataStart; //how many bytes were read by updatePosition
+//                p.seek(movementDataStart);
+//
+//                player.getMap().broadcastMessage(player, PacketCreator.moveSummon(player.getId(), oid, startPos, p, movementDataLength), summon.getPosition());
+//            } catch (EmptyMovementException e) {
+//            }
+//        }
+//    }
 }

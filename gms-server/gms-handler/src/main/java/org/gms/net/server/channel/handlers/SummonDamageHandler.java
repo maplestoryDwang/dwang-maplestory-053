@@ -85,14 +85,13 @@ public final class SummonDamageHandler extends AbstractDealDamageHandler {
         }
         Skill summonSkill = SkillFactory.getSkill(summon.getSkill());
         StatEffect summonEffect = summonSkill.getEffect(summon.getSkillLevel());
-        p.skip(4);
         List<SummonAttackEntry> allDamage = new ArrayList<>();
+        p.skip(8); // I failed lol (mob x,y and summon x,y), Thanks Gerald
         byte direction = p.readByte();
         int numAttacked = p.readByte();
-        p.skip(8); // I failed lol (mob x,y and summon x,y), Thanks Gerald
         for (int x = 0; x < numAttacked; x++) {
             int monsterOid = p.readInt(); // attacked oid
-            p.skip(18);
+            p.skip(14);
             int damage = p.readInt();
             allDamage.add(new SummonAttackEntry(monsterOid, damage));
         }
