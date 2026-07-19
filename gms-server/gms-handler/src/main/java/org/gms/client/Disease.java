@@ -32,7 +32,7 @@ public enum Disease {
     SEDUCE(0x80, MobSkillType.SEDUCE),
     FISHABLE(0x100),
     ZOMBIFY(0x4000),
-    CONFUSE(0x80000, MobSkillType.REVERSE_INPUT),
+    CONFUSE(0x80000, MobSkillType.REVERSE_INPUT), // 混乱
 
 
     // 以下正确
@@ -41,7 +41,7 @@ public enum Disease {
     SEAL(0x80000L, MobSkillType.SEAL),
     DARKNESS(0x20000L, MobSkillType.DARKNESS),   // 碰巧找到的  实际上并不是 027写的是stun  但是是对的  - -
     WEAKEN(0x40000000, MobSkillType.WEAKNESS),   // 这个也对了
-    CURSE(0x1L, MobSkillType.CURSE);
+    CURSE(0x100000, MobSkillType.CURSE);
 
     private final long i;
     private final MobSkillType mobSkillType;

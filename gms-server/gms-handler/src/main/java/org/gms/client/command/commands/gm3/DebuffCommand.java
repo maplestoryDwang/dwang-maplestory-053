@@ -69,7 +69,8 @@ public class DebuffCommand extends Command {
 //            param = skillWeaken;
 //            param = skillPoison;
 //            param = skillStun;
-            param = skillSeal;
+//            param = skillSeal;
+            param = skillCurse;
         } else {
             param = params[0].toUpperCase();
         }
