@@ -120,7 +120,10 @@ public enum SendPacketOpcode implements Opcode {
     UPDATE_QUEST_INFO(0x6C), // 更新任务状态信息
     // check ↓
     SPAWN_MONSTER(0x96), // 地图生成怪物
-    MOVE_MONSTER_RESPONSE(0x9C), // 移动怪物回应
+    /**
+     * 移动怪物：是否需要放技能
+     */
+    MOVE_MONSTER_RESPONSE(0x9C), // check
     DAMAGE_MONSTER(0x9D), // 怪物受到伤害
 
     /**

@@ -1062,6 +1062,8 @@ public class StatEffect {
             if (isBeholder()) {
                 tosummon.addHP(1);
             }
+        } else if (summonMovementType != null){
+            new RuntimeException("召唤兽解析异常");
         }
         if (isMagicDoor() && !FieldLimit.DOOR.check(applyto.getMap().getFieldLimit())) { // Magic Door
             int y = applyto.getFh();

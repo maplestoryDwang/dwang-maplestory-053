@@ -56,8 +56,8 @@ public final class MoveLifeHandler extends AbstractMovementPacketHandler {
 
 
 
-    @Override
-    public void handlePacket(InPacket slea, Client c) {
+//    @Override
+    public void handlePacket53(InPacket slea, Client c) {
         int objectid = slea.readInt();
         short moveid = slea.readShort();
         // or is the moveid an int?
@@ -75,10 +75,27 @@ public final class MoveLifeHandler extends AbstractMovementPacketHandler {
         Monster monster = (Monster) mmo;
 
         List<LifeMovementFragment> res = null;
-        int skillByte = slea.readByte();
-        int skill = slea.readInt();
-        slea.readShort();
-        slea.readInt(); // whatever
+        byte pNibbles = slea.readByte();
+        byte rawActivity = slea.readByte();
+
+        if (rawActivity >= 0) {
+            rawActivity = (byte) (rawActivity & 0xFF >> 1);
+        }
+        boolean isAttack = inRangeInclusive(rawActivity, 24, 41);
+        boolean isSkill = inRangeInclusive(rawActivity, 42, 59);
+
+//        int skill = slea.readInt();
+        int skill = 0;
+        int skillId = slea.readByte() & 0xff;
+        int skillLv = slea.readByte() & 0xff;
+        short pOption = slea.readShort();
+
+
+        int skillByte2 = slea.readByte();
+        int i1 = slea.readInt();// whatever
+
+
+        // ; CMovePath::Decode(v44, (int)a4); 需要加上xy
         int start_x = slea.readShort(); // hmm.. startpos?
         int start_y = slea.readShort(); // hmm...
         Point startPos = new Point(start_x, start_y);
@@ -123,7 +140,7 @@ public final class MoveLifeHandler extends AbstractMovementPacketHandler {
                 log.warn("slea.available != 9 (movement parsing error)");
                 return;
             }
-            Packet packet = PacketCreator.moveMonster(skillByte, skill, objectid, startPos, res);
+            Packet packet = PacketCreator.moveMonster(rawActivity, skill, objectid, startPos, res);
             c.getPlayer().getMap().broadcastMessage(c.getPlayer(), packet, monster.getPosition());
             // MaplePacket packet = MaplePacketCreator.moveMonster(200, res);
             // c.getPlayer().getMap().broadcastMessage(null, packet);
@@ -132,7 +149,7 @@ public final class MoveLifeHandler extends AbstractMovementPacketHandler {
         }
     }
 
-    public void handlePacket83(InPacket p, Client c) {
+    public void handlePacket(InPacket p, Client c) {
         Character player = c.getPlayer();
         MapleMap map = player.getMap();
 
@@ -152,10 +169,12 @@ public final class MoveLifeHandler extends AbstractMovementPacketHandler {
 
         byte pNibbles = p.readByte();
         byte rawActivity = p.readByte();
+
+        // encode4
         int skillId = p.readByte() & 0xff;
         int skillLv = p.readByte() & 0xff;
         short pOption = p.readShort();
-        p.skip(8);
+
 
         if (rawActivity >= 0) {
             rawActivity = (byte) (rawActivity & 0xFF >> 1);

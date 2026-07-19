@@ -38,7 +38,6 @@ import java.util.Set;
  * @author TheRamon
  * @author Ronan
  * @author dwang
- *
  */
 public final class PetLootHandler extends AbstractPacketHandler {
     @Override
@@ -53,11 +52,10 @@ public final class PetLootHandler extends AbstractPacketHandler {
             c.sendPacket(PacketCreator.enableActions());
             return;
         }
-
-        p.skip(13);
-        int oid = p.readInt();
-        MapObject ob = chr.getMap().getMapObject(oid);
         try {
+            p.skip(13);
+            int oid = p.readInt();
+            MapObject ob = chr.getMap().getMapObject(oid);
             MapItem mapitem = (MapItem) ob;
             if (mapitem.getMeso() > 0) {
                 if (!chr.isEquippedMesoMagnet(petIndex)) {

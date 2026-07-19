@@ -33,12 +33,15 @@ public enum Disease {
     FISHABLE(0x100),
     ZOMBIFY(0x4000),
     CONFUSE(0x80000, MobSkillType.REVERSE_INPUT),
-    STUN(0x2000000000000L, MobSkillType.STUN),
-    POISON(0x4000000000000L, MobSkillType.POISON),
-    SEAL(0x8000000000000L, MobSkillType.SEAL),
-    DARKNESS(0x10000000000000L, MobSkillType.DARKNESS),
-    WEAKEN(0x4000000000000000L, MobSkillType.WEAKNESS),
-    CURSE(0x8000000000000000L, MobSkillType.CURSE);
+
+
+    // 以下正确
+    STUN(0x00100000L, MobSkillType.STUN),           //昏迷
+    POISON(0x00040000L, MobSkillType.POISON),  // 这个也对了
+    SEAL(0x80000L, MobSkillType.SEAL),
+    DARKNESS(0x20000L, MobSkillType.DARKNESS),   // 碰巧找到的  实际上并不是 027写的是stun  但是是对的  - -
+    WEAKEN(0x40000000, MobSkillType.WEAKNESS),   // 这个也对了
+    CURSE(0x1L, MobSkillType.CURSE);
 
     private final long i;
     private final MobSkillType mobSkillType;

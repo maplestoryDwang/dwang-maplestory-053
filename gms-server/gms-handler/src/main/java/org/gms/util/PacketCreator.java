@@ -1372,6 +1372,21 @@ public class PacketCreator {
     public static Packet spawnSummon(Summon summon, boolean animated) {
         OutPacket p = OutPacket.create(SendPacketOpcode.SPAWN_SPECIAL_MAPOBJECT);
         p.writeInt(summon.getOwner().getId());
+        p.writeInt(summon.getSkill());
+        p.writeByte(summon.getSkillLevel());
+        p.writePos(summon.getPosition());
+        p.writeByte(summon.getStance());    //bMoveAction & foothold, found thanks to Rien dev team
+        p.writeShort(0);
+
+        p.writeByte(summon.getMovementType().getValue()); // 0 = don't move, 1 = follow (4th mage summons?), 2/4 = only tele follow, 3 = bird follow
+        p.writeBool(!summon.isPuppet()); // 0 and the summon can't attack - but puppets don't attack with 1 either ^.-
+        p.writeBool(!animated);
+
+        return p;
+    }
+/*    public static Packet spawnSummon83(Summon summon, boolean animated) {
+        OutPacket p = OutPacket.create(SendPacketOpcode.SPAWN_SPECIAL_MAPOBJECT);
+        p.writeInt(summon.getOwner().getId());
         p.writeInt(summon.getObjectId());
         p.writeInt(summon.getSkill());
         p.writeByte(0x0A); //v83
@@ -1383,7 +1398,7 @@ public class PacketCreator {
         p.writeBool(!summon.isPuppet()); // 0 and the summon can't attack - but puppets don't attack with 1 either ^.-
         p.writeBool(!animated);
         return p;
-    }
+    }*/
 
     /**
      * Gets a packet to remove a special map object.
@@ -1395,7 +1410,7 @@ public class PacketCreator {
     public static Packet removeSummon(Summon summon, boolean animated) {
         OutPacket p = OutPacket.create(SendPacketOpcode.REMOVE_SPECIAL_MAPOBJECT);
         p.writeInt(summon.getOwner().getId());
-        p.writeInt(summon.getObjectId());
+        p.writeInt(summon.getSkill());
         p.writeByte(animated ? 4 : 1); // ?
         return p;
     }
@@ -3391,16 +3406,10 @@ public class PacketCreator {
     }
 
     private static void writeLongMaskD(final OutPacket p, List<Pair<Disease, Integer>> statups) {
-        long firstmask = 0;
         long secondmask = 0;
         for (Pair<Disease, Integer> statup : statups) {
-            if (statup.getLeft().isFirst()) {
-                firstmask |= statup.getLeft().getValue();
-            } else {
                 secondmask |= statup.getLeft().getValue();
-            }
         }
-        p.writeLong(firstmask);
         p.writeLong(secondmask);
     }
 
@@ -3429,7 +3438,7 @@ public class PacketCreator {
             writeMobSkillId(p, skill.getId());
         }
         p.writeShort(0); // same as give_buff
-        p.writeShort(900);//Delay
+//        p.writeShort(900);//Delay
         return p;
     }
 
@@ -3533,7 +3542,7 @@ public class PacketCreator {
     private static void writeLongMaskSlowD(final OutPacket p) {
         p.writeInt(0);
         p.writeInt(2048);
-        p.writeLong(0);
+//        p.writeLong(0);
     }
 
     public static Packet giveForeignSlowDebuff(int chrId, List<Pair<Disease, Integer>> statups, MobSkill skill) {

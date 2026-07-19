@@ -52,15 +52,6 @@ public final class SpecialMoveHandler extends AbstractPacketHandler {
         p.readInt();
         chr.getAutoBanManager().setTimestamp(4, Server.getInstance().getCurrentTimestamp(), 28);
         int skillid = p.readInt();
-        
-        /*
-        if ((!GameConstants.isPqSkillMap(chr.getMapId()) && GameConstants.isPqSkill(skillid)) || (!chr.isGM() && GameConstants.isGMSkills(skillid)) || (!GameConstants.isInJobTree(skillid, chr.getJob().getId()) && !chr.isGM())) {
-        	AutobanFactory.PACKET_EDIT.alert(chr, chr.getName() + " tried to packet edit skills.");
-        	FilePrinter.printError(FilePrinter.EXPLOITS + chr.getName() + ".txt", chr.getName() + " tried to use skill " + skillid + " without it being in their job.");
-    		c.disconnect(true, false);
-            return;
-        }
-        */
 
         Point pos = null;
         int __skillLevel = p.readByte();
@@ -133,7 +124,8 @@ public final class SpecialMoveHandler extends AbstractPacketHandler {
             p.readShort();
         }
 
-        if (p.available() == 5) {
+//        if (p.available() == 5) {
+        if (p.available() == 4) {
             pos = new Point(p.readShort(), p.readShort());
         }
         if (chr.isAlive()) {

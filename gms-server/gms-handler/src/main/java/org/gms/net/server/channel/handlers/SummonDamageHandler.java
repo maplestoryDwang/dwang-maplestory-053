@@ -69,14 +69,14 @@ public final class SummonDamageHandler extends AbstractDealDamageHandler {
 
     @Override
     public void handlePacket(InPacket p, Client c) {
-        int oid = p.readInt();
+        int summonSkillId = p.readInt();
         Character player = c.getPlayer();
         if (!player.isAlive()) {
             return;
         }
         Summon summon = null;
         for (Summon sum : player.getSummonsValues()) {
-            if (sum.getObjectId() == oid) {
+            if (sum.getSkill() == summonSkillId) {
                 summon = sum;
             }
         }
@@ -90,7 +90,7 @@ public final class SummonDamageHandler extends AbstractDealDamageHandler {
         byte direction = p.readByte();
         int numAttacked = p.readByte();
         for (int x = 0; x < numAttacked; x++) {
-            int monsterOid = p.readInt(); // attacked oid
+            int monsterOid = p.readInt(); // attacked summonSkillId
             p.skip(14);
             int damage = p.readInt();
             allDamage.add(new SummonAttackEntry(monsterOid, damage));

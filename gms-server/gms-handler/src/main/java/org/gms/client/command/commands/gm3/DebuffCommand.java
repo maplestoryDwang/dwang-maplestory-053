@@ -45,14 +45,9 @@ public class DebuffCommand extends Command {
     @Override
     public void execute(Client c, String[] params) {
         Character player = c.getPlayer();
-        if (params.length < 1) {
-            player.yellowMessage(I18nUtil.getMessage("DebuffCommand.message2"));
-            return;
-        }
 
         Disease disease = null;
         Optional<MobSkill> skill = Optional.empty();
-        String param = params[0].toUpperCase();
         String skillSlow = I18nUtil.getMessage("DebuffCommand.skill.slow");
         String skillSeduce = I18nUtil.getMessage("DebuffCommand.skill.seduce");
         String skillZombify = I18nUtil.getMessage("DebuffCommand.skill.zombify");
@@ -63,6 +58,21 @@ public class DebuffCommand extends Command {
         String skillDarkness = I18nUtil.getMessage("DebuffCommand.skill.darkness");
         String skillWeaken = I18nUtil.getMessage("DebuffCommand.skill.weaken");
         String skillCurse = I18nUtil.getMessage("DebuffCommand.skill.curse");
+
+        String param = null;
+        if (params.length < 1) {
+//            player.message(I18nUtil.getMessage("DebuffCommand.message2"));
+//            return;
+//            param = skillSlow;
+//            param = skillSeal;
+//            param = skillDarkness;  // 居然出来无影人的影子- -
+//            param = skillWeaken;
+//            param = skillPoison;
+//            param = skillStun;
+            param = skillSeal;
+        } else {
+            param = params[0].toUpperCase();
+        }
 
         if (param.equals(skillSlow)) {
             disease = Disease.SLOW;
@@ -104,9 +114,7 @@ public class DebuffCommand extends Command {
         for (MapObject mmo : player.getMap().getMapObjectsInRange(player.getPosition(), 777777.7, Arrays.asList(MapObjectType.PLAYER))) {
             Character chr = (Character) mmo;
 
-            if (chr.getId() != player.getId()) {
-                chr.giveDebuff(disease, skill.get());
-            }
+            chr.giveDebuff(disease, skill.get());
         }
     }
 }
