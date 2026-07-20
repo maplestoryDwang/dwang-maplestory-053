@@ -21,6 +21,8 @@
 */
 package org.gms.client;
 
+import org.gms.server.life.MobSkillType;
+
 public enum BuffStat implements LongValueHolder{
 
 
@@ -43,6 +45,11 @@ public enum BuffStat implements LongValueHolder{
     INVINCIBLE(1L << 15),       // 聖光防護 / 無敵 (0x8000)
     SOULARROW(1L << 16),        // 靈魂之箭 (0x10000)
 
+    STUN(1L << 17),                 // 0x100000L (Bit 20 - 暈眩) , MobSkillType.STUN
+    POISON(1L << 18),             // 0x40000L (Bit 18) , MobSkillType.POISON
+    SEAL(1L << 19),                 // 0x80000L (Bit 19 - 封印) , MobSkillType.SEAL
+    DARKNESS(1L << 20),         //  (Bit 20) 也ok , MobSkillType.DARKNESS
+
     COMBO(1L << 21),            // 無鬥氣 / 鬥氣集中 (0x200000)
     SUMMON(1L << 21),           // 召喚獸狀態 (0x200000)
     WK_CHARGE(1L << 22),        // 屬性攻擊 / 劍氣附魔 (0x400000)
@@ -54,12 +61,41 @@ public enum BuffStat implements LongValueHolder{
     // PUPPET(1L << 27),        // 稻草人/傀儡 (0x8000000 - 與偷竊術共用 Mask)
     MESOGUARD(1L << 28),        // 楓幣護盾 (0x10000000)
 
-    RECOVERY(1L << 34),     // 回復
+    UNKNOW_29(1L << 29),        // 未知29
 
-    MAPLE_WARRIOR(1L << 35),  //  冒險島勇士
-    SHARP_EYES(1L << 37),     //  火眼
-    MONSTER_RIDING(1L << 46), // 怪物騎乘 / 騎寵 (0x400000000000L)
-    ECHO_OF_HERO(1L << 47),
+
+    WEAKEN(1L << 30),         // 0x40000000 (Bit 30 - 虛弱) , MobSkillType.WEAKNESS
+    // 改了
+    CURSE(1L << 31),               // 0x100000 (Bit 20 - 詛咒) MobSkillType.CURSE
+
+    SLOW(1L << 32),                   // MobSkillType.SLOW)
+    变身术(1L << 33),                //
+    RECOVERY(1L << 34),              // 回復
+
+    MAPLE_WARRIOR(1L << 35),         //  冒險島勇士
+
+    UNKNOW_36(1L << 36),        // 未知36
+
+    SHARP_EYES(1L << 37),     //  火眼 已校验
+    UNKNOW_38(1L << 38),        // 未知36
+
+    SEDUCE(1L << 39),               // 0x80 (Bit 7)   魅惑 OK Attract , MobSkillType.SEDUCE
+
+    UNKNOW_40(1L << 40),        // 未知40
+    UNKNOW_41(1L << 40),        // 未知41
+    UNKNOW_42(1L << 40),        // 未知42
+    UNKNOW_43(1L << 40),        // 未知43
+    UNKNOW_44(1L << 40),        // 未知44
+    UNKNOW_45(1L << 40),        // 未知45
+
+    MONSTER_RIDING(1L << 46),  // 怪物騎乘 / 騎寵 (0x400000000000L)
+
+    UNKNOW_47(1L << 47),        // 未知45
+
+    ECHO_OF_HERO(1L << 48),  //   英雄的回声确认
+
+    UNKNOW_49(1L << 49),        // 未知45
+
 
 
 
@@ -115,11 +151,9 @@ public enum BuffStat implements LongValueHolder{
 
     // 北斗83
     EXP_INCREASE(0x2000000000000000L),
-    WEAKEN(0x4000000000000000L),
     MAP_PROTECTION(0x8000000000000000L),
 
-    //all incorrect buffstats
-    SLOW(0x200000000L, true),
+
     ELEMENTAL_RESET(0x200000000L, true),
     MAGIC_SHIELD(0x400000000L, true),
     MAGIC_RESISTANCE(0x800000000L, true),
