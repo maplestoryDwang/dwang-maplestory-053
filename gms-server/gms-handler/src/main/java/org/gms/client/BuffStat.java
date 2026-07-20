@@ -22,12 +22,58 @@
 package org.gms.client;
 
 public enum BuffStat implements LongValueHolder{
+
+
+    // 53狀態複製
+    WATK(1L << 0),              // 物理攻擊力 (0x1)
+    WDEF(1L << 1),              // 物理防禦力 (0x2)
+    MATK(1L << 2),              // 魔法攻擊力 (0x4)
+    MDEF(1L << 3),              // 魔法防禦力 (0x8)
+    ACC(1L << 4),               // 命中值 (0x10)
+    AVOID(1L << 5),             // 迴避值 (0x20)
+    HANDS(1L << 6),             // 手藝 / 敏捷度 (0x40)
+    SPEED(1L << 7),             // 移動速度 (0x80)
+    JUMP(1L << 8),              // 跳躍力 (0x100)
+    MAGIC_GUARD(1L << 9),       // 魔心防禦 (0x200)
+    DARKSIGHT(1L << 10),        // 隱身術 (0x400 - GM隱藏亦使用)
+    BOOSTER(1L << 11),          // 武器加速術 (0x800)
+    POWERGUARD(1L << 12),       // 傷害反射 / 鋼鐵身體 (0x1000)
+    HYPERBODYHP(1L << 13),      // 神聖之火 HP (0x2000)
+    HYPERBODYMP(1L << 14),      // 神聖之火 MP (0x4000)
+    INVINCIBLE(1L << 15),       // 聖光防護 / 無敵 (0x8000)
+    SOULARROW(1L << 16),        // 靈魂之箭 (0x10000)
+
+    COMBO(1L << 21),            // 無鬥氣 / 鬥氣集中 (0x200000)
+    SUMMON(1L << 21),           // 召喚獸狀態 (0x200000)
+    WK_CHARGE(1L << 22),        // 屬性攻擊 / 劍氣附魔 (0x400000)
+    DRAGONBLOOD(1L << 23),      // 龍之魂 (0x800000)
+    HOLY_SYMBOL(1L << 24),      // 神聖祈禱 (0x1000000)
+    MESOUP(1L << 25),           // 楓幣獲得量增加 (0x2000000)
+    SHADOWPARTNER(1L << 26),    // 影分身 (0x4000000)
+    PICKPOCKET(1L << 27),       // 偷竊術 (0x8000000)
+    // PUPPET(1L << 27),        // 稻草人/傀儡 (0x8000000 - 與偷竊術共用 Mask)
+    MESOGUARD(1L << 28),        // 楓幣護盾 (0x10000000)
+
+    RECOVERY(1L << 34),     // 回復
+
+    MAPLE_WARRIOR(1L << 35),  //  冒險島勇士
+    SHARP_EYES(1L << 37),     //  火眼
+    MONSTER_RIDING(1L << 46), // 怪物騎乘 / 騎寵 (0x400000000000L)
+    ECHO_OF_HERO(1L << 47),
+
+
+
+
+    // 最高偏移量是49  159 & 0x2000000000000i64
+    /**
+     *
+     * 以下状态来自北斗，还不确定
+     *
+     */
+
     //SLOW(0x1L),
     MORPH(0x2L),
-    RECOVERY(0x4L),
-    MAPLE_WARRIOR(0x8L),
     STANCE(0x10L),
-    SHARP_EYES(0x20L),
     MANA_REFLECTION(0x40L),
     //ALWAYS_RIGHT(0X80L),
     SHADOW_CLAW(0x100L),
@@ -37,7 +83,6 @@ public enum BuffStat implements LongValueHolder{
     BLIND(0x1000L),
     CONCENTRATE(0x2000L),
     PUPPET(0x4000L),
-    ECHO_OF_HERO(0x8000L),
     MESO_UP_BY_ITEM(0x10000L),
     GHOST_MORPH(0x20000L),
     AURA(0x40000L),
@@ -67,71 +112,8 @@ public enum BuffStat implements LongValueHolder{
     FINALATTACK(0x80000000L),
 
 
-    // 53状态复制
-    WATK(0x1),
-    WDEF(0x2),
-    MATK(0x4),
-    MDEF(0x8),
-    ACC(0x10),
-    AVOID(0x20),
-    HANDS(0x40),
-    SPEED(0x80),
-    JUMP(0x100),
-    MAGIC_GUARD(0x200),
-    DARKSIGHT(0x400), // also used by gm hide
-    BOOSTER(0x800),
-    POWERGUARD(0x1000),
-    HYPERBODYHP(0x2000),
-    HYPERBODYMP(0x4000),
-    INVINCIBLE(0x8000),
-    SOULARROW(0x10000),
-
-    COMBO(0x200000),
-    SUMMON(0x200000), //hack buffstat for summons ^.- (does/should not increase damage... hopefully <3)
-    WK_CHARGE(0x400000),
-    DRAGONBLOOD(0x800000), // another funny buffstat...
-    HOLY_SYMBOL(0x1000000),
-    MESOUP(0x2000000),
-    SHADOWPARTNER(0x4000000),
-    PICKPOCKET(0x8000000),
-    //    PUPPET(0x8000000), // HACK - shares buffmask with pickpocket - odin special ^.-
-    MESOGUARD(0x10000000),
-
-    MONSTER_RIDING(0x400000000000l),
-
-
 
     // 北斗83
-//    WATK(0x100000000L),
-//    WDEF(0x200000000L),
-//    MATK(0x400000000L),
-//    MDEF(0x800000000L),
-//    ACC(0x1000000000L),
-//    AVOID(0x2000000000L),
-//    HANDS(0x4000000000L),
-//    SPEED(0x8000000000L),
-//    JUMP(0x10000000000L),
-//    MAGIC_GUARD(0x20000000000L),
-//    DARKSIGHT(0x40000000000L),
-//    BOOSTER(0x80000000000L),
-//    POWERGUARD(0x100000000000L),
-//    HYPERBODYHP(0x200000000000L),
-//    HYPERBODYMP(0x400000000000L),
-//    INVINCIBLE(0x800000000000L),
-//    SOULARROW(0x1000000000000L),
-    STUN(0x2000000000000L),
-    POISON(0x4000000000000L),
-    SEAL(0x8000000000000L),
-    DARKNESS(0x10000000000000L),
-//    COMBO(0x20000000000000L),
-//    SUMMON(0x20000000000000L),
-//    WK_CHARGE(0x40000000000000L),
-//    DRAGONBLOOD(0x80000000000000L),
-//    HOLY_SYMBOL(0x100000000000000L),
-//    MESOUP(0x200000000000000L),
-//    SHADOWPARTNER(0x400000000000000L),
-//    PICKPOCKET(0x800000000000000L),
-//    MESOGUARD(0x1000000000000000L),
     EXP_INCREASE(0x2000000000000000L),
     WEAKEN(0x4000000000000000L),
     MAP_PROTECTION(0x8000000000000000L),
@@ -154,9 +136,6 @@ public enum BuffStat implements LongValueHolder{
     ENERGY_CHARGE(0x4000000000000L, true),
     DASH2(0x8000000000000L, true), // correct (speed)
     DASH(0x10000000000000L, true), // correct (jump)
-//    MONSTER_RIDING(0x20000000000000L, true),
-
-
 
     SPEED_INFUSION(0x40000000000000L, true),
     HOMING_BEACON(0x80000000000000L, true);

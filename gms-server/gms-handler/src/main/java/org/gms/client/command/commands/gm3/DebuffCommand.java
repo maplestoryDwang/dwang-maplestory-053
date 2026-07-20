@@ -46,75 +46,68 @@ public class DebuffCommand extends Command {
     public void execute(Client c, String[] params) {
         Character player = c.getPlayer();
 
+        // 1. 取得指令輸入的Debuff名稱，無參數時預設為 "CURSE"
+        String param = (params.length < 1) ? "CURSE" : params[0].toUpperCase();
+
         Disease disease = null;
         Optional<MobSkill> skill = Optional.empty();
-        String skillSlow = I18nUtil.getMessage("DebuffCommand.skill.slow");
-        String skillSeduce = I18nUtil.getMessage("DebuffCommand.skill.seduce");
-        String skillZombify = I18nUtil.getMessage("DebuffCommand.skill.zombify");
-        String skillConfuse = I18nUtil.getMessage("DebuffCommand.skill.confuse");
-        String skillStun = I18nUtil.getMessage("DebuffCommand.skill.stun");
-        String skillPoison = I18nUtil.getMessage("DebuffCommand.skill.poison");
-        String skillSeal = I18nUtil.getMessage("DebuffCommand.skill.seal");
-        String skillDarkness = I18nUtil.getMessage("DebuffCommand.skill.darkness");
-        String skillWeaken = I18nUtil.getMessage("DebuffCommand.skill.weaken");
-        String skillCurse = I18nUtil.getMessage("DebuffCommand.skill.curse");
 
-        String param = null;
-        if (params.length < 1) {
-//            player.message(I18nUtil.getMessage("DebuffCommand.message2"));
-//            return;
-//            param = skillSlow;
-//            param = skillSeal;
-//            param = skillDarkness;  // 居然出来无影人的影子- -
-//            param = skillWeaken;
-//            param = skillPoison;
-//            param = skillStun;
-//            param = skillSeal;
-            param = skillCurse;
-        } else {
-            param = params[0].toUpperCase();
+        // 2. 直接根據英文名稱設定對應的 Disease 與 MobSkill
+        switch (param) {
+            case "SLOW":
+                disease = Disease.SLOW;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.SLOW, 7);
+                break;
+            case "SEDUCE":
+                disease = Disease.SEDUCE;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.SEDUCE, 5);
+                break;
+            case "ZOMBIFY":
+                disease = Disease.ZOMBIFY;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.UNDEAD, 1);
+                break;
+            case "CONFUSE":
+                disease = Disease.CONFUSE;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.REVERSE_INPUT, 2);
+                break;
+            case "STUN":
+                disease = Disease.STUN;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.STUN, 7);
+                break;
+            case "POISON":
+                disease = Disease.POISON;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.POISON, 5);
+                break;
+            case "SEAL":
+                disease = Disease.SEAL;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.SEAL, 1);
+                break;
+            case "DARKNESS":
+                disease = Disease.DARKNESS;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.DARKNESS, 1);
+                break;
+            case "WEAKEN":
+                disease = Disease.WEAKEN;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.WEAKNESS, 1);
+                break;
+            case "CURSE":
+                disease = Disease.CURSE;
+                skill = MobSkillFactory.getMobSkill(MobSkillType.CURSE, 1);
+                break;
+            default:
+                player.yellowMessage("未知的 Debuff 類型！請輸入正確的英文名稱（如 SLOW, STUN, CURSE 等）。");
+                return;
         }
 
-        if (param.equals(skillSlow)) {
-            disease = Disease.SLOW;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.SLOW, 7);
-        } else if (param.equals(skillSeduce)) {
-            disease = Disease.SEDUCE;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.SEDUCE, 7);
-        } else if (param.equals(skillZombify)) {
-            disease = Disease.ZOMBIFY;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.UNDEAD, 1);
-        } else if (param.equals(skillConfuse)) {
-            disease = Disease.CONFUSE;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.REVERSE_INPUT, 2);
-        } else if (param.equals(skillStun)) {
-            disease = Disease.STUN;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.STUN, 7);
-        } else if (param.equals(skillPoison)) {
-            disease = Disease.POISON;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.POISON, 5);
-        } else if (param.equals(skillSeal)) {
-            disease = Disease.SEAL;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.SEAL, 1);
-        } else if (param.equals(skillDarkness)) {
-            disease = Disease.DARKNESS;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.DARKNESS, 1);
-        } else if (param.equals(skillWeaken)) {
-            disease = Disease.WEAKEN;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.WEAKNESS, 1);
-        } else if (param.equals(skillCurse)) {
-            disease = Disease.CURSE;
-            skill = MobSkillFactory.getMobSkill(MobSkillType.CURSE, 1);
-        }
-
+        // 3. 檢查是否有成功取得技能
         if (disease == null || skill.isEmpty()) {
-            player.yellowMessage(I18nUtil.getMessage("DebuffCommand.message2"));
+            player.yellowMessage("技能載入失敗。");
             return;
         }
 
+        // 4. 施放 Debuff 給地圖範圍內的玩家
         for (MapObject mmo : player.getMap().getMapObjectsInRange(player.getPosition(), 777777.7, Arrays.asList(MapObjectType.PLAYER))) {
             Character chr = (Character) mmo;
-
             chr.giveDebuff(disease, skill.get());
         }
     }

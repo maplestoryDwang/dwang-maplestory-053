@@ -54,6 +54,9 @@ public final class PetLootHandler extends AbstractPacketHandler {
         }
         try {
             p.skip(13);
+            if (p.available() < 4) {
+                return;
+            }
             int oid = p.readInt();
             MapObject ob = chr.getMap().getMapObject(oid);
             MapItem mapitem = (MapItem) ob;

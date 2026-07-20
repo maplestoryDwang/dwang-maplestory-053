@@ -53,17 +53,16 @@ public final class GeneralChatHandler extends AbstractPacketHandler {
         if (CommandsExecutor.isCommand(c, s)) {
             CommandsExecutor.getInstance().handle(c, s);
         } else if (heading != '/') {
-            int show = p.readByte();
             if (chr.getMap().isMuted() && !chr.isGM()) {
                 chr.dropMessage(5, "The map you are in is currently muted. Please try again later.");
                 return;
             }
 
             if (!chr.isHidden()) {
-                chr.getMap().broadcastMessage(PacketCreator.getChatText(chr.getId(), s, chr.getWhiteChat(), show));
+                chr.getMap().broadcastMessage(PacketCreator.getChatText(chr.getId(), s, chr.getWhiteChat()));
                 ChatLogger.log(c, "General", s);
             } else {
-                chr.getMap().broadcastGMMessage(PacketCreator.getChatText(chr.getId(), s, chr.getWhiteChat(), show));
+                chr.getMap().broadcastGMMessage(PacketCreator.getChatText(chr.getId(), s, chr.getWhiteChat()));
                 ChatLogger.log(c, "GM General", s);
             }
 

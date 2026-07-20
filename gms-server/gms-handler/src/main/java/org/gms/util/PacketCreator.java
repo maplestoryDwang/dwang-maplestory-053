@@ -1928,12 +1928,11 @@ public class PacketCreator {
      * @param show
      * @return The general chat packet.
      */
-    public static Packet getChatText(int cidfrom, String text, boolean gm, int show) {
+    public static Packet getChatText(int cidfrom, String text, boolean gm) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.CHATTEXT);
         p.writeInt(cidfrom);
         p.writeBool(gm);
         p.writeString(text);
-        p.writeByte(show);
         return p;
     }
 
@@ -2825,10 +2824,7 @@ public class PacketCreator {
                 mplew.writeShort(1); // stacksize o.o
                 mplew.writeShort(item.getBuyable());
             } else {
-                mplew.writeShort(0);
-                mplew.writeInt(0);
-                // o.O getPrice sometimes returns the unitPrice not the price
-                mplew.writeShort(doubleToShortBits(ii.getUnitPrice(item.getItemId())));
+                mplew.writeLong(Double.doubleToLongBits(ii.getUnitPrice(item.getItemId())));
                 mplew.writeShort(ii.getSlotMax(c, item.getItemId()));
             }
         }

@@ -27,22 +27,47 @@ import org.gms.server.life.MobSkillType;
 import java.util.Arrays;
 
 public enum Disease {
-    NULL(0x0),
-    SLOW(0x1, MobSkillType.SLOW),
-    SEDUCE(0x80, MobSkillType.SEDUCE),
-    FISHABLE(0x100),
-    ZOMBIFY(0x4000),
-    CONFUSE(0x80000, MobSkillType.REVERSE_INPUT), // 混乱
+//    NULL(0x0),
+//    SLOW(0x1, MobSkillType.SLOW),
+//    SEDUCE(0x80, MobSkillType.SEDUCE),
+//    FISHABLE(0x100),
+//    ZOMBIFY(0x4000),
+//    CONFUSE(0x80000, MobSkillType.REVERSE_INPUT), // 混乱
+//
+//
+//    // 以下正确
+//    STUN(0x00100000L, MobSkillType.STUN),           // 眩晕
+//    POISON(0x00040000L, MobSkillType.POISON),
+//    SEAL(0x80000L, MobSkillType.SEAL),              // 封印
+//    DARKNESS(0x20000L, MobSkillType.DARKNESS),
+//    WEAKEN(0x40000000, MobSkillType.WEAKNESS),
+//    CURSE(0x100000, MobSkillType.CURSE);            // 诅咒
 
 
-    // 以下正确
-    STUN(0x00100000L, MobSkillType.STUN),           //昏迷
-    POISON(0x00040000L, MobSkillType.POISON),  // 这个也对了
-    SEAL(0x80000L, MobSkillType.SEAL),
-    DARKNESS(0x20000L, MobSkillType.DARKNESS),   // 碰巧找到的  实际上并不是 027写的是stun  但是是对的  - -
-    WEAKEN(0x40000000, MobSkillType.WEAKNESS),   // 这个也对了
-    CURSE(0x100000, MobSkillType.CURSE);
+    NULL(0),
 
+    FISHABLE(1L << 8),                                 // 0x100 (Bit 8)      这个不知道是什么
+    ZOMBIFY(1L << 14),                                 // 0x4000 (Bit 14)    没有133
+    CONFUSE(1L << 19, MobSkillType.REVERSE_INPUT),     // 0x80000 (Bit 19 -  没有132
+
+
+    // 下面是对的
+
+    SLOW(1L << 32, MobSkillType.SLOW),                   // 这个是对的           OK
+    SEDUCE(1L << 39, MobSkillType.SEDUCE),               // 0x80 (Bit 7)   魅惑 OK Attract
+//    DARKNESS(1L << 17, MobSkillType.DARKNESS),         // 0x20000L (Bit 17)  會導致無法移動
+
+    // 改了
+    STUN(1L << 17, MobSkillType.STUN),                 // 0x100000L (Bit 20 - 暈眩)
+    POISON(1L << 18, MobSkillType.POISON),             // 0x40000L (Bit 18)
+    SEAL(1L << 19, MobSkillType.SEAL),                 // 0x80000L (Bit 19 - 封印)
+    DARKNESS(1L << 20, MobSkillType.DARKNESS),         //  (Bit 20) 也ok
+
+    WEAKEN(1L << 30, MobSkillType.WEAKNESS),         // 0x40000000 (Bit 30 - 虛弱)
+    // 改了
+    CURSE(1L << 31, MobSkillType.CURSE),               // 0x100000 (Bit 20 - 詛咒) 这两个用同一个mask? = =
+
+    ;
     private final long i;
     private final MobSkillType mobSkillType;
 

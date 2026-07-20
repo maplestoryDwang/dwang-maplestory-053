@@ -1036,7 +1036,7 @@ public class StatEffect {
 
                 applyto.sendPacket(PacketCreator.enableActions());
             }
-
+            // 显示buff图标 + 对应的buff
             applyBuffEffect(applyfrom, applyto, primary);
         }
 
