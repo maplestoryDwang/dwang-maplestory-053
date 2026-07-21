@@ -230,8 +230,8 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.SKILL_EFFECT, new SkillEffectHandler());
 //        registerHandler(RecvOpcode.MESSENGER, new MessengerHandler());
         registerHandler(RecvOpcode.NPC_ACTION, new NPCAnimationHandler());                                              //   check
-        registerHandler(RecvOpcode.CHECK_CASH, new TouchingCashShopHandler());
-        registerHandler(RecvOpcode.CASHSHOP_OPERATION, new CashOperationHandler(channelDeps.noteService()));
+        registerHandler(RecvOpcode.CHECK_CASH, new TouchingCashShopHandler());                                           //   check
+        registerHandler(RecvOpcode.CASHSHOP_OPERATION, new CashOperationHandler(channelDeps.noteService()));            //   check了常用功能，后面的功能没修
 //        registerHandler(RecvOpcode.COUPON_CODE, new CouponCodeHandler());
         registerHandler(RecvOpcode.SPAWN_PET, new SpawnPetHandler());  //CUser::OnActivatePetRequest(this, (int)pExceptionObject);
         registerHandler(RecvOpcode.MOVE_PET, new MovePetHandler());                                                    //   check
@@ -246,6 +246,9 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.AUTO_AGGRO, new AutoAggroHandler());                                                 //   check
 
         registerHandler(RecvOpcode.MONSTER_BOMB, new MonsterBombHandler());
+        registerHandler(RecvOpcode.FIELD_DAMAGE_MOB, new FieldDamageMobHandler());
+        registerHandler(RecvOpcode.MOB_DAMAGE_MOB_FRIENDLY, new MobDamageMobFriendlyHandler());
+
 //        registerHandler(RecvOpcode.CANCEL_DEBUFF, new CancelDebuffHandler());
 //        registerHandler(RecvOpcode.USE_SKILL_BOOK, new SkillBookHandler());
 //        registerHandler(RecvOpcode.SKILL_MACRO, new SkillMacroHandler());
@@ -296,8 +299,6 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.PLAYER_MAP_TRANSFER, new PlayerMapTransitionHandler());
 //        registerHandler(RecvOpcode.USE_MAPLELIFE, new UseMapleLifeHandler());
 //        registerHandler(RecvOpcode.USE_CATCH_ITEM, new UseCatchItemHandler());
-        registerHandler(RecvOpcode.FIELD_DAMAGE_MOB, new FieldDamageMobHandler());
-        registerHandler(RecvOpcode.MOB_DAMAGE_MOB_FRIENDLY, new MobDamageMobFriendlyHandler());
 //        registerHandler(RecvOpcode.PARTY_SEARCH_REGISTER, new PartySearchRegisterHandler());
 //        registerHandler(RecvOpcode.PARTY_SEARCH_START, new PartySearchStartHandler());
 //        registerHandler(RecvOpcode.PARTY_SEARCH_UPDATE, new PartySearchUpdateHandler());

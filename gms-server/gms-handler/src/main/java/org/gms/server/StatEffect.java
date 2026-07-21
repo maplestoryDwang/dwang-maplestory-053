@@ -621,7 +621,8 @@ public class StatEffect {
                 case WindArcher.PUPPET:
                 case Outlaw.OCTOPUS:
                 case Corsair.WRATH_OF_THE_OCTOPI:
-                    statups.add(new Pair<>(BuffStat.PUPPET, 1));
+//                    statups.add(new Pair<>(BuffStat.PUPPET, x));
+                    statups.add(new Pair<>(BuffStat.PUPPET, x));
                     break;
                 case Bowmaster.CONCENTRATE:
                     statups.add(new Pair<>(BuffStat.CONCENTRATE, x));

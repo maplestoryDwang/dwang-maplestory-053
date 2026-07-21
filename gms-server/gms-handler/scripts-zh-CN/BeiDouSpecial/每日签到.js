@@ -33,7 +33,7 @@ function action(mode, type, selection)
 			{
 			    cm.saveOrUpdateCharacterExtendValue("每日签到", "TRUE",true);
 			    cm.sendOk("签到成功");
-				cm.gainItem(2430033,1);
+//				cm.gainItem(2430033,1);
 			    cm.dispose();				
 			}
 	    }

@@ -58,7 +58,8 @@ public enum BuffStat implements LongValueHolder{
     MESOUP(1L << 25),           // 楓幣獲得量增加 (0x2000000)
     SHADOWPARTNER(1L << 26),    // 影分身 (0x4000000)
     PICKPOCKET(1L << 27),       // 偷竊術 (0x8000000)
-    // PUPPET(1L << 27),        // 稻草人/傀儡 (0x8000000 - 與偷竊術共用 Mask)
+
+     PUPPET(1L << 27),        // 稻草人/傀儡 ()
     MESOGUARD(1L << 28),        // 楓幣護盾 (0x10000000)
 
     UNKNOW_29(1L << 29),        // 未知29
@@ -118,7 +119,7 @@ public enum BuffStat implements LongValueHolder{
     HAMSTRING(0x800L),
     BLIND(0x1000L),
     CONCENTRATE(0x2000L),
-    PUPPET(0x4000L),
+//    PUPPET(0x4000L),
     MESO_UP_BY_ITEM(0x10000L),
     GHOST_MORPH(0x20000L),
     AURA(0x40000L),

@@ -126,7 +126,7 @@ function AwardItem(selection, acquire, currentOnlineTime, scalar, gaincount) {
         if (!isRewardClaimed) 
 		{  
             // 颁发奖励  
-            cm.gainItem(2430033, gaincount);
+//            cm.gainItem(2430033, gaincount);
             var newAcquireStatus = acquire | index[selection];
             cm.saveOrUpdateAccountExtendValue("每日在线奖励领取状态", String(newAcquireStatus), true);  
             msg = textMsg[0]; 

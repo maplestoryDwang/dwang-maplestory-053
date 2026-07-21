@@ -1738,6 +1738,9 @@ public class ItemInformationProvider {
             return consumeOnPickupCache.get(itemId);
         }
         Data data = getItemData(itemId);
+        if (data == null) {
+            log.error("{} is not existed", itemId);
+        }
         boolean consume = DataTool.getIntConvert("spec/consumeOnPickup", data, 0) == 1 || DataTool.getIntConvert("specEx/consumeOnPickup", data, 0) == 1;
         consumeOnPickupCache.put(itemId, consume);
         return consume;

@@ -25,163 +25,423 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum RecvOpcode implements Opcode {
-    // GENERAL
-    PONG(0x0A), // 心跳回应
-
-    // LOGIN
-    AFTER_LOGIN(0x03), // 登录后处理
-    SERVERLIST_REREQUEST(0x04), // 重新请求服务器列表
-    CHECK_CHAR_NAME(0x09), // 检查角色名
-    CREATE_CHAR(0x0E), // 创建角色
-    DELETE_CHAR(0x0F), // 删除角色
-    SERVERSTATUS_REQUEST(0x13), // 请求服务器状态
-    CHAR_SELECT(0x16), // 选择角色
-    SERVERLIST_REQUEST(0x18), // 请求服务器列表
-    CHARLIST_REQUEST(0x19), // 请求角色列表
-    RELOG(0x1A), // 重新登录
-    LOGIN_PASSWORD(0x1B), // 登录密码
-
-    // CHANNEL
-    PLAYER_LOGGEDIN(0x14), // 玩家登录进频道
-    STRANGE_DATA(0x11), // 异常数据
-    CHANGE_MAP(0x2F), // 切换地图
-    CHANGE_CHANNEL(0x27), // 切换频道
-    ENTER_CASH_SHOP(0x28), // 进入商城    CUser::OnMigrateToCashShopRequest
-    MOVE_PLAYER(0x35), // 移动玩家
-    CLOSE_RANGE_ATTACK(0x59), // 近战攻击
-    RANGED_ATTACK(0x36), // 远程攻击
-    STORAGE(0x20), // 仓库操作
-    NPC_TALK_MORE(0x21), // NPC 对话继续
-    NPC_SHOP(0x22), // NPC 商店
-    NPC_TALK(0x23), // NPC 对话
-
-    CANCEL_CHAIR(0x2B), // 使用椅子  CUser::OnSitRequest
-    USE_CHAIR(0x2D), // 使用椅子  CUser::OnPortableChairSitRequest
-    USE_STAT_CHAIR(0x4A), // 使用椅子加滿血觸發  CUser::OnUserStatChangeByPortableChairRequest
-    MAGIC_ATTACK(0x2E), // 魔法攻击
-    TAKE_DAMAGE(0x2A), // 受到伤害
-    GENERAL_CHAT(0x2C), // 普通聊天
-    FACE_EXPRESSION(0x5C), // 面部表情
-    ITEM_MOVE(0x62), // 移动道具
-    USE_ITEM(0x63), // 使用道具
-
-    CALC_Damage_Stat_Request(0x6C), // 计算伤害状态请求
-    CANCEL_ITEM_EFFECT(0x49), // 取消道具效果
-    USE_CASH_ITEM(0x53), // 使用现金道具
-    USE_RETURN_SCROLL(0x64), // 使用回城卷轴
-    USE_UPGRADE_SCROLL(0x65), // 使用强化卷轴
-    DISTRIBUTE_AP(0x66), // 分配能力点(AP)
-    HEAL_OVER_TIME(0x67), // 定时恢复(HP/MP)
-    DISTRIBUTE_SP(0x4D), // 分配技能点(SP)
-    SPECIAL_MOVE(0x51), // 特殊动作/技能
-    CANCEL_BUFF(0x4E), // 取消Buff
-    MESO_DROP(0x68), // 丢金币
-    GIVE_FAME(0x69), // 人气度操作
-    CHAR_INFO_REQUEST(0x44), // 请求查看角色信息
-
-    SPAWN_PET(0x45), // 生成宠物
-
-    CANCEL_DEBUFF(0x46), // 取消减益效果
-
-
-    CHANGE_MAP_SPECIAL(0x47), // 特殊地图切换(如传送门)
-    QUEST_ACTION(0x6B), // 任务操作
-    PARTYCHAT(0x3A), // 组队聊天
-    WHISPER(0x58), // 密聊
-    PLAYER_INTERACTION(0x3E), // 玩家互动(小游戏/交易)
-    PARTY_OPERATION(0x31), // 组队操作
-    DENY_PARTY_REQUEST(0x32), // 拒绝组队邀请
-    BUDDYLIST_MODIFY(0x33), // 好友列表修改
-    USE_DOOR(0x41), // 使用时空门
-    CHANGE_KEYMAP(0x75), // 修改快捷键设置
-
-
-    SUMMON_ATTACK(0x7B), // 召唤兽攻击
-    MOVE_SUMMON(0x7C), // 移动召唤兽
-    DAMAGE_SUMMON(0x79), // 召唤兽受击
-
-    
-    NPC_ACTION(0x98), // NPC移动
-
+    // 0x00 - 0x02 未使用
 
     /**
-     *       case 0x9B:
-     *         result = CMob::OnDropPickUpRequest(v11, pExceptionObject, v4);
-     *         break;
-     *       case 0x9C:
-     *         result = CLifePool::OnMobHitByObstacle((int)v11, v4);
-     *         break;
-     *       case 0x9D:
-     *         result = CField::OnMobMove((int *)this[1], pExceptionObject, (int)v11, (void *)v4);
-     *         break;
-     *       case 0x9E:
-     *         result = CLifePool::OnMobHitByMob((int)v11, v4);
-     *         break;
-     *       case 0x9F:
-     *         result = CLifePool::OnMobSelfDestruct((int)v11, v4);
-     *         break;
-     *       default:
-     *         result = a3 - 160;
-     *         if ( a3 == 160 )
-     *           result = CMob::OnApplyCtrl(pExceptionObject, v4);
-     *         break;
+     * 登录后处理
      */
-    // CLifePool::OnMobPacket
-    MOVE_LIFE(0x9D), // 移动NPC/怪物(常用于控制权同步)   CField::OnMobMove
+    AFTER_LOGIN(0x03),
+    /**
+     * 重新请求服务器列表
+     */
+    SERVERLIST_REREQUEST(0x04),
+
+    // 0x05 - 0x08 未使用
 
     /**
-     * 自动仇恨，修改怪物的仇恨对象
+     * 检查角色名
+     */
+    CHECK_CHAR_NAME(0x09),
+    /**
+     * 心跳回应
+     */
+    PONG(0x0A),
+
+    // 0x0B - 0x0D 未使用
+
+    /**
+     * 创建角色
+     */
+    CREATE_CHAR(0x0E),
+    /**
+     * 删除角色
+     */
+    DELETE_CHAR(0x0F),
+
+    // 0x10 未使用
+
+    /**
+     * 异常数据
+     */
+    STRANGE_DATA(0x11),
+
+    // 0x12 未使用
+
+    /**
+     * 请求服务器状态
+     */
+    SERVERSTATUS_REQUEST(0x13),
+    /**
+     * 玩家登录进频道
+     */
+    PLAYER_LOGGEDIN(0x14),
+
+    // 0x15 未使用
+
+    /**
+     * 选择角色
+     */
+    CHAR_SELECT(0x16),
+
+    // 0x17 未使用
+
+    /**
+     * 请求服务器列表
+     */
+    SERVERLIST_REQUEST(0x18),
+    /**
+     * 请求角色列表
+     */
+    CHARLIST_REQUEST(0x19),
+    /**
+     * 重新登录
+     */
+    RELOG(0x1A),
+    /**
+     * 登录密码
+     */
+    LOGIN_PASSWORD(0x1B),
+
+    // 0x1C - 0x1F 未使用
+
+    /**
+     * 仓库操作
+     */
+    STORAGE(0x20),
+    /**
+     * NPC 对话继续
+     */
+    NPC_TALK_MORE(0x21),
+    /**
+     * NPC 商店
+     */
+    NPC_SHOP(0x22),
+    /**
+     * NPC 对话
+     */
+    NPC_TALK(0x23),
+
+    // 0x24 - 0x26 未使用
+
+    /**
+     * 切换频道
+     */
+    CHANGE_CHANNEL(0x27),
+    /**
+     * 进入商城    CUser::OnMigrateToCashShopRequest
+     */
+    ENTER_CASH_SHOP(0x28),
+
+    // 0x29 未使用
+
+    /**
+     * 受到伤害
+     */
+    TAKE_DAMAGE(0x2A),
+    /**
+     * 使用椅子  CUser::OnSitRequest
+     */
+    CANCEL_CHAIR(0x2B),
+    /**
+     * 普通聊天
+     */
+    GENERAL_CHAT(0x2C),
+    /**
+     * 使用椅子  CUser::OnPortableChairSitRequest
+     */
+    USE_CHAIR(0x2D),
+    /**
+     * 魔法攻击
+     */
+    MAGIC_ATTACK(0x2E),
+    /**
+     * 切换地图
+     */
+    CHANGE_MAP(0x2F),
+
+    // 0x30 未使用
+
+    /**
+     * 组队操作
+     */
+    PARTY_OPERATION(0x31),
+    /**
+     * 拒绝组队邀请
+     */
+    DENY_PARTY_REQUEST(0x32),
+    /**
+     * 好友列表修改
+     */
+    BUDDYLIST_MODIFY(0x33),
+
+    // 0x34 未使用
+
+    /**
+     * 移动玩家
+     */
+    MOVE_PLAYER(0x35),
+    /**
+     * 远程攻击
+     */
+    RANGED_ATTACK(0x36),
+
+    // 0x37 - 0x39 未使用
+
+    /**
+     * 组队聊天
+     */
+    PARTYCHAT(0x3A),
+
+    // 0x3B - 0x3D 未使用
+
+    /**
+     * 玩家互动(小游戏/交易)
+     */
+    PLAYER_INTERACTION(0x3E),
+
+    // 0x3F - 0x40 未使用
+
+    /**
+     * 使用时空门
+     */
+    USE_DOOR(0x41),
+
+    // 0x42 - 0x43 未使用
+
+    /**
+     * 请求查看角色信息
+     */
+    CHAR_INFO_REQUEST(0x44),
+    /**
+     * 生成宠物
+     */
+    SPAWN_PET(0x45),
+    /**
+     * 取消减益效果
+     */
+    CANCEL_DEBUFF(0x46),
+    /**
+     * 特殊地图切换(如传送门)
+     */
+    CHANGE_MAP_SPECIAL(0x47),
+
+    // 0x48 未使用
+
+    /**
+     * 取消道具效果
+     */
+    CANCEL_ITEM_EFFECT(0x49),
+    /**
+     * 使用椅子加滿血觸發  CUser::OnUserStatChangeByPortableChairRequest
+     */
+    USE_STAT_CHAIR(0x4A),
+
+    // 0x4B 未使用
+
+    /**
+     * 宠物食物
+     */
+    PET_FOOD(0x4C),
+    /**
+     * 分配技能点(SP)
+     */
+    DISTRIBUTE_SP(0x4D),
+    /**
+     * 取消Buff
+     */
+    CANCEL_BUFF(0x4E),
+
+    // 0x4F - 0x50 未使用
+
+    /**
+     * 特殊动作/技能释放   OnSkillUseRequest
+     */
+    SPECIAL_MOVE(0x51),
+
+    // 0x52 未使用
+
+    /**
+     * 使用现金道具
+     */
+    USE_CASH_ITEM(0x53),
+
+    // 0x54 - 0x57 未使用
+
+    /**
+     * 密聊
+     */
+    WHISPER(0x58),
+    /**
+     * 近战攻击
+     */
+    CLOSE_RANGE_ATTACK(0x59),
+
+    // 0x5A - 0x5B 未使用
+
+    /**
+     * 面部表情
+     */
+    FACE_EXPRESSION(0x5C),
+
+    // 0x5D - 0x61 未使用
+
+    /**
+     * 移动道具
+     */
+    ITEM_MOVE(0x62),
+    /**
+     * 使用道具
+     */
+    USE_ITEM(0x63),
+    /**
+     * 使用回城卷轴
+     */
+    USE_RETURN_SCROLL(0x64),
+    /**
+     * 使用强化卷轴
+     */
+    USE_UPGRADE_SCROLL(0x65),
+    /**
+     * 分配能力点(AP)
+     */
+    DISTRIBUTE_AP(0x66),
+    /**
+     * 定时恢复(HP/MP)
+     */
+    HEAL_OVER_TIME(0x67),
+    /**
+     * 丢金币
+     */
+    MESO_DROP(0x68),
+    /**
+     * 人气度操作
+     */
+    GIVE_FAME(0x69),
+
+    // 0x6A 未使用
+
+    /**
+     * 任务操作
+     */
+    QUEST_ACTION(0x6B),
+    /**
+     * 计算伤害状态请求
+     */
+    CALC_Damage_Stat_Request(0x6C),
+
+    // 0x6D - 0x74 未使用
+
+    /**
+     * 修改快捷键设置
+     */
+    CHANGE_KEYMAP(0x75),
+
+    // 0x76 未使用
+
+    /**
+     * 进入MTS(拍卖所)
+     */
+    ENTER_MTS(0x77),
+
+    // 0x78 未使用
+
+    /**
+     * 召唤兽受击
+     */
+    DAMAGE_SUMMON(0x79),
+
+    // 0x7A 未使用
+
+    /**
+     * 召唤兽攻击
+     */
+    SUMMON_ATTACK(0x7B),
+    /**
+     * 移动召唤兽
+     */
+    MOVE_SUMMON(0x7C),
+
+    // 0x7D - 0x7E 未使用
+
+    /**
+     * 宠物拾取  OnDropPickUpRequest
+     */
+    PET_LOOT(0x7F),
+    /**
+     * 宠物命令 OnInteractionRequest
+     */
+    PET_COMMAND(0x80),
+    /**
+     * 宠物自动使用药水 OnStatChangeItemUseRequest
+     */
+    PET_AUTO_POT(0x81),
+    /**
+     * 宠物对话 OnAction
+     */
+    PET_CHAT(0x82),
+    /**
+     * 宠物排除物品 OnPetUpdateExceptionListRequest
+     */
+    PET_EXCLUDE_ITEMS(0x83),
+    /**
+     * 移动宠物  OnMove
+     */
+    MOVE_PET(0x84),
+
+    // 0x85 - 0x88 未使用
+
+    /**
+     * 拾取道具
+     */
+    ITEM_PICKUP(0x89),
+
+    // 0x8A - 0x8B 未使用
+
+    /**
+     * 反应堆受到伤害
+     */
+    DAMAGE_REACTOR(0x8C),
+
+    // 0x8D - 0x97 未使用
+
+    /**
+     * NPC移动
+     */
+    NPC_ACTION(0x98),
+
+    // 0x99 - 0x9B 未使用
+
+    /**
+     * 场景中怪物受到伤害           OnMobHitByObstacle
+     */
+    FIELD_DAMAGE_MOB(0x9C),
+    /**
+     * 移动NPC/怪物(常用于控制权同步)   CField::OnMobMove
+     */
+    MOVE_LIFE(0x9D),
+    /**
+     * 怪物对友好怪物造成伤害 OnMobHitByMob
+     */
+    MOB_DAMAGE_MOB_FRIENDLY(0x9E),
+    /**
+     * 怪物炸弹    OnMobSelfDestruct
+     */
+    MONSTER_BOMB(0x9F),
+    /**
+     * 自动仇恨，修改怪物的仇恨对象    OnApplyCtrl
      */
     AUTO_AGGRO(0xA0),
-    FIELD_DAMAGE_MOB(0x9C), // 场景中怪物受到伤害           OnMobHitByObstacle
-    MOB_DAMAGE_MOB_FRIENDLY(0x9E), // 怪物对友好怪物造成伤害 OnMobHitByMob
-    MONSTER_BOMB(0x9F), // 怪物炸弹    OnMobSelfDestruct
 
-
-    ITEM_PICKUP(0x89), // 拾取道具
-    ENTER_MTS(0x77),// 进入MTS(拍卖所)
+    // 0xA1 - 0xA9 未使用
 
     /**
-     *       case 0x7F:
-     *         CPet::OnDropPickUpRequest(a3);
-     *         break;
-     *       case 0x80:
-     *         CPet::OnInteractionRequest(a3);
-     *         break;
-     *       case 0x81:
-     *         CPet::OnStatChangeItemUseRequest(a3);
-     *         break;
-     *       case 0x82:
-     *         CPet::OnAction(a3);
-     *         break;
-     *       case 0x83:
-     *         CUser::OnPetUpdateExceptionListRequest(a3);
-     *         break;
-     *       case 0x84:
-     *         CPet::OnMove(v3, a3);
-     *         break;
+     * 现金商店操作
      */
-    PET_LOOT(0x7F), // 宠物拾取
-    PET_COMMAND(0x80), // 宠物命令
-    PET_AUTO_POT(0x81), // 宠物自动使用药水
-    PET_CHAT(0x82), // 宠物对话 OnAction
-    PET_EXCLUDE_ITEMS(0x83), // 宠物排除物品
-    MOVE_PET(0x84), // 移动宠物
-
-    PET_FOOD(0x4C), // 宠物食物
-
-
-
-
-
-    // CReactorPool::OnPacket
-    DAMAGE_REACTOR(0x8C), // 反应堆受到伤害
-
-    CHECK_CASH(0xAA), // 现金商店操作
-    CASHSHOP_OPERATION(0xAB), // 现金商店操作
-
-
-    ;
+    CHECK_CASH(0xAA),
+    /**
+     * 现金商店操作
+     */
+    CASHSHOP_OPERATION(0xAB);
     private int code = -2;
 
     RecvOpcode(int code) {
@@ -210,7 +470,7 @@ public enum RecvOpcode implements Opcode {
 
     );
 
-    public static boolean recvIgnore(int opcode){
+    public static boolean recvIgnore(int opcode) {
         return ignoreLists.contains(opcode);
     }
 

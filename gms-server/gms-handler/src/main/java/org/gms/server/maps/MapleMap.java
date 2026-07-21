@@ -1819,6 +1819,24 @@ public class MapleMap {
         }
     }
 
+    public MapObject getMapObjectBySkillId(int skillID) {
+        objectRLock.lock();
+        try {
+            for (MapObject value : mapobjects.values()) {
+                if (value.getType() == MapObjectType.SUMMON) {
+                    Summon summon= (Summon) value;
+                    if (summon.getSkill() == skillID){
+                        return value;
+                    }
+
+                }
+            }
+            return  null;
+        } finally {
+            objectRLock.unlock();
+        }
+    }
+
     /**
      * returns a monster with the given oid, if no such monster exists returns
      * null

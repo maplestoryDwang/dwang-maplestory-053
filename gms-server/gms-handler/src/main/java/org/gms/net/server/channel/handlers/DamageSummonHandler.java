@@ -33,13 +33,13 @@ import org.gms.util.PacketCreator;
 public final class DamageSummonHandler extends AbstractPacketHandler {
     @Override
     public final void handlePacket(InPacket p, Client c) {
-        int oid = p.readInt();
+        int skillID = p.readInt();
         p.skip(1);   // -1
         int damage = p.readInt();
         int monsterIdFrom = p.readInt();
 
         Character player = c.getPlayer();
-        MapObject mmo = player.getMap().getMapObject(oid);
+        MapObject mmo = player.getMap().getMapObjectBySkillId(skillID);
 
         if (mmo != null && mmo instanceof Summon) {
             Summon summon = (Summon) mmo;
@@ -48,7 +48,7 @@ public final class DamageSummonHandler extends AbstractPacketHandler {
             if (summon.getHP() <= 0) {
                 player.cancelEffectFromBuffStat(BuffStat.PUPPET);
             }
-            player.getMap().broadcastMessage(player, PacketCreator.damageSummon(player.getId(), oid, damage, monsterIdFrom), summon.getPosition());
+            player.getMap().broadcastMessage(player, PacketCreator.damageSummon(player.getId(), skillID, damage, monsterIdFrom), summon.getPosition());
         }
     }
 }

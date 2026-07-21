@@ -357,6 +357,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                                         eachdf = eachd;
                                     }
 
+                                    // 决定刀飞爆金币
                                     TimerManager.getInstance().schedule(() -> map.spawnMesoDrop(Math.min((int) Math.max(((double) eachdf / (double) 20000) * (double) maxmeso, 1), maxmeso), new Point((int) (monster.getPosition().getX() + Randomizer.nextInt(100) - 50), (int) (monster.getPosition().getY())), monster, player, true, (byte) 2), delay);
                                     delay += 100;
                                 }
@@ -667,7 +668,14 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
         // 15 monsters...
         ret.numDamage = ret.numAttackedAndDamage & 0xF; // how often each single monster was attacked o.o
         ret.allDamage = new HashMap<>();
-        ret.skill = lea.readInt();
+        int v10 = lea.readInt();
+        ret.skill = v10;
+        if (v10 == 2121001 || v10 == 2221001 || v10 == 2321001 || v10 == 3221001 || v10 == 3121004 ){
+            int i = lea.readInt();
+
+        }
+
+
         lea.readByte(); // always 0 (?)
         ret.stance = lea.readByte();
 
