@@ -25,7 +25,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.SkillFactory;
 import org.gms.constants.game.GameConstants;
-import org.gms.constants.skills.Aran;
+import org.gms.constants.skills.other.Aran;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 

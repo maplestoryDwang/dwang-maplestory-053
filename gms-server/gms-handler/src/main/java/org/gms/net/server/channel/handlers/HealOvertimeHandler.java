@@ -27,7 +27,7 @@ import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
 import org.gms.client.autoban.AutobanManager;
-import org.gms.constants.skills.Magician;
+import org.gms.constants.skills.adventurer.magician.Magician;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;

@@ -30,7 +30,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.WeaponType;
 import org.gms.client.status.MonsterStatusEffect;
-import org.gms.constants.skills.Outlaw;
+import org.gms.constants.skills.other.Outlaw;
 import org.gms.net.packet.InPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

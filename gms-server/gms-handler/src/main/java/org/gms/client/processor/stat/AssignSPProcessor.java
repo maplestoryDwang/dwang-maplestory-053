@@ -29,7 +29,7 @@ import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
 import org.gms.constants.game.GameConstants;
-import org.gms.constants.skills.Aran;
+import org.gms.constants.skills.other.Aran;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.util.PacketCreator;

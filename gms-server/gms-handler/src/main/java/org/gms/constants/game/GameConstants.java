@@ -4,7 +4,7 @@ import org.gms.client.Disease;
 import org.gms.client.Job;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
-import org.gms.constants.skills.Aran;
+import org.gms.constants.skills.other.Aran;
 import org.gms.provider.*;
 import org.gms.provider.wz.WZFiles;
 import org.gms.server.maps.FieldLimit;
@@ -12,7 +12,6 @@ import org.gms.server.maps.MapleMap;
 import org.gms.server.quest.Quest;
 import org.gms.util.Pair;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
 

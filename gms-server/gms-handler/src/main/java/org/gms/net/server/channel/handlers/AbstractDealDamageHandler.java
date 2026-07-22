@@ -34,7 +34,36 @@ import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
 import org.gms.constants.id.MobId;
-import org.gms.constants.skills.*;
+import org.gms.constants.skills.adventurer.Beginner;
+import org.gms.constants.skills.adventurer.archer.bowmaster.Bowmaster;
+import org.gms.constants.skills.adventurer.archer.bowmaster.Hunter;
+import org.gms.constants.skills.adventurer.archer.bowmaster.Ranger;
+import org.gms.constants.skills.adventurer.archer.marksman.Crossbowman;
+import org.gms.constants.skills.adventurer.archer.marksman.Marksman;
+import org.gms.constants.skills.adventurer.archer.marksman.Sniper;
+import org.gms.constants.skills.adventurer.magician.bishop.Bishop;
+import org.gms.constants.skills.adventurer.magician.bishop.Cleric;
+import org.gms.constants.skills.adventurer.magician.fp.FPArchMage;
+import org.gms.constants.skills.adventurer.magician.fp.FPMage;
+import org.gms.constants.skills.adventurer.magician.fp.FPWizard;
+import org.gms.constants.skills.adventurer.magician.il.ILArchMage;
+import org.gms.constants.skills.adventurer.magician.il.ILMage;
+import org.gms.constants.skills.adventurer.thief.Rogue;
+import org.gms.constants.skills.adventurer.thief.nightlord.Assassin;
+import org.gms.constants.skills.adventurer.thief.nightlord.Hermit;
+import org.gms.constants.skills.adventurer.thief.nightlord.NightLord;
+import org.gms.constants.skills.adventurer.thief.shadower.Bandit;
+import org.gms.constants.skills.adventurer.thief.shadower.ChiefBandit;
+import org.gms.constants.skills.adventurer.thief.shadower.Shadower;
+import org.gms.constants.skills.adventurer.warrior.darkknight.DragonKnight;
+import org.gms.constants.skills.adventurer.warrior.darkknight.Spearman;
+import org.gms.constants.skills.adventurer.warrior.hero.Crusader;
+import org.gms.constants.skills.adventurer.warrior.hero.Fighter;
+import org.gms.constants.skills.adventurer.warrior.hero.Hero;
+import org.gms.constants.skills.adventurer.warrior.paladin.Page;
+import org.gms.constants.skills.adventurer.warrior.paladin.Paladin;
+import org.gms.constants.skills.adventurer.warrior.paladin.WhiteKnight;
+import org.gms.constants.skills.other.*;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.PlayerBuffValueHolder;
@@ -56,7 +85,6 @@ import org.gms.server.maps.MapObject;
 import org.gms.server.maps.MapObjectType;
 import org.gms.server.maps.MapleMap;
 import org.gms.util.PacketCreator;
-import org.gms.util.Pair;
 import org.gms.util.Randomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -660,7 +688,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
 //    public AttackInfo parseDamage(InPacket lea, boolean ranged) {
     protected AttackInfo parseDamage(InPacket lea, Character chr, boolean ranged, boolean magic) {
 
-            AttackInfo ret = new AttackInfo();
+        AttackInfo ret = new AttackInfo();
 
         lea.readByte();
         ret.numAttackedAndDamage = lea.readByte();
@@ -672,9 +700,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
         ret.skill = v10;
         if (v10 == 2121001 || v10 == 2221001 || v10 == 2321001 || v10 == 3221001 || v10 == 3121004 ){
             int i = lea.readInt();
-
         }
-
 
         lea.readByte(); // always 0 (?)
         ret.stance = lea.readByte();

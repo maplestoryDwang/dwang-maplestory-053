@@ -22,7 +22,7 @@
 package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
-import org.gms.constants.skills.DarkKnight;
+import org.gms.constants.skills.adventurer.warrior.darkknight.DarkKnight;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.server.maps.Summon;

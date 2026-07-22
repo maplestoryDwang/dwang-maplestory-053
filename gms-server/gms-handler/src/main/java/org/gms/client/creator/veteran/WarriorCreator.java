@@ -29,7 +29,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
-import org.gms.constants.skills.Warrior;
+import org.gms.constants.skills.adventurer.warrior.Warrior;
 import org.gms.server.ItemInformationProvider;
 
 /**

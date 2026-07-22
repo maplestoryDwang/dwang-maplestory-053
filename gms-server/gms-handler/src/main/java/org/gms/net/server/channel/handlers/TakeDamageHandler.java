@@ -23,39 +23,16 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.*;
 import org.gms.client.Character;
-import org.gms.client.inventory.Inventory;
-import org.gms.client.inventory.InventoryType;
-import org.gms.client.inventory.Item;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
-import org.gms.client.status.MonsterStatus;
-import org.gms.client.status.MonsterStatusEffect;
-import org.gms.config.GameConfig;
-import org.gms.constants.id.MapId;
-import org.gms.constants.inventory.ItemConstants;
-import org.gms.constants.skills.Aran;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.gms.server.StatEffect;
-import org.gms.server.life.LifeFactory.loseItem;
-import org.gms.server.life.MobAttackInfo;
-import org.gms.server.life.MobAttackInfoFactory;
-import org.gms.server.life.MobSkill;
-import org.gms.server.life.MobSkillFactory;
-import org.gms.server.life.MobSkillType;
 import org.gms.server.life.Monster;
-import org.gms.server.maps.MapObject;
-import org.gms.server.maps.MapleMap;
 import org.gms.util.PacketCreator;
-import org.gms.util.Randomizer;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public final class TakeDamageHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(TakeDamageHandler.class);
