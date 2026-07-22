@@ -1829,6 +1829,14 @@ public class StatEffect {
         return skill ? sourceid : -sourceid;
     }
 
+    /**
+     * todo 测试状态必须加
+     * @return
+     */
+    public boolean makeChanceResult_test() {
+        return true;
+    }
+
     public boolean makeChanceResult() {
         return prop == 1.0 || Math.random() < prop;
     }

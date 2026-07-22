@@ -1296,6 +1296,7 @@ public class Monster extends AbstractLoadedLife {
             overtimeAction = new DamageTask(damage, from, status, 2);
             overtimeDelay = 1000;
         } else {
+            // 常规给怪debuff
             animationTime = broadcastStatusEffect(status);
         }
 

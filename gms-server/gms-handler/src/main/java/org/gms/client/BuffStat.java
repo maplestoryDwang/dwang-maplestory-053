@@ -41,6 +41,9 @@ public enum BuffStat implements LongValueHolder{
     BOOSTER(1L << 11),          // 武器加速術 (0x800)
     POWERGUARD(1L << 12),       // 傷害反射 / 鋼鐵身體 (0x1000)
     HYPERBODYHP(1L << 13),      // 神聖之火 HP (0x2000)
+
+
+
     HYPERBODYMP(1L << 14),      // 神聖之火 MP (0x4000)
     INVINCIBLE(1L << 15),       // 聖光防護 / 無敵 (0x8000)
     SOULARROW(1L << 16),        // 靈魂之箭 (0x10000)
@@ -86,7 +89,9 @@ public enum BuffStat implements LongValueHolder{
     UNKNOW_41(1L << 40),        // 未知41
     UNKNOW_42(1L << 40),        // 未知42
     UNKNOW_43(1L << 40),        // 未知43
-    UNKNOW_44(1L << 40),        // 未知44
+
+    BLIND(1L << 44),            // 怪物致盲 不确定   095是44
+
     UNKNOW_45(1L << 40),        // 未知45
 
     MONSTER_RIDING(1L << 46),  // 怪物騎乘 / 騎寵 (0x400000000000L)
@@ -117,7 +122,6 @@ public enum BuffStat implements LongValueHolder{
     INFINITY(0x200L),
     HOLY_SHIELD(0x400L),
     HAMSTRING(0x800L),
-    BLIND(0x1000L),
     CONCENTRATE(0x2000L),
 //    PUPPET(0x4000L),
     MESO_UP_BY_ITEM(0x10000L),

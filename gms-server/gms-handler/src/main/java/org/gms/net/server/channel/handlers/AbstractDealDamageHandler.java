@@ -698,6 +698,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
         ret.allDamage = new HashMap<>();
         int v10 = lea.readInt();
         ret.skill = v10;
+        // 蓄力攻击
         if (v10 == 2121001 || v10 == 2221001 || v10 == 2321001 || v10 == 3221001 || v10 == 3121004 ){
             int i = lea.readInt();
         }

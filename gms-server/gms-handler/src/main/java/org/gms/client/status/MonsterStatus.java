@@ -28,7 +28,8 @@ public enum MonsterStatus {
     PHANTOM_IMPRINT(0x4, true), // needs testing
     MATK(0x4),
     MDEF(0x8),
-    ACC(0x10),
+//    ACC(0x10),
+    ACC((int) (1L << 4)),
     AVOID(0x20),
     SPEED(0x40),
     STUN(0x80),

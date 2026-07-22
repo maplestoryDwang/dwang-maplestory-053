@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<imgdir name="Continent.img">
+	<imgdir name="0">
+		<string name="info" value="엘리니아 -&gt; 오르비스"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="101000300"/>
+			<int name="waitFieldID" value="101000301"/>
+			<int name="moveFieldID" value="200090010"/>
+			<int name="cabinFieldID" value="200090011"/>
+			<int name="endFieldID" value="200000100"/>
+			<int name="endShipMoveFieldID" value="200000111"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="15"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="5"/>
+			<int name="tRequired" value="10"/>
+			<int name="tEventEnd" value="9"/>
+		</imgdir>
+		<imgdir name="genMob">
+			<int name="genMobItemID" value="2100009"/>
+			<int name="genMobPosition_x" value="485"/>
+			<int name="genMobPosition_y" value="-221"/>
+		</imgdir>
+	</imgdir>
+	<imgdir name="1">
+		<string name="info" value="오르비스 -&gt; 엘리니아"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="200000111"/>
+			<int name="waitFieldID" value="200000112"/>
+			<int name="moveFieldID" value="200090000"/>
+			<int name="cabinFieldID" value="200090001"/>
+			<int name="endFieldID" value="101000300"/>
+			<int name="endShipMoveFieldID" value="101000300"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="15"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="5"/>
+			<int name="tRequired" value="10"/>
+			<int name="tEventEnd" value="9"/>
+		</imgdir>
+		<imgdir name="genMob">
+			<int name="genMobItemID" value="2100009"/>
+			<int name="genMobPosition_x" value="-590"/>
+			<int name="genMobPosition_y" value="-221"/>
+		</imgdir>
+	</imgdir>
+	<imgdir name="2">
+		<string name="info" value="오르비스 -&gt; 루디브리엄"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="200000121"/>
+			<int name="waitFieldID" value="200000122"/>
+			<int name="moveFieldID" value="200090100"/>
+			<int name="endFieldID" value="220000100"/>
+			<int name="endShipMoveFieldID" value="220000110"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="10"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="5"/>
+			<int name="tRequired" value="5"/>
+		</imgdir>
+	</imgdir>
+	<imgdir name="3">
+		<string name="info" value="루디브리엄 -&gt; 오르비스"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="220000110"/>
+			<int name="waitFieldID" value="220000111"/>
+			<int name="moveFieldID" value="200090110"/>
+			<int name="endFieldID" value="200000100"/>
+			<int name="endShipMoveFieldID" value="200000121"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="10"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="5"/>
+			<int name="tRequired" value="5"/>
+		</imgdir>
+	</imgdir>
+	<imgdir name="4">
+		<string name="info" value="엘리베이터 99층 -&gt; 2층"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="222020200"/>
+			<int name="waitFieldID" value="222020210"/>
+			<int name="moveFieldID" value="222020211"/>
+			<int name="endFieldID" value="222020100"/>
+			<int name="endShipMoveFieldID" value="222020100"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="4"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="1"/>
+			<int name="tRequired" value="1"/>
+		</imgdir>
+		<imgdir name="reactor">
+			<string name="name" value="elevator"/>
+			<int name="stateOnStart" value="1"/>
+			<int name="stateOnEnd" value="0"/>
+		</imgdir>
+	</imgdir>
+	<imgdir name="5">
+		<string name="info" value="엘리베이터 2층 -&gt; 99층"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="222020100"/>
+			<int name="waitFieldID" value="222020110"/>
+			<int name="moveFieldID" value="222020111"/>
+			<int name="endFieldID" value="222020200"/>
+			<int name="endShipMoveFieldID" value="222020200"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="4"/>
+			<int name="tDelay" value="2"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="1"/>
+			<int name="tRequired" value="1"/>
+		</imgdir>
+		<imgdir name="reactor">
+			<string name="name" value="elevator"/>
+			<int name="stateOnStart" value="1"/>
+			<int name="stateOnEnd" value="0"/>
+		</imgdir>
+	</imgdir>
+	<imgdir name="6">
+		<string name="info" value="오르비스 -&gt; 리프레"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="200000131"/>
+			<int name="waitFieldID" value="200000132"/>
+			<int name="moveFieldID" value="200090200"/>
+			<int name="endFieldID" value="240000100"/>
+			<int name="endShipMoveFieldID" value="240000110"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="10"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="5"/>
+			<int name="tRequired" value="5"/>
+		</imgdir>
+	</imgdir>
+	<imgdir name="7">
+		<string name="info" value="리프레 -&gt; 오르비스"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="240000110"/>
+			<int name="waitFieldID" value="240000111"/>
+			<int name="moveFieldID" value="200090210"/>
+			<int name="endFieldID" value="200000100"/>
+			<int name="endShipMoveFieldID" value="200000131"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="10"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="5"/>
+			<int name="tRequired" value="5"/>
+		</imgdir>
+	</imgdir>
+	<imgdir name="8">
+		<string name="info" value="NLC -&gt; KC"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="600010001"/>
+			<int name="waitFieldID" value="600010002"/>
+			<int name="moveFieldID" value="600010003"/>
+			<string name="endFieldID" value="103000100"/>
+			<int name="endShipMoveFieldID" value="103000100"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="5"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="4"/>
+			<int name="tRequired" value="1"/>
+		</imgdir>
+	</imgdir>
+	<imgdir name="9">
+		<string name="info" value="KC -&gt; NLC"/>
+		<imgdir name="field">
+			<int name="startShipMoveFieldID" value="103000100"/>
+			<int name="waitFieldID" value="600010004"/>
+			<int name="moveFieldID" value="600010005"/>
+			<int name="endFieldID" value="600010001"/>
+			<int name="endShipMoveFieldID" value="600010001"/>
+		</imgdir>
+		<imgdir name="scheduler">
+			<int name="tTerm" value="5"/>
+		</imgdir>
+		<imgdir name="time">
+			<int name="tWait" value="4"/>
+			<int name="tRequired" value="1"/>
+		</imgdir>
+	</imgdir>
+</imgdir>
