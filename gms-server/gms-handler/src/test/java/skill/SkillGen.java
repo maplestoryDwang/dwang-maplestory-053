@@ -1,13 +1,50 @@
 package skill;
 
-import org.gms.provider.Data;
-import org.gms.provider.DataProvider;
-import org.gms.provider.DataProviderFactory;
-import org.gms.provider.DataTool;
+import org.gms.client.Skill;
+import org.gms.constants.skills.adventurer.Beginner;
+import org.gms.constants.skills.adventurer.archer.Archer;
+import org.gms.constants.skills.adventurer.archer.bowmaster.Bowmaster;
+import org.gms.constants.skills.adventurer.archer.bowmaster.Hunter;
+import org.gms.constants.skills.adventurer.archer.bowmaster.Ranger;
+import org.gms.constants.skills.adventurer.archer.marksman.Crossbowman;
+import org.gms.constants.skills.adventurer.archer.marksman.Marksman;
+import org.gms.constants.skills.adventurer.archer.marksman.Sniper;
+import org.gms.constants.skills.adventurer.magician.Magician;
+import org.gms.constants.skills.adventurer.magician.bishop.Bishop;
+import org.gms.constants.skills.adventurer.magician.bishop.Cleric;
+import org.gms.constants.skills.adventurer.magician.bishop.Priest;
+import org.gms.constants.skills.adventurer.magician.fp.FPArchMage;
+import org.gms.constants.skills.adventurer.magician.fp.FPMage;
+import org.gms.constants.skills.adventurer.magician.fp.FPWizard;
+import org.gms.constants.skills.adventurer.magician.il.ILArchMage;
+import org.gms.constants.skills.adventurer.magician.il.ILMage;
+import org.gms.constants.skills.adventurer.magician.il.ILWizard;
+import org.gms.constants.skills.adventurer.thief.Rogue;
+import org.gms.constants.skills.adventurer.thief.nightlord.Assassin;
+import org.gms.constants.skills.adventurer.thief.nightlord.Hermit;
+import org.gms.constants.skills.adventurer.thief.nightlord.NightLord;
+import org.gms.constants.skills.adventurer.thief.shadower.Bandit;
+import org.gms.constants.skills.adventurer.thief.shadower.ChiefBandit;
+import org.gms.constants.skills.adventurer.thief.shadower.Shadower;
+import org.gms.constants.skills.adventurer.warrior.Warrior;
+import org.gms.constants.skills.adventurer.warrior.darkknight.DarkKnight;
+import org.gms.constants.skills.adventurer.warrior.darkknight.DragonKnight;
+import org.gms.constants.skills.adventurer.warrior.darkknight.Spearman;
+import org.gms.constants.skills.adventurer.warrior.hero.Crusader;
+import org.gms.constants.skills.adventurer.warrior.hero.Fighter;
+import org.gms.constants.skills.adventurer.warrior.hero.Hero;
+import org.gms.constants.skills.adventurer.warrior.paladin.Page;
+import org.gms.constants.skills.adventurer.warrior.paladin.Paladin;
+import org.gms.constants.skills.adventurer.warrior.paladin.WhiteKnight;
+import org.gms.constants.skills.other.*;
+import org.gms.provider.*;
 import org.gms.provider.wz.WZFiles;
 import org.gms.provider.wz.XMLWZFile;
+import org.gms.server.StatEffect;
+import org.gms.server.life.Element;
 import skill.GenSkillDesc;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +53,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+
+import static skill.GenSKillJob.getBySKillId;
 
 /**
  * 生成枚举类模板
@@ -27,11 +66,41 @@ import java.util.*;
 
 public class SkillGen {
 
+    // 1. 顶级目录映射
+    private static final String[] MAIN_JOB_DIRS = {"begin", "warrior", "magician", "archer", "thief"};
 
+    /**
+     * 获取二级目录名：
+     * - 一转/基础职业 (十位为0, 如 100, 200) -> 返回 "" (不建二级目录)
+     * - 进阶分支 (如 110, 111, 112) -> 返回该十位分支的 2转职业名 (小写, 如 "fighter")
+     */
+    private static String getSubDirName(GenSKillJob job) {
+        int subType = (job.getId() % 100) / 10; // 取十位数
+        if (subType == 0) {
+            return ""; // 100, 200, 300, 400 等基础职业无二级目录
+        }
+
+        int mainType = job.getId() / 100; // 取百位数
+        int baseSubJobId = mainType * 100 + subType * 10; // 计算出该分支 2转 的 ID (如 110, 120, 210...)
+
+        // 寻找对应 2转 的枚举名称作为目录名
+        for (GenSKillJob j : GenSKillJob.values()) {
+            if (j.getId() == baseSubJobId) {
+                return j.name().toLowerCase();
+            }
+        }
+        return "";
+    }
     public static void main(String[] args) throws IOException {
+        Path enPath = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\gms-server\\gms-handler\\wz\\String.wz");
         Path langPath = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\gms-server\\gms-handler\\wz-zh-CN\\String.wz");
-        Path outputDir = Path.of("src/main/java/com/gms/skills");
+        Path skillPath = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\gms-server\\gms-handler\\wz\\Skill.wz");
+        Path outputDir = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\gms-server\\gms-handler\\src\\main\\java\\org\\gms\\constants\\skills\\adv");
 
+        // 英文名
+        HashMap<Integer, String> paramName = buildParamName(enPath);
+        // 技能ID和JOB映射关系
+//        HashMap<Integer, String> skillIdMapJob = buildMapSkill(skillPath);
 
         XMLWZFile xmlwzFile = new XMLWZFile(langPath);
 
@@ -46,7 +115,7 @@ public class SkillGen {
                 continue;
             }
 
-            String name = DataTool.getString(searchData.getChildByPath("name"), "NO_NAME");
+            String defaultName = DataTool.getString(searchData.getChildByPath("name"), "NO_NAME");
             String desc = DataTool.getString(searchData.getChildByPath("desc"), "NO_DESC");
 
             // 找到最大等级的技能描述
@@ -71,12 +140,16 @@ public class SkillGen {
 
             String maxSkillValue = (maxIndex != null) ? maxIndex.getAttributeValue("value") : "";
             int skillId = Integer.parseInt(skill);
+            String name = paramName.get(skillId);
+            if (name == null) {
+                name = defaultName;
+            }
 
             // 获取技能对应的职业
-            GenSKillJob job = GenSKillJob.getBySKillId(skillId);
+            GenSKillJob job = getBySKillId(skillId);
             if (job != null) {
                 jobSkillsMap.computeIfAbsent(job, k -> new ArrayList<>())
-                        .add(new GenSkillDesc(skillId, name, desc, maxSkillValue));
+                        .add(new GenSkillDesc(skillId, name, defaultName, desc, maxSkillValue));
             }
         }
 
@@ -87,21 +160,80 @@ public class SkillGen {
             System.out.println("输出目录： " + string);
         }
 
+        String[] jobIndex = new String[]{"begin", "warrior", "magician", "archer", "thief"};
+        Map<Integer, String> subDirMap = new HashMap<>();
+
+        // 遍历所有职业，生成相应的 Java 文件
         // 遍历所有职业，生成相应的 Java 文件
         for (GenSKillJob job : GenSKillJob.values()) {
+
             List<GenSkillDesc> skills = jobSkillsMap.getOrDefault(job, Collections.emptyList());
             if (skills.isEmpty()) {
                 continue; // 如果该职业没有技能数据可跳过
             }
 
+            int mainType = job.getId() / 100;
+            if (mainType < 0 || mainType >= MAIN_JOB_DIRS.length) {
+                continue;
+            }
+
+            String dirName = MAIN_JOB_DIRS[mainType]; // 0 -> begin, 1 -> warrior ...
+            String subDirName = getSubDirName(job);   // 110/111/112 -> fighter
+
+            // 构建包名
+            String classPackage = "org.gms.constants.skills.adv." + dirName;
+            if (!subDirName.isEmpty()) {
+                classPackage += "." + subDirName;
+            }
+
+            // 构建文件输出路径
+            Path targetDir = outputDir.resolve(dirName);
+            if (!subDirName.isEmpty()) {
+                targetDir = targetDir.resolve(subDirName);
+            }
+
+            if (!Files.exists(targetDir)) {
+                Files.createDirectories(targetDir);
+            }
+
             String className = toPascalCase(job.name());
-            String javaCode = generateJavaClassCode("com.gms.skills", className, skills);
+            String javaCode = generateJavaClassCode(classPackage, className, skills);
 
             // 写入文件
-            Path javaFilePath = outputDir.resolve(className + ".java");
+            Path javaFilePath = targetDir.resolve(className + ".java");
             Files.writeString(javaFilePath, javaCode, StandardCharsets.UTF_8);
-            System.out.println("Generated: " + javaFilePath.toAbsolutePath());
+            System.out.println("Generated [" + classPackage + "]: " + javaFilePath.toAbsolutePath());
         }
+    }
+
+
+
+    /**
+     * 生成ID和参数名对照
+     *
+     * @param enPath
+     * @return
+     */
+    private static HashMap<Integer, String> buildParamName(Path enPath) {
+        XMLWZFile xmlwzFile = new XMLWZFile(enPath);
+        HashMap<Integer, String> paramMap = new HashMap<>();
+        Data data = xmlwzFile.getData("Skill.img");
+
+        // 一个职业可能对应多个技能，因此使用 List 保存
+        Map<GenSKillJob, List<GenSkillDesc>> jobSkillsMap = new EnumMap<>(GenSKillJob.class);
+
+        for (Data searchData : data.getChildren()) {
+            String skill = searchData.getName();
+            if (skill == null || !skill.matches("\\d+")) {
+                continue;
+            }
+            int skillId = Integer.parseInt(skill);
+
+            String name = DataTool.getString(searchData.getChildByPath("name"), "NO_NAME");
+            paramMap.put(skillId, name);
+        }
+        return paramMap;
+
     }
 
     /**
@@ -118,7 +250,7 @@ public class SkillGen {
 
         for (GenSkillDesc skill : skills) {
             // 格式化变量名 (如 "Critical Shot" -> "CRITICAL_SHOT")
-            String constantName = formatConstantName(skill.getName(), skill.getSkillId());
+            String constantName = formatConstantName(skill.getParamName(), skill.getSkillId());
 
             sb.append("    /**\n");
             sb.append("     * [").append(skill.getName()).append("]\n");
@@ -181,4 +313,6 @@ public class SkillGen {
         return input.replace("*/", "* /")
                 .replace("\n", "\n     * ");
     }
+
+
 }

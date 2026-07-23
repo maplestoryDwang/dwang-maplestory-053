@@ -36,7 +36,9 @@ GMS V053，base on 083
 3. 所有事件已关闭后续修复
 
 # 修复内容
+[技能日志](skill_log.md)
 [修复日志](update_log.md)
+
 
 
 

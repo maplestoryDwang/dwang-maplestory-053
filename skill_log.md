@@ -4,9 +4,10 @@
 
 ## 通用
 1. 修复英雄的回声
-2. 修复冒险岛勇士
+2. 修复冒险岛勇士 (只有20级)
 
 ## 战士
+org.gms.constants.skills.adventurer.warrior
 ### 英雄 112
 ### 圣骑 122
 ### 黑骑 132
@@ -26,7 +27,7 @@
 
 ### 弩手 322
 1. 修复刺眼箭的角色Buffstatus，BLIND的mask是偏移44，校验mob的buffstatus
-2. 
+
 
 
 ## 飞侠

@@ -9,12 +9,14 @@ package skill;
  */
 public class GenSkillDesc {
     private int skillId;
+    private String paramName;
     private String name;
     private String desc;
     private String maxSkillValue;
 
-    public GenSkillDesc(int skillId, String name, String desc, String maxSkillValue) {
+    public GenSkillDesc(int skillId, String paramName, String name, String desc, String maxSkillValue) {
         this.skillId = skillId;
+        this.paramName = paramName;
         this.name = name;
         this.desc = desc;
         this.maxSkillValue = maxSkillValue;
@@ -34,5 +36,9 @@ public class GenSkillDesc {
 
     public String getMaxSkillValue() {
         return maxSkillValue;
+    }
+
+    public String getParamName() {
+        return paramName;
     }
 }
