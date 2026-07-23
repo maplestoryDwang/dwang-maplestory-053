@@ -36,7 +36,7 @@ import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.EquipSlot;
 import org.gms.constants.inventory.ItemConstants;
-import org.gms.constants.skills.adventurer.thief.nightlord.Assassin;
+import org.gms.constants.skills.adv.thief.assassin.Assassin;
 import org.gms.constants.skills.other.Gunslinger;
 import org.gms.constants.skills.other.NightWalker;
 import org.gms.net.server.Server;

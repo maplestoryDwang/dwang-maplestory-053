@@ -1,6 +1,6 @@
 package org.gms.constants.skills.adv.warrior.spearman;
 
-public class Darkknight {
+public class DarkKnight {
 
     /**
      * [阿基里斯]

@@ -1,6 +1,6 @@
 package org.gms.constants.skills.adv.warrior.page;
 
-public class Whiteknight {
+public class WhiteKnight {
 
     /**
      * [魔力恢复]

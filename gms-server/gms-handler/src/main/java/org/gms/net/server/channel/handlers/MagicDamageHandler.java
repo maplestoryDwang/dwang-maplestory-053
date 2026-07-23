@@ -28,10 +28,10 @@ import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
-import org.gms.constants.skills.adventurer.magician.bishop.Bishop;
+import org.gms.constants.skills.adv.magician.cleric.Bishop;
 import org.gms.constants.skills.other.Evan;
-import org.gms.constants.skills.adventurer.magician.fp.FPArchMage;
-import org.gms.constants.skills.adventurer.magician.il.ILArchMage;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
+import org.gms.constants.skills.adv.magician.il_wizard.IlArchmage;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.Packet;
 import org.gms.server.StatEffect;
@@ -65,7 +65,7 @@ public final class MagicDamageHandler extends AbstractDealDamageHandler {
             c.sendPacket(PacketCreator.getEnergy("energy", chr.getDojoEnergy()));
         }
 
-        int charge = (attack.skill == Evan.FIRE_BREATH || attack.skill == Evan.ICE_BREATH || attack.skill == FPArchMage.BIG_BANG || attack.skill == ILArchMage.BIG_BANG || attack.skill == Bishop.BIG_BANG) ? attack.charge : -1;
+        int charge = (attack.skill == Evan.FIRE_BREATH || attack.skill == Evan.ICE_BREATH || attack.skill == FpArchmage.BIG_BANG || attack.skill == IlArchmage.BIG_BANG || attack.skill == Bishop.BIG_BANG) ? attack.charge : -1;
         Packet packet = PacketCreator.magicAttack(chr, attack.skill, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, attack.allDamage, charge, attack.speed, attack.direction, attack.display);
 
         chr.getMap().broadcastMessage(chr, packet, false, true);

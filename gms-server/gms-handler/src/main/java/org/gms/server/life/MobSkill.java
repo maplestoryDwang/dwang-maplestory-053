@@ -26,7 +26,7 @@ import org.gms.client.Disease;
 import org.gms.client.status.MonsterStatus;
 import org.gms.constants.id.MapId;
 import org.gms.constants.id.MobId;
-import org.gms.constants.skills.adventurer.magician.bishop.Bishop;
+import org.gms.constants.skills.adv.magician.cleric.Bishop;
 import org.gms.net.server.services.task.channel.OverallService;
 import org.gms.net.server.services.type.ChannelServices;
 import org.slf4j.Logger;

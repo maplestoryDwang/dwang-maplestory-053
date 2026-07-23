@@ -22,21 +22,21 @@
 package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
-import org.gms.constants.skills.adventurer.magician.bishop.Bishop;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Bowmaster;
+import org.gms.constants.skills.adv.magician.cleric.Bishop;
+import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
 import org.gms.constants.skills.other.Brawler;
-import org.gms.constants.skills.adventurer.thief.shadower.ChiefBandit;
+import org.gms.constants.skills.adv.thief.bandit.Chiefbandit;
 import org.gms.constants.skills.other.Corsair;
-import org.gms.constants.skills.adventurer.warrior.darkknight.DarkKnight;
+import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
 import org.gms.constants.skills.other.Evan;
-import org.gms.constants.skills.adventurer.magician.fp.FPArchMage;
-import org.gms.constants.skills.adventurer.magician.fp.FPMage;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;
 import org.gms.constants.skills.other.Gunslinger;
-import org.gms.constants.skills.adventurer.warrior.hero.Hero;
-import org.gms.constants.skills.adventurer.magician.il.ILArchMage;
-import org.gms.constants.skills.adventurer.archer.marksman.Marksman;
+import org.gms.constants.skills.adv.warrior.fighter.Hero;
+import org.gms.constants.skills.adv.magician.il_wizard.IlArchmage;
+import org.gms.constants.skills.adv.archer.crossbowman.Marksman;
 import org.gms.constants.skills.other.NightWalker;
-import org.gms.constants.skills.adventurer.warrior.paladin.Paladin;
+import org.gms.constants.skills.adv.warrior.page.Paladin;
 import org.gms.constants.skills.other.ThunderBreaker;
 import org.gms.constants.skills.other.WindArcher;
 import org.gms.net.AbstractPacketHandler;
@@ -56,13 +56,13 @@ public final class SkillEffectHandler extends AbstractPacketHandler {
         int speed = p.readByte();
         byte aids = p.readByte();//Mmmk
         switch (skillId) {
-            case FPMage.EXPLOSION:
-            case FPArchMage.BIG_BANG:
-            case ILArchMage.BIG_BANG:
+            case FpMage.EXPLOSION:
+            case FpArchmage.BIG_BANG:
+            case IlArchmage.BIG_BANG:
             case Bishop.BIG_BANG:
             case Bowmaster.HURRICANE:
             case Marksman.PIERCING_ARROW:
-            case ChiefBandit.CHAKRA:
+            case Chiefbandit.CHAKRA:
             case Brawler.CORKSCREW_BLOW:
             case Gunslinger.GRENADE:
             case Corsair.RAPID_FIRE:

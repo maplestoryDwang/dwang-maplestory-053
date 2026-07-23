@@ -29,7 +29,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
-import org.gms.constants.skills.adventurer.magician.Magician;
+import org.gms.constants.skills.adv.magician.Magician;
 import org.gms.server.ItemInformationProvider;
 
 /**
@@ -76,7 +76,7 @@ public class MagicianCreator extends CharacterFactory {
             improveSp -= toUseSp;
 
             if (improveSp > 0) {
-                Skill improveMaxMp = SkillFactory.getSkill(Magician.IMPROVED_MAX_MP_INCREASE);
+                Skill improveMaxMp = SkillFactory.getSkill(Magician.IMPROVED_MAXMP_INCREASE);
                 recipe.addStartingSkillLevel(improveMaxMp, improveSp);
             }
         }

@@ -23,13 +23,13 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
 import org.gms.client.SkillFactory;
-import org.gms.constants.skills.adventurer.magician.bishop.Bishop;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Bowmaster;
+import org.gms.constants.skills.adv.magician.cleric.Bishop;
+import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
 import org.gms.constants.skills.other.Corsair;
 import org.gms.constants.skills.other.Evan;
-import org.gms.constants.skills.adventurer.magician.fp.FPArchMage;
-import org.gms.constants.skills.adventurer.magician.il.ILArchMage;
-import org.gms.constants.skills.adventurer.archer.marksman.Marksman;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
+import org.gms.constants.skills.adv.magician.il_wizard.IlArchmage;
+import org.gms.constants.skills.adv.archer.crossbowman.Marksman;
 import org.gms.constants.skills.other.WindArcher;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.PacketHandler;
@@ -43,8 +43,8 @@ public final class CancelBuffHandler extends AbstractPacketHandler implements Pa
         int sourceid = p.readInt();
 
         switch (sourceid) {
-            case FPArchMage.BIG_BANG:
-            case ILArchMage.BIG_BANG:
+            case FpArchmage.BIG_BANG:
+            case IlArchmage.BIG_BANG:
             case Bishop.BIG_BANG:
             case Bowmaster.HURRICANE:
             case Marksman.PIERCING_ARROW:

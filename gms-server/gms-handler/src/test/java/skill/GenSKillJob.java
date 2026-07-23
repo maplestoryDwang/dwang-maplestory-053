@@ -67,7 +67,10 @@ public enum GenSKillJob {
                 return l;
             }
         }
-        return BEGINNER;
+        if (id == 0) {
+            return BEGINNER;
+        }
+        return null;
     }
 
 }

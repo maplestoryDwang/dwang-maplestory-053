@@ -42,24 +42,24 @@ import org.gms.constants.id.MapId;
 import org.gms.constants.id.MobId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.net.ServerConstants;
-import org.gms.constants.skills.adventurer.Beginner;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Bowmaster;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Ranger;
-import org.gms.constants.skills.adventurer.archer.marksman.Marksman;
-import org.gms.constants.skills.adventurer.archer.marksman.Sniper;
-import org.gms.constants.skills.adventurer.magician.Magician;
-import org.gms.constants.skills.adventurer.magician.bishop.Bishop;
-import org.gms.constants.skills.adventurer.magician.bishop.Priest;
-import org.gms.constants.skills.adventurer.magician.fp.FPArchMage;
-import org.gms.constants.skills.adventurer.magician.il.ILArchMage;
-import org.gms.constants.skills.adventurer.thief.nightlord.Hermit;
-import org.gms.constants.skills.adventurer.thief.nightlord.NightLord;
-import org.gms.constants.skills.adventurer.thief.shadower.Shadower;
-import org.gms.constants.skills.adventurer.warrior.*;
-import org.gms.constants.skills.adventurer.warrior.darkknight.DarkKnight;
-import org.gms.constants.skills.adventurer.warrior.hero.Crusader;
-import org.gms.constants.skills.adventurer.warrior.hero.Hero;
-import org.gms.constants.skills.adventurer.warrior.paladin.Paladin;
+import org.gms.constants.skills.adv.begin.Beginner;
+import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
+import org.gms.constants.skills.adv.archer.hunter.Ranger;
+import org.gms.constants.skills.adv.archer.crossbowman.Marksman;
+import org.gms.constants.skills.adv.archer.crossbowman.Sniper;
+import org.gms.constants.skills.adv.magician.Magician;
+import org.gms.constants.skills.adv.magician.cleric.Bishop;
+import org.gms.constants.skills.adv.magician.cleric.Priest;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
+import org.gms.constants.skills.adv.magician.il_wizard.IlArchmage;
+import org.gms.constants.skills.adv.thief.assassin.Hermit;
+import org.gms.constants.skills.adv.thief.assassin.NightLord;
+import org.gms.constants.skills.adv.thief.bandit.Shadower;
+import org.gms.constants.skills.adv.warrior.*;
+import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
+import org.gms.constants.skills.adv.warrior.fighter.Crusader;
+import org.gms.constants.skills.adv.warrior.fighter.Hero;
+import org.gms.constants.skills.adv.warrior.page.Paladin;
 import org.gms.constants.skills.other.*;
 import org.gms.constants.string.ExtendKey;
 import org.gms.constants.string.ExtendType;
@@ -1048,13 +1048,13 @@ public class Character extends AbstractCharacterObject {
             skills[1] = DarkKnight.ACHILLES;
             skills[2] = DarkKnight.MONSTER_MAGNET;
         } else if (jobId == 212) {
-            skills[0] = FPArchMage.BIG_BANG;
-            skills[1] = FPArchMage.MANA_REFLECTION;
-            skills[2] = FPArchMage.PARALYZE;
+            skills[0] = FpArchmage.BIG_BANG;
+            skills[1] = FpArchmage.MANA_REFLECTION;
+            skills[2] = FpArchmage.PARALYZE;
         } else if (jobId == 222) {
-            skills[0] = ILArchMage.BIG_BANG;
-            skills[1] = ILArchMage.MANA_REFLECTION;
-            skills[2] = ILArchMage.CHAIN_LIGHTNING;
+            skills[0] = IlArchmage.BIG_BANG;
+            skills[1] = IlArchmage.MANA_REFLECTION;
+            skills[2] = IlArchmage.CHAIN_LIGHTNING;
         } else if (jobId == 232) {
             skills[0] = Bishop.BIG_BANG;
             skills[1] = Bishop.MANA_REFLECTION;
@@ -1068,7 +1068,7 @@ public class Character extends AbstractCharacterObject {
             skills[1] = Marksman.BLIND;
             skills[2] = Marksman.SHARP_EYES;
         } else if (jobId == 412) {
-            skills[0] = NightLord.SHADOW_STARS;
+            skills[0] = NightLord.SHADOW_CLAW;
             skills[1] = NightLord.SHADOW_SHIFTER;
             skills[2] = NightLord.VENOMOUS_STAR;
         } else if (jobId == 422) {
@@ -2659,7 +2659,7 @@ public class Character extends AbstractCharacterObject {
 
     private static boolean dispelSkills(int skillid) {
         return switch (skillid) {
-            case DarkKnight.BEHOLDER, FPArchMage.ELQUINES, ILArchMage.IFRIT, Priest.SUMMON_DRAGON, Bishop.BAHAMUT,
+            case DarkKnight.BEHOLDER, FpArchmage.ELQUINES, IlArchmage.IFRIT, Priest.SUMMON_DRAGON, Bishop.BAHAMUT,
                  Ranger.PUPPET, Ranger.SILVER_HAWK, Sniper.PUPPET, Sniper.GOLDEN_EAGLE, Hermit.SHADOW_PARTNER -> true;
             default -> false;
         };
@@ -4130,7 +4130,7 @@ public class Character extends AbstractCharacterObject {
             if (beholderBuffSchedule != null) {
                 beholderBuffSchedule.cancel(false);
             }
-            Skill bHealing = SkillFactory.getSkill(DarkKnight.AURA_OF_BEHOLDER);
+            Skill bHealing = SkillFactory.getSkill(DarkKnight.AURA_OF_THE_BEHOLDER);
             int bHealingLvl = getSkillLevel(bHealing);
             if (bHealingLvl > 0) {
                 final StatEffect healEffect = bHealing.getEffect(bHealingLvl);
@@ -4146,7 +4146,7 @@ public class Character extends AbstractCharacterObject {
                     getMap().broadcastMessage(Character.this, PacketCreator.showOwnBuffEffect(beholder, 2), false);
                 }, healInterval, healInterval);
             }
-            Skill bBuff = SkillFactory.getSkill(DarkKnight.HEX_OF_BEHOLDER);
+            Skill bBuff = SkillFactory.getSkill(DarkKnight.HEX_OF_THE_BEHOLDER);
             if (getSkillLevel(bBuff) > 0) {
                 final StatEffect buffEffect = bBuff.getEffect(getSkillLevel(bBuff));
                 int buffInterval = (int) SECONDS.toMillis(buffEffect.getX());
@@ -5593,7 +5593,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void handleOrbconsume() {
-        int skillid = isCygnus() ? DawnWarrior.COMBO : Crusader.COMBO;
+        int skillid = isCygnus() ? DawnWarrior.COMBO : Crusader.COMBO_ATTACK;
         Skill combo = SkillFactory.getSkill(skillid);
         List<Pair<BuffStat, Integer>> stat = Collections.singletonList(new Pair<>(BuffStat.COMBO, 1));
         setBuffedValue(BuffStat.COMBO, 1);
@@ -5867,7 +5867,7 @@ public class Character extends AbstractCharacterObject {
             addhp += Randomizer.rand(12, 16);
             addmp += Randomizer.rand(10, 12);
         } else if (job.isA(Job.WARRIOR) || job.isA(Job.DAWNWARRIOR1)) {
-            improvingMaxHP = isCygnus() ? SkillFactory.getSkill(DawnWarrior.MAX_HP_INCREASE) : SkillFactory.getSkill(Warrior.IMPROVED_MAXHP);
+            improvingMaxHP = isCygnus() ? SkillFactory.getSkill(DawnWarrior.MAX_HP_INCREASE) : SkillFactory.getSkill(Warrior.IMPROVED_MAXHP_INCREASE);
             if (job.isA(Job.CRUSADER)) {
                 improvingMaxMP = SkillFactory.getSkill(1210000);
             } else if (job.isA(Job.DAWNWARRIOR2)) {
@@ -5877,7 +5877,7 @@ public class Character extends AbstractCharacterObject {
             addhp += Randomizer.rand(24, 28);
             addmp += Randomizer.rand(4, 6);
         } else if (job.isA(Job.MAGICIAN) || job.isA(Job.BLAZEWIZARD1)) {
-            improvingMaxMP = isCygnus() ? SkillFactory.getSkill(BlazeWizard.INCREASING_MAX_MP) : SkillFactory.getSkill(Magician.IMPROVED_MAX_MP_INCREASE);
+            improvingMaxMP = isCygnus() ? SkillFactory.getSkill(BlazeWizard.INCREASING_MAX_MP) : SkillFactory.getSkill(Magician.IMPROVED_MAXMP_INCREASE);
             improvingMaxMPLevel = getSkillLevel(improvingMaxMP);
             addhp += Randomizer.rand(10, 14);
             addmp += Randomizer.rand(22, 24);

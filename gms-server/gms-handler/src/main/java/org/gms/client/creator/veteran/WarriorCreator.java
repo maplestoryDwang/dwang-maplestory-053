@@ -29,7 +29,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
-import org.gms.constants.skills.adventurer.warrior.Warrior;
+import org.gms.constants.skills.adv.warrior.Warrior;
 import org.gms.server.ItemInformationProvider;
 
 /**
@@ -67,12 +67,12 @@ public class WarriorCreator extends CharacterFactory {
             recipe.setRemainingSp(recipe.getRemainingSp() - improveSp);
 
             int toUseSp = 5;
-            Skill improveHpRec = SkillFactory.getSkill(Warrior.IMPROVED_HPREC);
+            Skill improveHpRec = SkillFactory.getSkill(Warrior.IMPROVED_HP_RECOVERY);
             recipe.addStartingSkillLevel(improveHpRec, toUseSp);
             improveSp -= toUseSp;
 
             if (improveSp > 0) {
-                Skill improveMaxHp = SkillFactory.getSkill(Warrior.IMPROVED_MAXHP);
+                Skill improveMaxHp = SkillFactory.getSkill(Warrior.IMPROVED_MAXHP_INCREASE);
                 recipe.addStartingSkillLevel(improveMaxHp, improveSp);
             }
         }

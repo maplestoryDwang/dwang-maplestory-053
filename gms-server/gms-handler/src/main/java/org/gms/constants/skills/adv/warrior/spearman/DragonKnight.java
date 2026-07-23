@@ -1,6 +1,6 @@
 package org.gms.constants.skills.adv.warrior.spearman;
 
-public class Dragonknight {
+public class DragonKnight {
 
     /**
      * [魔法抗性]

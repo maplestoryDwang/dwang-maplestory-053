@@ -22,7 +22,7 @@
 package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
-import org.gms.constants.skills.adventurer.warrior.darkknight.DarkKnight;
+import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.server.maps.Summon;
@@ -47,9 +47,9 @@ public final class BeholderHandler extends AbstractPacketHandler {//Summon Skill
         }
         if (summon != null) {
             int skillId = p.readInt();
-            if (skillId == DarkKnight.AURA_OF_BEHOLDER) {
+            if (skillId == DarkKnight.AURA_OF_THE_BEHOLDER) {
                 p.readShort(); //Not sure.
-            } else if (skillId == DarkKnight.HEX_OF_BEHOLDER) {
+            } else if (skillId == DarkKnight.HEX_OF_THE_BEHOLDER) {
                 p.readByte(); //Not sure.
             }            //show to others here
         } else {

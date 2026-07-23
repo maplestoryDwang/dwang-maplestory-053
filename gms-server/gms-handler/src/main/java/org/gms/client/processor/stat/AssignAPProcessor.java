@@ -37,9 +37,9 @@ import org.gms.config.GameConfig;
 import org.gms.constants.skills.other.BlazeWizard;
 import org.gms.constants.skills.other.Brawler;
 import org.gms.constants.skills.other.DawnWarrior;
-import org.gms.constants.skills.adventurer.magician.Magician;
+import org.gms.constants.skills.adv.magician.Magician;
 import org.gms.constants.skills.other.ThunderBreaker;
-import org.gms.constants.skills.adventurer.warrior.Warrior;
+import org.gms.constants.skills.adv.warrior.Warrior;
 import org.gms.net.packet.InPacket;
 import org.gms.util.PacketCreator;
 import org.gms.util.Randomizer;
@@ -799,7 +799,7 @@ public class AssignAPProcessor {
             randomMax = 22;
             skillId = job.isA(Job.DAWNWARRIOR1) ?
                     DawnWarrior.MAX_HP_INCREASE :
-                    Warrior.IMPROVED_MAXHP;
+                    Warrior.IMPROVED_MAXHP_INCREASE;
         }
         // 战神（特殊战士职业）
         else if (job.isA(Job.ARAN1)) {
@@ -942,7 +942,7 @@ public class AssignAPProcessor {
             // 根据子职业选择正确的技能ID
             int skillId = job.isA(Job.BLAZEWIZARD1) ?
                     BlazeWizard.INCREASING_MAX_MP :
-                    Magician.IMPROVED_MAX_MP_INCREASE;
+                    Magician.IMPROVED_MAXMP_INCREASE;
 
             Skill mpSkill = SkillFactory.getSkill(skillId);
             int skillLevel = player.getSkillLevel(mpSkill);

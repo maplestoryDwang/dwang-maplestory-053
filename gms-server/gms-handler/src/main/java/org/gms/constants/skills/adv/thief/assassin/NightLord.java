@@ -1,6 +1,6 @@
 package org.gms.constants.skills.adv.thief.assassin;
 
-public class Nightlord {
+public class NightLord {
 
     /**
      * [假动作]

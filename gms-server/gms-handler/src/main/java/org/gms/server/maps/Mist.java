@@ -27,9 +27,9 @@ import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.constants.skills.other.BlazeWizard;
 import org.gms.constants.skills.other.Evan;
-import org.gms.constants.skills.adventurer.magician.fp.FPMage;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;
 import org.gms.constants.skills.other.NightWalker;
-import org.gms.constants.skills.adventurer.thief.shadower.Shadower;
+import org.gms.constants.skills.adv.thief.bandit.Shadower;
 import org.gms.net.packet.Packet;
 import org.gms.server.StatEffect;
 import org.gms.server.life.MobSkill;
@@ -75,11 +75,11 @@ public class Mist extends AbstractMapObject {
                 isRecoveryMist = true;
                 break;
 
-            case Shadower.SMOKE_SCREEN: // Smoke Screen
+            case Shadower.SMOKESCREEN: // Smoke Screen
                 isPoisonMist = false;
                 break;
 
-            case FPMage.POISON_MIST: // FP mist
+            case FpMage.POISON_MIST: // FP mist
             case BlazeWizard.FLAME_GEAR: // Flame Gear
             case NightWalker.POISON_BOMB: // Poison Bomb
                 isPoisonMist = true;

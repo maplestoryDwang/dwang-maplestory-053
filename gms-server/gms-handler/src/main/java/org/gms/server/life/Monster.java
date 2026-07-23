@@ -32,15 +32,15 @@ import org.gms.client.status.MonsterStatus;
 import org.gms.client.status.MonsterStatusEffect;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MobId;
-import org.gms.constants.skills.adventurer.warrior.hero.Crusader;
-import org.gms.constants.skills.adventurer.magician.fp.FPMage;
-import org.gms.constants.skills.adventurer.thief.nightlord.Hermit;
-import org.gms.constants.skills.adventurer.magician.il.ILMage;
-import org.gms.constants.skills.adventurer.thief.nightlord.NightLord;
+import org.gms.constants.skills.adv.warrior.fighter.Crusader;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;
+import org.gms.constants.skills.adv.thief.assassin.Hermit;
+import org.gms.constants.skills.adv.magician.il_wizard.IlMage;
+import org.gms.constants.skills.adv.thief.assassin.NightLord;
 import org.gms.constants.skills.other.NightWalker;
-import org.gms.constants.skills.adventurer.magician.bishop.Priest;
-import org.gms.constants.skills.adventurer.thief.shadower.Shadower;
-import org.gms.constants.skills.adventurer.warrior.paladin.WhiteKnight;
+import org.gms.constants.skills.adv.magician.cleric.Priest;
+import org.gms.constants.skills.adv.thief.bandit.Shadower;
+import org.gms.constants.skills.adv.warrior.page.WhiteKnight;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.channel.Channel;
 import org.gms.net.server.coordinator.world.MonsterAggroCoordinator;
@@ -1168,12 +1168,12 @@ public class Monster extends AbstractLoadedLife {
             }
         }
 
-        if (status.getSkill().getId() == FPMage.ELEMENT_COMPOSITION) { // fp compo
+        if (status.getSkill().getId() == FpMage.ELEMENT_COMPOSITION) { // fp compo
             ElementalEffectiveness effectiveness = getMonsterEffectiveness(Element.POISON);
             if (effectiveness == ElementalEffectiveness.IMMUNE || effectiveness == ElementalEffectiveness.STRONG) {
                 return false;
             }
-        } else if (status.getSkill().getId() == ILMage.ELEMENT_COMPOSITION) { // il compo
+        } else if (status.getSkill().getId() == IlMage.ELEMENT_COMPOSITION) { // il compo
             ElementalEffectiveness effectiveness = getMonsterEffectiveness(Element.ICE);
             if (effectiveness == ElementalEffectiveness.IMMUNE || effectiveness == ElementalEffectiveness.STRONG) {
                 return false;

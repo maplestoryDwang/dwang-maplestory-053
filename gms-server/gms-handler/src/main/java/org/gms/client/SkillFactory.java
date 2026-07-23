@@ -21,56 +21,56 @@
 */
 package org.gms.client;
 
+import org.gms.constants.skills.adv.archer.Bowman;
 import org.gms.constants.skills.other.Aran;
-import org.gms.constants.skills.adventurer.archer.Archer;
-import org.gms.constants.skills.adventurer.thief.nightlord.Assassin;
-import org.gms.constants.skills.adventurer.thief.shadower.Bandit;
-import org.gms.constants.skills.adventurer.Beginner;
-import org.gms.constants.skills.adventurer.magician.bishop.Bishop;
+import org.gms.constants.skills.adv.thief.assassin.Assassin;
+import org.gms.constants.skills.adv.thief.bandit.Bandit;
+import org.gms.constants.skills.adv.begin.Beginner;
+import org.gms.constants.skills.adv.magician.cleric.Bishop;
 import org.gms.constants.skills.other.BlazeWizard;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Bowmaster;
+import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
 import org.gms.constants.skills.other.Buccaneer;
-import org.gms.constants.skills.adventurer.thief.shadower.ChiefBandit;
-import org.gms.constants.skills.adventurer.magician.bishop.Cleric;
+import org.gms.constants.skills.adv.thief.bandit.Chiefbandit;
+import org.gms.constants.skills.adv.magician.cleric.Cleric;
 import org.gms.constants.skills.other.Corsair;
-import org.gms.constants.skills.adventurer.archer.marksman.Crossbowman;
-import org.gms.constants.skills.adventurer.warrior.hero.Crusader;
-import org.gms.constants.skills.adventurer.warrior.darkknight.DarkKnight;
+import org.gms.constants.skills.adv.archer.crossbowman.Crossbowman;
+import org.gms.constants.skills.adv.warrior.fighter.Crusader;
+import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
 import org.gms.constants.skills.other.DawnWarrior;
-import org.gms.constants.skills.adventurer.warrior.darkknight.DragonKnight;
+import org.gms.constants.skills.adv.warrior.spearman.DragonKnight;
 import org.gms.constants.skills.other.Evan;
-import org.gms.constants.skills.adventurer.magician.fp.FPArchMage;
-import org.gms.constants.skills.adventurer.magician.fp.FPMage;
-import org.gms.constants.skills.adventurer.magician.fp.FPWizard;
-import org.gms.constants.skills.adventurer.warrior.hero.Fighter;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpWizard;
+import org.gms.constants.skills.adv.warrior.fighter.Fighter;
 import org.gms.constants.skills.other.GM;
 import org.gms.constants.skills.other.Gunslinger;
-import org.gms.constants.skills.adventurer.thief.nightlord.Hermit;
-import org.gms.constants.skills.adventurer.warrior.hero.Hero;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Hunter;
-import org.gms.constants.skills.adventurer.magician.il.ILArchMage;
-import org.gms.constants.skills.adventurer.magician.il.ILMage;
-import org.gms.constants.skills.adventurer.magician.il.ILWizard;
+import org.gms.constants.skills.adv.thief.assassin.Hermit;
+import org.gms.constants.skills.adv.warrior.fighter.Hero;
+import org.gms.constants.skills.adv.archer.hunter.Hunter;
+import org.gms.constants.skills.adv.magician.il_wizard.IlArchmage;
+import org.gms.constants.skills.adv.magician.il_wizard.IlMage;
+import org.gms.constants.skills.adv.magician.il_wizard.IlWizard;
 import org.gms.constants.skills.other.Legend;
-import org.gms.constants.skills.adventurer.magician.Magician;
+import org.gms.constants.skills.adv.magician.Magician;
 import org.gms.constants.skills.other.Marauder;
-import org.gms.constants.skills.adventurer.archer.marksman.Marksman;
-import org.gms.constants.skills.adventurer.thief.nightlord.NightLord;
+import org.gms.constants.skills.adv.archer.crossbowman.Marksman;
+import org.gms.constants.skills.adv.thief.assassin.NightLord;
 import org.gms.constants.skills.other.NightWalker;
 import org.gms.constants.skills.other.Noblesse;
-import org.gms.constants.skills.adventurer.warrior.paladin.Page;
-import org.gms.constants.skills.adventurer.warrior.paladin.Paladin;
+import org.gms.constants.skills.adv.warrior.page.Page;
+import org.gms.constants.skills.adv.warrior.page.Paladin;
 import org.gms.constants.skills.other.Pirate;
-import org.gms.constants.skills.adventurer.magician.bishop.Priest;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Ranger;
-import org.gms.constants.skills.adventurer.thief.Rogue;
-import org.gms.constants.skills.adventurer.thief.shadower.Shadower;
-import org.gms.constants.skills.adventurer.archer.marksman.Sniper;
-import org.gms.constants.skills.adventurer.warrior.darkknight.Spearman;
+import org.gms.constants.skills.adv.magician.cleric.Priest;
+import org.gms.constants.skills.adv.archer.hunter.Ranger;
+import org.gms.constants.skills.adv.thief.Thief;
+import org.gms.constants.skills.adv.thief.bandit.Shadower;
+import org.gms.constants.skills.adv.archer.crossbowman.Sniper;
+import org.gms.constants.skills.adv.warrior.spearman.Spearman;
 import org.gms.constants.skills.other.SuperGM;
 import org.gms.constants.skills.other.ThunderBreaker;
-import org.gms.constants.skills.adventurer.warrior.Warrior;
-import org.gms.constants.skills.adventurer.warrior.paladin.WhiteKnight;
+import org.gms.constants.skills.adv.warrior.Warrior;
+import org.gms.constants.skills.adv.warrior.page.WhiteKnight;
 import org.gms.constants.skills.other.WindArcher;
 import org.gms.provider.Data;
 import org.gms.provider.DataDirectoryEntry;
@@ -156,15 +156,15 @@ public class SkillFactory {
                 case Paladin.RUSH:
                 case DarkKnight.RUSH:
                 case DragonKnight.SACRIFICE:
-                case FPMage.EXPLOSION:
-                case FPMage.POISON_MIST:
+                case FpMage.EXPLOSION:
+                case FpMage.POISON_MIST:
                 case Cleric.HEAL:
                 case Ranger.MORTAL_BLOW:
                 case Sniper.MORTAL_BLOW:
                 case Assassin.DRAIN:
                 case Hermit.SHADOW_WEB:
                 case Bandit.STEAL:
-                case Shadower.SMOKE_SCREEN:
+                case Shadower.SMOKESCREEN:
                 case SuperGM.HEAL_PLUS_DISPEL:
                 case Hero.MONSTER_MAGNET:
                 case Paladin.MONSTER_MAGNET:
@@ -177,7 +177,7 @@ public class SkillFactory {
                 case NightWalker.SHADOW_WEB:
                 case NightWalker.POISON_BOMB:
                 case NightWalker.VAMPIRE:
-                case ChiefBandit.CHAKRA:
+                case Chiefbandit.CHAKRA:
                 case Aran.COMBAT_STEP:
                 case Evan.RECOVERY_AURA:
                     isBuff = false;
@@ -193,97 +193,97 @@ public class SkillFactory {
                 case Fighter.RAGE:
                 case Fighter.SWORD_BOOSTER:
                 case Crusader.ARMOR_CRASH:
-                case Crusader.COMBO:
+                case Crusader.COMBO_ATTACK:
                 case Hero.ENRAGE:
-                case Hero.HEROS_WILL:
+                case Hero.HERO_S_WILL:
                 case Hero.MAPLE_WARRIOR:
-                case Hero.STANCE:
+                case Hero.POWER_STANCE:
                 case Page.BW_BOOSTER:
                 case Page.POWER_GUARD:
                 case Page.SWORD_BOOSTER:
                 case Page.THREATEN:
-                case WhiteKnight.BW_FIRE_CHARGE:
-                case WhiteKnight.BW_ICE_CHARGE:
-                case WhiteKnight.BW_LIT_CHARGE:
+                case WhiteKnight.FLAME_CHARGE_BW:
+                case WhiteKnight.BLIZZARD_CHARGE_BW:
+                case WhiteKnight.LIGHTNING_CHARGE_BW:
                 case WhiteKnight.MAGIC_CRASH:
-                case WhiteKnight.SWORD_FIRE_CHARGE:
-                case WhiteKnight.SWORD_ICE_CHARGE:
-                case WhiteKnight.SWORD_LIT_CHARGE:
-                case Paladin.BW_HOLY_CHARGE:
-                case Paladin.HEROS_WILL:
+                case WhiteKnight.FIRE_CHARGE_SWORD:
+                case WhiteKnight.ICE_CHARGE_SWORD:
+                case WhiteKnight.THUNDER_CHARGE_SWORD:
+                case Paladin.DIVINE_CHARGE_BW:
+                case Paladin.HERO_S_WILL:
                 case Paladin.MAPLE_WARRIOR:
-                case Paladin.STANCE:
-                case Paladin.SWORD_HOLY_CHARGE:
+                case Paladin.POWER_STANCE:
+                case Paladin.HOLY_CHARGE_SWORD:
                 case Spearman.HYPER_BODY:
                 case Spearman.IRON_WILL:
-                case Spearman.POLEARM_BOOSTER:
+                case Spearman.POLE_ARM_BOOSTER:
                 case Spearman.SPEAR_BOOSTER:
                 case DragonKnight.DRAGON_BLOOD:
                 case DragonKnight.POWER_CRASH:
-                case DarkKnight.AURA_OF_BEHOLDER:
+                case DarkKnight.AURA_OF_THE_BEHOLDER:
                 case DarkKnight.BEHOLDER:
-                case DarkKnight.HEROS_WILL:
-                case DarkKnight.HEX_OF_BEHOLDER:
+                case DarkKnight.HERO_S_WILL:
+                case DarkKnight.HEX_OF_THE_BEHOLDER:
                 case DarkKnight.MAPLE_WARRIOR:
-                case DarkKnight.STANCE:
+                case DarkKnight.POWER_STANCE:
                 case Magician.MAGIC_GUARD:
                 case Magician.MAGIC_ARMOR:
-                case FPWizard.MEDITATION:
-                case FPWizard.SLOW:
-                case FPMage.SEAL:
-                case FPMage.SPELL_BOOSTER:
-                case FPArchMage.HEROS_WILL:
-                case FPArchMage.INFINITY:
-                case FPArchMage.MANA_REFLECTION:
-                case FPArchMage.MAPLE_WARRIOR:
-                case ILWizard.MEDITATION:
-                case ILMage.SEAL:
-                case ILWizard.SLOW:
-                case ILMage.SPELL_BOOSTER:
-                case ILArchMage.HEROS_WILL:
-                case ILArchMage.INFINITY:
-                case ILArchMage.MANA_REFLECTION:
-                case ILArchMage.MAPLE_WARRIOR:
+                case FpWizard.MEDITATION:
+                case FpWizard.SLOW:
+                case FpMage.SEAL:
+                case FpMage.SPELL_BOOSTER:
+                case FpArchmage.HERO_S_WILL:
+                case FpArchmage.INFINITY:
+                case FpArchmage.MANA_REFLECTION:
+                case FpArchmage.MAPLE_WARRIOR:
+                case IlWizard.MEDITATION:
+                case IlMage.SEAL:
+                case IlWizard.SLOW:
+                case IlMage.SPELL_BOOSTER:
+                case IlArchmage.HERO_S_WILL:
+                case IlArchmage.INFINITY:
+                case IlArchmage.MANA_REFLECTION:
+                case IlArchmage.MAPLE_WARRIOR:
                 case Cleric.INVINCIBLE:
                 case Cleric.BLESS:
                 case Priest.DISPEL:
                 case Priest.DOOM:
                 case Priest.HOLY_SYMBOL:
                 case Priest.MYSTIC_DOOR:
-                case Bishop.HEROS_WILL:
+                case Bishop.HERO_S_WILL:
                 case Bishop.HOLY_SHIELD:
                 case Bishop.INFINITY:
                 case Bishop.MANA_REFLECTION:
                 case Bishop.MAPLE_WARRIOR:
-                case Archer.FOCUS:
+                case Bowman.FOCUS:
                 case Hunter.BOW_BOOSTER:
-                case Hunter.SOUL_ARROW:
+                case Hunter.SOUL_ARROW_BOW:
                 case Ranger.PUPPET:
                 case Bowmaster.CONCENTRATE:
-                case Bowmaster.HEROS_WILL:
+                case Bowmaster.HERO_S_WILL:
                 case Bowmaster.MAPLE_WARRIOR:
                 case Bowmaster.SHARP_EYES:
                 case Crossbowman.CROSSBOW_BOOSTER:
-                case Crossbowman.SOUL_ARROW:
+                case Crossbowman.SOUL_ARROW_CROSSBOW:
                 case Sniper.PUPPET:
                 case Marksman.BLIND:
-                case Marksman.HEROS_WILL:
+                case Marksman.HERO_S_WILL:
                 case Marksman.MAPLE_WARRIOR:
                 case Marksman.SHARP_EYES:
-                case Rogue.DARK_SIGHT:
+                case Thief.DARK_SIGHT:
                 case Assassin.CLAW_BOOSTER:
                 case Assassin.HASTE:
                 case Hermit.MESO_UP:
                 case Hermit.SHADOW_PARTNER:
-                case NightLord.HEROS_WILL:
+                case NightLord  .HERO_S_WILL:
                 case NightLord.MAPLE_WARRIOR:
                 case NightLord.NINJA_AMBUSH:
-                case NightLord.SHADOW_STARS:
+                case NightLord.SHADOW_CLAW:
                 case Bandit.DAGGER_BOOSTER:
                 case Bandit.HASTE:
-                case ChiefBandit.MESO_GUARD:
-                case ChiefBandit.PICKPOCKET:
-                case Shadower.HEROS_WILL:
+                case Chiefbandit.MESO_GUARD:
+                case Chiefbandit.PICKPOCKET:
+                case Shadower.HERO_S_WILL:
                 case Shadower.MAPLE_WARRIOR:
                 case Shadower.NINJA_AMBUSH:
                 case Pirate.DASH:

@@ -34,35 +34,35 @@ import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
 import org.gms.constants.id.MobId;
-import org.gms.constants.skills.adventurer.Beginner;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Bowmaster;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Hunter;
-import org.gms.constants.skills.adventurer.archer.bowmaster.Ranger;
-import org.gms.constants.skills.adventurer.archer.marksman.Crossbowman;
-import org.gms.constants.skills.adventurer.archer.marksman.Marksman;
-import org.gms.constants.skills.adventurer.archer.marksman.Sniper;
-import org.gms.constants.skills.adventurer.magician.bishop.Bishop;
-import org.gms.constants.skills.adventurer.magician.bishop.Cleric;
-import org.gms.constants.skills.adventurer.magician.fp.FPArchMage;
-import org.gms.constants.skills.adventurer.magician.fp.FPMage;
-import org.gms.constants.skills.adventurer.magician.fp.FPWizard;
-import org.gms.constants.skills.adventurer.magician.il.ILArchMage;
-import org.gms.constants.skills.adventurer.magician.il.ILMage;
-import org.gms.constants.skills.adventurer.thief.Rogue;
-import org.gms.constants.skills.adventurer.thief.nightlord.Assassin;
-import org.gms.constants.skills.adventurer.thief.nightlord.Hermit;
-import org.gms.constants.skills.adventurer.thief.nightlord.NightLord;
-import org.gms.constants.skills.adventurer.thief.shadower.Bandit;
-import org.gms.constants.skills.adventurer.thief.shadower.ChiefBandit;
-import org.gms.constants.skills.adventurer.thief.shadower.Shadower;
-import org.gms.constants.skills.adventurer.warrior.darkknight.DragonKnight;
-import org.gms.constants.skills.adventurer.warrior.darkknight.Spearman;
-import org.gms.constants.skills.adventurer.warrior.hero.Crusader;
-import org.gms.constants.skills.adventurer.warrior.hero.Fighter;
-import org.gms.constants.skills.adventurer.warrior.hero.Hero;
-import org.gms.constants.skills.adventurer.warrior.paladin.Page;
-import org.gms.constants.skills.adventurer.warrior.paladin.Paladin;
-import org.gms.constants.skills.adventurer.warrior.paladin.WhiteKnight;
+import org.gms.constants.skills.adv.begin.Beginner;
+import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
+import org.gms.constants.skills.adv.archer.hunter.Hunter;
+import org.gms.constants.skills.adv.archer.hunter.Ranger;
+import org.gms.constants.skills.adv.archer.crossbowman.Crossbowman;
+import org.gms.constants.skills.adv.archer.crossbowman.Marksman;
+import org.gms.constants.skills.adv.archer.crossbowman.Sniper;
+import org.gms.constants.skills.adv.magician.cleric.Bishop;
+import org.gms.constants.skills.adv.magician.cleric.Cleric;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;
+import org.gms.constants.skills.adv.magician.fp_wizard.FpWizard;
+import org.gms.constants.skills.adv.magician.il_wizard.IlArchmage;
+import org.gms.constants.skills.adv.magician.il_wizard.IlMage;
+import org.gms.constants.skills.adv.thief.Thief;
+import org.gms.constants.skills.adv.thief.assassin.Assassin;
+import org.gms.constants.skills.adv.thief.assassin.Hermit;
+import org.gms.constants.skills.adv.thief.assassin.NightLord;
+import org.gms.constants.skills.adv.thief.bandit.Bandit;
+import org.gms.constants.skills.adv.thief.bandit.Chiefbandit;
+import org.gms.constants.skills.adv.thief.bandit.Shadower;
+import org.gms.constants.skills.adv.warrior.spearman.DragonKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Spearman;
+import org.gms.constants.skills.adv.warrior.fighter.Crusader;
+import org.gms.constants.skills.adv.warrior.fighter.Fighter;
+import org.gms.constants.skills.adv.warrior.fighter.Hero;
+import org.gms.constants.skills.adv.warrior.page.Page;
+import org.gms.constants.skills.adv.warrior.page.Paladin;
+import org.gms.constants.skills.adv.warrior.page.WhiteKnight;
 import org.gms.constants.skills.other.*;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
@@ -191,8 +191,8 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                             attackEffect.applyTo(player);
 
                             if (attack.skill == Page.FINAL_ATTACK_BW || attack.skill == Page.FINAL_ATTACK_SWORD || attack.skill == Fighter.FINAL_ATTACK_SWORD
-                                    || attack.skill == Fighter.FINAL_ATTACK_AXE || attack.skill == Spearman.FINAL_ATTACK_SPEAR || attack.skill == Spearman.FINAL_ATTACK_POLEARM
-                                    || attack.skill == Hunter.FINAL_ATTACK || attack.skill == Crossbowman.FINAL_ATTACK) {
+                                    || attack.skill == Fighter.FINAL_ATTACK_AXE || attack.skill == Spearman.FINAL_ATTACK_SPEAR || attack.skill == Spearman.FINAL_ATTACK_POLE_ARM
+                                    || attack.skill == Hunter.FINAL_ATTACK_BOW || attack.skill == Crossbowman.FINAL_ATTACK_CROSSBOW) {
 
                                 mobCount = 15;//:(
                             } else if (attack.skill == Aran.HIDDEN_FULL_DOUBLE || attack.skill == Aran.HIDDEN_FULL_TRIPLE || attack.skill == Aran.HIDDEN_OVER_DOUBLE || attack.skill == Aran.HIDDEN_OVER_TRIPLE) {
@@ -214,7 +214,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             }
 
             final boolean skipDistanceHack = shouldSkipDistanceHackCheck(attack.skill, attackEffect);
-            final boolean isChainLightning = attack.skill == ILArchMage.CHAIN_LIGHTNING;
+            final boolean isChainLightning = attack.skill == IlArchmage.CHAIN_LIGHTNING;
             boolean chainLightningCheckedFirst = false;
             Point teleportBeforePosForDistanceCheck = player.getTeleportBeforePositionForDistanceCheck();
             Point movementBeforePosForDistanceCheck = player.getMovementBeforePositionForDistanceCheck();
@@ -233,7 +233,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             boolean distanceHackWorstUsedTeleportContext = false;
             boolean distanceHackWorstUsedMovementContext = false;
 
-            if (attack.skill == ChiefBandit.MESO_EXPLOSION) {
+            if (attack.skill == Chiefbandit.MESO_EXPLOSION) {
                 int delay = 0;
                 for (Integer oned : attack.allDamage.keySet()) {
                     MapObject mapobject = map.getMapObject(oned);
@@ -287,13 +287,13 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
 
                     if (attack.skill == Aran.COMBO_SMASH || attack.skill == Aran.BODY_PRESSURE) {
                         distanceToDetect += 40000;
-                    } else if (attack.skill == Bishop.GENESIS || attack.skill == ILArchMage.BLIZZARD || attack.skill == FPArchMage.METEOR_SHOWER) {
+                    } else if (attack.skill == Bishop.GENESIS || attack.skill == IlArchmage.BLIZZARD || attack.skill == FpArchmage.METEOR_SHOWER) {
                         distanceToDetect += 275000;
                     } else if (attack.skill == Hero.BRANDISH || attack.skill == DragonKnight.SPEAR_CRUSHER || attack.skill == DragonKnight.POLE_ARM_CRUSHER) {
                         distanceToDetect += 40000;
                     } else if (attack.skill == DragonKnight.DRAGON_ROAR || attack.skill == SuperGM.SUPER_DRAGON_ROAR) {
                         distanceToDetect += 250000;
-                    } else if (attack.skill == Shadower.BOOMERANG_STEP || attack.skill == ILArchMage.CHAIN_LIGHTNING) {
+                    } else if (attack.skill == Shadower.BOOMERANG_STEP || attack.skill == IlArchmage.CHAIN_LIGHTNING) {
                         distanceToDetect += 60000;
                     } else if (attack.skill == Buccaneer.DRAGON_STRIKE) {
                         // 龙之怒的客户端攻击范围较长，且近战包没有额外携带权威攻击原点，
@@ -368,8 +368,8 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                     }
                     totDamage += totDamageToOneMonster;
                     monster.aggroMonsterDamage(player, totDamageToOneMonster);
-                    if (player.getBuffedValue(BuffStat.PICKPOCKET) != null && (attack.skill == 0 || attack.skill == Rogue.DOUBLE_STAB || attack.skill == Bandit.SAVAGE_BLOW || attack.skill == ChiefBandit.ASSAULTER || attack.skill == ChiefBandit.BAND_OF_THIEVES || attack.skill == Shadower.ASSASSINATE || attack.skill == Shadower.TAUNT || attack.skill == Shadower.BOOMERANG_STEP)) {
-                        Skill pickpocket = SkillFactory.getSkill(ChiefBandit.PICKPOCKET);
+                    if (player.getBuffedValue(BuffStat.PICKPOCKET) != null && (attack.skill == 0 || attack.skill == Thief.DOUBLE_STAB || attack.skill == Bandit.SAVAGE_BLOW || attack.skill == Chiefbandit.ASSAULTER || attack.skill == Chiefbandit.BAND_OF_THIEVES || attack.skill == Shadower.ASSASSINATE || attack.skill == Shadower.TAUNT || attack.skill == Shadower.BOOMERANG_STEP)) {
+                        Skill pickpocket = SkillFactory.getSkill(Chiefbandit.PICKPOCKET);
                         int picklv = (player.isGM()) ? pickpocket.getMaxLevel() : player.getSkillLevel(pickpocket);
                         if (picklv > 0) {
                             int delay = 0;
@@ -417,11 +417,11 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                                 }
                             }
                         }
-                    } else if (attack.skill == FPArchMage.FIRE_DEMON) {
-                        long duration = SECONDS.toMillis(SkillFactory.getSkill(FPArchMage.FIRE_DEMON).getEffect(player.getSkillLevel(SkillFactory.getSkill(FPArchMage.FIRE_DEMON))).getDuration());
+                    } else if (attack.skill == FpArchmage.FIRE_DEMON) {
+                        long duration = SECONDS.toMillis(SkillFactory.getSkill(FpArchmage.FIRE_DEMON).getEffect(player.getSkillLevel(SkillFactory.getSkill(FpArchmage.FIRE_DEMON))).getDuration());
                         monster.setTempEffectiveness(Element.ICE, ElementalEffectiveness.WEAK, duration);
-                    } else if (attack.skill == ILArchMage.ICE_DEMON) {
-                        long duration = SECONDS.toMillis(SkillFactory.getSkill(ILArchMage.ICE_DEMON).getEffect(player.getSkillLevel(SkillFactory.getSkill(ILArchMage.ICE_DEMON))).getDuration());
+                    } else if (attack.skill == IlArchmage.ICE_DEMON) {
+                        long duration = SECONDS.toMillis(SkillFactory.getSkill(IlArchmage.ICE_DEMON).getEffect(player.getSkillLevel(SkillFactory.getSkill(IlArchmage.ICE_DEMON))).getDuration());
                         monster.setTempEffectiveness(Element.FIRE, ElementalEffectiveness.WEAK, duration);
                     } else if (attack.skill == Outlaw.HOMING_BEACON || attack.skill == Corsair.BULLSEYE) {
                         StatEffect beacon = SkillFactory.getSkill(attack.skill).getEffect(player.getSkillLevel(attack.skill));
@@ -476,7 +476,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                             Skill chargeSkill = SkillFactory.getSkill(charge);
                             if (player.isBuffFrom(BuffStat.WK_CHARGE, chargeSkill)) {
                                 if (totDamageToOneMonster > 0) {
-                                    if (charge == WhiteKnight.BW_ICE_CHARGE || charge == WhiteKnight.SWORD_ICE_CHARGE) {
+                                    if (charge == WhiteKnight.BLIZZARD_CHARGE_BW || charge == WhiteKnight.ICE_CHARGE_SWORD) {
                                         monster.setTempEffectiveness(Element.ICE, ElementalEffectiveness.WEAK, chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getY() * 1000);
                                         // 修复冰技能不冰怪的问题，关键是冰和火都没有对应的异常状态，对应的异常只有冻结。如果这里把ICE改了，那火怎么办？所以，还是先注释掉。
 //                                        MonsterStatusEffect monsterStatusEffect = new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.FREEZE, chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getX()), chargeSkill, null, false);
@@ -484,7 +484,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
 //                                        monster.applyStatus(player, monsterStatusEffect, false, duration);
                                         break;
                                     }
-                                    if (charge == WhiteKnight.BW_FIRE_CHARGE || charge == WhiteKnight.SWORD_FIRE_CHARGE) {
+                                    if (charge == WhiteKnight.FLAME_CHARGE_BW || charge == WhiteKnight.FIRE_CHARGE_SWORD) {
                                         monster.setTempEffectiveness(Element.FIRE, ElementalEffectiveness.WEAK, chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getY() * 1000);
                                         break;
                                     }
@@ -584,11 +584,11 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                             }
                         }
                     }
-                    if (attack.skill == Paladin.HEAVENS_HAMMER) {
+                    if (attack.skill == Paladin.HEAVEN_S_HAMMER) {
                         if (!monster.isBoss()) {
                             damageMonsterWithSkill(player, map, monster, monster.getHp() - 1, attack.skill, 1777);
                         } else {
-                            int HHDmg = (player.calculateMaxBaseDamage(player.getTotalWatk()) * (SkillFactory.getSkill(Paladin.HEAVENS_HAMMER).getEffect(player.getSkillLevel(SkillFactory.getSkill(Paladin.HEAVENS_HAMMER))).getDamage() / 100));
+                            int HHDmg = (player.calculateMaxBaseDamage(player.getTotalWatk()) * (SkillFactory.getSkill(Paladin.HEAVEN_S_HAMMER).getEffect(player.getSkillLevel(SkillFactory.getSkill(Paladin.HEAVEN_S_HAMMER))).getDamage() / 100));
                             damageMonsterWithSkill(player, map, monster, (int) (Math.floor(Math.random() * (HHDmg / 5) + HHDmg * .8)), attack.skill, 1777);
                         }
                     } else if (attack.skill == Aran.COMBO_TEMPEST) {
@@ -757,7 +757,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             }
         }
 
-        if (ret.skill == Evan.ICE_BREATH || ret.skill == Evan.FIRE_BREATH || ret.skill == FPArchMage.BIG_BANG || ret.skill == ILArchMage.BIG_BANG || ret.skill == Bishop.BIG_BANG || ret.skill == Gunslinger.GRENADE || ret.skill == Brawler.CORKSCREW_BLOW || ret.skill == ThunderBreaker.CORKSCREW_BLOW || ret.skill == NightWalker.POISON_BOMB) {
+        if (ret.skill == Evan.ICE_BREATH || ret.skill == Evan.FIRE_BREATH || ret.skill == FpArchmage.BIG_BANG || ret.skill == IlArchmage.BIG_BANG || ret.skill == Bishop.BIG_BANG || ret.skill == Gunslinger.GRENADE || ret.skill == Brawler.CORKSCREW_BLOW || ret.skill == ThunderBreaker.CORKSCREW_BLOW || ret.skill == NightWalker.POISON_BOMB) {
             ret.charge = p.readInt();
         } else {
             ret.charge = 0;
@@ -767,7 +767,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
         ret.display = p.readByte();
         ret.direction = p.readByte();
         ret.stance = p.readByte();
-        if (ret.skill == ChiefBandit.MESO_EXPLOSION) {
+        if (ret.skill == Chiefbandit.MESO_EXPLOSION) {
             if (ret.numAttackedAndDamage == 0) {
                 p.skip(10);
                 int bullets = p.readByte();
@@ -824,7 +824,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
 
         if (magic && ret.skill != 0) {   // thanks onechord for noticing a few false positives stemming from maxdmg as 0
             calcDmgMax = (long) (Math.ceil((chr.getTotalMagic() * Math.ceil(chr.getTotalMagic() / 1000.0) + chr.getTotalMagic()) / 30.0) + Math.ceil(chr.getTotalInt() / 200.0));
-        } else if (ret.skill == Rogue.LUCKY_SEVEN || ret.skill == NightWalker.LUCKY_SEVEN || ret.skill == NightLord.TRIPLE_THROW) {
+        } else if (ret.skill == Thief.LUCKY_SEVEN || ret.skill == NightWalker.LUCKY_SEVEN || ret.skill == NightLord.TRIPLE_THROW) {
             calcDmgMax = (long) ((chr.getTotalLuk() * 5) * Math.ceil(chr.getTotalWatk() / 100.0));
         } else if (ret.skill == DragonKnight.DRAGON_ROAR) {
             calcDmgMax = (long) ((chr.getTotalStr() * 4 + chr.getTotalDex()) * Math.ceil(chr.getTotalWatk() / 100.0));
@@ -842,14 +842,14 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             if (magic) {
                 // Since the skill is magic based, use the magic formula
                 if (chr.getJob() == Job.IL_ARCHMAGE || chr.getJob() == Job.IL_MAGE) {
-                    int skillLvl = chr.getSkillLevel(ILMage.ELEMENT_AMPLIFICATION);
+                    int skillLvl = chr.getSkillLevel(IlMage.ELEMENT_AMPLIFICATION);
                     if (skillLvl > 0) {
-                        calcDmgMax = calcDmgMax * SkillFactory.getSkill(ILMage.ELEMENT_AMPLIFICATION).getEffect(skillLvl).getY() / 100;
+                        calcDmgMax = calcDmgMax * SkillFactory.getSkill(IlMage.ELEMENT_AMPLIFICATION).getEffect(skillLvl).getY() / 100;
                     }
                 } else if (chr.getJob() == Job.FP_ARCHMAGE || chr.getJob() == Job.FP_MAGE) {
-                    int skillLvl = chr.getSkillLevel(FPMage.ELEMENT_AMPLIFICATION);
+                    int skillLvl = chr.getSkillLevel(FpMage.ELEMENT_AMPLIFICATION);
                     if (skillLvl > 0) {
-                        calcDmgMax = calcDmgMax * SkillFactory.getSkill(FPMage.ELEMENT_AMPLIFICATION).getEffect(skillLvl).getY() / 100;
+                        calcDmgMax = calcDmgMax * SkillFactory.getSkill(FpMage.ELEMENT_AMPLIFICATION).getEffect(skillLvl).getY() / 100;
                     }
                 } else if (chr.getJob() == Job.BLAZEWIZARD3 || chr.getJob() == Job.BLAZEWIZARD4) {
                     int skillLvl = chr.getSkillLevel(BlazeWizard.ELEMENT_AMPLIFICATION);
@@ -883,8 +883,8 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
 
         Integer comboBuff = chr.getBuffedValue(BuffStat.COMBO);
         if (comboBuff != null && comboBuff > 0) {
-            int oid = chr.isCygnus() ? DawnWarrior.COMBO : Crusader.COMBO;
-            int advcomboid = chr.isCygnus() ? DawnWarrior.ADVANCED_COMBO : Hero.ADVANCED_COMBO;
+            int oid = chr.isCygnus() ? DawnWarrior.COMBO : Crusader.COMBO_ATTACK;
+            int advcomboid = chr.isCygnus() ? DawnWarrior.ADVANCED_COMBO : Hero.ADVANCED_COMBO_ATTACK;
 
             if (comboBuff > 6) {
                 // Advanced Combo
@@ -969,19 +969,19 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                 int sourceID = chr.getBuffSource(BuffStat.WK_CHARGE);
                 int level = chr.getBuffedValue(BuffStat.WK_CHARGE);
                 if (monster != null) {
-                    if (sourceID == WhiteKnight.BW_FIRE_CHARGE || sourceID == WhiteKnight.SWORD_FIRE_CHARGE) {
+                    if (sourceID == WhiteKnight.FLAME_CHARGE_BW || sourceID == WhiteKnight.FIRE_CHARGE_SWORD) {
                         if (monster.getStats().getEffectiveness(Element.FIRE) == ElementalEffectiveness.WEAK) {
                             calcDmgMax *= 1.05 + level * 0.015;
                         }
-                    } else if (sourceID == WhiteKnight.BW_ICE_CHARGE || sourceID == WhiteKnight.SWORD_ICE_CHARGE) {
+                    } else if (sourceID == WhiteKnight.BLIZZARD_CHARGE_BW || sourceID == WhiteKnight.ICE_CHARGE_SWORD) {
                         if (monster.getStats().getEffectiveness(Element.ICE) == ElementalEffectiveness.WEAK) {
                             calcDmgMax *= 1.05 + level * 0.015;
                         }
-                    } else if (sourceID == WhiteKnight.BW_LIT_CHARGE || sourceID == WhiteKnight.SWORD_LIT_CHARGE) {
+                    } else if (sourceID == WhiteKnight.LIGHTNING_CHARGE_BW || sourceID == WhiteKnight.THUNDER_CHARGE_SWORD) {
                         if (monster.getStats().getEffectiveness(Element.LIGHTING) == ElementalEffectiveness.WEAK) {
                             calcDmgMax *= 1.05 + level * 0.015;
                         }
-                    } else if (sourceID == Paladin.BW_HOLY_CHARGE || sourceID == Paladin.SWORD_HOLY_CHARGE) {
+                    } else if (sourceID == Paladin.DIVINE_CHARGE_BW || sourceID == Paladin.HOLY_CHARGE_SWORD) {
                         if (monster.getStats().getEffectiveness(Element.HOLY) == ElementalEffectiveness.WEAK) {
                             calcDmgMax *= 1.2 + level * 0.015;
                         }
@@ -1010,7 +1010,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                         calcDmgMax *= 1.5;
                     }
                 }
-                if (ret.skill == FPWizard.POISON_BREATH || ret.skill == FPMage.POISON_MIST || ret.skill == FPArchMage.FIRE_DEMON || ret.skill == ILArchMage.ICE_DEMON) {
+                if (ret.skill == FpWizard.POISON_BREATH || ret.skill == FpMage.POISON_MIST || ret.skill == FpArchmage.FIRE_DEMON || ret.skill == IlArchmage.ICE_DEMON) {
                     if (monster != null) {
                         // Turns out poison is completely server side, so I don't know why I added this. >.<
                         //calcDmgMax = monster.getHp() / (70 - chr.getSkillLevel(skill));
@@ -1196,8 +1196,8 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
      */
     private static boolean isFullScreenDistanceExempt(int skillId) {
         return skillId == Bishop.GENESIS
-                || skillId == ILArchMage.BLIZZARD
-                || skillId == FPArchMage.METEOR_SHOWER
+                || skillId == IlArchmage.BLIZZARD
+                || skillId == FpArchmage.METEOR_SHOWER
                 || skillId == BlazeWizard.METEOR_SHOWER;
     }
 

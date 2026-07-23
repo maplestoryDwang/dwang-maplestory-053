@@ -30,12 +30,12 @@ import org.gms.client.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.MapId;
-import org.gms.constants.skills.adventurer.warrior.hero.Crusader;
+import org.gms.constants.skills.adv.warrior.fighter.Crusader;
 import org.gms.constants.skills.other.DawnWarrior;
-import org.gms.constants.skills.adventurer.warrior.darkknight.DragonKnight;
-import org.gms.constants.skills.adventurer.warrior.hero.Hero;
+import org.gms.constants.skills.adv.warrior.spearman.DragonKnight;
+import org.gms.constants.skills.adv.warrior.fighter.Hero;
 import org.gms.constants.skills.other.NightWalker;
-import org.gms.constants.skills.adventurer.thief.Rogue;
+import org.gms.constants.skills.adv.thief.Thief;
 import org.gms.constants.skills.other.WindArcher;
 import org.gms.net.packet.InPacket;
 import org.gms.server.StatEffect;
@@ -89,8 +89,8 @@ public final class CloseRangeDamageHandler extends AbstractDealDamageHandler {
         } else if (attack.numAttacked > 0) {
             if (attack.skill != 1111008 && comboBuff != null) {
                 int orbcount = chr.getBuffedValue(BuffStat.COMBO);
-                int oid = chr.isCygnus() ? DawnWarrior.COMBO : Crusader.COMBO;
-                int advcomboid = chr.isCygnus() ? DawnWarrior.ADVANCED_COMBO : Hero.ADVANCED_COMBO;
+                int oid = chr.isCygnus() ? DawnWarrior.COMBO : Crusader.COMBO_ATTACK;
+                int advcomboid = chr.isCygnus() ? DawnWarrior.ADVANCED_COMBO : Hero.ADVANCED_COMBO_ATTACK;
                 Skill combo = SkillFactory.getSkill(oid);
                 Skill advcombo = SkillFactory.getSkill(advcomboid);
                 StatEffect ceffect;
@@ -183,7 +183,7 @@ public final class CloseRangeDamageHandler extends AbstractDealDamageHandler {
                 }
             }
         }
-        if ((chr.getSkillLevel(SkillFactory.getSkill(NightWalker.VANISH)) > 0 || chr.getSkillLevel(SkillFactory.getSkill(Rogue.DARK_SIGHT)) > 0) && chr.getBuffedValue(BuffStat.DARKSIGHT) != null) {// && chr.getBuffSource(BuffStat.DARKSIGHT) != 9101004
+        if ((chr.getSkillLevel(SkillFactory.getSkill(NightWalker.VANISH)) > 0 || chr.getSkillLevel(SkillFactory.getSkill(Thief.DARK_SIGHT)) > 0) && chr.getBuffedValue(BuffStat.DARKSIGHT) != null) {// && chr.getBuffSource(BuffStat.DARKSIGHT) != 9101004
             chr.cancelEffectFromBuffStat(BuffStat.DARKSIGHT);
             chr.cancelBuffStats(BuffStat.DARKSIGHT);
         } else if (chr.getSkillLevel(SkillFactory.getSkill(WindArcher.WIND_WALK)) > 0 && chr.getBuffedValue(BuffStat.WIND_WALK) != null) {
