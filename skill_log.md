@@ -11,6 +11,7 @@ org.gms.constants.skills.adventurer.warrior
 ### 英雄 112
 ### 圣骑 122
 ### 黑骑 132
+1. 修复``恶龙附身 `` 显示特效包头错误
 
 
 ## 法师

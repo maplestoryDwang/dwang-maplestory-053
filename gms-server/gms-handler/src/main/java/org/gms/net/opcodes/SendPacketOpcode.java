@@ -115,9 +115,11 @@ public enum SendPacketOpcode implements Opcode {
     UPDATE_CHAR_LOOK(0x92), // 更新玩家外观(换装同步)
     SHOW_FOREIGN_EFFECT(0x85), // 显示其他玩家的效果(升级/技能等)
     GIVE_FOREIGN_BUFF(0x86), // 给予可见的其他玩家Buff
-    SHOW_ITEM_GAIN_INCHAT(0x67), // 聊天栏提示获得道具
 
-    UPDATE_QUEST_INFO(0x6C), // 更新任务状态信息
+
+
+
+
     // check ↓
     SPAWN_MONSTER(0x96), // 地图生成怪物
     /**
@@ -186,7 +188,7 @@ public enum SendPacketOpcode implements Opcode {
 
     // check ↓
     SHOW_CHAIR(0x91), // 显示椅子
-    CANCEL_CHAIR(0x66), // 取消椅子
+
 
 
     /**
@@ -194,7 +196,51 @@ public enum SendPacketOpcode implements Opcode {
      * CUserLocal::OnPacket
      *
      */
-    COOLDOWN(0x6F), // 冷却时间
+
+    /**
+     * 取消椅子
+     */
+    CANCEL_CHAIR(0x66), // check
+
+    /**
+     * 聊天栏提示获得道具
+     */
+    SHOW_ITEM_GAIN_INCHAT(0x67), // check
+
+    /**
+     * 传送准备
+     */
+    LP_UserTeleport(0x68), //   check
+
+    /**
+     * 幸运袋成功
+     */
+    LUCKSACK_PASS(0x6A), // check
+
+    /**
+     * 幸运袋失败
+     */
+    LUCKSACK_FAIL(0x6B), // check
+
+
+
+    /**
+     * 更新任务状态信息
+     */
+    UPDATE_QUEST_INFO(0x6C), // check
+
+    /**
+     * 通知字段减少HP
+     */
+    ON_NOTIFY_HP_DEC_BY_FIELD(0x6D), // check
+
+    /**
+     * 冷却时间
+     */
+    COOLDOWN(0x6F), // check
+
+
+
 
 
     /*CStage::OnPacket*/
@@ -410,13 +456,8 @@ public enum SendPacketOpcode implements Opcode {
     GUILD_MARK_CHANGED(0xCB), // 公会标志改变
     THROW_GRENADE(0xCC), // 抛掷手榴弹
 //    CANCEL_CHAIR(0xCD), // 取消椅子
-    LP_UserTeleport(0xCF), // 武道馆传送准备  还有其他的情况啊，谁写的的注释？？？
 
-
-    LUCKSACK_PASS(0xD0), // 幸运袋成功
-    LUCKSACK_FAIL(0xD1), // 幸运袋失败
     MESO_BAG_MESSAGE(0xD2), // 金币背包消息
-    ON_NOTIFY_HP_DEC_BY_FIELD(0xD4), // 通知字段减少HP
     PLAYER_HINT(-1), // 玩家提示
     MAKER_RESULT(0xD9), // 制作器结果
     KOREAN_EVENT(0xDB), // 韩国活动
