@@ -2,9 +2,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson2.JSONObject;
 import com.mybatisflex.codegen.Generator;
 import com.mybatisflex.codegen.config.GlobalConfig;
-import org.gms.ServerApplication;
 import org.junit.jupiter.api.Test;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
