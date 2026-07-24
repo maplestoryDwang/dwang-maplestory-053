@@ -57,8 +57,8 @@ public class SkillGen {
     }
     public static void main(String[] args) throws IOException {
         Path enPath = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\gms-server\\gms-handler\\wz\\String.wz");
-        Path langPath = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\gms-server\\gms-handler\\wz-zh-CN\\String.wz");
-        Path skillPath = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\gms-server\\gms-handler\\wz\\Skill.wz");
+//        Path cnPath = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\gms-server\\gms-handler\\wz-zh-CN\\String.wz");
+        Path cnPath = Path.of("E:\\game\\ms\\gms053\\汉化\\20260720-skill-str\\cn-59\\String.wz");
         Path outputDir = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\gms-server\\gms-handler\\src\\main\\java\\org\\gms\\constants\\skills\\adv");
 
         // 英文名
@@ -66,7 +66,7 @@ public class SkillGen {
         // 技能ID和JOB映射关系
 //        HashMap<Integer, String> skillIdMapJob = buildMapSkill(skillPath);
 
-        XMLWZFile xmlwzFile = new XMLWZFile(langPath);
+        XMLWZFile xmlwzFile = new XMLWZFile(cnPath);
 
         Data data = xmlwzFile.getData("Skill.img");
 
@@ -136,6 +136,14 @@ public class SkillGen {
                 continue; // 如果该职业没有技能数据可跳过
             }
 
+            List<GenSkillDesc> sortSkills = skills.stream().sorted(new Comparator<GenSkillDesc>() {
+                @Override
+                public int compare(GenSkillDesc o1, GenSkillDesc o2) {
+                    return o1.getSkillId() - o2.getSkillId();
+                }
+            }).toList();
+
+
             int mainType = job.getId() / 100;
             if (mainType < 0 || mainType >= MAIN_JOB_DIRS.length) {
                 continue;
@@ -161,7 +169,7 @@ public class SkillGen {
             }
 
             String className = toPascalCase(job.name());
-            String javaCode = generateJavaClassCode(classPackage, className, skills);
+            String javaCode = generateJavaClassCode(classPackage, className, sortSkills);
 
             // 写入文件
             Path javaFilePath = targetDir.resolve(className + ".java");

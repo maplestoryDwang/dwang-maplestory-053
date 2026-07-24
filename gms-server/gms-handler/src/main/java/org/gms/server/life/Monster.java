@@ -36,11 +36,11 @@ import org.gms.constants.skills.adv.warrior.fighter.Crusader;
 import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;
 import org.gms.constants.skills.adv.thief.assassin.Hermit;
 import org.gms.constants.skills.adv.magician.il_wizard.IlMage;
-import org.gms.constants.skills.adv.thief.assassin.NightLord;
+import org.gms.constants.skills.adv.thief.assassin.Nightlord;
 import org.gms.constants.skills.other.NightWalker;
 import org.gms.constants.skills.adv.magician.cleric.Priest;
 import org.gms.constants.skills.adv.thief.bandit.Shadower;
-import org.gms.constants.skills.adv.warrior.page.WhiteKnight;
+import org.gms.constants.skills.adv.warrior.page.Whiteknight;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.channel.Channel;
 import org.gms.net.server.coordinator.world.MonsterAggroCoordinator;
@@ -1178,7 +1178,7 @@ public class Monster extends AbstractLoadedLife {
             if (effectiveness == ElementalEffectiveness.IMMUNE || effectiveness == ElementalEffectiveness.STRONG) {
                 return false;
             }
-        } else if (status.getSkill().getId() == NightLord.VENOMOUS_STAR || status.getSkill().getId() == Shadower.VENOMOUS_STAB || status.getSkill().getId() == NightWalker.VENOM) {// venom
+        } else if (status.getSkill().getId() == Nightlord.VENOMOUS_STAR || status.getSkill().getId() == Shadower.VENOMOUS_STAB || status.getSkill().getId() == NightWalker.VENOM) {// venom
             if (getMonsterEffectiveness(Element.POISON) == ElementalEffectiveness.WEAK) {
                 return false;
             }
@@ -1249,7 +1249,7 @@ public class Monster extends AbstractLoadedLife {
         } else if (venom) {
             if (from.getJob() == Job.NIGHTLORD || from.getJob() == Job.SHADOWER || from.getJob().isA(Job.NIGHTWALKER3)) {
                 int poisonLevel, matk, jobid = from.getJob().getId();
-                int skillid = (jobid == 412 ? NightLord.VENOMOUS_STAR : (jobid == 422 ? Shadower.VENOMOUS_STAB : NightWalker.VENOM));
+                int skillid = (jobid == 412 ? Nightlord.VENOMOUS_STAR : (jobid == 422 ? Shadower.VENOMOUS_STAB : NightWalker.VENOM));
                 poisonLevel = from.getSkillLevel(SkillFactory.getSkill(skillid));
                 if (poisonLevel <= 0) {
                     return false;
@@ -1403,7 +1403,7 @@ public class Monster extends AbstractLoadedLife {
                     debuffMobStat(ms);
                 }
             } else {    // is a crash skill
-                int i = (skillid == Crusader.ARMOR_CRASH ? 1 : (skillid == WhiteKnight.MAGIC_CRASH ? 2 : 0));
+                int i = (skillid == Crusader.ARMOR_CRASH ? 1 : (skillid == Whiteknight.MAGIC_CRASH ? 2 : 0));
                 debuffMobStat(statups[i]);
 
                 if (GameConfig.getServerBoolean("use_anti_immunity_crash")) {
@@ -1414,7 +1414,7 @@ public class Monster extends AbstractLoadedLife {
                         if (!isBuffed(MonsterStatus.MAGIC_REFLECT)) {
                             debuffMobStat(MonsterStatus.MAGIC_IMMUNITY);
                         }
-                    } else if (skillid == WhiteKnight.MAGIC_CRASH) {
+                    } else if (skillid == Whiteknight.MAGIC_CRASH) {
                         if (!isBuffed(MonsterStatus.MAGIC_REFLECT)) {
                             debuffMobStat(MonsterStatus.MAGIC_IMMUNITY);
                         }

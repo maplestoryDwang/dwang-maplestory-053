@@ -27,7 +27,7 @@ import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
 import org.gms.constants.skills.other.Brawler;
 import org.gms.constants.skills.adv.thief.bandit.Chiefbandit;
 import org.gms.constants.skills.other.Corsair;
-import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.constants.skills.other.Evan;
 import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
 import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;
@@ -70,7 +70,7 @@ public final class SkillEffectHandler extends AbstractPacketHandler {
             case NightWalker.POISON_BOMB:
             case ThunderBreaker.CORKSCREW_BLOW:
             case Paladin.MONSTER_MAGNET:
-            case DarkKnight.MONSTER_MAGNET:
+            case Darkknight.MONSTER_MAGNET:
             case Hero.MONSTER_MAGNET:
             case Evan.FIRE_BREATH:
             case Evan.ICE_BREATH:

@@ -32,7 +32,7 @@ import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.MapId;
 import org.gms.constants.skills.adv.warrior.fighter.Crusader;
 import org.gms.constants.skills.other.DawnWarrior;
-import org.gms.constants.skills.adv.warrior.spearman.DragonKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Dragonknight;
 import org.gms.constants.skills.adv.warrior.fighter.Hero;
 import org.gms.constants.skills.other.NightWalker;
 import org.gms.constants.skills.adv.thief.Thief;
@@ -137,7 +137,7 @@ public final class CloseRangeDamageHandler extends AbstractDealDamageHandler {
                 }
             }
         }
-        if (attack.numAttacked > 0 && attack.skill == DragonKnight.SACRIFICE) {
+        if (attack.numAttacked > 0 && attack.skill == Dragonknight.SACRIFICE) {
             int totDamageToOneMonster = 0; // sacrifice attacks only 1 mob with 1 attack
             final Iterator<List<Integer>> dmgIt = attack.allDamage.values().iterator();
             if (dmgIt.hasNext()) {

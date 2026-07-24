@@ -1,30 +1,35 @@
-/*
-	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-		       Matthias Butz <matze@odinms.de>
-		       Jan Christian Meyer <vimes@odinms.de>
+package org.gms.constants.skills.other;
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-package org.gms.constants.skills.adv.begin;
-
-/**
- * @author BubblesDev
- */
 public class Beginner {
+
+    /**
+     * [蜗牛投掷术]
+     * [最高等级：3]\n投掷蜗牛壳来攻击远距离的怪物。
+     * <br><b>Max Level Effect:</b> 红色蜗牛壳1个，MP 15 消耗后伤害 40
+     */
+    public static final int THREE_SNAILS = 1000;
+
+    /**
+     * [团队治疗]
+     * [最高等级 ：3]\n30秒内持续恢复HP。 \n#c再次使用时间间隔 : 10分#
+     * <br><b>Max Level Effect:</b> MP 30 消耗后 30秒恢复 HP 72
+     */
+    public static final int RECOVERY = 1001;
+
+    /**
+     * [疾风步]
+     * [最高等级 : 3]\n瞬间迅速的移动。 \n#c再次使用时间间隔 ： 15分#
+     * <br><b>Max Level Effect:</b> MP 20消耗后 12秒之内增加20的移动速度
+     */
+    public static final int NIMBLE_FEET = 1002;
+
+    /**
+     * [英雄之回声]
+     * [最高等级 : 1]\n增加周边角色的物理攻击力和魔法攻击力。 \n#c冷却时间 : 2小时#
+     * <br><b>Max Level Effect:</b> 消耗MP 30，持续 40分钟，增加物理和魔法攻击力4% 
+     */
+    public static final int ECHO_OF_HERO = 1005;
+
 
 
     public static final int FOLLOW_THE_LEADER = 8;
@@ -42,36 +47,10 @@ public class Beginner {
      */
     public static final int MAP_CHAIR = 100;
 
-    /**
-     * [蜗牛投掷术]
-     * [最高等级：3]\n投掷蜗牛壳来攻击远距离的怪物
-     * <br><b>Max Level Effect:</b> MP7 消耗后伤害40
-     */
-    public static final int THREE_SNAILS = 1000;
 
-    /**
-     * [团队治疗]
-     * [最高等级 : 3]\n30秒内持续恢复HP. \n#c再次使用时间间隔 : 2分#
-     * <br><b>Max Level Effect:</b> MP 15 消耗后 30秒恢复 HP 72
-     */
-    public static final int RECOVERY = 1001;
-
-    /**
-     * [疾风步]
-     * [最高等级 : 3]\n瞬间迅速的移动。 \n#c再次使用时间间隔 ： 20秒#
-     * <br><b>Max Level Effect:</b> MP 10消耗后 12秒之内增加20的移动速度
-     */
-    public static final int NIMBLE_FEET = 1002;
 
     public static final int MONSTER_RIDER = 1004;
 
-
-    /**
-     * [英雄之回声]
-     * [最高等级 : 1]\n增加周边角色的物理攻击力和魔法攻击力。 \n#c冷却时间 : 300秒#
-     * <br><b>Max Level Effect:</b> 消耗MP 30，持续 40分钟，增加物理和魔法攻击力4%
-     */
-    public static final int ECHO_OF_HERO = 1005;
 
     /**
      * [向下跳跃]
@@ -151,6 +130,4 @@ public class Beginner {
      * <br><b>Max Level Effect:</b> MP消耗10，防御力增加10，移动速度140，跳跃力120
      */
     public static final int BALROG_MOUNT = 1031;
-
-
 }

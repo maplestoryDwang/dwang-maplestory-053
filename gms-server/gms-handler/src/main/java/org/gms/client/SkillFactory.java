@@ -25,7 +25,7 @@ import org.gms.constants.skills.adv.archer.Bowman;
 import org.gms.constants.skills.other.Aran;
 import org.gms.constants.skills.adv.thief.assassin.Assassin;
 import org.gms.constants.skills.adv.thief.bandit.Bandit;
-import org.gms.constants.skills.adv.begin.Beginner;
+import org.gms.constants.skills.other.Beginner;
 import org.gms.constants.skills.adv.magician.cleric.Bishop;
 import org.gms.constants.skills.other.BlazeWizard;
 import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
@@ -35,9 +35,9 @@ import org.gms.constants.skills.adv.magician.cleric.Cleric;
 import org.gms.constants.skills.other.Corsair;
 import org.gms.constants.skills.adv.archer.crossbowman.Crossbowman;
 import org.gms.constants.skills.adv.warrior.fighter.Crusader;
-import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.constants.skills.other.DawnWarrior;
-import org.gms.constants.skills.adv.warrior.spearman.DragonKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Dragonknight;
 import org.gms.constants.skills.other.Evan;
 import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
 import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;
@@ -55,7 +55,7 @@ import org.gms.constants.skills.other.Legend;
 import org.gms.constants.skills.adv.magician.Magician;
 import org.gms.constants.skills.other.Marauder;
 import org.gms.constants.skills.adv.archer.crossbowman.Marksman;
-import org.gms.constants.skills.adv.thief.assassin.NightLord;
+import org.gms.constants.skills.adv.thief.assassin.Nightlord;
 import org.gms.constants.skills.other.NightWalker;
 import org.gms.constants.skills.other.Noblesse;
 import org.gms.constants.skills.adv.warrior.page.Page;
@@ -70,7 +70,7 @@ import org.gms.constants.skills.adv.warrior.spearman.Spearman;
 import org.gms.constants.skills.other.SuperGM;
 import org.gms.constants.skills.other.ThunderBreaker;
 import org.gms.constants.skills.adv.warrior.Warrior;
-import org.gms.constants.skills.adv.warrior.page.WhiteKnight;
+import org.gms.constants.skills.adv.warrior.page.Whiteknight;
 import org.gms.constants.skills.other.WindArcher;
 import org.gms.provider.Data;
 import org.gms.provider.DataDirectoryEntry;
@@ -154,8 +154,8 @@ public class SkillFactory {
             switch (id) {
                 case Hero.RUSH:
                 case Paladin.RUSH:
-                case DarkKnight.RUSH:
-                case DragonKnight.SACRIFICE:
+                case Darkknight.RUSH:
+                case Dragonknight.SACRIFICE:
                 case FpMage.EXPLOSION:
                 case FpMage.POISON_MIST:
                 case Cleric.HEAL:
@@ -168,7 +168,7 @@ public class SkillFactory {
                 case SuperGM.HEAL_PLUS_DISPEL:
                 case Hero.MONSTER_MAGNET:
                 case Paladin.MONSTER_MAGNET:
-                case DarkKnight.MONSTER_MAGNET:
+                case Darkknight.MONSTER_MAGNET:
                 case Evan.ICE_BREATH:
                 case Evan.FIRE_BREATH:
                 case Gunslinger.RECOIL_SHOT:
@@ -202,13 +202,13 @@ public class SkillFactory {
                 case Page.POWER_GUARD:
                 case Page.SWORD_BOOSTER:
                 case Page.THREATEN:
-                case WhiteKnight.FLAME_CHARGE_BW:
-                case WhiteKnight.BLIZZARD_CHARGE_BW:
-                case WhiteKnight.LIGHTNING_CHARGE_BW:
-                case WhiteKnight.MAGIC_CRASH:
-                case WhiteKnight.FIRE_CHARGE_SWORD:
-                case WhiteKnight.ICE_CHARGE_SWORD:
-                case WhiteKnight.THUNDER_CHARGE_SWORD:
+                case Whiteknight.FLAME_CHARGE_BW:
+                case Whiteknight.BLIZZARD_CHARGE_BW:
+                case Whiteknight.LIGHTNING_CHARGE_BW:
+                case Whiteknight.MAGIC_CRASH:
+                case Whiteknight.FIRE_CHARGE_SWORD:
+                case Whiteknight.ICE_CHARGE_SWORD:
+                case Whiteknight.THUNDER_CHARGE_SWORD:
                 case Paladin.DIVINE_CHARGE_BW:
                 case Paladin.HERO_S_WILL:
                 case Paladin.MAPLE_WARRIOR:
@@ -218,14 +218,14 @@ public class SkillFactory {
                 case Spearman.IRON_WILL:
                 case Spearman.POLE_ARM_BOOSTER:
                 case Spearman.SPEAR_BOOSTER:
-                case DragonKnight.DRAGON_BLOOD:
-                case DragonKnight.POWER_CRASH:
-                case DarkKnight.AURA_OF_THE_BEHOLDER:
-                case DarkKnight.BEHOLDER:
-                case DarkKnight.HERO_S_WILL:
-                case DarkKnight.HEX_OF_THE_BEHOLDER:
-                case DarkKnight.MAPLE_WARRIOR:
-                case DarkKnight.POWER_STANCE:
+                case Dragonknight.DRAGON_BLOOD:
+                case Dragonknight.POWER_CRASH:
+                case Darkknight.AURA_OF_THE_BEHOLDER:
+                case Darkknight.BEHOLDER:
+                case Darkknight.HERO_S_WILL:
+                case Darkknight.HEX_OF_THE_BEHOLDER:
+                case Darkknight.MAPLE_WARRIOR:
+                case Darkknight.POWER_STANCE:
                 case Magician.MAGIC_GUARD:
                 case Magician.MAGIC_ARMOR:
                 case FpWizard.MEDITATION:
@@ -275,10 +275,10 @@ public class SkillFactory {
                 case Assassin.HASTE:
                 case Hermit.MESO_UP:
                 case Hermit.SHADOW_PARTNER:
-                case NightLord  .HERO_S_WILL:
-                case NightLord.MAPLE_WARRIOR:
-                case NightLord.NINJA_AMBUSH:
-                case NightLord.SHADOW_CLAW:
+                case Nightlord.HERO_S_WILL:
+                case Nightlord.MAPLE_WARRIOR:
+                case Nightlord.NINJA_AMBUSH:
+                case Nightlord.SHADOW_CLAW:
                 case Bandit.DAGGER_BOOSTER:
                 case Bandit.HASTE:
                 case Chiefbandit.MESO_GUARD:

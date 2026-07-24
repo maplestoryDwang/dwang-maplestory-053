@@ -28,7 +28,7 @@ import org.gms.client.inventory.Equip.ScrollResult;
 import org.gms.client.keybind.KeyBinding;
 import org.gms.client.keybind.QuickslotBinding;
 import org.gms.constants.game.CommodityFlag;
-import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.dao.entity.ModifiedCashItemDO;
 import org.gms.model.pojo.NewYearCardRecord;
 import org.gms.client.status.MonsterStatus;
@@ -3932,7 +3932,6 @@ public class PacketCreator {
         p.writeInt(chrId);
         p.writeByte(effectId);
         p.writeInt(skillId);
-        p.writeByte(0);
         p.writeByte(skillLv);
         p.writeByte(direction);
         return p;
@@ -3950,7 +3949,7 @@ public class PacketCreator {
     public static Packet showOwnBerserk(int skilllevel, boolean Berserk) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT);
         p.writeByte(1);
-        p.writeInt(DarkKnight.BERSERK);
+        p.writeInt(Darkknight.BERSERK);
 //        p.writeByte(0xA9);
         p.writeByte(skilllevel);
         p.writeByte(Berserk ? 1 : 0);

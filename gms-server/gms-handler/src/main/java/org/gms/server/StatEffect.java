@@ -41,7 +41,7 @@ import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.skills.other.Aran;
 import org.gms.constants.skills.adv.thief.assassin.Assassin;
 import org.gms.constants.skills.adv.thief.bandit.Bandit;
-import org.gms.constants.skills.adv.begin.Beginner;
+import org.gms.constants.skills.other.Beginner;
 import org.gms.constants.skills.adv.magician.cleric.Bishop;
 import org.gms.constants.skills.other.BlazeWizard;
 import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
@@ -52,9 +52,9 @@ import org.gms.constants.skills.adv.magician.cleric.Cleric;
 import org.gms.constants.skills.other.Corsair;
 import org.gms.constants.skills.adv.archer.crossbowman.Crossbowman;
 import org.gms.constants.skills.adv.warrior.fighter.Crusader;
-import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.constants.skills.other.DawnWarrior;
-import org.gms.constants.skills.adv.warrior.spearman.DragonKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Dragonknight;
 import org.gms.constants.skills.other.Evan;
 import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
 import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;
@@ -72,7 +72,7 @@ import org.gms.constants.skills.other.Legend;
 import org.gms.constants.skills.adv.magician.Magician;
 import org.gms.constants.skills.other.Marauder;
 import org.gms.constants.skills.adv.archer.crossbowman.Marksman;
-import org.gms.constants.skills.adv.thief.assassin.NightLord;
+import org.gms.constants.skills.adv.thief.assassin.Nightlord;
 import org.gms.constants.skills.other.NightWalker;
 import org.gms.constants.skills.other.Noblesse;
 import org.gms.constants.skills.other.Outlaw;
@@ -87,7 +87,7 @@ import org.gms.constants.skills.adv.archer.crossbowman.Sniper;
 import org.gms.constants.skills.adv.warrior.spearman.Spearman;
 import org.gms.constants.skills.other.SuperGM;
 import org.gms.constants.skills.other.ThunderBreaker;
-import org.gms.constants.skills.adv.warrior.page.WhiteKnight;
+import org.gms.constants.skills.adv.warrior.page.Whiteknight;
 import org.gms.constants.skills.other.WindArcher;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.Server;
@@ -546,24 +546,24 @@ public class StatEffect {
                 case DawnWarrior.COMBO:
                     statups.add(new Pair<>(BuffStat.COMBO, 1));
                     break;
-                case WhiteKnight.FLAME_CHARGE_BW:
-                case WhiteKnight.BLIZZARD_CHARGE_BW:
-                case WhiteKnight.LIGHTNING_CHARGE_BW:
-                case WhiteKnight.FIRE_CHARGE_SWORD:
-                case WhiteKnight.ICE_CHARGE_SWORD:
-                case WhiteKnight.THUNDER_CHARGE_SWORD:
+                case Whiteknight.FLAME_CHARGE_BW:
+                case Whiteknight.BLIZZARD_CHARGE_BW:
+                case Whiteknight.LIGHTNING_CHARGE_BW:
+                case Whiteknight.FIRE_CHARGE_SWORD:
+                case Whiteknight.ICE_CHARGE_SWORD:
+                case Whiteknight.THUNDER_CHARGE_SWORD:
                 case Paladin.DIVINE_CHARGE_BW:
                 case Paladin.HOLY_CHARGE_SWORD:
                 case DawnWarrior.SOUL_CHARGE:
                 case ThunderBreaker.LIGHTNING_CHARGE:
                     statups.add(new Pair<>(BuffStat.WK_CHARGE, x));
                     break;
-                case DragonKnight.DRAGON_BLOOD:
+                case Dragonknight.DRAGON_BLOOD:
                     statups.add(new Pair<>(BuffStat.DRAGONBLOOD, ret.x));
                     break;
                 case Hero.POWER_STANCE:
                 case Paladin.POWER_STANCE:
-                case DarkKnight.POWER_STANCE:
+                case Darkknight.POWER_STANCE:
                 case Aran.FREEZE_STANDING:
                     statups.add(new Pair<>(BuffStat.STANCE, iprop));
                     break;
@@ -659,7 +659,7 @@ public class StatEffect {
                 case Chiefbandit.PICKPOCKET:
                     statups.add(new Pair<>(BuffStat.PICKPOCKET, x));
                     break;
-                case NightLord.SHADOW_CLAW:
+                case Nightlord.SHADOW_CLAW:
                     statups.add(new Pair<>(BuffStat.SHADOW_CLAW, 0));
                     break;
                 // PIRATE
@@ -711,13 +711,13 @@ public class StatEffect {
                     break;
                 case Hero.MAPLE_WARRIOR:
                 case Paladin.MAPLE_WARRIOR:
-                case DarkKnight.MAPLE_WARRIOR:
+                case Darkknight.MAPLE_WARRIOR:
                 case FpArchmage.MAPLE_WARRIOR:
                 case IlArchmage.MAPLE_WARRIOR:
                 case Bishop.MAPLE_WARRIOR:
                 case Bowmaster.MAPLE_WARRIOR:
                 case Marksman.MAPLE_WARRIOR:
-                case NightLord.MAPLE_WARRIOR:
+                case Nightlord.MAPLE_WARRIOR:
                 case Shadower.MAPLE_WARRIOR:
                 case Corsair.MAPLE_WARRIOR:
                 case Buccaneer.MAPLE_WARRIOR:
@@ -740,7 +740,7 @@ public class StatEffect {
                 case Bowmaster.PHOENIX:
                 case IlArchmage.IFRIT:
                 case Bishop.BAHAMUT:
-                case DarkKnight.BEHOLDER:
+                case Darkknight.BEHOLDER:
                 case Outlaw.GAVIOTA:
                 case DawnWarrior.SOUL:
                 case BlazeWizard.FLAME:
@@ -752,8 +752,8 @@ public class StatEffect {
                     break;
                 // ----------------------------- MONSTER STATUS ---------------------------------- //
                 case Crusader.ARMOR_CRASH:
-                case DragonKnight.POWER_CRASH:
-                case WhiteKnight.MAGIC_CRASH:
+                case Dragonknight.POWER_CRASH:
+                case Whiteknight.MAGIC_CRASH:
                     monsterStatus.put(MonsterStatus.SEAL_SKILL, 1);
                     break;
                 case Thief.DISORDER:
@@ -763,7 +763,7 @@ public class StatEffect {
                 case Corsair.HYPNOTIZE:
                     monsterStatus.put(MonsterStatus.INERTMOB, 1);
                     break;
-                case NightLord.NINJA_AMBUSH:
+                case Nightlord.NINJA_AMBUSH:
                 case Shadower.NINJA_AMBUSH:
                     monsterStatus.put(MonsterStatus.NINJA_AMBUSH, ret.damage);
                     break;
@@ -771,14 +771,14 @@ public class StatEffect {
                     monsterStatus.put(MonsterStatus.WATK, ret.x);
                     monsterStatus.put(MonsterStatus.WDEF, ret.y);
                     break;
-                case DragonKnight.DRAGON_ROAR:
+                case Dragonknight.DRAGON_ROAR:
                     ret.hpR = -x / 100.0;
                     monsterStatus.put(MonsterStatus.STUN, 1);
                     break;
                 case Crusader.COMA_AXE:
                 case Crusader.COMA_SWORD:
                 case Crusader.SHOUT:
-                case WhiteKnight.CHARGED_BLOW:
+                case Whiteknight.CHARGED_BLOW:
                 case Hunter.ARROW_BOMB_BOW:
                 case Chiefbandit.ASSAULTER:
                 case Shadower.BOOMERANG_STEP:
@@ -795,7 +795,7 @@ public class StatEffect {
                 case Evan.BLAZE:
                     monsterStatus.put(MonsterStatus.STUN, 1);
                     break;
-                case NightLord.TAUNT:
+                case Nightlord.TAUNT:
                 case Shadower.TAUNT:
                     monsterStatus.put(MonsterStatus.SHOWDOWN, ret.x);
                     monsterStatus.put(MonsterStatus.MDEF, ret.x);
@@ -1549,14 +1549,14 @@ public class StatEffect {
             case IlMage.SEAL:
             case Priest.DOOM:
             case Hermit.SHADOW_WEB:
-            case NightLord.NINJA_AMBUSH:
+            case Nightlord.NINJA_AMBUSH:
             case Shadower.NINJA_AMBUSH:
             case BlazeWizard.SLOW:
             case BlazeWizard.SEAL:
             case NightWalker.SHADOW_WEB:
             case Crusader.ARMOR_CRASH:
-            case DragonKnight.POWER_CRASH:
-            case WhiteKnight.MAGIC_CRASH:
+            case Dragonknight.POWER_CRASH:
+            case Whiteknight.MAGIC_CRASH:
             case Priest.DISPEL:
             case SuperGM.HEAL_PLUS_DISPEL:
                 return true;
@@ -1585,11 +1585,11 @@ public class StatEffect {
     }
 
     public boolean isDragonBlood() {
-        return skill && sourceid == DragonKnight.DRAGON_BLOOD;
+        return skill && sourceid == Dragonknight.DRAGON_BLOOD;
     }
 
     public boolean isBerserk() {
-        return skill && sourceid == DarkKnight.BERSERK;
+        return skill && sourceid == Darkknight.BERSERK;
     }
 
     public boolean isRecovery() {
@@ -1629,7 +1629,7 @@ public class StatEffect {
     }
 
     public boolean isBeholder() {
-        return skill && sourceid == DarkKnight.BEHOLDER;
+        return skill && sourceid == Darkknight.BEHOLDER;
     }
 
     private boolean isShadowPartner() {
@@ -1685,11 +1685,11 @@ public class StatEffect {
     }
 
     private boolean isShadowClaw() {
-        return skill && sourceid == NightLord.SHADOW_CLAW;
+        return skill && sourceid == Nightlord.SHADOW_CLAW;
     }
 
     private boolean isCrash() {
-        return skill && (sourceid == DragonKnight.POWER_CRASH || sourceid == Crusader.ARMOR_CRASH || sourceid == WhiteKnight.MAGIC_CRASH);
+        return skill && (sourceid == Dragonknight.POWER_CRASH || sourceid == Crusader.ARMOR_CRASH || sourceid == Whiteknight.MAGIC_CRASH);
     }
 
     private boolean isSeal() {
@@ -1712,13 +1712,13 @@ public class StatEffect {
         switch (skillid) {
             case Hero.HERO_S_WILL:
             case Paladin.HERO_S_WILL:
-            case DarkKnight.HERO_S_WILL:
+            case Darkknight.HERO_S_WILL:
             case FpArchmage.HERO_S_WILL:
             case IlArchmage.HERO_S_WILL:
             case Bishop.HERO_S_WILL:
             case Bowmaster.HERO_S_WILL:
             case Marksman.HERO_S_WILL:
-            case NightLord.HERO_S_WILL:
+            case Nightlord.HERO_S_WILL:
             case Shadower.HERO_S_WILL:
             case Buccaneer.PIRATES_RAGE:
             case Aran.HEROS_WILL:
@@ -1800,7 +1800,7 @@ public class StatEffect {
             case Bowmaster.PHOENIX:
             case Outlaw.GAVIOTA:
                 return SummonMovementType.CIRCLE_FOLLOW;
-            case DarkKnight.BEHOLDER:
+            case Darkknight.BEHOLDER:
             case FpArchmage.ELQUINES:
             case IlArchmage.IFRIT:
             case Bishop.BAHAMUT:

@@ -34,7 +34,7 @@ import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
 import org.gms.constants.id.MobId;
-import org.gms.constants.skills.adv.begin.Beginner;
+import org.gms.constants.skills.other.Beginner;
 import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
 import org.gms.constants.skills.adv.archer.hunter.Hunter;
 import org.gms.constants.skills.adv.archer.hunter.Ranger;
@@ -51,18 +51,18 @@ import org.gms.constants.skills.adv.magician.il_wizard.IlMage;
 import org.gms.constants.skills.adv.thief.Thief;
 import org.gms.constants.skills.adv.thief.assassin.Assassin;
 import org.gms.constants.skills.adv.thief.assassin.Hermit;
-import org.gms.constants.skills.adv.thief.assassin.NightLord;
+import org.gms.constants.skills.adv.thief.assassin.Nightlord;
 import org.gms.constants.skills.adv.thief.bandit.Bandit;
 import org.gms.constants.skills.adv.thief.bandit.Chiefbandit;
 import org.gms.constants.skills.adv.thief.bandit.Shadower;
-import org.gms.constants.skills.adv.warrior.spearman.DragonKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Dragonknight;
 import org.gms.constants.skills.adv.warrior.spearman.Spearman;
 import org.gms.constants.skills.adv.warrior.fighter.Crusader;
 import org.gms.constants.skills.adv.warrior.fighter.Fighter;
 import org.gms.constants.skills.adv.warrior.fighter.Hero;
 import org.gms.constants.skills.adv.warrior.page.Page;
 import org.gms.constants.skills.adv.warrior.page.Paladin;
-import org.gms.constants.skills.adv.warrior.page.WhiteKnight;
+import org.gms.constants.skills.adv.warrior.page.Whiteknight;
 import org.gms.constants.skills.other.*;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
@@ -289,9 +289,9 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                         distanceToDetect += 40000;
                     } else if (attack.skill == Bishop.GENESIS || attack.skill == IlArchmage.BLIZZARD || attack.skill == FpArchmage.METEOR_SHOWER) {
                         distanceToDetect += 275000;
-                    } else if (attack.skill == Hero.BRANDISH || attack.skill == DragonKnight.SPEAR_CRUSHER || attack.skill == DragonKnight.POLE_ARM_CRUSHER) {
+                    } else if (attack.skill == Hero.BRANDISH || attack.skill == Dragonknight.SPEAR_CRUSHER || attack.skill == Dragonknight.POLE_ARM_CRUSHER) {
                         distanceToDetect += 40000;
-                    } else if (attack.skill == DragonKnight.DRAGON_ROAR || attack.skill == SuperGM.SUPER_DRAGON_ROAR) {
+                    } else if (attack.skill == Dragonknight.DRAGON_ROAR || attack.skill == SuperGM.SUPER_DRAGON_ROAR) {
                         distanceToDetect += 250000;
                     } else if (attack.skill == Shadower.BOOMERANG_STEP || attack.skill == IlArchmage.CHAIN_LIGHTNING) {
                         distanceToDetect += 60000;
@@ -476,7 +476,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                             Skill chargeSkill = SkillFactory.getSkill(charge);
                             if (player.isBuffFrom(BuffStat.WK_CHARGE, chargeSkill)) {
                                 if (totDamageToOneMonster > 0) {
-                                    if (charge == WhiteKnight.BLIZZARD_CHARGE_BW || charge == WhiteKnight.ICE_CHARGE_SWORD) {
+                                    if (charge == Whiteknight.BLIZZARD_CHARGE_BW || charge == Whiteknight.ICE_CHARGE_SWORD) {
                                         monster.setTempEffectiveness(Element.ICE, ElementalEffectiveness.WEAK, chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getY() * 1000);
                                         // 修复冰技能不冰怪的问题，关键是冰和火都没有对应的异常状态，对应的异常只有冻结。如果这里把ICE改了，那火怎么办？所以，还是先注释掉。
 //                                        MonsterStatusEffect monsterStatusEffect = new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.FREEZE, chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getX()), chargeSkill, null, false);
@@ -484,7 +484,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
 //                                        monster.applyStatus(player, monsterStatusEffect, false, duration);
                                         break;
                                     }
-                                    if (charge == WhiteKnight.FLAME_CHARGE_BW || charge == WhiteKnight.FIRE_CHARGE_SWORD) {
+                                    if (charge == Whiteknight.FLAME_CHARGE_BW || charge == Whiteknight.FIRE_CHARGE_SWORD) {
                                         monster.setTempEffectiveness(Element.FIRE, ElementalEffectiveness.WEAK, chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getY() * 1000);
                                         break;
                                     }
@@ -824,11 +824,11 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
 
         if (magic && ret.skill != 0) {   // thanks onechord for noticing a few false positives stemming from maxdmg as 0
             calcDmgMax = (long) (Math.ceil((chr.getTotalMagic() * Math.ceil(chr.getTotalMagic() / 1000.0) + chr.getTotalMagic()) / 30.0) + Math.ceil(chr.getTotalInt() / 200.0));
-        } else if (ret.skill == Thief.LUCKY_SEVEN || ret.skill == NightWalker.LUCKY_SEVEN || ret.skill == NightLord.TRIPLE_THROW) {
+        } else if (ret.skill == Thief.LUCKY_SEVEN || ret.skill == NightWalker.LUCKY_SEVEN || ret.skill == Nightlord.TRIPLE_THROW) {
             calcDmgMax = (long) ((chr.getTotalLuk() * 5) * Math.ceil(chr.getTotalWatk() / 100.0));
-        } else if (ret.skill == DragonKnight.DRAGON_ROAR) {
+        } else if (ret.skill == Dragonknight.DRAGON_ROAR) {
             calcDmgMax = (long) ((chr.getTotalStr() * 4 + chr.getTotalDex()) * Math.ceil(chr.getTotalWatk() / 100.0));
-        } else if (ret.skill == NightLord.VENOMOUS_STAR || ret.skill == Shadower.VENOMOUS_STAB) {
+        } else if (ret.skill == Nightlord.VENOMOUS_STAR || ret.skill == Shadower.VENOMOUS_STAB) {
             calcDmgMax = (long) (Math.ceil((18.5 * (chr.getTotalStr() + chr.getTotalLuk()) + chr.getTotalDex() * 2) / 100.0) * chr.calculateMaxBaseDamage(chr.getTotalWatk()));
         } else {
             calcDmgMax = chr.calculateMaxBaseDamage(chr.getTotalWatk());
@@ -969,15 +969,15 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                 int sourceID = chr.getBuffSource(BuffStat.WK_CHARGE);
                 int level = chr.getBuffedValue(BuffStat.WK_CHARGE);
                 if (monster != null) {
-                    if (sourceID == WhiteKnight.FLAME_CHARGE_BW || sourceID == WhiteKnight.FIRE_CHARGE_SWORD) {
+                    if (sourceID == Whiteknight.FLAME_CHARGE_BW || sourceID == Whiteknight.FIRE_CHARGE_SWORD) {
                         if (monster.getStats().getEffectiveness(Element.FIRE) == ElementalEffectiveness.WEAK) {
                             calcDmgMax *= 1.05 + level * 0.015;
                         }
-                    } else if (sourceID == WhiteKnight.BLIZZARD_CHARGE_BW || sourceID == WhiteKnight.ICE_CHARGE_SWORD) {
+                    } else if (sourceID == Whiteknight.BLIZZARD_CHARGE_BW || sourceID == Whiteknight.ICE_CHARGE_SWORD) {
                         if (monster.getStats().getEffectiveness(Element.ICE) == ElementalEffectiveness.WEAK) {
                             calcDmgMax *= 1.05 + level * 0.015;
                         }
-                    } else if (sourceID == WhiteKnight.LIGHTNING_CHARGE_BW || sourceID == WhiteKnight.THUNDER_CHARGE_SWORD) {
+                    } else if (sourceID == Whiteknight.LIGHTNING_CHARGE_BW || sourceID == Whiteknight.THUNDER_CHARGE_SWORD) {
                         if (monster.getStats().getEffectiveness(Element.LIGHTING) == ElementalEffectiveness.WEAK) {
                             calcDmgMax *= 1.05 + level * 0.015;
                         }

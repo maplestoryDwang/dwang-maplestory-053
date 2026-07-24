@@ -28,7 +28,7 @@ import org.gms.client.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.skills.other.Brawler;
 import org.gms.constants.skills.other.Corsair;
-import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.constants.skills.adv.warrior.fighter.Hero;
 import org.gms.constants.skills.adv.warrior.page.Paladin;
 import org.gms.constants.skills.adv.magician.cleric.Priest;
@@ -87,24 +87,24 @@ public final class SpecialMoveHandler extends AbstractPacketHandler {
                 chr.addCooldown(skillid, currentServerTime(), SECONDS.toMillis(cooldownTime));
             }
         }
-        if (skillid == Hero.MONSTER_MAGNET || skillid == Paladin.MONSTER_MAGNET || skillid == DarkKnight.MONSTER_MAGNET) { // Monster Magnet
-            int num = p.readInt();
-            for (int i = 0; i < num; i++) {
-                int mobOid = p.readInt();
-                byte success = p.readByte();
-                chr.getMap().broadcastMessage(chr, PacketCreator.catchMonster(mobOid, success), false);
-                Monster monster = chr.getMap().getMonsterByOid(mobOid);
-                if (monster != null) {
-                    if (!monster.isBoss()) {
-                        monster.aggroClearDamages();
-                        monster.aggroMonsterDamage(chr, 1);
-
-                        // thanks onechord for pointing out Magnet crashing the caster (issue would actually happen upon failing to catch mob)
-                        // thanks Conrad for noticing Magnet crashing when trying to pull bosses and fixed mobs
-                        monster.aggroSwitchController(chr, true);
-                    }
-                }
-            }
+        if (skillid == Hero.MONSTER_MAGNET || skillid == Paladin.MONSTER_MAGNET || skillid == Darkknight.MONSTER_MAGNET) { // Monster Magnet
+//            int num = p.readInt();
+//            for (int i = 0; i < num; i++) {
+//                int mobOid = p.readInt();
+//                byte success = p.readByte();
+//                chr.getMap().broadcastMessage(chr, PacketCreator.catchMonster(mobOid, success), false);
+//                Monster monster = chr.getMap().getMonsterByOid(mobOid);
+//                if (monster != null) {
+//                    if (!monster.isBoss()) {
+//                        monster.aggroClearDamages();
+//                        monster.aggroMonsterDamage(chr, 1);
+//
+//                        // thanks onechord for pointing out Magnet crashing the caster (issue would actually happen upon failing to catch mob)
+//                        // thanks Conrad for noticing Magnet crashing when trying to pull bosses and fixed mobs
+//                        monster.aggroSwitchController(chr, true);
+//                    }
+//                }
+//            }
             byte direction = p.readByte();   // thanks MedicOP for pointing some 3rd-party related issues with Magnet
             chr.getMap().broadcastMessage(chr, PacketCreator.showBuffEffect(chr.getId(), skillid, chr.getSkillLevel(skillid), 1, direction), false);
             c.sendPacket(PacketCreator.enableActions());

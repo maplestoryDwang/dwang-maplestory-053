@@ -42,7 +42,7 @@ import org.gms.constants.id.MapId;
 import org.gms.constants.id.MobId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.net.ServerConstants;
-import org.gms.constants.skills.adv.begin.Beginner;
+import org.gms.constants.skills.other.Beginner;
 import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
 import org.gms.constants.skills.adv.archer.hunter.Ranger;
 import org.gms.constants.skills.adv.archer.crossbowman.Marksman;
@@ -53,10 +53,10 @@ import org.gms.constants.skills.adv.magician.cleric.Priest;
 import org.gms.constants.skills.adv.magician.fp_wizard.FpArchmage;
 import org.gms.constants.skills.adv.magician.il_wizard.IlArchmage;
 import org.gms.constants.skills.adv.thief.assassin.Hermit;
-import org.gms.constants.skills.adv.thief.assassin.NightLord;
+import org.gms.constants.skills.adv.thief.assassin.Nightlord;
 import org.gms.constants.skills.adv.thief.bandit.Shadower;
 import org.gms.constants.skills.adv.warrior.*;
-import org.gms.constants.skills.adv.warrior.spearman.DarkKnight;
+import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.constants.skills.adv.warrior.fighter.Crusader;
 import org.gms.constants.skills.adv.warrior.fighter.Hero;
 import org.gms.constants.skills.adv.warrior.page.Paladin;
@@ -1044,9 +1044,9 @@ public class Character extends AbstractCharacterObject {
             skills[1] = Paladin.MONSTER_MAGNET;
             skills[2] = Paladin.BLAST;
         } else if (jobId == 132) {
-            skills[0] = DarkKnight.BEHOLDER;
-            skills[1] = DarkKnight.ACHILLES;
-            skills[2] = DarkKnight.MONSTER_MAGNET;
+            skills[0] = Darkknight.BEHOLDER;
+            skills[1] = Darkknight.ACHILLES;
+            skills[2] = Darkknight.MONSTER_MAGNET;
         } else if (jobId == 212) {
             skills[0] = FpArchmage.BIG_BANG;
             skills[1] = FpArchmage.MANA_REFLECTION;
@@ -1068,9 +1068,9 @@ public class Character extends AbstractCharacterObject {
             skills[1] = Marksman.BLIND;
             skills[2] = Marksman.SHARP_EYES;
         } else if (jobId == 412) {
-            skills[0] = NightLord.SHADOW_CLAW;
-            skills[1] = NightLord.SHADOW_SHIFTER;
-            skills[2] = NightLord.VENOMOUS_STAR;
+            skills[0] = Nightlord.SHADOW_CLAW;
+            skills[1] = Nightlord.SHADOW_SHIFTER;
+            skills[2] = Nightlord.VENOMOUS_STAR;
         } else if (jobId == 422) {
             skills[0] = Shadower.SHADOW_SHIFTER;
             skills[1] = Shadower.VENOMOUS_STAB;
@@ -1859,7 +1859,7 @@ public class Character extends AbstractCharacterObject {
         }
         final Character chr = this;
         if (job.equals(Job.DARKKNIGHT)) {
-            Skill BerserkX = SkillFactory.getSkill(DarkKnight.BERSERK);
+            Skill BerserkX = SkillFactory.getSkill(Darkknight.BERSERK);
             final int skilllevel = getSkillLevel(BerserkX);
             if (skilllevel > 0) {
                 berserk = chr.getHp() * 100 / chr.getCurrentMaxHp() < BerserkX.getEffect(skilllevel).getX();
@@ -2659,7 +2659,7 @@ public class Character extends AbstractCharacterObject {
 
     private static boolean dispelSkills(int skillid) {
         return switch (skillid) {
-            case DarkKnight.BEHOLDER, FpArchmage.ELQUINES, IlArchmage.IFRIT, Priest.SUMMON_DRAGON, Bishop.BAHAMUT,
+            case Darkknight.BEHOLDER, FpArchmage.ELQUINES, IlArchmage.IFRIT, Priest.SUMMON_DRAGON, Bishop.BAHAMUT,
                  Ranger.PUPPET, Ranger.SILVER_HAWK, Sniper.PUPPET, Sniper.GOLDEN_EAGLE, Hermit.SHADOW_PARTNER -> true;
             default -> false;
         };
@@ -3522,7 +3522,7 @@ public class Character extends AbstractCharacterObject {
                             summons.remove(summonId);
                             if (summon.isPuppet()) {
                                 map.removePlayerPuppet(this);
-                            } else if (summon.getSkill() == DarkKnight.BEHOLDER) {
+                            } else if (summon.getSkill() == Darkknight.BEHOLDER) {
                                 if (beholderHealingSchedule != null) {
                                     beholderHealingSchedule.cancel(false);
                                     beholderHealingSchedule = null;
@@ -4123,14 +4123,14 @@ public class Character extends AbstractCharacterObject {
         } else if (effect.isBerserk()) {
             checkBerserk(isHidden());
         } else if (effect.isBeholder()) {
-            final int beholder = DarkKnight.BEHOLDER;
+            final int beholder = Darkknight.BEHOLDER;
             if (beholderHealingSchedule != null) {
                 beholderHealingSchedule.cancel(false);
             }
             if (beholderBuffSchedule != null) {
                 beholderBuffSchedule.cancel(false);
             }
-            Skill bHealing = SkillFactory.getSkill(DarkKnight.AURA_OF_THE_BEHOLDER);
+            Skill bHealing = SkillFactory.getSkill(Darkknight.AURA_OF_THE_BEHOLDER);
             int bHealingLvl = getSkillLevel(bHealing);
             if (bHealingLvl > 0) {
                 final StatEffect healEffect = bHealing.getEffect(bHealingLvl);
@@ -4146,7 +4146,7 @@ public class Character extends AbstractCharacterObject {
                     getMap().broadcastMessage(Character.this, PacketCreator.showOwnBuffEffect(beholder, 2), false);
                 }, healInterval, healInterval);
             }
-            Skill bBuff = SkillFactory.getSkill(DarkKnight.HEX_OF_THE_BEHOLDER);
+            Skill bBuff = SkillFactory.getSkill(Darkknight.HEX_OF_THE_BEHOLDER);
             if (getSkillLevel(bBuff) > 0) {
                 final StatEffect buffEffect = bBuff.getEffect(getSkillLevel(bBuff));
                 int buffInterval = (int) SECONDS.toMillis(buffEffect.getX());
