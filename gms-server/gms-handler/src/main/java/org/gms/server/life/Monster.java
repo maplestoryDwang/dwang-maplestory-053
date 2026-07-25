@@ -1215,7 +1215,7 @@ public class Monster extends AbstractLoadedLife {
                 statiLock.unlock();
             }
         }
-
+        // 取消怪物的debuff
         final Runnable cancelTask = () -> {
             if (isAlive()) {
                 Packet packet = PacketCreator.cancelMonsterStatus(getObjectId(), status.getStati());
@@ -1246,6 +1246,7 @@ public class Monster extends AbstractLoadedLife {
 
             overtimeAction = new DamageTask(poisonDamage, from, status, 0);
             overtimeDelay = 1000;
+            //  venom 毒液攻击
         } else if (venom) {
             if (from.getJob() == Job.NIGHTLORD || from.getJob() == Job.SHADOWER || from.getJob().isA(Job.NIGHTWALKER3)) {
                 int poisonLevel, matk, jobid = from.getJob().getId();

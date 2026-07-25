@@ -4445,6 +4445,7 @@ public class PacketCreator {
                 p.writeInt(mse.getSkill().getId());
             }
             p.writeShort(-1); // might actually be the buffTime but it's not displayed anywhere
+//            p.writeShort(9000/500); // 持续时间但是好像要/500
         }
         p.writeShort(0); // delay in ms
         p.write(1); // ?

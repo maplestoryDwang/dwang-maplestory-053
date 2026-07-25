@@ -633,7 +633,7 @@ public class StatEffect {
                     break;
                 case Marksman.BLIND:
                     statups.add(new Pair<>(BuffStat.BLIND, x));
-                    monsterStatus.put(MonsterStatus.ACC, x);
+                    monsterStatus.put(MonsterStatus.BLIND, x);   // 命中率减少值
                     break;
                 case Bowmaster.SHARP_EYES:
                 case Marksman.SHARP_EYES:
@@ -774,6 +774,19 @@ public class StatEffect {
                 case Dragonknight.DRAGON_ROAR:
                     ret.hpR = -x / 100.0;
                     monsterStatus.put(MonsterStatus.STUN, 1);
+                    break;
+
+                case Crusader.PANIC_SWORD:
+                case Crusader.PANIC_AXE:
+//                    statups.add(new Pair<>(BuffStat.BLIND, -70));
+
+
+//                    monsterStatus.put(MonsterStatus.BLIND, -70);
+
+
+//                    monsterStatus.put(MonsterStatus.BLIND, iprop);
+//                    monsterStatus.put(MonsterStatus.ACC, 30);   // 命中率减少值
+
                     break;
                 case Crusader.COMA_AXE:
                 case Crusader.COMA_SWORD:
@@ -1838,7 +1851,8 @@ public class StatEffect {
     }
 
     public boolean makeChanceResult() {
-        return prop == 1.0 || Math.random() < prop;
+//        return prop == 1.0 || Math.random() < prop;
+        return true;
     }
 
     /*

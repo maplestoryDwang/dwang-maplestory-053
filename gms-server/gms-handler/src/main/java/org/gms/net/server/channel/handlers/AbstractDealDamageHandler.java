@@ -466,11 +466,26 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                     if (player.getBuffedValue(BuffStat.BLIND) != null) {
                         Skill blind = SkillFactory.getSkill(Marksman.BLIND);
                         if (blind.getEffect(player.getSkillLevel(blind)).makeChanceResult()) {
-                            MonsterStatusEffect monsterStatusEffect = new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.ACC, blind.getEffect(player.getSkillLevel(blind)).getX()), blind, null, false);
+                            MonsterStatusEffect monsterStatusEffect = new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.BLIND, blind.getEffect(player.getSkillLevel(blind)).getX()), blind, null, false);
                             long duration = SECONDS.toMillis(blind.getEffect(player.getSkillLevel(blind)).getY());
                             monster.applyStatus(player, monsterStatusEffect, false, duration);
                         }
                     }
+
+                    // 单独加一个 复用刺眼箭逻辑
+                    if (attack.skill == Crusader.PANIC_SWORD || attack.skill == Crusader.PANIC_AXE ) {
+                        Skill bind = SkillFactory.getSkill(Marksman.BLIND);
+                        Skill sourceSkill = SkillFactory.getSkill(attack.skill);
+                        if (sourceSkill.getEffect(player.getSkillLevel(sourceSkill)).makeChanceResult()) {
+                           // 使用刺眼箭的buff显示，实际还是使用panic的数值
+                            MonsterStatusEffect monsterStatusEffect = new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.BLIND, 30), bind, null, false);
+                            StatEffect effect = sourceSkill.getEffect(player.getSkillLevel(sourceSkill));
+                            int duration = effect.getDuration();
+                            monster.applyStatus(player, monsterStatusEffect, false, duration);
+                        }
+                    }
+
+
                     if (job == 121 || job == 122) {
                         for (int charge = 1211005; charge < 1211007; charge++) {
                             Skill chargeSkill = SkillFactory.getSkill(charge);
@@ -576,6 +591,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                             }
                         }
                     }
+                    // 给怪物加特效。
                     if (totDamageToOneMonster > 0 && attackEffect != null) {
                         Map<MonsterStatus, Integer> attackEffectStati = attackEffect.getMonsterStati();
                         if (!attackEffectStati.isEmpty()) {

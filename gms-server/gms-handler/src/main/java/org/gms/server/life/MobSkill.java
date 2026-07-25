@@ -247,7 +247,7 @@ public class MobSkill {
                 stats.put(MonsterStatus.MAGIC_IMMUNITY, 10);
                 reflection.add(x);
             }
-            case ACC -> stats.put(MonsterStatus.ACC, x);
+            case ACC -> stats.put(MonsterStatus.BLIND, x);
             case EVA -> stats.put(MonsterStatus.AVOID, x);
             case SPEED -> stats.put(MonsterStatus.SPEED, x);
             case SEAL_SKILL -> stats.put(MonsterStatus.SEAL_SKILL, x);

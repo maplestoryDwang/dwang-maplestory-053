@@ -9,8 +9,11 @@
 ## 战士
 org.gms.constants.skills.adventurer.warrior
 1. 磁石 只能吸一只。083可以吸7只，053非常鸡肋
+2. 稳如泰山mask修复
 
 ### 英雄 112
+1. 修复狂乱之剑/斧效果完成，需要复用刺眼箭的skillID才能正常显示黑暗。 MOB的status是 BLIND(1 << 12),
+
 ### 圣骑 122
 ### 黑骑 132
 1. 修复``恶龙附身（1320006） `` 显示特效包头错误
@@ -31,7 +34,7 @@ org.gms.constants.skills.adventurer.warrior
 1. 修复暴风箭雨
 
 ### 弩手 322
-1. 修复刺眼箭的角色Buffstatus，BLIND的mask是偏移44，校验mob的buffstatus
+1. 修复刺眼箭 （3221006）的角色Buffstatus，BLIND的mask是偏移44，校验mob的MonsterStatus
 
 
 

@@ -78,7 +78,7 @@ public enum BuffStat implements LongValueHolder{
 
     MAPLE_WARRIOR(1L << 35),         //  冒險島勇士
 
-    UNKNOW_36(1L << 36),        // 未知36
+    STANCE(1L << 36),        // 稳如泰山
 
     SHARP_EYES(1L << 37),     //  火眼 已校验
     UNKNOW_38(1L << 38),        // 未知36
@@ -115,7 +115,6 @@ public enum BuffStat implements LongValueHolder{
 
     //SLOW(0x1L),
     MORPH(0x2L),
-    STANCE(0x10L),
     MANA_REFLECTION(0x40L),
     //ALWAYS_RIGHT(0X80L),
     SHADOW_CLAW(0x100L),
