@@ -4506,8 +4506,8 @@ public class PacketCreator {
     public static Packet spawnMist(int objId, int ownerId, int skill, int level, Mist mist) {
         OutPacket p = OutPacket.create(SendPacketOpcode.SPAWN_MIST);
         p.writeInt(objId);
-//        p.write(mist.isMobMist() ? 0 : mist.isPoisonMist() ? 1 : mist.isRecoveryMist() ? 4 : 2); // mob mist = 0, player poison = 1, smokescreen = 2, unknown = 3, recovery = 4
-        p.write(0);
+//        p.write(mist.isMobMist() ? 0 : mist.isPoisonMist() ? 0 : mist.isRecoveryMist() ? 4 : 1); // mob mist = 0, player poison = 1, smokescreen = 2, unknown = 3, recovery = 4
+        p.write(0); // mob mist = 0, player poison = 1, smokescreen = 2, unknown = 3, recovery = 4
 
         p.writeInt(ownerId);
         p.writeInt(skill);
@@ -4518,7 +4518,7 @@ public class PacketCreator {
         p.writeInt(mist.getBox().y);
         p.writeInt(mist.getBox().x + mist.getBox().width);
         p.writeInt(mist.getBox().y + mist.getBox().height);
-        p.writeInt(0);
+        p.writeBool(mist.isShelter());  // 053的 shelter是这里控制的- -
         return p;
     }
 

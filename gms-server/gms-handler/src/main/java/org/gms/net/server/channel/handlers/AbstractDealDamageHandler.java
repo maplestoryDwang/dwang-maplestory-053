@@ -714,46 +714,52 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             map.damageMonster(attacker, monster, damage);
         }
     }
-//    public AttackInfo parseDamage(InPacket lea, boolean ranged) {
-    protected AttackInfo parseDamage(InPacket lea, Character chr, boolean ranged, boolean magic) {
+//    public AttackInfo parseDamage(InPacket p, boolean ranged) {
+    protected AttackInfo parseDamage(InPacket p, Character chr, boolean ranged, boolean magic) {
 
         AttackInfo ret = new AttackInfo();
 
-        lea.readByte();
-        ret.numAttackedAndDamage = lea.readByte();
+        p.readByte();
+        ret.numAttackedAndDamage = p.readByte();
         ret.numAttacked = (ret.numAttackedAndDamage >>> 4) & 0xF; // guess why there are no skills damaging more than
         // 15 monsters...
         ret.numDamage = ret.numAttackedAndDamage & 0xF; // how often each single monster was attacked o.o
         ret.allDamage = new HashMap<>();
-        int v10 = lea.readInt();
+        int v10 = p.readInt();
         ret.skill = v10;
         // 蓄力攻击
-        if (v10 == 2121001 || v10 == 2221001 || v10 == 2321001 || v10 == 3221001 || v10 == 3121004 ){
-            int i = lea.readInt();
+        if (v10 == FpArchmage.BIG_BANG || v10 == IlArchmage.BIG_BANG || v10 == Bishop.BIG_BANG || v10 == Marksman.PIERCING_ARROW || v10 == Bowmaster.HURRICANE ){
+            int i = p.readInt();
         }
 
-        lea.readByte(); // always 0 (?)
-        ret.stance = lea.readByte();
+        p.readByte(); // always 0 (?)
+        ret.stance = p.readByte();
+
+        if (ret.skill == Chiefbandit.MESO_EXPLOSION) {
+            return parseMesoExplosion(p, ret);
+        }
+
+
 
         if (ranged) {
-            lea.readShort();
-            lea.readShort(); // somehow related to crits? this is the only value that changes between two otherwise
+            p.readShort();
+            p.readShort(); // somehow related to crits? this is the only value that changes between two otherwise
             // identical attacks
             // System.out.println(Integer.toBinaryString(wui & 0xFFFF) + "_" + Integer.toHexString(wui & 0xFFFF));
-            lea.skip(7);
-            // System.out.println("Unk1: " + HexTool.toString(lea.read(7)));
+            p.skip(7);
+            // System.out.println("Unk1: " + HexTool.toString(p.read(7)));
         } else {
-            lea.skip(6);
+            p.skip(6);
         }
 
 
         for (int i = 0; i < ret.numAttacked; i++) {
-            int oid = lea.readInt();
-            lea.skip(14); // seems to contain some position info o.o
+            int oid = p.readInt();
+            p.skip(14); // seems to contain some position info o.o
 
             List<Integer> allDamageNumbers = new ArrayList<Integer>();
             for (int j = 0; j < ret.numDamage; j++) {
-                int damage = lea.readInt();
+                int damage = p.readInt();
                 allDamageNumbers.add(Integer.valueOf(damage));
             }
 //            ret.allDamage.add(new Pair<Integer, List<Integer>>(Integer.valueOf(oid), allDamageNumbers));
@@ -762,6 +768,52 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
         return ret;
     }
 
+    public AttackInfo parseMesoExplosion(InPacket lea, AttackInfo ret) {
+
+        if (ret.numAttackedAndDamage == 0) { // 没打到怪
+            lea.skip(10);
+
+            int bullets = lea.readByte();
+            for (int j = 0; j < bullets; j++) {
+                int mesoid = lea.readInt();
+                lea.skip(1);
+                ret.allDamage.put(mesoid, null);
+            }
+            return ret;
+
+        } else {
+            lea.skip(6);
+        }
+
+        for (int i = 0; i < ret.numAttacked + 1; i++) {
+
+            int oid = lea.readInt();
+
+            if (i < ret.numAttacked) {
+                lea.skip(12);
+                int bullets = lea.readByte();
+
+                List<Integer> allDamageNumbers = new ArrayList<Integer>();
+                for (int j = 0; j < bullets; j++) {
+                    int damage = lea.readInt();
+                    // System.out.println("Damage: " + damage);
+                    allDamageNumbers.add(Integer.valueOf(damage));
+                }
+                ret.allDamage.put(oid, allDamageNumbers);
+
+            } else {
+
+                int bullets = lea.readByte();
+                for (int j = 0; j < bullets; j++) {
+                    int mesoid = lea.readInt();
+                    lea.skip(1);
+                    ret.allDamage.put(mesoid, null);
+                }
+            }
+        }
+
+        return ret;
+    }
     protected AttackInfo parseDamage083(InPacket p, Character chr, boolean ranged, boolean magic) {
         //2C 00 00 01 91 A1 12 00 A5 57 62 FC E2 75 99 10 00 47 80 01 04 01 C6 CC 02 DD FF 5F 00
 
@@ -796,6 +848,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
         ret.display = p.readByte();
         ret.direction = p.readByte();
         ret.stance = p.readByte();
+
         if (ret.skill == Chiefbandit.MESO_EXPLOSION) {
             if (ret.numAttackedAndDamage == 0) {
                 p.skip(10);

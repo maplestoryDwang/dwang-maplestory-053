@@ -50,6 +50,7 @@ public class Mist extends AbstractMapObject {
     private final boolean isMobMist;
     private boolean isPoisonMist;
     private boolean isRecoveryMist;
+    private boolean isShelter;
     private final int skillDelay;
 
     public Mist(Rectangle mistPosition, Monster mob, MobSkill skill) {
@@ -77,6 +78,7 @@ public class Mist extends AbstractMapObject {
 
             case Shadower.SMOKESCREEN: // Smoke Screen
                 isPoisonMist = false;
+                isShelter = true;
                 break;
 
             case FpMage.POISON_MIST: // FP mist
@@ -111,6 +113,10 @@ public class Mist extends AbstractMapObject {
 
     public boolean isRecoveryMist() {
         return isRecoveryMist;
+    }
+
+    public boolean isShelter() {
+        return isShelter;
     }
 
     public int getSkillDelay() {

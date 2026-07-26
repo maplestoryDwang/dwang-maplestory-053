@@ -403,7 +403,7 @@ public enum SendPacketOpcode implements Opcode {
     // SET_BUY_EQUIP_EXT(0x6C),  // 可能是额外的饰品插槽，用于其他版本？
     MAPLE_TV_USE_RES(0x6D), // Maple TV使用结果（不是空白，是一个弹窗）
     AVATAR_MEGAPHONE_RESULT(0x6E), // 头像喇叭结果（机器人无用）
-    SET_AVATAR_MEGAPHONE(0x6F), // 设置头像喇叭
+    SET_AVATAR_MEGAPHONE(-1), // 设置头像喇叭
     CLEAR_AVATAR_MEGAPHONE(0x70), // 清除头像喇叭
     CANCEL_NAME_CHANGE_RESULT(0x71), // 取消更改名字结果
     CANCEL_TRANSFER_WORLD_RESULT(0x72), // 取消转移世界结果

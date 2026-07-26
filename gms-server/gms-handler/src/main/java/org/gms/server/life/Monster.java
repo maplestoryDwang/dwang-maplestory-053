@@ -1287,7 +1287,7 @@ public class Monster extends AbstractLoadedLife {
             overtimeDelay = 3500;
             */
             // 忍者伏击
-        } else if (status.getSkill().getId() == Nightlord.NINJA_AMBUSH || status.getSkill().getId() == 4221004) { // Ninja Ambush
+        } else if (status.getSkill().getId() == Nightlord.NINJA_AMBUSH || status.getSkill().getId() == Shadower.NINJA_AMBUSH) { // Ninja Ambush
             final Skill skill = SkillFactory.getSkill(status.getSkill().getId());
             final byte level = from.getSkillLevel(skill);
             final int damage = (int) ((from.getStr() + from.getLuk()) * ((3.7 * skill.getEffect(level).getDamage()) / 100));
