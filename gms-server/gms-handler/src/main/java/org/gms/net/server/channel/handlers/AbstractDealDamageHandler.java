@@ -419,7 +419,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                         }
                     } else if (attack.skill == FpArchmage.FIRE_DEMON) {
                         long duration = SECONDS.toMillis(SkillFactory.getSkill(FpArchmage.FIRE_DEMON).getEffect(player.getSkillLevel(SkillFactory.getSkill(FpArchmage.FIRE_DEMON))).getDuration());
-                        monster.setTempEffectiveness(Element.ICE, ElementalEffectiveness.WEAK, duration);
+                        monster.setTempEffectiveness(Element.ICE, ElementalEffectiveness.WEAK, duration); //火凤球效果：冰技能虚弱
                     } else if (attack.skill == IlArchmage.ICE_DEMON) {
                         long duration = SECONDS.toMillis(SkillFactory.getSkill(IlArchmage.ICE_DEMON).getEffect(player.getSkillLevel(SkillFactory.getSkill(IlArchmage.ICE_DEMON))).getDuration());
                         monster.setTempEffectiveness(Element.FIRE, ElementalEffectiveness.WEAK, duration);
@@ -485,6 +485,16 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                         }
                     }
 
+                    // 单独加一个龙咆哮，使用虎咆哮的特效
+                    if (attack.skill == Dragonknight.DRAGON_ROAR){
+                        Skill bind = SkillFactory.getSkill(Crusader.SHOUT);
+                        Skill sourceSkill = SkillFactory.getSkill(attack.skill);
+                        MonsterStatusEffect monsterStatusEffect = new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.STUN, 1), bind, null, false);
+                        StatEffect effect = sourceSkill.getEffect(player.getSkillLevel(sourceSkill));
+                        int duration = effect.getY() * 1000;
+                        monster.applyStatus(player, monsterStatusEffect, false, duration);
+                    }
+
 
                     if (job == 121 || job == 122) {
                         for (int charge = 1211005; charge < 1211007; charge++) {
@@ -494,9 +504,9 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                                     if (charge == Whiteknight.BLIZZARD_CHARGE_BW || charge == Whiteknight.ICE_CHARGE_SWORD) {
                                         monster.setTempEffectiveness(Element.ICE, ElementalEffectiveness.WEAK, chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getY() * 1000);
                                         // 修复冰技能不冰怪的问题，关键是冰和火都没有对应的异常状态，对应的异常只有冻结。如果这里把ICE改了，那火怎么办？所以，还是先注释掉。
-//                                        MonsterStatusEffect monsterStatusEffect = new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.FREEZE, chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getX()), chargeSkill, null, false);
-//                                        long duration = SECONDS.toMillis(chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getY());
-//                                        monster.applyStatus(player, monsterStatusEffect, false, duration);
+                                        MonsterStatusEffect monsterStatusEffect = new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.FREEZE, chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getX()), chargeSkill, null, false);
+                                        long duration = SECONDS.toMillis(chargeSkill.getEffect(player.getSkillLevel(chargeSkill)).getY());
+                                        monster.applyStatus(player, monsterStatusEffect, false, duration);
                                         break;
                                     }
                                     if (charge == Whiteknight.FLAME_CHARGE_BW || charge == Whiteknight.FIRE_CHARGE_SWORD) {
@@ -591,6 +601,9 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                             }
                         }
                     }
+
+
+
                     // 给怪物加特效。
                     if (totDamageToOneMonster > 0 && attackEffect != null) {
                         Map<MonsterStatus, Integer> attackEffectStati = attackEffect.getMonsterStati();

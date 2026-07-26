@@ -546,11 +546,15 @@ public class StatEffect {
                 case DawnWarrior.COMBO:
                     statups.add(new Pair<>(BuffStat.COMBO, 1));
                     break;
-                case Whiteknight.FLAME_CHARGE_BW:
                 case Whiteknight.BLIZZARD_CHARGE_BW:
+                    statups.add(new Pair<>(BuffStat.WK_CHARGE, x));
+                    break;
+                case Whiteknight.ICE_CHARGE_SWORD:
+                    statups.add(new Pair<>(BuffStat.WK_CHARGE, x));
+                    break;
                 case Whiteknight.LIGHTNING_CHARGE_BW:
                 case Whiteknight.FIRE_CHARGE_SWORD:
-                case Whiteknight.ICE_CHARGE_SWORD:
+                case Whiteknight.FLAME_CHARGE_BW:
                 case Whiteknight.THUNDER_CHARGE_SWORD:
                 case Paladin.DIVINE_CHARGE_BW:
                 case Paladin.HOLY_CHARGE_SWORD:
@@ -578,7 +582,7 @@ public class StatEffect {
                     statups.add(new Pair<>(BuffStat.MAGIC_GUARD, x));
                     break;
                 case Cleric.INVINCIBLE:
-                    statups.add(new Pair<>(BuffStat.INVINCIBLE, x));
+                    statups.add(new Pair<>(BuffStat.INVINCIBLE, x)); // 只防御物理
                     break;
                 case Priest.HOLY_SYMBOL:
                 case SuperGM.HOLY_SYMBOL:
@@ -592,7 +596,7 @@ public class StatEffect {
                 case FpArchmage.MANA_REFLECTION:
                 case IlArchmage.MANA_REFLECTION:
                 case Bishop.MANA_REFLECTION:
-                    statups.add(new Pair<>(BuffStat.MANA_REFLECTION, 1));
+                    statups.add(new Pair<>(BuffStat.MANA_REFLECTION, 0));
                     break;
                 case Bishop.HOLY_SHIELD:
                     statups.add(new Pair<>(BuffStat.HOLY_SHIELD, x));
@@ -773,20 +777,17 @@ public class StatEffect {
                     break;
                 case Dragonknight.DRAGON_ROAR:
                     ret.hpR = -x / 100.0;
-                    monsterStatus.put(MonsterStatus.STUN, 1);
+                    // 有误 眩晕时间是y值
+//                    monsterStatus.put(MonsterStatus.STUN, 1);
                     break;
 
                 case Crusader.PANIC_SWORD:
                 case Crusader.PANIC_AXE:
 //                    statups.add(new Pair<>(BuffStat.BLIND, -70));
-
-
 //                    monsterStatus.put(MonsterStatus.BLIND, -70);
-
-
 //                    monsterStatus.put(MonsterStatus.BLIND, iprop);
 //                    monsterStatus.put(MonsterStatus.ACC, 30);   // 命中率减少值
-
+                    // 单独判断不用buff判断了
                     break;
                 case Crusader.COMA_AXE:
                 case Crusader.COMA_SWORD:
@@ -820,11 +821,13 @@ public class StatEffect {
                 case IlMage.ELEMENT_COMPOSITION:
                 case Sniper.BLIZZARD:
                 case Outlaw.ICE_SPLITTER:
-                case FpArchmage.PARALYZE:
                 case Aran.COMBO_TEMPEST:
                 case Evan.ICE_BREATH:
                     monsterStatus.put(MonsterStatus.FREEZE, 1);
                     ret.duration *= 2; // freezing skills are a little strange
+                    break;
+                case FpArchmage.PARALYZE:
+                    monsterStatus.put(MonsterStatus.STUN, 1);
                     break;
                 case FpWizard.SLOW:
                 case IlWizard.SLOW:
@@ -848,8 +851,9 @@ public class StatEffect {
                     monsterStatus.put(MonsterStatus.SHADOW_WEB, 1);
                     break;
                 case FpArchmage.FIRE_DEMON:
-                case IlArchmage.ICE_DEMON:
                     monsterStatus.put(MonsterStatus.POISON, 1);
+                    break;
+                case IlArchmage.ICE_DEMON:
                     monsterStatus.put(MonsterStatus.FREEZE, 1);
                     break;
                 case Evan.PHANTOM_IMPRINT:
@@ -890,6 +894,7 @@ public class StatEffect {
     }
 
     /**
+     * 魔力吸收
      * @param applyto
      * @param obj
      * @param attack  damage done by the skill
@@ -1678,7 +1683,9 @@ public class StatEffect {
     }
 
     public boolean isPoison() {
-        return skill && (sourceid == FpMage.POISON_MIST || sourceid == FpWizard.POISON_BREATH || sourceid == FpMage.ELEMENT_COMPOSITION || sourceid == NightWalker.POISON_BOMB || sourceid == BlazeWizard.FLAME_GEAR);
+        return skill && (sourceid == FpMage.POISON_MIST || sourceid == FpWizard.POISON_BREATH || sourceid == FpMage.ELEMENT_COMPOSITION || sourceid == FpArchmage.FIRE_DEMON ||
+        sourceid == NightWalker.POISON_BOMB ||
+                sourceid == BlazeWizard.FLAME_GEAR);
     }
 
     public boolean isMorph() {

@@ -154,10 +154,25 @@ public enum SendPacketOpcode implements Opcode {
     DROP_ITEM_FROM_MAPOBJECT(0xB8), // 地图掉落道具
     // check ↓
     REMOVE_ITEM_FROM_MAP(0xB9), // 移除地图上的道具(捡起/消失)
-    SPAWN_MIST(0xBD), // 生成烟雾效果(如毒雾)
-    REMOVE_MIST(0xBE), // 移除烟雾效果
-    SPAWN_DOOR(0xBF), // 生成时空门
-    REMOVE_DOOR(0xC0), // 移除时空门
+
+    /**
+     * 生成烟雾效果(如毒雾)
+     */
+    SPAWN_MIST(0xBD),  // check
+
+    /**
+     * 移除烟雾效果
+     */
+    REMOVE_MIST(0xBE), // check
+
+    /**
+     * 生成时空门
+     */
+    SPAWN_DOOR(0xBF), // check
+    /**
+     * 移除时空门
+     */
+    REMOVE_DOOR(0xC0), // check
     OPEN_NPC_SHOP(0xD6), // 打开NPC商店窗口
     CONFIRM_SHOP_TRANSACTION(0xD7), // 商店交易回应
     OPEN_STORAGE(0xD8), // 打开仓库窗口

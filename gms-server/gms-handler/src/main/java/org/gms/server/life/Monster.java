@@ -1154,7 +1154,7 @@ public class Monster extends AbstractLoadedLife {
     }
 
     public boolean applyStatus(Character from, final MonsterStatusEffect status, boolean poison, long duration, boolean venom) {
-        switch (getMonsterEffectiveness(status.getSkill().getElement())) {
+         switch (getMonsterEffectiveness(status.getSkill().getElement())) {
             case IMMUNE:
             case STRONG:
             case NEUTRAL:
@@ -1286,7 +1286,8 @@ public class Monster extends AbstractLoadedLife {
             overtimeAction = new DamageTask(webDamage, from, status, 1);
             overtimeDelay = 3500;
             */
-        } else if (status.getSkill().getId() == 4121004 || status.getSkill().getId() == 4221004) { // Ninja Ambush
+            // 忍者伏击
+        } else if (status.getSkill().getId() == Nightlord.NINJA_AMBUSH || status.getSkill().getId() == 4221004) { // Ninja Ambush
             final Skill skill = SkillFactory.getSkill(status.getSkill().getId());
             final byte level = from.getSkillLevel(skill);
             final int damage = (int) ((from.getStr() + from.getLuk()) * ((3.7 * skill.getEffect(level).getDamage()) / 100));

@@ -135,7 +135,7 @@ public enum RecvOpcode implements Opcode {
     // 0x29 未使用
 
     /**
-     * 受到伤害
+     * 受到伤害 CUser::OnHit
      */
     TAKE_DAMAGE(0x2A),
     /**

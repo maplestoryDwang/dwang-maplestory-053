@@ -3018,7 +3018,7 @@ public class PacketCreator {
         // mplew.writeShort(0x84); // 47 82
         mplew.writeInt(cid);
         mplew.write(skill);
-        mplew.writeInt(0);
+        mplew.writeInt(0);  //damage
         mplew.writeInt(monsteridfrom);
         mplew.write(1);
         mplew.write(0);
@@ -3941,7 +3941,7 @@ public class PacketCreator {
         OutPacket p = OutPacket.create(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT);
         p.writeByte(effectId);
         p.writeInt(skillId);
-        p.writeByte(0xA9);
+//        p.writeByte(0xA9);
         p.writeByte(1);
         return p;
     }
@@ -3960,8 +3960,8 @@ public class PacketCreator {
         OutPacket p = OutPacket.create(SendPacketOpcode.SHOW_FOREIGN_EFFECT);
         p.writeInt(chrId);
         p.writeByte(1);
-        p.writeInt(1320006);
-        p.writeByte(0xA9);
+        p.writeInt(Darkknight.BERSERK);
+//        p.writeByte(0xA9);
         p.writeByte(skillLv);
         p.writeBool(berserk);
         return p;
@@ -4437,6 +4437,7 @@ public class PacketCreator {
         p.writeInt(oid);
         writeIntMask(p, stati);
 
+        // 写nrt
         for (Map.Entry<MonsterStatus, Integer> stat : stati.entrySet()) {
             p.writeShort(stat.getValue());
             if (mse.isMonsterSkill()) {
@@ -4448,7 +4449,7 @@ public class PacketCreator {
 //            p.writeShort(9000/500); // 持续时间但是好像要/500
         }
         p.writeShort(0); // delay in ms
-        p.write(1); // ?
+        p.write(stati.size()); // ?
 
 
 //        int size = stati.size(); // size
@@ -4505,11 +4506,14 @@ public class PacketCreator {
     public static Packet spawnMist(int objId, int ownerId, int skill, int level, Mist mist) {
         OutPacket p = OutPacket.create(SendPacketOpcode.SPAWN_MIST);
         p.writeInt(objId);
-        p.writeInt(mist.isMobMist() ? 0 : mist.isPoisonMist() ? 1 : mist.isRecoveryMist() ? 4 : 2); // mob mist = 0, player poison = 1, smokescreen = 2, unknown = 3, recovery = 4
+//        p.write(mist.isMobMist() ? 0 : mist.isPoisonMist() ? 1 : mist.isRecoveryMist() ? 4 : 2); // mob mist = 0, player poison = 1, smokescreen = 2, unknown = 3, recovery = 4
+        p.write(0);
+
         p.writeInt(ownerId);
         p.writeInt(skill);
         p.writeByte(level);
         p.writeShort(mist.getSkillDelay()); // Skill delay
+
         p.writeInt(mist.getBox().x);
         p.writeInt(mist.getBox().y);
         p.writeInt(mist.getBox().x + mist.getBox().width);

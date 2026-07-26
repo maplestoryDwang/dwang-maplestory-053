@@ -23,104 +23,202 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.*;
 import org.gms.client.Character;
+import org.gms.client.inventory.Inventory;
+import org.gms.client.inventory.InventoryType;
+import org.gms.client.inventory.Item;
+import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.status.MonsterStatus;
+import org.gms.client.status.MonsterStatusEffect;
+import org.gms.config.GameConfig;
+import org.gms.constants.id.MapId;
+import org.gms.constants.inventory.ItemConstants;
+import org.gms.constants.skills.adv.warrior.fighter.Hero;
+import org.gms.constants.skills.adv.warrior.page.Paladin;
+import org.gms.constants.skills.other.Aran;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.server.StatEffect;
+import org.gms.server.life.*;
+import org.gms.server.maps.MapObject;
+import org.gms.server.maps.MapleMap;
 import org.gms.util.Pair;
+import org.gms.util.Randomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.gms.server.life.Monster;
 import org.gms.util.PacketCreator;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public final class TakeDamageHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(TakeDamageHandler.class);
 
-
+    // damagefrom 0 是魔法攻击  -1 是碰撞攻击
     @Override
     public void handlePacket(InPacket slea, Client c) {
         // damage from map object
         // 26 00 EB F2 2B 01 FE 25 00 00 00 00 00
         // damage from monster
         // 26 00 0F 60 4C 00 FF 48 01 00 00 B5 89 5D 00 CC CC CC CC 00 00 00 00
-
-        slea.readInt();
+        Character chr = c.getPlayer();
+        MapleMap map = chr.getMap();
+        int i = slea.readInt();
+        Monster attacker = null;
         int damagefrom = slea.readByte();
         int damage = slea.readInt();
         int oid = 0;
         int monsteridfrom = 0;
-        if (damagefrom != -2) {
+        if (damagefrom <= -2) {
+            short v68 = slea.readShort();
+        } else {
+//        if (damagefrom != -2) {
             monsteridfrom = slea.readInt();
             oid = slea.readInt();
+            int v62 = slea.readInt();
+            boolean v77 = slea.readByte() != 0;
+            byte v7 = slea.readByte();  // 反盾类型
+            byte v8 = slea.readByte();
+            byte v78 = 0;
+            if ( v8 == 2 ) {
+                v78 = 1;
+            }
+            if (v78 != 0 || v7 != 0) {
+                byte isPowerGuard = slea.readByte();
+                int reflectMobOid = slea.readInt();
+                byte hitAction = slea.readByte();
+                short mobX = slea.readShort();
+                short mobY = slea.readShort();
+                short charX = slea.readShort();
+                short charY = slea.readShort();
+
+            }
+            byte v9 = slea.readByte();
+            byte v77_2 = slea.readByte();
+            int v60_index14 = slea.readInt();
+            int[] v60 = new int[15];
+            v60[14] = v60_index14;
+            for (int j = 0; j < 14; j++) {
+                v60[j] = slea.readShort();
+            }
+            attacker = (Monster) chr.getMap().getMapObject(oid);
+
+            // 寒冰掌控制 英雄和圣骑士
+            if (v8 > 1 && attacker != null && !attacker.isBoss()) {
+                Skill skillObj = null;
+                if (chr.getSkillLevel(SkillFactory.getSkill(Paladin.GUARDIAN)) > 0) {
+                    skillObj = SkillFactory.getSkill(Paladin.GUARDIAN);
+                } else if (chr.getSkillLevel(SkillFactory.getSkill(Hero.GUARDIAN)) > 0) {
+                    skillObj = SkillFactory.getSkill(Hero.GUARDIAN);
+                }
+                if (skillObj != null) {
+                    StatEffect skillEffect = skillObj.getEffect(chr.getSkillLevel(skillObj));
+                    if (skillEffect != null) {
+                        attacker.applyStatus(chr, new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.STUN, 1), skillObj, null, false), false, skillEffect.getDuration(), false);
+                    } else {
+                        attacker.applyStatus(chr, new MonsterStatusEffect(Collections.singletonMap(MonsterStatus.STUN, 1), skillObj, null, false), false, 2000, false);
+                    }
+                }
+            }
+
         }
 
-        Character player = c.getPlayer();
 
         if (damage < 0 || damage > 60000) {
             return;
         }
-        if (damage > 0 && !player.isHidden()) {
+        if (damage > 0 && !chr.isHidden()) {
             if (damagefrom == -1 && damage > 0) {
-                Integer pguard = player.getBuffedValue(BuffStat.POWERGUARD);
+                Integer pguard = chr.getBuffedValue(BuffStat.POWERGUARD);
                 if (pguard != null) {
                     // why do we have to do this? -.- the client shows the damage...
-                    Monster attacker = (Monster) player.getMap().getMapObject(oid);
                     if (attacker != null && !attacker.isBoss()) {
                         int bouncedamage = (int) (damage * (pguard.doubleValue() / 100));
                         bouncedamage = Math.min(bouncedamage, attacker.getMaxHp() / 10);
-                        player.getMap().damageMonster(player, attacker, bouncedamage);
+                        chr.getMap().damageMonster(chr, attacker, bouncedamage);
                         damage -= bouncedamage;
-                        player.getMap().broadcastMessage(player, PacketCreator.damageMonster(oid, bouncedamage), false, true);
+                        chr.getMap().broadcastMessage(chr, PacketCreator.damageMonster(oid, bouncedamage), false, true);
+                    }
+                }
+
+            }
+
+            // 魔法反击
+            if (damagefrom != -1 && damagefrom != -2 && attacker != null) {
+                MobAttackInfo attackInfo = MobAttackInfoFactory.getMobAttackInfo(attacker, damagefrom);
+                if (attackInfo != null) {
+
+                    if (chr.getBuffedValue(BuffStat.MANA_REFLECTION) != null && damage > 0 && !attacker.isBoss()) {
+                        int jobid = chr.getJob().getId();
+                        if (jobid == 212 || jobid == 222 || jobid == 232) {
+                            int id = jobid * 10000 + 1002;
+                            Skill manaReflectSkill = SkillFactory.getSkill(id);
+                            if (chr.isBuffFrom(BuffStat.MANA_REFLECTION, manaReflectSkill) && chr.getSkillLevel(manaReflectSkill) > 0 && manaReflectSkill.getEffect(chr.getSkillLevel(manaReflectSkill)).makeChanceResult()) {
+                                int bouncedamage = (damage * manaReflectSkill.getEffect(chr.getSkillLevel(manaReflectSkill)).getX() / 100);
+                                if (bouncedamage > attacker.getMaxHp() / 5) {
+                                    bouncedamage = attacker.getMaxHp() / 5;
+                                }
+                                map.damageMonster(chr, attacker, bouncedamage);
+                                map.broadcastMessage(chr, PacketCreator.damageMonster(oid, bouncedamage), true);
+                                chr.sendPacket(PacketCreator.showOwnBuffEffect(id, 5));
+                                map.broadcastMessage(chr, PacketCreator.showBuffEffect(chr.getId(), id, 5), false);
+                            }
+                        }
                     }
                 }
             }
-            Integer mguard = player.getBuffedValue(BuffStat.MAGIC_GUARD);
-            Integer mesoguard = player.getBuffedValue(BuffStat.MESOGUARD);
+
+
+
+
+            Integer mguard = chr.getBuffedValue(BuffStat.MAGIC_GUARD);
+            Integer mesoguard = chr.getBuffedValue(BuffStat.MESOGUARD);
             if (mguard != null) {
                 List<Pair<MapleStat, Integer>> stats = new ArrayList<Pair<MapleStat , Integer>>(2);
                 int mploss = (int) (damage * (mguard.doubleValue() / 100.0));
                 int hploss = damage - mploss;
-                if (mploss > player.getMp()) {
-                    hploss += mploss - player.getMp();
-                    mploss = player.getMp();
+                if (mploss > chr.getMp()) {
+                    hploss += mploss - chr.getMp();
+                    mploss = chr.getMp();
                 }
 
-                player.setHp(player.getHp() - hploss);
-                player.setMp(player.getMp() - mploss);
-                stats.add(new Pair<MapleStat, Integer>(MapleStat.HP, player.getHp()));
-                stats.add(new Pair<MapleStat, Integer>(MapleStat.MP, player.getMp()));
-                c.sendPacket(PacketCreator.updatePlayerStats(stats, false, player));
+                chr.setHp(chr.getHp() - hploss);
+                chr.setMp(chr.getMp() - mploss);
+                stats.add(new Pair<MapleStat, Integer>(MapleStat.HP, chr.getHp()));
+                stats.add(new Pair<MapleStat, Integer>(MapleStat.MP, chr.getMp()));
+                c.sendPacket(PacketCreator.updatePlayerStats(stats, false, chr));
             } else if(mesoguard != null) {
                 damage = (damage % 2 == 0) ? damage / 2 : (damage / 2) + 1;
                 int mesoloss = (int) (damage * (mesoguard.doubleValue() / 100.0));
-                if(player.getMeso() < mesoloss) {
-                    player.gainMeso(-player.getMeso(), false);
-                    player.cancelBuffStats(BuffStat.MESOGUARD);
+                if(chr.getMeso() < mesoloss) {
+                    chr.gainMeso(-chr.getMeso(), false);
+                    chr.cancelBuffStats(BuffStat.MESOGUARD);
                 } else {
-                    player.gainMeso(-mesoloss, false);
+                    chr.gainMeso(-mesoloss, false);
                 }
-                player.addHP(-damage);
+                chr.addHP(-damage);
             } else {
-                player.addHP(-damage);
+                chr.addHP(-damage);
             }
 
         }
-        // player.getMap().broadcastMessage(null, MaplePacketCreator.damagePlayer(oid, 30000, damage));
-        if (!player.isHidden()) {
-            player.getMap().broadcastMessage(player,
-                    PacketCreator.damagePlayer(damagefrom, monsteridfrom, player.getId(), damage), false);
+        // chr.getMap().broadcastMessage(null, MaplePacketCreator.damagePlayer(oid, 30000, damage));
+        if (!chr.isHidden()) {
+            chr.getMap().broadcastMessage(chr,
+                    PacketCreator.damagePlayer(damagefrom, monsteridfrom, chr.getId(), damage), false);
         }
     }
-/*    @Override
-    public void handlePacket(InPacket p, Client c) {
+
+
+    public void handlePacket083(InPacket inPacket, Client c) {
         List<Character> banishPlayers = new ArrayList<>();
 
         Character chr = c.getPlayer();
-        p.readInt();
-        byte damagefrom = p.readByte();
-        p.readByte(); //Element
-        int damage = p.readInt();
+        inPacket.readInt();
+        byte damagefrom = inPacket.readByte();
+        int damage = inPacket.readInt();
         int oid = 0, monsteridfrom = 0, pgmr = 0, direction = 0;
         int pos_x = 0, pos_y = 0, fake = 0;
         boolean is_pgmr = false, is_pg = true, is_deadly = false;
@@ -128,8 +226,8 @@ public final class TakeDamageHandler extends AbstractPacketHandler {
         Monster attacker = null;
         final MapleMap map = chr.getMap();
         if (damagefrom != -3 && damagefrom != -4) {
-            monsteridfrom = p.readInt();
-            oid = p.readInt();
+            monsteridfrom = inPacket.readInt();
+            oid = inPacket.readInt();
 
             try {
                 MapObject mmo = map.getMapObject(oid);
@@ -145,7 +243,7 @@ public final class TakeDamageHandler extends AbstractPacketHandler {
                         return;
                     }
 
-                    List<loseItem> loseItems;
+                    List<LifeFactory.loseItem> loseItems;
                     if (damage > 0) {
                         loseItems = attacker.getStats().loseItem();
                         if (loseItems != null) {
@@ -154,7 +252,7 @@ public final class TakeDamageHandler extends AbstractPacketHandler {
                                 final int playerpos = chr.getPosition().x;
                                 byte d = 1;
                                 Point pos = new Point(0, chr.getPosition().y);
-                                for (loseItem loseItem : loseItems) {
+                                for (LifeFactory.loseItem loseItem : loseItems) {
                                     type = ItemConstants.getInventoryType(loseItem.getId());
 
                                     int dropCount = 0;
@@ -200,19 +298,19 @@ public final class TakeDamageHandler extends AbstractPacketHandler {
                 return;
             }
 
-            direction = p.readByte();
+            direction = inPacket.readByte();
 
-            if (p.available() >= 2) {
-                int reflect = p.readByte();
-                int guardingData = p.readByte();
+            if (inPacket.available() >= 2) {
+                int reflect = inPacket.readByte();
+                int guardingData = inPacket.readByte();
                 if (reflect > 0 || guardingData > 1) {
-                    byte isPowerGuard = p.readByte();
-                    int reflectMobOid = p.readInt();
-                    byte hitAction = p.readByte();
-                    short mobX = p.readShort();
-                    short mobY = p.readShort();
-                    short charX = p.readShort();
-                    short charY = p.readShort();
+                    byte isPowerGuard = inPacket.readByte();
+                    int reflectMobOid = inPacket.readInt();
+                    byte hitAction = inPacket.readByte();
+                    short mobX = inPacket.readShort();
+                    short mobY = inPacket.readShort();
+                    short charX = inPacket.readShort();
+                    short charY = inPacket.readShort();
                     if (guardingData > 1 && attacker != null && !attacker.isBoss()) {
                         Skill skillObj = null;
                         if (chr.getSkillLevel(SkillFactory.getSkill(1220006)) > 0) {
@@ -248,6 +346,7 @@ public final class TakeDamageHandler extends AbstractPacketHandler {
                 }
 
                 attacker.setMp(attacker.getMp() - attackInfo.getMpCon());
+
                 if (chr.getBuffedValue(BuffStat.MANA_REFLECTION) != null && damage > 0 && !attacker.isBoss()) {
                     int jobid = chr.getJob().getId();
                     if (jobid == 212 || jobid == 222 || jobid == 232) {
@@ -371,5 +470,5 @@ public final class TakeDamageHandler extends AbstractPacketHandler {
         for (Character player : banishPlayers) {  // chill, if this list ever gets non-empty an attacker does exist, trust me :)
             player.changeMapBanish(attacker.getBanish().getMap(), attacker.getBanish().getPortal(), attacker.getBanish().getMsg());
         }
-    }*/
+    }
 }

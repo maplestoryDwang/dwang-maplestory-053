@@ -81,7 +81,8 @@ public enum BuffStat implements LongValueHolder{
     STANCE(1L << 36),        // 稳如泰山
 
     SHARP_EYES(1L << 37),     //  火眼 已校验
-    UNKNOW_38(1L << 38),        // 未知36
+//    UNKNOW_38(1L << 38),        // 未知36
+    MANA_REFLECTION(1L << 38),  // 法术反击
 
     SEDUCE(1L << 39),               // 0x80 (Bit 7)   魅惑 OK Attract , MobSkillType.SEDUCE
 
@@ -115,7 +116,6 @@ public enum BuffStat implements LongValueHolder{
 
     //SLOW(0x1L),
     MORPH(0x2L),
-    MANA_REFLECTION(0x40L),
     //ALWAYS_RIGHT(0X80L),
     SHADOW_CLAW(0x100L),
     INFINITY(0x200L),
