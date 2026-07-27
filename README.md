@@ -5,7 +5,7 @@ Language / 语言: [English](README.md) | [中文](README-CN.md)
 > *"MapleStory is not merely a game; it is a cherished memory."*
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-[![Java](https://img.shields.io/badge/Java-8%2B-orange.svg)]()
+[![Java](https://img.shields.io/badge/Java-21%2B-orange.svg)]()
 [![Base](https://img.shields.io/badge/Base-BeiDou--v083-blue.svg)](https://github.com/BeiDouMS/BeiDou-Server)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)]()
 
@@ -87,9 +87,6 @@ The primary goal of this project is to recreate the authentic, nostalgic feeling
 
 - [ ] **Code Refactoring**: Remove redundant logic checks and optimize server runtime performance.
 - [ ] **Localization & Resolution**: Full Chinese client translation and modern high-resolution client porting.
-- [ ] **High-Version Branches**:
-  - Branch 1: 5th Job Advancement up to Black Mage.
-  - Branch 2: 6th Job Advancement era.
 - [ ] **Lobby-based Co-op Concept**: Explore a hybrid multiplayer model—players enjoy offline/single-player progression for solo exploration, with a shared online lobby for Party Quests (PQ) and Boss Raids.
 
 ---
