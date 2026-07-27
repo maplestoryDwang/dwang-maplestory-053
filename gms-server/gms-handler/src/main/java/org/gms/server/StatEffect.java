@@ -778,7 +778,7 @@ public class StatEffect {
                 case Dragonknight.DRAGON_ROAR:
                     ret.hpR = -x / 100.0;
                     // 有误 眩晕时间是y值
-                    monsterStatus.put(MonsterStatus.STUN, 1);
+//                    monsterStatus.put(MonsterStatus.STUN, 1);
                     break;
 
                 case Crusader.PANIC_SWORD:
@@ -839,7 +839,8 @@ public class StatEffect {
                     monsterStatus.put(MonsterStatus.POISON, 1);
                     break;
                 case Priest.DOOM:
-                    monsterStatus.put(MonsterStatus.DOOM, 1);
+//                    monsterStatus.put(MonsterStatus.DOOM, 1);
+                    monsterStatus.put(MonsterStatus.BLIND, 1);
                     break;
                 case IlMage.SEAL:
                 case FpMage.SEAL:
