@@ -27,23 +27,6 @@ import org.gms.server.life.MobSkillType;
 import java.util.Arrays;
 
 public enum Disease {
-//    NULL(0x0),
-//    SLOW(0x1, MobSkillType.SLOW),
-//    SEDUCE(0x80, MobSkillType.SEDUCE),
-//    FISHABLE(0x100),
-//    ZOMBIFY(0x4000),
-//    CONFUSE(0x80000, MobSkillType.REVERSE_INPUT), // 混乱
-//
-//
-//    // 以下正确
-//    STUN(0x00100000L, MobSkillType.STUN),           // 眩晕
-//    POISON(0x00040000L, MobSkillType.POISON),
-//    SEAL(0x80000L, MobSkillType.SEAL),              // 封印
-//    DARKNESS(0x20000L, MobSkillType.DARKNESS),
-//    WEAKEN(0x40000000, MobSkillType.WEAKNESS),
-//    CURSE(0x100000, MobSkillType.CURSE);            // 诅咒
-
-
     NULL(0),
 
     FISHABLE(1L << 8),                                 // 0x100 (Bit 8)      这个不知道是什么
@@ -53,8 +36,7 @@ public enum Disease {
 
     // 下面是对的
 
-    SLOW(1L << 32, MobSkillType.SLOW),                   // 这个是对的           OK
-    SEDUCE(1L << 39, MobSkillType.SEDUCE),               // 0x80 (Bit 7)   魅惑 OK Attract
+
 //    DARKNESS(1L << 17, MobSkillType.DARKNESS),         // 0x20000L (Bit 17)  會導致無法移動
 
     // 改了
@@ -67,6 +49,8 @@ public enum Disease {
     // 改了
     CURSE(1L << 31, MobSkillType.CURSE),               // 0x100000 (Bit 20 - 詛咒) 这两个用同一个mask? = =
 
+    SLOW(1L << 32, MobSkillType.SLOW),                   // 这个是对的           OK
+    SEDUCE(1L << 39, MobSkillType.SEDUCE),               // 0x80 (Bit 7)   魅惑 OK Attract
     ;
     private final long i;
     private final MobSkillType mobSkillType;

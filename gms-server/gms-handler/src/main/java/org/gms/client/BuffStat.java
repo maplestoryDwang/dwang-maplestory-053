@@ -62,7 +62,7 @@ public enum BuffStat implements LongValueHolder{
     SHADOWPARTNER(1L << 26),    // 影分身 (0x4000000)
     PICKPOCKET(1L << 27),       // 偷竊術 (0x8000000)
 
-     PUPPET(1L << 27),        // 稻草人/傀儡 ()
+    PUPPET(1L << 27),        // 稻草人/傀儡 ()
     MESOGUARD(1L << 28),        // 楓幣護盾 (0x10000000)
 
     UNKNOW_29(1L << 29),        // 未知29
