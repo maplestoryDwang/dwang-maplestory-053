@@ -8,7 +8,7 @@
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Java](https://img.shields.io/badge/Java-21%2B-orange.svg)]()
 [![Base](https://img.shields.io/badge/Base-BeiDou--v083-blue.svg)](https://github.com/BeiDouMS/BeiDou-Server)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)]()
+[![License](https://img.shields.io/badge/License-AGPL--3.0-green.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 ---
 

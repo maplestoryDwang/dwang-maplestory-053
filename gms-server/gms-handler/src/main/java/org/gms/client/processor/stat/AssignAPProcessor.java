@@ -30,6 +30,7 @@ import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.client.MapleStat;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
@@ -433,7 +434,8 @@ public class AssignAPProcessor {
                                 "\r\n运气(LUK): +" + statGain[2]));
             } else { // 不使用自动分配器的情况
                 if (inPacket.available() < 16) { // 检查数据包是否完整
-                    AutobanFactory.PACKET_EDIT.alert(chr, "Auto Assign数据包不完整"); // 记录异常
+                    AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, "Auto Assign数据包不完整");
+
                     c.disconnect(true, false); // 断开客户端连接
                     return;
                 }

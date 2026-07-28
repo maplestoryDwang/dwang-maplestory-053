@@ -26,6 +26,7 @@ import org.gms.client.Client;
 import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.WeaponType;
@@ -108,7 +109,8 @@ public final class SummonDamageHandler extends AbstractDealDamageHandler {
             Monster target = player.getMap().getMonsterByOid(attackEntry.getMonsterOid());
             if (target != null) {
                 if (damage > maxDmg) {
-                    AutobanFactory.DAMAGE_HACK.alert(c.getPlayer(), "Possible packet editing summon damage exploit.");
+                    AutobanManager.alert(c.getPlayer(), AutobanFactory.DAMAGE_HACK, "Possible packet editing summon damage exploit.");
+
                     final String mobName = MonsterInformationProvider.getInstance().getMobNameFromId(target.getId());
                     log.info("Possible exploit - chr {} used a summon of skillId {} to attack {} with damage {} (max: {})",
                             c.getPlayer().getName(), summon.getSkill(), mobName, damage, maxDmg);

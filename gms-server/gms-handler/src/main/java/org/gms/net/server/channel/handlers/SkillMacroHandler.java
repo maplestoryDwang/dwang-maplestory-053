@@ -25,6 +25,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.SkillMacro;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 
@@ -41,7 +42,8 @@ public final class SkillMacroHandler extends AbstractPacketHandler {
         for (int i = 0; i < num; i++) {
             String name = p.readString();
             if (name.length() > 12) {
-                AutobanFactory.PACKET_EDIT.alert(chr, "Invalid name length " + name + " (" + name.length() + ") for skill macro.");
+                AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, "Invalid name length " + name + " (" + name.length() + ") for skill macro.");
+
                 c.disconnect(false, false);
                 break;
             }

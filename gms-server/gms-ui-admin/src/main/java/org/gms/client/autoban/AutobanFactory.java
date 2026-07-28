@@ -1,47 +1,20 @@
-/*
-This file is part of the OdinMS Maple Story Server
-Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-Matthias Butz <matze@odinms.de>
-Jan Christian Meyer <vimes@odinms.de>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation version 3 as published by
-the Free Software Foundation. You may not use, modify or distribute
-this program under any other version of the GNU Affero General Public
-License.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 package org.gms.client.autoban;
 
 import lombok.Getter;
-import org.gms.client.Character;
-import org.gms.config.GameConfig;
 import org.gms.dao.entity.AutobanConfigDO;
-import org.gms.net.server.Server;
 import org.gms.util.I18nUtil;
-import org.gms.util.PacketCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
+ * 反作弊类型与配置枚举
+ *
  * @author kevintjuh93
  */
 public enum AutobanFactory {
@@ -67,12 +40,11 @@ public enum AutobanFactory {
     ATTACK_INTERVAL(I18nUtil.getMessage("autoban.name.ATTACK_INTERVAL"), 60, SECONDS.toMillis(60));
 
     private static final Logger log = LoggerFactory.getLogger(AutobanFactory.class);
-    private static final Set<Integer> ignoredChrIds = new HashSet<>();
 
     /**
-     * 配置缓存：type -> AutobanConfigDO
+     * 配置缓存：type -> AutobanConfigDO (并发安全 Map)
      */
-    private static final Map<String, AutobanConfigDO> CONFIG_CACHE = new HashMap<>();
+    private static final Map<String, AutobanConfigDO> CONFIG_CACHE = new ConcurrentHashMap<>();
 
     @Getter
     private final String name;
@@ -108,8 +80,10 @@ public enum AutobanFactory {
      */
     public static void initConfig(Map<String, AutobanConfigDO> configs) {
         CONFIG_CACHE.clear();
-        CONFIG_CACHE.putAll(configs);
-        log.info("Loaded {} autoban configs", configs.size());
+        if (configs != null) {
+            CONFIG_CACHE.putAll(configs);
+        }
+        log.info("Loaded {} autoban configs", CONFIG_CACHE.size());
     }
 
     /**
@@ -158,53 +132,5 @@ public enum AutobanFactory {
     public boolean isDisabled() {
         AutobanConfigDO config = CONFIG_CACHE.get(this.name());
         return config != null && Boolean.TRUE.equals(config.getDisabled());
-    }
-
-    public void addPoint(AutobanManager ban, String reason) {
-        ban.addPoint(this, reason);
-    }
-
-    public void alert(Character chr, String reason) {
-        if (GameConfig.getServerBoolean("use_auto_ban")) {
-            if (chr != null && isIgnored(chr.getId())) {
-                return;
-            }
-            Server.getInstance().broadcastGMMessage((chr != null ? chr.getWorld() : 0), PacketCreator.sendYellowTip((chr != null ? Character.makeMapleReadable(chr.getName()) : "") + " caused " + this.name() + " " + reason));
-        }
-        if (GameConfig.getServerBoolean("use_auto_ban_log")) {
-            final String chrName = chr != null ? Character.makeMapleReadable(chr.getName()) : "";
-            log.info("Autoban alert - chr {} caused {}-{}", chrName, this.name(), reason);
-        }
-    }
-
-    public void autoban(Character chr, String value) {
-        if (GameConfig.getServerBoolean("use_auto_ban")) {
-            chr.autoBan("Autobanned for (" + this.name() + ": " + value + ")");
-            //chr.sendPolice("You will be disconnected for (" + this.name() + ": " + value + ")");
-        }
-    }
-
-    /**
-     * Toggle ignored status for a character id.
-     * An ignored character will not trigger GM alerts.
-     *
-     * @return new status. true if the chrId is now ignored, otherwise false.
-     */
-    public static boolean toggleIgnored(int chrId) {
-        if (ignoredChrIds.contains(chrId)) {
-            ignoredChrIds.remove(chrId);
-            return false;
-        } else {
-            ignoredChrIds.add(chrId);
-            return true;
-        }
-    }
-
-    private static boolean isIgnored(int chrId) {
-        return ignoredChrIds.contains(chrId);
-    }
-
-    public static Collection<Integer> getIgnoredChrIds() {
-        return ignoredChrIds;
     }
 }

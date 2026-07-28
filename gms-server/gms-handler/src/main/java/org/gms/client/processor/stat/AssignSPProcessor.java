@@ -28,6 +28,7 @@ import org.gms.client.Client;
 import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.skills.other.Aran;
 import org.slf4j.Logger;
@@ -48,7 +49,8 @@ public class AssignSPProcessor {
 
         Character player = c.getPlayer();
         if ((!GameConstants.isPqSkillMap(player.getMapId()) && GameConstants.isPqSkill(skillid)) || (!player.isGM() && GameConstants.isGMSkills(skillid)) || (!GameConstants.isInJobTree(skillid, player.getJob().getId()) && !player.isGM())) {
-            AutobanFactory.PACKET_EDIT.alert(player, "tried to packet edit in distributing sp.");
+            AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, "tried to packet edit in distributing sp.");
+
             log.warn("Chr {} tried to use skill {} without it being in their job.", c.getPlayer().getName(), skillid);
 
             c.disconnect(true, false);

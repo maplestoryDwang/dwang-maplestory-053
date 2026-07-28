@@ -24,6 +24,7 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.util.PacketCreator;
@@ -41,7 +42,7 @@ public class UseGachaExpHandler extends AbstractPacketHandler {
         if (c.tryacquireClient()) {
             try {
                 if (c.getPlayer().getGachaExp() <= 0) {
-                    AutobanFactory.GACHA_EXP.autoban(c.getPlayer(), "Player tried to redeem GachaEXP, but had none to redeem.");
+                    AutobanManager.autoban(c.getPlayer(), AutobanFactory.GACHA_EXP, "Player tried to redeem GachaEXP, but had none to redeem.");
                 }
                 c.getPlayer().gainGachaExp();
             } finally {

@@ -27,6 +27,7 @@ import org.gms.client.Job;
 import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
@@ -1882,7 +1883,8 @@ public class ItemInformationProvider {
             equip.wear(false);
             String itemName = ItemInformationProvider.getInstance().getName(equip.getItemId());
             Server.getInstance().broadcastGMMessage(chr.getWorld(), PacketCreator.sendYellowTip("[Warning]: " + chr.getName() + " tried to equip " + itemName + " into slot " + dst + "."));
-            AutobanFactory.PACKET_EDIT.alert(chr, chr.getName() + " tried to forcibly equip an item.");
+            AutobanManager.alert(chr, AutobanFactory.PACKET_EDIT, chr.getName() + " tried to forcibly equip an item.");
+
             log.warn("Chr {} tried to equip {} into slot {}", chr.getName(), itemName, dst);
             return false;
         }

@@ -23,6 +23,7 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;
@@ -39,7 +40,8 @@ public final class ChangeChannelHandler extends AbstractPacketHandler {
         p.readInt();
         c.getPlayer().getAutoBanManager().setTimestamp(6, Server.getInstance().getCurrentTimestamp(), 3);
         if (c.getChannel() == channel) {
-            AutobanFactory.GENERAL.alert(c.getPlayer(), "CCing to same channel.");
+            AutobanManager.alert(c.getPlayer(), AutobanFactory.GENERAL, "CCing to same channel.");
+
             c.disconnect(false, false);
             return;
         } else if (c.getPlayer().getCashShop().isOpened() || c.getPlayer().getMiniGame() != null || c.getPlayer().getPlayerShop() != null || c.getPlayer().getTrade() != null) {

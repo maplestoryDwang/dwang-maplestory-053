@@ -24,6 +24,7 @@ package org.gms.net.server.channel.handlers;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.slf4j.Logger;
@@ -94,7 +95,8 @@ public final class WhisperHandler extends AbstractPacketHandler {
         user.getAutoBanManager().spam(7);
 
         if (message.length() > Byte.MAX_VALUE) {
-            AutobanFactory.PACKET_EDIT.alert(user, user.getName() + " tried to packet edit with whispers.");
+            AutobanManager.alert(user, AutobanFactory.PACKET_EDIT, user.getName() + " tried to packet edit with whispers.");
+
             log.warn("Chr {} tried to send text with length of {}", user.getName(), message.length());
             user.getClient().disconnect(true, false);
             return;

@@ -25,7 +25,7 @@ package org.gms.client.command.commands.gm3;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.command.Command;
 import org.gms.net.server.Server;
 import org.gms.util.I18nUtil;
@@ -49,7 +49,7 @@ public class IgnoreCommand extends Command {
             return;
         }
 
-        boolean ignored = AutobanFactory.toggleIgnored(victim.getId());
+        boolean ignored = AutobanManager.toggleIgnored(victim.getId());
         player.yellowMessage(ignored ? I18nUtil.getMessage("IgnoreCommand.message3", victim.getName()) : I18nUtil.getMessage("IgnoreCommand.message4", victim.getName()));
         String message_ = (ignored ? I18nUtil.getMessage("IgnoreCommand.message5", player.getName(), victim.getName()) : I18nUtil.getMessage("IgnoreCommand.message6", player.getName(), victim.getName()));
         Server.getInstance().broadcastGMMessage(c.getWorld(), PacketCreator.serverNotice(5, message_));

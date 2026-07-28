@@ -24,6 +24,7 @@ package org.gms.net.server.channel.handlers;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;
@@ -51,7 +52,7 @@ public final class MultiChatHandler extends AbstractPacketHandler {
         }
         String chattext = p.readString();
         if (chattext.length() > Byte.MAX_VALUE && !player.isGM()) {
-            AutobanFactory.PACKET_EDIT.alert(c.getPlayer(), c.getPlayer().getName() + " tried to packet edit chats.");
+            AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit chats.");
             log.warn("Chr {} tried to send text with length of {}", c.getPlayer().getName(), chattext.length());
             c.disconnect(true, false);
             return;

@@ -25,6 +25,7 @@ import org.gms.client.BuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
@@ -1458,7 +1459,7 @@ public class MapleMap {
             if (removeKilledMonsterObject(monster)) {
                 try {
                     if (monster.getStats().getLevel() >= chr.getLevel() + 30 && !chr.isGM()) {
-                        AutobanFactory.GENERAL.alert(chr, "因击杀超过自身30级的怪物[" + monster.getName() + "]被系统警告");
+                        AutobanManager.alert(chr, AutobanFactory.GENERAL, "因击杀超过自身30级的怪物[" + monster.getName() + "]被系统警告");
                     }
 
                     /*if (chr.getQuest(Quest.getInstance(29400)).getStatus().equals(QuestStatus.Status.STARTED)) {

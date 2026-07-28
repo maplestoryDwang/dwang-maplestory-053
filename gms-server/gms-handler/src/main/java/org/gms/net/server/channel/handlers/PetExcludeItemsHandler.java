@@ -24,6 +24,7 @@ package org.gms.net.server.channel.handlers;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.Pet;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
@@ -60,7 +61,8 @@ public final class PetExcludeItemsHandler extends AbstractPacketHandler {
             if (itemId >= 0) {
                 newExcludedItems.add(itemId);
             } else {
-                AutobanFactory.PACKET_EDIT.alert(chr, "negative item id value in PetExcludeItemsHandler (" + itemId + ")");
+                AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, "negative item id value in PetExcludeItemsHandler (" + itemId + ")");
+
                 return;
             }
         }

@@ -23,7 +23,6 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.autoban.AutobanFactory;
 import org.gms.client.status.MonsterStatus;
 import org.gms.client.status.MonsterStatusEffect;
 import org.gms.net.AbstractPacketHandler;

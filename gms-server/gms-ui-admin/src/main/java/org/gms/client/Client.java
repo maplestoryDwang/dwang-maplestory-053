@@ -1,7 +1,7 @@
 package org.gms.client;
 
 /**
- * TODO
+ * 暂时为了显示登录状态
  *
  * @author dwang
  * @version 1.0

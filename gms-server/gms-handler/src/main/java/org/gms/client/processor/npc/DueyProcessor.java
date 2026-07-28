@@ -26,6 +26,7 @@ package org.gms.client.processor.npc;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
@@ -297,14 +298,16 @@ public class DueyProcessor {
 
                 // 修复发快递给别人扣钱的问题
                 if (sendMesos < 0) {
-                    AutobanFactory.PACKET_EDIT.alert(c.getPlayer(), c.getPlayer().getName() + " tried to packet edit with sendMesos on duey.");
+                    AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit with sendMesos on duey.");
+
                     log.warn("Chr {} tried to use duey with mesos {}", c.getPlayer().getName(), sendMesos);
                     c.disconnect(true, false);
                     return;
                 }
                 int fee = Trade.getFee(sendMesos);
                 if (sendMessage != null && sendMessage.length() > 100) {
-                    AutobanFactory.PACKET_EDIT.alert(c.getPlayer(), c.getPlayer().getName() + " tried to packet edit with Quick Delivery on duey.");
+                    AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit with Quick Delivery on duey.");
+
                     log.warn("Chr {} tried to use duey with too long of a text", c.getPlayer().getName());
                     c.disconnect(true, false);
                     return;
@@ -312,7 +315,8 @@ public class DueyProcessor {
                 if (!quick) {
                     fee += 5000;
                 } else if (!c.getPlayer().haveItem(ItemId.QUICK_DELIVERY_TICKET)) {
-                    AutobanFactory.PACKET_EDIT.alert(c.getPlayer(), c.getPlayer().getName() + " tried to packet edit with Quick Delivery on duey.");
+                    AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit with Quick Delivery on duey.");
+
                     log.warn("Chr {} tried to use duey with Quick Delivery without a ticket, mesos {} and amount {}", c.getPlayer().getName(), sendMesos, amount);
                     c.disconnect(true, false);
                     return;
@@ -320,7 +324,8 @@ public class DueyProcessor {
 
                 long finalcost = (long) sendMesos + fee;
                 if (finalcost < 0 || finalcost > Integer.MAX_VALUE || (amount < 1 && sendMesos == 0)) {
-                    AutobanFactory.PACKET_EDIT.alert(c.getPlayer(), c.getPlayer().getName() + " tried to packet edit with duey.");
+                    AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit with duey.");
+
                     log.warn("Chr {} tried to use duey with mesos {} and amount {}", c.getPlayer().getName(), sendMesos, amount);
                     c.disconnect(true, false);
                     return;
@@ -420,7 +425,8 @@ public class DueyProcessor {
 
             // 判断是否本人快递，不是本人那就是改包了
             if (!Objects.equals(dp.getReceiverId(), c.getPlayer().getId())) {
-                AutobanFactory.PACKET_EDIT.alert(c.getPlayer(), c.getPlayer().getName() + " tried to packet edit with duey.");
+                AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit with duey.");
+
                 c.sendPacket(PacketCreator.sendDueyMSG(Actions.TOCLIENT_RECV_UNKNOWN_ERROR.getCode()));
                 log.warn("Chr {} tried to receive package from duey with receiverId {}", c.getPlayer().getName(), dp.getReceiverId());
                 return;

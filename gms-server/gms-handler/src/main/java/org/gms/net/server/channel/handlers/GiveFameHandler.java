@@ -24,6 +24,7 @@ package org.gms.net.server.channel.handlers;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.util.PacketCreator;
@@ -43,7 +44,8 @@ public final class GiveFameHandler extends AbstractPacketHandler {
         if (target == null || target.getId() == player.getId() || player.getLevel() < 15) {
             return;
         } else if (famechange != 1 && famechange != -1) {
-            AutobanFactory.PACKET_EDIT.alert(c.getPlayer(), c.getPlayer().getName() + " tried to packet edit fame.");
+            AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit fame.");
+
             log.warn(I18nUtil.getLogMessage("GiveFameHandler.handlePacket.warn1"), c.getPlayer().getName(), famechange);
             c.disconnect(true, false);
             return;

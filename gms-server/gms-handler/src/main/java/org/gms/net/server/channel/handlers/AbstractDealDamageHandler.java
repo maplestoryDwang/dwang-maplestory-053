@@ -27,6 +27,7 @@ import org.gms.client.Job;
 import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.status.MonsterStatus;
 import org.gms.client.status.MonsterStatusEffect;
 import org.gms.config.GameConfig;
@@ -124,7 +125,8 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             }
             if (display > 80) { //Hmm
                 if (!mySkill.getAction()) {
-                    AutobanFactory.FAST_ATTACK.autoban(chr, "WZ编辑；为技能添加动作：" + display);
+                    AutobanManager.alert(chr, AutobanFactory.FAST_ATTACK, "WZ编辑；为技能添加动作：" + display);
+
                     return null;
                 }
             }
@@ -174,7 +176,8 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                 }
 
                 if (player.getMp() < attackEffect.getMpCon()) {
-                    AutobanFactory.MPCON.addPoint(player.getAutoBanManager(), "技能: " + attack.skill + "; 玩家 MP: " + player.getMp() + "; MP 需要: " + attackEffect.getMpCon());
+                    player.getAutoBanManager().addPoint( AutobanFactory.MPCON, "技能: " + attack.skill + "; 玩家 MP: " + player.getMp() + "; MP 需要: " + attackEffect.getMpCon());
+
                 }
 
                 int mobCount = attackEffect.getMobCount();
@@ -205,7 +208,8 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                 }
 
                 if (attack.numAttacked > mobCount) {
-                    AutobanFactory.MOB_COUNT.autoban(player, "技能: " + attack.skill + "; Count: " + attack.numAttacked + " Max: " + attackEffect.getMobCount());
+                    AutobanManager.autoban(player, AutobanFactory.MOB_COUNT, "技能: " + attack.skill + "; Count: " + attack.numAttacked + " Max: " + attackEffect.getMobCount());
+
                     return;
                 }
             }
@@ -570,7 +574,8 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                     if (attack.skill != 0) {
                         if (attackEffect.getFixDamage() != -1) {
                             if (totDamageToOneMonster != attackEffect.getFixDamage() && totDamageToOneMonster != 0) {
-                                AutobanFactory.FIX_DAMAGE.autoban(player, totDamageToOneMonster + " damage");
+                                AutobanManager.autoban(player, AutobanFactory.FIX_DAMAGE, totDamageToOneMonster + " damage");
+
                             }
 
                             int threeSnailsId = player.getJobType() * 10000000 + 1000;
@@ -671,15 +676,16 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                         distanceHackWorstUsedTeleportContext,
                         distanceHackWorstUsedMovementContext
                 );
-                AutobanFactory.DISTANCE_HACK.addPoint(
-                        player.getAutoBanManager(),
-                        "Player: " + player.getName()
-                                + " maxDistanceSqToMob: " + distanceHackWorstDistance
-                                + " thresholdSq: " + distanceHackWorstThreshold
-                                + " SID: " + attack.skill
-                                + " MID: " + distanceHackWorstMonster.getId()
-                                + " " + bboxInfo
-                );
+                String str = "Player: " + player.getName()
+                        + " maxDistanceSqToMob: " + distanceHackWorstDistance
+                        + " thresholdSq: " + distanceHackWorstThreshold
+                        + " SID: " + attack.skill
+                        + " MID: " + distanceHackWorstMonster.getId()
+                        + " " + bboxInfo;
+                player.getAutoBanManager().addPoint(AutobanFactory.DISTANCE_HACK, str);
+
+
+
                 log.warn(
                         "Player: {} maxDistanceSqToMob: {} thresholdSq: {} SID: {} MID: {} {}",
                         player.getName(),
@@ -1146,12 +1152,13 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
 
                 // Warn if the damage is over 1.5x what we calculated above.
                 if (damage > maxWithCrit * 1.5) {
-                    AutobanFactory.DAMAGE_HACK.alert(chr, "DMG: " + damage + " MaxDMG: " + maxWithCrit + " SID: " + ret.skill + " MobID: " + (monster != null ? monster.getId() : "null") + " Map: " + chr.getMap().getMapName() + " (" + chr.getMapId() + ")");
+                    AutobanManager.alert(chr, AutobanFactory.DAMAGE_HACK, "DMG: " + damage + " MaxDMG: " + maxWithCrit + " SID: " + ret.skill + " MobID: " + (monster != null ? monster.getId() : "null") + " Map: " + chr.getMap().getMapName() + " (" + chr.getMapId() + ")");
+
                 }
 
                 // Add a ab point if its over 5x what we calculated.
                 if (damage > maxWithCrit * 5) {
-                    AutobanFactory.DAMAGE_HACK.addPoint(chr.getAutoBanManager(), "DMG: " + damage + " MaxDMG: " + maxWithCrit + " SID: " + ret.skill + " MobID: " + (monster != null ? monster.getId() : "null") + " Map: " + chr.getMap().getMapName() + " (" + chr.getMapId() + ")");
+                    chr.getAutoBanManager().addPoint(AutobanFactory.DAMAGE_HACK, "DMG: " + damage + " MaxDMG: " + maxWithCrit + " SID: " + ret.skill + " MobID: " + (monster != null ? monster.getId() : "null") + " Map: " + chr.getMap().getMapName() + " (" + chr.getMapId() + ")");
                 }
 
                 if (ret.skill == Marksman.SNIPE || (canCrit && damage > hitDmgMax)) {
@@ -1165,7 +1172,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                         maxattack = maxattack * 2;
                     }
                     if (ret.numDamage > maxattack) {
-                        AutobanFactory.DAMAGE_HACK.addPoint(chr.getAutoBanManager(), "Too many lines: " + ret.numDamage + " Max lines: " + maxattack + " SID: " + ret.skill + " MobID: " + (monster != null ? monster.getId() : "null") + " Map: " + chr.getMap().getMapName() + " (" + chr.getMapId() + ")");
+                        chr.getAutoBanManager().addPoint(AutobanFactory.DAMAGE_HACK, "Too many lines: " + ret.numDamage + " Max lines: " + maxattack + " SID: " + ret.skill + " MobID: " + (monster != null ? monster.getId() : "null") + " Map: " + chr.getMap().getMapName() + " (" + chr.getMapId() + ")");
                     }
                 }
 
@@ -1496,11 +1503,12 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
             long interval = chr.updateLastAttackTimeAndGetInterval(skill, System.currentTimeMillis());
             if (interval < 250) {
                 // 检测攻击间隔 小于350mm封号
-                AutobanFactory.ATTACK_INTERVAL.addPoint(chr.getAutoBanManager(), "玩家" + chr.getName() + "地图ID：" + chr.getMapId() + "攻击间隔: " + interval + "技能ID：" + skill);
+                chr.getAutoBanManager().addPoint(AutobanFactory.ATTACK_INTERVAL, "玩家" + chr.getName() + "地图ID：" + chr.getMapId() + "攻击间隔: " + interval + "技能ID：" + skill);
+
                 log.warn("玩家{}地图ID：{}攻击间隔: {}技能ID：{}", chr.getName(), chr.getMapId(), interval, skill);
             } else if (interval < 350) {
                 // 检测攻击间隔 小于500mm警告
-                AutobanFactory.ATTACK_INTERVAL.alert(chr, "玩家" + chr.getName() + "地图ID：" + chr.getMapId() + "攻击间隔: " + interval + "技能ID：" + skill);
+                AutobanManager.alert(chr, AutobanFactory.ATTACK_INTERVAL, "玩家" + chr.getName() + "地图ID：" + chr.getMapId() + "攻击间隔: " + interval + "技能ID：" + skill);
                 log.warn("玩家{}地图ID：{}攻击间隔: {}技能ID：{}", chr.getName(), chr.getMapId(), interval, skill);
             }
         }

@@ -23,6 +23,7 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
@@ -44,8 +45,8 @@ public final class NPCShopHandler extends AbstractPacketHandler {
             int itemId = p.readInt();
             short quantity = p.readShort();
             if (quantity < 1) {
-                AutobanFactory.PACKET_EDIT.alert(c.getPlayer(),
-                        c.getPlayer().getName() + " tried to packet edit a npc shop.");
+                AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit a npc shop.");
+
                 log.warn("Chr {} tried to buy quantity {} of itemid {}", c.getPlayer().getName(), quantity, itemId);
                 c.disconnect(true, false);
                 return;

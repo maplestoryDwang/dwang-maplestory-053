@@ -27,6 +27,7 @@ import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
 import org.gms.client.autoban.AutobanManager;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.constants.skills.adv.magician.Magician;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
@@ -50,13 +51,13 @@ public final class HealOvertimeHandler extends AbstractPacketHandler {
         if (healHP != 0) {
             abm.setTimestamp(8, timestamp, 28);  // thanks Vcoc & Thora for pointing out d/c happening here
             if ((abm.getLastSpam(0) + 1500) > timestamp) {
-                AutobanFactory.FAST_HP_HEALING.addPoint(abm, "Fast hp healing");
+                AutobanManager.alert(c.getPlayer(), AutobanFactory.FAST_HP_HEALING, "Fast hp healing");
             }
 
             MapleMap map = chr.getMap();
             int abHeal = (int) (77 * map.getRecovery() * 1.5); // thanks Ari for noticing players not getting healed in sauna in certain cases
             if (healHP > abHeal) {
-                AutobanFactory.HIGH_HP_HEALING.autoban(chr, "Healing: " + healHP + "; Max is " + abHeal + ".");
+                AutobanManager.alert(c.getPlayer(), AutobanFactory.HIGH_HP_HEALING, "Healing: " + healHP + "; Max is " + abHeal + ".");
                 return;
             }
 
@@ -69,7 +70,8 @@ public final class HealOvertimeHandler extends AbstractPacketHandler {
         if (healMP != 0 && healMP < 1000) {
             abm.setTimestamp(9, timestamp, 28);
             if ((abm.getLastSpam(1) + 1500) > timestamp) {
-                AutobanFactory.FAST_MP_HEALING.addPoint(abm, "Fast mp healing");
+                AutobanManager.alert(c.getPlayer(), AutobanFactory.FAST_MP_HEALING, "Fast mp healing");
+
                 return;     // thanks resinate for noticing mp being gained even after detection
             }
             healMP = applyImprovedMpRecovery(chr, healMP);

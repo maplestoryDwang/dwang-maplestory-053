@@ -24,6 +24,7 @@ package org.gms.net.server.channel.handlers;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
@@ -608,7 +609,8 @@ public final class PlayerInteractionHandler extends AbstractPacketHandler {
 
                 int price = p.readInt();
                 if (perBundle <= 0 || perBundle * bundles > 2000 || bundles <= 0 || price <= 0 || price > Integer.MAX_VALUE) {
-                    AutobanFactory.PACKET_EDIT.alert(chr, chr.getName() + I18nUtil.getMessage("PlayerInteractionHandler.message10"));
+                    AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, chr.getName() + I18nUtil.getMessage("PlayerInteractionHandler.message10"));
+
                     log.warn(I18nUtil.getLogMessage("PlayerInteractionHandler.warn5"),
                             chr.getName(), perBundle, perBundle * bundles, bundles, price);
                     return;
@@ -706,7 +708,8 @@ public final class PlayerInteractionHandler extends AbstractPacketHandler {
 
                     int slot = p.readShort();
                     if (slot >= shop.getItems().size() || slot < 0) {
-                        AutobanFactory.PACKET_EDIT.alert(chr, chr.getName() + I18nUtil.getMessage("PlayerInteractionHandler.message15"));
+                        AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, chr.getName() + I18nUtil.getMessage("PlayerInteractionHandler.message15"));
+
                         log.warn(I18nUtil.getLogMessage("PlayerInteractionHandler.warn6"), chr.getName(), slot);
                         c.disconnect(true, false);
                         return;
@@ -772,7 +775,8 @@ public final class PlayerInteractionHandler extends AbstractPacketHandler {
                 int itemid = p.readByte();
                 short quantity = p.readShort();
                 if (quantity < 1) {
-                    AutobanFactory.PACKET_EDIT.alert(chr, chr.getName() + I18nUtil.getMessage("PlayerInteractionHandler.message16"));
+                    AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, chr.getName() + I18nUtil.getMessage("PlayerInteractionHandler.message16"));
+
                     log.warn(I18nUtil.getLogMessage("PlayerInteractionHandler.warn7"), chr.getName(), itemid, quantity);
                     c.disconnect(true, false);
                     return;
@@ -801,7 +805,8 @@ public final class PlayerInteractionHandler extends AbstractPacketHandler {
 
                     int slot = p.readShort();
                     if (slot >= merchant.getItems().size() || slot < 0) {
-                        AutobanFactory.PACKET_EDIT.alert(chr, chr.getName() + I18nUtil.getMessage("PlayerInteractionHandler.message17"));
+                        AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, chr.getName() + I18nUtil.getMessage("PlayerInteractionHandler.message17"));
+
                         log.warn(I18nUtil.getLogMessage("PlayerInteractionHandler.warn6", chr.getName(), slot));
                         c.disconnect(true, false);
                         return;

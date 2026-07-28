@@ -24,6 +24,7 @@ package org.gms.client.processor.npc;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
+import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
@@ -67,7 +68,9 @@ public class StorageProcessor {
                     byte type = p.readByte();
                     byte slot = p.readByte();
                     if (slot < 0 || slot > storage.getSlots()) { // removal starts at zero
-                        AutobanFactory.PACKET_EDIT.alert(c.getPlayer(), c.getPlayer().getName() + " tried to packet edit with storage.");
+
+                        AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit with storage.");
+
                         log.warn("Chr {} tried to work with storage slot {}", c.getPlayer().getName(), slot);
                         c.disconnect(true, false);
                         return;
@@ -124,8 +127,8 @@ public class StorageProcessor {
                     InventoryType invType = ItemConstants.getInventoryType(itemId);
                     Inventory inv = chr.getInventory(invType);
                     if (slot < 1 || slot > inv.getSlotLimit()) { // player inv starts at one
-                        AutobanFactory.PACKET_EDIT.alert(c.getPlayer(),
-                                c.getPlayer().getName() + " tried to packet edit with storage.");
+                        AutobanManager.alert(c.getPlayer(), AutobanFactory.PACKET_EDIT, c.getPlayer().getName() + " tried to packet edit with storage.");
+
                         log.warn("Chr {} tried to store item at slot {}", c.getPlayer().getName(), slot);
                         c.disconnect(true, false);
                         return;
