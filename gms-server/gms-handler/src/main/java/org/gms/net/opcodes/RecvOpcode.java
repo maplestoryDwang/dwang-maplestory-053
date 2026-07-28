@@ -122,6 +122,9 @@ public enum RecvOpcode implements Opcode {
     NPC_TALK(0x23),
 
     // 0x24 - 0x26 未使用
+    // 0x24 CUser::OnEntrustedShopRequest((int)pExceptionObject);
+    // 0x25 CUser::OnStoreBankRequest
+    // 0x26 CUser::OnParcelRequest
 
     /**
      * 切换频道
@@ -133,6 +136,8 @@ public enum RecvOpcode implements Opcode {
     ENTER_CASH_SHOP(0x28),
 
     // 0x29 未使用
+
+
 
     /**
      * 受到伤害 CUser::OnHit
@@ -159,7 +164,7 @@ public enum RecvOpcode implements Opcode {
      */
     CHANGE_MAP(0x2F),
 
-    // 0x30 未使用
+    // 0x30 未使用  OnAdmin
 
     /**
      * 组队操作
@@ -174,7 +179,7 @@ public enum RecvOpcode implements Opcode {
      */
     BUDDYLIST_MODIFY(0x33),
 
-    // 0x34 未使用
+    // 0x34 未使用  OnGuildResult
 
     /**
      * 移动玩家

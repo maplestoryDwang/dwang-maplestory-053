@@ -50,6 +50,8 @@ import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.net.server.world.PartyOperation;
 import org.gms.net.server.world.World;
+import org.gms.property.DefaultDates;
+import org.gms.property.HasLanguage;
 import org.gms.server.SystemRescue;
 import org.gms.util.*;
 import org.slf4j.Logger;
@@ -99,7 +101,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class Client extends ChannelInboundHandlerAdapter {
+public class Client extends ChannelInboundHandlerAdapter implements HasLanguage {
     private static final Logger log = LoggerFactory.getLogger(Client.class);
 
     public static final int LOGIN_NOTLOGGEDIN = 0;

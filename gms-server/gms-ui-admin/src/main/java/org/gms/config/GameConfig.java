@@ -4,32 +4,42 @@ import com.alibaba.fastjson2.JSONException;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
 import org.gms.dao.entity.GameConfigDO;
-import org.gms.manager.ServerManager;
-import org.gms.net.server.Server;
-import org.gms.net.server.world.World;
-import org.gms.server.life.MonsterInformationProvider;
+import org.gms.event.ConfigChangeEvent;
 import org.gms.service.ConfigService;
-import org.gms.util.Pair;
 
 import java.util.List;
 import java.util.function.Function;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 
 /**
  * 北斗动态参数计划，结构
  * {"world":{"0":{"server_message":{"clazz":"java.lang.String","value":"Welcome to Scania!"},"exp_rate":{"clazz":"java.lang.Float","value":"1.0"}}},"server":{"global":{"WORLDS":{"clazz":"java.lang.Integer","value":"1"}},"npc":{"NPCS_SCRIPTABLE":{"clazz":"java.util.Map","value":"{9001105:\"Rescue Gaga!\"}"}}}}
  */
+@Component
 public class GameConfig {
-    private static final GameConfig config = new GameConfig();
     private final JSONObject properties = new JSONObject();
+    private static GameConfig instance;
+    private final ApplicationEventPublisher eventPublisher;
 
-    private GameConfig() {
-        ConfigService configService = ServerManager.getApplicationContext().getBean(ConfigService.class);
+
+
+
+    // 1. 通过 Spring 构造器注入 ConfigService 和事件发布器
+    public GameConfig(ConfigService configService, ApplicationEventPublisher eventPublisher) {
+        this.eventPublisher = eventPublisher;
+        GameConfig.instance = this;
+
+        // 初始化加载配置
         List<GameConfigDO> gameConfigDOS = configService.loadGameConfigs();
         gameConfigDOS.forEach(gameConfigDO -> add(this, gameConfigDO));
     }
 
+
+
+
     public static void add(GameConfigDO gameConfigDO) {
-        add(config, gameConfigDO);
+        add(instance, gameConfigDO);
     }
 
     private static void add(GameConfig config, GameConfigDO gameConfigDO) {
@@ -53,7 +63,7 @@ public class GameConfig {
     }
 
     public static void remove(GameConfigDO gameConfigDO) {
-        JSONObject typeProp = config.properties.getJSONObject(gameConfigDO.getConfigType());
+        JSONObject typeProp = instance.properties.getJSONObject(gameConfigDO.getConfigType());
         if (typeProp == null) {
             return;
         }
@@ -66,10 +76,29 @@ public class GameConfig {
             typeProp.remove(gameConfigDO.getConfigSubType());
         }
         if (typeProp.isEmpty()) {
-            config.properties.remove(gameConfigDO.getConfigType());
+            instance.properties.remove(gameConfigDO.getConfigType());
         }
     }
+    public static void update(GameConfigDO gameConfigDO) {
+        if (instance == null) {
+            return;
+        }
 
+        JSONObject valueProp = instance.getValueProp(gameConfigDO.getConfigType(), gameConfigDO.getConfigSubType(), gameConfigDO.getConfigCode());
+        if (valueProp == null) {
+            add(gameConfigDO);
+            return;
+        }
+
+        // 2. 底层仅更新自己的数据结构
+        valueProp.put("value", gameConfigDO.getConfigValue());
+
+        // 3. 发布配置变更事件，完全解耦上层！
+        instance.eventPublisher.publishEvent(new ConfigChangeEvent(instance, gameConfigDO));
+    }
+
+
+/*
     public static void update(GameConfigDO gameConfigDO) {
         JSONObject valueProp = getValueProp(gameConfigDO.getConfigType(), gameConfigDO.getConfigSubType(), gameConfigDO.getConfigCode());
         if (valueProp == null) {
@@ -125,6 +154,7 @@ public class GameConfig {
                 break;
         }
     }
+*/
 
     public static Object getObject(String key) {
         return get(key, null);
@@ -135,7 +165,7 @@ public class GameConfig {
     }
 
     public static <T> T get(String key, T defaultValue) {
-        for (String type : config.properties.keySet()) {
+        for (String type : instance.properties.keySet()) {
             T obj = get(type, key, null);
             if (obj != null) {
                 return obj;
@@ -189,7 +219,7 @@ public class GameConfig {
     /* -------------------- 以上根据数据库的clazz类型获取，以下根据传入的类型获取 -------------------- */
 
     public static JSONObject getValueProp(String type, String subType, String key) {
-        JSONObject typeProp = config.properties.getJSONObject(type);
+        JSONObject typeProp = instance.properties.getJSONObject(type);
         if (typeProp == null) {
             return null;
         }
@@ -201,7 +231,7 @@ public class GameConfig {
     }
 
     public static JSONObject getValueProp(String type, String key) {
-        JSONObject typeProp = config.properties.getJSONObject(type);
+        JSONObject typeProp = instance.properties.getJSONObject(type);
         if (typeProp == null) {
             return null;
         }
@@ -293,7 +323,7 @@ public class GameConfig {
     }
 
     private static <T> T getValue(String key, T defaultVal, Function<JSONObject, T> mapper) {
-        for (String type : config.properties.keySet()) {
+        for (String type : instance.properties.keySet()) {
             JSONObject valueProp = getValueProp(type, key);
             if (valueProp != null) {
                 return mapper.apply(valueProp);
@@ -500,6 +530,6 @@ public class GameConfig {
     }
 
     public static JSONObject getConfig() {
-        return config.properties;
+        return instance.properties;
     }
 }

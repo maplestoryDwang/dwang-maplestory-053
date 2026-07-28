@@ -5,24 +5,26 @@
  */
 
 package org.gms.constants.string;
-
-/*
- * Thanks to GabrielSin (EllinMS) - gabrielsin@playellin.net
- * Ellin
- * MapleStory Server
- * CharsetConstants
- */
-
 import lombok.Getter;
-import org.gms.manager.ServerManager;
 import org.gms.property.ServiceProperty;
+import org.springframework.stereotype.Component;
 
 import java.nio.charset.Charset;
 import java.util.Locale;
 
+/**
+ * 更新成springboot管理注入
+ * @dwang
+ */
+@Component
 public class CharsetConstants {
-    // 保证只加载一次
-    private static final Language SERVICE_LANGUAGE = loadServiceLanguage();
+
+    private static Language serviceLanguage;
+
+    // 使用构造器注入 ServiceProperty，Spring 会保证在容器启动时按顺序注入，绝不会 NPE
+    public CharsetConstants(ServiceProperty serviceProperty) {
+        CharsetConstants.serviceLanguage = parseServiceLanguage(serviceProperty.getLanguage());
+    }
 
     public static Charset getCharset(int language) {
         return Charset.forName(Language.fromLang(language).getCharset());
@@ -33,13 +35,11 @@ public class CharsetConstants {
     }
 
     public static boolean isZhCN() {
-        return Language.LANGUAGE_CN == SERVICE_LANGUAGE;
+        return Language.LANGUAGE_CN == serviceLanguage;
     }
 
-    private static Language loadServiceLanguage() {
-        ServiceProperty serviceProperty = ServerManager.getApplicationContext().getBean(ServiceProperty.class);
-        String language = serviceProperty.getLanguage();
-        if (language.equals("zh-CN")) {
+    private static Language parseServiceLanguage(String language) {
+        if ("zh-CN".equals(language)) {
             return Language.LANGUAGE_CN;
         } else {
             return Language.LANGUAGE_US;
@@ -73,7 +73,7 @@ public class CharsetConstants {
                     return value;
                 }
             }
-            return SERVICE_LANGUAGE;
+            return serviceLanguage;
         }
     }
 }

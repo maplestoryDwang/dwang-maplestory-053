@@ -22,12 +22,12 @@
 package org.gms.net.server.handlers.login;
 
 import org.gms.client.Client;
-import org.gms.client.DefaultDates;
 import org.gms.config.GameConfig;
 import org.gms.net.PacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;
 import org.gms.net.server.coordinator.session.Hwid;
+import org.gms.property.DefaultDates;
 import org.gms.util.BCrypt;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.HexTool;

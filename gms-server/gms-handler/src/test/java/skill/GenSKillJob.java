@@ -22,8 +22,6 @@
 package skill;
 
 import lombok.Getter;
-import org.gms.client.Job;
-import org.gms.util.I18nUtil;
 
 
 public enum GenSKillJob {

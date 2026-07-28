@@ -1,4 +1,4 @@
-package org.gms.client;
+package org.gms.property;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

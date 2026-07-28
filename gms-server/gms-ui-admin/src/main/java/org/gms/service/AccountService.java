@@ -3,20 +3,20 @@ package org.gms.service;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.AllArgsConstructor;
-import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.DefaultDates;
 import org.gms.config.GameConfig;
 import org.gms.dao.entity.*;
 import org.gms.dao.mapper.*;
+import org.gms.event.AccountBannedEvent;
 import org.gms.model.dto.AddAccountDTO;
 import org.gms.model.dto.UpdateAccountByGmDTO;
 import org.gms.model.dto.UpdateAccountByUserDTO;
-import org.gms.net.server.Server;
+import org.gms.property.DefaultDates;
 import org.gms.util.BCrypt;
 import org.gms.util.HexTool;
 import org.gms.util.I18nUtil;
 import org.gms.util.RequireUtil;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -41,6 +41,7 @@ public class AccountService {
     private final IpbansMapper ipbansMapper;
     private final MacbansMapper macbansMapper;
     private final QuickslotkeymappedMapper quickslotkeymappedMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     public AccountsDO findByName(String name) {
         return accountsMapper.selectOneByName(name);
@@ -122,7 +123,7 @@ public class AccountService {
         RequireUtil.requireNotNull(account, I18nUtil.getExceptionMessage("AccountService.id.NotExist"));
         // 防止swagger调用，后续的语言路由都受影响
         RequireUtil.requireNotNull(account.getLanguage(), I18nUtil.getExceptionMessage("LANGUAGE_NOT_SUPPORT"));
-        RequireUtil.requireFalse(account.getLoggedin() == LOGIN_LOGGEDIN, I18nUtil.getExceptionMessage("AccountService.isOnline"));
+        RequireUtil.requireFalse(account.getLoggedin() == Client.LOGIN_LOGGEDIN, I18nUtil.getExceptionMessage("AccountService.isOnline"));
         if (submitData.getNewPwd() != null && submitData.getNewPwd().length() >= 6) {
             account.setPassword(encryptPassword(submitData.getNewPwd()));
         }
@@ -178,7 +179,7 @@ public class AccountService {
 
         AccountsDO account = new AccountsDO();
         account.setId(id);
-        account.setLoggedin(LOGIN_NOTLOGGEDIN);
+        account.setLoggedin(Client.LOGIN_NOTLOGGEDIN);
         accountsMapper.update(account);
     }
 
@@ -191,26 +192,31 @@ public class AccountService {
         account.setBanned(true);
         account.setBanreason(reason);
         accountsMapper.update(account);
-        // 遍历账号下的角色，如果在线，追封客户端/Mac/IP
-        List<CharactersDO> characterList = charactersMapper.selectIdAndWorldListByAccountId(accountId); // 仅查询角色ID和所在world
-        for (CharactersDO chr : characterList) {
-            Character player = Server.getInstance()
-                    .getWorlds()
-                    .get(chr.getWorld())
-                    .getPlayerStorage()
-                    .getCharacterById(chr.getId());
-            if (player == null) continue; // 角色离线
-            player.setBanned(true);
-            Client c = player.getClient(); // 角色在线，获取客户端
-            c.banMacs(); // 封禁Mac
-            // c.banHWID(); // 封禁客户端 操作不可逆？
-            // 封禁IP
-            String ip = c.getRemoteAddress();
-            IpbansDO ipban = IpbansDO.builder().ip(ip).aid(String.valueOf(accountId)).build();
-            ipbansMapper.insertSelective(ipban);
-            // 强制离线，这个方法只是中断了连接不会造成客户端退出，但是实际跟掉线没什么区别
-            c.disconnect(false, false);
-        }
+
+
+        // 2. 发布封停事件（不关心上层谁去踢人，也不感知 Character/Client）
+        eventPublisher.publishEvent(new AccountBannedEvent(this, accountId, reason));
+
+//        // 遍历账号下的角色，如果在线，追封客户端/Mac/IP
+//        List<CharactersDO> characterList = charactersMapper.selectIdAndWorldListByAccountId(accountId); // 仅查询角色ID和所在world
+//        for (CharactersDO chr : characterList) {
+//            Character player = Server.getInstance()
+//                    .getWorlds()
+//                    .get(chr.getWorld())
+//                    .getPlayerStorage()
+//                    .getCharacterById(chr.getId());
+//            if (player == null) continue; // 角色离线
+//            player.setBanned(true);
+//            Client c = player.getClient(); // 角色在线，获取客户端
+//            c.banMacs(); // 封禁Mac
+//            // c.banHWID(); // 封禁客户端 操作不可逆？
+//            // 封禁IP
+//            String ip = c.getRemoteAddress();
+//            IpbansDO ipban = IpbansDO.builder().ip(ip).aid(String.valueOf(accountId)).build();
+//            ipbansMapper.insertSelective(ipban);
+//            // 强制离线，这个方法只是中断了连接不会造成客户端退出，但是实际跟掉线没什么区别
+//            c.disconnect(false, false);
+//        }
     }
 
     public void unbanAccount(int accountId) {
@@ -231,10 +237,9 @@ public class AccountService {
         accountsMapper.updateAllLoggedIn(0);
     }
 
-    public void ban(Character chr, String reason) {
-        accountsMapper.update(AccountsDO.builder().banned(true).id(chr.getAccountId()).banreason(reason).build());
-        // 更新在线的ban状态
-        chr.setBanned(true);
+    public void ban(int chrId, String reason) {
+        accountsMapper.update(AccountsDO.builder().banned(true).id(chrId).banreason(reason).build());
+
     }
 
     public void ban(String str, String reason, boolean isAccount) {

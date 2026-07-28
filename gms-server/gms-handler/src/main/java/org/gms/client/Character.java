@@ -789,7 +789,9 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void ban(String reason) {
-        accountService.ban(this, reason);
+        accountService.ban(this.getId(), reason);
+        // 更新在线的ban状态
+        setBanned(true);
     }
 
     public static boolean ban(String id, String reason, boolean accountId) {

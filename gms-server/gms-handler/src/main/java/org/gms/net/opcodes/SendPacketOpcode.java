@@ -26,11 +26,13 @@ import java.util.List;
 public enum SendPacketOpcode implements Opcode {
 
     // LOGIN
-    // check ↓
-    LOGIN_STATUS(0x00), // 登录状态
+    /**
+     * 登录状态
+     */
+    LOGIN_STATUS(0x00), // check
 
     // CHANNEL
-    // check ↓
+    //  ↓
     CHANGE_CHANNEL(0x03), // 更改频道
 
     // GENERAL
@@ -59,8 +61,10 @@ public enum SendPacketOpcode implements Opcode {
 
     /*CWvsContext::OnPacket*/
 //    MODIFY_INVENTORY_ITEM(0x18), // 更新/修改背包道具
-    // check ↓
-    INVENTORY_OPERATION(0x18), // 物品栏操作
+    /**
+     * 物品栏操作
+     */
+    INVENTORY_OPERATION(0x18), // check
 
 
 //    UPDATE_STATS(0x23), // 更新角色属性(HP/MP/EXP等)

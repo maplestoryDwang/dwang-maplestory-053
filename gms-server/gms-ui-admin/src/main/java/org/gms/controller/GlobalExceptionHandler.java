@@ -1,7 +1,9 @@
-package org.gms.exception;
+package org.gms.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.gms.exception.BizException;
+import org.gms.exception.BizExceptionEnum;
 import org.gms.model.dto.ResultBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

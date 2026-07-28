@@ -1,10 +1,10 @@
 package org.gms.util;
 
-import org.gms.client.Client;
 import org.gms.constants.string.CharsetConstants;
-import org.gms.manager.ServerManager;
 import org.gms.property.ServiceProperty;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -14,11 +14,29 @@ import java.util.Optional;
  * messageSource.getMessage底层是通过循环遍历文件名去读取的
  * 所以将不同文件名定义不同的bean，这样扫描的时候可以少扫描其他文件，直接找到想要对应的文件，节约时间
  */
+@Component
 public class I18nUtil {
-    public static final Locale LANGUAGE = Locale.forLanguageTag(ServerManager.getApplicationContext().getBean(ServiceProperty.class).getLanguage());
-    public static final MessageSource messageSource = ServerManager.getApplicationContext().getBean("messageSource", MessageSource.class);
-    public static final MessageSource logSource = ServerManager.getApplicationContext().getBean("logSource", MessageSource.class);
-    public static final MessageSource exceptionSource = ServerManager.getApplicationContext().getBean("exceptionSource", MessageSource.class);
+
+        private static MessageSource messageSource;
+        private static MessageSource logSource;
+        private static MessageSource exceptionSource;
+        private static ServiceProperty serviceProperty;
+
+        private static Locale LANGUAGE;
+
+        // 使用构造器注入，Spring 保证依赖注入完成后才可以使用
+        public I18nUtil(
+                @Qualifier("messageSource") MessageSource messageSource,
+                @Qualifier("logSource") MessageSource logSource,
+                @Qualifier("exceptionSource") MessageSource exceptionSource,
+                ServiceProperty serviceProperty) {
+            I18nUtil.messageSource = messageSource;
+            I18nUtil.logSource = logSource;
+            I18nUtil.exceptionSource = exceptionSource;
+            I18nUtil.serviceProperty = serviceProperty;
+            LANGUAGE = Locale.forLanguageTag(serviceProperty.getLanguage());
+        }
+
 
     public static String getMessage(String code, Object... args) {
         // 如果当前存在客户端请求，则以客户端的语言为准。如果当前非客户端请求，是服务端主动发给客户端的，则以服务端语言为准

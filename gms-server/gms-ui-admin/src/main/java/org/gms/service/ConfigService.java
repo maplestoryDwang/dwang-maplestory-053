@@ -14,7 +14,6 @@ import org.gms.dao.mapper.GameConfigMapper;
 import org.gms.exception.BizException;
 import org.gms.model.dto.ConfigTypeDTO;
 import org.gms.model.dto.GameConfigReqDTO;
-import org.gms.net.server.Server;
 import org.gms.property.ServiceProperty;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.I18nUtil;
@@ -219,7 +218,10 @@ public class ConfigService {
             throw new BizException(msg);
         }
         // 异步重启，这里千万不要用ThreadManager，因为停止服务会注销所有线程
-        Thread.startVirtualThread(Server.getInstance().shutdown(true));
+        // todo 占时不要重启
+//        Thread.startVirtualThread(Server.getInstance().shutdown(true));
+
+
         // 返回成功的数量
         return 1;
     }
