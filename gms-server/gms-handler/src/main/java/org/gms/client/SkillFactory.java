@@ -78,7 +78,7 @@ import org.gms.provider.DataFileEntry;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.server.StatEffect;
 import org.gms.server.life.Element;
 
@@ -87,7 +87,7 @@ import java.util.Map;
 
 public class SkillFactory {
     private static volatile Map<Integer, Skill> skills = new HashMap<>();
-    private static final DataProvider datasource = DataProviderFactory.getDataProvider(WZFiles.SKILL);
+    private static final DataProvider datasource = DataProviderFactory.getDataProvider(WzFiles.SKILL);
 
     public static Skill getSkill(int id) {
         return skills.get(id);
@@ -385,7 +385,7 @@ public class SkillFactory {
     }
 
     public static String getSkillName(int skillid) {
-        Data data = DataProviderFactory.getDataProvider(WZFiles.STRING).getData("Skill.img");
+        Data data = DataProviderFactory.getDataProvider(WzFiles.STRING).getData("Skill.img");
         StringBuilder skill = new StringBuilder();
         skill.append(skillid);
         if (skill.length() == 4) {

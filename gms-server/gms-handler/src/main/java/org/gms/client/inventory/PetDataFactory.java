@@ -25,7 +25,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +34,7 @@ import java.util.Map;
  * @author Danny (Leifde)
  */
 public class PetDataFactory {
-    private static final DataProvider dataRoot = DataProviderFactory.getDataProvider(WZFiles.ITEM);
+    private static final DataProvider dataRoot = DataProviderFactory.getDataProvider(WzFiles.ITEM);
     private static final Map<String, PetCommand> petCommands = new HashMap<>();
     private static final Map<Integer, Integer> petHunger = new HashMap<>();
 

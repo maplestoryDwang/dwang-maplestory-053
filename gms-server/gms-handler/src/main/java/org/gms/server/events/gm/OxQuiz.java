@@ -25,7 +25,7 @@ import org.gms.client.Character;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.server.TimerManager;
 import org.gms.server.maps.MapleMap;
 import org.gms.util.PacketCreator;
@@ -42,7 +42,7 @@ public final class OxQuiz {
     private int question = 1;
     private MapleMap map = null;
     private final int expGain = 200;
-    private static final DataProvider stringData = DataProviderFactory.getDataProvider(WZFiles.ETC);
+    private static final DataProvider stringData = DataProviderFactory.getDataProvider(WzFiles.ETC);
 
     public OxQuiz(MapleMap map) {
         this.map = map;

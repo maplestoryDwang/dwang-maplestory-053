@@ -28,7 +28,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.server.ItemInformationProvider;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.Pair;
@@ -241,7 +241,7 @@ public class MonsterInformationProvider {
     }
 
     public static ArrayList<Pair<Integer, String>> getMobsIDsFromName(String search) {
-        DataProvider dataProvider = DataProviderFactory.getDataProvider(WZFiles.STRING);
+        DataProvider dataProvider = DataProviderFactory.getDataProvider(WzFiles.STRING);
         ArrayList<Pair<Integer, String>> retMobs = new ArrayList<>();
         Data data = dataProvider.getData("Mob.img");
         List<Pair<Integer, String>> mobPairList = new LinkedList<>();
@@ -280,7 +280,7 @@ public class MonsterInformationProvider {
     public String getMobNameFromId(int id) {
         String mobName = mobNameCache.get(id);
         if (mobName == null) {
-            DataProvider dataProvider = DataProviderFactory.getDataProvider(WZFiles.STRING);
+            DataProvider dataProvider = DataProviderFactory.getDataProvider(WzFiles.STRING);
             Data mobData = dataProvider.getData("Mob.img");
 
             mobName = DataTool.getString(mobData.getChildByPath(id + "/name"), "");

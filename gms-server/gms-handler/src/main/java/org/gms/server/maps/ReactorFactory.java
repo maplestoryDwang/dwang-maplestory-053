@@ -25,7 +25,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.server.maps.ReactorStats.StateData;
 import org.gms.util.Pair;
 import org.gms.util.StringUtil;
@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ReactorFactory {
-    private static final DataProvider data = DataProviderFactory.getDataProvider(WZFiles.REACTOR);
+    private static final DataProvider data = DataProviderFactory.getDataProvider(WzFiles.REACTOR);
     private static final Map<Integer, ReactorStats> reactorStats = new HashMap<>();
 
     public static final ReactorStats getReactorS(int rid) {

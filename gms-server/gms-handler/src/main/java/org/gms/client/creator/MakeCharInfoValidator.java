@@ -3,7 +3,7 @@ package org.gms.client.creator;
 import org.gms.client.Character;
 import org.gms.provider.Data;
 import org.gms.provider.DataProviderFactory;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 
 public class MakeCharInfoValidator {
     private static final MakeCharInfo charFemale;
@@ -14,7 +14,7 @@ public class MakeCharInfoValidator {
     private static final MakeCharInfo premiumCharMale;
 
     static {
-        Data data = DataProviderFactory.getDataProvider(WZFiles.ETC).getData("MakeCharInfo.img");
+        Data data = DataProviderFactory.getDataProvider(WzFiles.ETC).getData("MakeCharInfo.img");
         charFemale = new MakeCharInfo(data.getChildByPath("Info/CharFemale"));
         charMale = new MakeCharInfo(data.getChildByPath("Info/CharMale"));
         orientCharFemale = new MakeCharInfo(data.getChildByPath("OrientCharFemale"));

@@ -29,7 +29,7 @@ import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
 import org.gms.provider.wz.DataType;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.util.Pair;
 import org.gms.util.StringUtil;
 
@@ -43,8 +43,8 @@ import java.util.Set;
 
 public class LifeFactory {
     private static final Logger log = LoggerFactory.getLogger(LifeFactory.class);
-    private static final DataProvider data = DataProviderFactory.getDataProvider(WZFiles.MOB);
-    private final static DataProvider stringDataWZ = DataProviderFactory.getDataProvider(WZFiles.STRING);
+    private static final DataProvider data = DataProviderFactory.getDataProvider(WzFiles.MOB);
+    private final static DataProvider stringDataWZ = DataProviderFactory.getDataProvider(WzFiles.STRING);
     private static final Data mobStringData = stringDataWZ.getData("Mob.img");
     private static final Data npcStringData = stringDataWZ.getData("Npc.img");
     private static final Map<Integer, MonsterStats> monsterStats = new HashMap<>();
@@ -54,7 +54,7 @@ public class LifeFactory {
     private static Set<Integer> getHpBarBosses() {
         Set<Integer> ret = new HashSet<>();
 
-        DataProvider uiDataWZ = DataProviderFactory.getDataProvider(WZFiles.UI);
+        DataProvider uiDataWZ = DataProviderFactory.getDataProvider(WzFiles.UI);
         for (Data bossData : uiDataWZ.getData("UIWindow.img").getChildByPath("MobGage/Mob").getChildren()) {
             ret.add(Integer.valueOf(bossData.getName()));
         }

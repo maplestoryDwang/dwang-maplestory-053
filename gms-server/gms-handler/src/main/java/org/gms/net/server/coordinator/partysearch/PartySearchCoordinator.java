@@ -29,7 +29,7 @@ import org.gms.net.server.world.Party;
 import org.gms.provider.Data;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
 
@@ -81,7 +81,7 @@ public class PartySearchCoordinator {
     private static Map<Integer, Set<Integer>> fetchNeighbouringMaps() {
         Map<Integer, Set<Integer>> mapLinks = new HashMap<>();
 
-        Data data = DataProviderFactory.getDataProvider(WZFiles.ETC).getData("MapNeighbors.img");
+        Data data = DataProviderFactory.getDataProvider(WzFiles.ETC).getData("MapNeighbors.img");
         if (data != null) {
             for (Data mapdata : data.getChildren()) {
                 int mapid = Integer.parseInt(mapdata.getName());

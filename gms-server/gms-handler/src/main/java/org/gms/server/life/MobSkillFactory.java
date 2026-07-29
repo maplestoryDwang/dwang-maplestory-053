@@ -25,7 +25,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  */
 public class MobSkillFactory {
     private static final Map<String, MobSkill> mobSkills = new HashMap<>();
-    private static final DataProvider dataSource = DataProviderFactory.getDataProvider(WZFiles.SKILL);
+    private static final DataProvider dataSource = DataProviderFactory.getDataProvider(WzFiles.SKILL);
     private static final Data skillRoot = dataSource.getData("MobSkill.img");
     private static final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
     private static final Lock readLock = readWriteLock.readLock();

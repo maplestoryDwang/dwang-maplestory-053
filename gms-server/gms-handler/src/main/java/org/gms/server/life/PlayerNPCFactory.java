@@ -21,13 +21,13 @@ package org.gms.server.life;
 
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 
 /**
  * @author RonanLana
  */
 public class PlayerNPCFactory {
-    private static final DataProvider npcData = DataProviderFactory.getDataProvider(WZFiles.NPC);
+    private static final DataProvider npcData = DataProviderFactory.getDataProvider(WzFiles.NPC);
 
     public synchronized static boolean isExistentScriptid(int scriptid) {
         return npcData.getData(scriptid + ".img") != null;

@@ -32,7 +32,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.server.quest.actions.AbstractQuestAction;
 import org.gms.server.quest.actions.BuffAction;
 import org.gms.server.quest.actions.ExpAction;
@@ -113,7 +113,7 @@ public class Quest {
     private boolean autoPreComplete, autoComplete;
     private boolean repeatable = false;
     private String name = "", parent = "";
-    private final static DataProvider questData = DataProviderFactory.getDataProvider(WZFiles.QUEST);
+    private final static DataProvider questData = DataProviderFactory.getDataProvider(WzFiles.QUEST);
     private final static Data questInfo = questData.getData("QuestInfo.img");
     private final static Data questAct = questData.getData("Act.img");
     private final static Data questReq = questData.getData("Check.img");

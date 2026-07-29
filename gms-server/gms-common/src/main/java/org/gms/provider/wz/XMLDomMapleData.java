@@ -21,7 +21,6 @@
  */
 package org.gms.provider.wz;
 
-import org.gms.constants.game.GameConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -123,7 +122,7 @@ public class XMLDomMapleData implements Data {
             case INT:
             case SHORT: {
                 String value = attributes.getNamedItem("value").getNodeValue();
-                Number nval = GameConstants.parseNumber(value);
+                Number nval = WZConfig.parseNumber(value);
 
                 switch (type) {
                     case DOUBLE:

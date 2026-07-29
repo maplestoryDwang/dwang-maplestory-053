@@ -37,7 +37,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.service.AccountService;
 import org.gms.service.CashShopService;
 import org.gms.service.CharacterService;
@@ -131,7 +131,7 @@ public class CashShop {
         private static final Map<Integer, ModifiedCashItemDO> modifiedCashItems = new HashMap<>();
 
         public static void loadAllCashItems() {
-            DataProvider etc = DataProviderFactory.getDataProvider(WZFiles.ETC);
+            DataProvider etc = DataProviderFactory.getDataProvider(WzFiles.ETC);
 
             Map<Integer, ModifiedCashItemDO> loadedItems = new HashMap<>();
             for (Data item : etc.getData("Commodity.img").getChildren()) {

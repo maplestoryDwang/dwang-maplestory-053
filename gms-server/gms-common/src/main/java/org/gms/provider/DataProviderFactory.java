@@ -21,17 +21,32 @@
 */
 package org.gms.provider;
 
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFileResolver;
+import org.gms.provider.wz.WzFiles;
 import org.gms.provider.wz.XMLWZFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 
+@Component
 public class DataProviderFactory {
+
+    private static WzFileResolver wzFileResolver;
+
+    // 借助 Spring 的构造函数为静态属性赋值
+    @Autowired
+    public DataProviderFactory(WzFileResolver wzFileResolver) {
+        DataProviderFactory.wzFileResolver = wzFileResolver;
+    }
+
+
     private static DataProvider getWZ(Path in) {
         return new XMLWZFile(in);
     }
 
-    public static DataProvider getDataProvider(WZFiles in) {
-        return getWZ(in.getFile());
+    public static DataProvider getDataProvider(WzFiles in) {
+        Path file = wzFileResolver.getFile(in);
+        return getWZ(file);
     }
 }

@@ -2,20 +2,14 @@ package skill;
 
 
 import org.gms.provider.*;
-import org.gms.provider.wz.WZFiles;
 import org.gms.provider.wz.XMLWZFile;
-import org.gms.server.StatEffect;
-import org.gms.server.life.Element;
-import skill.GenSkillDesc;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 
 import static skill.GenSKillJob.getBySKillId;

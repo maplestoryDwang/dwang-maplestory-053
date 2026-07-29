@@ -31,7 +31,7 @@ import org.gms.client.SkillFactory;
 import org.gms.client.command.Command;
 import org.gms.provider.Data;
 import org.gms.provider.DataProviderFactory;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.util.I18nUtil;
 
 public class MaxSkillCommand extends Command {
@@ -42,7 +42,7 @@ public class MaxSkillCommand extends Command {
     @Override
     public void execute(Client c, String[] params) {
         Character player = c.getPlayer();
-        for (Data skill_ : DataProviderFactory.getDataProvider(WZFiles.STRING).getData("Skill.img").getChildren()) {
+        for (Data skill_ : DataProviderFactory.getDataProvider(WzFiles.STRING).getData("Skill.img").getChildren()) {
             try {
                 Skill skill = SkillFactory.getSkill(Integer.parseInt(skill_.getName()));
                 player.changeSkillLevel(skill, (byte) skill.getMaxLevel(), skill.getMaxLevel(), -1);

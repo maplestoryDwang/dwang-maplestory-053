@@ -29,7 +29,7 @@ import org.gms.constants.id.ItemId;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.util.PacketCreator;
 
 import java.awt.*;
@@ -38,7 +38,7 @@ import java.awt.*;
  * @author RonanLana - just added locking on OdinMS' SpawnPetHandler method body
  */
 public class SpawnPetProcessor {
-    private static final DataProvider dataRoot = DataProviderFactory.getDataProvider(WZFiles.ITEM);
+    private static final DataProvider dataRoot = DataProviderFactory.getDataProvider(WzFiles.ITEM);
 
     public static void processSpawnPet(Client c, short slot) {
         if (c.tryacquireClient()) {

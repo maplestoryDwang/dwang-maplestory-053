@@ -24,7 +24,7 @@ package org.gms.server.maps;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
 import org.gms.provider.*;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.scripting.event.EventInstanceManager;
 import org.gms.server.life.AbstractLoadedLife;
 import org.gms.server.life.LifeFactory;
@@ -47,8 +47,8 @@ import java.util.List;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class MapFactory {
-    private static final Data nameData = DataProviderFactory.getDataProvider(WZFiles.STRING).getData("Map.img");
-    private static final DataProvider mapSource = DataProviderFactory.getDataProvider(WZFiles.MAP);
+    private static final Data nameData = DataProviderFactory.getDataProvider(WzFiles.STRING).getData("Map.img");
+    private static final DataProvider mapSource = DataProviderFactory.getDataProvider(WzFiles.MAP);
 
     private static void loadLifeFromWz(MapleMap map, Data mapData) {
         for (Data life : mapData.getChildByPath("life")) {

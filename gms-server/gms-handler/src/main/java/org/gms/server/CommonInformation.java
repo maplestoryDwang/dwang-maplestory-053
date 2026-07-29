@@ -8,7 +8,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.util.I18nUtil;
 import org.gms.util.RequireUtil;
 
@@ -20,7 +20,7 @@ public class CommonInformation {
     private final DataProvider stringData;
 
     private CommonInformation() {
-        stringData = DataProviderFactory.getDataProvider(WZFiles.STRING);
+        stringData = DataProviderFactory.getDataProvider(WzFiles.STRING);
     }
 
     public static CommonInformation getInstance() {

@@ -30,7 +30,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
@@ -333,7 +333,7 @@ public class Storage {
         if (fee == null) {
             fee = 100;
 
-            DataProvider npc = DataProviderFactory.getDataProvider(WZFiles.NPC);
+            DataProvider npc = DataProviderFactory.getDataProvider(WzFiles.NPC);
             Data npcData = npc.getData(npcId + ".img");
             if (npcData != null) {
                 fee = DataTool.getIntConvert("info/trunkPut", npcData, 100);
@@ -351,7 +351,7 @@ public class Storage {
         if (fee == null) {
             fee = 0;
 
-            DataProvider npc = DataProviderFactory.getDataProvider(WZFiles.NPC);
+            DataProvider npc = DataProviderFactory.getDataProvider(WzFiles.NPC);
             Data npcData = npc.getData(npcId + ".img");
             if (npcData != null) {
                 fee = DataTool.getIntConvert("info/trunkGet", npcData, 0);

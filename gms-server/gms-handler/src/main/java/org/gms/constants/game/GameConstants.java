@@ -6,7 +6,7 @@ import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
 import org.gms.constants.skills.other.Aran;
 import org.gms.provider.*;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.server.maps.FieldLimit;
 import org.gms.server.maps.MapleMap;
 import org.gms.server.quest.Quest;
@@ -647,7 +647,7 @@ public class GameConstants {
     }
 
     private static int getMaxObstacleMobDamageFromWz() {
-        DataProvider mapSource = DataProviderFactory.getDataProvider(WZFiles.MAP);
+        DataProvider mapSource = DataProviderFactory.getDataProvider(WzFiles.MAP);
         int maxMobDmg = 0;
 
         DataDirectoryEntry root = mapSource.getRoot();

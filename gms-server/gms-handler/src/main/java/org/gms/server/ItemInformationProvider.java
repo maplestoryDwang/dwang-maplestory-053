@@ -50,7 +50,7 @@ import org.gms.provider.DataFileEntry;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.server.MakerItemFactory.MakerItemCreateEntry;
 import org.gms.server.life.LifeFactory;
 import org.gms.server.life.MonsterInformationProvider;
@@ -140,10 +140,10 @@ public class ItemInformationProvider {
 
     private ItemInformationProvider() {
         loadCardIdData();
-        itemData = DataProviderFactory.getDataProvider(WZFiles.ITEM);
-        equipData = DataProviderFactory.getDataProvider(WZFiles.CHARACTER);
-        stringData = DataProviderFactory.getDataProvider(WZFiles.STRING);
-        etcData = DataProviderFactory.getDataProvider(WZFiles.ETC);
+        itemData = DataProviderFactory.getDataProvider(WzFiles.ITEM);
+        equipData = DataProviderFactory.getDataProvider(WzFiles.CHARACTER);
+        stringData = DataProviderFactory.getDataProvider(WzFiles.STRING);
+        etcData = DataProviderFactory.getDataProvider(WzFiles.ETC);
         cashStringData = stringData.getData("Cash.img");
         consumeStringData = stringData.getData("Consume.img");
         eqpStringData = stringData.getData("Eqp.img");

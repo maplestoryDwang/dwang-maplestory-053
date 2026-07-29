@@ -25,7 +25,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.util.StringUtil;
 
 import java.util.HashMap;
@@ -36,7 +36,7 @@ import java.util.Map;
  */
 public class MobAttackInfoFactory {
     private static final Map<String, MobAttackInfo> mobAttacks = new HashMap<>();
-    private static final DataProvider dataSource = DataProviderFactory.getDataProvider(WZFiles.MOB);
+    private static final DataProvider dataSource = DataProviderFactory.getDataProvider(WzFiles.MOB);
 
     public static MobAttackInfo getMobAttackInfo(Monster mob, int attack) {
         MobAttackInfo ret = mobAttacks.get(mob.getId() + "" + attack);

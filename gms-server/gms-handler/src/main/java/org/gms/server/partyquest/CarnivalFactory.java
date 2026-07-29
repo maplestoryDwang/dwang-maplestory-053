@@ -5,7 +5,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.server.life.MobSkill;
 import org.gms.server.life.MobSkillFactory;
 import org.gms.server.life.MobSkillType;
@@ -23,7 +23,7 @@ public class CarnivalFactory {
     private final static CarnivalFactory instance = new CarnivalFactory();
     private final Map<Integer, MCSkill> skills = new HashMap<>();
     private final Map<Integer, MCSkill> guardians = new HashMap<>();
-    private final DataProvider dataRoot = DataProviderFactory.getDataProvider(WZFiles.SKILL);
+    private final DataProvider dataRoot = DataProviderFactory.getDataProvider(WzFiles.SKILL);
 
     private final List<Integer> singleTargetedSkills = new ArrayList<>();
     private final List<Integer> multiTargetedSkills = new ArrayList<>();

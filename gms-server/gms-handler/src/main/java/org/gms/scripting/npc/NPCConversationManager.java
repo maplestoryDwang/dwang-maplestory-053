@@ -49,7 +49,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.provider.Data;
 import org.gms.provider.DataProviderFactory;
-import org.gms.provider.wz.WZFiles;
+import org.gms.provider.wz.WzFiles;
 import org.gms.scripting.AbstractPlayerInteraction;
 import org.gms.server.*;
 import org.gms.server.SkillbookInformationProvider.SkillBookEntry;
@@ -425,7 +425,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public void maxMastery() {
-        for (Data skill_ : DataProviderFactory.getDataProvider(WZFiles.STRING).getData("Skill.img").getChildren()) {
+        for (Data skill_ : DataProviderFactory.getDataProvider(WzFiles.STRING).getData("Skill.img").getChildren()) {
             try {
                 Skill skill = SkillFactory.getSkill(Integer.parseInt(skill_.getName()));
                 getPlayer().changeSkillLevel(skill, (byte) 0, skill.getMaxLevel(), -1);
