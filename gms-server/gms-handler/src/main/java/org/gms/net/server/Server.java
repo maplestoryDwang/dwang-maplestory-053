@@ -55,7 +55,7 @@ import org.gms.net.server.guild.Guild;
 import org.gms.net.server.guild.GuildCharacter;
 import org.gms.net.server.task.*;
 import org.gms.net.server.world.World;
-import org.gms.server.CashShop.CashItemFactory;
+import org.gms.server.CashItemFactory;
 import org.gms.server.SkillbookInformationProvider;
 import org.gms.server.ThreadManager;
 import org.gms.server.TimerManager;

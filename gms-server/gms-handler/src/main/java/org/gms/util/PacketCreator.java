@@ -62,7 +62,7 @@ import org.gms.net.server.world.PartyCharacter;
 import org.gms.net.server.world.PartyOperation;
 import org.gms.net.server.world.World;
 import org.gms.server.*;
-import org.gms.server.CashShop.CashItemFactory;
+import org.gms.server.CashItemFactory;
 import org.gms.server.cashshop.CashItemResultType;
 import org.gms.server.events.gm.Snowball;
 import org.gms.server.life.MobSkill;

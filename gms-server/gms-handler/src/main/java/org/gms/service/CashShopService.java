@@ -14,7 +14,7 @@ import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
 import org.gms.provider.wz.WzFiles;
-import org.gms.server.CashShop;
+import org.gms.server.CashItemFactory;
 import org.gms.server.ItemInformationProvider;
 import org.gms.util.BasePageUtil;
 import org.gms.util.I18nUtil;
@@ -32,7 +32,6 @@ public class CashShopService {
     public List<ModifiedCashItemDO> loadAllModifiedCashItems() {
         return modifiedCashItemMapper.selectAll();
     }
-
     public List<CashCategory> getAllCategoryList() {
         DataProvider etc = DataProviderFactory.getDataProvider(WzFiles.ETC);
         List<CashCategory> cashCategoryList = new ArrayList<>();
@@ -56,13 +55,13 @@ public class CashShopService {
 
         final String prefix = data.getId() + String.format("%02d", data.getSubId());
         // wz中的物品
-        List<CashShopSearchRtnDTO> wzCashItems = CashShop.CashItemFactory.getItems().values().stream()
+        List<CashShopSearchRtnDTO> wzCashItems = CashItemFactory.getItems().values().stream()
                 // 按分类过滤
                 .filter(cashItem -> String.valueOf(cashItem.getSn()).startsWith(prefix))
                 .map(cashItem -> fromCashItem(cashCategory, cashItem))
                 .toList();
         // 数据库中的物品
-        List<ModifiedCashItemDO> dbCashItems = CashShop.CashItemFactory.getModifiedCashItems().values().stream()
+        List<ModifiedCashItemDO> dbCashItems = CashItemFactory.getModifiedCashItems().values().stream()
                 // 按分类过滤
                 .filter(modifiedCashItemDO -> String.valueOf(modifiedCashItemDO.getSn()).startsWith(prefix))
                 .toList();
@@ -99,10 +98,10 @@ public class CashShopService {
         int id = Integer.parseInt(snStr.substring(0, 1));
         int subId = Integer.parseInt(snStr.substring(1, 3));
         CashCategory cashCategory = getCategory(id, subId);
-        ModifiedCashItemDO cashItem = CashShop.CashItemFactory.getWzItem(sn);
+        ModifiedCashItemDO cashItem = CashItemFactory.getWzItem(sn);
         RequireUtil.requireNotNull(cashItem, I18nUtil.getExceptionMessage("UNKNOWN_PARAMETER_VALUE", "sn", sn));
         CashShopSearchRtnDTO rtnDTO = fromCashItem(cashCategory, cashItem);
-        CashShop.CashItemFactory.getModifiedCashItems().values().stream()
+        CashItemFactory.getModifiedCashItems().values().stream()
                 .filter(dbCashItem -> Objects.equals(dbCashItem.getSn(), sn))
                 .findFirst()
                 .ifPresent(dbCashItem -> setDbItemValue(rtnDTO, dbCashItem));
@@ -112,7 +111,7 @@ public class CashShopService {
     @Transactional(rollbackFor = Exception.class)
     public void changeOnSale(ModifiedCashItemDO data) {
         RequireUtil.requireNotNull(data.getSn(), I18nUtil.getExceptionMessage("PARAMETER_SHOULD_NOT_NULL", "sn"));
-        ModifiedCashItemDO cashItem = CashShop.CashItemFactory.getWzItem(data.getSn());
+        ModifiedCashItemDO cashItem = CashItemFactory.getWzItem(data.getSn());
         modifiedCashItemMapper.deleteById(data.getSn());
 
         // 如果是下架，直接插入或更新除状态外所有值为null
@@ -120,7 +119,7 @@ public class CashShopService {
             if (cashItem.isSelling()) {
                 modifiedCashItemMapper.insertSelective(ModifiedCashItemDO.builder().sn(data.getSn()).onSale(0).build());
             }
-            CashShop.CashItemFactory.loadAllModifiedCashItems();
+            CashItemFactory.loadAllModifiedCashItems();
             return;
         }
         if (Objects.equals(cashItem.getItemId(), data.getItemId())) {
@@ -142,11 +141,11 @@ public class CashShopService {
             data.setOnSale(null);
         }
         modifiedCashItemMapper.insertSelective(data);
-        CashShop.CashItemFactory.loadAllModifiedCashItems();
+        CashItemFactory.loadAllModifiedCashItems();
     }
 
     private CashCategory getCategory(Integer id, Integer subId) {
-        return CashShop.CashItemFactory.getCashCategories().stream()
+        return CashItemFactory.getCashCategories().stream()
                 .filter(cc -> Objects.equals(cc.getId(), id) && Objects.equals(cc.getSubId(), subId))
                 .findFirst()
                 .orElseThrow(() -> new BizException(I18nUtil.getExceptionMessage("CashShopService.getByCategory.exception1")));

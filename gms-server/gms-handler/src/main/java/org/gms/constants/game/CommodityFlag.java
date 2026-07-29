@@ -3,6 +3,7 @@ package org.gms.constants.game;
 import lombok.Getter;
 import org.gms.client.inventory.Item;
 import org.gms.net.packet.OutPacket;
+import org.gms.server.CashItemFactory;
 import org.gms.server.CashShop;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public enum CommodityFlag {
     PB_POINT(1 << 14, 16, "Unknown", (p, n)-> p.writeShort(n.intValue())),
     PB_GIFT(1 << 15, 17, "Unknown", (p, n)-> p.writeShort(n.intValue())),
     PACKAGE_SN(1 << 16, 18, "礼包SN", (p, n)-> {
-        List<Item> itemList = CashShop.CashItemFactory.getPackage(n.intValue());
+        List<Item> itemList = CashItemFactory.getPackage(n.intValue());
         if (itemList.isEmpty()) {
             p.writeByte(0);
         } else {

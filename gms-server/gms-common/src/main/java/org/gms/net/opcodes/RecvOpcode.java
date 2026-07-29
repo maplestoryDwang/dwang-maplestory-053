@@ -21,7 +21,6 @@
 */
 package org.gms.net.opcodes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public enum RecvOpcode implements Opcode {

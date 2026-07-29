@@ -42,7 +42,7 @@ import org.gms.service.CharacterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.CashShop;
-import org.gms.server.CashShop.CashItemFactory;
+import org.gms.server.CashItemFactory;
 import org.gms.server.ItemInformationProvider;
 import org.gms.service.NoteService;
 import org.gms.util.PacketCreator;

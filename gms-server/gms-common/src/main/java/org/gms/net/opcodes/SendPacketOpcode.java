@@ -21,8 +21,6 @@
  */
 package org.gms.net.opcodes;
 
-import java.util.List;
-
 public enum SendPacketOpcode implements Opcode {
 
     // LOGIN

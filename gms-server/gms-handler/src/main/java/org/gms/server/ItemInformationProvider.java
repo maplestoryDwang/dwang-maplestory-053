@@ -72,6 +72,8 @@ import java.util.Set;
 
 /**
  * @author Matze
+ *
+ * @desc 感觉是所有wz的数据缓存
  */
 public class ItemInformationProvider {
     private static final Logger log = LoggerFactory.getLogger(ItemInformationProvider.class);
