@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.gms.dao.entity.ModifiedCashItemDO;
 import org.gms.model.dto.CashShopBatchOnSaleReqDTO;
 import org.gms.model.dto.CashShopSearchRtnDTO;
-import org.gms.model.pojo.CashCategory;
+import org.gms.model.dto.CashCategoryDTO;
 import org.gms.server.CashItemFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +22,11 @@ public class CashShopApiService {
     private final CashItemFactory cashItemFactory;
 
 
-    public List<CashCategory> getAllCategoryList() {
+    public List<CashCategoryDTO> getAllCategoryList() {
         return cashItemFactory.getAllCategoryList();
     }
 
-    public Page<CashShopSearchRtnDTO> getCommodityByCategory(CashCategory data) {
+    public Page<CashShopSearchRtnDTO> getCommodityByCategory(CashCategoryDTO data) {
         return cashItemFactory.getCommodityByCategory(data);
     }
 

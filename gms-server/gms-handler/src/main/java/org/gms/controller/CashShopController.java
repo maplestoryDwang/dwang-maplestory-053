@@ -10,9 +10,8 @@ import org.gms.model.dto.CashShopBatchOnSaleReqDTO;
 import org.gms.model.dto.CashShopSearchRtnDTO;
 import org.gms.model.dto.ResultBody;
 import org.gms.model.dto.SubmitBody;
-import org.gms.model.pojo.CashCategory;
+import org.gms.model.dto.CashCategoryDTO;
 import org.gms.service.CashShopApiService;
-import org.gms.service.CashShopService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,14 +25,14 @@ public class CashShopController {
     @Tag(name = "/cashShop/" + ApiConstant.LATEST)
     @Operation(summary = "获取商城全部分类")
     @GetMapping("/" + ApiConstant.LATEST + "/getAllCategoryList")
-    public ResultBody<List<CashCategory>> getAllCategoryList() {
+    public ResultBody<List<CashCategoryDTO>> getAllCategoryList() {
         return ResultBody.success(cashShopService.getAllCategoryList());
     }
 
     @Tag(name = "/cashShop/" + ApiConstant.LATEST)
     @Operation(summary = "分页分类查询商品列表")
     @PostMapping("/" + ApiConstant.LATEST + "/getCommodityByCategory")
-    public ResultBody<Page<CashShopSearchRtnDTO>> getCommodityByCategory(@RequestBody SubmitBody<CashCategory> request) {
+    public ResultBody<Page<CashShopSearchRtnDTO>> getCommodityByCategory(@RequestBody SubmitBody<CashCategoryDTO> request) {
         return ResultBody.success(cashShopService.getCommodityByCategory(request.getData()));
     }
 

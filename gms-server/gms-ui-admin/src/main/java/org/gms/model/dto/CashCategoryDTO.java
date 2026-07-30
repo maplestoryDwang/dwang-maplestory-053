@@ -1,4 +1,4 @@
-package org.gms.model.pojo;
+package org.gms.model.dto;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -9,7 +9,7 @@ import org.gms.model.dto.BasePageDTO;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class CashCategory extends BasePageDTO {
+public class CashCategoryDTO extends BasePageDTO {
     private Integer id;
     private String name;
     private Integer subId;

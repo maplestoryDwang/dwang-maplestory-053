@@ -11,7 +11,7 @@ import org.gms.constants.string.CategoryType;
 import org.gms.dao.entity.ModifiedCashItemDO;
 import org.gms.exception.BizException;
 import org.gms.model.dto.CashShopSearchRtnDTO;
-import org.gms.model.pojo.CashCategory;
+import org.gms.model.dto.CashCategoryDTO;
 import org.gms.net.server.Server;
 import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
@@ -45,7 +45,7 @@ public class CashItemFactory {
     private static volatile Map<Integer, ModifiedCashItemDO> items = new HashMap<>();
     private static volatile Map<Integer, List<Integer>> packages = new HashMap<>();
     @Getter
-    private static final List<CashCategory> cashCategories = new ArrayList<>();
+    private static final List<CashCategoryDTO> cashCategories = new ArrayList<>();
     @Getter
     private static final Map<Integer, ModifiedCashItemDO> modifiedCashItems = new HashMap<>();
 
@@ -245,29 +245,29 @@ public class CashItemFactory {
         return item;
     }
 
-    public List<CashCategory> getAllCategoryList() {
+    public List<CashCategoryDTO> getAllCategoryList() {
         DataProvider etc = dataProviderFactory.getDataProvider(WzFiles.ETC);
-        List<CashCategory> cashCategoryList = new ArrayList<>();
+        List<CashCategoryDTO> cashCategoryDTOList = new ArrayList<>();
         for (Data item : etc.getData("Category.img").getChildren()) {
             int id = DataTool.getIntConvert("Category", item);
             int subId = DataTool.getIntConvert("CategorySub", item);
             String subName = DataTool.getString("Name", item);
             String name = CategoryType.toName(id);
-            cashCategoryList.add(CashCategory.builder().id(id).name(name).subId(subId).subName(subName).build());
+            cashCategoryDTOList.add(CashCategoryDTO.builder().id(id).name(name).subId(subId).subName(subName).build());
         }
-        return cashCategoryList;
+        return cashCategoryDTOList;
 
     }
 
 
 
 
-    public Page<CashShopSearchRtnDTO> getCommodityByCategory(CashCategory data) {
+    public Page<CashShopSearchRtnDTO> getCommodityByCategory(CashCategoryDTO data) {
 
         RequireUtil.requireNotNull(data.getId(), I18nUtil.getExceptionMessage("PARAMETER_SHOULD_NOT_NULL", "id"));
         RequireUtil.requireNotNull(data.getSubId(), I18nUtil.getExceptionMessage("PARAMETER_SHOULD_NOT_NULL", "subId"));
 
-        CashCategory cashCategory = getCategory(data.getId(), data.getSubId());
+        CashCategoryDTO cashCategoryDTO = getCategory(data.getId(), data.getSubId());
         // 与客户端保持一致，固定每页10条
         data.setPageSize(10);
 
@@ -276,7 +276,7 @@ public class CashItemFactory {
         List<CashShopSearchRtnDTO> wzCashItems = getItems().values().stream()
                 // 按分类过滤
                 .filter(cashItem -> String.valueOf(cashItem.getSn()).startsWith(prefix))
-                .map(cashItem -> fromCashItem(cashCategory, cashItem))
+                .map(cashItem -> fromCashItem(cashCategoryDTO, cashItem))
                 .toList();
         // 数据库中的物品
         List<ModifiedCashItemDO> dbCashItems = getModifiedCashItems().values().stream()
@@ -311,19 +311,19 @@ public class CashItemFactory {
     }
 
 
-    private CashCategory getCategory(Integer id, Integer subId) {
+    private CashCategoryDTO getCategory(Integer id, Integer subId) {
         return getCashCategories().stream()
                 .filter(cc -> Objects.equals(cc.getId(), id) && Objects.equals(cc.getSubId(), subId))
                 .findFirst()
                 .orElseThrow(() -> new BizException(I18nUtil.getExceptionMessage("CashShopService.getByCategory.exception1")));
     }
 
-    private CashShopSearchRtnDTO fromCashItem(CashCategory cashCategory, ModifiedCashItemDO cashItem) {
+    private CashShopSearchRtnDTO fromCashItem(CashCategoryDTO cashCategoryDTO, ModifiedCashItemDO cashItem) {
         return CashShopSearchRtnDTO.builder()
-                .categoryId(cashCategory.getId())
-                .categoryName(cashCategory.getName())
-                .subcategoryId(cashCategory.getSubId())
-                .subcategoryName(cashCategory.getSubName())
+                .categoryId(cashCategoryDTO.getId())
+                .categoryName(cashCategoryDTO.getName())
+                .subcategoryId(cashCategoryDTO.getSubId())
+                .subcategoryName(cashCategoryDTO.getSubName())
                 .sn(cashItem.getSn())
                 .itemId(cashItem.getItemId())
                 .price(cashItem.getPrice())
@@ -386,10 +386,10 @@ public class CashItemFactory {
         String snStr = String.valueOf(sn);
         int id = Integer.parseInt(snStr.substring(0, 1));
         int subId = Integer.parseInt(snStr.substring(1, 3));
-        CashCategory cashCategory = getCategory(id, subId);
+        CashCategoryDTO cashCategoryDTO = getCategory(id, subId);
         ModifiedCashItemDO cashItem = getWzItem(sn);
         RequireUtil.requireNotNull(cashItem, I18nUtil.getExceptionMessage("UNKNOWN_PARAMETER_VALUE", "sn", sn));
-        CashShopSearchRtnDTO rtnDTO = fromCashItem(cashCategory, cashItem);
+        CashShopSearchRtnDTO rtnDTO = fromCashItem(cashCategoryDTO, cashItem);
         getModifiedCashItems().values().stream()
                 .filter(dbCashItem -> Objects.equals(dbCashItem.getSn(), sn))
                 .findFirst()

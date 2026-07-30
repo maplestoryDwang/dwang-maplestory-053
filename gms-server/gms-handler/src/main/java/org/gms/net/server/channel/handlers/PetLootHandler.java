@@ -53,7 +53,8 @@ public final class PetLootHandler extends AbstractPacketHandler {
             return;
         }
         try {
-            p.skip(13);
+//            p.skip(13);
+            p.skip(9);   // 7F 00  01 91 87 38 10 54 00 22 00 6E 00 00 00 00 01 01   跳过9是objectId ,之前是跳过13的不知道啥情况
             if (p.available() < 4) {
                 return;
             }
