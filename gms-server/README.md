@@ -16,3 +16,8 @@ mysql库的show view权限
 1. 原生GMS083没有回退卷轴，需要删掉
    delete from shopitems where itemid = 2030100 
 2. 冲标和子弹需要修改服务端wz
+
+
+gms-common：基础类
+gms-data: 加载DB和wz数据
+gms-data-provider: 给gms-handler和gms-ui-admin提供数据支持

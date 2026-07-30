@@ -11,6 +11,7 @@ import org.gms.model.dto.CashShopSearchRtnDTO;
 import org.gms.model.dto.ResultBody;
 import org.gms.model.dto.SubmitBody;
 import org.gms.model.pojo.CashCategory;
+import org.gms.service.CashShopApiService;
 import org.gms.service.CashShopService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ import java.util.List;
 @RequestMapping("/cashShop")
 @AllArgsConstructor
 public class CashShopController {
-    private final CashShopService cashShopService;
+    private final CashShopApiService cashShopService;
 
     @Tag(name = "/cashShop/" + ApiConstant.LATEST)
     @Operation(summary = "获取商城全部分类")

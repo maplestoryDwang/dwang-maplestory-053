@@ -17,6 +17,7 @@
         <module>gms-handler</module>
         <module>gms-ui-admin</module>
         <module>gms-common</module>
+        <module>gms-data-provider</module>
     </modules>
 
     <repositories>
