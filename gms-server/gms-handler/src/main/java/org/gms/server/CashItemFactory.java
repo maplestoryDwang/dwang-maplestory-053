@@ -10,6 +10,7 @@ import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.CategoryType;
 import org.gms.dao.entity.ModifiedCashItemDO;
 import org.gms.exception.BizException;
+import org.gms.model.CashCategoryWZDO;
 import org.gms.model.dto.CashShopSearchRtnDTO;
 import org.gms.model.dto.CashCategoryDTO;
 import org.gms.net.server.Server;
@@ -132,7 +133,13 @@ public class CashItemFactory {
 
     private static void loadCashCategories() {
         modifiedCashItems.clear();
-        cashCategories.addAll(cashShopService.getAllCategoryList());
+        List<CashCategoryWZDO> allCategoryList = cashShopService.getAllCategoryList();
+
+        List<CashCategoryDTO> cashCategoryDTOS = new ArrayList<>();
+        allCategoryList.forEach(category -> {
+            cashCategoryDTOS.add(CashCategoryDTO.builder().id(category.getId()).name(category.getName()).subId(category.getSubId()).subName(category.getSubName()).build());
+        });
+        cashCategories.addAll(cashCategoryDTOS);
     }
 
     public static Optional<ModifiedCashItemDO> getRandomCashItem() {
