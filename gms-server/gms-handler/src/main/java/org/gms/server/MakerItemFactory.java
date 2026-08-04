@@ -23,8 +23,13 @@ package org.gms.server;
 
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.EquipType;
+import org.gms.util.DatabaseConnection;
 import org.gms.util.Pair;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +42,7 @@ public class MakerItemFactory {
     private static final ItemInformationProvider ii = ItemInformationProvider.getInstance();
 
     public static MakerItemCreateEntry getItemCreateEntry(int toCreate, int stimulantid, Map<Integer, Short> reagentids) {
-        MakerItemCreateEntry makerEntry = ii.getMakerItemEntry(toCreate);
+        MakerItemCreateEntry makerEntry = getMakerItemEntry(toCreate);
         if (makerEntry.isInvalid()) {
             return makerEntry;
         }
@@ -142,6 +147,52 @@ public class MakerItemFactory {
             return 8000 * reagentLevel;
         }
     }
+
+    private static MakerItemCreateEntry getMakerItemEntry(int toCreate) {
+        MakerItemCreateEntry makerEntry;
+
+        if ((makerEntry = ii.getMakerItemCache().get(toCreate)) != null) {
+            return new MakerItemCreateEntry(makerEntry);
+        } else {
+            try (Connection con = DatabaseConnection.getConnection()) {
+                int reqLevel = -1;
+                int reqMakerLevel = -1;
+                int cost = -1;
+                int toGive = -1;
+                try (PreparedStatement ps = con.prepareStatement("SELECT req_level, req_maker_level, req_meso, quantity FROM makercreatedata WHERE itemid = ?")) {
+                    ps.setInt(1, toCreate);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            reqLevel = rs.getInt("req_level");
+                            reqMakerLevel = rs.getInt("req_maker_level");
+                            cost = rs.getInt("req_meso");
+                            toGive = rs.getInt("quantity");
+                        }
+                    }
+                }
+
+                makerEntry = new MakerItemCreateEntry(cost, reqLevel, reqMakerLevel);
+                makerEntry.addGainItem(toCreate, toGive);
+
+                try (PreparedStatement ps = con.prepareStatement("SELECT req_item, count FROM makerrecipedata WHERE itemid = ?")) {
+                    ps.setInt(1, toCreate);
+
+                    try (ResultSet rs = ps.executeQuery()) {
+                        while (rs.next()) {
+                            makerEntry.addReqItem(rs.getInt("req_item"), rs.getInt("count"));
+                        }
+                    }
+                }
+                ii.getMakerItemCache().put(toCreate, new MakerItemCreateEntry(makerEntry));
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+                makerEntry = null;
+            }
+        }
+
+        return makerEntry;
+    }
+
 
     public static class MakerItemCreateEntry {
         private final int reqLevel;

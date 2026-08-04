@@ -48,6 +48,7 @@ import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.PetUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.outbound.SendNoteSuccessPacket;
@@ -447,10 +448,10 @@ public final class UseCashItemHandler extends AbstractPacketHandler {
             for (byte i = 0; i < 1; i++) {
                 Pet pet = player.getPet(i);
                 if (pet != null) {
-                    Pair<Integer, Boolean> pair = pet.canConsume(itemId);
+                    Pair<Integer, Boolean> pair = PetUtils.canConsume(pet, itemId);
                     if (pair.getRight()) {
                         isUse = true;
-                        pet.gainTamenessFullness(player, pair.getLeft(), 100, 1, true);
+                        PetUtils.gainTamenessFullness(pet, player, pair.getLeft(), 100, 1, true);
                         remove(c, position, itemId);
                         break;
                     }

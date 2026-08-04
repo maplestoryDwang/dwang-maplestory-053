@@ -23,6 +23,7 @@ import org.gms.client.inventory.Item;
 import org.gms.constants.inventory.ItemConstants;
 
 /**
+ * KarmaFlag --是否是宿命剪刀 5510000
  * @author RonanLana
  */
 public class KarmaManipulator {

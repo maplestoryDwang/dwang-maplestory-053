@@ -26,6 +26,8 @@ import org.gms.client.Client;
 import org.gms.client.inventory.Pet;
 import org.gms.client.inventory.PetCommand;
 import org.gms.client.inventory.PetDataFactory;
+import org.gms.dwutil.CharacterUtils;
+import org.gms.dwutil.PetUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.util.PacketCreator;
@@ -53,7 +55,7 @@ public final class PetCommandHandler extends AbstractPacketHandler {
         }
 
         if (Randomizer.nextInt(100) < petCommand.getProbability()) {
-            pet.gainTamenessFullness(chr, petCommand.getIncrease(), 0, command);
+            PetUtils.gainTamenessFullness(pet, chr, petCommand.getIncrease(), 0, command);
             chr.getMap().broadcastMessage(PacketCreator.commandResponse(chr.getId(), petIndex, false, command, chr.hasPetChatballoon(petIndex)));
         } else {
             chr.getMap().broadcastMessage(PacketCreator.commandResponse(chr.getId(), petIndex, true, command, chr.hasPetChatballoon(petIndex)));

@@ -54,6 +54,7 @@ import org.gms.provider.wz.WzFiles;
 import org.gms.server.MakerItemFactory.MakerItemCreateEntry;
 import org.gms.server.life.LifeFactory;
 import org.gms.server.life.MonsterInformationProvider;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,7 +74,7 @@ import java.util.Set;
 /**
  * @author Matze
  *
- * @desc 感觉是所有wz的数据缓存
+ * @desc 所有wz的数据缓存
  */
 public class ItemInformationProvider {
     private static final Logger log = LoggerFactory.getLogger(ItemInformationProvider.class);
@@ -544,7 +545,7 @@ public class ItemInformationProvider {
         return ret;
     }
 
-    protected String getEquipmentSlot(int itemId) {
+    public String getEquipmentSlot(int itemId) {
         if (equipmentSlotCache.containsKey(itemId)) {
             return equipmentSlotCache.get(itemId);
         }
@@ -2051,25 +2052,6 @@ public class ItemInformationProvider {
         return list;
     }
 
-    private static int getCrystalForLevel(int level) {
-        int range = (level - 1) / 10;
-
-        if (range < 5) {
-            return ItemId.BASIC_MONSTER_CRYSTAL_1;
-        } else if (range > 11) {
-            return ItemId.ADVANCED_MONSTER_CRYSTAL_3;
-        } else {
-            return switch (range) {
-                case 5 -> ItemId.BASIC_MONSTER_CRYSTAL_2;
-                case 6 -> ItemId.BASIC_MONSTER_CRYSTAL_3;
-                case 7 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_1;
-                case 8 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_2;
-                case 9 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_3;
-                case 10 -> ItemId.ADVANCED_MONSTER_CRYSTAL_1;
-                default -> ItemId.ADVANCED_MONSTER_CRYSTAL_2;
-            };
-        }
-    }
 
     public Pair<String, Integer> getMakerReagentStatUpgrade(int itemId) {
         try {
@@ -2132,50 +2114,6 @@ public class ItemInformationProvider {
         return -1;
     }
 
-    public MakerItemCreateEntry getMakerItemEntry(int toCreate) {
-        MakerItemCreateEntry makerEntry;
-
-        if ((makerEntry = makerItemCache.get(toCreate)) != null) {
-            return new MakerItemCreateEntry(makerEntry);
-        } else {
-            try (Connection con = DatabaseConnection.getConnection()) {
-                int reqLevel = -1;
-                int reqMakerLevel = -1;
-                int cost = -1;
-                int toGive = -1;
-                try (PreparedStatement ps = con.prepareStatement("SELECT req_level, req_maker_level, req_meso, quantity FROM makercreatedata WHERE itemid = ?")) {
-                    ps.setInt(1, toCreate);
-                    try (ResultSet rs = ps.executeQuery()) {
-                        if (rs.next()) {
-                            reqLevel = rs.getInt("req_level");
-                            reqMakerLevel = rs.getInt("req_maker_level");
-                            cost = rs.getInt("req_meso");
-                            toGive = rs.getInt("quantity");
-                        }
-                    }
-                }
-
-                makerEntry = new MakerItemCreateEntry(cost, reqLevel, reqMakerLevel);
-                makerEntry.addGainItem(toCreate, toGive);
-
-                try (PreparedStatement ps = con.prepareStatement("SELECT req_item, count FROM makerrecipedata WHERE itemid = ?")) {
-                    ps.setInt(1, toCreate);
-
-                    try (ResultSet rs = ps.executeQuery()) {
-                        while (rs.next()) {
-                            makerEntry.addReqItem(rs.getInt("req_item"), rs.getInt("count"));
-                        }
-                    }
-                }
-                makerItemCache.put(toCreate, new MakerItemCreateEntry(makerEntry));
-            } catch (SQLException sqle) {
-                sqle.printStackTrace();
-                makerEntry = null;
-            }
-        }
-
-        return makerEntry;
-    }
 
     public int getMakerCrystalFromEquip(Integer equipId) {
         try {
@@ -2196,6 +2134,27 @@ public class ItemInformationProvider {
 
         return -1;
     }
+
+    private static int getCrystalForLevel(int level) {
+        int range = (level - 1) / 10;
+
+        if (range < 5) {
+            return ItemId.BASIC_MONSTER_CRYSTAL_1;
+        } else if (range > 11) {
+            return ItemId.ADVANCED_MONSTER_CRYSTAL_3;
+        } else {
+            return switch (range) {
+                case 5 -> ItemId.BASIC_MONSTER_CRYSTAL_2;
+                case 6 -> ItemId.BASIC_MONSTER_CRYSTAL_3;
+                case 7 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_1;
+                case 8 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_2;
+                case 9 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_3;
+                case 10 -> ItemId.ADVANCED_MONSTER_CRYSTAL_1;
+                default -> ItemId.ADVANCED_MONSTER_CRYSTAL_2;
+            };
+        }
+    }
+
 
     public List<Pair<Integer, Integer>> getMakerDisassembledItems(Integer itemId) {
         List<Pair<Integer, Integer>> items = new LinkedList<>();
@@ -2277,37 +2236,6 @@ public class ItemInformationProvider {
         return list;
     }
 
-    private boolean canUseSkillBook(Character player, Integer skillBookId) {
-        Map<String, Integer> skilldata = getSkillStats(skillBookId, player.getJob().getId());
-        if (skilldata == null || skilldata.get("skillid") == 0) {
-            return false;
-        }
-
-        Skill skill2 = SkillFactory.getSkill(skilldata.get("skillid"));
-        return (skilldata.get("skillid") != 0 && ((player.getSkillLevel(skill2) >= skilldata.get("reqSkillLevel") || skilldata.get("reqSkillLevel") == 0) && player.getMasterLevel(skill2) < skilldata.get("masterLevel")));
-    }
-
-    public List<Integer> usableMasteryBooks(Character player) {
-        List<Integer> masterybook = new LinkedList<>();
-        for (Integer i = 2290000; i <= 2290139; i++) {
-            if (canUseSkillBook(player, i)) {
-                masterybook.add(i);
-            }
-        }
-
-        return masterybook;
-    }
-
-    public List<Integer> usableSkillBooks(Character player) {
-        List<Integer> skillbook = new LinkedList<>();
-        for (Integer i = 2280000; i <= 2280019; i++) {
-            if (canUseSkillBook(player, i)) {
-                skillbook.add(i);
-            }
-        }
-
-        return skillbook;
-    }
 
     public final QuestConsItem getQuestConsumablesInfo(final int itemId) {
         if (questItemConsCache.containsKey(itemId)) {
@@ -2422,5 +2350,9 @@ public class ItemInformationProvider {
 
     public boolean isThrowingStar(int itemId) {
         return itemId >= 2070000 && itemId < 2080000;
+    }
+
+    public Map<Integer, MakerItemCreateEntry> getMakerItemCache() {
+        return makerItemCache;
     }
 }

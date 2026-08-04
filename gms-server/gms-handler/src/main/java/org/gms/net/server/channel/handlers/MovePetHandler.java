@@ -25,6 +25,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.inventory.Pet;
 import org.gms.config.GameConfig;
+import org.gms.dwutil.PetUtils;
 import org.gms.net.packet.InPacket;
 import org.gms.server.maps.MapObject;
 import org.gms.server.maps.MapObjectType;
@@ -63,7 +64,8 @@ public final class MovePetHandler extends AbstractMovementPacketHandler {
         byte slot = 0;
 
         // 這個是給別人看的
-        player.getPet(slot).updatePosition(res);
+//        player.getPet(slot).updatePosition(res);
+        PetUtils.updatePosition(player.getPet(slot), res);
         player.getMap().broadcastMessage(player, PacketCreator.movePet(player.getId(),_ZtlSecureTear_m_x,_ZtlSecureTear_m_y , res), false);
         if (GameConfig.getServerBoolean("pet_itemvac")) {
             // 根据游戏config参数确定是否开启宠吸

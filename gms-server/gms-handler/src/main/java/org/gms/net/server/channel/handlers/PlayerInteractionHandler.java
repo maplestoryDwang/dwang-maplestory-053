@@ -34,6 +34,7 @@ import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.util.I18nUtil;
@@ -581,7 +582,7 @@ public final class PlayerInteractionHandler extends AbstractPacketHandler {
                 short bundles = p.readShort();
                 Item ivItem = chr.getInventory(ivType).getItem(slot);
 
-                if (ivItem == null || ivItem.isUntradeable()) {
+                if (ivItem == null || ItemUtils.isUntradeable(ivItem)) {
                     c.sendPacket(PacketCreator.serverNotice(1, I18nUtil.getMessage("PlayerInteractionHandler.message7")));
                     c.sendPacket(PacketCreator.enableActions());
                     return;

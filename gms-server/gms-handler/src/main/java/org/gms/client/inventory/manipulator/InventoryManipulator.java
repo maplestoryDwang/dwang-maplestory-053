@@ -23,6 +23,7 @@ package org.gms.client.inventory.manipulator;
 
 import org.gms.client.BuffStat;
 import org.gms.client.Character;
+import org.gms.dwutil.CharacterUtils;
 import org.gms.client.Client;
 import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.Inventory;
@@ -30,6 +31,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.ModifyInventory;
 import org.gms.client.inventory.Pet;
+import org.gms.dwutil.ItemUtils;
 import org.gms.model.pojo.NewYearCardRecord;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
@@ -551,7 +553,8 @@ public class InventoryManipulator {
             );
             return;
         }
-        if (source == null || !ii.canWearEquipment(chr, source, dst)) {
+//        if (source == null || !ii.canWearEquipment(chr, source, dst)) {
+        if (source == null || !CharacterUtils.canWearEquipment(chr, source, dst)) {
             c.sendPacket(PacketCreator.enableActions());
             return;
         } else if ((ItemId.isExplorerMount(source.getItemId()) && chr.isCygnus()) ||
@@ -849,7 +852,7 @@ public class InventoryManipulator {
     }
 
     private static boolean isDroppedItemRestricted(Item it) {
-        return GameConfig.getServerBoolean("use_erase_untradeable_drop") && it.isUntradeable();
+        return GameConfig.getServerBoolean("use_erase_untradeable_drop") && ItemUtils.isUntradeable(it);
     }
 
     public static boolean isSandboxItem(Item it) {

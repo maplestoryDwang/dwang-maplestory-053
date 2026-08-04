@@ -23,14 +23,8 @@ package org.gms.client.inventory;
 
 import org.gms.client.Character;
 import org.gms.util.CashIdGenerator;
-import org.gms.constants.game.ExpTable;
 import org.gms.server.ItemInformationProvider;
-import org.gms.server.movement.AbsoluteLifeMovement;
-import org.gms.server.movement.LifeMovement;
-import org.gms.server.movement.LifeMovementFragment;
 import org.gms.util.DatabaseConnection;
-import org.gms.util.PacketCreator;
-import org.gms.util.Pair;
 
 import java.awt.*;
 import java.sql.Connection;
@@ -68,7 +62,7 @@ public class Pet extends Item {
         }
     }
 
-    private Pet(int id, short position, int uniqueid) {
+    public Pet(int id, short position, int uniqueid) {
         super(id, position, (short) 1);
         this.uniqueid = uniqueid;
         this.pos = new Point(0, 0);
@@ -181,61 +175,6 @@ public class Pet extends Item {
         return level;
     }
 
-    public void gainTamenessFullness(Character owner, int incTameness, int incFullness, int type) {
-        gainTamenessFullness(owner, incTameness, incFullness, type, false);
-    }
-
-    public void gainTamenessFullness(Character owner, int incTameness, int incFullness, int type, boolean forceEnjoy) {
-        byte slot = owner.getPetIndex(this);
-        boolean enjoyed;
-
-        //will NOT increase pet's tameness if tried to feed pet with 100% fullness
-        // unless forceEnjoy == true (cash shop)
-        if (fullness < 100 || incFullness == 0 || forceEnjoy) {   //incFullness == 0: command given
-            int newFullness = fullness + incFullness;
-            if (newFullness > 100) {
-                newFullness = 100;
-            }
-            fullness = newFullness;
-
-            if (incTameness > 0 && tameness < 30000) {
-                int newTameness = tameness + incTameness;
-                if (newTameness > 30000) {
-                    newTameness = 30000;
-                }
-
-                tameness = newTameness;
-                while (newTameness >= ExpTable.getTamenessNeededForLevel(level)) {
-                    level += 1;
-                    owner.sendPacket(PacketCreator.showOwnPetLevelUp(slot));
-                    owner.getMap().broadcastMessage(PacketCreator.showPetLevelUp(owner, slot));
-                }
-            }
-
-            enjoyed = true;
-        } else {
-            int newTameness = tameness - 1;
-            if (newTameness < 0) {
-                newTameness = 0;
-            }
-
-            tameness = newTameness;
-            if (level > 1 && newTameness < ExpTable.getTamenessNeededForLevel(level - 1)) {
-                level -= 1;
-            }
-
-            enjoyed = false;
-        }
-
-        owner.getMap().broadcastMessage(PacketCreator.petFoodResponse(owner.getId(), slot, enjoyed, owner.hasPetChatballoon(slot)));
-        saveToDb();
-
-        Item petz = owner.getInventory(InventoryType.CASH).getItem(getPosition());
-        if (petz != null) {
-            owner.forceUpdateItem(petz);
-        }
-    }
-
     public void setLevel(byte level) {
         this.level = level;
     }
@@ -284,7 +223,7 @@ public class Pet extends Item {
         return this.petAttribute;
     }
 
-    private void setPetAttribute(int flag) {
+    public void setPetAttribute(int flag) {
         this.petAttribute = flag;
     }
 
@@ -308,18 +247,5 @@ public class Pet extends Item {
         }
     }
 
-    public Pair<Integer, Boolean> canConsume(int itemId) {
-        return ItemInformationProvider.getInstance().canPetConsume(this.getItemId(), itemId);
-    }
 
-    public void updatePosition(List<LifeMovementFragment> movement) {
-        for (LifeMovementFragment move : movement) {
-            if (move instanceof LifeMovement) {
-                if (move instanceof AbsoluteLifeMovement) {
-                    this.setPos(move.getPosition());
-                }
-                this.setStance(((LifeMovement) move).getNewstate());
-            }
-        }
-    }
 }

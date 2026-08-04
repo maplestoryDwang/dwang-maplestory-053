@@ -33,6 +33,8 @@ import org.gms.constants.game.NextLevelType;
 import org.gms.constants.id.MapId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.LanguageConstants;
+import org.gms.dwutil.CharacterUtils;
+import org.gms.dwutil.PetUtils;
 import org.gms.manager.ServerManager;
 import org.gms.model.pojo.NextLevelContext;
 import org.gms.net.server.Server;
@@ -380,7 +382,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     public void gainTameness(int tameness) {
         for (Pet pet : getPlayer().getPets()) {
             if (pet != null) {
-                pet.gainTamenessFullness(getPlayer(), tameness, 0, 0);
+                PetUtils.gainTamenessFullness(pet, getPlayer(), tameness, 0, 0);
             }
         }
     }
@@ -606,11 +608,11 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public Object[] getAvailableMasteryBooks() {
-        return ItemInformationProvider.getInstance().usableMasteryBooks(this.getPlayer()).toArray();
+        return CharacterUtils.usableMasteryBooks(this.getPlayer()).toArray();
     }
 
     public Object[] getAvailableSkillBooks() {
-        List<Integer> ret = ItemInformationProvider.getInstance().usableSkillBooks(this.getPlayer());
+        List<Integer> ret = CharacterUtils.usableSkillBooks(this.getPlayer());
         ret.addAll(SkillbookInformationProvider.getTeachableSkills(this.getPlayer()));
 
         return ret.toArray();

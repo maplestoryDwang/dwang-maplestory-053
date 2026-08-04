@@ -29,6 +29,8 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.Pet;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.dwutil.CharacterUtils;
+import org.gms.dwutil.PetUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;
@@ -81,7 +83,7 @@ public final class PetFoodHandler extends AbstractPacketHandler {
                         return;
                     }
 
-                    pet.gainTamenessFullness(chr, (pet.getFullness() <= 75) ? 1 : 0, 30, 1);   // 25+ "emptyness" to get +1 tameness
+                    PetUtils.gainTamenessFullness(pet, chr, (pet.getFullness() <= 75) ? 1 : 0, 30, 1);   // 25+ "emptyness" to get +1 tameness
                     InventoryManipulator.removeFromSlot(c, InventoryType.USE, pos, (short) 1, false);
                 } finally {
                     useInv.unlockInventory();

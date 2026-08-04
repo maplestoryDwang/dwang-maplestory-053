@@ -22,6 +22,7 @@ package org.gms.server.quest.actions;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.inventory.Pet;
+import org.gms.dwutil.PetUtils;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.quest.Quest;
@@ -56,7 +57,7 @@ public class PetTamenessAction extends AbstractQuestAction {
 
         c.lockClient();
         try {
-            pet.gainTamenessFullness(chr, tameness, 0, 0);
+            PetUtils.gainTamenessFullness(pet, chr, tameness, 0, 0);
         } finally {
             c.unlockClient();
         }

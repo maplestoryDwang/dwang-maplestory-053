@@ -16,6 +16,7 @@ import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.client.inventory.manipulator.KarmaManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.slf4j.Logger;
@@ -66,7 +67,7 @@ public final class WeddingHandler extends AbstractPacketHandler {
                                         try {
                                             Item item = chrInv.getItem((byte) slot);
                                             if (item != null) {
-                                                if (!item.isUntradeable()) {
+                                                if (!ItemUtils.isUntradeable(item)) {
                                                     if (itemid == item.getItemId() && quantity <= item.getQuantity()) {
                                                         newItem = item.copy();
                                                         newItem.setQuantity(quantity);

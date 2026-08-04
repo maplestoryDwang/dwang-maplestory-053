@@ -36,6 +36,7 @@ import org.gms.client.inventory.manipulator.KarmaManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.server.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -257,7 +258,7 @@ public class DueyProcessor {
             try {
                 item = inv.getItem(itemPos);
                 if (item != null && item.getQuantity() >= amount) {
-                    if (item.isUntradeable() || ii.isUnmerchable(item.getItemId())) {
+                    if (ItemUtils.isUntradeable(item) || ii.isUnmerchable(item.getItemId())) {
                         return -1;
                     }
 
