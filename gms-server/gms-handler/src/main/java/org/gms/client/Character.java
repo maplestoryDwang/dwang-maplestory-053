@@ -64,6 +64,7 @@ import org.gms.constants.skills.other.*;
 import org.gms.constants.string.ExtendKey;
 import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.*;
+import org.gms.dwutil.ItemUtils;
 import org.gms.exception.NotEnabledException;
 import org.gms.manager.ServerManager;
 import org.gms.model.dto.InventorySearchReqDTO;
@@ -9454,7 +9455,7 @@ public class Character extends AbstractCharacterObject {
                     continue;
                 }
 
-                nEquip.gainItemExp(client, expGain);
+                ItemUtils.gainItemExp(nEquip, client, expGain);
             }
         }
     }

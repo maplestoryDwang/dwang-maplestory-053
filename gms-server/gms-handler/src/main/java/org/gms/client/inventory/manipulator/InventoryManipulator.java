@@ -88,7 +88,7 @@ public class InventoryManipulator {
     private static boolean addByIdInternal(Client c, Character chr, InventoryType type, Inventory inv, int itemId, short quantity, String owner, int petid, short flag, long expiration) {
         ItemInformationProvider ii = ItemInformationProvider.getInstance();
         if (!type.equals(InventoryType.EQUIP)) {
-            short slotMax = ii.getSlotMax(c, itemId);
+            short slotMax = ItemUtils.getSlotMax(c, itemId);
             List<Item> existing = inv.listById(itemId);
             if (!ItemConstants.isRechargeable(itemId) && petid == -1) {
                 if (existing.size() > 0) { // first update all existing slots to slotMax
@@ -205,7 +205,7 @@ public class InventoryManipulator {
         short quantity = item.getQuantity();
 
         if (!type.equals(InventoryType.EQUIP)) {
-            short slotMax = ii.getSlotMax(c, itemid);
+            short slotMax = ItemUtils.getSlotMax(c, itemid);
             List<Item> existing = inv.listById(itemid);
             if (!ItemConstants.isRechargeable(itemid) && petId == -1) {
                 if (existing.size() > 0) { // first update all existing slots to slotMax
@@ -309,7 +309,7 @@ public class InventoryManipulator {
         }
 
         if (!type.equals(InventoryType.EQUIP)) {
-            short slotMax = ii.getSlotMax(c, itemid);
+            short slotMax = ItemUtils.getSlotMax(c, itemid);
             List<Item> existing = inv.listById(itemid);
 
             final int numSlotsNeeded;
@@ -364,7 +364,7 @@ public class InventoryManipulator {
         }
 
         if (!type.equals(InventoryType.EQUIP)) {
-            short slotMax = ii.getSlotMax(c, itemid);
+            short slotMax = ItemUtils.getSlotMax(c, itemid);
             final int numSlotsNeeded;
 
             if (ItemConstants.isRechargeable(itemid)) {
@@ -506,7 +506,7 @@ public class InventoryManipulator {
             olddstQ = initialTarget.getQuantity();
         }
         short oldsrcQ = source.getQuantity();
-        short slotMax = ii.getSlotMax(c, source.getItemId());
+        short slotMax = ItemUtils.getSlotMax(c, source.getItemId());
         inv.move(src, dst, slotMax);
         final List<ModifyInventory> mods = new ArrayList<>();
         if (!(type.equals(InventoryType.EQUIP) || type.equals(InventoryType.CASH)) && initialTarget != null && initialTarget.getItemId() == source.getItemId() && !ItemConstants.isRechargeable(source.getItemId()) && isSameOwner(source, initialTarget)) {

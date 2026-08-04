@@ -29,6 +29,7 @@ import org.gms.client.command.Command;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.gms.server.ItemInformationProvider;
 import org.gms.util.I18nUtil;
 
@@ -40,19 +41,18 @@ public class RechargeCommand extends Command {
     @Override
     public void execute(Client c, String[] params) {
         Character player = c.getPlayer();
-        ItemInformationProvider ii = ItemInformationProvider.getInstance();
         for (Item torecharge : c.getPlayer().getInventory(InventoryType.USE).list()) {
             if (ItemConstants.isThrowingStar(torecharge.getItemId())) {
-                torecharge.setQuantity(ii.getSlotMax(c, torecharge.getItemId()));
+                torecharge.setQuantity(ItemUtils.getSlotMax(c, torecharge.getItemId()));
                 c.getPlayer().forceUpdateItem(torecharge);
             } else if (ItemConstants.isArrow(torecharge.getItemId())) {
-                torecharge.setQuantity(ii.getSlotMax(c, torecharge.getItemId()));
+                torecharge.setQuantity(ItemUtils.getSlotMax(c, torecharge.getItemId()));
                 c.getPlayer().forceUpdateItem(torecharge);
             } else if (ItemConstants.isBullet(torecharge.getItemId())) {
-                torecharge.setQuantity(ii.getSlotMax(c, torecharge.getItemId()));
+                torecharge.setQuantity(ItemUtils.getSlotMax(c, torecharge.getItemId()));
                 c.getPlayer().forceUpdateItem(torecharge);
             } else if (ItemConstants.isConsumable(torecharge.getItemId())) {
-                torecharge.setQuantity(ii.getSlotMax(c, torecharge.getItemId()));
+                torecharge.setQuantity(ItemUtils.getSlotMax(c, torecharge.getItemId()));
                 c.getPlayer().forceUpdateItem(torecharge);
             }
         }

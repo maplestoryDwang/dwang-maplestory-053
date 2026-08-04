@@ -30,6 +30,7 @@ import org.gms.client.inventory.Pet;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.util.DatabaseConnection;
@@ -108,7 +109,7 @@ public class Shop {
                             InventoryManipulator.addById(c, itemId, quantity, "", -1);
                             c.getPlayer().gainMeso(-amount, false);
                         } else {
-                            quantity = ii.getSlotMax(c, item.getItemId());
+                            quantity = ItemUtils.getSlotMax(c, item.getItemId());
                             InventoryManipulator.addById(c, itemId, quantity, "", -1);
                             c.getPlayer().gainMeso(-item.getPrice(), false);
                         }
@@ -130,7 +131,7 @@ public class Shop {
                             InventoryManipulator.addById(c, itemId, quantity, "", -1);
                             InventoryManipulator.removeById(c, InventoryType.ETC, ItemId.PERFECT_PITCH, amount, false, false);
                         } else {
-                            short slotMax = ii.getSlotMax(c, item.getItemId());
+                            short slotMax = ItemUtils.getSlotMax(c, item.getItemId());
                             quantity = slotMax;
                             InventoryManipulator.addById(c, itemId, quantity, "", -1);
                             InventoryManipulator.removeById(c, InventoryType.ETC, ItemId.PERFECT_PITCH, amount, false, false);
@@ -236,7 +237,7 @@ public class Shop {
         if (item == null || !ItemConstants.isRechargeable(item.getItemId())) {
             return;
         }
-        short slotMax = ii.getSlotMax(c, item.getItemId());
+        short slotMax = ItemUtils.getSlotMax(c, item.getItemId());
         if (item.getQuantity() < 0) {
             return;
         }

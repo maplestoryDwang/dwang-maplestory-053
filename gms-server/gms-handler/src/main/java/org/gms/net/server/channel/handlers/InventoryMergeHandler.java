@@ -28,6 +28,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;
@@ -77,7 +78,7 @@ public final class InventoryMergeHandler extends AbstractPacketHandler {
                     if (dstItem.getItemId() != srcItem.getItemId()) {
                         continue;
                     }
-                    if (dstItem.getQuantity() == ii.getSlotMax(c, inventory.getItem(dst).getItemId())) {
+                    if (dstItem.getQuantity() == ItemUtils.getSlotMax(c, inventory.getItem(dst).getItemId())) {
                         break;
                     }
 

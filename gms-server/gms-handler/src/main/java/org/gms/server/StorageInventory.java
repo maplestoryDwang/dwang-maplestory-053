@@ -24,6 +24,7 @@ import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 
 import java.util.*;
 
@@ -110,7 +111,7 @@ public class StorageInventory {
         if (source == null) {
             return;
         }
-        short slotMax = ItemInformationProvider.getInstance().getSlotMax(c, source.getItemId());
+        short slotMax = ItemUtils.getSlotMax(c, source.getItemId());
         this.move(src, dst, slotMax);
     }
 
@@ -172,7 +173,7 @@ public class StorageInventory {
                 if (dstItem.getItemId() != srcItem.getItemId()) {
                     continue;
                 }
-                if (dstItem.getQuantity() == ii.getSlotMax(c, this.getItem(dst).getItemId())) {
+                if (dstItem.getQuantity() == ItemUtils.getSlotMax(c, this.getItem(dst).getItemId())) {
                     break;
                 }
 

@@ -42,6 +42,7 @@ import org.gms.constants.skills.other.NightWalker;
 import org.gms.constants.skills.adv.thief.bandit.Shadower;
 import org.gms.constants.skills.other.ThunderBreaker;
 import org.gms.constants.skills.other.WindArcher;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.Packet;
 import org.slf4j.Logger;
@@ -151,7 +152,7 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
                     boolean cbow = ItemConstants.isArrowForCrossBow(id);
 
                     if (id == ItemId.BALANCED_FURY && (item.getQuantity() - bulletCount) <= 10) {   //平衡之怒低于10，则自动补充，如果设置数值过低时，会造成出拳平A
-                        supplement = (short) -ItemInformationProvider.getInstance().getSlotMax(c,id);  //设定补充到限制的最高数值
+                        supplement = (short) - ItemUtils.getSlotMax(c,id);  //设定补充到限制的最高数值
                     }
 
                     if (item.getQuantity() >= bulletCount) { //Fixes the bug where you can't use your last arrow.

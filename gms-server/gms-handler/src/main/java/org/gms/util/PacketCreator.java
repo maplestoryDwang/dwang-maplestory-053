@@ -31,6 +31,7 @@ import org.gms.constants.game.CommodityFlag;
 import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.dao.entity.ModifiedCashItemDO;
 import org.gms.dwutil.CharacterUtils;
+import org.gms.dwutil.ItemUtils;
 import org.gms.model.pojo.NewYearCardRecord;
 import org.gms.client.status.MonsterStatus;
 import org.gms.client.status.MonsterStatusEffect;
@@ -2828,7 +2829,7 @@ public class PacketCreator {
                 mplew.writeShort(item.getBuyable());
             } else {
                 mplew.writeLong(Double.doubleToLongBits(ii.getUnitPrice(item.getItemId())));
-                mplew.writeShort(ii.getSlotMax(c, item.getItemId()));
+                mplew.writeShort(ItemUtils.getSlotMax(c, item.getItemId()));
             }
         }
 

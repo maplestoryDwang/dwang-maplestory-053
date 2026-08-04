@@ -204,6 +204,30 @@ public class Equip extends Item {
         return vicious;
     }
 
+    public boolean isElemental() {
+        return isElemental;
+    }
+
+    public boolean isUpgradeable() {
+        return isUpgradeable;
+    }
+
+    public void setUpgradeable(boolean upgradeable) {
+        isUpgradeable = upgradeable;
+    }
+
+    public void setElemental(boolean elemental) {
+        isElemental = elemental;
+    }
+
+    public static ItemInformationProvider getIi() {
+        return ii;
+    }
+
+    public static void setIi(ItemInformationProvider ii) {
+        Equip.ii = ii;
+    }
+
     @Override
     public void setFlag(short flag) {
         this.flag = flag;
@@ -376,7 +400,7 @@ public class Equip extends Item {
     /**
      * 判断是否需要增加砸卷次数或者减少金锤子已使用次数
      */
-    private void UpgradeSlotProcessing(List<Pair<StatUpgrade, Integer>> stats,int equipLevel) {
+    public void UpgradeSlotProcessing(List<Pair<StatUpgrade, Integer>> stats,int equipLevel) {
         if (GameConfig.getServerBoolean("use_equipment_level_up_slots")) {// 处理可砸卷次数逻辑
             getUnitSlotUpgrade(stats, StatUpgrade.incSlot); // 增加升级槽
         }
@@ -399,7 +423,7 @@ public class Equip extends Item {
             }
         }
     }
-    private void improveDefaultStats(List<Pair<StatUpgrade, Integer>> stats) {
+    public void improveDefaultStats(List<Pair<StatUpgrade, Integer>> stats) {
         if (dex > 0) {
             getUnitStatUpgrade(stats, StatUpgrade.incDEX, dex, true);
         }
@@ -606,62 +630,6 @@ public class Equip extends Item {
         return I18nUtil.getMessage(messageKey) + "+" + value;
     }
 
-    /**
-     * 处理装备升级的逻辑，包括属性提升、升级槽增加、金锤子减少等，并通知客户端更新装备状态
-     * @param c 触发升级的客户端
-     */
-    private void gainLevel(Client c) {
-        List<Pair<StatUpgrade, Integer>> stats = new LinkedList<>(); // 初始化属性升级列表
-        int equipLevel = ii.getEquipLevelReq(getItemId()); // 获取装备要求等级
-
-        if (isElemental) {// 如果是元素装备，从配置中获取元素属性升级列表
-            List<Pair<String, Integer>> elementalStats = ii.getItemLevelupStats(getItemId(), itemLevel);
-            for (Pair<String, Integer> p : elementalStats) {
-                if (p.getRight() > 0) { // 只有增加值大于0时才添加到列表
-                    stats.add(new Pair<>(StatUpgrade.valueOf(p.getLeft()), p.getRight()));
-                }
-            }
-        }
-
-        if (stats.isEmpty()) {// 如果属性列表为空，则生成默认属性升级列表
-            isUpgradeable = false; // 标记装备不可升级
-            improveDefaultStats(stats); // 生成默认属性升级列表
-        }
-        UpgradeSlotProcessing(stats,equipLevel);    // 砸卷次数和减少金锤子次数判断
-        if (isUpgradeable && stats.isEmpty()) {// 如果装备仍可升级且属性列表为空，则继续生成属性升级列表
-            while (stats.isEmpty()) {
-                improveDefaultStats(stats);// 生成默认属性升级列表
-                UpgradeSlotProcessing(stats,equipLevel);// 砸卷次数和减少金锤子次数判断
-            }
-        }
-
-        itemLevel++; // 提升装备等级
-
-        String lvupStr = I18nUtil.getMessage("Equip.gainStats.lvupStr", ii.getName(this.getItemId()), itemLevel) + "; ";  // 生成等级提升的提示消息
-
-        Pair<String, Pair<Boolean, Boolean>> res = this.gainStats(stats);    // 调用 gainStats 计算属性提升和生成提示消息
-        lvupStr += res.getLeft(); // 拼接属性提升的提示消息
-        boolean gotSlot = res.getRight().getLeft(); // 是否增加了升级槽
-        boolean gotVicious = res.getRight().getRight(); // 是否减少了金锤子
-
-        if (gotVicious) {// 如果减少了金锤子，追加提示消息
-            lvupStr += I18nUtil.getMessage("Equip.gainStats.Vicious","-1")  + "; ";
-        }
-
-        if (gotSlot) {// 如果增加了升级槽，追加提示消息
-            lvupStr += I18nUtil.getMessage("Equip.gainStats.UPGSLOT","+1")  + "; ";
-        }
-
-        // 通知客户端更新装备状态
-        c.getPlayer().equipChanged();
-        c.getPlayer().showHint(I18nUtil.getMessage("Equip.gainStats.showHint", ii.getName(this.getItemId()), itemLevel), 300); // 显示等级提升的消息
-        c.getPlayer().dropMessage(6, lvupStr); // 显示属性提升的消息
-
-        // 发送装备升级的效果包
-        c.sendPacket(PacketCreator.showEquipmentLevelUp());
-        c.getPlayer().getMap().broadcastPacket(c.getPlayer(), PacketCreator.showForeignEffect(c.getPlayer().getId(), 15));
-        c.getPlayer().forceUpdateItem(this); // 强制更新装备状态
-    }
 
     public int getItemExp() {
         return (int) itemExp;
@@ -684,55 +652,7 @@ public class Equip extends Item {
         }
     }
 
-    /**
-     * 处理装备经验值的增加逻辑（Ronan 的装备经验值获取方法）
-     * @param c 客户端对象
-     * @param gain 获得的经验值
-     */
-    public synchronized void gainItemExp(Client c, int gain) {
-        if (!ii.isUpgradeable(this.getItemId())) {// 检查装备是否可升级
-            return;
-        }
 
-        int equipMaxLevel = Math.min(30, Math.max(ii.getEquipLevel(this.getItemId(), true), GameConfig.getServerInt("use_equipment_level_up")));// 计算装备的最大等级
-        if (itemLevel >= equipMaxLevel) {
-            return;
-        }
-
-        int reqLevel = ii.getEquipLevelReq(this.getItemId());// 获取装备的需求等级
-
-        // 计算经验值修正因子
-        float masteryModifier = (GameConfig.getServerFloat("equip_exp_rate") * ExpTable.getExpNeededForLevel(1)) / (float) normalizedMasteryExp(reqLevel);
-        float elementModifier = (isElemental) ? 0.85f : 0.6f;
-
-        float baseExpGain = gain * elementModifier * masteryModifier;// 计算实际获得的经验值
-
-        itemExp += baseExpGain;// 更新装备经验值
-        int expNeeded = ExpTable.getEquipExpNeededForLevel(itemLevel);
-
-        // 调试信息：显示经验值获取详情
-        if (GameConfig.getServerBoolean("use_debug_show_eqp_exp")) {
-            log.info("{} -> EXP Gain: {}, Mastery: {}, Base gain: {}, exp: {} / {}, Kills TNL: {}", ii.getName(getItemId()),
-                    gain, masteryModifier, baseExpGain, itemExp, expNeeded, expNeeded / (baseExpGain / c.getPlayer().getExpRate()));
-        }
-
-
-        if (itemExp >= expNeeded) {// 判断是否需要升级
-            while (itemExp >= expNeeded) {
-                itemExp -= expNeeded;
-                gainLevel(c); // 升级装备
-
-                if (itemLevel >= equipMaxLevel || !GameConfig.getServerBoolean("use_equipment_level_up_continuous")) {// 如果达到最大等级或者不允许连续升级，重置经验值并退出循环
-                    itemExp = 0.0f;
-                    break;
-                }
-
-                expNeeded = ExpTable.getEquipExpNeededForLevel(itemLevel);// 更新升级所需经验值
-            }
-        }
-
-        c.getPlayer().forceUpdateItem(this);// 通知客户端更新装备状态
-    }
 
     private boolean reachedMaxLevel() {
         if (isElemental) {
@@ -759,6 +679,10 @@ public class Equip extends Item {
     public void setItemExp(int exp) {
         this.itemExp = exp;
     }
+    public void setItemExp(float exp) {
+        this.itemExp = exp;
+    }
+
 
     public void setItemLevel(byte level) {
         this.itemLevel = level;
