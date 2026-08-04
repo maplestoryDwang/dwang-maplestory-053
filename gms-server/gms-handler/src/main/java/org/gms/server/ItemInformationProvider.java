@@ -116,9 +116,7 @@ public class ItemInformationProvider {
     protected Map<Integer, Pair<Integer, String>> replaceOnExpireCache = new HashMap<>();
     protected Map<Integer, String> equipmentSlotCache = new HashMap<>();
     protected Map<Integer, Boolean> noCancelMouseCache = new HashMap<>();
-    protected Map<Integer, Integer> mobCrystalMakerCache = new HashMap<>();
     protected Map<Integer, Pair<String, Integer>> statUpgradeMakerCache = new HashMap<>();
-    protected Map<Integer, MakerItemFactory.MakerItemCreateEntry> makerItemCache = new HashMap<>();
     protected Map<Integer, Integer> makerCatalystCache = new HashMap<>();
     protected Map<Integer, Map<String, Integer>> skillUpgradeCache = new HashMap<>();
     protected Map<Integer, Data> skillUpgradeInfoCache = new HashMap<>();
@@ -1907,77 +1905,6 @@ public class ItemInformationProvider {
         }
     }
 
-    public int getMakerCrystalFromLeftover(Integer leftoverId) {
-        try {
-            Integer itemid = mobCrystalMakerCache.get(leftoverId);
-            if (itemid != null) {
-                return itemid;
-            }
-
-            itemid = -1;
-
-            try (Connection con = DatabaseConnection.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT dropperid FROM drop_data WHERE itemid = ? ORDER BY dropperid;")) {
-                ps.setInt(1, leftoverId);
-
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        int dropperid = rs.getInt("dropperid");
-                        itemid = getCrystalForLevel(LifeFactory.getMonsterLevel(dropperid));
-                    }
-                }
-            }
-
-            mobCrystalMakerCache.put(leftoverId, itemid);
-            return itemid;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return -1;
-    }
-
-
-    public int getMakerCrystalFromEquip(Integer equipId) {
-        try {
-            return getCrystalForLevel(getEquipLevelReq(equipId));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return -1;
-    }
-
-    public int getMakerStimulantFromEquip(Integer equipId) {
-        try {
-            return getCrystalForLevel(getEquipLevelReq(equipId));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return -1;
-    }
-
-    private static int getCrystalForLevel(int level) {
-        int range = (level - 1) / 10;
-
-        if (range < 5) {
-            return ItemId.BASIC_MONSTER_CRYSTAL_1;
-        } else if (range > 11) {
-            return ItemId.ADVANCED_MONSTER_CRYSTAL_3;
-        } else {
-            return switch (range) {
-                case 5 -> ItemId.BASIC_MONSTER_CRYSTAL_2;
-                case 6 -> ItemId.BASIC_MONSTER_CRYSTAL_3;
-                case 7 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_1;
-                case 8 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_2;
-                case 9 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_3;
-                case 10 -> ItemId.ADVANCED_MONSTER_CRYSTAL_1;
-                default -> ItemId.ADVANCED_MONSTER_CRYSTAL_2;
-            };
-        }
-    }
-
 
     public List<Pair<Integer, Integer>> getMakerDisassembledItems(Integer itemId) {
         List<Pair<Integer, Integer>> items = new LinkedList<>();
@@ -2037,28 +1964,6 @@ public class ItemInformationProvider {
         makerCatalystCache.put(itemId, itemid);
         return itemid;
     }
-
-    public Set<String> getWhoDrops(Integer itemId) {
-        Set<String> list = new HashSet<>();
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement("SELECT dropperid FROM drop_data WHERE itemid = ? LIMIT 50")) {
-            ps.setInt(1, itemId);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    String resultName = MonsterInformationProvider.getInstance().getMobNameFromId(rs.getInt("dropperid"));
-                    if (!resultName.isEmpty()) {
-                        list.add(resultName);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return list;
-    }
-
 
     public final QuestConsItem getQuestConsumablesInfo(final int itemId) {
         if (questItemConsCache.containsKey(itemId)) {
@@ -2175,7 +2080,5 @@ public class ItemInformationProvider {
         return itemId >= 2070000 && itemId < 2080000;
     }
 
-    public Map<Integer, MakerItemCreateEntry> getMakerItemCache() {
-        return makerItemCache;
-    }
+
 }

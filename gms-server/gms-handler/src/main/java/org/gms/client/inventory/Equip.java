@@ -23,12 +23,9 @@ package org.gms.client.inventory;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
-import org.gms.client.Client;
 import org.gms.config.GameConfig;
-import org.gms.constants.game.ExpTable;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.util.I18nUtil;
-import org.gms.util.PacketCreator;
 import org.gms.util.Randomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -654,7 +651,7 @@ public class Equip extends Item {
 
 
 
-    private boolean reachedMaxLevel() {
+    public boolean reachedMaxLevel() {
         if (isElemental) {
             if (itemLevel < ItemInformationProvider.getInstance().getEquipLevel(getItemId(), true)) {
                 return false;
@@ -662,18 +659,6 @@ public class Equip extends Item {
         }
 
         return itemLevel >= GameConfig.getServerInt("use_equipment_level_up");
-    }
-
-    public String showEquipFeatures(Client c) {
-        ItemInformationProvider ii = ItemInformationProvider.getInstance();
-        if (!ii.isUpgradeable(this.getItemId())) {
-            return "";
-        }
-
-        String eqpName = ii.getName(getItemId());
-        String eqpInfo = reachedMaxLevel() ? " #e#rMAX LEVEL#k#n" : (" EXP: #e#b" + (int) itemExp + "#k#n / " + ExpTable.getEquipExpNeededForLevel(itemLevel));
-
-        return "'" + eqpName + "' -> LV: #e#b" + itemLevel + "#k#n    " + eqpInfo + "\r\n";
     }
 
     public void setItemExp(int exp) {

@@ -31,6 +31,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,6 +41,7 @@ import java.util.Map.Entry;
  */
 public class MakerItemFactory {
     private static final ItemInformationProvider ii = ItemInformationProvider.getInstance();
+    protected static Map<Integer, MakerItemFactory.MakerItemCreateEntry> makerItemCache = new HashMap<>();
 
     public static MakerItemCreateEntry getItemCreateEntry(int toCreate, int stimulantid, Map<Integer, Short> reagentids) {
         MakerItemCreateEntry makerEntry = getMakerItemEntry(toCreate);
@@ -151,7 +153,7 @@ public class MakerItemFactory {
     private static MakerItemCreateEntry getMakerItemEntry(int toCreate) {
         MakerItemCreateEntry makerEntry;
 
-        if ((makerEntry = ii.getMakerItemCache().get(toCreate)) != null) {
+        if ((makerEntry = getMakerItemCache().get(toCreate)) != null) {
             return new MakerItemCreateEntry(makerEntry);
         } else {
             try (Connection con = DatabaseConnection.getConnection()) {
@@ -183,7 +185,7 @@ public class MakerItemFactory {
                         }
                     }
                 }
-                ii.getMakerItemCache().put(toCreate, new MakerItemCreateEntry(makerEntry));
+                getMakerItemCache().put(toCreate, new MakerItemCreateEntry(makerEntry));
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
                 makerEntry = null;
@@ -258,5 +260,9 @@ public class MakerItemFactory {
         public boolean isInvalid() {    // thanks Rohenn, Wh1SK3Y for noticing some items not getting checked properly
             return reqLevel < 0;
         }
+    }
+
+    public static Map<Integer, MakerItemCreateEntry> getMakerItemCache() {
+        return makerItemCache;
     }
 }

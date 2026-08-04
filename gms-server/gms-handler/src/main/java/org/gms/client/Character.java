@@ -9471,7 +9471,7 @@ public class Character extends AbstractCharacterObject {
                 continue;
             }
 
-            showMsg.append(nEquip.showEquipFeatures(client));
+            showMsg.append(ItemUtils.showEquipFeatures(nEquip));
         }
 
         if (!showMsg.isEmpty()) {

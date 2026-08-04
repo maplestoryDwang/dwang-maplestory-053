@@ -9,6 +9,7 @@ import org.gms.client.inventory.Item;
 import org.gms.client.inventory.manipulator.KarmaManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.ExpTable;
+import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.skills.adv.thief.assassin.Assassin;
 import org.gms.constants.skills.other.Gunslinger;
@@ -17,14 +18,19 @@ import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.scripting.npc.NPCConversationManager;
 import org.gms.server.ItemInformationProvider;
+import org.gms.server.life.LifeFactory;
+import org.gms.server.life.MonsterInformationProvider;
+import org.gms.util.DatabaseConnection;
 import org.gms.util.I18nUtil;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.*;
 
 /**
  * 校验item用于解耦
@@ -206,4 +212,89 @@ public class ItemUtils {
         c.getPlayer().forceUpdateItem(equip); // 强制更新装备状态
     }
 
+
+
+    public static String showEquipFeatures(Equip equip) {
+        ItemInformationProvider ii = ItemInformationProvider.getInstance();
+        if (!ii.isUpgradeable(equip.getItemId())) {
+            return "";
+        }
+
+        String eqpName = ii.getName(equip.getItemId());
+        String eqpInfo = equip.reachedMaxLevel() ? " #e#rMAX LEVEL#k#n" : (" EXP: #e#b" + (int) equip.getItemExp() + "#k#n / " + ExpTable.getEquipExpNeededForLevel(equip.getItemLevel()));
+
+        return "'" + eqpName + "' -> LV: #e#b" + equip.getItemLevel() + "#k#n    " + eqpInfo + "\r\n";
+    }
+
+    public static Set<String> getWhoDrops(Integer itemId) {
+        Set<String> list = new HashSet<>();
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement("SELECT dropperid FROM drop_data WHERE itemid = ? LIMIT 50")) {
+            ps.setInt(1, itemId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String resultName = MonsterInformationProvider.getInstance().getMobNameFromId(rs.getInt("dropperid"));
+                    if (!resultName.isEmpty()) {
+                        list.add(resultName);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    protected static Map<Integer, Integer> mobCrystalMakerCache = new HashMap<>();
+    public static int getMakerCrystalFromLeftover(Integer leftoverId) {
+        try {
+            Integer itemid = mobCrystalMakerCache.get(leftoverId);
+            if (itemid != null) {
+                return itemid;
+            }
+
+            itemid = -1;
+
+            try (Connection con = DatabaseConnection.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT dropperid FROM drop_data WHERE itemid = ? ORDER BY dropperid;")) {
+                ps.setInt(1, leftoverId);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        int dropperid = rs.getInt("dropperid");
+                        itemid = getCrystalForLevel(LifeFactory.getMonsterLevel(dropperid));
+                    }
+                }
+            }
+
+            mobCrystalMakerCache.put(leftoverId, itemid);
+            return itemid;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    private static int getCrystalForLevel(int level) {
+        int range = (level - 1) / 10;
+
+        if (range < 5) {
+            return ItemId.BASIC_MONSTER_CRYSTAL_1;
+        } else if (range > 11) {
+            return ItemId.ADVANCED_MONSTER_CRYSTAL_3;
+        } else {
+            return switch (range) {
+                case 5 -> ItemId.BASIC_MONSTER_CRYSTAL_2;
+                case 6 -> ItemId.BASIC_MONSTER_CRYSTAL_3;
+                case 7 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_1;
+                case 8 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_2;
+                case 9 -> ItemId.INTERMEDIATE_MONSTER_CRYSTAL_3;
+                case 10 -> ItemId.ADVANCED_MONSTER_CRYSTAL_1;
+                default -> ItemId.ADVANCED_MONSTER_CRYSTAL_2;
+            };
+        }
+    }
 }

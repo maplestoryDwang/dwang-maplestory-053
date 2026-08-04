@@ -34,6 +34,7 @@ import org.gms.constants.id.MapId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.LanguageConstants;
 import org.gms.dwutil.CharacterUtils;
+import org.gms.dwutil.ItemUtils;
 import org.gms.dwutil.PetUtils;
 import org.gms.manager.ServerManager;
 import org.gms.model.pojo.NextLevelContext;
@@ -619,7 +620,8 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public Object[] getNamesWhoDropsItem(Integer itemId) {
-        return ItemInformationProvider.getInstance().getWhoDrops(itemId).toArray();
+//        return ItemInformationProvider.getInstance().getWhoDrops(itemId).toArray();
+        return ItemUtils.getWhoDrops(itemId).toArray();
     }
 
     public String getSkillBookInfo(int itemid) {

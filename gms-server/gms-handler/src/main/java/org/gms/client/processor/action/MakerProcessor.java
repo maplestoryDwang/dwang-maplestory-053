@@ -29,6 +29,7 @@ import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.packet.InPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,7 @@ public class MakerProcessor {
 
                 if (type == 3) {    // building monster crystal
                     int fromLeftover = toCreate;
-                    toCreate = ii.getMakerCrystalFromLeftover(toCreate);
+                    toCreate = ItemUtils.getMakerCrystalFromLeftover(toCreate);
                     if (toCreate == -1) {
                         c.sendPacket(PacketCreator.serverNotice(1, ii.getName(fromLeftover) + " is unavailable for Monster Crystal conversion."));
                         c.sendPacket(PacketCreator.makerEnableActions());
