@@ -22,6 +22,7 @@
 package org.gms.server.quest.actions;
 
 import org.gms.client.Character;
+import org.gms.dwutil.ItemUtils;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.ItemInformationProvider;
@@ -51,6 +52,6 @@ public class BuffAction extends AbstractQuestAction {
 
     @Override
     public void run(Character chr, Integer extSelection) {
-        ItemInformationProvider.getInstance().getItemEffect(itemEffect).applyTo(chr);
+        ItemUtils.getItemEffect(itemEffect).applyTo(chr);
     }
 } 

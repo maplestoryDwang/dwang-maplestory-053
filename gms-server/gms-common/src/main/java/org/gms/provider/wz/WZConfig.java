@@ -17,7 +17,7 @@ public class WZConfig {
     // (Set this accordingly with the layout of the unitPrices on Item.wz XML''s, whether it''s using commas or dots to represent fractions.)'),
     // NumberFormat.getInstance(GameConfig.getServerBoolean("use_unit_price_with_comma") ? Locale.FRANCE : Locale.UK);
 
-//    Locale locale = Locale.FRANCE;  不使用
+//    Locale locale = Locale.UK;  不使用
     private static Locale localeLanguage = Locale.UK;
 
 

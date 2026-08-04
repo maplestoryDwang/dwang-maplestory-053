@@ -21,7 +21,6 @@
 */
 package org.gms.client.inventory;
 
-import org.gms.client.Character;
 import org.gms.util.CashIdGenerator;
 import org.gms.server.ItemInformationProvider;
 import org.gms.util.DatabaseConnection;
@@ -89,15 +88,6 @@ public class Pet extends Item {
         }
     }
 
-    public static void deleteFromDb(Character owner, int petid) {
-        try {
-            // 宠物基础数据删除后，petignores 会通过外键级联清理，这里同步移除角色内存中的缓存。
-            owner.deletePetExcludedData(petid);
-            CashIdGenerator.freeCashId(petid);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
     public void saveToDb() {
         try (Connection con = DatabaseConnection.getConnection();
@@ -226,25 +216,6 @@ public class Pet extends Item {
         this.petAttribute = flag;
     }
 
-    public void addPetAttribute(Character owner, PetAttribute flag) {
-        this.petAttribute |= flag.getValue();
-        saveToDb();
-
-        Item petz = owner.getInventory(InventoryType.CASH).getItem(getPosition());
-        if (petz != null) {
-            owner.forceUpdateItem(petz);
-        }
-    }
-
-    public void removePetAttribute(Character owner, PetAttribute flag) {
-        this.petAttribute &= 0xFFFFFFFF ^ flag.getValue();
-        saveToDb();
-
-        Item petz = owner.getInventory(InventoryType.CASH).getItem(getPosition());
-        if (petz != null) {
-            owner.forceUpdateItem(petz);
-        }
-    }
 
 
 }

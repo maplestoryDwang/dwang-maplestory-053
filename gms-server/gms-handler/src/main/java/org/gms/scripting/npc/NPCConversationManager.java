@@ -409,7 +409,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public StatEffect getItemEffect(int itemId) {
-        return ItemInformationProvider.getInstance().getItemEffect(itemId);
+        return ItemUtils.getItemEffect(itemId);
     }
 
     public void resetStats() {

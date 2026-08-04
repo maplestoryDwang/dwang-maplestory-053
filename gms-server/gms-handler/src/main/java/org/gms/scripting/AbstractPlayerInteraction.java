@@ -34,6 +34,7 @@ import org.gms.constants.id.NpcId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;
+import org.gms.dwutil.ItemUtils;
 import org.gms.model.pojo.SkillEntry;
 import org.gms.net.server.Server;
 import org.gms.net.server.guild.Guild;
@@ -941,12 +942,12 @@ public class AbstractPlayerInteraction {
     }
 
     public void useItem(int id) {
-        ItemInformationProvider.getInstance().getItemEffect(id).applyTo(c.getPlayer());
+        ItemUtils.getItemEffect(id).applyTo(c.getPlayer());
         c.sendPacket(PacketCreator.getItemMessage(id));//Useful shet :3
     }
 
     public void cancelItem(final int id) {
-        getPlayer().cancelEffect(ItemInformationProvider.getInstance().getItemEffect(id), false, -1);
+        getPlayer().cancelEffect(ItemUtils.getItemEffect(id), false, -1);
     }
 
     public void teachSkill(int skillid, byte level, byte masterLevel, long expiration) {

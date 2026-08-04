@@ -21,7 +21,8 @@ package org.gms.util;
 
 import org.gms.dao.mapper.PetsMapper;
 import org.gms.dao.mapper.RingsMapper;
-import org.gms.manager.ServerManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,19 +30,27 @@ import java.util.Set;
 /**
  * @author RonanLana
  */
+@Component
 public class CashIdGenerator {
     private final static Set<Integer> existentCashIds = new HashSet<>(10000);
     private static Integer runningCashId = 0;
 
+    static RingsMapper ringsMapper;
+    static PetsMapper petsMapper;
+
+    @Autowired
+    public CashIdGenerator(RingsMapper ringsMapper, PetsMapper petsMapper) {
+        CashIdGenerator.ringsMapper = ringsMapper;
+        CashIdGenerator.petsMapper = petsMapper;
+    }
+
     public static synchronized void loadExistentCashIdsFromDb() {
-        RingsMapper ringsMapper = ServerManager.getApplicationContext().getBean(RingsMapper.class);
         existentCashIds.clear();
         ringsMapper.selectAll().forEach(ringsDO -> {
             if (ringsDO.getId() != null) {
                 existentCashIds.add(ringsDO.getId());
             }
         });
-        PetsMapper petsMapper = ServerManager.getApplicationContext().getBean(PetsMapper.class);
         petsMapper.selectAll().forEach(petsDO -> {
             if (petsDO.getPetid() != null) {
                 existentCashIds.add(petsDO.getPetid().intValue());

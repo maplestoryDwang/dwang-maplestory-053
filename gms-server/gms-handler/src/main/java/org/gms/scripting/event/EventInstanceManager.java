@@ -26,6 +26,7 @@ import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.server.coordinator.world.EventRecallCoordinator;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
@@ -174,7 +175,7 @@ public class EventInstanceManager {
 
     public void applyEventPlayersItemBuff(int itemId) {
         List<Character> players = getPlayerList();
-        StatEffect mse = ItemInformationProvider.getInstance().getItemEffect(itemId);
+        StatEffect mse = ItemUtils.getItemEffect(itemId);
 
         if (mse != null) {
             for (Character player : players) {

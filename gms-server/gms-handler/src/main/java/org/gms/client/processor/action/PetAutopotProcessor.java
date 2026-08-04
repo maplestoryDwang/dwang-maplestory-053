@@ -28,6 +28,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
+import org.gms.dwutil.ItemUtils;
 import org.gms.manager.ServerManager;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.StatEffect;
@@ -123,7 +124,7 @@ public class PetAutopotProcessor {
                         }
                     }
 
-                    stat = ItemInformationProvider.getInstance().getItemEffect(toUse.getItemId());
+                    stat = ItemUtils.getItemEffect(toUse.getItemId());
                     hasHpGain = stat.getHp() > 0 || stat.getHpRate() > 0.0;
                     hasMpGain = stat.getMp() > 0 || stat.getMpRate() > 0.0;
 

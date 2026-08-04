@@ -39,9 +39,6 @@ import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
 import org.gms.provider.wz.WzFiles;
-import org.gms.server.MakerItemFactory.MakerItemCreateEntry;
-import org.gms.server.life.LifeFactory;
-import org.gms.server.life.MonsterInformationProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -80,7 +77,6 @@ public class ItemInformationProvider {
     protected Data insStringData;
     protected Data petStringData;
     protected Map<Integer, Short> slotMaxCache = new HashMap<>();
-    protected Map<Integer, StatEffect> itemEffects = new HashMap<>();
     protected Map<Integer, Map<String, Integer>> equipStatsCache = new HashMap<>();
     protected Map<Integer, Equip> equipCache = new HashMap<>();
     protected Map<Integer, Data> equipLevelInfoCache = new HashMap<>();
@@ -277,7 +273,7 @@ public class ItemInformationProvider {
         return blockMouse;
     }
 
-    private Data getItemData(int itemId) {
+    public Data getItemData(int itemId) {
         Data ret = null;
         String idStr = "0" + itemId;
         DataDirectoryEntry root = itemData.getRoot();
@@ -1301,22 +1297,7 @@ public class ItemInformationProvider {
         return equip;
     }
 
-    public StatEffect getItemEffect(int itemId) {
-        StatEffect ret = itemEffects.get(itemId);
-        if (ret == null) {
-            Data item = getItemData(itemId);
-            if (item == null) {
-                return null;
-            }
-            Data spec = item.getChildByPath("specEx");
-            if (spec == null) {
-                spec = item.getChildByPath("spec");
-            }
-            ret = StatEffect.loadItemEffectFromData(spec, itemId);
-            itemEffects.put(itemId, ret);
-        }
-        return ret;
-    }
+
 
     public int[][] getSummonMobs(int itemId) {
         Data data = getItemData(itemId);

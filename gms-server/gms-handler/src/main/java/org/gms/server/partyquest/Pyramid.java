@@ -25,6 +25,7 @@ package org.gms.server.partyquest;
 import org.gms.client.Character;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.server.world.Party;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.TimerManager;
@@ -188,7 +189,7 @@ public class Pyramid extends PartyQuest {
             buffcount++;
             ItemInformationProvider ii = ItemInformationProvider.getInstance();
             for (Character chr : getParticipants()) {
-                ii.getItemEffect(ItemId.PHARAOHS_BLESSING_1).applyTo(chr);
+                ItemUtils.getItemEffect(ItemId.PHARAOHS_BLESSING_1).applyTo(chr);
             }
 
         } else if (buffcount == 1 && total >= 500) {
@@ -197,7 +198,7 @@ public class Pyramid extends PartyQuest {
             ItemInformationProvider ii = ItemInformationProvider.getInstance();
             for (Character chr : getParticipants()) {
                 chr.sendPacket(PacketCreator.getEnergy("massacre_skill", skill));
-                ii.getItemEffect(ItemId.PHARAOHS_BLESSING_2).applyTo(chr);
+                ItemUtils.getItemEffect(ItemId.PHARAOHS_BLESSING_2).applyTo(chr);
             }
         } else if (buffcount == 2 && total >= 1000) {
             buffcount++;
@@ -205,7 +206,7 @@ public class Pyramid extends PartyQuest {
             ItemInformationProvider ii = ItemInformationProvider.getInstance();
             for (Character chr : getParticipants()) {
                 chr.sendPacket(PacketCreator.getEnergy("massacre_skill", skill));
-                ii.getItemEffect(ItemId.PHARAOHS_BLESSING_3).applyTo(chr);
+                ItemUtils.getItemEffect(ItemId.PHARAOHS_BLESSING_3).applyTo(chr);
             }
         } else if (buffcount == 3 && total >= 1500) {
             skill++;
@@ -216,7 +217,7 @@ public class Pyramid extends PartyQuest {
             ItemInformationProvider ii = ItemInformationProvider.getInstance();
             for (Character chr : getParticipants()) {
                 chr.sendPacket(PacketCreator.getEnergy("massacre_skill", skill));
-                ii.getItemEffect(ItemId.PHARAOHS_BLESSING_4).applyTo(chr);
+                ItemUtils.getItemEffect(ItemId.PHARAOHS_BLESSING_4).applyTo(chr);
             }
         } else if (buffcount == 5 && total >= 2500) {
             skill++;

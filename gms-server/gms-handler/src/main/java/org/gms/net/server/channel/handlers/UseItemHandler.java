@@ -30,6 +30,7 @@ import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.server.ItemInformationProvider;
@@ -78,7 +79,7 @@ public final class UseItemHandler extends AbstractPacketHandler {
                 int banSp = chr.getMap().findClosestPlayerSpawnpoint(chr.getPosition()).getId();
                 long banTime = currentServerTime();
 
-                if (ii.getItemEffect(toUse.getItemId()).applyTo(chr)) {
+                if (ItemUtils.getItemEffect(toUse.getItemId()).applyTo(chr)) {
                     if (GameConfig.getServerBoolean("use_banishable_town_scroll")) {
                         chr.setBanishPlayerData(banMap, banSp, banTime);
                     }
@@ -87,7 +88,7 @@ public final class UseItemHandler extends AbstractPacketHandler {
                 }
                 return;
             } else if (ItemConstants.isAntibanishScroll(itemId)) {
-                if (ii.getItemEffect(toUse.getItemId()).applyTo(chr)) {
+                if (ItemUtils.getItemEffect(toUse.getItemId()).applyTo(chr)) {
                     remove(c, slot);
                 } else {
                     chr.dropMessage(5, I18nUtil.getMessage("UseItemHandler.message1"));
@@ -98,9 +99,9 @@ public final class UseItemHandler extends AbstractPacketHandler {
             remove(c, slot);
 
             if (toUse.getItemId() != ItemId.HAPPY_BIRTHDAY) {
-                ii.getItemEffect(toUse.getItemId()).applyTo(chr);
+                ItemUtils.getItemEffect(toUse.getItemId()).applyTo(chr);
             } else {
-                StatEffect mse = ii.getItemEffect(toUse.getItemId());
+                StatEffect mse = ItemUtils.getItemEffect(toUse.getItemId());
                 for (Character player : chr.getMap().getCharacters()) {
                     mse.applyTo(player);
                 }

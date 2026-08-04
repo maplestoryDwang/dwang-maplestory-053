@@ -22,6 +22,7 @@ package org.gms.server.quest.actions;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.inventory.Pet;
+import org.gms.dwutil.ItemUtils;
 import org.gms.provider.Data;
 import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestActionType;
@@ -51,7 +52,7 @@ public class PetSpeedAction extends AbstractQuestAction {
 
         c.lockClient();
         try {
-            pet.addPetAttribute(c.getPlayer(), Pet.PetAttribute.OWNER_SPEED);
+            ItemUtils.addPetAttribute(pet, c.getPlayer(), Pet.PetAttribute.OWNER_SPEED);
         } finally {
             c.unlockClient();
         }

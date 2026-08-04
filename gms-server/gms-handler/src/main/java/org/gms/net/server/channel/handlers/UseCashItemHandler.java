@@ -48,6 +48,7 @@ import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.gms.dwutil.PetUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
@@ -401,7 +402,7 @@ public final class UseCashItemHandler extends AbstractPacketHandler {
         } else if (itemType == 512) {//场景消息
             if (ii.getStateChangeItem(itemId) != 0) {
                 for (Character mChar : player.getMap().getCharacters()) {
-                    ii.getItemEffect(ii.getStateChangeItem(itemId)).applyTo(mChar);
+                    ItemUtils.getItemEffect(ii.getStateChangeItem(itemId)).applyTo(mChar);
                 }
             }
             player.getMap().startMapEffect(ii.getMsg(itemId).replaceFirst("%s", player.getName()).replaceFirst("%s", p.readString()), itemId);
@@ -486,7 +487,7 @@ public final class UseCashItemHandler extends AbstractPacketHandler {
         } else if (itemType == 529) {//家族表情留言板
             notEnabled(player);
         } else if (itemType == 530) {//变身石
-            ii.getItemEffect(itemId).applyTo(player);
+            ItemUtils.getItemEffect(itemId).applyTo(player);
             remove(c, position, itemId);
         } else if (itemType == 533) {//特快使用券
             DueyProcessor.dueySendTalk(c, true);

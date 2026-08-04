@@ -1995,7 +1995,7 @@ public class Character extends AbstractCharacterObject {
         if (ItemConstants.isPartyItem(itemId)) {// 判断是否为队伍共享类道具
             List<Character> partyMembers = this.getPartyMembersOnSameMap();// 获取同一地图内的队伍成员列表
             if (!ItemId.isPartyAllCure(itemId)) {// 处理非全体治疗类道具
-                StatEffect mse = ii.getItemEffect(itemId);// 获取道具效果对象
+                StatEffect mse = ItemUtils.getItemEffect(itemId);// 获取道具效果对象
                 if (!partyMembers.isEmpty()) {
                     for (Character mc : partyMembers) {// 遍历存活队友并施加效果
                         if (mc.isAlive()) {
@@ -2015,7 +2015,7 @@ public class Character extends AbstractCharacterObject {
                 }
             }
         } else {
-            ii.getItemEffect(itemId).applyTo(this);// 非队伍道具直接对自身生效
+            ItemUtils.getItemEffect(itemId).applyTo(this);// 非队伍道具直接对自身生效
         }
 
         if (itemId / 10000 == 238) {// 特殊处理怪物卡片收集（ID格式238xxxx）
@@ -2862,7 +2862,7 @@ public class Character extends AbstractCharacterObject {
                                 if (ItemConstants.isExpirablePet(item.getItemId())) {
                                     if (item.getPetId() > -1) {
                                         // 宠物道具真正过期销毁时，同时清理 pets/petignores，避免数据库残留孤儿数据。
-                                        Pet.deleteFromDb(this, item.getPetId());
+                                        ItemUtils.deletePetFromDb(this, item.getPetId());
                                     }
                                     sendPacket(PacketCreator.itemExpired(item.getItemId()));
                                     toberemove.add(item);
@@ -3565,8 +3565,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void cancelEffect(int itemId) {
-        ItemInformationProvider ii = ItemInformationProvider.getInstance();
-        cancelEffect(ii.getItemEffect(itemId), false, -1);
+        cancelEffect(ItemUtils.getItemEffect(itemId), false, -1);
     }
 
     public boolean cancelEffect(StatEffect effect, boolean overwrite, long startTime) {
@@ -6253,8 +6252,7 @@ public class Character extends AbstractCharacterObject {
             return;
         }
 
-        ItemInformationProvider ii = ItemInformationProvider.getInstance();
-        StatEffect mse = ii.getItemEffect(couponid);
+        StatEffect mse = ItemUtils.getItemEffect(couponid);
         mse.applyTo(this);
     }
 

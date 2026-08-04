@@ -37,6 +37,7 @@ import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.MapId;
 import org.gms.constants.id.MobId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.ItemUtils;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.Server;
 import org.gms.net.server.channel.Channel;
@@ -1475,11 +1476,10 @@ public class MapleMap {
 
                     int buff = monster.getBuffToGive();
                     if (buff > -1) {
-                        ItemInformationProvider mii = ItemInformationProvider.getInstance();
                         for (MapObject mmo : this.getPlayers()) {
                             Character character = (Character) mmo;
                             if (character.isAlive()) {
-                                StatEffect statEffect = mii.getItemEffect(buff);
+                                StatEffect statEffect = ItemUtils.getItemEffect(buff);
                                 character.sendPacket(PacketCreator.showOwnBuffEffect(buff, 1));
                                 broadcastMessage(character, PacketCreator.showBuffEffect(character.getId(), buff, 1), false);
                                 statEffect.applyTo(character);

@@ -1,11 +1,13 @@
 package org.gms.dwutil;
 
+import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.Job;
 import org.gms.client.SkillFactory;
 import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
+import org.gms.client.inventory.Pet;
 import org.gms.client.inventory.manipulator.KarmaManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.ExpTable;
@@ -15,15 +17,11 @@ import org.gms.constants.skills.adv.thief.assassin.Assassin;
 import org.gms.constants.skills.other.Gunslinger;
 import org.gms.constants.skills.other.NightWalker;
 import org.gms.provider.Data;
-import org.gms.provider.DataTool;
-import org.gms.scripting.npc.NPCConversationManager;
 import org.gms.server.ItemInformationProvider;
+import org.gms.server.StatEffect;
 import org.gms.server.life.LifeFactory;
 import org.gms.server.life.MonsterInformationProvider;
-import org.gms.util.DatabaseConnection;
-import org.gms.util.I18nUtil;
-import org.gms.util.PacketCreator;
-import org.gms.util.Pair;
+import org.gms.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +44,7 @@ public class ItemUtils {
 
     /**
      * 是否不可交易
+     *
      * @param item
      * @return
      */
@@ -56,6 +55,7 @@ public class ItemUtils {
 
     /**
      * 飞侠冲标等等
+     *
      * @param c
      * @param itemId
      * @return
@@ -83,6 +83,7 @@ public class ItemUtils {
         short slotMax1 = ii.getSlotMax(itemId);
         return (short) (slotMax1 + getExtraSlotMaxFromPlayer(c, itemId));
     }
+
     private static double normalizedMasteryExp(int reqLevel) {
         // Conversion factor between mob exp and equip exp gain. Through many calculations, the expected for equipment levelup
         // from level 1 to 2 is killing about 100~200 mobs of the same level range, on a 1x EXP rate scenario.
@@ -102,7 +103,8 @@ public class ItemUtils {
 
     /**
      * 处理装备经验值的增加逻辑（Ronan 的装备经验值获取方法）
-     * @param c 客户端对象
+     *
+     * @param c    客户端对象
      * @param gain 获得的经验值
      */
     public static synchronized void gainItemExp(Equip equip, Client c, int gain) {
@@ -124,7 +126,7 @@ public class ItemUtils {
         float baseExpGain = gain * elementModifier * masteryModifier;// 计算实际获得的经验值
 
         int itemExp = equip.getItemExp();
-        equip.setItemExp(itemExp +  baseExpGain); // 更新装备经验值
+        equip.setItemExp(itemExp + baseExpGain); // 更新装备经验值
         int expNeeded = ExpTable.getEquipExpNeededForLevel(equip.getItemLevel());
 
         // 调试信息：显示经验值获取详情
@@ -137,7 +139,7 @@ public class ItemUtils {
         if (itemExp >= expNeeded) {// 判断是否需要升级
             while (itemExp >= expNeeded) {
 //                itemExp -= expNeeded;
-                equip.setItemExp(itemExp -  expNeeded);
+                equip.setItemExp(itemExp - expNeeded);
 
                 gainLevel(equip, c); // 升级装备
 
@@ -156,6 +158,7 @@ public class ItemUtils {
 
     /**
      * 处理装备升级的逻辑，包括属性提升、升级槽增加、金锤子减少等，并通知客户端更新装备状态
+     *
      * @param c 触发升级的客户端
      */
     private static void gainLevel(Equip equip, Client c) {
@@ -176,11 +179,11 @@ public class ItemUtils {
             equip.setUpgradeable(false);
             equip.improveDefaultStats(stats); // 生成默认属性升级列表
         }
-        equip.UpgradeSlotProcessing(stats,equipLevel);    // 砸卷次数和减少金锤子次数判断
+        equip.UpgradeSlotProcessing(stats, equipLevel);    // 砸卷次数和减少金锤子次数判断
         if (equip.isUpgradeable() && stats.isEmpty()) {// 如果装备仍可升级且属性列表为空，则继续生成属性升级列表
             while (stats.isEmpty()) {
                 equip.improveDefaultStats(stats);// 生成默认属性升级列表
-                equip.UpgradeSlotProcessing(stats,equipLevel);// 砸卷次数和减少金锤子次数判断
+                equip.UpgradeSlotProcessing(stats, equipLevel);// 砸卷次数和减少金锤子次数判断
             }
         }
 
@@ -194,11 +197,11 @@ public class ItemUtils {
         boolean gotVicious = res.getRight().getRight(); // 是否减少了金锤子
 
         if (gotVicious) {// 如果减少了金锤子，追加提示消息
-            lvupStr += I18nUtil.getMessage("Equip.gainStats.Vicious","-1")  + "; ";
+            lvupStr += I18nUtil.getMessage("Equip.gainStats.Vicious", "-1") + "; ";
         }
 
         if (gotSlot) {// 如果增加了升级槽，追加提示消息
-            lvupStr += I18nUtil.getMessage("Equip.gainStats.UPGSLOT","+1")  + "; ";
+            lvupStr += I18nUtil.getMessage("Equip.gainStats.UPGSLOT", "+1") + "; ";
         }
 
         // 通知客户端更新装备状态
@@ -211,7 +214,6 @@ public class ItemUtils {
         c.getPlayer().getMap().broadcastPacket(c.getPlayer(), PacketCreator.showForeignEffect(c.getPlayer().getId(), 15));
         c.getPlayer().forceUpdateItem(equip); // 强制更新装备状态
     }
-
 
 
     public static String showEquipFeatures(Equip equip) {
@@ -248,6 +250,7 @@ public class ItemUtils {
     }
 
     protected static Map<Integer, Integer> mobCrystalMakerCache = new HashMap<>();
+
     public static int getMakerCrystalFromLeftover(Integer leftoverId) {
         try {
             Integer itemid = mobCrystalMakerCache.get(leftoverId);
@@ -297,4 +300,61 @@ public class ItemUtils {
             };
         }
     }
+
+
+    protected static Map<Integer, StatEffect> itemEffects = new HashMap<>();
+
+    public static StatEffect getItemEffect(int itemId) {
+        StatEffect ret = itemEffects.get(itemId);
+        if (ret == null) {
+            Data item = ii.getItemData(itemId);
+            if (item == null) {
+                return null;
+            }
+            Data spec = item.getChildByPath("specEx");
+            if (spec == null) {
+                spec = item.getChildByPath("spec");
+            }
+            ret = StatEffect.loadItemEffectFromData(spec, itemId);
+            itemEffects.put(itemId, ret);
+        }
+        return ret;
+    }
+
+
+    public static void deletePetFromDb(Character owner, int petid) {
+        try {
+            // 宠物基础数据删除后，petignores 会通过外键级联清理，这里同步移除角色内存中的缓存。
+            owner.deletePetExcludedData(petid);
+            CashIdGenerator.freeCashId(petid);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void addPetAttribute(Pet pet, Character owner, Pet.PetAttribute flag) {
+        int petAttribute = pet.getPetAttribute();
+        petAttribute |= flag.getValue();
+        pet.setPetAttribute(petAttribute);
+        pet.saveToDb();
+
+        Item petz = owner.getInventory(InventoryType.CASH).getItem(pet.getPosition());
+        if (petz != null) {
+            owner.forceUpdateItem(petz);
+        }
+    }
+
+    public void removePetAttribute(Pet pet, Character owner, Pet.PetAttribute flag) {
+        int petAttribute = pet.getPetAttribute();
+        petAttribute &= 0xFFFFFFFF ^ flag.getValue();
+
+        pet.setPetAttribute(petAttribute);
+        pet.saveToDb();
+
+        Item petz = owner.getInventory(InventoryType.CASH).getItem(pet.getPosition());
+        if (petz != null) {
+            owner.forceUpdateItem(petz);
+        }
+    }
+
 }
