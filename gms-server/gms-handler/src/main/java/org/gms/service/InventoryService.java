@@ -6,6 +6,7 @@ import com.mybatisflex.core.row.Row;
 import lombok.AllArgsConstructor;
 import org.gms.client.Character;
 import org.gms.client.inventory.*;
+import org.gms.client.inventory.equip.Equip;
 import org.gms.dao.entity.CharactersDO;
 import org.gms.dao.entity.InventoryequipmentDO;
 import org.gms.dao.entity.InventoryitemsDO;

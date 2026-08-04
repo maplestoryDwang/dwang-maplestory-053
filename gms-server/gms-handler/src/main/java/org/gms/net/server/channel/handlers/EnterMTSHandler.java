@@ -23,7 +23,7 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.inventory.Equip;
+import org.gms.client.inventory.equip.Equip;
 import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.NpcId;

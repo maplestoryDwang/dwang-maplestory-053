@@ -25,7 +25,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
 import org.gms.client.autoban.AutobanManager;
-import org.gms.client.inventory.Pet;
+import org.gms.client.inventory.pet.Pet;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 

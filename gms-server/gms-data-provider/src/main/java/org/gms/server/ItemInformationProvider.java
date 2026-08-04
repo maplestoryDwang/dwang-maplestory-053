@@ -21,10 +21,10 @@
  */
 package org.gms.server;
 
-import org.gms.client.inventory.Equip;
+import org.gms.client.inventory.equip.Equip;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
-import org.gms.client.inventory.WeaponType;
+import org.gms.client.inventory.equip.WeaponType;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
@@ -366,12 +366,9 @@ public class ItemInformationProvider {
             } else {
                 if (isThrowingStar(itemId))
                     ret = 1;
-                else if (DataTool.getInt(smEntry) == 0) {
+                else if (DataTool.getInt(smEntry) == 0)
                     ret = 1;
-
-                } else {
-                    ret = (short) DataTool.getInt(smEntry);
-                }
+                ret = (short) DataTool.getInt(smEntry);
             }
         }
         slotMaxCache.put(itemId, ret);

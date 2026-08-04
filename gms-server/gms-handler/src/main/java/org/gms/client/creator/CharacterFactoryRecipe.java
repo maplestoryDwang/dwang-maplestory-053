@@ -21,7 +21,6 @@ package org.gms.client.creator;
 
 import org.gms.client.Job;
 import org.gms.client.Skill;
-import org.gms.client.inventory.Equip;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;

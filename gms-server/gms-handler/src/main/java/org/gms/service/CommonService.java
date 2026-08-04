@@ -2,7 +2,7 @@ package org.gms.service;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.gms.client.inventory.Equip;
+import org.gms.client.inventory.equip.Equip;
 import org.gms.constants.api.InformationType;
 import org.gms.exception.BizException;
 import org.gms.model.dto.*;

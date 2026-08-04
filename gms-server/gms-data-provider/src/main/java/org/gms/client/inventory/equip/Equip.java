@@ -19,10 +19,11 @@
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gms.client.inventory;
+package org.gms.client.inventory.equip;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
+import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.util.I18nUtil;

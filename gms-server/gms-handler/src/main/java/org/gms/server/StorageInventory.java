@@ -20,7 +20,7 @@
 package org.gms.server;
 
 import org.gms.client.Client;
-import org.gms.client.inventory.Equip;
+import org.gms.client.inventory.equip.Equip;
 import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;

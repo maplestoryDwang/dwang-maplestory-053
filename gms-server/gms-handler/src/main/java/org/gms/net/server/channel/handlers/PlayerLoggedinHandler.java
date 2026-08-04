@@ -23,12 +23,11 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.*;
 import org.gms.client.Character;
-import org.gms.client.inventory.Equip;
+import org.gms.client.inventory.equip.Equip;
 import org.gms.client.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
-import org.gms.client.inventory.Pet;
-import org.gms.client.keybind.KeyBinding;
+import org.gms.client.inventory.pet.Pet;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.manager.ServerManager;
@@ -59,7 +58,6 @@ import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
 
-import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

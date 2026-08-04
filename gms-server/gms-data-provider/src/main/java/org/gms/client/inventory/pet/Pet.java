@@ -19,8 +19,9 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client.inventory;
+package org.gms.client.inventory.pet;
 
+import org.gms.client.inventory.Item;
 import org.gms.util.CashIdGenerator;
 import org.gms.server.ItemInformationProvider;
 import org.gms.util.DatabaseConnection;

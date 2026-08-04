@@ -1,7 +1,7 @@
 package org.gms.client.inventory;
 
 /**
- * TODO
+ * 只是用于客户端判断类型
  *
  * @author dwang
  * @version 1.0

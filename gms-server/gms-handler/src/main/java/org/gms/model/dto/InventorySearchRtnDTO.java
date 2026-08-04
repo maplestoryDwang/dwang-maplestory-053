@@ -1,11 +1,10 @@
 package org.gms.model.dto;
 
-import com.mybatisflex.annotation.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.gms.client.inventory.Equip;
+import org.gms.client.inventory.equip.Equip;
 import org.gms.client.inventory.Item;
 
 import java.util.Optional;

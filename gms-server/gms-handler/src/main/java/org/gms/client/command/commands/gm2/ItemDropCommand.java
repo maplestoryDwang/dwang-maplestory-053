@@ -28,7 +28,7 @@ import org.gms.client.Client;
 import org.gms.client.command.Command;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
-import org.gms.client.inventory.Pet;
+import org.gms.client.inventory.pet.Pet;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.server.ItemInformationProvider;

@@ -20,6 +20,7 @@
  */
 package org.gms.client.inventory;
 
+import org.gms.client.inventory.equip.Equip;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.Pair;
 

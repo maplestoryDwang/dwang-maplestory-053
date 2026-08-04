@@ -22,7 +22,7 @@
 package org.gms.server.quest.requirements;
 
 import org.gms.client.Character;
-import org.gms.client.inventory.Pet;
+import org.gms.client.inventory.pet.Pet;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.quest.Quest;

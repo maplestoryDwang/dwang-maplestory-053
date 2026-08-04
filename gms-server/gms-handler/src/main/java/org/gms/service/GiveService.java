@@ -5,6 +5,7 @@ import org.gms.client.Character;
 import org.gms.client.MapleStat;
 import org.gms.client.inventory.*;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.inventory.pet.Pet;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;

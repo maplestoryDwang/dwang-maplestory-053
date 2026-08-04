@@ -1,6 +1,7 @@
 package org.gms.client.inventory;
 
 /**
+ * 物品栏的操作，使用或者移动
  * @author kevin
  */
 public class ModifyInventory {

@@ -3,21 +3,15 @@ package org.gms.dwutil;
 import org.gms.client.Character;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
-import org.gms.client.inventory.Pet;
+import org.gms.client.inventory.pet.Pet;
 import org.gms.constants.game.ExpTable;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.movement.AbsoluteLifeMovement;
 import org.gms.server.movement.LifeMovement;
 import org.gms.server.movement.LifeMovementFragment;
-import org.gms.util.CashIdGenerator;
-import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 /**

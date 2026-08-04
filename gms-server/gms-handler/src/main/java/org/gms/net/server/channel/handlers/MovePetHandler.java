@@ -23,7 +23,7 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.inventory.Pet;
+import org.gms.client.inventory.pet.Pet;
 import org.gms.config.GameConfig;
 import org.gms.dwutil.PetUtils;
 import org.gms.net.packet.InPacket;

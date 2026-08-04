@@ -23,6 +23,7 @@ package org.gms.server;
 
 import net.jcip.annotations.GuardedBy;
 import org.gms.client.inventory.*;
+import org.gms.client.inventory.equip.Equip;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;

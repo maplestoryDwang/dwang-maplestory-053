@@ -23,10 +23,9 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.inventory.Pet;
-import org.gms.client.inventory.PetCommand;
-import org.gms.client.inventory.PetDataFactory;
-import org.gms.dwutil.CharacterUtils;
+import org.gms.client.inventory.pet.Pet;
+import org.gms.client.inventory.pet.PetCommand;
+import org.gms.client.inventory.pet.PetDataFactory;
 import org.gms.dwutil.PetUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;

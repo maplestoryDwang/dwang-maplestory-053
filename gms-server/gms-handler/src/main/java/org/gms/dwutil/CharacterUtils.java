@@ -7,7 +7,7 @@ import org.gms.client.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
 import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.*;
-import org.gms.constants.game.ExpTable;
+import org.gms.client.inventory.equip.Equip;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.EquipSlot;
 import org.gms.net.server.Server;
