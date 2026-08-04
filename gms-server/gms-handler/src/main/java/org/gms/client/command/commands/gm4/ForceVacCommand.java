@@ -35,7 +35,6 @@ import org.gms.server.maps.MapObjectType;
 import org.gms.util.I18nUtil;
 import org.gms.util.PacketCreator;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ForceVacCommand extends Command {

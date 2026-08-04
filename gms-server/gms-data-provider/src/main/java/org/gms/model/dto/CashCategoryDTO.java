@@ -2,7 +2,6 @@ package org.gms.model.dto;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.gms.model.dto.BasePageDTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

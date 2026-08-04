@@ -7,6 +7,7 @@ import org.gms.model.dto.CashShopBatchOnSaleReqDTO;
 import org.gms.model.dto.CashShopSearchRtnDTO;
 import org.gms.model.dto.CashCategoryDTO;
 import org.gms.server.CashItemFactory;
+import org.gms.util.BasePageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,11 @@ public class CashShopApiService {
     }
 
     public Page<CashShopSearchRtnDTO> getCommodityByCategory(CashCategoryDTO data) {
-        return cashItemFactory.getCommodityByCategory(data);
+        List<CashShopSearchRtnDTO> wzCashItems = cashItemFactory.getCommodityByCategory(data);
+        // 排序是否正确？ 猜测按照Priority降序 ItemId升序排列
+        return BasePageUtil.create(wzCashItems, data)
+                .sorted(Comparator.comparing(CashShopSearchRtnDTO::getPriority).reversed().thenComparing(CashShopSearchRtnDTO::getItemId))
+                .page();
     }
 
     public CashShopSearchRtnDTO getCommodityBySn(Integer sn) {

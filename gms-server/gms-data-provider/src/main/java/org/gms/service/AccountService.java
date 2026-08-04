@@ -28,8 +28,6 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.gms.client.Client.LOGIN_LOGGEDIN;
-import static org.gms.client.Client.LOGIN_NOTLOGGEDIN;
 import static org.gms.dao.entity.table.CharactersDOTableDef.CHARACTERS_D_O;
 import static org.gms.dao.entity.table.IpbansDOTableDef.IPBANS_D_O;
 

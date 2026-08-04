@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.gms.constants.api.ApiConstant;
 import org.gms.model.dto.*;
-import org.gms.service.FileTreeService;
+import org.gms.service.FileTreeApiService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -14,20 +14,20 @@ import java.util.*;
 @AllArgsConstructor
 @RequestMapping("/file")
 public class FileController {
-    private final FileTreeService fileTreeService;
+    private final FileTreeApiService fileTreeApiService;
 
     @Tag(name = "/file/" + ApiConstant.LATEST)
     @Operation(summary = "读取文件")
     @PostMapping("/" + ApiConstant.LATEST + "/tree/read")
     public ResultBody<String> treeRead(@RequestBody SubmitBody<FileReadDTO> request) {
-        return ResultBody.success(request, fileTreeService.readFile(request.getData().getCurrentKey(), request.getData().getTitle()));
+        return ResultBody.success(request, fileTreeApiService.readFile(request.getData().getCurrentKey(), request.getData().getTitle()));
     }
 
     @Tag(name = "/file/" + ApiConstant.LATEST)
     @Operation(summary = "写入文件")
     @PostMapping("/" + ApiConstant.LATEST + "/tree/write")
     public ResultBody<String> treeWrite(@RequestBody SubmitBody<FileWriteDTO> request) {
-        fileTreeService.writeFile(request.getData().getCurrentKey(), request.getData().getTitle(), request.getData().getContent());
+        fileTreeApiService.writeFile(request.getData().getCurrentKey(), request.getData().getTitle(), request.getData().getContent());
         return ResultBody.success(request,"写入成功");
     }
 
@@ -35,7 +35,7 @@ public class FileController {
     @Operation(summary = "读取文件树")
     @PostMapping("/" + ApiConstant.LATEST + "/tree")
     public ResultBody<List<FileTreeNodeDTO>> tree(@RequestBody SubmitBody<FileTreeDTO> request) {
-        return ResultBody.success(request, fileTreeService.tree(request.getData().getCurrentKey()));
+        return ResultBody.success(request, fileTreeApiService.tree(request.getData().getCurrentKey()));
     }
 
 }

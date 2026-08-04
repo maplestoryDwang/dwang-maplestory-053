@@ -269,7 +269,7 @@ public class CashItemFactory {
 
 
 
-    public Page<CashShopSearchRtnDTO> getCommodityByCategory(CashCategoryDTO data) {
+    public List<CashShopSearchRtnDTO> getCommodityByCategory(CashCategoryDTO data) {
 
         RequireUtil.requireNotNull(data.getId(), I18nUtil.getExceptionMessage("PARAMETER_SHOULD_NOT_NULL", "id"));
         RequireUtil.requireNotNull(data.getSubId(), I18nUtil.getExceptionMessage("PARAMETER_SHOULD_NOT_NULL", "subId"));
@@ -310,11 +310,7 @@ public class CashItemFactory {
             wzCashItem.setItemName(ii.getName(wzCashItem.getItemId()));
         });
 
-
-        // 排序是否正确？ 猜测按照Priority降序 ItemId升序排列
-        return BasePageUtil.create(wzCashItems, data)
-                .sorted(Comparator.comparing(CashShopSearchRtnDTO::getPriority).reversed().thenComparing(CashShopSearchRtnDTO::getItemId))
-                .page();
+        return wzCashItems;
     }
 
 

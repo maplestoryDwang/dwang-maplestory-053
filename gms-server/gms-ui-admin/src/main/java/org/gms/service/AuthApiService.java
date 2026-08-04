@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Service
 @AllArgsConstructor
-public class AuthService {
+public class AuthApiService {
     private final AccountService accountService;
     private final JwtUtils jwtUtils;
 

@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.gms.constants.api.ApiConstant;
 import org.gms.model.dto.ResultBody;
 import org.gms.model.dto.SubmitBody;
-import org.gms.service.AuthService;
+import org.gms.service.AuthApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,18 +14,18 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private final AuthService authService;
+    private final AuthApiService authApiService;
 
     @Autowired
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+    public AuthController(AuthApiService authApiService) {
+        this.authApiService = authApiService;
     }
 
     @Tag(name = "/auth/" + ApiConstant.LATEST)
     @Operation(summary = "登录")
     @PostMapping("/" + ApiConstant.LATEST + "/login")
     public ResultBody<Map<String, String>> login(@RequestBody SubmitBody<Map<String, String>> data) {
-        return ResultBody.success(authService.getToken(data.getData().get("username"), data.getData().get("password")));
+        return ResultBody.success(authApiService.getToken(data.getData().get("username"), data.getData().get("password")));
     }
 
     @Tag(name = "/auth/" + ApiConstant.LATEST)
@@ -39,6 +39,6 @@ public class AuthController {
     @Operation(summary = "刷新token")
     @GetMapping("/" + ApiConstant.LATEST + "/refreshToken")
     public ResultBody<Map<String, String>> refreshToken(@RequestHeader("Authorization") String token) {
-        return ResultBody.success(authService.refreshToken(token));
+        return ResultBody.success(authApiService.refreshToken(token));
     }
 }

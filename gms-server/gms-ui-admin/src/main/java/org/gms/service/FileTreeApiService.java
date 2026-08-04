@@ -18,7 +18,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Slf4j
 @Service
-public class FileTreeService {
+public class FileTreeApiService {
 
     private static final String FILE_TREE_BASE_DIR = System.getProperty("user.dir");
     private static final Path FILE_TREE_BASE_DIR_PATH = Path.of(FILE_TREE_BASE_DIR);
