@@ -1,18 +1,13 @@
 package org.gms.server;
 
 import lombok.Getter;
-import org.gms.client.inventory.InventoryType;
-import org.gms.client.inventory.Item;
-import org.gms.client.inventory.pet.Pet;
 import org.gms.constants.id.ItemId;
-import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.CategoryType;
 import org.gms.dao.entity.ModifiedCashItemDO;
 import org.gms.exception.BizException;
 import org.gms.model.CashCategoryWZDO;
 import org.gms.model.dto.CashShopSearchRtnDTO;
 import org.gms.model.dto.CashCategoryDTO;
-import org.gms.net.server.Server;
 import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
@@ -26,9 +21,6 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-
-import static java.util.concurrent.TimeUnit.DAYS;
-import static java.util.concurrent.TimeUnit.HOURS;
 
 /**
  * 拆分的Factory
@@ -59,6 +51,9 @@ public class CashItemFactory {
         this.dataProviderFactory = dataProviderFactory;
     }
 
+    public static Map<Integer, List<Integer>> getPackages() {
+        return packages;
+    }
 
     public static void loadAllCashItems() {
         DataProvider etc = DataProviderFactory.getDataProvider(WzFiles.ETC);
@@ -189,65 +184,9 @@ public class CashItemFactory {
         return items.get(sn);
     }
 
-    public static List<Item> getPackage(int itemId) {
-        List<Item> cashPackage = new ArrayList<>();
-
-        for (int sn : packages.get(itemId)) {
-            cashPackage.add(toItem(Objects.requireNonNull(getItem(sn))));
-        }
-
-        return cashPackage;
-    }
 
     public static boolean isPackage(int itemId) {
         return packages.containsKey(itemId);
-    }
-
-
-    public static Item toItem(ModifiedCashItemDO modifiedCashItemDO) {
-        Integer itemId = modifiedCashItemDO.getItemId();
-        Long period = modifiedCashItemDO.getPeriod();
-        Short count = modifiedCashItemDO.getCount();
-        Integer sn = modifiedCashItemDO.getSn();
-
-        Item item;
-
-        int petid = -1;
-        if (ItemConstants.isPet(itemId)) {
-            petid = Pet.createPet(itemId);
-        }
-
-        if (ItemConstants.getInventoryType(itemId).equals(InventoryType.EQUIP)) {
-            item = ItemInformationProvider.getInstance().getEquipById(itemId);
-        } else {
-            item = new Item(itemId, (byte) 0, count, petid);
-        }
-
-        if (period == 1) {
-            switch (itemId) {
-                case ItemId.DROP_COUPON_2X_4H,
-                        ItemId.EXP_COUPON_2X_4H: // 4 Hour 2X coupons, the period is 1, but we don't want them to last a day.
-                    item.setExpiration(Server.getInstance().getCurrentTime() + HOURS.toMillis(4));
-                            /*
-                            } else if(itemId == 5211047 || itemId == 5360014) { // 3 Hour 2X coupons, unused as of now
-                                    item.setExpiration(Server.getInstance().getCurrentTime() + HOURS.toMillis(3));
-                            */
-                    break;
-                case ItemId.EXP_COUPON_3X_2H:
-                    item.setExpiration(Server.getInstance().getCurrentTime() + HOURS.toMillis(2));
-                    break;
-                default:
-                    item.setExpiration(Server.getInstance().getCurrentTime() + DAYS.toMillis(1));
-                    break;
-            }
-        } else if (period == -1) {
-            item.setExpiration(-1);
-        } else {
-            item.setExpiration(Server.getInstance().getCurrentTime() + DAYS.toMillis(period));
-        }
-
-        item.setSN(sn);
-        return item;
     }
 
     public List<CashCategoryDTO> getAllCategoryList() {
@@ -263,8 +202,6 @@ public class CashItemFactory {
         return cashCategoryDTOList;
 
     }
-
-
 
 
     public List<CashShopSearchRtnDTO> getCommodityByCategory(CashCategoryDTO data) {

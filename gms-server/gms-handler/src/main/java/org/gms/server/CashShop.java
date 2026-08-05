@@ -30,6 +30,7 @@ import org.gms.constants.inventory.ItemConstants;
 import org.gms.dao.entity.AccountsDO;
 import org.gms.dao.entity.ModifiedCashItemDO;
 import org.gms.dao.entity.WishlistsDO;
+import org.gms.dwutil.CashShopUtils;
 import org.gms.manager.ServerManager;
 import org.gms.net.server.Server;
 import org.gms.service.AccountService;
@@ -262,12 +263,12 @@ public class CashShop {
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         ModifiedCashItemDO cItem = CashItemFactory.getItem(rs.getInt("sn"));
-                        Item item = CashItemFactory.toItem(cItem);
+                        Item item = CashShopUtils.toItem(cItem);
                         Equip equip = null;
                         item.setGiftFrom(rs.getString("from"));
                         int itemsToStore = 1;
                         if (CashItemFactory.isPackage(cItem.getItemId())) {
-                            itemsToStore = CashItemFactory.getPackage(cItem.getItemId()).size();
+                            itemsToStore = CashShopUtils.getPackage(cItem.getItemId()).size();
                         }
                         if (!canAddToInventory(itemsToStore)) {
                             continue;
@@ -282,7 +283,7 @@ public class CashShop {
                         }
 
                         if (CashItemFactory.isPackage(cItem.getItemId())) { //Packages never contains a ring
-                            for (Item packageItem : CashItemFactory.getPackage(cItem.getItemId())) {
+                            for (Item packageItem : CashShopUtils.getPackage(cItem.getItemId())) {
                                 packageItem.setGiftFrom(rs.getString("from"));
                                 addToInventory(packageItem);
                             }
@@ -374,7 +375,7 @@ public class CashShop {
             if (newQuantity <= 0) {
                 removeFromInventory(cashShopSurprise);
             }
-            Item itemReward = CashItemFactory.toItem(cashItemReward.get());
+            Item itemReward = CashShopUtils.toItem(cashItemReward.get());
             addToInventory(itemReward);
 
             return Optional.of(new CashShopSurpriseResult(cashShopSurprise, itemReward));
@@ -412,7 +413,7 @@ public class CashShop {
     }
 
     public static Item generateCouponItem(int itemId, short quantity) {
-        return CashItemFactory.toItem(ModifiedCashItemDO.builder()
+        return CashShopUtils.toItem(ModifiedCashItemDO.builder()
                 .sn(77777777)
                 .itemId(itemId)
                 .price(777)

@@ -24,6 +24,7 @@ package org.gms.net.server.channel.handlers;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.config.GameConfig;
+import org.gms.dwutil.MobUtils;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.Packet;
 import org.gms.server.movement.LifeMovementFragment;
@@ -34,7 +35,6 @@ import org.gms.server.life.MobSkillFactory;
 import org.gms.server.life.MobSkillId;
 import org.gms.server.life.MobSkillType;
 import org.gms.server.life.Monster;
-import org.gms.server.life.MonsterInformationProvider;
 import org.gms.server.maps.MapObject;
 import org.gms.server.maps.MapObjectType;
 import org.gms.server.maps.MapleMap;
@@ -195,7 +195,7 @@ public final class MoveLifeHandler extends AbstractMovementPacketHandler {
                 MobSkill toUse = MobSkillFactory.getMobSkillOrThrow(mobSkillType, useSkillLevel);
 
                 if (monster.canUseSkill(toUse, true)) {
-                    int animationTime = MonsterInformationProvider.getInstance().getMobSkillAnimationTime(toUse);
+                    int animationTime = MobUtils.getMobSkillAnimationTime(toUse);
                     if (animationTime > 0 && toUse.getType() != MobSkillType.BANISH) {
                         toUse.applyDelayedEffect(player, monster, true, animationTime);
                     } else {

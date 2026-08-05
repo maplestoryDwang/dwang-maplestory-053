@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.gms.server.life;
 
+import org.gms.dwutil.MobUtils;
 import org.gms.util.RequireUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -357,7 +358,7 @@ public class LifeFactory {
 
             for (MobAttackInfoHolder attackInfo : attackInfos) {
                 mi.setMobAttackInfo(mid, attackInfo.attackPos, attackInfo.mpCon, attackInfo.coolTime);
-                mi.setMobAttackAnimationTime(mid, attackInfo.attackPos, attackInfo.animationTime);
+                MobUtils.setMobAttackAnimationTime(mid, attackInfo.attackPos, attackInfo.animationTime);
             }
         }
     }
@@ -454,7 +455,6 @@ public class LifeFactory {
         }
         decodeElementalString(stats, DataTool.getString("elemAttr", monsterInfoData, ""));
 
-        MonsterInformationProvider mi = MonsterInformationProvider.getInstance();
         Data monsterSkillInfoData = monsterInfoData.getChildByPath("skill");
         if (monsterSkillInfoData != null) {
             int i = 0;
@@ -473,7 +473,7 @@ public class LifeFactory {
                     }
 
                     MobSkill skill = MobSkillFactory.getMobSkillOrThrow(type, skillLv);
-                    mi.setMobSkillAnimationTime(skill, animationTime);
+                    MobUtils.setMobSkillAnimationTime(skill, animationTime);
                 }
 
                 i++;

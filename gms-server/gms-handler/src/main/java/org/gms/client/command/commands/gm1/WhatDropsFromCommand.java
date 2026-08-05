@@ -27,6 +27,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.command.Command;
 import org.gms.constants.id.NpcId;
+import org.gms.dwutil.MobUtils;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.life.MonsterDropEntry;
 import org.gms.server.life.MonsterInformationProvider;
@@ -64,7 +65,7 @@ public class WhatDropsFromCommand extends Command {
                             continue;
                         }
                         // 计算精度丢失的问题
-                        float chance = Math.max(1000000F / drop.chance / (!MonsterInformationProvider.getInstance().isBoss(mobId) ? player.getDropRate() : player.getBossDropRate()), 1);
+                        float chance = Math.max(1000000F / drop.chance / (!MobUtils.isBoss(mobId) ? player.getDropRate() : player.getBossDropRate()), 1);
                         output.append("- ").append(name).append(" (1/").append((int) chance).append(")\r\n");
                     } catch (Exception ex) {
                         ex.printStackTrace();

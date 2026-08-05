@@ -34,6 +34,7 @@ import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.dao.entity.CharactersDO;
 import org.gms.dao.entity.ModifiedCashItemDO;
+import org.gms.dwutil.CashShopUtils;
 import org.gms.manager.ServerManager;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
@@ -120,7 +121,7 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                             return;
                         }
 
-                        Item item = CashItemFactory.toItem(cItem);
+                        Item item = CashShopUtils.toItem(cItem);
                         if (!ensureCashInventoryCapacity(c, cs, 1)) {
                             return;
                         }
@@ -128,7 +129,7 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                         cs.addToInventory(item);
                         c.sendPacket(PacketCreator.showBoughtCashItem(item, c.getAccID()));
                     } else { // Package
-                        List<Item> cashPackage = CashItemFactory.getPackage(cItem.getItemId());
+                        List<Item> cashPackage = CashShopUtils.getPackage(cItem.getItemId());
                         if (!ensureCashInventoryCapacity(c, cs, cashPackage.size())) {
                             return;
                         }
@@ -373,7 +374,7 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                             if (!ensureCashInventoryCapacity(c, cs, 1)) {
                                 return;
                             }
-                            if (CashItemFactory.toItem(itemRing) instanceof Equip eqp) {
+                            if (CashShopUtils.toItem(itemRing) instanceof Equip eqp) {
                                 Pair<Integer, Integer> rings = Ring.createRing(itemRing.getItemId(), chr, partner);
                                 eqp.setRingId(rings.getLeft());
                                 cs.addToInventory(eqp);
@@ -435,7 +436,7 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                             if (!ensureCashInventoryCapacity(c, cs, 1)) {
                                 return;
                             }
-                            if (CashItemFactory.toItem(itemRing) instanceof Equip eqp) {
+                            if (CashShopUtils.toItem(itemRing) instanceof Equip eqp) {
                                 Pair<Integer, Integer> rings = Ring.createRing(itemRing.getItemId(), chr, partner);
                                 eqp.setRingId(rings.getLeft());
                                 cs.addToInventory(eqp);
@@ -475,7 +476,7 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                             return;
                         }
                         if (chr.registerNameChange(newName)) { //success
-                            Item item = CashItemFactory.toItem(cItem);
+                            Item item = CashShopUtils.toItem(cItem);
 
                             c.sendPacket(PacketCreator.showNameChangeSuccess(item, c.getAccID()));
                             cs.gainCash(4, cItem, chr.getWorld());
@@ -508,7 +509,7 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                         } else if (!ensureCashInventoryCapacity(c, cs, 1)) {
                             return;
                         } else if (chr.registerWorldTransfer(newWorldSelection)) {
-                            Item item = CashItemFactory.toItem(cItem);
+                            Item item = CashShopUtils.toItem(cItem);
                             c.sendPacket(PacketCreator.showWorldTransferSuccess(item, c.getAccID()));
                             cs.gainCash(4, cItem, chr.getWorld());
                             cs.addToInventory(item);

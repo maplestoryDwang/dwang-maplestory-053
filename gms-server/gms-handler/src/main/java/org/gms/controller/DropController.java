@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.gms.constants.api.ApiConstant;
 import org.gms.model.dto.*;
+import org.gms.service.DropApiService;
 import org.gms.service.DropService;
 import org.gms.util.I18nUtil;
 import org.gms.util.RequireUtil;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("/drop")
 public class DropController {
-    private final DropService dropService;
+    private final DropApiService dropService;
 
     @Tag(name = "/drop/" + ApiConstant.LATEST)
     @Operation(summary = "分页获取掉落列表")

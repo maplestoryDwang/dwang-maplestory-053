@@ -41,6 +41,7 @@ import org.gms.constants.skills.other.NightWalker;
 import org.gms.constants.skills.adv.magician.cleric.Priest;
 import org.gms.constants.skills.adv.thief.bandit.Shadower;
 import org.gms.constants.skills.adv.warrior.page.Whiteknight;
+import org.gms.dwutil.MobUtils;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.channel.Channel;
 import org.gms.net.server.coordinator.world.MonsterAggroCoordinator;
@@ -338,9 +339,9 @@ public class Monster extends AbstractLoadedLife {
             long animationTime;
 
             if (skill == null) {
-                animationTime = MonsterInformationProvider.getInstance().getMobAttackAnimationTime(this.getId(), attackPos);
+                animationTime = MobUtils.getMobAttackAnimationTime(this.getId(), attackPos);
             } else {
-                animationTime = MonsterInformationProvider.getInstance().getMobSkillAnimationTime(skill);
+                animationTime = MobUtils.getMobSkillAnimationTime(skill);
             }
 
             if (animationTime > 0) {

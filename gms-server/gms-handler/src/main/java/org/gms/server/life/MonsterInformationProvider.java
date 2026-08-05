@@ -64,12 +64,8 @@ public class MonsterInformationProvider {
     private final Set<Integer> hasNoMultiEquipDrops = new HashSet<>();
     private final Map<Integer, List<MonsterDropEntry>> extraMultiEquipDrops = new HashMap<>();
 
-    private final Map<Pair<Integer, Integer>, Integer> mobAttackAnimationTime = new HashMap<>();
-    private final Map<MobSkill, Integer> mobSkillAnimationTime = new HashMap<>();
-
     private final Map<Integer, Pair<Integer, Integer>> mobAttackInfo = new HashMap<>();
 
-    private final Map<Integer, Boolean> mobBossCache = new HashMap<>();
     private final Map<Integer, String> mobNameCache = new HashMap<>();
 
     protected MonsterInformationProvider() {
@@ -211,23 +207,6 @@ public class MonsterInformationProvider {
         return ret;
     }
 
-    public final void setMobAttackAnimationTime(int monsterId, int attackPos, int animationTime) {
-        mobAttackAnimationTime.put(new Pair<>(monsterId, attackPos), animationTime);
-    }
-
-    public final Integer getMobAttackAnimationTime(int monsterId, int attackPos) {
-        Integer time = mobAttackAnimationTime.get(new Pair<>(monsterId, attackPos));
-        return time == null ? 0 : time;
-    }
-
-    public final void setMobSkillAnimationTime(MobSkill skill, int animationTime) {
-        mobSkillAnimationTime.put(skill, animationTime);
-    }
-
-    public final Integer getMobSkillAnimationTime(MobSkill skill) {
-        Integer time = mobSkillAnimationTime.get(skill);
-        return time == null ? 0 : time;
-    }
 
     public final void setMobAttackInfo(int monsterId, int attackPos, int mpCon, int coolTime) {
         mobAttackInfo.put((monsterId << 3) + attackPos, new Pair<>(mpCon, coolTime));
@@ -258,24 +237,7 @@ public class MonsterInformationProvider {
         return retMobs;
     }
 
-    public boolean isBoss(int id) {
-        Boolean boss = mobBossCache.get(id);
-        if (boss == null) {
-            try {
-                boss = LifeFactory.getMonster(id).isBoss();
-            } catch (NullPointerException npe) {
-                boss = false;
-            } catch (Exception e) {   //nonexistant mob
-                boss = false;
 
-                log.warn("Non-existent mob id {}", id, e);
-            }
-
-            mobBossCache.put(id, boss);
-        }
-
-        return boss;
-    }
 
     public String getMobNameFromId(int id) {
         String mobName = mobNameCache.get(id);
