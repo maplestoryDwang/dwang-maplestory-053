@@ -25,6 +25,7 @@ import org.gms.client.Client;
 import org.gms.scripting.npc.NPCConversationManager;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.actions.ExpAction;
 import org.gms.server.quest.actions.MesoAction;
 
@@ -83,7 +84,7 @@ public class QuestActionManager extends NPCConversationManager {
     }
 
     public String getMedalName() {  // usable only for medal quests (id 299XX)
-        Quest q = Quest.getInstance(quest);
-        return ItemInformationProvider.getInstance().getName(q.getMedalRequirement());
+        Quest q = QuestRepository.getInstance(quest);
+        return ItemInformationProvider.getInstance().getName(QuestRepository.getMedalRequirement(q.getId()));
     }
 }

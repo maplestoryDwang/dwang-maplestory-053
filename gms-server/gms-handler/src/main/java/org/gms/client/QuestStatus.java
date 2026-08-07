@@ -22,6 +22,7 @@
 package org.gms.client;
 
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 import org.gms.util.StringUtil;
 
 import java.util.Collections;
@@ -93,7 +94,7 @@ public class QuestStatus {
     }
 
     public Quest getQuest() {
-        return Quest.getInstance(questID);
+        return QuestRepository.getInstance(questID);
     }
 
     public short getQuestID() {
@@ -131,7 +132,7 @@ public class QuestStatus {
     }
 
     private void registerMobs() {
-        for (int i : Quest.getInstance(questID).getRelevantMobs()) {
+        for (int i : QuestRepository.getInstance(questID).getRelevantMobs()) {
             progress.put(i, "000");
         }
         //this.setUpdated();

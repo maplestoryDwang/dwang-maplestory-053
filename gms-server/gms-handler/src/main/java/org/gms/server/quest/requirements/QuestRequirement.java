@@ -23,6 +23,7 @@ import org.gms.client.QuestStatus;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.QuestRequirementType;
 
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class QuestRequirement extends AbstractQuestRequirement {
     public boolean check(Character chr, Integer npcid) {
         for (Integer questID : quests.keySet()) {
             int stateReq = quests.get(questID);
-            QuestStatus qs = chr.getQuest(Quest.getInstance(questID));
+            QuestStatus qs = chr.getQuest(QuestRepository.getInstance(questID));
 
             if (qs == null && QuestStatus.Status.getById(stateReq).equals(QuestStatus.Status.NOT_STARTED)) {
                 continue;

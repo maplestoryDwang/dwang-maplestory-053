@@ -27,6 +27,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestActionType;
+import org.gms.server.quest.QuestRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +59,7 @@ public class QuestAction extends AbstractQuestAction {
     public void run(Character chr, Integer extSelection) {
         for (Integer questID : quests.keySet()) {
             int stat = quests.get(questID);
-            chr.updateQuestStatus(new QuestStatus(Quest.getInstance(questID), QuestStatus.Status.getById(stat)));
+            chr.updateQuestStatus(new QuestStatus(QuestRepository.getInstance(questID), QuestStatus.Status.getById(stat)));
         }
     }
 } 

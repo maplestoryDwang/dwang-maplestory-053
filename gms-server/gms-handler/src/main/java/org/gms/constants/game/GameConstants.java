@@ -10,6 +10,7 @@ import org.gms.provider.wz.WzFiles;
 import org.gms.server.maps.FieldLimit;
 import org.gms.server.maps.MapleMap;
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 import org.gms.util.Pair;
 
 import java.text.NumberFormat;
@@ -591,7 +592,7 @@ public class GameConstants {
     }
 
     public static boolean isMedalQuest(short questid) {
-        return Quest.getInstance(questid).getMedalRequirement() != -1;
+        return QuestRepository.getMedalRequirement(questid) != -1;
     }
 
     public static boolean hasSPTable(Job job) {

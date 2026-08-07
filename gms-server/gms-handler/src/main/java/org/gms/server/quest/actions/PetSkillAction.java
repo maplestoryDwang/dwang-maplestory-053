@@ -28,6 +28,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestActionType;
+import org.gms.server.quest.QuestRepository;
 
 /**
  * @author Tyler (Twdtwd)
@@ -49,7 +50,7 @@ public class PetSkillAction extends AbstractQuestAction {
 
     @Override
     public boolean check(Character chr, Integer extSelection) {
-        QuestStatus status = chr.getQuest(Quest.getInstance(questID));
+        QuestStatus status = chr.getQuest(QuestRepository.getInstance(questID));
         if (!(status.getStatus() == QuestStatus.Status.NOT_STARTED && status.getForfeited() > 0)) {
             return false;
         }

@@ -28,6 +28,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.server.quest.QuestRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.ItemInformationProvider;
@@ -138,7 +139,7 @@ public final class AdminCommandHandler extends AbstractPacketHandler {
                 }
                 break;
             case 0x16: // Questreset
-                Quest.getInstance(p.readShort()).reset(c.getPlayer());
+                QuestRepository.getInstance(p.readShort()).reset(c.getPlayer());
                 break;
             case 0x17: // Summon
                 int mobId = p.readInt();

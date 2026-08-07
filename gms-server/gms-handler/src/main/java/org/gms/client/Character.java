@@ -106,6 +106,7 @@ import org.gms.server.partyquest.MonsterCarnival;
 import org.gms.server.partyquest.MonsterCarnivalParty;
 import org.gms.server.partyquest.PartyQuest;
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 import org.gms.service.*;
 import org.gms.util.*;
 import org.gms.util.packets.WeddingPackets;
@@ -5359,7 +5360,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     public QuestStatus getQuest(final int quest) {
-        return getQuest(Quest.getInstance(quest));
+        return getQuest(QuestRepository.getInstance(quest));
     }
 
     public QuestStatus getQuest(Quest quest) {
@@ -5398,14 +5399,14 @@ public class Character extends AbstractCharacterObject {
 
         int amountNeeded, questStatus = this.getQuestStatus(questid);
         if (questStatus == 0) {
-            amountNeeded = Quest.getInstance(questid).getStartItemAmountNeeded(itemid);
+            amountNeeded = QuestRepository.getInstance(questid).getStartItemAmountNeeded(itemid);
             if (amountNeeded == Integer.MIN_VALUE) {
                 return false;
             }
         } else if (questStatus != 1) {
             return false;
         } else {
-            amountNeeded = Quest.getInstance(questid).getCompleteItemAmountNeeded(itemid);
+            amountNeeded = QuestRepository.getInstance(questid).getCompleteItemAmountNeeded(itemid);
             if (amountNeeded == Integer.MAX_VALUE) {
                 return true;
             }
@@ -8789,11 +8790,11 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void setQuestProgress(int id, int infoNumber, String progress) {
-        Quest q = Quest.getInstance(id);
+        Quest q = QuestRepository.getInstance(id);
         QuestStatus qs = getQuest(q);
 
         if (qs.getInfoNumber() == infoNumber && infoNumber > 0) {
-            Quest iq = Quest.getInstance(infoNumber);
+            Quest iq = QuestRepository.getInstance(infoNumber);
             QuestStatus iqs = getQuest(iq);
             iqs.setProgress(0, progress);
         } else {
@@ -8885,7 +8886,7 @@ public class Character extends AbstractCharacterObject {
         } else if (qs.getStatus().equals(QuestStatus.Status.COMPLETED)) {
             Quest mquest = qs.getQuest();
             short questid = mquest.getId();
-            if (!mquest.isSameDayRepeatable() && !Quest.isExploitableQuest(questid)) {
+            if (!mquest.isSameDayRepeatable() && !QuestRepository.isExploitableQuest(questid)) {
                 awardQuestPoint(GameConfig.getServerInt("quest_point_per_quest_complete"));
             }
             qs.setCompleted(qs.getCompleted() + 1);   // Jayd's idea - count quest completed

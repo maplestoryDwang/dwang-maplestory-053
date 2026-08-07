@@ -57,6 +57,7 @@ import org.gms.server.maps.MapleMap;
 import org.gms.server.partyquest.PartyQuest;
 import org.gms.server.partyquest.Pyramid;
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 import org.gms.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -351,11 +352,11 @@ public class AbstractPlayerInteraction {
     //---- \/ \/ \/ \/ \/ \/ \/  NOT TESTED  \/ \/ \/ \/ \/ \/ \/ \/ \/ ----
 
     public final QuestStatus getQuestRecord(final int id) {
-        return c.getPlayer().getQuestNAdd(Quest.getInstance(id));
+        return c.getPlayer().getQuestNAdd(QuestRepository.getInstance(id));
     }
 
     public final QuestStatus getQuestNoRecord(final int id) {
-        return c.getPlayer().getQuestNoAdd(Quest.getInstance(id));
+        return c.getPlayer().getQuestNoAdd(QuestRepository.getInstance(id));
     }
 
     //---- /\ /\ /\ /\ /\ /\ /\  NOT TESTED  /\ /\ /\ /\ /\ /\ /\ /\ /\ ----
@@ -375,11 +376,11 @@ public class AbstractPlayerInteraction {
     }
 
     public int getQuestStatus(int id) {
-        return c.getPlayer().getQuest(Quest.getInstance(id)).getStatus().getId();
+        return c.getPlayer().getQuest(QuestRepository.getInstance(id)).getStatus().getId();
     }
 
     private QuestStatus.Status getQuestStat(int id) {
-        return c.getPlayer().getQuest(Quest.getInstance(id)).getStatus();
+        return c.getPlayer().getQuest(QuestRepository.getInstance(id)).getStatus();
     }
 
     public boolean isQuestCompleted(int id) {
@@ -425,10 +426,10 @@ public class AbstractPlayerInteraction {
     }
 
     public String getQuestProgress(int id, int infoNumber) {
-        QuestStatus qs = getPlayer().getQuest(Quest.getInstance(id));
+        QuestStatus qs = getPlayer().getQuest(QuestRepository.getInstance(id));
 
         if (qs.getInfoNumber() == infoNumber && infoNumber > 0) {
-            qs = getPlayer().getQuest(Quest.getInstance(infoNumber));
+            qs = getPlayer().getQuest(QuestRepository.getInstance(infoNumber));
             infoNumber = 0;
         }
 
@@ -456,7 +457,7 @@ public class AbstractPlayerInteraction {
     }
 
     public void resetAllQuestProgress(int id) {
-        QuestStatus qs = getPlayer().getQuest(Quest.getInstance(id));
+        QuestStatus qs = getPlayer().getQuest(QuestRepository.getInstance(id));
         if (qs != null) {
             qs.resetAllProgress();
             getPlayer().announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, false);
@@ -464,7 +465,7 @@ public class AbstractPlayerInteraction {
     }
 
     public void resetQuestProgress(int id, int infoNumber) {
-        QuestStatus qs = getPlayer().getQuest(Quest.getInstance(id));
+        QuestStatus qs = getPlayer().getQuest(QuestRepository.getInstance(id));
         if (qs != null) {
             qs.resetProgress(infoNumber);
             getPlayer().announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, false);
@@ -513,7 +514,7 @@ public class AbstractPlayerInteraction {
 
     public boolean startQuest(int id, int npc) {
         try {
-            return Quest.getInstance(id).forceStart(getPlayer(), npc);
+            return QuestRepository.getInstance(id).forceStart(getPlayer(), npc);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
             return false;
@@ -522,7 +523,7 @@ public class AbstractPlayerInteraction {
 
     public boolean completeQuest(int id, int npc) {
         try {
-            return Quest.getInstance(id).forceComplete(getPlayer(), npc);
+            return QuestRepository.getInstance(id).forceComplete(getPlayer(), npc);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
             return false;

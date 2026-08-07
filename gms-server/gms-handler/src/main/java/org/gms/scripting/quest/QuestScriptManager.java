@@ -24,6 +24,7 @@ package org.gms.scripting.quest;
 import org.gms.client.Client;
 import org.gms.client.QuestStatus;
 import org.gms.constants.game.GameConstants;
+import org.gms.server.quest.QuestRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.AbstractScriptManager;
@@ -59,7 +60,7 @@ public class QuestScriptManager extends AbstractScriptManager {
     }
 
     public void start(Client c, short questid, int npc) {
-        Quest quest = Quest.getInstance(questid);
+        Quest quest = QuestRepository.getInstance(questid);
         try {
             QuestActionManager qm = new QuestActionManager(c, questid, npc, true);
             if (qms.containsKey(c)) {
@@ -107,7 +108,7 @@ public class QuestScriptManager extends AbstractScriptManager {
     }
 
     public void end(Client c, short questid, int npc) {
-        Quest quest = Quest.getInstance(questid);
+        Quest quest = QuestRepository.getInstance(questid);
         if (!c.getPlayer().getQuest(quest).getStatus().equals(QuestStatus.Status.STARTED) || (!c.getPlayer().getMap().containsNPC(npc) && !quest.isAutoComplete())) {
             dispose(c);
             return;

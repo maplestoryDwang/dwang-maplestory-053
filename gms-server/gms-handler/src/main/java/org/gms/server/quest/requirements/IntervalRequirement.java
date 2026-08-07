@@ -26,6 +26,7 @@ import org.gms.client.QuestStatus;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.QuestRequirementType;
 
 import static java.util.concurrent.TimeUnit.HOURS;
@@ -56,7 +57,7 @@ public class IntervalRequirement extends AbstractQuestRequirement {
     private static String getIntervalTimeLeft(Character chr, IntervalRequirement r) {
         StringBuilder str = new StringBuilder();
 
-        long futureTime = chr.getQuest(Quest.getInstance(r.questID)).getCompletionTime() + r.getInterval();
+        long futureTime = chr.getQuest(QuestRepository.getInstance(r.questID)).getCompletionTime() + r.getInterval();
         long leftTime = futureTime - System.currentTimeMillis();
 
         byte mode = 0;
@@ -87,8 +88,8 @@ public class IntervalRequirement extends AbstractQuestRequirement {
 
     @Override
     public boolean check(Character chr, Integer npcid) {
-        boolean check = !chr.getQuest(Quest.getInstance(questID)).getStatus().equals(QuestStatus.Status.COMPLETED);
-        boolean check2 = chr.getQuest(Quest.getInstance(questID)).getCompletionTime() <= System.currentTimeMillis() - interval;
+        boolean check = !chr.getQuest(QuestRepository.getInstance(questID)).getStatus().equals(QuestStatus.Status.COMPLETED);
+        boolean check2 = chr.getQuest(QuestRepository.getInstance(questID)).getCompletionTime() <= System.currentTimeMillis() - interval;
 
         if (check || check2) {
             return true;

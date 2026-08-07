@@ -23,6 +23,7 @@ import org.gms.client.Character;
 import org.gms.server.life.MonsterDropEntry;
 import org.gms.server.life.MonsterInformationProvider;
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class LootManager {
         }
         
         int qStartAmount = 0, qCompleteAmount = 0;
-        Quest quest = Quest.getInstance(dropEntry.questid);
+        Quest quest = QuestRepository.getInstance(dropEntry.questid);
         if (quest != null) {
             qStartAmount = quest.getStartItemAmountNeeded(dropEntry.itemId);
             qCompleteAmount = quest.getCompleteItemAmountNeeded(dropEntry.itemId);

@@ -29,6 +29,7 @@ import org.gms.net.packet.InPacket;
 import org.gms.scripting.quest.QuestScriptManager;
 import org.gms.server.life.NPC;
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 import org.gms.util.I18nUtil;
 
 import java.awt.*;
@@ -73,7 +74,7 @@ public final class QuestActionHandler extends AbstractPacketHandler {
         byte action = p.readByte();
         short questid = p.readShort();
         Character player = c.getPlayer();
-        Quest quest = Quest.getInstance(questid);
+        Quest quest = QuestRepository.getInstance(questid);
         if (player.getMapId() == MapId.JAIL) {   //监狱地图不可使用任务脚本
             player.dropMessage(1,I18nUtil.getMessage("ActionHandler.map.message1"));
             return;

@@ -34,6 +34,7 @@ import org.gms.provider.DataTool;
 import org.gms.provider.wz.WzFiles;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.quest.Quest;
+import org.gms.server.quest.QuestRepository;
 import org.gms.util.I18nUtil;
 import org.gms.util.Pair;
 
@@ -122,7 +123,7 @@ public class SearchCommand extends Command {
                     }
                 }
             } else {
-                for (Quest mq : Quest.getMatchedQuests(search)) {
+                for (Quest mq : QuestRepository.getMatchedQuests(search)) {
                     sb.append("#b").append(mq.getId()).append("#k - #r");
 
                     String parentName = mq.getParentName();

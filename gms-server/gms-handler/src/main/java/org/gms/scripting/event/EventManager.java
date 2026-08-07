@@ -30,6 +30,7 @@ import org.gms.net.server.guild.Guild;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.net.server.world.World;
+import org.gms.server.quest.QuestRepository;
 import org.gms.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1218,7 +1219,7 @@ public class EventManager {
      */
     public void startQuest(Character chr, int id, int npcid) {
         try {
-            Quest.getInstance(id).forceStart(chr, npcid);
+            QuestRepository.getInstance(id).forceStart(chr, npcid);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
@@ -1232,7 +1233,7 @@ public class EventManager {
      */
     public void completeQuest(Character chr, int id, int npcid) {
         try {
-            Quest.getInstance(id).forceComplete(chr, npcid);
+            QuestRepository.getInstance(id).forceComplete(chr, npcid);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }

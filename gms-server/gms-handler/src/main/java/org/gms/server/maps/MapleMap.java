@@ -1463,7 +1463,7 @@ public class MapleMap {
                         AutobanManager.alert(chr, AutobanFactory.GENERAL, "因击杀超过自身30级的怪物[" + monster.getName() + "]被系统警告");
                     }
 
-                    /*if (chr.getQuest(Quest.getInstance(29400)).getStatus().equals(QuestStatus.Status.STARTED)) {
+                    /*if (chr.getQuest(QuestRepository.getInstance(29400)).getStatus().equals(QuestStatus.Status.STARTED)) {
                      if (chr.getLevel() >= 120 && monster.getStats().getLevel() >= 120) {
                      //FIX MEDAL SHET
                      } else if (monster.getStats().getLevel() >= chr.getLevel()) {

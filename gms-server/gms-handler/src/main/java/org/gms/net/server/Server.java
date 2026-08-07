@@ -34,6 +34,7 @@ import org.gms.dao.entity.CharactersDO;
 import org.gms.dao.entity.PlayernpcsFieldDO;
 import org.gms.model.dto.ServerShutdownDTO;
 import org.gms.property.ServiceProperty;
+import org.gms.server.quest.QuestRepository;
 import org.gms.util.*;
 import org.gms.model.pojo.NewYearCardRecord;
 import org.gms.client.processor.npc.FredrickProcessor;
@@ -671,7 +672,7 @@ public class Server {
             final List<Future<?>> futures = new ArrayList<>();
             futures.add(initExecutor.submit(SkillFactory::loadAllSkills));
             futures.add(initExecutor.submit(CashItemFactory::loadAllCashItems));
-            futures.add(initExecutor.submit(Quest::loadAllQuests));
+            futures.add(initExecutor.submit(QuestRepository::loadAllQuests));
             futures.add(initExecutor.submit(SkillbookInformationProvider::loadAllSkillbookInformation));
             // Wait on all async tasks to complete
             for (Future<?> future : futures) {
