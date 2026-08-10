@@ -40,7 +40,13 @@ public class QuestRepository {
     }
 
     public static Quest getInstance(int id) {
-        return quests.computeIfAbsent(id, key -> dataProvider.buildQuest(key, medals));
+        Quest ret = quests.get(id);
+        if (ret == null) {
+            ret = new Quest((short) id);
+            quests.put(id, ret);
+        }
+        return ret;
+//        return quests.computeIfAbsent(id, key -> dataProvider.buildQuest(key, medals));
     }
 
     public static Quest getInstanceFromInfoNumber(int infoNumber) {

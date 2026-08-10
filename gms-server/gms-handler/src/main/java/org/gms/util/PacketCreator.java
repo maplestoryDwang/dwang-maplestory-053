@@ -3837,11 +3837,24 @@ public class PacketCreator {
         return p;
     }
 
+
+
+    public static Packet getNPCTalkText(int npc, String talk, String def) {
+        final OutPacket p = OutPacket.create(SendPacketOpcode.NPC_TALK);
+        p.writeByte(4); // Doesn't matter
+        p.writeInt(npc);
+        p.writeByte(3); // text
+        p.writeString(talk);
+        p.writeString(def);//:D
+        p.writeInt(0);
+        return p;
+    }
+
     public static Packet getNPCTalkNum(int npc, String talk, int def, int min, int max) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.NPC_TALK);
         p.writeByte(4); // ?
         p.writeInt(npc);
-        p.writeByte(3);
+        p.writeByte(4); // 类型，输入数字
         p.writeString(talk);
         p.writeInt(def);
         p.writeInt(min);
@@ -3850,21 +3863,11 @@ public class PacketCreator {
         return p;
     }
 
-    public static Packet getNPCTalkText(int npc, String talk, String def) {
-        final OutPacket p = OutPacket.create(SendPacketOpcode.NPC_TALK);
-        p.writeByte(4); // Doesn't matter
-        p.writeInt(npc);
-        p.writeByte(2);
-        p.writeString(talk);
-        p.writeString(def);//:D
-        p.writeInt(0);
-        return p;
-    }
     public static Packet getNPCTalkNum(int npc, String talk, int def, int min, int max,byte speaker) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.NPC_TALK);
         p.writeByte(4); // ?
         p.writeInt(npc);
-        p.writeByte(3);
+        p.writeByte(4); // 类型，输入数字
         p.writeString(talk);
         p.writeInt(def);
         p.writeInt(min);

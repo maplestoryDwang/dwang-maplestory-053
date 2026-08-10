@@ -31,7 +31,7 @@
 */
 
 var status = -1;
-var selectedType = -1;
+var selectedType = -1;  // 选择的类型
 var selectedItem = -1;
 var item;
 var items;
@@ -43,75 +43,120 @@ var equip;
 
 function start() {
     cm.getPlayer().setCS(true);
-    var selStr = "你好. 我是比休斯，退休的射手，但我曾经是雅典娜皮尔斯顶尖的学生，我不再打猎了，但我可以帮你制作一些对你有帮助的物品...#b"
-    var options = ["制作一把弓", "制作一把弩", "制作一双手套", "升级一双手套", "材料制作", "制作箭矢"];
-    for (var i = 0; i < options.length; i++) {
-        selStr += "\r\n#L" + i + "# " + options[i] + "#l";
+    var selStr = "喂～有什么需要的做的吗？只要你给我一些的材料和服务费，我就能够为你做很多物品。怎么样？你要试试吗？不过，对于这个村落的人来说这可是个秘密呀。"
+    cm.sendYesNo(selStr);
+}
+
+function recItem(item, qty) {
+    var recvItem = item, recvQty;
+
+    if (item >= 2060000 && item <= 2060002) //bow arrows
+    {
+        recvQty = 1000 - (item - 2060000) * 100;
+    } else if (item >= 2061000 && item <= 2061002) //xbow arrows
+    {
+        recvQty = 1000 - (item - 2061000) * 100;
+    } else if (item == 4003000)//screws
+    {
+        recvQty = 15 * qty;
+    } else {
+        recvQty = qty;
     }
-    cm.sendSimple(selStr);
+    return recvQty;
 }
 
 function action(mode, type, selection) {
     status++;
-    if (mode != 1) {
+    if (mode == -1) {
         cm.dispose();
+        return;
+    } else if(mode == 0) {
+        if(selectedType == -1) {
+            var selStr = "你可能现在不想做吧...但是以后也有什么需要的话，就来找我吧。我能够给你做在商店买不到的。"
+            cm.sendNext(selStr);
+            cm.dispose();
+        } else {
+            var selStr = "是吗？肯定是材料不够吧？那么以后再来吧。我打算暂时留在这里"
+            cm.sendNext(selStr);
+            cm.dispose();
+        }
         return;
     }
     if (status == 0) {
+        var selStr = "好！你想做什么？尽管说吧。#b"
+        var options = ["制作弓", "制作弩", "制作手套", "手套合成", "材料制作", "制作箭矢"];
+        for (var i = 0; i < options.length; i++) {
+            selStr += "\r\n#L" + i + "# " + options[i] + "#l";
+        }
+        cm.sendSimple(selStr);
+    } else if (status == 1) {
+        lastSelection = selection;
         if (selection == 0) { //bow refine
             var selStr = "好眼光,弓的攻击速度快,也比弩灵敏许多,但是攻击比弩低一点点哦，但箭矢和弩没有太大区别。 总之, 你想做哪一种?#b";
             items = [1452002, 1452003, 1452001, 1452000, 1452005, 1452006, 1452007];
             for (var i = 0; i < items.length; i++) {
-                selStr += "\r\n#L" + i + "#" + "#z" + items[i] + "##k - 需要弓箭手等级 Lv. " + (10 + (i * 5)) + "#l#b";
+                selStr += "\r\n#L" + i + "#" + "#z" + items[i] + "##k (等级限制：" + (10 + (i * 5)) + "，弓箭手)#l#b";
                 //selStr += "\r\n#L" + i + "##t" + items[i] + "##k - 需要弓箭手等级 Lv. " + (10 + (i * 5)) + "#l#b";
             }
         } else if (selection == 1) { //xbow refine
             var selStr = "弩是我的专长~它的攻击速度比弓要慢一点，但是伤害却比弓要来的高哦， 你想让我为你做哪一个?#b";
             items = [1462001, 1462002, 1462003, 1462000, 1462004, 1462005, 1462006, 1462007];
             for (var i = 0; i < items.length; i++) {
-                selStr += "\r\n#L" + i + "#" + "#z" + items[i] + "##k - 需要弓箭手等级 Lv. " + (10 + (i * 5)) + "#l#b";
+                selStr += "\r\n#L" + i + "#" + "#z" + items[i] + "##k (等级限制：" + (10 + (i * 5)) + "，弓箭手)#l#b";
             }
         } else if (selection == 2) { //glove refine
             var selStr = "好的,你想要製作哪一种手套呢?#b";
             items = [1082012, 1082013, 1082016, 1082048, 1082068, 1082071, 1082084, 1082089];
             for (var i = 0; i < items.length; i++) {
-                selStr += "\r\n#L" + i + "#" + "#z" + items[i] + "##k - 需要弓箭手等级 Lv. " + (15 + (i * 5) > 40 ? ((i - 1) * 10) : 15 + (i * 5)) + "#l#b";
+                selStr += "\r\n#L" + i + "#" + "#z" + items[i] + "##k (等级限制：" + (15 + (i * 5) > 40 ? ((i - 1) * 10) : 15 + (i * 5)) + "，弓箭手)#l#b";
             }
         } else if (selection == 3) { //glove upgrade
-            var selStr = "升级手套？这应该不会太难。你想过要升级哪一个？#b";
-            items = [1082015, 1082014, 1082017, 1082018, 1082049, 1082050, 1082069, 1082070, 1082072, 1082073, 1082085, 1082083, 1082090, 1082091];
-            for (var i = 0, x = 0; i < items.length; i++, x += (i + 1) % 2 == 0 ? 1 : 0) {
-                selStr += "\r\n#L" + i + "#" + "#z" + items[i] + "##k - 需要弓箭手等级 Lv. " + (20 + (x * 5) > 40 ? ((x - 1) * 10) : 20 + (x * 5)) + "#l#b";
-            }
+            var selStr = "你想合成手套吗？好！但你要小心。作为合成材料的道具都会消失，你万一掌已经用卷轴#r加强#k过的道具来作为合成的材料，以前的属性就会消失。要认真考虑啊#b";
         } else if (selection == 4) { //material refine
             var selStr = "材料？我知道有几种材料我可以给你做...#b";
-            var materials = ["用10个树枝制作1个木材", "用5个木柴制作1个木材", "制作螺丝钉(1次15个)"];
+            var materials = ["用树枝做木材", "用木块做木材", "做螺丝钉"];
             for (var i = 0; i < materials.length; i++) {
                 selStr += "\r\n#L" + i + "# " + materials[i] + "#l";
             }
         } else if (selection == 5) { //arrow refine
-            var selStr = "箭矢?没问题的。#b";
+            var selStr = "你想做箭吗？当然用好箭在战斗使更有利...好！你想做什么样的箭吗？#b";
             items = [2060000, 2061000, 2060001, 2061001, 2060002, 2061002];
             for (var i = 0; i < items.length; i++) {
                 selStr += "\r\n#L" + i + "##t" + items[i] + "##l";
             }
         }
         selectedType = selection;
-        cm.sendSimple(selStr);
-        if (selection != 4) {
+        if (selection == 3) {
+            cm.sendNext(selStr);
+        } else {
+            cm.sendSimple(selStr);
+        }
+        if (!(selection == 4 || selection == 3)) { // 材料不增加状态，下一个状态是3
             status++;
         }
-    } else if (status == 1) {
-        selectedItem = selection;
-        items = [4003001, 4003001, 4003000];
-        var matSet = [4000003, 4000018, [4011000, 4011001]];
-        var matQtySet = [10, 5, [1, 1]];
-        item = items[selection];
-        mats = matSet[selection];
-        matQty = matQtySet[selection];
-        cost = 0;
-        cm.sendGetNumber("所以，你需要我帮你做一些 #t" + item + "#s? 那你想要我帮你做多少个呢?", 1, 1, 100)
     } else if (status == 2) {
+        if(selectedType == 4) {
+            selectedItem = selection;
+            items = [4003001, 4003001, 4003000];
+            var matSet = [4000003, 4000018, [4011000, 4011001]];
+            var matQtySet = [10, 5, [1, 1]];
+            item = items[selection];
+            mats = matSet[selection];
+            matQty = matQtySet[selection];
+            cost = 0;
+            var selStr = "#b#t" + mats + "#" + matQty +"个#k能做#t" + item + "#1个。要是你给我材料，我给你免费服务。怎么样？你想做几次？";
+
+            cm.sendGetNumber(selStr, 1, 1, 100)
+
+        } else if(selectedType == 3) {
+            var selStr = "好你想合成什么手套：#b";
+            items = [1082015, 1082014, 1082017, 1082018, 1082049, 1082050, 1082069, 1082070, 1082072, 1082073, 1082085, 1082083, 1082090, 1082091];
+            for (var i = 0, x = 0; i < items.length; i++, x += (i + 1) % 2 == 0 ? 1 : 0) {
+                selStr += "\r\n#L" + i + "#" + "#z" + items[i] + "##k (等级限制：" + (20 + (x * 5) > 40 ? ((x - 1) * 10) : 20 + (x * 5)) + "，弓箭手)#l#b";
+            }
+            cm.sendSimple(selStr);
+        }
+    } else if (status == 3) {
         if (selectedType != 4) {
             selectedItem = selection;
         } else {
@@ -145,8 +190,12 @@ function action(mode, type, selection) {
             cost = costSet[selectedItem];
         }
         var prompt = "你需要我帮你做 ";
-        if (qty == 1) {
-            prompt += "a #t" + item + "#?";
+        if (selectedType == 5) {
+            var num = recItem(item, qty);
+            prompt += "#b#t" + item + "#" + num + "个#k吗？";
+
+        } else if (qty == 1) {
+            prompt += "一个 #r#t" + item + "##k?";
         } else {
             prompt += qty + " #t" + item + "#?";
         }
@@ -162,7 +211,7 @@ function action(mode, type, selection) {
             prompt += "\r\n#i4031138# " + (cost * qty) + " 金币";
         }
         cm.sendYesNo(prompt);
-    } else if (status == 3) {
+    } else if (status == 4) {
         var complete = true;
 
         if (cm.getMeso() < (cost * qty)) {
@@ -181,7 +230,7 @@ function action(mode, type, selection) {
             }
         }
         if (!complete) {
-            cm.sendOk("毫无疑问，你作为其中一员，应该能理解拥有优质物品的价值吧？没有我需要的物品，我就无法做到这一点。");
+            cm.sendOk("你说你想做一个请你确认是否有需要的物品或者背包的其他窗口有没有空间。材料不够或背包里没有空间，我就不能做。");
         } else {
             var recvItem = item, recvQty;
 

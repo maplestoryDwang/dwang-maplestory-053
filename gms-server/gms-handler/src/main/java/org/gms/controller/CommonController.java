@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 基础查询
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("/common")
