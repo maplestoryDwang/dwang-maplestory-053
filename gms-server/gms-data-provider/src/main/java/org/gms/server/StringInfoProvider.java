@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO
+ * 提供WZ的String信息
  *
  * @author dwang
  * @version 1.0
