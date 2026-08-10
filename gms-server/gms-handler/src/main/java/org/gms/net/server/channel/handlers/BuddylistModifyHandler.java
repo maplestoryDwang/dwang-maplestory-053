@@ -21,12 +21,12 @@
 */
 package org.gms.net.server.channel.handlers;
 
-import org.gms.client.BuddyList;
-import org.gms.client.BuddyList.BuddyAddResult;
-import org.gms.client.BuddyList.BuddyOperation;
-import org.gms.client.BuddylistEntry;
+import org.gms.client.character.buddy.BuddyList;
+import org.gms.client.character.buddy.BuddyList.BuddyAddResult;
+import org.gms.client.character.buddy.BuddyList.BuddyOperation;
+import org.gms.client.character.buddy.BuddylistEntry;
 import org.gms.client.Character;
-import org.gms.client.CharacterNameAndId;
+import org.gms.client.character.CharacterNameAndId;
 import org.gms.client.Client;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;

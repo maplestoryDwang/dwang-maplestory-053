@@ -23,6 +23,7 @@ package org.gms.util;
 import com.mybatisflex.annotation.Column;
 import org.gms.client.*;
 import org.gms.client.Character;
+import org.gms.client.character.buddy.BuddylistEntry;
 import org.gms.client.inventory.*;
 import org.gms.client.inventory.equip.Equip;
 import org.gms.client.inventory.equip.Equip.ScrollResult;

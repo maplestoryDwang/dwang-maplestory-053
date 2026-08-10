@@ -23,6 +23,9 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.*;
 import org.gms.client.Character;
+import org.gms.client.character.CharacterNameAndId;
+import org.gms.client.character.buddy.BuddyList;
+import org.gms.client.character.buddy.BuddylistEntry;
 import org.gms.client.inventory.equip.Equip;
 import org.gms.client.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
