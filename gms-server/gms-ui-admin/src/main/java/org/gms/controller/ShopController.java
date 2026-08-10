@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.gms.constants.api.ApiConstant;
 import org.gms.model.dto.*;
-import org.gms.service.ShopService;
+import org.gms.service.ShopApiService;
 import org.gms.util.I18nUtil;
 import org.gms.util.RequireUtil;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("/shop")
 public class ShopController {
-    private final ShopService shopService;
+    private final ShopApiService shopService;
 
     @Tag(name = "/shop/" + ApiConstant.LATEST)
     @Operation(summary = "分页获取商店列表")

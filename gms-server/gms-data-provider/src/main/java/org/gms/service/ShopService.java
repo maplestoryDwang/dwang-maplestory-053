@@ -7,15 +7,18 @@ import lombok.AllArgsConstructor;
 import org.gms.dao.entity.ShopitemsDO;
 import org.gms.dao.mapper.ShopitemsMapper;
 import org.gms.dao.mapper.ShopsMapper;
+import org.gms.event.ReloadShopEvent;
 import org.gms.model.dto.ShopItemSearchRtnDTO;
 import org.gms.model.dto.ShopSearchReqDTO;
 import org.gms.model.dto.ShopSearchRtnDTO;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.ShopFactory;
+import org.gms.server.StringInfoProvider;
 import org.gms.server.life.LifeFactory;
 import org.gms.util.BasePageUtil;
 import org.gms.util.Pair;
 import org.gms.util.RequireUtil;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,8 +33,9 @@ import static org.gms.dao.entity.table.ShopsDOTableDef.SHOPS_D_O;
 public class ShopService {
     private final ShopsMapper shopsMapper;
     private final ShopitemsMapper shopitemsMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public Page<ShopSearchRtnDTO> getShopList(ShopSearchReqDTO data) {
+    public List<ShopSearchRtnDTO> getShopList(ShopSearchReqDTO data) {
         QueryWrapper queryWrapper = QueryWrapper.create().select().from(SHOPS_D_O)
                 .leftJoin(SHOPITEMS_D_O).on(SHOPS_D_O.SHOPID.eq(SHOPITEMS_D_O.SHOPID));
         if (data.getNpcId() != null) {
@@ -47,7 +51,7 @@ public class ShopService {
         List<ShopSearchRtnDTO> matchedShopsDOList = new ArrayList<>();
         for (Row row : queryAsList) {
             Integer npcId = row.getInt("npcid");
-            String npcName = LifeFactory.getNPCName(npcId);
+            String npcName = StringInfoProvider.getNPCName(npcId);
             if (RequireUtil.isEmpty(npcName)) {
                 continue;
             }
@@ -70,7 +74,7 @@ public class ShopService {
                     .npcName(npcName)
                     .build());
         }
-        return BasePageUtil.create(matchedShopsDOList.stream().distinct().toList(), data).page();
+        return matchedShopsDOList;
     }
 
     public Page<ShopItemSearchRtnDTO> getShopItemList(ShopSearchReqDTO data) {
@@ -107,7 +111,9 @@ public class ShopService {
             shopitemsMapper.insertOrUpdate(shopitemsDO, true);
             shopItemId = shopitemsDO.getShopitemid();
         }
-        ShopFactory.getInstance().reloadShops();
+        //
+        eventPublisher.publishEvent(new ReloadShopEvent(this));
+
         return shopItemId;
     }
 
