@@ -24,6 +24,7 @@ package org.gms.scripting.event;
 import org.gms.client.Character;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
+import org.gms.dwutil.QuestUtils;
 import org.gms.net.server.Server;
 import org.gms.net.server.channel.Channel;
 import org.gms.net.server.guild.Guild;
@@ -1219,7 +1220,7 @@ public class EventManager {
      */
     public void startQuest(Character chr, int id, int npcid) {
         try {
-            QuestRepository.getInstance(id).forceStart(chr, npcid);
+            QuestUtils.forceStart(chr, npcid, QuestRepository.getInstance(id));
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
@@ -1233,7 +1234,7 @@ public class EventManager {
      */
     public void completeQuest(Character chr, int id, int npcid) {
         try {
-            QuestRepository.getInstance(id).forceComplete(chr, npcid);
+            QuestUtils.forceComplete(chr, npcid, QuestRepository.getInstance(id));
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }

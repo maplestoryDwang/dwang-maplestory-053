@@ -26,6 +26,7 @@ package org.gms.client.command.commands.gm3;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.command.Command;
+import org.gms.dwutil.QuestUtils;
 import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.I18nUtil;
@@ -49,7 +50,7 @@ public class QuestResetCommand extends Command {
         if (player.getQuestStatus(questId) != 0) {
             Quest quest = QuestRepository.getInstance(questId);
             if (quest != null) {
-                quest.reset(player);
+                QuestUtils.reset(player, quest);
                 player.dropMessage(5, I18nUtil.getMessage("QuestResetCommand.message3", questId));
             } else {    // should not occur
                 player.dropMessage(5, I18nUtil.getMessage("QuestResetCommand.message4", questId));

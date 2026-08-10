@@ -24,6 +24,7 @@ package org.gms.net.server.channel.handlers;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.constants.id.MapId;
+import org.gms.dwutil.QuestUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.scripting.quest.QuestScriptManager;
@@ -83,20 +84,20 @@ public final class QuestActionHandler extends AbstractPacketHandler {
             case 0: // Restore lost item, Credits Darter ( Rajan )
                 p.readInt();
                 int itemid = p.readInt();
-                quest.restoreLostItem(player, itemid);
+                QuestUtils.restoreLostItem(player, itemid, quest);
                 break;
             case 1: { // Start Quest
                 int npc = p.readInt();
                 if (!isNpcNearby(p, player, quest, npc)) {
                     return;
                 }
-                if (quest.canStart(player, npc)) {
+                if (QuestUtils.canStart(player, npc, quest)) {
                     boolean success = QuestScriptManager.getInstance().checkFunctionExists(c, questid, npc, "start");
                     boolean hasScriptRequirement = quest.hasScriptRequirement(false);
                     if (hasScriptRequirement && success) {
                         QuestScriptManager.getInstance().start(c, questid, npc);
                     } else {
-                        quest.start(player, npc);
+                        QuestUtils.start(player, npc, quest);
                     }
                 }
                 break;
@@ -106,7 +107,7 @@ public final class QuestActionHandler extends AbstractPacketHandler {
                 if (!isNpcNearby(p, player, quest, npc)) {
                     return;
                 }
-                if (quest.canComplete(player, npc)) {
+                if (QuestUtils.canComplete(player, npc,quest)) {
                     boolean success = QuestScriptManager.getInstance().checkFunctionExists(c, questid, npc, "end");
                     boolean hasScriptRequirement = quest.hasScriptRequirement(true);
                     if (hasScriptRequirement && success) {
@@ -114,23 +115,23 @@ public final class QuestActionHandler extends AbstractPacketHandler {
                     } else {
                         if (p.available() >= 2) {
                             int selection = p.readShort();
-                            quest.complete(player, npc, selection);
+                            QuestUtils.complete(player, npc, selection, quest);
                         } else {
-                            quest.complete(player, npc);
+                            QuestUtils.complete(player, npc, quest);
                         }
                     }
                 }
                 break;
             }
             case 3: // forfeit quest
-                quest.forfeit(player);
+                QuestUtils.forfeit(player, quest);
                 break;
             case 4: { // scripted start quest
                 int npc = p.readInt();
                 if (!isNpcNearby(p, player, quest, npc)) {
                     return;
                 }
-                if (quest.canStart(player, npc)) {
+                if (QuestUtils.canStart(player, npc, quest)) {
                     QuestScriptManager.getInstance().start(c, questid, npc);
                 }
                 break;
@@ -140,7 +141,7 @@ public final class QuestActionHandler extends AbstractPacketHandler {
                 if (!isNpcNearby(p, player, quest, npc)) {
                     return;
                 }
-                if (quest.canComplete(player, npc)) {
+                if (QuestUtils.canComplete(player, npc, quest)) {
                     QuestScriptManager.getInstance().end(c, questid, npc);
                 }
                 break;

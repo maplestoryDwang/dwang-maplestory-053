@@ -25,6 +25,7 @@ import org.gms.client.Client;
 import org.gms.client.QuestStatus;
 import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.constants.id.MapId;
+import org.gms.dwutil.QuestUtils;
 import org.gms.scripting.AbstractPlayerInteraction;
 import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRepository;
@@ -109,7 +110,7 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
         }
         
         if (!isQuestStarted(questid)) {
-            if (!quest.forceStart(getPlayer(), 9000066)) {
+            if (!QuestUtils.forceStart(getPlayer(), 9000066, quest)) {
                 return;
             }
         }
@@ -142,7 +143,7 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
     public void touchTheSky() { //29004
         Quest quest = QuestRepository.getInstance(29004);
         if (!isQuestStarted(29004)) {
-            if (!quest.forceStart(getPlayer(), 9000066)) {
+            if (!QuestUtils.forceStart(getPlayer(), 9000066, quest)) {
                 return;
             }
         }

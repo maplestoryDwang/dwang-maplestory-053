@@ -4,6 +4,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.QuestStatus;
 import org.gms.constants.game.DelayedQuestUpdate;
+import org.gms.dwutil.QuestUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.scripting.quest.QuestScriptManager;
@@ -28,7 +29,7 @@ public class RaiseUIStateHandler extends AbstractPacketHandler {
                 QuestScriptManager.getInstance().raiseOpen(c, (short) infoNumber, mqs.getNpc());
 
                 if (mqs.getStatus() == QuestStatus.Status.NOT_STARTED) {
-                    quest.forceStart(chr, 22000);
+                    QuestUtils.forceStart(chr, 22000, quest);
                     c.getAbstractPlayerInteraction().setQuestProgress(quest.getId(), infoNumber, 0);
                 } else if (mqs.getStatus() == QuestStatus.Status.STARTED) {
                     chr.announceUpdateQuest(DelayedQuestUpdate.UPDATE, mqs, mqs.getInfoNumber() > 0);

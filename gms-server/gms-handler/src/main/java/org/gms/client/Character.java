@@ -69,6 +69,7 @@ import org.gms.constants.string.ExtendKey;
 import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.*;
 import org.gms.dwutil.ItemUtils;
+import org.gms.dwutil.QuestUtils;
 import org.gms.exception.NotEnabledException;
 import org.gms.manager.ServerManager;
 import org.gms.model.dto.InventorySearchReqDTO;
@@ -6754,7 +6755,7 @@ public class Character extends AbstractCharacterObject {
             synchronized (quests) {
                 for (QuestStatus qs : getQuestValues()) {
                     lastQuestProcessed = qs.getQuest().getId();
-                    if (qs.getStatus() == QuestStatus.Status.COMPLETED || qs.getQuest().canComplete(this, null)) {
+                    if (qs.getStatus() == QuestStatus.Status.COMPLETED || QuestUtils.canComplete(this, null, qs.getQuest())) {
                         continue;
                     }
 
@@ -8918,7 +8919,7 @@ public class Character extends AbstractCharacterObject {
         evtLock.lock();
         try {
             for (Quest quest : questExpirations.keySet()) {
-                quest.forfeit(this);
+                QuestUtils.forfeit(this, quest);
             }
 
             questExpirations.clear();
@@ -8954,7 +8955,7 @@ public class Character extends AbstractCharacterObject {
 
             if (!expireList.isEmpty()) {
                 for (Quest quest : expireList) {
-                    quest.expireQuest(this);
+                    QuestUtils.expireQuest(this, quest);
                     questExpirations.remove(quest);
                 }
 
@@ -8990,7 +8991,7 @@ public class Character extends AbstractCharacterObject {
         long timeLeft = expires - System.currentTimeMillis();
 
         if (timeLeft <= 0) {
-            quest.expireQuest(this);
+            QuestUtils.expireQuest(this, quest);
         } else {
             registerQuestExpire(quest, timeLeft);
         }

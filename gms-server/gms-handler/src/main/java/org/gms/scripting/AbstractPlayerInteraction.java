@@ -37,6 +37,7 @@ import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;
 import org.gms.dwutil.ItemUtils;
+import org.gms.dwutil.QuestUtils;
 import org.gms.model.pojo.SkillEntry;
 import org.gms.net.server.Server;
 import org.gms.net.server.guild.Guild;
@@ -514,7 +515,7 @@ public class AbstractPlayerInteraction {
 
     public boolean startQuest(int id, int npc) {
         try {
-            return QuestRepository.getInstance(id).forceStart(getPlayer(), npc);
+            return QuestUtils.forceStart(getPlayer(), npc, QuestRepository.getInstance(id));
         } catch (NullPointerException ex) {
             ex.printStackTrace();
             return false;
@@ -523,7 +524,7 @@ public class AbstractPlayerInteraction {
 
     public boolean completeQuest(int id, int npc) {
         try {
-            return QuestRepository.getInstance(id).forceComplete(getPlayer(), npc);
+            return QuestUtils.forceComplete(getPlayer(), npc, QuestRepository.getInstance(id));
         } catch (NullPointerException ex) {
             ex.printStackTrace();
             return false;
