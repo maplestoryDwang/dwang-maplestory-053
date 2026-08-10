@@ -37,9 +37,8 @@ public class GachaponService {
 
     @Autowired
     private GachaponDataService  gachaponDataService;
-    private static final ReadWriteLock lock = new ReentrantReadWriteLock(true);
-    private static final Lock rLock = lock.readLock();
-    private static final Lock wLock = lock.writeLock();
+
+
 
     public List<GachaponRewardDO> getRewards(Integer poolId) {
         return gachaponDataService.getRewards(poolId);
@@ -51,6 +50,7 @@ public class GachaponService {
     }
 
     public void doGachapon(Character player, int gachaponId) {
+        Lock rLock = gachaponDataService.getrLock();
         rLock.lock();
         try {
             List<GachaponRewardPoolDO> pools = getActivePools(gachaponId); // 已按ID排序

@@ -8,14 +8,14 @@ import lombok.AllArgsConstructor;
 import org.gms.constants.api.ApiConstant;
 import org.gms.dao.entity.CommandInfoDO;
 import org.gms.model.dto.*;
-import org.gms.service.CommandService;
+import org.gms.service.CommandApiService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/command")
 public class CommandController {
-    private final CommandService commandService;
+    private final CommandApiService commandService;
 
     @Tag(name = "/command/" + ApiConstant.LATEST)
     @Operation(summary = "查询命令库所有指令与状态")

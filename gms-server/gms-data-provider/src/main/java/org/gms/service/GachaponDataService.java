@@ -36,12 +36,14 @@ public class GachaponDataService {
     private GachaponRewardMapper gachaponRewardMapper;
 
 
-    private static final HashMap<Integer, List<GachaponRewardDO>> poolRewardsCache = new HashMap<>();
-    private static final ReadWriteLock lock = new ReentrantReadWriteLock(true);
-    private static final Lock rLock = lock.readLock();
-    private static final Lock wLock = lock.writeLock();
+    private final HashMap<Integer, List<GachaponRewardDO>> poolRewardsCache = new HashMap<>();
+    private final ReadWriteLock lock = new ReentrantReadWriteLock(true);
+    private final Lock rLock = lock.readLock();
+    private final Lock wLock = lock.writeLock();
 
-
+    public Lock getrLock() {
+        return rLock;
+    }
 
     public void updatePool(GachaponRewardPoolDO submit) {
         wLock.lock();
