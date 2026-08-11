@@ -33,6 +33,7 @@ import org.gms.config.GameConfig;
 import org.gms.dao.entity.CharactersDO;
 import org.gms.dao.entity.PlayernpcsFieldDO;
 import org.gms.model.dto.ServerShutdownDTO;
+import org.gms.model.pojo.ServerStat;
 import org.gms.property.ServiceProperty;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.*;
@@ -752,6 +753,7 @@ public class Server {
         }
         log.info(I18nUtil.getLogMessage("Server.init.info8"));
         online = true;
+        ServerStat.online = true;
         Duration initDuration = Duration.between(beforeInit, Instant.now());
         log.info(I18nUtil.getLogMessage("Server.init.info9"), initDuration.toMillis() / 1000.0);
     }
@@ -1647,6 +1649,7 @@ public class Server {
         TimerManager.getInstance().stop();
         loginServer.stop();
         online = false;
+        ServerStat.online = false;
         log.info(I18nUtil.getLogMessage("Server.shutdownInternal.info4"));
         if (restart) {
             log.info(I18nUtil.getLogMessage("Server.shutdownInternal.info5"));
