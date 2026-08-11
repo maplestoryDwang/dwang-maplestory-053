@@ -10,25 +10,32 @@ package org.gms.client.listener;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
+import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.CharactersDO;
+import org.gms.dao.entity.ExtendValueDO;
 import org.gms.dao.entity.IpbansDO;
 import org.gms.dao.mapper.CharactersMapper;
 import org.gms.dao.mapper.IpbansMapper;
 import org.gms.event.AccountBannedEvent;
+import org.gms.event.CharacterExtReloadEvent;
+import org.gms.exception.BizException;
 import org.gms.net.server.Server;
+import org.gms.net.server.world.World;
+import org.gms.util.I18nUtil;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Component
-public class AccountEventListener {
+public class AccountCharEventListener {
 
     private final CharactersMapper charactersMapper;
     private final IpbansMapper ipbansMapper;
 
-    public AccountEventListener(CharactersMapper charactersMapper, IpbansMapper ipbansMapper) {
+    public AccountCharEventListener(CharactersMapper charactersMapper, IpbansMapper ipbansMapper) {
         this.charactersMapper = charactersMapper;
         this.ipbansMapper = ipbansMapper;
     }
@@ -69,4 +76,30 @@ public class AccountEventListener {
             }
         }
     }
+    @EventListener
+    public void onCharacterExtReload(CharacterExtReloadEvent event) {
+
+        ExtendValueDO data = event.getExtendValueDO();
+        Character character = getCharacter(data);
+        character.resetPlayerRates();
+        character.setWorldRates();
+        character.setCouponRates();
+    }
+
+
+    private Character getCharacter(ExtendValueDO data) {
+        for (World world : Server.getInstance().getWorlds()) {
+            for (Character character : world.getPlayerStorage().getAllCharacters()) {
+                if (ExtendType.isAccount(data.getExtendType()) && Objects.equals(String.valueOf(character.getAccountId()), data.getExtendId())) {
+                    return character;
+                }
+
+                if (ExtendType.isCharacter(data.getExtendType()) && Objects.equals(String.valueOf(character.getId()), data.getExtendId())) {
+                    return character;
+                }
+            }
+        }
+        throw BizException.illegalArgument(I18nUtil.getExceptionMessage("CharacterService.getCharacter.exception1"));
+    }
+
 }

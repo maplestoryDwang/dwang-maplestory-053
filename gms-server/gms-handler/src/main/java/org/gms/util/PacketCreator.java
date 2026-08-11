@@ -5880,7 +5880,7 @@ public class PacketCreator {
         final OutPacket p = OutPacket.create(SendPacketOpcode.SET_WEEK_EVENT_MESSAGE);
         p.writeByte(0xFF);
         p.writeString(tip);
-        p.writeShort(0);
+        p.writeShort(0);  // 长度0
         return p;
     }
 

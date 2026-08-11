@@ -48,6 +48,7 @@ public class CharacterController {
     @Operation(summary = "查询在线玩家列表")
     @PostMapping("/" + ApiConstant.LATEST + "/online/list")
     public ResultBody<Page<ChrOnlineListRtnDTO>> onlineList(@RequestBody SubmitBody<ChrOnlineListReqDTO> submitBody) {
-        return ResultBody.success(characterApiService.getChrOnlineList(submitBody.getData()));
+//        return ResultBody.success(characterApiService.getChrOnlineList(submitBody.getData()));
+        return ResultBody.success(characterApiService.getChrList(submitBody.getData()));
     }
 }

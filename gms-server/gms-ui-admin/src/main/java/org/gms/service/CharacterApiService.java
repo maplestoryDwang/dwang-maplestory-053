@@ -3,22 +3,23 @@ package org.gms.service;
 
 import com.mybatisflex.core.paginate.Page;
 import lombok.AllArgsConstructor;
-import org.gms.client.Character;
+import org.gms.client.Job;
 import org.gms.constants.string.ExtendType;
+import org.gms.dao.entity.CharactersDO;
 import org.gms.dao.entity.ExtendValueDO;
+import org.gms.event.CharacterExtReloadEvent;
 import org.gms.exception.BizException;
 import org.gms.model.dto.ChrOnlineListReqDTO;
 import org.gms.model.dto.ChrOnlineListRtnDTO;
-import org.gms.net.server.Server;
-import org.gms.net.server.world.World;
 import org.gms.util.BasePageUtil;
 import org.gms.util.I18nUtil;
 import org.gms.util.RequireUtil;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,27 +37,50 @@ public class CharacterApiService {
 
     private final CharacterDataService characterDataService;
 
-    /**
-     * 有问题，只能查到当前记录的，
-     * @param request
-     * @return
-     */
-    public Page<ChrOnlineListRtnDTO> getChrOnlineList(ChrOnlineListReqDTO request) {
-        Collection<Character> chrList = Server.getInstance().getWorld(request.getWorld()).getPlayerStorage().getAllCharacters();
+    private final ApplicationEventPublisher eventPublisher;
+
+//    /**
+//     * 有问题，只能查到当前记录的，
+//     * @param request
+//     * @return
+//     */
+//    public Page<ChrOnlineListRtnDTO> getChrOnlineList(ChrOnlineListReqDTO request) {
+//        Collection<Character> chrList = Server.getInstance().getWorld(request.getWorld()).getPlayerStorage().getAllCharacters();
+//        return BasePageUtil.create(chrList, request)
+//                .filter(chr -> (Objects.isNull(request.getId()) || Objects.equals(chr.getId(), request.getId()))
+//                        && (RequireUtil.isEmpty(request.getName()) || chr.getName().contains(request.getName()))
+//                        && (Objects.isNull(request.getMap()) || Objects.equals(chr.getMap().getId(), request.getMap())))
+//                .page(chr -> ChrOnlineListRtnDTO.builder()
+//                        .id(chr.getId())
+//                        .name(chr.getName())
+//                        .map(chr.getMap().getId())
+//                        .job(chr.getJob().getId())
+//                        .jobName(chr.getJob().getName())
+//                        .level(chr.getLevel())
+//                        .gm(chr.gmLevel())
+//                        .build());
+//    }
+
+
+    public Page<ChrOnlineListRtnDTO> getChrList(ChrOnlineListReqDTO request) {
+//        Collection<Character> chrList = Server.getInstance().getWorld(request.getWorld()).getPlayerStorage().getAllCharacters();
+        List<CharactersDO> chrList = characterDataService.getChrOnlineList(request.getWorld());
+
         return BasePageUtil.create(chrList, request)
                 .filter(chr -> (Objects.isNull(request.getId()) || Objects.equals(chr.getId(), request.getId()))
                         && (RequireUtil.isEmpty(request.getName()) || chr.getName().contains(request.getName()))
-                        && (Objects.isNull(request.getMap()) || Objects.equals(chr.getMap().getId(), request.getMap())))
+                        && (Objects.isNull(request.getMap()) || Objects.equals(chr.getMap(), request.getMap())))
                 .page(chr -> ChrOnlineListRtnDTO.builder()
                         .id(chr.getId())
                         .name(chr.getName())
-                        .map(chr.getMap().getId())
-                        .job(chr.getJob().getId())
-                        .jobName(chr.getJob().getName())
+                        .map(chr.getMap())
+                        .job(chr.getJob())
+                        .jobName(Job.getById(chr.getJob()).getName())
                         .level(chr.getLevel())
-                        .gm(chr.gmLevel())
+                        .gm(chr.getGm())
                         .build());
     }
+
 
     public void updateRate(ExtendValueDO data) {
         checkName(data);
@@ -70,28 +94,24 @@ public class CharacterApiService {
             characterDataService.updateExtendValue(data);
         }
 
-        Character character = getCharacter(data);
-        character.resetPlayerRates();
-        character.setWorldRates();
-        character.setCouponRates();
+        eventPublisher.publishEvent(new CharacterExtReloadEvent(this, data));
+
     }
 
     public void resetRate(ExtendValueDO data) {
         checkName(data);
         characterDataService.deleteExtendValueByName(data.getExtendId(), data.getExtendName());
-        Character character = getCharacter(data);
-        character.resetPlayerRates();
-        character.setWorldRates();
-        character.setCouponRates();
+        eventPublisher.publishEvent(new CharacterExtReloadEvent(this, data));
+
     }
 
     public void resetRates(ExtendValueDO data) {
         check(data);
         characterDataService.deleteExtendValuesByNames(data.getExtendId(), Arrays.asList("expRate", "dropRate", "mesoRate"));
-        Character character = getCharacter(data);
-        character.resetPlayerRates();
-        character.setWorldRates();
-        character.setCouponRates();
+
+
+        eventPublisher.publishEvent(new CharacterExtReloadEvent(this, data));
+
     }
 
     private void checkName(ExtendValueDO data) {
@@ -108,18 +128,5 @@ public class CharacterApiService {
         RequireUtil.requireNotEmpty(data.getExtendName(), I18nUtil.getExceptionMessage("PARAMETER_SHOULD_NOT_EMPTY", "extendName"));
     }
 
-    private Character getCharacter(ExtendValueDO data) {
-        for (World world : Server.getInstance().getWorlds()) {
-            for (Character character : world.getPlayerStorage().getAllCharacters()) {
-                if (ExtendType.isAccount(data.getExtendType()) && Objects.equals(String.valueOf(character.getAccountId()), data.getExtendId())) {
-                    return character;
-                }
 
-                if (ExtendType.isCharacter(data.getExtendType()) && Objects.equals(String.valueOf(character.getId()), data.getExtendId())) {
-                    return character;
-                }
-            }
-        }
-        throw BizException.illegalArgument(I18nUtil.getExceptionMessage("CharacterService.getCharacter.exception1"));
-    }
 }

@@ -88,8 +88,8 @@ public enum SendPacketOpcode implements Opcode {
      */
     PARTY_OPERATION(0x38),
 
-    // check ↓
-    SERVERMESSAGE(0x2D), // 滚动公告/顶部横幅
+    // 滚动公告/顶部横幅  dropmsg
+    SERVERMESSAGE(0x2D), //  check
     AVATAR_MEGA(0x19), // 喇叭(大喇叭/全服喇叭)
     MULTICHAT(0x55), // 频道/组队/公会多功能聊天
     WHISPER(0x5E), // 密聊回应/寻找玩家

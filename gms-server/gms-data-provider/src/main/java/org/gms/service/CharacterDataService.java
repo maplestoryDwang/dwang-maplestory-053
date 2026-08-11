@@ -8,8 +8,10 @@ package org.gms.service;
  * @since 2026/8/11 13:56
  */
 
+import com.mybatisflex.core.query.QueryMethods;
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.AllArgsConstructor;
+import org.gms.client.Client;
 import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.*;
 import org.gms.dao.mapper.*;
@@ -256,5 +258,11 @@ public class CharacterDataService {
 
     public List<WishlistsDO> getWishlistsByCharacter(Integer cid) {
         return wishlistsMapper.selectListByQuery(QueryWrapper.create().where(WISHLISTS_D_O.CHARID.eq(cid)));
+    }
+
+    public List<CharactersDO> getChrOnlineList(int worldId) {
+        QueryWrapper where = QueryWrapper.create().where(CHARACTERS_D_O.WORLD.eq(worldId));
+        return charactersMapper.selectListByQuery(where);
+
     }
 }
