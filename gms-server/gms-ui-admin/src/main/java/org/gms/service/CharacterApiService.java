@@ -61,7 +61,11 @@ public class CharacterApiService {
 //                        .build());
 //    }
 
-
+    /**
+     * todo 当前是查询所有玩家。
+     * @param request
+     * @return
+     */
     public Page<ChrOnlineListRtnDTO> getChrList(ChrOnlineListReqDTO request) {
 //        Collection<Character> chrList = Server.getInstance().getWorld(request.getWorld()).getPlayerStorage().getAllCharacters();
         List<CharactersDO> chrList = characterDataService.getChrOnlineList(request.getWorld());
