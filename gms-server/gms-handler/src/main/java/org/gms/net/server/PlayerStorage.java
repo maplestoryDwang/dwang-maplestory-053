@@ -33,6 +33,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * 管理所有登录的用户Character
+ */
 public class PlayerStorage {
     private final Map<Integer, Character> storage = new LinkedHashMap<>();
     private final Map<String, Character> nameStorage = new LinkedHashMap<>();

@@ -57,8 +57,8 @@ import org.gms.server.maps.MapObjectType;
 import org.gms.server.maps.MapleMap;
 import org.gms.server.partyquest.PartyQuest;
 import org.gms.server.partyquest.Pyramid;
-import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRepository;
+import org.gms.service.ExtendDataService;
 import org.gms.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1278,7 +1278,7 @@ public class AbstractPlayerInteraction {
      * @return 扩展字段值
      */
     public String getCharacterExtendValue(String extendName) {
-        ExtendValueDO extendValueDO = ExtendUtil.getExtendValue(String.valueOf(getPlayer().getId()), ExtendType.CHARACTER_EXTEND.getType(), extendName);
+        ExtendValueDO extendValueDO = ExtendDataService.getExtendValue(String.valueOf(getPlayer().getId()), ExtendType.CHARACTER_EXTEND.getType(), extendName);
         return extendValueDO == null ? null : extendValueDO.getExtendValue();
     }
 
@@ -1290,7 +1290,7 @@ public class AbstractPlayerInteraction {
      * @return 扩展字段值
      */
     public String getCharacterExtendValue(String extendName, boolean isDaily) {
-        ExtendValueDO extendValueDO = ExtendUtil.getExtendValue(String.valueOf(getPlayer().getId()),
+        ExtendValueDO extendValueDO = ExtendDataService.getExtendValue(String.valueOf(getPlayer().getId()),
                 isDaily ? ExtendType.CHARACTER_EXTEND_DAILY.getType() : ExtendType.CHARACTER_EXTEND_WEEKLY.getType(),
                 extendName);
         return extendValueDO == null ? null : extendValueDO.getExtendValue();
@@ -1303,7 +1303,7 @@ public class AbstractPlayerInteraction {
      * @return 扩展字段值
      */
     public String getAccountExtendValue(String extendName) {
-        ExtendValueDO extendValueDO = ExtendUtil.getExtendValue(String.valueOf(getPlayer().getAccountId()), ExtendType.ACCOUNT_EXTEND.getType(), extendName);
+        ExtendValueDO extendValueDO = ExtendDataService.getExtendValue(String.valueOf(getPlayer().getAccountId()), ExtendType.ACCOUNT_EXTEND.getType(), extendName);
         return extendValueDO == null ? null : extendValueDO.getExtendValue();
     }
 
@@ -1315,7 +1315,7 @@ public class AbstractPlayerInteraction {
      * @return 扩展字段值
      */
     public String getAccountExtendValue(String extendName, boolean isDaily) {
-        ExtendValueDO extendValueDO = ExtendUtil.getExtendValue(String.valueOf(getPlayer().getAccountId()),
+        ExtendValueDO extendValueDO = ExtendDataService.getExtendValue(String.valueOf(getPlayer().getAccountId()),
                 isDaily ? ExtendType.ACCOUNT_EXTEND_DAILY.getType() : ExtendType.ACCOUNT_EXTEND_WEEKLY.getType(),
                 extendName);
         return extendValueDO == null ? null : extendValueDO.getExtendValue();
@@ -1328,7 +1328,7 @@ public class AbstractPlayerInteraction {
      * @param extendValue
      */
     public void saveOrUpdateCharacterExtendValue(String extendName, String extendValue) {
-        ExtendUtil.saveOrUpdateExtendValue(String.valueOf(getPlayer().getId()), ExtendType.CHARACTER_EXTEND.getType(), extendName, extendValue);
+        ExtendDataService.saveOrUpdateExtendValue(String.valueOf(getPlayer().getId()), ExtendType.CHARACTER_EXTEND.getType(), extendName, extendValue);
     }
 
     /***
@@ -1338,16 +1338,16 @@ public class AbstractPlayerInteraction {
      * @param isDaily 是否为每日刷新，否则为周刷新
      */
     public void saveOrUpdateCharacterExtendValue(String extendName, String extendValue, boolean isDaily) {
-        ExtendUtil.saveOrUpdateExtendValue(String.valueOf(getPlayer().getId()), isDaily ? ExtendType.CHARACTER_EXTEND_DAILY.getType() : ExtendType.CHARACTER_EXTEND_WEEKLY.getType(),
+        ExtendDataService.saveOrUpdateExtendValue(String.valueOf(getPlayer().getId()), isDaily ? ExtendType.CHARACTER_EXTEND_DAILY.getType() : ExtendType.CHARACTER_EXTEND_WEEKLY.getType(),
                 extendName, extendValue);
     }
 
     public void saveOrUpdateAccountExtendValue(String extendName, String extendValue) {
-        ExtendUtil.saveOrUpdateExtendValue(String.valueOf(getPlayer().getAccountId()), ExtendType.ACCOUNT_EXTEND.getType(), extendName, extendValue);
+        ExtendDataService.saveOrUpdateExtendValue(String.valueOf(getPlayer().getAccountId()), ExtendType.ACCOUNT_EXTEND.getType(), extendName, extendValue);
     }
 
     public void saveOrUpdateAccountExtendValue(String extendName, String extendValue, boolean isDaily) {
-        ExtendUtil.saveOrUpdateExtendValue(String.valueOf(getPlayer().getAccountId()), isDaily ? ExtendType.ACCOUNT_EXTEND_DAILY.getType() : ExtendType.ACCOUNT_EXTEND_WEEKLY.getType(),
+        ExtendDataService.saveOrUpdateExtendValue(String.valueOf(getPlayer().getAccountId()), isDaily ? ExtendType.ACCOUNT_EXTEND_DAILY.getType() : ExtendType.ACCOUNT_EXTEND_WEEKLY.getType(),
                 extendName, extendValue);
     }
 

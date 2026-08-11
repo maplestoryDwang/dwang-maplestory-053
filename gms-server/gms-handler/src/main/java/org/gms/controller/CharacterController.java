@@ -10,20 +10,20 @@ import org.gms.model.dto.ChrOnlineListReqDTO;
 import org.gms.model.dto.ChrOnlineListRtnDTO;
 import org.gms.model.dto.ResultBody;
 import org.gms.model.dto.SubmitBody;
-import org.gms.service.CharacterService;
+import org.gms.service.CharacterApiService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/character")
 public class CharacterController {
-    private final CharacterService characterService;
+    private final CharacterApiService characterApiService;
 
     @Tag(name = "/character/" + ApiConstant.LATEST)
     @Operation(summary = "调整玩家个人倍率，extendName为：expRate | mesoRate | dropRate")
     @PostMapping("/" + ApiConstant.LATEST + "/updateRate")
     public ResultBody<Object> updateRate(@RequestBody SubmitBody<ExtendValueDO> submitBody) {
-        characterService.updateRate(submitBody.getData());
+        characterApiService.updateRate(submitBody.getData());
         return ResultBody.success();
     }
 
@@ -32,7 +32,7 @@ public class CharacterController {
     @Operation(summary = "重置玩家个人倍率，extendName为：expRate | mesoRate | dropRate")
     @PostMapping("/" + ApiConstant.LATEST + "/resetRate")
     public ResultBody<Object> resetRate(@RequestBody SubmitBody<ExtendValueDO> submitBody) {
-        characterService.resetRate(submitBody.getData());
+        characterApiService.resetRate(submitBody.getData());
         return ResultBody.success();
     }
 
@@ -40,7 +40,7 @@ public class CharacterController {
     @Operation(summary = "重置玩家个人所有倍率")
     @GetMapping("/" + ApiConstant.LATEST + "/resetRates")
     public ResultBody<Object> resetRates(@RequestBody SubmitBody<ExtendValueDO> submitBody) {
-        characterService.resetRates(submitBody.getData());
+        characterApiService.resetRates(submitBody.getData());
         return ResultBody.success();
     }
 
@@ -48,6 +48,6 @@ public class CharacterController {
     @Operation(summary = "查询在线玩家列表")
     @PostMapping("/" + ApiConstant.LATEST + "/online/list")
     public ResultBody<Page<ChrOnlineListRtnDTO>> onlineList(@RequestBody SubmitBody<ChrOnlineListReqDTO> submitBody) {
-        return ResultBody.success(characterService.getChrOnlineList(submitBody.getData()));
+        return ResultBody.success(characterApiService.getChrOnlineList(submitBody.getData()));
     }
 }

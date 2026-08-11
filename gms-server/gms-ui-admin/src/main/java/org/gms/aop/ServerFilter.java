@@ -53,7 +53,7 @@ public class ServerFilter extends HttpFilter {
                 throw new BizException("Banned ip is requesting, forwardedIp: " + forwardedIp + ",realIp: " + realIp + ", remoteAddr: " + remoteAddr);
             }
 
-            // 限流
+            // 限流工具
             if (!RateLimitUtil.getInstance().check(remoteAddr)) {
                 throw new BizException("IP " + remoteAddr + " has reached rate limit.");
             }

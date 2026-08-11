@@ -62,7 +62,6 @@ import org.gms.server.ThreadManager;
 import org.gms.server.TimerManager;
 import org.gms.server.expeditions.ExpeditionBossLog;
 import org.gms.server.life.PlayerNPC;
-import org.gms.server.quest.Quest;
 import org.gms.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,7 +148,7 @@ public class Server {
 
     private static final NpcService npcService = ServerManager.getApplicationContext().getBean(NpcService.class);
     private static final NxCouponService nxCouponService = ServerManager.getApplicationContext().getBean(NxCouponService.class);
-    private static final CharacterService characterService = ServerManager.getApplicationContext().getBean(CharacterService.class);
+    private static final CharacterInternalService CHARACTER_INTERNAL_SERVICE = ServerManager.getApplicationContext().getBean(CharacterInternalService.class);
     private static final AccountService accountService = ServerManager.getApplicationContext().getBean(AccountService.class);
     private static final NxCodeService nxCodeService = ServerManager.getApplicationContext().getBean(NxCodeService.class);
     private static final NewYearCardService newYearCardService = ServerManager.getApplicationContext().getBean(NewYearCardService.class);
@@ -641,7 +640,7 @@ public class Server {
     }
 
     public void reloadWorldsPlayerRanking() {
-        List<List<CharactersDO>> rankPlayers = characterService.getWorldsRankPlayers(getWorldsSize());
+        List<List<CharactersDO>> rankPlayers = CHARACTER_INTERNAL_SERVICE.getWorldsRankPlayers(getWorldsSize());
         if (rankPlayers.isEmpty()) {
             return;
         }
@@ -692,7 +691,7 @@ public class Server {
 
         // 重置登录状态和雇佣商店状态
         accountService.resetAllLoggedIn();
-        characterService.resetMerchant();
+        CHARACTER_INTERNAL_SERVICE.resetMerchant();
 
         // 清空失效的现金物品
         nxCodeService.clearExpirations();

@@ -30,7 +30,7 @@ import static java.util.concurrent.TimeUnit.DAYS;
 @Slf4j
 public class GiveService {
     @Autowired
-    CharacterService characterService;
+    CharacterApiService characterApiService;
 
     public void give(GiveResourceReqDTO submitData) {
         if (submitData.getPlayerId() == 0) {
@@ -66,20 +66,6 @@ public class GiveService {
             case 6: // equip
                 giveEquipAllOnlineChr(submitData);
                 break;
-            // 全服没有设置倍率的操作
-            // case 7: // expRate
-            // case 8: // mesosRate
-            // case 9: // dropRate
-            // case 10: // bossRate
-            //     String rateType = switch (submitData.getType()) {
-            //         case 7 -> "Exp";
-            //         case 8 -> "Mesos";
-            //         case 9 -> "Drop";
-            //         case 10 -> "Boss";
-            //         default -> "None";
-            //     };
-            //     giveRateAllOnlineChr(rateType, submitData.getRate());
-            //     break;
         }
     }
 
@@ -392,7 +378,7 @@ public class GiveService {
                 .extendName(type)
                 .extendValue(String.valueOf(rate))
                 .build();
-        characterService.updateRate(data);
+        characterApiService.updateRate(data);
 
         chr.message(I18nUtil.getMessage("Give.Rate.Chr", type, rate));
         log.info(I18nUtil.getLogMessage("Give.Rate.Chr.info1", chr.getId(), chr.getName(), type, rate));

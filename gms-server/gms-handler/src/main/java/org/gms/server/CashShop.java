@@ -34,7 +34,7 @@ import org.gms.dwutil.CashShopUtils;
 import org.gms.manager.ServerManager;
 import org.gms.net.server.Server;
 import org.gms.service.AccountService;
-import org.gms.service.CharacterService;
+import org.gms.service.CharacterInternalService;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.Pair;
 
@@ -68,7 +68,7 @@ public class CashShop {
     private int notes = 0;
     private final Lock lock = new ReentrantLock();
     private static final AccountService accountService = ServerManager.getApplicationContext().getBean(AccountService.class);
-    private static final CharacterService characterService = ServerManager.getApplicationContext().getBean(CharacterService.class);
+    private static final CharacterInternalService CHARACTER_INTERNAL_SERVICE = ServerManager.getApplicationContext().getBean(CharacterInternalService.class);
 
     public int getNxCredit() {
         return nxCredit;
@@ -108,7 +108,7 @@ public class CashShop {
             throw new RuntimeException(e);
         }
 
-        List<WishlistsDO> wishlistsDOList = characterService.getWishlistsByCharacter(characterId);
+        List<WishlistsDO> wishlistsDOList = CHARACTER_INTERNAL_SERVICE.getWishlistsByCharacter(characterId);
         wishlistsDOList.forEach(wishlistsDO -> wishList.add(wishlistsDO.getSn()));
     }
 

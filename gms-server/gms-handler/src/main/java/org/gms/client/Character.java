@@ -523,7 +523,7 @@ public class Character extends AbstractCharacterObject {
     private float familyExp = 1;
     @Getter
     private float familyDrop = 1;
-    private static final CharacterService characterService = ServerManager.getApplicationContext().getBean(CharacterService.class);
+    private static final CharacterInternalService CHARACTER_INTERNAL_SERVICE = ServerManager.getApplicationContext().getBean(CharacterInternalService.class);
     private static final NameChangeService nameChangeService = ServerManager.getApplicationContext().getBean(NameChangeService.class);
     private static final WorldTransferService worldTransferService = ServerManager.getApplicationContext().getBean(WorldTransferService.class);
     private static final AccountService accountService = ServerManager.getApplicationContext().getBean(AccountService.class);
@@ -995,7 +995,7 @@ public class Character extends AbstractCharacterObject {
 
     public static boolean existName(String name) {
         try {
-            if (characterService.findByName(name) != null) {
+            if (CHARACTER_INTERNAL_SERVICE.findByName(name) != null) {
                 return true;
             }
             if (!nameChangeService.getAllNameChanges().isEmpty()) {
@@ -1853,7 +1853,7 @@ public class Character extends AbstractCharacterObject {
         } else {
             skills.remove(skill);
             sendPacket(PacketCreator.updateSkill(skill.getId(), newLevel, newMasterlevel, -1)); //Shouldn't use expiration anymore :)
-            characterService.removeSkill(SkillsDO.builder().skillid(skill.getId()).characterid(getId()).build());
+            CHARACTER_INTERNAL_SERVICE.removeSkill(SkillsDO.builder().skillid(skill.getId()).characterid(getId()).build());
         }
     }
 
@@ -2228,7 +2228,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void deleteGuild(int guildId) {
-        characterService.deleteGuild(GuildsDO.builder().guildid((long) guildId).build());
+        CHARACTER_INTERNAL_SERVICE.deleteGuild(GuildsDO.builder().guildid((long) guildId).build());
     }
 
     private void nextPendingRequest(Client c) {
@@ -2258,7 +2258,7 @@ public class Character extends AbstractCharacterObject {
 
     public static boolean deleteCharFromDB(Character player, int senderAccId) {
         try {
-            characterService.deleteCharFromDB(player, senderAccId);
+            CHARACTER_INTERNAL_SERVICE.deleteCharFromDB(player, senderAccId);
             // NOTE: 删除缓存,防止角色槽满后无法再次建立角色
             Server.getInstance().deleteCharacterEntry(senderAccId, player.getId());
             return true;
@@ -6089,7 +6089,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     private void applySavedRateOrElse(String type, Runnable runnable) {
-        ExtendValueDO extendValueDO = ExtendUtil.getExtendValue(String.valueOf(id), ExtendType.CHARACTER_EXTEND.getType(), type);
+        ExtendValueDO extendValueDO = ExtendDataService.getExtendValue(String.valueOf(id), ExtendType.CHARACTER_EXTEND.getType(), type);
 
         if (extendValueDO == null) {
             runnable.run();
@@ -6528,7 +6528,7 @@ public class Character extends AbstractCharacterObject {
         }
         NewYearCardRecord.loadPlayerNewYearCards(chr);
 
-        List<TrocklocationsDO> trocklocationsDOList = characterService.getTrockLocationByCharacter(charactersDO.getId());
+        List<TrocklocationsDO> trocklocationsDOList = CHARACTER_INTERNAL_SERVICE.getTrockLocationByCharacter(charactersDO.getId());
         int vip = 0;
         int reg = 0;
         for (int i = 0; i < 15; i++) {
@@ -6556,17 +6556,17 @@ public class Character extends AbstractCharacterObject {
         chr.getClient().setCharacterSlots(Optional.ofNullable(accountsDO.getCharacterslots()).map(Integer::byteValue).orElse((byte) 0));
         chr.getClient().setLanguage(accountsDO.getLanguage());
 
-        List<AreaInfoDO> areaInfoDOList = characterService.getAreaInfoByCharacter(charactersDO.getId());
+        List<AreaInfoDO> areaInfoDOList = CHARACTER_INTERNAL_SERVICE.getAreaInfoByCharacter(charactersDO.getId());
         areaInfoDOList.forEach(areaInfoDO -> chr.getAreaInfos().put(Optional.ofNullable(areaInfoDO.getArea()).map(Integer::shortValue).orElse((short) 0),
                 areaInfoDO.getInfo()));
 
-        List<EventstatsDO> eventstatsDOList = characterService.getEventStatsByCharacter(charactersDO.getId());
+        List<EventstatsDO> eventstatsDOList = CHARACTER_INTERNAL_SERVICE.getEventStatsByCharacter(charactersDO.getId());
         eventstatsDOList.forEach(eventstatsDO -> chr.getEvents().put(eventstatsDO.getName(), new RescueGaga(Optional.ofNullable(eventstatsDO.getInfo()).orElse(0))));
 
         chr.setCashShop(new CashShop(charactersDO.getAccountid(), charactersDO.getId(), chr.getJobType()));
         chr.setAutoBanManager(new AutobanManager(chr));
 
-        List<CharactersDO> charactersDOList = characterService.getCharacterByAccountId(charactersDO.getAccountid());
+        List<CharactersDO> charactersDOList = CHARACTER_INTERNAL_SERVICE.getCharacterByAccountId(charactersDO.getAccountid());
         charactersDOList.stream()
                 .filter(chrDO -> !Objects.equals(chrDO.getId(), charactersDO.getId()))
                 .max(Comparator.comparing(CharactersDO::getLevel))
@@ -6682,7 +6682,7 @@ public class Character extends AbstractCharacterObject {
 
     public static Character loadCharFromDB(final int cid, Client client, boolean channelServer) {
         try {
-            return characterService.loadCharFromDB(cid, client, channelServer);
+            return CHARACTER_INTERNAL_SERVICE.loadCharFromDB(cid, client, channelServer);
         } catch (Exception e) {
             log.error(I18nUtil.getLogMessage("Character.loadCharFromDB.error1"), cid, e);
         }
@@ -8066,7 +8066,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void setHasMerchant(boolean set) {
-        characterService.update(CharactersDO.builder()
+        CHARACTER_INTERNAL_SERVICE.update(CharactersDO.builder()
                 .id(id)
                 .hasmerchant(set)
                 .build());
@@ -8079,7 +8079,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void setMerchantMeso(int set) {
-        characterService.update(CharactersDO.builder()
+        CHARACTER_INTERNAL_SERVICE.update(CharactersDO.builder()
                 .id(id)
                 .merchantmesos(set)
                 .build());
@@ -9612,7 +9612,7 @@ public class Character extends AbstractCharacterObject {
 
     public void logOff() {
         this.loggedIn = false;
-        characterService.update(CharactersDO.builder()
+        CHARACTER_INTERNAL_SERVICE.update(CharactersDO.builder()
                 .id(id)
                 .lastLogoutTime(new Timestamp(System.currentTimeMillis()))
                 .build());
@@ -9763,7 +9763,7 @@ public class Character extends AbstractCharacterObject {
             throw new NotEnabledException();
         }
 
-        characterService.update(CharactersDO.builder()
+        CHARACTER_INTERNAL_SERVICE.update(CharactersDO.builder()
                 .id(id)
                 .reborns(value)
                 .build());
@@ -9779,7 +9779,7 @@ public class Character extends AbstractCharacterObject {
             throw new NotEnabledException();
         }
 
-        CharactersDO charactersDO = characterService.findById(id);
+        CharactersDO charactersDO = CHARACTER_INTERNAL_SERVICE.findById(id);
         return charactersDO == null ? 0 : Optional.ofNullable(charactersDO.getReborns()).orElse(0);
     }
 

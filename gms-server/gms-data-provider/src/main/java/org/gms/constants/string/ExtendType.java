@@ -15,6 +15,9 @@ public enum ExtendType {
     ACCOUNT_EXTEND("11"),
     ACCOUNT_EXTEND_DAILY("12"),
     ACCOUNT_EXTEND_WEEKLY("13"),
+    /**
+     * 个人特别爆率
+     */
     CHARACTER_EXTEND("21"),
     CHARACTER_EXTEND_DAILY("22"),
     CHARACTER_EXTEND_WEEKLY("23"),

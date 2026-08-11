@@ -35,7 +35,7 @@ import org.gms.client.command.commands.gm5.*;
 import org.gms.client.command.commands.gm6.*;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
-import org.gms.service.CommandService;
+import org.gms.service.CommandInternalService;
 import org.gms.util.I18nUtil;
 import org.gms.util.Pair;
 import org.slf4j.Logger;
@@ -67,11 +67,11 @@ public class CommandsExecutor {
     private Pair<List<String>, List<String>> levelCommandsCursor;
 
     // 3. 改为成员变量（推荐配合构造函数注入或 @Autowired）
-    private final CommandService commandService;
+    private final CommandInternalService commandInternalService;
 
     // 4. 使用构造函数注入 Spring 的 CommandService
-    public CommandsExecutor(CommandService commandService) {
-        this.commandService = commandService;
+    public CommandsExecutor(CommandInternalService commandInternalService) {
+        this.commandInternalService = commandInternalService;
     }
 
 
@@ -100,7 +100,7 @@ public class CommandsExecutor {
 //        registerLv5Commands();
 //        registerLv6Commands();
 
-        commandService.loadCommands(registeredCommands, commandsNameDesc);
+        commandInternalService.loadCommands(registeredCommands, commandsNameDesc);
     }
 
     public void handle(Client client, String message) {

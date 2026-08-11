@@ -25,13 +25,13 @@ import static org.gms.dao.entity.table.FamilyEntitlementDOTableDef.FAMILY_ENTITL
 public class FamilyService {
     private final FamilyCharacterMapper familyCharacterMapper;
     private final FamilyEntitlementMapper familyEntitlementMapper;
-    private final CharacterService characterService;
+    private final CharacterInternalService characterInternalService;
 
     public void loadAllFamilies() {
         List<FamilyCharacterDO> familyCharacterDOList = familyCharacterMapper.selectAll();
         List<Pair<Integer, FamilyEntry>> unmatchedJuniors = new ArrayList<>(); // <<world, seniorid> familyEntry>
         for (FamilyCharacterDO familyCharacterDO : familyCharacterDOList) {
-            CharactersDO charactersDO = characterService.findById(familyCharacterDO.getCid());
+            CharactersDO charactersDO = characterInternalService.findById(familyCharacterDO.getCid());
             if (charactersDO == null) {
                 continue;
             }

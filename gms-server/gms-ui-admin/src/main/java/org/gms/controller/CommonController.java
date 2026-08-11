@@ -33,10 +33,11 @@ public class CommonController {
         return ResultBody.success(commonService.getEquipmentInfoByItemId(submitBody.getData()));
     }
 
+    // 这个接口都没用。。。。
     @Tag(name = "/common/" + ApiConstant.LATEST)
     @Operation(summary = "查询所有世界中当前在线玩家数量")
     @PostMapping("/" + ApiConstant.LATEST + "/getAllWorldsOnlinePlayersCount")
-    public ResultBody<Integer> getAllWorldsOnlinePlayersCount(@RequestBody SubmitBody<ServerInfoReqDto> submitBody) {
+    public ResultBody<Long> getAllWorldsOnlinePlayersCount(@RequestBody SubmitBody<ServerInfoReqDto> submitBody) {
         return ResultBody.success(commonService.getAllWorldsOnlinePlayersCount(submitBody.getData().getWorldIdList()));
     }
 

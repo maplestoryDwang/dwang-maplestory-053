@@ -15,17 +15,17 @@ import org.gms.util.RequireUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonInformation {
-    private static CommonInformation instance;
+public class CommonInformationProvider {
+    private static CommonInformationProvider instance;
     private final DataProvider stringData;
 
-    private CommonInformation() {
+    private CommonInformationProvider() {
         stringData = DataProviderFactory.getDataProvider(WzFiles.STRING);
     }
 
-    public static CommonInformation getInstance() {
+    public static CommonInformationProvider getInstance() {
         if (instance == null) {
-            instance = new CommonInformation();
+            instance = new CommonInformationProvider();
         }
         return instance;
     }

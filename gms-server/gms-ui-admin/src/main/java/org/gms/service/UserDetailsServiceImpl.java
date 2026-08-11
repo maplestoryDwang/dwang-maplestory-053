@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * 查询是否可以登录
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final AccountsMapper userDao;

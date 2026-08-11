@@ -1,33 +1,26 @@
 package org.gms.service;
 
-import com.mybatisflex.core.paginate.Page;
-import com.mybatisflex.core.query.QueryWrapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.gms.client.Character;
 import org.gms.client.command.Command;
 import org.gms.client.command.CommandsExecutor;
 
 import org.gms.dao.entity.CommandInfoDO;
-import org.gms.dao.mapper.CommandInfoMapper;
-import org.gms.model.dto.CommandReqDTO;
-import org.gms.net.server.Server;
-import org.gms.net.server.channel.Channel;
-import org.gms.scripting.portal.PortalScriptManager;
-import org.gms.server.maps.MapleMap;
 import org.gms.util.I18nUtil;
 import org.gms.util.Pair;
 import org.gms.util.RequireUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * 内部调用使用
+ */
 @Slf4j
 @Service
 @AllArgsConstructor
-public class CommandService {
+public class CommandInternalService {
 
     private final CommandDataService commandDataService;
 

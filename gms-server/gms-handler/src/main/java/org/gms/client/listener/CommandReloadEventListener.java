@@ -3,7 +3,6 @@ package org.gms.client.listener;
 import lombok.AllArgsConstructor;
 import org.gms.client.Character;
 import org.gms.dao.entity.CommandInfoDO;
-import org.gms.event.AccountBannedEvent;
 import org.gms.event.CommandReloadEvent;
 import org.gms.event.CommandReloadEventType;
 import org.gms.event.CommandUpdateEvent;
@@ -11,7 +10,7 @@ import org.gms.net.server.Server;
 import org.gms.net.server.channel.Channel;
 import org.gms.scripting.portal.PortalScriptManager;
 import org.gms.server.maps.MapleMap;
-import org.gms.service.CommandService;
+import org.gms.service.CommandInternalService;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +34,13 @@ public class CommandReloadEventListener {
     private static final Logger log = LoggerFactory.getLogger(CommandReloadEventListener.class);
 
     // 构造函数注入
-    private CommandService commandService;
+    private CommandInternalService commandInternalService;
 
 
     @EventListener
     public void onCommandUpdateEvent(CommandUpdateEvent event) {
         CommandInfoDO commandInfoDO = event.getCommandInfoDO();
-        commandService.updateRegisteredCommands(commandInfoDO);
+        commandInternalService.updateRegisteredCommands(commandInfoDO);
 
     }
 

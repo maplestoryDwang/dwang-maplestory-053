@@ -39,7 +39,7 @@ import org.gms.manager.ServerManager;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;
-import org.gms.service.CharacterService;
+import org.gms.service.CharacterInternalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.CashShop;
@@ -144,8 +144,8 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                 } else if (action == 3) {//TODO check for gender with gift
                     int birthday = p.readInt();
                     ModifiedCashItemDO cItem = CashItemFactory.getItem(p.readInt());
-                    CharacterService characterService = ServerManager.getApplicationContext().getBean(CharacterService.class);
-                    CharactersDO charactersDO = characterService.findByName(p.readString());
+                    CharacterInternalService characterInternalService = ServerManager.getApplicationContext().getBean(CharacterInternalService.class);
+                    CharactersDO charactersDO = characterInternalService.findByName(p.readString());
                     String message = p.readString();
                     if (!canBuy(chr, cItem, cs.getCash(CashShop.NX_PREPAID)) || message.isEmpty() || message.length() > 73) {
                         c.enableCSActions();
