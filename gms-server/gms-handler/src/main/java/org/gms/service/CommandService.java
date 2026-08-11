@@ -29,18 +29,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CommandService {
 
-    private final CommandInfoMapper commandInfoMapper;
+    private final CommandDataService commandDataService;
 
     public void loadCommands(final HashMap<String, Command> registeredCommands,
                              final List<Pair<List<String>, List<String>>> commandsNameDesc) {
-        registeredCommands.clear();
-        commandsNameDesc.clear();
 
-        List<CommandInfoDO> commandInfoList = commandInfoMapper.selectAll();
-        if (commandInfoList == null || commandInfoList.isEmpty()) {
-            log.warn(I18nUtil.getLogMessage("CommandService.loadCommands.warn1"));
-            return;
-        }
+        List<CommandInfoDO> commandInfoList = commandDataService.loadCommands(registeredCommands, commandsNameDesc);
+
+
         // 根据level对指令分组
         Map<Integer, List<CommandInfoDO>> levelMap = commandInfoList.stream()
                 .collect(Collectors.groupingBy(CommandInfoDO::getLevel));

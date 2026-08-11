@@ -23,6 +23,7 @@
 */
 package org.gms.client.command;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.gms.client.Client;
 import org.gms.client.command.commands.gm0.*;
@@ -40,16 +41,21 @@ import org.gms.util.I18nUtil;
 import org.gms.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+@Component // 1. 让 Spring 管理该类
 public class CommandsExecutor {
     private static final Logger log = LoggerFactory.getLogger(CommandsExecutor.class);
+
+    // 2. 静态实例变量（去掉 new，改由 Spring 初始化后赋值）
     @Getter
-    private static final CommandsExecutor instance = new CommandsExecutor();
+    private static CommandsExecutor instance;
+
     private static final char USER_HEADING = '@';
     private static final char GM_HEADING = '!';
 
@@ -57,9 +63,24 @@ public class CommandsExecutor {
     private final HashMap<String, Command> registeredCommands = new HashMap<>();
     @Getter
     private final List<Pair<List<String>, List<String>>> commandsNameDesc = new ArrayList<>();
+
+
     private Pair<List<String>, List<String>> levelCommandsCursor;
 
-    private static final CommandService commandService = ServerManager.getApplicationContext().getBean(CommandService.class);
+    // 3. 改为成员变量（推荐配合构造函数注入或 @Autowired）
+    private final CommandService commandService;
+
+    // 4. 使用构造函数注入 Spring 的 CommandService
+    public CommandsExecutor(CommandService commandService) {
+        this.commandService = commandService;
+    }
+
+
+    // 5. Spring 创建完 Bean 后，将自身赋值给静态的 instance 供外部 CommandsExecutor.getInstance() 调用
+    @PostConstruct
+    private void init() {
+        instance = this;
+    }
 
     public static boolean isCommand(Client client, String content) {
         char heading = content.charAt(0);

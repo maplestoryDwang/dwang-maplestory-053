@@ -28,7 +28,47 @@ public class CommandDataService {
 
     private final CommandInfoMapper commandInfoMapper;
 
-    public void loadCommands(final HashMap<String, Command> registeredCommands,
+    public Page<CommandReqDTO> getCommandListFromDB(CommandReqDTO request) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if (request.getLevel() != null) queryWrapper.in("level", request.getLevelList());
+        if (request.getDefaultLevel() != null) queryWrapper.in("default_level", request.getDefaultLevelList());
+        if (!RequireUtil.isEmpty(request.getSyntax())) queryWrapper.like("syntax", request.getSyntax());
+
+        if (request.getEnabled() != null) queryWrapper.eq("enabled", request.getEnabled());
+        Page<CommandInfoDO> commandInfoDOPage = commandInfoMapper.paginateWithRelations(request.getPageNo(), request.getPageSize(), queryWrapper);
+        return new Page<>(
+                commandInfoDOPage.getRecords().stream()
+                        .map(record -> {
+                            // 显式声明返回值类型
+                            CommandReqDTO build = CommandReqDTO.builder()
+                                    .id(record.getId())
+                                    .level(record.getLevel())
+                                    .syntax(record.getSyntax())
+                                    .defaultLevel(record.getDefaultLevel())
+                                    .clazz(record.getClazz())
+                                    .enabled(record.isEnabled())
+                                    .description(getDescriptionByCommandInfoDO(record))
+                                    .build();
+                            build.setPageNo(null);
+                            build.setPageSize(null);
+                            return build;
+                        })
+                        .toList(),
+                commandInfoDOPage.getPageNumber(),
+                commandInfoDOPage.getPageSize(),
+                commandInfoDOPage.getTotalRow()
+        );
+    }
+
+    public String getDescriptionByCommandInfoDO(CommandInfoDO CommandDO) {
+        Command command = getCommandInstance(CommandDO);
+        if (command == null) {
+            return I18nUtil.getLogMessage("CommandsExecutor.addCommand.warn1", CommandDO.getSyntax());
+        }
+        return command.getDescription();
+    }
+
+    public List<CommandInfoDO> loadCommands(final HashMap<String, Command> registeredCommands,
                              final List<Pair<List<String>, List<String>>> commandsNameDesc) {
         registeredCommands.clear();
         commandsNameDesc.clear();
@@ -36,15 +76,9 @@ public class CommandDataService {
         List<CommandInfoDO> commandInfoList = commandInfoMapper.selectAll();
         if (commandInfoList == null || commandInfoList.isEmpty()) {
             log.warn(I18nUtil.getLogMessage("CommandService.loadCommands.warn1"));
-            return;
+            return commandInfoList;
         }
-        // 根据level对指令分组
-        Map<Integer, List<CommandInfoDO>> levelMap = commandInfoList.stream()
-                .collect(Collectors.groupingBy(CommandInfoDO::getLevel));
-        for (int i = 0; i <= 6; i++) {
-            registerCommands(registeredCommands, commandsNameDesc, i, levelMap.get(i));
-        }
-        log.info(I18nUtil.getLogMessage("CommandService.loadCommands.info1"), registeredCommands.size());
+        return commandInfoList;
     }
 
 
@@ -94,44 +128,6 @@ public class CommandDataService {
 
     }
 
-    private void registerCommands(final HashMap<String, Command> registeredCommands,
-                                  final List<Pair<List<String>, List<String>>> commandsNameDesc,
-                                  int level,
-                                  List<CommandInfoDO> commandInfoList) {
-        if (commandInfoList == null) {
-            log.warn(I18nUtil.getLogMessage("CommandService.loadCommands.warn2"), level);
-            commandInfoList = new ArrayList<>();
-        }
-
-        Pair<List<String>, List<String>> levelCommandsCursor = new Pair<>(new ArrayList<>(), new ArrayList<>());
-        for (CommandInfoDO item : commandInfoList) {
-            // 未开启的不能加载
-            if (!item.isEnabled()) {
-                continue;
-            }
-            Command command = getCommandInstance(item);
-            if (command == null) {
-                log.warn(I18nUtil.getLogMessage("CommandService.loadCommands.warn3"), item.getSyntax());
-                continue;
-            }
-
-            String commandName = item.getSyntax().toLowerCase();
-            if (registeredCommands.containsKey(commandName)) {
-                log.warn(I18nUtil.getLogMessage("CommandsExecutor.addCommand.warn1", item.getSyntax()));
-                continue;
-            }
-
-            try {
-                levelCommandsCursor.getRight().add(command.getDescription());
-                levelCommandsCursor.getLeft().add(commandName);
-                registeredCommands.put(commandName, command);
-            } catch (Exception e) {
-                log.warn(I18nUtil.getLogMessage("CommandsExecutor.addCommand.warn2"), e);
-            }
-        }
-
-        commandsNameDesc.add(levelCommandsCursor);
-    }
 
     private Command getCommandInstance(CommandInfoDO commandInfoDO) {
         try {
@@ -145,45 +141,7 @@ public class CommandDataService {
         }
     }
 
-    public Page<CommandReqDTO> getCommandListFromDB(CommandReqDTO request) {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        if (request.getLevel() != null) queryWrapper.in("level", request.getLevelList());
-        if (request.getDefaultLevel() != null) queryWrapper.in("default_level", request.getDefaultLevelList());
-        if (!RequireUtil.isEmpty(request.getSyntax())) queryWrapper.like("syntax", request.getSyntax());
 
-        if (request.getEnabled() != null) queryWrapper.eq("enabled", request.getEnabled());
-        Page<CommandInfoDO> commandInfoDOPage = commandInfoMapper.paginateWithRelations(request.getPageNo(), request.getPageSize(), queryWrapper);
-        return new Page<>(
-                commandInfoDOPage.getRecords().stream()
-                        .map(record -> {
-                            // 显式声明返回值类型
-                            CommandReqDTO build = CommandReqDTO.builder()
-                                    .id(record.getId())
-                                    .level(record.getLevel())
-                                    .syntax(record.getSyntax())
-                                    .defaultLevel(record.getDefaultLevel())
-                                    .clazz(record.getClazz())
-                                    .enabled(record.isEnabled())
-                                    .description(getDescriptionByCommandInfoDO(record))
-                                    .build();
-                            build.setPageNo(null);
-                            build.setPageSize(null);
-                            return build;
-                        })
-                        .toList(),
-                commandInfoDOPage.getPageNumber(),
-                commandInfoDOPage.getPageSize(),
-                commandInfoDOPage.getTotalRow()
-        );
-    }
-
-    public String getDescriptionByCommandInfoDO(CommandInfoDO CommandDO) {
-        Command command = getCommandInstance(CommandDO);
-        if (command == null) {
-            return I18nUtil.getLogMessage("CommandsExecutor.addCommand.warn1", CommandDO.getSyntax());
-        }
-        return command.getDescription();
-    }
 
     @Transactional
     public CommandInfoDO updateCommand(CommandReqDTO request) {
