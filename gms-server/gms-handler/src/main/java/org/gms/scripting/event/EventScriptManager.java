@@ -70,7 +70,7 @@ public class EventScriptManager extends AbstractScriptManager {
 //            }
 //        }
         // todo 初始化事件
-        log.info(" 当前不启动任何事件");
+        log.info(" 当前不启动任何事件 --dwang");
         init(); // 初始化所有事件
         fallback = events.remove("0_EXAMPLE"); // 移除并保留后备事件
     }

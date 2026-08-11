@@ -35,7 +35,6 @@ import org.gms.client.command.commands.gm5.*;
 import org.gms.client.command.commands.gm6.*;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
-import org.gms.manager.ServerManager;
 import org.gms.service.CommandService;
 import org.gms.util.I18nUtil;
 import org.gms.util.Pair;

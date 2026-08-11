@@ -34,7 +34,9 @@ public class CommandService {
     public void loadCommands(final HashMap<String, Command> registeredCommands,
                              final List<Pair<List<String>, List<String>>> commandsNameDesc) {
 
-        List<CommandInfoDO> commandInfoList = commandDataService.loadCommands(registeredCommands, commandsNameDesc);
+        registeredCommands.clear();
+        commandsNameDesc.clear();
+        List<CommandInfoDO> commandInfoList = commandDataService.loadCommands();
 
 
         // 根据level对指令分组
@@ -97,6 +99,51 @@ public class CommandService {
         }
     }
 
+    public void updateRegisteredCommands(CommandInfoDO commandInfoDO) {
+        CommandsExecutor commandsExecutor = CommandsExecutor.getInstance();
+        HashMap<String, Command> registeredCommands = commandsExecutor.getRegisteredCommands();
+        List<Pair<List<String>, List<String>>> commandsNameDesc = commandsExecutor.getCommandsNameDesc();
+        String syntax = commandInfoDO.getSyntax().toLowerCase();
+        Command command = registeredCommands.get(syntax);
+        // 如果原先未注册
+        if (command == null) {
+            // 如果更新的状态是开启，则添加注册。如果新状态是关闭，则不必理会，更新db即可
+            if (commandInfoDO.isEnabled()) {
+                command = getCommandInstance(commandInfoDO);
+                RequireUtil.requireNotNull(command, I18nUtil.getExceptionMessage("UNKNOWN_PARAMETER_VALUE", "clazz", commandInfoDO.getClazz()));
+                registeredCommands.put(syntax, command);
+                // 按照新等级获取实例
+                Pair<List<String>, List<String>> nameDescPair = commandsNameDesc.get(commandInfoDO.getLevel());
+                // 添加到最后
+                nameDescPair.getLeft().add(syntax);
+                nameDescPair.getRight().add(command.getDescription());
+            }
+            return;
+        }
+        // 原先已注册，这里拿的是老的rank去获取老的nameDesc
+        Pair<List<String>, List<String>> oldPair = commandsNameDesc.get(command.getRank());
+        int index = oldPair.getLeft().indexOf(syntax);
+        // 获取index，移除name和desc
+        if (index > -1) {
+            oldPair.getLeft().remove(index);
+            oldPair.getRight().remove(index);
+        }
+
+        // 如果新状态是开启，那么有可能是更新了等级。如果新状态是关闭，则移除之前的注册
+        if (commandInfoDO.isEnabled()) {
+            // 老的nameDesc已经移除，这里直接把新的等级加进nameDesc
+            Pair<List<String>, List<String>> newPair = commandsNameDesc.get(commandInfoDO.getLevel());
+            newPair.getLeft().add(syntax);
+            newPair.getRight().add(command.getDescription());
+
+            // 更新reg的Rank
+            command.setRank(commandInfoDO.getLevel());
+        } else {
+            // 老的nameDesc已经移除，这里直接移除reg
+            registeredCommands.remove(syntax);
+        }
+
+    }
 
 }
 

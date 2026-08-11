@@ -31,6 +31,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * 给内部调用使用
+ */
 @Slf4j
 @Service
 public class GachaponService {

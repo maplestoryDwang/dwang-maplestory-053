@@ -10,9 +10,8 @@ import org.gms.dao.mapper.DropDataMapper;
 import org.gms.model.dto.DropSearchReqDTO;
 import org.gms.model.dto.DropSearchRtnDTO;
 import org.gms.server.ItemInformationProvider;
+import org.gms.server.StringInfoProvider;
 import org.gms.server.life.MonsterInformationProvider;
-import org.gms.server.quest.Quest;
-import org.gms.server.quest.QuestRepository;
 import org.gms.util.Pair;
 import org.springframework.stereotype.Service;
 
@@ -170,6 +169,7 @@ public class DropService {
     }
 
     private String getQuestName(Integer questId) {
-        return questId == null ? null : QuestRepository.getInstance(questId).getName();
+//        return questId == null ? null : QuestRepository.getInstance(questId).getName();
+        return questId == null ? null : StringInfoProvider.getQuestName(questId);
     }
 }

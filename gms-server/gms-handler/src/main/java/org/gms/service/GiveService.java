@@ -34,8 +34,10 @@ public class GiveService {
 
     public void give(GiveResourceReqDTO submitData) {
         if (submitData.getPlayerId() == 0) {
+            // 给所有人
             giveAllOnlineChr(submitData);
         } else {
+            // 给某个人
             giveChr(submitData);
         }
     }

@@ -20,10 +20,21 @@ import java.util.Map;
 public class StringInfoProvider {
 
     private final static DataProvider stringDataWZ = DataProviderFactory.getDataProvider(WzFiles.STRING);
+
+
+
     private static final Data mobStringData = stringDataWZ.getData("Mob.img");
     private static final Data npcStringData = stringDataWZ.getData("Npc.img");
 
+    private final static DataProvider questDataWZ = DataProviderFactory.getDataProvider(WzFiles.QUEST);
+    private static final Data questInfoData = questDataWZ.getData("QuestInfo.img");
+
     private static final Map<Integer, String> npcNames = new HashMap<>();
+    private static final Map<Integer, String> questNames = new HashMap<>();
+
+    static {
+
+    }
 
 
     public static String getNPCName(int nid) {
@@ -34,4 +45,13 @@ public class StringInfoProvider {
         }
         return name;
     }
+
+
+    public static String getQuestName(int qid) {
+        String name = questNames.get(qid);
+        if (RequireUtil.isEmpty(name)) {
+            name = DataTool.getString(qid + "/name", questInfoData, "");
+            questNames.put(qid, name);
+        }
+        return name;    }
 }

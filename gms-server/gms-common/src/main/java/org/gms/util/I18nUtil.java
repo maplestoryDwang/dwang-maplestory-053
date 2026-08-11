@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * messageSource.getMessage底层是通过循环遍历文件名去读取的
@@ -81,5 +79,45 @@ public class I18nUtil {
 
     public static String getExceptionMessage(Locale locale, String code, Object... args) {
         return exceptionSource.getMessage(code, args, locale);
+    }
+
+
+
+    /**
+     * 根据指定的 Locale 和后缀筛选 Key
+     *
+     * @param locale 语言环境 (如 Locale.SIMPLIFIED_CHINESE 或 Locale.US)
+     * @param suffix 后缀匹配 (如 ".message1")
+     * @return Map<指令前缀, 描述文字>
+     */
+    public static Map<String, String> getCommandMessageMap(Locale locale, String suffix) {
+        Map<String, String> resultMap = new HashMap<>();
+
+        // "i18n/message" 代表 classpath:i18n/message，Java 会自动追加 _zh_CN.properties
+        ResourceBundle bundle = ResourceBundle.getBundle("i18n/message", locale);
+
+        Enumeration<String> keys = bundle.getKeys();
+        while (keys.hasMoreElements()) {
+            String key = keys.nextElement();
+            if (key.endsWith(suffix)) {
+                // 如果你想去除 .message1 后缀，只留 ReloadShopsCommand 作为 Map 的 key：
+                String commandKey = key.substring(0, key.length() - suffix.length());
+                resultMap.put(commandKey, bundle.getString(key));
+
+                // 如果你保留完整 Key（如 ReloadShopsCommand.message1），用下面这行代替上两行：
+                // resultMap.put(key, bundle.getString(key));
+            }
+        }
+
+        return resultMap;
+    }
+
+    /**
+     * 获取指定语言下所有匹配指令名称的描述 (默认获取中文 message_zh_CN)
+     *
+     * @return Map<指令前缀, 描述文字>  例如 {"ReloadShopsCommand": "重载商店"}
+     */
+    public static Map<String, String> getCommandMessageMap() {
+        return getCommandMessageMap(LANGUAGE, ".message1");
     }
 }
