@@ -21,44 +21,70 @@
  */
 package org.gms.scripting.npc;
 
+import jakarta.annotation.PostConstruct;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.constants.game.NextLevelType;
 import org.gms.model.pojo.NextLevelContext;
 import org.gms.net.server.world.PartyCharacter;
+import org.gms.scripting.ScriptServiceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.AbstractScriptManager;
 import org.gms.server.ItemInformationProvider.ScriptedItem;
 import org.gms.util.PacketCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
-import javax.script.ScriptException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
+ *
  * @author Matze
+ * @update spring管理 dwang
  */
+@Component
 public class NPCScriptManager extends AbstractScriptManager {
     private static final Logger log = LoggerFactory.getLogger(NPCScriptManager.class);
-    private static final NPCScriptManager instance = new NPCScriptManager();
 
-    private final Map<Client, NPCConversationManager> cms = new HashMap<>();
-    private final Map<Client, Invocable> scripts = new HashMap<>();
+    private static NPCScriptManager instance;
+
+    /**
+     * 获取上下文
+     */
+    @Autowired
+    private ScriptServiceContext scriptServiceContext;
+
+
+    @PostConstruct
+    public void init() {
+        instance = this; // 当 Spring 完成 Bean 实例化后，赋值给静态变量
+    }
 
     public static NPCScriptManager getInstance() {
         return instance;
     }
+
+    public ScriptServiceContext getScriptServiceContext() {
+        return scriptServiceContext;
+    }
+
+    private final Map<Client, NPCConversationManager> cms = new HashMap<>();
+    private final Map<Client, Invocable> scripts = new HashMap<>();
+
+    // -------------------------------------------------------------------------
+    // 脚本启动逻辑
+    // -------------------------------------------------------------------------
 
     public boolean isNpcScriptAvailable(Client c, String fileName) {
         ScriptEngine engine = null;
         if (fileName != null) {
             engine = getInvocableScriptEngine("npc/" + fileName + ".js", c);
         }
-
         return engine != null;
     }
 
@@ -84,7 +110,8 @@ public class NPCScriptManager extends AbstractScriptManager {
 
     public void start(String filename, Client c, int npc, List<PartyCharacter> chrs) {
         try {
-            final NPCConversationManager cm = new NPCConversationManager(c, npc, chrs, true);
+            // 直接将注入进来的 craftService 传给 NPCConversationManager
+            final NPCConversationManager cm = new NPCConversationManager(c, npc, chrs, true, scriptServiceContext);
             cm.dispose();
             if (cms.containsKey(c)) {
                 return;
@@ -115,7 +142,8 @@ public class NPCScriptManager extends AbstractScriptManager {
 
     private boolean start(Client c, int npc, int oid, String fileName, Character chr, boolean itemScript, String engineName) {
         try {
-            final NPCConversationManager cm = new NPCConversationManager(c, npc, oid, fileName, itemScript);
+            // 直接将注入进来的 craftService 传给 NPCConversationManager
+            final NPCConversationManager cm = new NPCConversationManager(c, npc, oid, fileName, itemScript, scriptServiceContext);
             if (cms.containsKey(c)) {
                 dispose(c);
             }
@@ -130,7 +158,7 @@ public class NPCScriptManager extends AbstractScriptManager {
                         }
                     }
                 } else {
-                    if (fileName != null) {     // thanks MiLin for drafting NPC-based item scripts
+                    if (fileName != null) {
                         engine = getInvocableScriptEngine("item/" + fileName + ".js", c);
                     }
                 }
@@ -278,5 +306,4 @@ public class NPCScriptManager extends AbstractScriptManager {
     public NPCConversationManager getCM(Client c) {
         return cms.get(c);
     }
-
 }

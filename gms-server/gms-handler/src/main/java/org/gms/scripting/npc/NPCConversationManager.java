@@ -33,10 +33,11 @@ import org.gms.constants.game.NextLevelType;
 import org.gms.constants.id.MapId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.LanguageConstants;
+import org.gms.dto.NpcCraftCategoryDTO;
+import org.gms.dto.NpcMenuDTO;
 import org.gms.dwutil.CharacterUtils;
 import org.gms.dwutil.ItemUtils;
 import org.gms.dwutil.PetUtils;
-import org.gms.manager.ServerManager;
 import org.gms.model.pojo.NextLevelContext;
 import org.gms.net.server.Server;
 import org.gms.net.server.channel.Channel;
@@ -46,7 +47,7 @@ import org.gms.net.server.guild.Guild;
 import org.gms.net.server.guild.GuildPackets;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
-import org.gms.service.GachaponService;
+import org.gms.scripting.ScriptServiceContext;
 import org.gms.util.packets.WeddingPackets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,7 +91,9 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     private String getText;
     private boolean itemScript;
     private List<PartyCharacter> otherParty;
-    private static final GachaponService gachaponService = ServerManager.getApplicationContext().getBean(GachaponService.class);
+
+    // 持有统一的 Context 对象
+    private ScriptServiceContext context;
 
     private final Map<Integer, String> npcDefaultTalks = new HashMap<>();
     @Getter
@@ -107,22 +110,28 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public NPCConversationManager(Client c, int npc, String scriptName) {
-        this(c, npc, -1, scriptName, false);
+        this(c, npc,  scriptName,  null);
     }
 
-    public NPCConversationManager(Client c, int npc, List<PartyCharacter> otherParty, boolean test) {
+    public NPCConversationManager(Client c, int npc, String scriptName, ScriptServiceContext context) {
+        this(c, npc, -1, scriptName, false, context);
+    }
+
+    public NPCConversationManager(Client c, int npc, List<PartyCharacter> otherParty, boolean test, ScriptServiceContext context) {
         super(c);
         this.c = c;
         this.npc = npc;
         this.otherParty = otherParty;
+        this.context = context;
     }
 
-    public NPCConversationManager(Client c, int npc, int oid, String scriptName, boolean itemScript) {
+    public NPCConversationManager(Client c, int npc, int oid, String scriptName, boolean itemScript, ScriptServiceContext context) {
         super(c);
         this.npc = npc;
         this.npcOid = oid;
         this.scriptName = scriptName;
         this.itemScript = itemScript;
+        this.context = context;
     }
 
     public int getNpc() {
@@ -443,7 +452,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public void doGachapon() {
-        gachaponService.doGachapon(getPlayer(), npc);
+        context.getGachaponService().doGachapon(getPlayer(), npc);
     }
 
     // public void doGachapon() {
@@ -1456,5 +1465,37 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         nextLevelContext.setLevelType(NextLevelType.SEND_YES_NO);
         nextLevelContext.setLastLevel(noLevel);
         nextLevelContext.setNextLevel(yesLevel);
+    }
+
+    // ==============================================================
+    // 1. Craft 相关
+    // ==============================================================
+
+    /**
+     * 获取NPC的对话列表
+     * @param npcId
+     * @return
+     */
+    public Map<String, String> getNpcDialogs(int npcId) {
+        return context.getCraftService().loadDialogMap(npcId, "craft");
+    }
+
+    /**
+     * 获取NPC能做的菜单
+     * @param npcId
+     * @return
+     */
+    public List<NpcMenuDTO> getNpcMenuList(int npcId) {
+        return context.getCraftService().getNpcMenuList(npcId);
+    }
+
+    /**
+     * 获取菜单对应的材料
+     * @param npcId
+     * @param menuIndex
+     * @return
+     */
+    public NpcCraftCategoryDTO getCraftCategoryData(int npcId, int menuIndex) {
+        return context.getCraftService().getCategoryData(npcId, menuIndex);
     }
 }

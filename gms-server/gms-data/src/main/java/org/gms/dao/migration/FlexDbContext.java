@@ -106,6 +106,13 @@ public class FlexDbContext {
                     .addMapper(org.gms.dao.mapper.SkillsMapper.class)
                     .addMapper(org.gms.dao.mapper.StoragesMapper.class)
                     .addMapper(org.gms.dao.mapper.TrocklocationsMapper.class)
+
+                    .addMapper(org.gms.dao.mapper.NpcDialogMapper.class)
+                    .addMapper(org.gms.dao.mapper.NpcCraftCatMapper.class)
+                    .addMapper(org.gms.dao.mapper.NpcCraftItemMapper.class)
+                    .addMapper(org.gms.dao.mapper.NpcCraftMatMapper.class)
+
+
                     .addMapper(org.gms.dao.mapper.WishlistsMapper.class);
 
             List<Class<?>> mappers = bootstrap.getMappers();
