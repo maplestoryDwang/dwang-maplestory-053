@@ -1,5 +1,5 @@
 /*
-    通用数据驱动 - NPC 引擎 (修正主菜单选定逻辑)
+    通用数据驱动 - NPC 引擎 (修正主菜单选定逻辑与 JS/Java 字符串混用 Bug)
 */
 
 var status = -1;
@@ -14,11 +14,11 @@ var dialogMap = null;      // 存储初始加载的 Key-Value 台词 Map
 function getDialog(key, defaultText) {
     if (dialogMap != null) {
         var val = dialogMap.get(key);
-        if (val != null) return val;
+        if (val != null) return val + "";
     }
     if (categoryData != null && categoryData.getDialogs() != null) {
         var val = categoryData.getDialogs().get(key);
-        if (val != null) return val;
+        if (val != null) return val + "";
     }
     return defaultText;
 }
@@ -27,7 +27,7 @@ function start() {
     cm.getPlayer().setCS(true);
     status = -1;
 
-    // 1. 获取该 NPC 的台词 Map (可以单独提供一个 cm.getNpcDialogs(npcId) API，或者先查模板台词)
+    // 1. 获取该 NPC 的台词 Map
     dialogMap = cm.getNpcDialogs(cm.getNpc());
 
     // 2. 校验该 NPC 是否配置了主菜单分类
@@ -76,7 +76,7 @@ function action(mode, type, selection) {
     } else if (status == 1) {
         selectedCategoryIndex = selection; // 获取玩家选中的 menuIndex
 
-        // 关键点：根据选中的 menuIndex 去拉取真正的分类配方数据！
+        // 根据选中的 menuIndex 去拉取真正的分类配方数据
         categoryData = cm.getCraftCategoryData(cm.getNpc(), selectedCategoryIndex);
 
         if (categoryData == null || categoryData.getOptions() == null || categoryData.getOptions().isEmpty()) {
@@ -85,9 +85,9 @@ function action(mode, type, selection) {
             return;
         }
 
-        // 判断该分类是否有警告/提示文本（如手套/帽子合成的风险提示）
+        // 判断该分类是否有警告/提示文本
         var warningText = categoryData.getWarningText();
-        if (warningText != null && warningText.length() > 0) {
+        if (warningText != null && (warningText + "").length > 0) {
             cm.sendNext(warningText);
         } else {
             // 没有警告则跳过状态，直接渲染装备/配方列表
@@ -113,7 +113,10 @@ function action(mode, type, selection) {
             prompt = "你想做一个 #b#z" + selectedRecipe.getItemId() + "##k 吗？这需要下面的道具，等级限制是 #r" + selectedRecipe.getReqLevel() + "#k。怎么样？想做吗？\r\n";
         } else {
             var yieldText = selectedRecipe.getYieldQty() > 1 ? selectedRecipe.getYieldQty() + "个 " : "";
-            var nameText = selectedRecipe.getDisplayText() != null ? selectedRecipe.getDisplayText() : "#t" + selectedRecipe.getItemId() + "#";
+            var rawDisplayText = selectedRecipe.getDisplayText();
+            var nameText = (rawDisplayText != null && (rawDisplayText + "").length > 0)
+                           ? rawDisplayText
+                           : "#t" + selectedRecipe.getItemId() + "#";
             prompt = "你想制作 " + yieldText + "#b" + nameText + "#k 吗？这需要以下材料：\r\n";
         }
 
@@ -121,11 +124,11 @@ function action(mode, type, selection) {
         var mats = selectedRecipe.getMats();
         var matQty = selectedRecipe.getMatQty();
         for (var i = 0; i < mats.size(); i++) {
-            prompt += "\r\n#i" + mats.get(i) + "# " + matQty.get(i) + " #t" + mats.get(i) + "#";
+            prompt += "\r\n#i" + mats.get(i) + "##b " + matQty.get(i) + " #t" + mats.get(i) + "#个#k";
         }
 
         if (selectedRecipe.getCost() > 0) {
-            prompt += "\r\n#i4031138# " + selectedRecipe.getCost() + " 金币";
+            prompt += "\r\n#i4031138# #b" + selectedRecipe.getCost() + " 金币#k";
         }
 
         cm.sendYesNo(prompt);
@@ -181,7 +184,8 @@ function action(mode, type, selection) {
 // 渲染配方列表
 function renderOptionList() {
     var promptText = categoryData.getPromptText();
-    var selStr = (promptText != null && promptText.length() > 0) ? promptText : "你想做什么样的道具？#b";
+    var hasPrompt = promptText != null && (promptText + "").length > 0;
+    var selStr = hasPrompt ? promptText : "你想做什么样的道具？#b";
 
     var options = categoryData.getOptions();
     for (var i = 0; i < options.size(); i++) {
@@ -189,7 +193,10 @@ function renderOptionList() {
         if (opt.getIsEquip()) {
             selStr += "\r\n#L" + i + "##z" + opt.getItemId() + "##k (等级限制：" + opt.getReqLevel() + "，" + opt.getJobName() + ")#l#b";
         } else {
-            var nameStr = opt.getDisplayText() != null ? opt.getDisplayText() : "#t" + opt.getItemId() + "#";
+            var rawDisplayText = opt.getDisplayText();
+            var nameStr = (rawDisplayText != null && (rawDisplayText + "").length > 0)
+                          ? rawDisplayText
+                          : "#t" + opt.getItemId() + "#";
             var yieldStr = opt.getYieldQty() > 1 ? " [" + opt.getYieldQty() + "个]" : "";
             selStr += "\r\n#L" + i + "# " + nameStr + yieldStr + "#l#b";
         }

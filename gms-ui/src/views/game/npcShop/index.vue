@@ -96,7 +96,7 @@
                 size="mini"
                 @click="showShopItemClick(record.shopId)"
               >
-                查看
+                查看商店
               </a-button>
             </template>
           </a-table-column>

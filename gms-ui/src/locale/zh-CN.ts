@@ -28,6 +28,7 @@ export default {
   'menu.game.command': 'GM指令',
   'menu.game.file': '文件管理',
   'menu.game.autoban': '自动封禁',
+  'menu.game.npcCraft': 'NPC制作',
   'menu.account': '玩家管理',
   'menu.account.list': '账户列表',
   'menu.account.player': '玩家管理',
