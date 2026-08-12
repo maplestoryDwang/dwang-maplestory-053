@@ -24,7 +24,6 @@ package org.gms.scripting;
 import org.gms.client.Client;
 import com.oracle.truffle.js.scriptengine.GraalJSScriptEngine;
 import org.gms.config.GameConfig;
-import org.gms.manager.ServerManager;
 import org.gms.property.ServiceProperty;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
@@ -44,14 +43,21 @@ public abstract class AbstractScriptManager {
     private static final Logger log = LoggerFactory.getLogger(AbstractScriptManager.class);
     private final ScriptEngineFactory sef;
 
+    protected final ServiceProperty serviceProperty;
+
     protected AbstractScriptManager() {
         sef = new ScriptEngineManager().getEngineByName("graal.js").getFactory();
+        serviceProperty = ScriptServiceContext.getInstance().getServiceProperty();
+    }
+    // 方式一：直接接收 ScriptServiceContext
+    protected AbstractScriptManager(ScriptServiceContext context) {
+        sef = new ScriptEngineManager().getEngineByName("graal.js").getFactory();
+        this.serviceProperty = context.getServiceProperty();
     }
 
     protected ScriptEngine getInvocableScriptEngine(String path) {
         // 优先取语言文件夹，没有则取scripts
         String scriptName = "scripts";
-        ServiceProperty serviceProperty = ServerManager.getApplicationContext().getBean(ServiceProperty.class);
         String scriptLangName = scriptName + "-" + serviceProperty.getLanguage();
 
         Path scriptPath = Path.of(scriptName, path);

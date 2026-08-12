@@ -59,6 +59,11 @@ public class NPCScriptManager extends AbstractScriptManager {
     @Autowired
     private ScriptServiceContext scriptServiceContext;
 
+    // Spring 会自动先创建 ScriptServiceContext，再调用这个构造函数创建 NPCScriptManager
+    public NPCScriptManager(ScriptServiceContext scriptServiceContext) {
+        super(scriptServiceContext); // 显式传递给父类
+        this.scriptServiceContext = scriptServiceContext;
+    }
 
     @PostConstruct
     public void init() {
