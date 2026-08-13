@@ -38,6 +38,7 @@ public final class RegisterPinHandler extends AbstractPacketHandler {
         if (c2 == 0) {
             SessionCoordinator.getInstance().closeSession(c, null);
             ClientDBUtils.updateLoginState(c, Client.LOGIN_NOTLOGGEDIN);
+            ClientDBUtils.updatePlayerLoginState(c.getAccID(), -1, Client.LOGIN_NOTLOGGEDIN);
         } else {
             String pin = p.readString();
             if (pin != null) {
@@ -46,6 +47,8 @@ public final class RegisterPinHandler extends AbstractPacketHandler {
 
                 SessionCoordinator.getInstance().closeSession(c, null);
                 ClientDBUtils.updateLoginState(c, Client.LOGIN_NOTLOGGEDIN);
+                ClientDBUtils.updatePlayerLoginState(c.getAccID(), -1, Client.LOGIN_NOTLOGGEDIN);
+
             }
         }
     }

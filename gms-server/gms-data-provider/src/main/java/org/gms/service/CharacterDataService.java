@@ -261,7 +261,7 @@ public class CharacterDataService {
     }
 
     public List<CharactersDO> getChrOnlineList(int worldId) {
-        QueryWrapper where = QueryWrapper.create().where(CHARACTERS_D_O.WORLD.eq(worldId));
+        QueryWrapper where = QueryWrapper.create().where(CHARACTERS_D_O.WORLD.eq(worldId)).and(CHARACTERS_D_O.LOGGEDIN.eq(Boolean.TRUE));
         return charactersMapper.selectListByQuery(where);
 
     }

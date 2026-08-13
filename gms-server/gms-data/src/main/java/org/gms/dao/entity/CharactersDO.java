@@ -200,6 +200,11 @@ public class CharactersDO implements Serializable {
     @Column("partySearch")
     private Boolean partySearch;
 
+    /**
+     * 新增字段：目的是记录当前是哪个角色登录
+     */
+    private Boolean loggedin;
+
     private Long jailexpire;
 
 }

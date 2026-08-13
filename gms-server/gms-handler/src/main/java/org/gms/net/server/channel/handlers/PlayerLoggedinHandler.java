@@ -175,6 +175,8 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
             if (tryAcquireAccount(accId)) { // Sync this to prevent wrong login state for double loggedin handling
                 try {
                     int state = ClientDBUtils.getLoginState(c);
+
+                    // 如果不是登陆中的状态
                     if (state != Client.LOGIN_SERVER_TRANSITION || !allowLogin) {
                         c.setPlayer(null);
                         c.setAccID(0);
@@ -188,6 +190,7 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                         return;
                     }
                     ClientDBUtils.updateLoginState(c, Client.LOGIN_LOGGEDIN);
+                    ClientDBUtils.updatePlayerLoginState(c.getAccID(), player.getId(), Client.LOGIN_LOGGEDIN);
                 } finally {
                     releaseAccount(accId);
                 }

@@ -46,6 +46,8 @@ public class SetGenderHandler extends AbstractPacketHandler {
             } else {
                 SessionCoordinator.getInstance().closeSession(c, null);
                 ClientDBUtils.updateLoginState(c, Client.LOGIN_NOTLOGGEDIN);
+                ClientDBUtils.updatePlayerLoginState(c.getAccID(), -1, Client.LOGIN_NOTLOGGEDIN);
+
             }
         }
     }

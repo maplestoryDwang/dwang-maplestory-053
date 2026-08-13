@@ -62,7 +62,8 @@ public class CharacterApiService {
 //    }
 
     /**
-     * todo 当前是查询所有玩家。
+     * 已新增一个字段，可以查询所有在线玩家了
+     * @author dwang
      * @param request
      * @return
      */
