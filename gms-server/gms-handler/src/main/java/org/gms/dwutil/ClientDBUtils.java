@@ -160,7 +160,7 @@ public class ClientDBUtils {
             }
         }
     }
-    public static void updatePlayerLoginStateUpdate(int accId, int charId, int newState) {
+    public static void updatePlayerLoginStateUpdateChain(int accId, int charId, int newState) {
         if (newState == Client.LOGIN_NOTLOGGEDIN) {
             // 账号下线：把该账号下所有角色下线
             UpdateChain.of(CharactersDO.class)

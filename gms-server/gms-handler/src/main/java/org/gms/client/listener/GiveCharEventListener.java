@@ -1,4 +1,4 @@
-package org.gms.service;
+package org.gms.client.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.gms.client.Character;
@@ -10,6 +10,7 @@ import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;
 
+import org.gms.event.GiveCharEvent;
 import org.gms.model.dto.GiveResourceReqDTO;
 import org.gms.exception.BizException;
 
@@ -17,22 +18,28 @@ import org.gms.exception.BizException;
 import org.gms.net.server.Server;
 import org.gms.server.CashShop;
 import org.gms.server.ItemInformationProvider;
+import org.gms.service.CharacterApiService;
 import org.gms.util.I18nUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
 import static java.util.concurrent.TimeUnit.DAYS;
 
 
-@Service
+@Component
 @Slf4j
-public class GiveService {
+public class GiveCharEventListener {
     @Autowired
     CharacterApiService characterApiService;
 
-    public void give(GiveResourceReqDTO submitData) {
+
+    @EventListener
+    public void give(GiveCharEvent event) {
+        GiveResourceReqDTO submitData = event.getSubmitData();
         if (submitData.getPlayerId() == 0) {
             // 给所有人
             giveAllOnlineChr(submitData);

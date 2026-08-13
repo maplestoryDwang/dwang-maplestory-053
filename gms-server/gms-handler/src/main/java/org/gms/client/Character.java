@@ -6484,7 +6484,7 @@ public class Character extends AbstractCharacterObject {
         chr.getInventory(InventoryType.ETC).setSlotLimit(charactersDO.getEtcslots());
         short sandboxCheck = 0x0;
         for (InventoryType inventoryType : InventoryType.values()) {
-            List<InventorySearchRtnDTO> searchRtnDTOList = inventoryService.getInventoryList(InventorySearchReqDTO.builder()
+            List<InventorySearchRtnDTO> searchRtnDTOList = inventoryService.getInventoryListFromDB(InventorySearchReqDTO.builder()
                     .characterId(charactersDO.getId())
                     .inventoryType(inventoryType.getType())
                     .build());

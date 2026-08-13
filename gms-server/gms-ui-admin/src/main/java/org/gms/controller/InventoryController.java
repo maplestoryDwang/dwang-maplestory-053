@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ *
+ * @comment 我觉得背包操作一定要不在线的状态进行操作。因为数据没有落库，在线状态操作玩家背包有问题
+ * @author dwang
+ * @date 20260813
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("/inventory")
@@ -32,10 +38,10 @@ public class InventoryController {
     }
 
     @Tag(name = "/inventory/" + ApiConstant.LATEST)
-    @Operation(summary = "获取指定玩家背包分类下的所有物品")
+    @Operation(summary = "获取指定玩家背包分类下的所有物品(只获取不在线玩家)")
     @PostMapping("/" + ApiConstant.LATEST + "/getInventoryList")
     public ResultBody<List<InventorySearchRtnDTO>> getInventoryList(@RequestBody SubmitBody<InventorySearchReqDTO> request) {
-        return ResultBody.success(inventoryService.getInventoryList(request.getData()));
+        return ResultBody.success(inventoryService.getInventoryListFromDB(request.getData()));
     }
 
     @Tag(name = "/inventory/" + ApiConstant.LATEST)
