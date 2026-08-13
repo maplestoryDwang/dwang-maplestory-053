@@ -22,6 +22,7 @@
 package org.gms.net.server.handlers.login;
 
 import org.gms.client.Client;
+import org.gms.dwutil.ClientDBUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.coordinator.session.SessionCoordinator;
@@ -36,7 +37,7 @@ public final class RegisterPinHandler extends AbstractPacketHandler {
         byte c2 = p.readByte();
         if (c2 == 0) {
             SessionCoordinator.getInstance().closeSession(c, null);
-            c.updateLoginState(Client.LOGIN_NOTLOGGEDIN);
+            ClientDBUtils.updateLoginState(c, Client.LOGIN_NOTLOGGEDIN);
         } else {
             String pin = p.readString();
             if (pin != null) {
@@ -44,7 +45,7 @@ public final class RegisterPinHandler extends AbstractPacketHandler {
                 c.sendPacket(PacketCreator.pinRegistered());
 
                 SessionCoordinator.getInstance().closeSession(c, null);
-                c.updateLoginState(Client.LOGIN_NOTLOGGEDIN);
+                ClientDBUtils.updateLoginState(c, Client.LOGIN_NOTLOGGEDIN);
             }
         }
     }

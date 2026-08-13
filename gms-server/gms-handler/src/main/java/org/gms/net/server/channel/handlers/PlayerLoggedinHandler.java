@@ -33,6 +33,7 @@ import org.gms.client.inventory.Item;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
+import org.gms.dwutil.ClientDBUtils;
 import org.gms.manager.ServerManager;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
@@ -173,7 +174,7 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
             int accId = c.getAccID();
             if (tryAcquireAccount(accId)) { // Sync this to prevent wrong login state for double loggedin handling
                 try {
-                    int state = c.getLoginState();
+                    int state = ClientDBUtils.getLoginState(c);
                     if (state != Client.LOGIN_SERVER_TRANSITION || !allowLogin) {
                         c.setPlayer(null);
                         c.setAccID(0);
@@ -186,7 +187,7 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
 
                         return;
                     }
-                    c.updateLoginState(Client.LOGIN_LOGGEDIN);
+                    ClientDBUtils.updateLoginState(c, Client.LOGIN_LOGGEDIN);
                 } finally {
                     releaseAccount(accId);
                 }
@@ -228,7 +229,7 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                 player.silentApplyDiseases(diseases);
             }
 
-            //这里发送登录成功封包
+            //这里发送登录成功封包 setField
             c.sendPacket(PacketCreator.getCharInfo(player));
             if (player.isHidden()) {
                 if (!GameConfig.getServerBoolean("use_auto_hide_gm")) {
@@ -382,11 +383,11 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                     }
                     */
                 if (player.isGM()) {
-                    // 没有
+                    // todo 没有
 //                    Server.getInstance().broadcastGMMessage(c.getWorld(), PacketCreator.earnTitleMessage((player.gmLevel() < 6 ? "GM " : "Admin ") + player.getName() + " 登录了游戏"));
 
                     // 只能加普通隐身
-                    SkillFactory.getSkill(5101004).getEffect(1).applyTo(player);
+//                    SkillFactory.getSkill(5101004).getEffect(1).applyTo(player);
 
                 } else {
                     if (GameConfig.getServerBoolean("use_login_notification")) {

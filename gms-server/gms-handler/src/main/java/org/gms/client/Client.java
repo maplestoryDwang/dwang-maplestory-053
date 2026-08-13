@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.gms.client;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.gms.client.character.buddy.BuddyList;
 import org.gms.client.inventory.InventoryType;
 import org.gms.config.GameConfig;
@@ -30,6 +31,7 @@ import org.gms.constants.id.MapId;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleStateEvent;
+import org.gms.dwutil.ClientDBUtils;
 import org.gms.net.PacketHandler;
 import org.gms.net.PacketProcessor;
 import org.gms.net.netty.InvalidPacketHeaderException;
@@ -102,6 +104,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+@Getter
+@Setter
 public class Client extends ChannelInboundHandlerAdapter implements HasLanguage {
     private static final Logger log = LoggerFactory.getLogger(Client.class);
 
@@ -352,13 +356,6 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
         return chars;
     }
 
-    public List<String> loadCharacterNames(int worldId) {
-        List<String> chars = new ArrayList<>(15);
-        for (CharNameAndId cni : loadCharactersInternal(worldId)) {
-            chars.add(cni.name);
-        }
-        return chars;
-    }
 
     private List<CharNameAndId> loadCharactersInternal(int worldId) {
         List<CharNameAndId> chars = new ArrayList<>(15);
@@ -575,11 +572,11 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
     public int finishLogin() {
         encoderLock.lock();
         try {
-            if (getLoginState() > LOGIN_NOTLOGGEDIN) { // 0 = LOGIN_NOTLOGGEDIN, 1= LOGIN_SERVER_TRANSITION, 2 = LOGIN_LOGGEDIN
+            if (ClientDBUtils.getLoginState(this) > LOGIN_NOTLOGGEDIN) { // 0 = LOGIN_NOTLOGGEDIN, 1= LOGIN_SERVER_TRANSITION, 2 = LOGIN_LOGGEDIN
                 loggedIn = false;
                 return 7;
             }
-            updateLoginState(Client.LOGIN_LOGGEDIN);
+           ClientDBUtils.updateLoginState(this, Client.LOGIN_LOGGEDIN);
         } finally {
             encoderLock.unlock();
         }
@@ -690,7 +687,7 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
                         return 3;
                     }
 
-                    if (getLoginState() > LOGIN_NOTLOGGEDIN) { // already loggedin
+                    if (ClientDBUtils.getLoginState(this) > LOGIN_NOTLOGGEDIN) { // already loggedin
                         loggedIn = false;
                         loginok = 7;
                     } else if (GameConfig.getServerBoolean("use_debug") && GameConfig.getServerBoolean("no_password")) {
@@ -826,81 +823,6 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
         return accId;
     }
 
-    public void updateLoginState(int newState) {
-        // rules out possibility of multiple account entries
-        if (newState == LOGIN_LOGGEDIN) {
-            SessionCoordinator.getInstance().updateOnlineClient(this);
-        }
-
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement("UPDATE accounts SET loggedin = ?, lastlogin = ? WHERE id = ?")) {
-            // using sql currenttime here could potentially break the login, thanks Arnah for pointing this out
-
-            ps.setInt(1, newState);
-            ps.setTimestamp(2, new java.sql.Timestamp(Server.getInstance().getCurrentTime()));
-            ps.setInt(3, getAccID());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        if (newState == LOGIN_NOTLOGGEDIN) {
-            loggedIn = false;
-            serverTransition = false;
-            setAccID(0);
-        } else {
-            serverTransition = (newState == LOGIN_SERVER_TRANSITION);
-            loggedIn = !serverTransition;
-        }
-    }
-
-    public int getLoginState() {  // 0 = LOGIN_NOTLOGGEDIN, 1= LOGIN_SERVER_TRANSITION, 2 = LOGIN_LOGGEDIN
-        try (Connection con = DatabaseConnection.getConnection()) {
-            int state;
-            try (PreparedStatement ps = con.prepareStatement("SELECT loggedin, lastlogin, birthday FROM accounts WHERE id = ?")) {
-                ps.setInt(1, getAccID());
-
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (!rs.next()) {
-                        throw new RuntimeException("获取登录状态-客户端账号：" + getAccID());
-                    }
-
-                    birthday = Calendar.getInstance();
-                    try {
-                        birthday.setTime(rs.getDate("birthday"));
-                    } catch (SQLException e) {
-                    }
-
-                    state = rs.getInt("loggedin");
-                    if (state == LOGIN_SERVER_TRANSITION) {
-                        Timestamp lastlogin = rs.getTimestamp("lastlogin");
-                        // 兼容历史已经创建的账号，和自动注册但未登录的账号
-                        if (lastlogin == null || lastlogin.getTime() + 30000 < Server.getInstance().getCurrentTime()) {
-                            int accountId = accId;
-                            state = LOGIN_NOTLOGGEDIN;
-                            updateLoginState(Client.LOGIN_NOTLOGGEDIN);   // ACCID = 0, issue found thanks to Tochi & K u ssss o & Thora & Omo Oppa
-                            this.setAccID(accountId);
-                        }
-                    }
-                }
-            }
-            if (state == LOGIN_LOGGEDIN) {
-                loggedIn = true;
-            } else if (state == LOGIN_SERVER_TRANSITION) {
-                try (PreparedStatement ps2 = con.prepareStatement("UPDATE accounts SET loggedin = 0 WHERE id = ?")) {
-                    ps2.setInt(1, getAccID());
-                    ps2.executeUpdate();
-                }
-            } else {
-                loggedIn = false;
-            }
-            return state;
-        } catch (SQLException e) {
-            loggedIn = false;
-            e.printStackTrace();
-            throw new RuntimeException("登录状态");
-        }
-    }
 
     public boolean checkBirthDate(Calendar date) {
         return date.get(Calendar.YEAR) == birthday.get(Calendar.YEAR) && date.get(Calendar.MONTH) == birthday.get(Calendar.MONTH) && date.get(Calendar.DAY_OF_MONTH) == birthday.get(Calendar.DAY_OF_MONTH);
@@ -1079,12 +1001,12 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
         SessionCoordinator.getInstance().closeSession(this, false);
 
         if (!serverTransition && isLoggedIn()) {
-            updateLoginState(Client.LOGIN_NOTLOGGEDIN);
+           ClientDBUtils.updateLoginState(this, Client.LOGIN_NOTLOGGEDIN);
 
             clear();
         } else {
             if (!Server.getInstance().hasCharacteridInTransition(this)) {
-                updateLoginState(Client.LOGIN_NOTLOGGEDIN);
+               ClientDBUtils.updateLoginState(this, Client.LOGIN_NOTLOGGEDIN);
             }
 
             engines = null; // thanks Tochi for pointing out a NPE here
@@ -1108,7 +1030,7 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
     }
 
     public void setCharacterOnSessionTransitionState(int cid) {
-        this.updateLoginState(Client.LOGIN_SERVER_TRANSITION);
+        ClientDBUtils.updateLoginState(this, Client.LOGIN_SERVER_TRANSITION);
         this.inTransition = true;
         Server.getInstance().setCharacteridInTransition(this, cid);
     }
