@@ -15,6 +15,8 @@ import java.util.Map;
 public class NpcCraftCategoryDTO {
     private Integer categoryId;
     private String categoryName;
+    private String craftType;     // <--- 新增：制造类型 (如: CRAFT, REFINE, MAKE 等)
+    private Integer templateId;   // <--- 可选：如果前端/脚本需要判定模板 ID 也可以加上
     private String promptText;
     private String warningText;
 

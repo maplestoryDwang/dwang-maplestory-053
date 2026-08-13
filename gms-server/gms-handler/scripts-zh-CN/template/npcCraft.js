@@ -108,15 +108,23 @@ function action(mode, type, selection) {
         selectedOptionIndex = selection;
         selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
 
+        // 获取当前分类的 craftType (例如: "CRAFT", "REFINE", "MAKE")
+        var craftType = categoryData.getCraftType();
+
         var prompt = "";
-        if (selectedRecipe.getIsEquip()) {
+
+        // 根据 craftType 进行针对性的对话渲染
+        if (craftType == "REFINE") {
+            // 提炼类型文案
+            var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
+            prompt = "你想提炼 #b" + nameText + "#k 吗？这需要以下材料：\r\n";
+        } else if (selectedRecipe.getIsEquip()) {
+            // 装备锻造文案
             prompt = "你想做一个 #b#z" + selectedRecipe.getItemId() + "##k 吗？这需要下面的道具，等级限制是 #r" + selectedRecipe.getReqLevel() + "#k。怎么样？想做吗？\r\n";
         } else {
+            // 普通消耗品/道具制作
             var yieldText = selectedRecipe.getYieldQty() > 1 ? selectedRecipe.getYieldQty() + "个 " : "";
-            var rawDisplayText = selectedRecipe.getDisplayText();
-            var nameText = (rawDisplayText != null && (rawDisplayText + "").length > 0)
-                           ? rawDisplayText
-                           : "#t" + selectedRecipe.getItemId() + "#";
+            var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
             prompt = "你想制作 " + yieldText + "#b" + nameText + "#k 吗？这需要以下材料：\r\n";
         }
 

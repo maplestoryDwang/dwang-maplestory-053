@@ -79,6 +79,7 @@ public class NpcCraftServiceImpl implements NpcCraftService {
         NpcCraftCategoryDTO dto = new NpcCraftCategoryDTO();
         dto.setCategoryId(cat.getId());
         dto.setCategoryName(cat.getCategoryName());
+        dto.setCraftType(cat.getCraftType());
         dto.setPromptText(cat.getPromptText());
         dto.setWarningText(cat.getWarningText());
 

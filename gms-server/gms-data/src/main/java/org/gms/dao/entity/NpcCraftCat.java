@@ -21,6 +21,7 @@ public class NpcCraftCat {
     private Integer menuIndex;
     private String categoryName;
     private Integer templateId; // 关联台词模板 ID
+    private String craftType;
     private String promptText;
     private String warningText;
 }
