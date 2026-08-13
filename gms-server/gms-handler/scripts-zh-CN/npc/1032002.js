@@ -90,16 +90,39 @@ function action(mode, type, selection) {
         if (warningText != null && (warningText + "").length > 0) {
             cm.sendNext(warningText);
         } else {
-            // 没有警告则跳过状态，直接渲染装备/配方列表
-            status++;
+            // 没有警告的装备则跳过状态
+            if(categoryData.getCraftType() == "EQUIP_SINGLE") {
+                status++;
+            }
+            // 材料只显示列表
             renderOptionList();
+
+
         }
 
         // -------------------------------------------------------------------------
         // Status 2: 显示二级列表（该分类下的所有装备/配方）
         // -------------------------------------------------------------------------
     } else if (status == 2) {
-        renderOptionList();
+        // 如果是合成就显示列表
+        if(categoryData.getCraftType() == "EQUIP_UPGRADE") {
+            renderOptionList();
+        }
+
+        // todo 如果是制作材料要给玩家输入要做多少个
+             var prompt = "使用";
+             if (mats instanceof Array) {
+                 for (var i = 0; i < mats.length; i++) {
+                    prompt += "#t" + mats[i] + "# " + (matQty[i] * qty) + "个#k";
+                }
+             } else {
+                prompt += "#t" + mats + "# " + (matQty * qty) + "个#k";
+            }
+             prompt += "能做#t" + item + "#" + yieldCount  +"个，都是免费的。所以你应该谢谢我，怎么样？你想做几次？";
+
+            cm.sendGetNumber(prompt, 1, 1, 100);
+
+
 
         // -------------------------------------------------------------------------
         // Status 3: 玩家选中具体装备，显示材料清单与金币确认
@@ -108,15 +131,23 @@ function action(mode, type, selection) {
         selectedOptionIndex = selection;
         selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
 
+        // 获取当前分类的 craftType (例如: "CRAFT", "REFINE", "MAKE")
+        var craftType = categoryData.getCraftType();
+
         var prompt = "";
-        if (selectedRecipe.getIsEquip()) {
+
+        // 根据 craftType 进行针对性的对话渲染
+        if (craftType == "REFINE") {
+            // 提炼类型文案
+            var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
+            prompt = "你想提炼 #b" + nameText + "#k 吗？这需要以下材料：\r\n";
+        } else if (selectedRecipe.getIsEquip()) {
+            // 装备锻造文案
             prompt = "你想做一个 #b#z" + selectedRecipe.getItemId() + "##k 吗？这需要下面的道具，等级限制是 #r" + selectedRecipe.getReqLevel() + "#k。怎么样？想做吗？\r\n";
         } else {
+            // 普通消耗品/道具制作
             var yieldText = selectedRecipe.getYieldQty() > 1 ? selectedRecipe.getYieldQty() + "个 " : "";
-            var rawDisplayText = selectedRecipe.getDisplayText();
-            var nameText = (rawDisplayText != null && (rawDisplayText + "").length > 0)
-                           ? rawDisplayText
-                           : "#t" + selectedRecipe.getItemId() + "#";
+            var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
             prompt = "你想制作 " + yieldText + "#b" + nameText + "#k 吗？这需要以下材料：\r\n";
         }
 
@@ -124,7 +155,7 @@ function action(mode, type, selection) {
         var mats = selectedRecipe.getMats();
         var matQty = selectedRecipe.getMatQty();
         for (var i = 0; i < mats.size(); i++) {
-            prompt += "\r\n#i" + mats.get(i) + "##b " + matQty.get(i) + " #t" + mats.get(i) + "#个#k";
+            prompt += "\r\n#i" + mats.get(i) + "##b " + " #t" + mats.get(i) + "# " + matQty.get(i) + " 个#k";
         }
 
         if (selectedRecipe.getCost() > 0) {

@@ -1,10 +1,11 @@
 /*
-    通用数据驱动 - NPC 引擎 (修正主菜单选定逻辑与 JS/Java 字符串混用 Bug)
+    通用数据驱动 - NPC 引擎 (支持 EQUIP_UPGRADE / EQUIP_SINGLE / MATERIAL_BATCH)
 */
 
 var status = -1;
 var selectedCategoryIndex = -1;
 var selectedOptionIndex = -1;
+var craftQty = 1; // 制作数量 (用于 MATERIAL_BATCH 批量制作)
 
 var categoryData = null;   // 选中某个分类后加载的 DTO
 var selectedRecipe = null; // 当前选中的配方
@@ -70,13 +71,16 @@ function action(mode, type, selection) {
         }
         cm.sendSimple(selStr);
 
-        // -------------------------------------------------------------------------
-        // Status 1: 玩家点击了具体的某个分类，此时才真正加载该分类的数据与配方
-        // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Status 1: 选中分类，判断展示警告还是直接展示选择列表
+    // -------------------------------------------------------------------------
     } else if (status == 1) {
-        selectedCategoryIndex = selection; // 获取玩家选中的 menuIndex
+        // 如果是从 Status 0 刚选完分类进来
+        if (selectedCategoryIndex == -1) {
+            selectedCategoryIndex = selection;
+        }
 
-        // 根据选中的 menuIndex 去拉取真正的分类配方数据
+        // 获取分类配方数据
         categoryData = cm.getCraftCategoryData(cm.getNpc(), selectedCategoryIndex);
 
         if (categoryData == null || categoryData.getOptions() == null || categoryData.getOptions().isEmpty()) {
@@ -85,105 +89,192 @@ function action(mode, type, selection) {
             return;
         }
 
-        // 判断该分类是否有警告/提示文本
-        var warningText = categoryData.getWarningText();
-        if (warningText != null && (warningText + "").length > 0) {
+        var craftType = (categoryData.getCraftType() + "").toUpperCase();
+        var warningText = categoryData.getWarningText() != null ? categoryData.getWarningText() + "" : "";
+
+        // 如果配置了警告文案（如装备合成警告），先弹 Warning 提示框
+        if (warningText.length > 0) {
             cm.sendNext(warningText);
         } else {
-            // 没有警告则跳过状态，直接渲染装备/配方列表
-            status++;
+            // 没有警告则直接展示配方列表
             renderOptionList();
         }
 
-        // -------------------------------------------------------------------------
-        // Status 2: 显示二级列表（该分类下的所有装备/配方）
-        // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Status 2: 处理配方选择或数量输入
+    // -------------------------------------------------------------------------
     } else if (status == 2) {
-        renderOptionList();
+        var craftType = (categoryData.getCraftType() + "").toUpperCase();
+        var warningText = categoryData.getWarningText() != null ? categoryData.getWarningText() + "" : "";
 
-        // -------------------------------------------------------------------------
-        // Status 3: 玩家选中具体装备，显示材料清单与金币确认
-        // -------------------------------------------------------------------------
-    } else if (status == 3) {
-        selectedOptionIndex = selection;
+        // 如果有警告文本，Status 2 才展示配方列表
+        if (warningText.length > 0) {
+            renderOptionList();
+            return;
+        }
+
+        // 记录选中的配方
+        if (selectedOptionIndex == -1) {
+            selectedOptionIndex = selection;
+        }
         selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
 
-        // 获取当前分类的 craftType (例如: "CRAFT", "REFINE", "MAKE")
-        var craftType = categoryData.getCraftType();
+        // 如果是批量制作材料/提炼类型，要求玩家输入要制作的数量
+        if (craftType == "MATERIAL_BATCH") {
+            var mats = selectedRecipe.getMats();
+            var matQty = selectedRecipe.getMatQty();
+            var item = selectedRecipe.getItemId();
+            var yieldCount = selectedRecipe.getYieldQty();
+            var cost = selectedRecipe.getCost();
+
+            var prompt = "";
+
+            // 判断是付费冶炼还是免费合成，读取不同的台词模版
+            if (cost > 0) {
+                // 读取付费冶炼台词模版
+                var defaultTpl = "冶炼1个#t{item}#需要下面的物品，怎么样？你想试试吗？\r\n{mats}";
+                var tpl = getDialog("quantity_prompt_refine", defaultTpl);
+
+                // 拼接材料与金币列表
+                var matStr = "";
+                for (var i = 0; i < mats.size(); i++) {
+                    matStr += "\r\n#i" + mats.get(i) + "# #b#t" + mats.get(i) + "# " + matQty.get(i) + "个#k";
+                }
+                if (cost > 0) {
+                    matStr += "\r\n#i4031138# #b" + cost + " 金币#k";
+                }
+
+                // 替换模版中的变量
+                prompt = tpl.replace("{item}", item + "")
+                            .replace("{mats}", matStr)
+                            .replace("{yield}", yieldCount + "");
+
+            } else {
+                // 读取免费合成台词模版
+                var defaultTpl = "使用 {mats}能做#t{item}#{yield}个，都是免费的。所以你应该谢谢我，怎么样？你想做几次？";
+                var tpl = getDialog("quantity_prompt_free", defaultTpl);
+
+                // 拼接材料简述 (如 "#b#t4000000# 10个#k ")
+                var matStr = "";
+                for (var i = 0; i < mats.size(); i++) {
+                    matStr += "#b#t" + mats.get(i) + "# " + matQty.get(i) + "个#k ";
+                }
+
+                // 替换模版中的变量
+                prompt = tpl.replace("{item}", item + "")
+                            .replace("{mats}", matStr)
+                            .replace("{yield}", yieldCount + "");
+            }
+
+            // 弹出输入框，默认 1，范围 1~100
+            cm.sendGetNumber(prompt, 1, 1, 100);
+
+        } else {
+            // 装备/单品类无需输入数量，自动跳到 Status 3 确认页
+            status = 2; // 修正 status 步进
+            action(1, 0, 0);
+        }
+
+    // -------------------------------------------------------------------------
+    // Status 3: 材料清单与最终确认
+    // -------------------------------------------------------------------------
+    } else if (status == 3) {
+        var craftType = (categoryData.getCraftType() + "").toUpperCase();
+
+        // 如果是批量制作，获取输入的数量
+        if (craftType == "MATERIAL_BATCH") {
+            craftQty = selection;
+            if (selectedRecipe == null && selectedOptionIndex != -1) {
+                selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
+            }
+        } else {
+            // 装备类型配方在上一步设置
+            if (selectedOptionIndex == -1) {
+                selectedOptionIndex = selection;
+            }
+            selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
+            craftQty = 1;
+        }
 
         var prompt = "";
 
-        // 根据 craftType 进行针对性的对话渲染
-        if (craftType == "REFINE") {
-            // 提炼类型文案
+        if (craftType == "MATERIAL_BATCH") {
             var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
-            prompt = "你想提炼 #b" + nameText + "#k 吗？这需要以下材料：\r\n";
+            var totalYield = selectedRecipe.getYieldQty() * craftQty;
+            prompt = "你想制作 #b#t" + selectedRecipe.getItemId() + "##k " + totalYield + " 个吗？这需要以下材料：\r\n";
+
         } else if (selectedRecipe.getIsEquip()) {
-            // 装备锻造文案
             prompt = "你想做一个 #b#z" + selectedRecipe.getItemId() + "##k 吗？这需要下面的道具，等级限制是 #r" + selectedRecipe.getReqLevel() + "#k。怎么样？想做吗？\r\n";
         } else {
-            // 普通消耗品/道具制作
             var yieldText = selectedRecipe.getYieldQty() > 1 ? selectedRecipe.getYieldQty() + "个 " : "";
             var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
             prompt = "你想制作 " + yieldText + "#b" + nameText + "#k 吗？这需要以下材料：\r\n";
         }
 
-        // 拼接材料列表
+        // 拼接材料列表 (自动按制作次数 craftQty 计算总需材料)
         var mats = selectedRecipe.getMats();
         var matQty = selectedRecipe.getMatQty();
         for (var i = 0; i < mats.size(); i++) {
-            prompt += "\r\n#i" + mats.get(i) + "##b " + matQty.get(i) + " #t" + mats.get(i) + "#个#k";
+            var totalMatReq = matQty.get(i) * craftQty;
+            prompt += "\r\n#i" + mats.get(i) + "##b #t" + mats.get(i) + "# " + totalMatReq + " 个#k";
         }
 
-        if (selectedRecipe.getCost() > 0) {
-            prompt += "\r\n#i4031138# #b" + selectedRecipe.getCost() + " 金币#k";
+        // 计算总手续费
+        var totalCost = selectedRecipe.getCost() * craftQty;
+        if (totalCost > 0) {
+            prompt += "\r\n#i4031138# #b" + totalCost + " 金币#k";
         }
 
         cm.sendYesNo(prompt);
 
-        // -------------------------------------------------------------------------
-        // Status 4: 校验与制作
-        // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Status 4: 校验与执行发放
+    // -------------------------------------------------------------------------
     } else if (status == 4) {
+        var totalYield = selectedRecipe.getYieldQty() * craftQty;
+        var totalCost = selectedRecipe.getCost() * craftQty;
+
         // 1. 检查背包空间
-        if (!cm.canHold(selectedRecipe.getItemId(), selectedRecipe.getYieldQty())) {
+        if (!cm.canHold(selectedRecipe.getItemId(), totalYield)) {
             cm.sendOk(getDialog("no_space", "首先检查你的物品栏是否有空位。"));
             cm.dispose();
             return;
         }
 
         // 2. 检查金币
-        if (selectedRecipe.getCost() > 0 && cm.getMeso() < selectedRecipe.getCost()) {
-            cm.sendOk(getDialog("no_meso", "对不起，你的金币不足。"));
+        if (totalCost > 0 && cm.getMeso() < totalCost) {
+            cm.sendOk(getDialog("no_meso", "恐怕你支付不起我的服务费。"));
             cm.dispose();
             return;
         }
 
-        // 3. 检查材料
+        // 3. 检查材料是否充足
         var complete = true;
         var mats = selectedRecipe.getMats();
         var matQty = selectedRecipe.getMatQty();
         for (var i = 0; i < mats.size(); i++) {
-            if (!cm.haveItem(mats.get(i), matQty.get(i))) {
+            var totalMatReq = matQty.get(i) * craftQty;
+            if (!cm.haveItem(mats.get(i), totalMatReq)) {
                 complete = false;
                 break;
             }
         }
 
         if (!complete) {
-            cm.sendOk(getDialog("no_mat", "请你确认是否有需要的物品或者背包对应窗口有没有空间。"));
+            cm.sendOk(getDialog("no_mat", "请你确认有需要的物品或背包的其他窗口有空间。"));
         } else {
-            // 扣材料与金币
+            // 扣除材料与金币
             for (var i = 0; i < mats.size(); i++) {
-                cm.gainItem(mats.get(i), -matQty.get(i));
+                var totalMatReq = matQty.get(i) * craftQty;
+                cm.gainItem(mats.get(i), -totalMatReq);
             }
-            if (selectedRecipe.getCost() > 0) {
-                cm.gainMeso(-selectedRecipe.getCost());
+            if (totalCost > 0) {
+                cm.gainMeso(-totalCost);
             }
 
-            // 给产物
-            cm.gainItem(selectedRecipe.getItemId(), selectedRecipe.getYieldQty());
-            cm.sendOk(getDialog("craft_success", "成功了！请拿好你的物品。"));
+            // 发放成果
+            cm.gainItem(selectedRecipe.getItemId(), totalYield);
+            cm.sendOk(getDialog("craft_success", "好了，完成了。你觉得怎么样，是不是一件艺术品？嗯，如果你需要其他东西，请再来找我。"));
         }
         cm.dispose();
     }
