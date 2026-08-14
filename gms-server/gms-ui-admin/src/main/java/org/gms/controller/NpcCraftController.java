@@ -48,14 +48,6 @@ public class NpcCraftController {
         return ResultBody.success(request, page);
     }
 
-    @Operation(summary = "分页获取列表")
-    @PostMapping("/" + ApiConstant.LATEST + "/getCraftList")
-    public ResultBody<Page<CraftSearchRtnDTO>> getCraftList() {
-        List<CraftSearchRtnDTO> craftList = npcCraftService.getCraftList();
-        Page<CraftSearchRtnDTO> page = BasePageUtil.create(craftList.stream().distinct().toList()).page();
-        return ResultBody.success(page);
-    }
-
     /**
      * 获取指定 NPC 配置的所有一级分类菜单列表
      */

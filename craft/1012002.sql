@@ -1,3 +1,7 @@
+-- 插入npc总表记录
+DELETE FROM `npc_craft_list` WHERE `npc_id` = 1012002;
+INSERT INTO `npc_craft_list` (`npc_id`) values (1012002);
+
 -- =========================================================================
 -- DML 数据初始化 (针对 NPC: 1012002 卫斯理 / 射手村) - 变量动态主键版
 -- =========================================================================
@@ -32,7 +36,7 @@ DELETE FROM `npc_craft_cat` WHERE `npc_id` = 1012002;
 -- 分类 0: 制作弓 (EQUIP_UPGRADE)
 -- =========================================================================
 INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_id`, `craft_type`, `prompt_text`, `warning_text`) VALUES
-(1012002, 0, '制作弓', 1, 'EQUIP_UPGRADE', '好眼光,弓的攻击速度快,也比弩灵敏许多,但是攻击比弩低一点点哦，但箭矢和弩没有太大区别。 总之, 你想做哪一种?#b', '');
+(1012002, 0, '制作弓', 1, 'EQUIP_SINGLE', '好眼光,弓的攻击速度快,也比弩灵敏许多,但是攻击比弩低一点点哦，但箭矢和弩没有太大区别。 总之, 你想做哪一种?#b', '');
 SET @cat_bow = LAST_INSERT_ID();
 
 -- 配方 0-0: 猎弓 (1452002)
@@ -75,7 +79,7 @@ INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 
 -- 分类 1: 制作弩 (EQUIP_UPGRADE)
 -- =========================================================================
 INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_id`, `craft_type`, `prompt_text`, `warning_text`) VALUES
-(1012002, 1, '制作弩', 1, 'EQUIP_UPGRADE', '弩是我的专长~它的攻击速度比弓要慢一点，但是伤害却比弓要来的高哦， 你想让我为你做哪一个?#b', '');
+(1012002, 1, '制作弩', 1, 'EQUIP_SINGLE', '弩是我的专长~它的攻击速度比弓要慢一点，但是伤害却比弓要来的高哦， 你想让我为你做哪一个?#b', '');
 SET @cat_xbow = LAST_INSERT_ID();
 
 -- 配方 1-0: 交叉弩 (1462001)
@@ -123,7 +127,7 @@ INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 
 -- 分类 2: 制作手套 (EQUIP_UPGRADE)
 -- =========================================================================
 INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_id`, `craft_type`, `prompt_text`, `warning_text`) VALUES
-(1012002, 2, '制作手套', 1, 'EQUIP_UPGRADE', '好的,你想要製作哪一种手套呢?#b', '');
+(1012002, 2, '制作手套', 1, 'EQUIP_SINGLE', '好的,你想要製作哪一种手套呢?#b', '');
 SET @cat_glove = LAST_INSERT_ID();
 
 -- 配方 2-0: 蓝色皮手套 (1082012)

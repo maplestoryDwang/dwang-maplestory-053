@@ -1,6 +1,25 @@
 import axios from 'axios';
 import type { HttpResponse } from '@/api/interceptor';
 
+
+// 对应 Java: CraftSearchRtnDTO
+export interface CraftSearchRtnDTO {
+  craftId?: number;
+  npcId?: number;
+  npcName?: string;
+}
+
+// 对应请求过滤器参数 (参照 getShopFilter 保持一致)
+export interface getCraftFilter {
+  pageNo?: number;
+  pageSize?: number;
+  onlyTotal?: boolean;
+  notPage?: boolean;
+  craftId?: number;
+  npcId?: number;
+  npcName?: string;
+}
+
 // DTO 定义
 export interface NpcCraftOption {
   id: number;

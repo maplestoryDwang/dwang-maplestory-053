@@ -1,3 +1,6 @@
+DELETE FROM `npc_craft_list` WHERE `npc_id` = 1052002;
+INSERT INTO `npc_craft_list` (`npc_id`) values (1052002);
+
 -- =========================================================================
 -- DML 数据初始化 (针对 NPC: 1052002 JM from tha Streetz / 废弃都市) - 变量动态主键版
 -- =========================================================================
@@ -18,7 +21,7 @@ INSERT INTO `npc_dialog` (`npc_id`, `template_id`, `dialog_type`, `dialog_key`, 
 -- 分类 0: 制作拳套 (EQUIP_UPGRADE)
 -- =========================================================================
 INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_id`, `craft_type`, `prompt_text`, `warning_text`) VALUES
-(1052002, 0, '制作拳套', 1, 'EQUIP_UPGRADE', '拳套是投飞镖时戴在手上的装备。对主要用短刀的飞侠作用不大。怎么样？你想做什么样的拳套？#b', '');
+(1052002, 0, '制作拳套', 1, 'EQUIP_SINGLE', '拳套是投飞镖时戴在手上的装备。对主要用短刀的飞侠作用不大。怎么样？你想做什么样的拳套？#b', '');
 SET @cat_claw = LAST_INSERT_ID();
 
 -- 配方 0-0: 甲级拳套 (1472001)
@@ -61,7 +64,7 @@ INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 
 -- 分类 1: 制作手套 (EQUIP_UPGRADE)
 -- =========================================================================
 INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_id`, `craft_type`, `prompt_text`, `warning_text`) VALUES
-(1052002, 1, '制作手套', 1, 'EQUIP_UPGRADE', '好...你想做什么手套？#b', '');
+(1052002, 1, '制作手套', 1, 'EQUIP_SINGLE', '好...你想做什么手套？#b', '');
 SET @cat_glove = LAST_INSERT_ID();
 
 -- 配方 1-0: 工人手套 (1082002)
