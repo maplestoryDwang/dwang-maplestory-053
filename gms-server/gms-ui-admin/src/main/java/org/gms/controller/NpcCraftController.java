@@ -4,25 +4,17 @@ import com.mybatisflex.core.paginate.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.gms.constants.api.ApiConstant;
-import org.gms.dao.entity.AccountsDO;
 import org.gms.model.dto.*;
-import org.gms.service.AccountService;
 import org.gms.service.NpcCraftService;
-import org.gms.service.NpcCraftServiceImpl;
 import org.gms.util.BasePageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.gms.dto.NpcCraftCategoryDTO;
-import org.gms.service.NpcCraftService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,6 +39,14 @@ public class NpcCraftController {
         this.npcCraftService = npcCraftService;
     }
 
+
+    @Operation(summary = "分页获取建造列表")
+    @PostMapping("/" + ApiConstant.LATEST + "/getCraftList")
+    public ResultBody<Page<CraftSearchRtnDTO>> getCraftList(@RequestBody SubmitBody<CraftSearchReqDTO> request) {
+        List<CraftSearchRtnDTO> craftList = npcCraftService.getCraftList();
+        Page<CraftSearchRtnDTO> page = BasePageUtil.create(craftList.stream().distinct().toList(), request.getData()).page();
+        return ResultBody.success(request, page);
+    }
 
     @Operation(summary = "分页获取列表")
     @PostMapping("/" + ApiConstant.LATEST + "/getCraftList")

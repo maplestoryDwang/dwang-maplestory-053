@@ -26,6 +26,25 @@ export interface NpcCraftCat {
   options?: NpcCraftOption[];
 }
 
+// 参数类型（完全照搬 getShopFilter 的字段）
+export interface CraftSearchReq {
+    pageNo?: number;
+    pageSize?: number;
+    onlyTotal: boolean;
+    notPage: boolean;
+    shopId?: number;      // 对应 craftId，后端字段名 shopId
+    npcId?: number;
+    npcName?: string;
+    itemId?: number;
+    itemName?: string;
+}
+
+// 新接口：直接 POST，不包一层 data，就和 getShopList 一样
+export function getCraftList(data: CraftSearchReq) {
+    return axios.post<HttpResponse<any>>('/api/npc-craft/v1/getCraftList', data);
+}
+
+
 // 1. 查询某个 NPC 的菜单分类列表
 export function getNpcMenuList(npcId: number) {
   return axios.get<HttpResponse<NpcCraftCat[]>>(
