@@ -1295,7 +1295,6 @@ public class ItemInformationProvider {
     }
 
 
-
     public int[][] getSummonMobs(int itemId) {
         Data data = getItemData(itemId);
         int theInt = data.getChildByPath("mob").getChildren().size();
@@ -1324,6 +1323,7 @@ public class ItemInformationProvider {
     }
 
     public Pair<String, String> getNameDesc(int itemId) {
+
         if (nameDescCache.containsKey(itemId)) {
             return nameDescCache.get(itemId);
         }
@@ -1331,8 +1331,14 @@ public class ItemInformationProvider {
         if (strings == null) {
             return null;
         }
-        String name = DataTool.getString("name", strings, null);
-        String desc = DataTool.getString("desc", strings, null);
+        String name = null;
+        String desc = null;
+        try {
+            name = DataTool.getString("name", strings, null);
+            desc = DataTool.getString("desc", strings, null);
+        } catch (Exception e) {
+            log.error("getNameDesc error: {} name:{}, desc:{}", itemId, name, desc, e);
+        }
         if (name == null) {
             return null;
         }

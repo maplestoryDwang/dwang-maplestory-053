@@ -3,6 +3,7 @@ package org.gms.service;
 
 import org.gms.dto.NpcCraftCategoryDTO;
 import org.gms.dto.NpcMenuDTO;
+import org.gms.model.dto.CraftSearchRtnDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,12 @@ import java.util.Map;
  * @since 2026/8/12 15:41
  */
 public interface NpcCraftService {
+
+    /**
+     * 获取所有有制作的NPC
+     * @return
+     */
+    public List<CraftSearchRtnDTO> getCraftList();
 
     /**
      * 获取指定 NPC 绑定的全量 Key-Value 垂直台词 Map (支持模板降级)

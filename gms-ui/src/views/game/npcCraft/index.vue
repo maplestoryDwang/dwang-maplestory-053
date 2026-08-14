@@ -3,7 +3,7 @@
     <Breadcrumb :items="['menu.game', 'menu.game.npcCraft']" />
 
     <!-- 头部搜索过滤栏 -->
-    <a-card class="general-card" title="NPC 锻造配置查看">
+    <a-card class="general-card" title="NPC 制作配置查看">
       <a-row :gutter="16" style="margin-bottom: 16px">
         <a-col :span="8">
           <a-input-search
@@ -51,7 +51,7 @@
               <a-tab-pane
                 v-for="cat in categories"
                 :key="cat.categoryId"
-                :title="`[Menu ${cat.categoryId}] ${cat.categoryName}`"
+                :title="`[Menu ${cat.menuIndex}] ${cat.categoryName}`"
               >
                 <!-- 分类基本信息 -->
                 <a-space direction="vertical" fill style="margin-bottom: 12px">
@@ -82,7 +82,7 @@
                     />
                     <a-table-column title="显示名称" data-index="displayText">
                       <template #cell="{ record }">
-                        {{ record.displayText || `#t${record.itemId}#` }}
+                        {{ record.displayText || `${record.itemName}` }}
                       </template>
                     </a-table-column>
 
@@ -129,7 +129,7 @@
                       <template #cell="{ record }">
                         <a-space wrap>
                           <a-tag
-                            v-for="(matId, idx) in record.mats"
+                            v-for="(matId, idx) in record.matNames"
                             :key="idx"
                             color="orange"
                           >
@@ -160,7 +160,7 @@
     NpcCraftCat,
   } from '@/api/npcCraft';
 
-  const searchNpcId = ref<number | undefined>(2000000);
+  const searchNpcId = ref<number | undefined>(1012002);
   const loading = ref(false);
   const hasSearched = ref(false);
 
@@ -193,10 +193,18 @@
       );
 
       const categoryResults = await Promise.all(categoryPromises);
-      categories.value = categoryResults
-        .map((res) => res.data)
-        .filter((item): item is NpcCraftCat => Boolean(item));
 
+      categories.value = categoryResults
+        .map((res, index) => {
+          if (!res.data) return null;
+          return {
+            ...res.data,
+            // 如果后端详情接口没给 menuIndex，用第一步 menuList 里的 menuIndex 兜底
+            menuIndex: res.data.menuIndex ?? menuList[index]?.menuIndex,
+            categoryName: res.data.categoryName ?? menuList[index]?.categoryName,
+          };
+        })
+        .filter((item): item is NpcCraftCat => Boolean(item));
       hasSearched.value = true;
       Message.success(`成功加载 NPC [${npcId}] 锻造数据`);
     } catch (err: any) {

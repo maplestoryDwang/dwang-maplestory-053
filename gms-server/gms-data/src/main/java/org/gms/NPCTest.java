@@ -45,15 +45,16 @@ public class NPCTest {
 
     public static void main(String[] args) {
         NPCTest npcTest = new NPCTest();
-        int npcId= 101000000;
+        int npcId= 1012002;
         int menuIndex = 1;
         List<NpcMenuDTO> npcMenuList = npcTest.getNpcMenuList(npcId);
         Map<String, String> craft = npcTest.loadDialogMap(npcId, "craft");
 
-        NpcCraftCategoryDTO categoryData = npcTest.getCategoryData(101000000, 0);
+        NpcCraftCategoryDTO categoryData = npcTest.getCategoryData(npcId, 0);
 
 
     }
+
 
 
     /**
@@ -92,6 +93,7 @@ public class NPCTest {
         NpcCraftCategoryDTO dto = new NpcCraftCategoryDTO();
         dto.setCategoryId(cat.getId());
         dto.setCategoryName(cat.getCategoryName());
+        dto.setCraftType(cat.getCraftType());
         dto.setPromptText(cat.getPromptText());
         dto.setWarningText(cat.getWarningText());
 
@@ -113,6 +115,8 @@ public class NPCTest {
         }
 
         List<Integer> recipeIds = items.stream().map(NpcCraftItem::getId).collect(Collectors.toList());
+
+        // 拿到所有需要的材料
         List<NpcCraftMat> allMats = matMapper.selectListByQuery(
                 QueryWrapper.create().from(NPC_CRAFT_MAT).where(NPC_CRAFT_MAT.RECIPE_ID.in(recipeIds))
         );

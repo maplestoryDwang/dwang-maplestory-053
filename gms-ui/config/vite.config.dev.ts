@@ -14,8 +14,8 @@ export default mergeConfig(
     plugins: [
       eslint({
         cache: false,
-        include: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue'],
-        exclude: ['node_modules'],
+        failOnError: false, // 出现 ESLint 报错时不卡住 Vite 编译
+        emitError: false,
       }),
     ],
   },

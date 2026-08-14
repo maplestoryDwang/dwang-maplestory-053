@@ -9,6 +9,7 @@ import org.gms.model.dto.*;
 import org.gms.service.AccountService;
 import org.gms.service.NpcCraftService;
 import org.gms.service.NpcCraftServiceImpl;
+import org.gms.util.BasePageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,15 @@ public class NpcCraftController {
     @Autowired
     public NpcCraftController(NpcCraftService npcCraftService) {
         this.npcCraftService = npcCraftService;
+    }
+
+
+    @Operation(summary = "分页获取列表")
+    @PostMapping("/" + ApiConstant.LATEST + "/getCraftList")
+    public ResultBody<Page<CraftSearchRtnDTO>> getCraftList() {
+        List<CraftSearchRtnDTO> craftList = npcCraftService.getCraftList();
+        Page<CraftSearchRtnDTO> page = BasePageUtil.create(craftList.stream().distinct().toList()).page();
+        return ResultBody.success(page);
     }
 
     /**

@@ -29,6 +29,7 @@ public class NpcCraftCategoryDTO {
     public static class RecipeOptionDTO {
         private Integer recipeId;
         private Integer itemId;
+        private String itemName;
         private Boolean isEquip;
         private Integer yieldQty;
         private Integer reqLevel;
@@ -36,6 +37,7 @@ public class NpcCraftCategoryDTO {
         private Integer cost;
         private String displayText;
         private List<Integer> mats;
+        private List<String> matNames;
         private List<Integer> matQty;
     }
 }

@@ -1,16 +1,17 @@
 package org.gms.service;
 
 import com.mybatisflex.core.query.QueryWrapper;
-import org.gms.dao.entity.NpcCraftCat;
-import org.gms.dao.entity.NpcCraftItem;
-import org.gms.dao.entity.NpcCraftMat;
-import org.gms.dao.entity.NpcDialog;
-import org.gms.dao.mapper.NpcCraftCatMapper;
-import org.gms.dao.mapper.NpcCraftItemMapper;
-import org.gms.dao.mapper.NpcCraftMatMapper;
-import org.gms.dao.mapper.NpcDialogMapper;
+import com.mybatisflex.core.row.Row;
+import org.gms.dao.entity.*;
+import org.gms.dao.mapper.*;
 import org.gms.dto.NpcCraftCategoryDTO;
 import org.gms.dto.NpcMenuDTO;
+import org.gms.model.dto.CraftSearchRtnDTO;
+import org.gms.model.dto.ShopSearchReqDTO;
+import org.gms.model.dto.ShopSearchRtnDTO;
+import org.gms.server.ItemInformationProvider;
+import org.gms.server.StringInfoProvider;
+import org.gms.util.RequireUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ import static org.gms.dao.entity.table.NpcCraftCatTableDef.NPC_CRAFT_CAT;
 import static org.gms.dao.entity.table.NpcCraftItemTableDef.NPC_CRAFT_ITEM;
 import static org.gms.dao.entity.table.NpcCraftMatTableDef.NPC_CRAFT_MAT;
 import static org.gms.dao.entity.table.NpcDialogTableDef.NPC_DIALOG;
+import static org.gms.dao.entity.table.ShopitemsDOTableDef.SHOPITEMS_D_O;
+import static org.gms.dao.entity.table.ShopsDOTableDef.SHOPS_D_O;
 
 /**
  * NPC 锻造/合成服务实现类 (基于 MyBatis-Flex)
@@ -41,6 +44,29 @@ public class NpcCraftServiceImpl implements NpcCraftService {
     @Autowired
     private NpcCraftMatMapper matMapper;
 
+    @Autowired
+    private NpcCraftListMapper craftListMapper;
+
+
+    public List<CraftSearchRtnDTO> getCraftList() {
+
+        List<NpcCraftListDO> queryAsList = craftListMapper.selectAll();
+        List<CraftSearchRtnDTO> matchedShopsDOList = new ArrayList<>();
+        for (NpcCraftListDO row : queryAsList) {
+            Integer npcId = row.getNpcId();
+            String npcName = StringInfoProvider.getNPCName(npcId);
+            if (RequireUtil.isEmpty(npcName)) {
+                continue;
+            }
+
+            matchedShopsDOList.add(CraftSearchRtnDTO.builder()
+                    .craftId(row.getId())
+                    .npcId(npcId)
+                    .npcName(npcName)
+                    .build());
+        }
+        return matchedShopsDOList;
+    }
     /**
      * 1. 获取指定 NPC 配置的所有一级分类菜单列表 (用于 status == 0 阶段)
      */
@@ -106,11 +132,16 @@ public class NpcCraftServiceImpl implements NpcCraftService {
         );
         Map<Integer, List<NpcCraftMat>> matGroup = allMats.stream().collect(Collectors.groupingBy(NpcCraftMat::getRecipeId));
 
+        // 获取item的名字
+        ItemInformationProvider instance = ItemInformationProvider.getInstance();
+
         List<NpcCraftCategoryDTO.RecipeOptionDTO> optionDTOs = new ArrayList<>();
         for (NpcCraftItem item : items) {
             NpcCraftCategoryDTO.RecipeOptionDTO opt = new NpcCraftCategoryDTO.RecipeOptionDTO();
             opt.setRecipeId(item.getId());
             opt.setItemId(item.getItemId());
+            String name = instance.getName(item.getItemId());
+            opt.setItemName(name);
             opt.setIsEquip(item.getIsEquip());
             opt.setYieldQty(item.getYieldQty());
             opt.setReqLevel(item.getReqLevel());
@@ -119,12 +150,15 @@ public class NpcCraftServiceImpl implements NpcCraftService {
             opt.setDisplayText(item.getDisplayText());
 
             List<Integer> matsList = new ArrayList<>();
+            List<String> matsNameLists = new ArrayList<>();
             List<Integer> matQtyList = new ArrayList<>();
             for (NpcCraftMat m : matGroup.getOrDefault(item.getId(), Collections.emptyList())) {
                 matsList.add(m.getMatId());
+                matsNameLists.add(instance.getName(m.getMatId()));
                 matQtyList.add(m.getMatQty());
             }
             opt.setMats(matsList);
+            opt.setMatNames(matsNameLists);
             opt.setMatQty(matQtyList);
             optionDTOs.add(opt);
         }

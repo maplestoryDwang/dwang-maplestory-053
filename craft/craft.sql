@@ -2,10 +2,17 @@
 -- 1. 建表 DDL
 -- =========================================================================
 
+DROP TABLE IF EXISTS `npc_craft_list`;
 DROP TABLE IF EXISTS `npc_craft_mat`;
 DROP TABLE IF EXISTS `npc_craft_item`;
 DROP TABLE IF EXISTS `npc_craft_cat`;
 DROP TABLE IF EXISTS `npc_dialog`;
+
+-- 1.0 npc列表
+CREATE TABLE `npc_craft_list` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `npc_id` INT NOT NULL COMMENT '绑定 NPC ID'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='NPC制作主分类表';
 
 -- 1.1 台词配置表
 CREATE TABLE `npc_dialog` (
