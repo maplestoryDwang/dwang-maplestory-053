@@ -111,6 +111,16 @@
 
           <!-- 分类与配方 Tab 选项卡 -->
           <a-card title="锻造分类与配方列表" size="small">
+            <template #extra>
+              <a-button
+                type="primary"
+                status="success"
+                size="small"
+                @click="addCategoryClick"
+              >
+                新增分类
+              </a-button>
+            </template>
             <a-empty
               v-if="categories.length === 0"
               description="该 NPC 暂未配置任何锻造分类"
@@ -119,10 +129,35 @@
             <a-tabs v-else type="card-gutter">
               <a-tab-pane
                 v-for="cat in categories"
-                :key="cat.categoryId"
+                :key="cat.id ?? cat.categoryId"
                 :title="`[Menu ${cat.menuIndex}] ${cat.categoryName}`"
               >
                 <a-space direction="vertical" fill style="margin-bottom: 12px">
+                  <a-space>
+                    <a-button
+                      type="primary"
+                      size="mini"
+                      @click="editCategoryClick(cat)"
+                    >
+                      编辑分类
+                    </a-button>
+                    <a-popconfirm
+                      content="确定删除该分类吗？其下所有配方与材料将一并删除！"
+                      @ok="removeCategoryClick(cat)"
+                    >
+                      <a-button type="primary" status="danger" size="mini">
+                        删除分类
+                      </a-button>
+                    </a-popconfirm>
+                    <a-button
+                      type="primary"
+                      status="success"
+                      size="mini"
+                      @click="addItemClick(cat)"
+                    >
+                      + 新增配方
+                    </a-button>
+                  </a-space>
                   <a-alert
                     v-if="cat.warningText"
                     type="warning"
@@ -130,20 +165,17 @@
                   >
                     {{ cat.warningText }}
                   </a-alert>
-                  <div>
-                    <b>类型：</b> {{ cat.craftType }}
-                  </div>
+                  <div> <b>类型：</b> {{ cat.craftType }} </div>
                   <div v-if="cat.promptText">
                     <b>引导提示词：</b> {{ cat.promptText }}
                   </div>
-
                 </a-space>
 
                 <!-- 配方数据表格 -->
                 <a-table
                   :data="cat.options || []"
                   :pagination="false"
-                  row-key="id"
+                  row-key="recipeId"
                   bordered
                 >
                   <template #columns>
@@ -160,7 +192,11 @@
                       data-index="itemId"
                       :width="120"
                     />
-                    <a-table-column title="显示名称" data-index="displayText" :width="150">
+                    <a-table-column
+                      title="显示名称"
+                      data-index="displayText"
+                      :width="150"
+                    >
                       <template #cell="{ record }">
                         {{ record.itemName || `道具 ${record.itemId}` }}
                       </template>
@@ -200,7 +236,7 @@
                     <!-- 合成材料 -->
                     <a-table-column title="合成材料明细 (Item ID x 数量)">
                       <template #cell="{ record }">
-                        <a-space wrap v-if="record.mats && record.mats.length">
+                        <a-space v-if="record.mats && record.mats.length" wrap>
                           <a-tag
                             v-for="(matId, idx) in record.mats"
                             :key="idx"
@@ -208,13 +244,45 @@
                           >
                             <img
                               :src="getIconUrl('item', matId)"
-                              style="width: 16px; vertical-align: middle; margin-right: 4px"
+                              style="
+                                width: 16px;
+                                vertical-align: middle;
+                                margin-right: 4px;
+                              "
                             />
                             {{ matId }} ×
                             {{ record.matQty ? record.matQty[idx] : 0 }}
                           </a-tag>
                         </a-space>
                         <span v-else>-</span>
+                      </template>
+                    </a-table-column>
+
+                    <!-- 操作列 -->
+                    <a-table-column
+                      title="操作"
+                      :width="140"
+                      fixed="right"
+                      align="center"
+                    >
+                      <template #cell="{ record }">
+                        <a-space>
+                          <a-button
+                            type="text"
+                            size="mini"
+                            @click="editItemClick(cat, record)"
+                          >
+                            编辑
+                          </a-button>
+                          <a-popconfirm
+                            content="确定删除该配方吗？其材料明细将一并删除！"
+                            @ok="removeItemClick(cat, record)"
+                          >
+                            <a-button type="text" status="danger" size="mini">
+                              删除
+                            </a-button>
+                          </a-popconfirm>
+                        </a-space>
                       </template>
                     </a-table-column>
                   </template>
@@ -240,6 +308,11 @@
         @page-size-change="pageSizeChange"
       />
     </a-card>
+
+    <!-- 分类新增/编辑模态框 -->
+    <category-form ref="categoryFormRef" @load-data="reloadDetail" />
+    <!-- 配方新增/编辑模态框 -->
+    <item-form ref="itemFormRef" @load-data="reloadDetail" />
   </div>
 </template>
 
@@ -256,13 +329,18 @@
     getCraftFilter,
     CraftSearchRtnDTO,
     NpcCraftCat,
+    deleteCategory,
+    deleteItem,
   } from '@/api/npcCraft';
+  import CategoryForm from '@/views/game/npcCraft/categoryForm.vue';
+  import ItemForm from '@/views/game/npcCraft/itemForm.vue';
 
   const { loading, setLoading } = useLoading(false);
   const detailLoading = ref(false);
 
   const craftId = ref<number>(-1);
   const total = ref<number>(0);
+  const currentNpcId = ref<number>(0);
 
   // 筛选对象，对齐 npcShop
   const craftFilter = ref<getCraftFilter>({
@@ -325,6 +403,7 @@
 
   const showCraftDetailClick = async (cId: number, npcId: number) => {
     craftId.value = cId;
+    currentNpcId.value = npcId;
     detailLoading.value = true;
     try {
       // 1. 并发获取对话台词 & 菜单列表
@@ -347,8 +426,11 @@
           if (!res.data) return null;
           return {
             ...res.data,
+            id: res.data.categoryId,
+            npcId,
             menuIndex: res.data.menuIndex ?? menuList[index]?.menuIndex,
-            categoryName: res.data.categoryName ?? menuList[index]?.categoryName,
+            categoryName:
+              res.data.categoryName ?? menuList[index]?.categoryName,
           };
         })
         .filter((item): item is NpcCraftCat => Boolean(item));
@@ -356,6 +438,50 @@
       Message.error(err.message || '获取配方详情失败');
     } finally {
       detailLoading.value = false;
+    }
+  };
+
+  // ===================== 增删改操作 =====================
+
+  const reloadDetail = () => {
+    if (craftId.value > 0 && currentNpcId.value > 0) {
+      showCraftDetailClick(craftId.value, currentNpcId.value);
+    }
+  };
+
+  // 分类表单
+  const categoryFormRef = ref();
+  const addCategoryClick = () => {
+    categoryFormRef.value.initAdd(currentNpcId.value);
+  };
+  const editCategoryClick = (cat: NpcCraftCat) => {
+    categoryFormRef.value.initEdit(cat);
+  };
+  const removeCategoryClick = async (cat: NpcCraftCat) => {
+    try {
+      await deleteCategory({ id: cat.id, npcId: cat.npcId } as any);
+      Message.success('删除成功！');
+      reloadDetail();
+    } catch (err: any) {
+      Message.error(err.message || '删除失败');
+    }
+  };
+
+  // 配方表单
+  const itemFormRef = ref();
+  const addItemClick = (cat: NpcCraftCat) => {
+    itemFormRef.value.initAdd(cat.id);
+  };
+  const editItemClick = (cat: NpcCraftCat, opt: any) => {
+    itemFormRef.value.initEdit({ ...opt, catId: cat.id });
+  };
+  const removeItemClick = async (cat: NpcCraftCat, opt: any) => {
+    try {
+      await deleteItem({ id: opt.recipeId ?? opt.id } as any);
+      Message.success('删除成功！');
+      reloadDetail();
+    } catch (err: any) {
+      Message.error(err.message || '删除失败');
     }
   };
 </script>

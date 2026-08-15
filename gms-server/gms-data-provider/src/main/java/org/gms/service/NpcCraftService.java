@@ -1,7 +1,10 @@
 package org.gms.service;
 
 
+import org.gms.dao.entity.NpcCraftCat;
+import org.gms.dao.entity.NpcDialog;
 import org.gms.dto.NpcCraftCategoryDTO;
+import org.gms.dto.NpcCraftItemDTO;
 import org.gms.dto.NpcMenuDTO;
 import org.gms.model.dto.CraftSearchRtnDTO;
 
@@ -37,4 +40,34 @@ public interface NpcCraftService {
      * 根据 npcId 和 menuIndex 获取具体某个分类下的完整配方与台词数据包
      */
     NpcCraftCategoryDTO getCategoryData(int npcId, int menuIndex);
+
+    /**
+     * 新增或修改锻造分类 (id 为空时新增)
+     */
+    void saveCategory(NpcCraftCat cat);
+
+    /**
+     * 删除锻造分类 (级联删除该分类下所有配方与材料)
+     */
+    void deleteCategory(Integer categoryId);
+
+    /**
+     * 新增或修改配方 (id 为空时新增；保存时重建该配方的材料明细)
+     */
+    void saveItem(NpcCraftItemDTO dto);
+
+    /**
+     * 删除配方 (级联删除其材料明细)
+     */
+    void deleteItem(Integer itemId);
+
+    /**
+     * 新增或修改 NPC 台词 (id 为空时新增)
+     */
+    void saveDialog(NpcDialog dialog);
+
+    /**
+     * 删除 NPC 台词
+     */
+    void deleteDialog(Integer dialogId);
 }

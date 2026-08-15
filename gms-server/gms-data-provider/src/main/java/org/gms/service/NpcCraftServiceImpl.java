@@ -5,6 +5,7 @@ import com.mybatisflex.core.row.Row;
 import org.gms.dao.entity.*;
 import org.gms.dao.mapper.*;
 import org.gms.dto.NpcCraftCategoryDTO;
+import org.gms.dto.NpcCraftItemDTO;
 import org.gms.dto.NpcMenuDTO;
 import org.gms.model.dto.CraftSearchRtnDTO;
 import org.gms.model.dto.ShopSearchReqDTO;
@@ -14,6 +15,7 @@ import org.gms.server.StringInfoProvider;
 import org.gms.util.RequireUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -196,7 +198,7 @@ public class NpcCraftServiceImpl implements NpcCraftService {
                 .where(NPC_DIALOG.DIALOG_TYPE.eq(dialogType))
                 .and(
                         NPC_DIALOG.NPC_ID.eq(npcId)
-                                .or(NPC_DIALOG.TEMPLATE_ID.eq(templateId))
+
                 );
 
         List<NpcDialog> list = dialogMapper.selectListByQuery(qw);
@@ -210,5 +212,157 @@ public class NpcCraftServiceImpl implements NpcCraftService {
             }
         }
         return resultMap;
+    }
+
+    // =========================================================================
+    // 以下为管理后台增删改接口实现
+    // =========================================================================
+
+    /**
+     * 新增或修改锻造分类 (id 为空时新增)
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveCategory(NpcCraftCat cat) {
+        RequireUtil.requireNotNull(cat, "分类数据不能为空");
+        RequireUtil.requireNotNull(cat.getNpcId(), "npcId 不能为空");
+        RequireUtil.requireNotEmpty(cat.getCategoryName(), "分类名称不能为空");
+        if (cat.getMenuIndex() == null) {
+            cat.setMenuIndex(0);
+        }
+        if (cat.getTemplateId() == null) {
+            cat.setTemplateId(1);
+        }
+        if (cat.getId() == null) {
+            catMapper.insertSelective(cat);
+        } else {
+            catMapper.update(cat);
+        }
+    }
+
+    /**
+     * 删除锻造分类 (级联删除该分类下所有配方与材料)
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteCategory(Integer categoryId) {
+        RequireUtil.requireNotNull(categoryId, "分类ID不能为空");
+        // 1. 查出该分类下所有配方
+        List<NpcCraftItem> items = itemMapper.selectListByQuery(
+                QueryWrapper.create()
+                        .from(NPC_CRAFT_ITEM)
+                        .where(NPC_CRAFT_ITEM.CATEGORY_ID.eq(categoryId))
+        );
+        // 2. 删除这些配方的材料
+        for (NpcCraftItem item : items) {
+            matMapper.deleteByQuery(
+                    QueryWrapper.create()
+                            .from(NPC_CRAFT_MAT)
+                            .where(NPC_CRAFT_MAT.RECIPE_ID.eq(item.getId()))
+            );
+        }
+        // 3. 删除配方
+        itemMapper.deleteByQuery(
+                QueryWrapper.create()
+                        .from(NPC_CRAFT_ITEM)
+                        .where(NPC_CRAFT_ITEM.CATEGORY_ID.eq(categoryId))
+        );
+        // 4. 删除分类
+        catMapper.deleteById(categoryId);
+    }
+
+    /**
+     * 新增或修改配方 (id 为空时新增；保存时重建该配方的材料明细)
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveItem(NpcCraftItemDTO dto) {
+        RequireUtil.requireNotNull(dto, "配方数据不能为空");
+        RequireUtil.requireNotNull(dto.getCategoryId(), "分类ID不能为空");
+        RequireUtil.requireNotNull(dto.getItemId(), "物品ID不能为空");
+
+        NpcCraftItem item = new NpcCraftItem();
+        item.setId(dto.getId());
+        item.setCategoryId(dto.getCategoryId());
+        item.setItemId(dto.getItemId());
+        item.setIsEquip(dto.getIsEquip() != null ? dto.getIsEquip() : false);
+        item.setYieldQty(dto.getYieldQty() != null ? dto.getYieldQty() : 1);
+        item.setReqLevel(dto.getReqLevel() != null ? dto.getReqLevel() : 0);
+        item.setJobName(dto.getJobName());
+        item.setCost(dto.getCost() != null ? dto.getCost() : 0);
+        item.setDisplayText(dto.getDisplayText());
+        item.setSortOrder(dto.getSortOrder() != null ? dto.getSortOrder() : 0);
+
+        if (item.getId() == null) {
+            itemMapper.insertSelective(item);
+        } else {
+            itemMapper.update(item);
+        }
+
+        // 重建材料明细：先删除旧材料，再插入新材料
+        matMapper.deleteByQuery(
+                QueryWrapper.create()
+                        .from(NPC_CRAFT_MAT)
+                        .where(NPC_CRAFT_MAT.RECIPE_ID.eq(item.getId()))
+        );
+        if (dto.getMats() != null) {
+            for (NpcCraftMat mat : dto.getMats()) {
+                if (mat == null || mat.getMatId() == null || mat.getMatQty() == null) {
+                    continue;
+                }
+                NpcCraftMat newMat = new NpcCraftMat();
+                newMat.setRecipeId(item.getId());
+                newMat.setMatId(mat.getMatId());
+                newMat.setMatQty(mat.getMatQty());
+                matMapper.insertSelective(newMat);
+            }
+        }
+    }
+
+    /**
+     * 删除配方 (级联删除其材料明细)
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteItem(Integer itemId) {
+        RequireUtil.requireNotNull(itemId, "配方ID不能为空");
+        matMapper.deleteByQuery(
+                QueryWrapper.create()
+                        .from(NPC_CRAFT_MAT)
+                        .where(NPC_CRAFT_MAT.RECIPE_ID.eq(itemId))
+        );
+        itemMapper.deleteById(itemId);
+    }
+
+    /**
+     * 新增或修改 NPC 台词 (id 为空时新增)
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveDialog(NpcDialog dialog) {
+        RequireUtil.requireNotNull(dialog, "台词数据不能为空");
+        RequireUtil.requireNotNull(dialog.getNpcId(), "npcId 不能为空");
+        RequireUtil.requireNotEmpty(dialog.getDialogKey(), "台词 key 不能为空");
+        if (dialog.getDialogType() == null) {
+            dialog.setDialogType("craft");
+        }
+        if (dialog.getTemplateId() == null) {
+            dialog.setTemplateId(1);
+        }
+        if (dialog.getId() == null) {
+            dialogMapper.insertSelective(dialog);
+        } else {
+            dialogMapper.update(dialog);
+        }
+    }
+
+    /**
+     * 删除 NPC 台词
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteDialog(Integer dialogId) {
+        RequireUtil.requireNotNull(dialogId, "台词ID不能为空");
+        dialogMapper.deleteById(dialogId);
     }
 }

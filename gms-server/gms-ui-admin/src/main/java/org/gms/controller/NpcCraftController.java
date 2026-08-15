@@ -4,6 +4,9 @@ import com.mybatisflex.core.paginate.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.gms.constants.api.ApiConstant;
+import org.gms.dao.entity.NpcCraftCat;
+import org.gms.dao.entity.NpcDialog;
+import org.gms.dto.NpcCraftItemDTO;
 import org.gms.model.dto.*;
 import org.gms.service.NpcCraftService;
 import org.gms.util.BasePageUtil;
@@ -84,5 +87,65 @@ public class NpcCraftController {
             @Parameter(description = "台词类型") @RequestParam(value = "dialogType", defaultValue = "craft") String dialogType) {
         Map<String, String> dialogMap = npcCraftService.loadDialogMap(npcId, dialogType);
         return ResultBody.success(dialogMap);
+    }
+
+    /**
+     * 新增或修改锻造分类
+     */
+    @Operation(summary = "新增或修改锻造分类")
+    @PostMapping("/" + ApiConstant.LATEST + "/saveCategory")
+    public ResultBody<Object> saveCategory(@RequestBody SubmitBody<NpcCraftCat> request) {
+        npcCraftService.saveCategory(request.getData());
+        return ResultBody.success(request, null);
+    }
+
+    /**
+     * 删除锻造分类
+     */
+    @Operation(summary = "删除锻造分类 (级联删除配方与材料)")
+    @PostMapping("/" + ApiConstant.LATEST + "/deleteCategory")
+    public ResultBody<Object> deleteCategory(@RequestBody SubmitBody<NpcCraftCat> request) {
+        npcCraftService.deleteCategory(request.getData().getId());
+        return ResultBody.success(request, null);
+    }
+
+    /**
+     * 新增或修改配方
+     */
+    @Operation(summary = "新增或修改配方 (含材料明细)")
+    @PostMapping("/" + ApiConstant.LATEST + "/saveItem")
+    public ResultBody<Object> saveItem(@RequestBody SubmitBody<NpcCraftItemDTO> request) {
+        npcCraftService.saveItem(request.getData());
+        return ResultBody.success(request, null);
+    }
+
+    /**
+     * 删除配方
+     */
+    @Operation(summary = "删除配方 (级联删除材料明细)")
+    @PostMapping("/" + ApiConstant.LATEST + "/deleteItem")
+    public ResultBody<Object> deleteItem(@RequestBody SubmitBody<NpcCraftItemDTO> request) {
+        npcCraftService.deleteItem(request.getData().getId());
+        return ResultBody.success(request, null);
+    }
+
+    /**
+     * 新增或修改 NPC 台词
+     */
+    @Operation(summary = "新增或修改 NPC 台词")
+    @PostMapping("/" + ApiConstant.LATEST + "/saveDialog")
+    public ResultBody<Object> saveDialog(@RequestBody SubmitBody<NpcDialog> request) {
+        npcCraftService.saveDialog(request.getData());
+        return ResultBody.success(request, null);
+    }
+
+    /**
+     * 删除 NPC 台词
+     */
+    @Operation(summary = "删除 NPC 台词")
+    @PostMapping("/" + ApiConstant.LATEST + "/deleteDialog")
+    public ResultBody<Object> deleteDialog(@RequestBody SubmitBody<NpcDialog> request) {
+        npcCraftService.deleteDialog(request.getData().getId());
+        return ResultBody.success(request, null);
     }
 }
