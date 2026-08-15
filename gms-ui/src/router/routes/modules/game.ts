@@ -43,6 +43,16 @@ const GAME: AppRouteRecordRaw = {
       },
     },
     {
+      path: 'npcCraft',
+      name: 'NpcCraft',
+      component: () => import('@/views/game/npcCraft/index.vue'),
+      meta: {
+        locale: 'menu.game.npcCraft', // 国际化 Key (也可直接写 'NPC锻造')
+        requiresAuth: true,
+        roles: ['admin'],
+      },
+    },
+    {
       path: 'drop',
       name: 'drop',
       component: () => import('@/views/game/drop/index.vue'),
@@ -108,16 +118,6 @@ const GAME: AppRouteRecordRaw = {
       component: () => import('@/views/game/autoban/index.vue'),
       meta: {
         locale: 'menu.game.autoban',
-        requiresAuth: true,
-        roles: ['admin'],
-      },
-    },
-    {
-      path: 'npcCraft',
-      name: 'NpcCraft',
-      component: () => import('@/views/game/npcCraft/index.vue'),
-      meta: {
-        locale: 'menu.game.npcCraft', // 国际化 Key (也可直接写 'NPC锻造')
         requiresAuth: true,
         roles: ['admin'],
       },

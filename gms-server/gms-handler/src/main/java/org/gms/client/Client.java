@@ -1001,14 +1001,14 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
         SessionCoordinator.getInstance().closeSession(this, false);
 
         if (!serverTransition && isLoggedIn()) {
-           ClientDBUtils.updateLoginState(this, Client.LOGIN_NOTLOGGEDIN);
            ClientDBUtils.updatePlayerLoginState(this.getAccID(), -1, Client.LOGIN_NOTLOGGEDIN);
+            ClientDBUtils.updateLoginState(this, Client.LOGIN_NOTLOGGEDIN);
 
             clear();
         } else {
             if (!Server.getInstance().hasCharacteridInTransition(this)) {
-               ClientDBUtils.updateLoginState(this, Client.LOGIN_NOTLOGGEDIN);
                ClientDBUtils.updatePlayerLoginState(this.getAccID(), -1, Client.LOGIN_NOTLOGGEDIN);
+                ClientDBUtils.updateLoginState(this, Client.LOGIN_NOTLOGGEDIN);
 
             }
 

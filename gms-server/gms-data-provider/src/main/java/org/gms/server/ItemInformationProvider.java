@@ -1327,17 +1327,18 @@ public class ItemInformationProvider {
         if (nameDescCache.containsKey(itemId)) {
             return nameDescCache.get(itemId);
         }
-        Data strings = getStringData(itemId);
-        if (strings == null) {
-            return null;
-        }
+        Data strings = null;
         String name = null;
         String desc = null;
         try {
+            strings = getStringData(itemId);
             name = DataTool.getString("name", strings, null);
             desc = DataTool.getString("desc", strings, null);
         } catch (Exception e) {
             log.error("getNameDesc error: {} name:{}, desc:{}", itemId, name, desc, e);
+        }
+        if (strings == null) {
+            return null;
         }
         if (name == null) {
             return null;
