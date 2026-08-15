@@ -1,224 +1,304 @@
 /*
-	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-		       Matthias Butz <matze@odinms.de>
-		       Jan Christian Meyer <vimes@odinms.de>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-/* Tara
-	Ludibrium : Tara and Sarah's House (220000303)
-	
-	Refining NPC: 
-	* Shoes - All classes, 30-50, stimulator (4130001) available on upgrades
-	* Price is 90% of locations on same items
+    通用数据驱动 - NPC 引擎 (支持 EQUIP_UPGRADE / EQUIP_SINGLE / MATERIAL_BATCH)
 */
 
-var status = 0;
-var selectedType = -1;
-var selectedItem = -1;
-var item;
-var mats;
-var matQty;
-var cost;
-var stimulator = false;
-var stimID = 4130001;
+var status = -1;
+var selectedCategoryIndex = -1;
+var selectedOptionIndex = -1;
+var craftQty = 1; // 制作数量 (用于 MATERIAL_BATCH 批量制作)
 
-var itemSet = [];
+var categoryData = null;   // 选中某个分类后加载的 DTO
+var selectedRecipe = null; // 当前选中的配方
+var dialogMap = null;      // 存储初始加载的 Key-Value 台词 Map
+
+// 辅助方法：安全获取 Java Map 中的台词
+function getDialog(key, defaultText) {
+    if (dialogMap != null) {
+        var val = dialogMap.get(key);
+        if (val != null) return val + "";
+    }
+    if (categoryData != null && categoryData.getDialogs() != null) {
+        var val = categoryData.getDialogs().get(key);
+        if (val != null) return val + "";
+    }
+    return defaultText;
+}
 
 function start() {
     cm.getPlayer().setCS(true);
-    var selStr = "您好，欢迎光临玩具城鞋店。今天有什么可以帮您的吗？#b"
-    var options = ["什么是辅助剂?", "制作战士鞋子", "制作弓箭手鞋子", "制作魔法师鞋子", "制作飞侠鞋子", "使用辅助剂制作战士鞋子", "使用辅助剂制作弓箭手鞋子", "使用辅助剂制作魔法师鞋子", "使用辅助剂制作飞侠鞋子"];
-    for (var i = 0; i < options.length; i++) {
-        selStr += "\r\n#L" + i + "# " + options[i] + "#l";
-    }
-    cm.sendSimple(selStr);
-}
+    status = -1;
 
-function action(mode, type, selection) {
-    if (mode < 1) {
+    // 1. 获取该 NPC 的台词 Map
+    dialogMap = cm.getNpcDialogs(cm.getNpc());
+
+    // 2. 校验该 NPC 是否配置了主菜单分类
+    var menuList = cm.getNpcMenuList(cm.getNpc());
+    if (menuList == null || menuList.isEmpty()) {
+        cm.sendOk("该 NPC 暂未配置任何功能。");
         cm.dispose();
         return;
     }
-    status++;
-    if (status == 1) {
-        selectedType = selection;
-        var selStr;
-        var shoes = [];
-        if (selectedType > 4) {
-            stimulator = true;
-            selectedType -= 4;
-        } else {
-            stimulator = false;
-        }
-        if (selectedType == 0) { // what is stim
-            cm.sendNext("辅助剂是一种特殊药剂，可在特定物品的制作过程中添加。它能让物品获得如同怪物掉落般的属性，但也可能毫无变化，甚至属性低于平均水平。使用辅助剂还有 10% 的概率无法获得任何物品，请谨慎选择。")
-            cm.dispose();
-        } else if (selectedType == 1) { //warrior shoe
-			itemSet = [1072003, 1072039, 1072040, 1072041, 1072002, 1072112, 1072113, 1072000, 1072126, 1072127, 1072132, 1072133, 1072134, 1072135];
-            
-            selStr = "战士鞋？没问题，想要哪一款呀？#b";
-			
-			
-            //shoes = ["Emerald Battle Grieve#k - Warrior Lv. 30#b", "Mithril Battle Grieve#k - Warrior Lv. 30#b", "Silver Battle Grieve#k - Warrior Lv. 30#b", "Blood Battle Grieve#k - Warrior Lv. 30#b", "Steel Trigger#k - Warrior Lv. 35#b", "Mithril Trigger#k - Warrior Lv. 35#b", "Dark Trigger#k - Warrior Lv. 35#b", "Brown Jangoon Boots#k - Warrior Lv. 40#b", "Maroon Jangoon Boots#k - Warrior Lv. 40#b", "Blue Jangoon Boots#k - Warrior Lv. 40#b", "Emerald Hildon Boots#k - Warrior Lv. 50#b", "Mithril Hildon Boots#k - Warrior Lv. 50#b", "Orihalcon Hildon Boots#k - Warrior Lv. 50#b", "Gold Hildon Boots#k - Warrior Lv. 50#b"];
 
-        } else if (selectedType == 2) { //bowman shoe
-		
-			itemSet = [1072079, 1072080, 1072081, 1072082, 1072083, 1072101, 1072102, 1072103, 1072118, 1072119, 1072120, 1072121, 1072122, 1072123, 1072124, 1072125];
-            
-            selStr = "弓箭手鞋？没问题，想要哪一款呢？#b";
-            //shoes = ["Red Hunter Boots#k - Bowman Lv. 30#b", "Blue Hunter Boots#k - Bowman Lv. 30#b", "Green Hunter Boots#k - Bowman Lv. 30#b", "Black Hunter Boots#k - Bowman Lv. 30#b", "Brown Hunter Boots#k - Bowman Lv. 30#b", "Blue Silky Boots#k - Bowman Lv. 35#b", "Green Silky Boots#k - Bowman Lv. 35#b", "Red Silky Boots#k - Bowman Lv. 35#b", "Red Pierre Shoes#k - Bowman Lv. 40#b", "Yellow Pierre Shoes#k - Bowman Lv. 40#b", "Brown Pierre Shoes#k - Bowman Lv. 40#b", "Blue Pierre Shoes#k - Bowman Lv. 40#b", "Brown Steel-Tipped Boots#k - Bowman Lv. 50#b", "Green Steel-Tipped Boots#k - Bowman Lv. 50#b", "Blue Steel-Tipped Boots#k - Bowman Lv. 50#b", "Purple Steel-Tipped Boots#k - Bowman Lv. 50#b"];
-        } else if (selectedType == 3) { //magician shoe
-            
-			itemSet = [1072075, 1072076, 1072077, 1072078, 1072089, 1072090, 1072091, 1072114, 1072115, 1072116, 1072117, 1072140, 1072141, 1072142, 1072143, 1072136, 1072137, 1072138, 1072139];
-            
-			selStr = "魔法师鞋？没问题，想要哪一款呢？#b";
-            shoes = ["Red Magicshoes#k - Magician Lv. 30#b", "Blue Magicshoes#k - Magician Lv. 30#b", "White Magicshoes#k - Magician Lv. 30#b", "Black Magicshoes#k - Magician Lv. 30#b", "Purple Salt Shoes#k - Magician Lv. 35#b", "Red Salt Shoes#k - Magician Lv. 35#b", "Black Salt Shoes#k - Magician Lv. 35#b", "Red Moon Shoes#k - Magician Lv. 40#b", "Blue Moon Shoes#k - Magician Lv. 40#b", "Gold Moon Shoes#k - Magician Lv. 40#b", "Dark Moon Shoes#k - Magician Lv. 40#b", "Pink Goldwind Shoes#k - Magician Lv. 50#b", "Blue Goldwind Shoes#k - Magician Lv. 50#b", "Purple Goldwind Shoes#k - Magician Lv. 50#b", "Green Goldwind Shoes#k - Magician Lv. 50#b"];
-        } else if (selectedType == 4) { //thief shoe
-            itemSet = [1072032, 1072033, 1072035, 1072036, 1072104, 1072105, 1072106, 1072107, 1072108, 1072109, 1072110, 1072128, 1072130, 1072129, 1072131];
-            
-			selStr = "飞侠鞋？没问题，想要哪一款呢？#b";
-            shoes = ["Bronze Chain Boots#k - Thief Lv. 30#b", "Iron Chain Boots#k - Thief Lv. 30#b", "Silver Chain Boots#k - Thief Lv. 30#b", "Gold Chain Boots#k - Thief Lv. 30#b", "Red White-Line Boots#k - Thief Lv. 35#b", "Green White-Line Boots#k - Thief Lv. 35#b", "Blue White-Line Boots#k - Thief Lv. 35#b", "Black Red-Lined Shoes#k - Thief Lv. 40#b", "Black Green-Lined Shoes#k - Thief Lv. 40#b", "Black Yellow-Lined Shoes#k - Thief Lv. 40#b", "Black Blue-Lined Shoes#k - Thief Lv. 40#b", "Blue Goni Shoes#k - Thief Lv. 50#b", "Red Goni Shoes#k - Thief Lv. 50#b", "Green Goni Shoes#k - Thief Lv. 50#b", "Purple Goni Shoes#k - Thief Lv. 50#b"];
+    // 3. 弹出开场白
+    var startMsg = getDialog("craft_start", "你想锻造道具吗？");
+    cm.sendYesNo(startMsg);
+}
+
+function action(mode, type, selection) {
+    if (mode == 1) {
+        status++;
+    } else {
+        // 拒绝/取消逻辑
+        if (selectedCategoryIndex == -1) {
+            cm.sendNext(getDialog("craft_cancel_start", "好的，下次有需要再来找我。"));
+        } else {
+            cm.sendNext(getDialog("craft_cancel_menu", "收集齐材料后再来找我吧！"));
         }
-        if (selectedType != 0) {
-            for (var i = 0; i < itemSet.length; i++) {
-                selStr += "\r\n#L" + i + "# #t" + itemSet[i] + ":##l";
-            }
-            cm.sendSimple(selStr);
+        cm.dispose();
+        return;
+    }
+
+    // -------------------------------------------------------------------------
+    // Status 0: 显示主菜单（列出该 NPC 的所有 NpcCraftCat 分类）
+    // -------------------------------------------------------------------------
+    if (status == 0) {
+        var menuList = cm.getNpcMenuList(cm.getNpc()); // 返回 List<NpcMenuDTO>
+        var selStr = getDialog("craft_menu_title", "请选择制作类型：#b");
+
+        for (var i = 0; i < menuList.size(); i++) {
+            var menu = menuList.get(i);
+            selStr += "\r\n#L" + menu.getMenuIndex() + "# " + menu.getCategoryName() + "#l";
         }
+        cm.sendSimple(selStr);
+
+    // -------------------------------------------------------------------------
+    // Status 1: 选中分类，判断展示警告还是直接展示选择列表
+    // -------------------------------------------------------------------------
+    } else if (status == 1) {
+        // 如果是从 Status 0 刚选完分类进来
+        if (selectedCategoryIndex == -1) {
+            selectedCategoryIndex = selection;
+        }
+
+        // 获取分类配方数据
+        categoryData = cm.getCraftCategoryData(cm.getNpc(), selectedCategoryIndex);
+
+        if (categoryData == null || categoryData.getOptions() == null || categoryData.getOptions().isEmpty()) {
+            cm.sendOk("当前分类下暂无可以制作的道具。");
+            cm.dispose();
+            return;
+        }
+
+        var craftType = (categoryData.getCraftType() + "").toUpperCase();
+        var warningText = categoryData.getWarningText() != null ? categoryData.getWarningText() + "" : "";
+
+        // 如果配置了警告文案（如装备合成警告），先弹 Warning 提示框
+        if (warningText.length > 0) {
+            cm.sendNext(warningText);
+        } else {
+            // 没有警告则直接展示配方列表
+            renderOptionList();
+        }
+
+    // -------------------------------------------------------------------------
+    // Status 2: 处理配方选择或数量输入
+    // -------------------------------------------------------------------------
     } else if (status == 2) {
-        selectedItem = selection;
-        if (selectedType == 1) { //warrior shoe
-            var matSet = [[4021003, 4011001, 4000021, 4003000], [4011002, 4011001, 4000021, 4003000],
-                [4011004, 4011001, 4000021, 4003000], [4021000, 4011001, 4000021, 4003000], [4011001, 4021004, 4000021, 4000030, 4003000], [4011002, 4021004, 4000021, 4000030, 4003000], [4021008, 4021004, 4000021, 4000030, 4003000],
-                [4011003, 4000021, 4000030, 4003000, 4000103], [4011005, 4021007, 4000030, 4003000, 4000104], [4011002, 4021007, 4000030, 4003000, 4000105], [4021008, 4011001, 4021003, 4000030, 4003000],
-                [4021008, 4011001, 4011002, 4000030, 4003000], [4021008, 4011001, 4011005, 4000030, 4003000], [4021008, 4011001, 4011006, 4000030, 4003000]];
-            var matQtySet = [[4, 2, 45, 15], [4, 2, 45, 15], [4, 2, 45, 15], [4, 2, 45, 15], [3, 1, 30, 20, 25], [3, 1, 30, 20, 25], [2, 1, 30, 20, 25],
-                [4, 100, 40, 30, 100], [4, 1, 40, 30, 100], [4, 1, 40, 30, 100], [1, 3, 6, 65, 45], [1, 3, 6, 65, 45], [1, 3, 6, 65, 45], [1, 3, 6, 65, 45]];
-            var costSet = [20000, 20000, 20000, 20000, 22000, 22000, 25000, 38000, 38000, 38000, 50000, 50000, 50000, 50000];
-            item = itemSet[selectedItem];
-            mats = matSet[selectedItem];
-            matQty = matQtySet[selectedItem];
-            cost = costSet[selectedItem];
-        } else if (selectedType == 2) { //bowman shoe
-            var matSet = [[4000021, 4021000, 4003000], [4000021, 4021005, 4003000], [4000021, 4021003, 4003000],
-                [4000021, 4021004, 4003000], [4000021, 4021006, 4003000], [4021002, 4021006, 4000030, 4000021, 4003000], [4021003, 4021006, 4000030, 4000021, 4003000], [4021000, 4021006, 4000030, 4000021, 4003000],
-                [4021000, 4003000, 4000030, 4000106], [4021006, 4003000, 4000030, 4000107], [4011003, 4003000, 4000030, 4000108], [4021002, 4003000, 4000030, 4000099], [4011001, 4021006, 4021008, 4000030, 4003000, 4000033],
-                [4011001, 4021006, 4021008, 4000030, 4003000, 4000032], [4011001, 4021006, 4021008, 4000030, 4003000, 4000041], [4011001, 4021006, 4021008, 4000030, 4003000, 4000042]];
-            var matQtySet = [[50, 2, 15], [50, 2, 15], [50, 2, 15], [50, 2, 15], [50, 2, 15],
-                [3, 1, 15, 30, 20], [3, 1, 15, 30, 20], [3, 1, 15, 30, 20], [4, 30, 45, 100], [4, 30, 45, 100], [5, 30, 45, 100], [5, 30, 45, 100],
-                [3, 3, 1, 60, 35, 80], [3, 3, 1, 60, 35, 150], [3, 3, 1, 60, 35, 100], [3, 3, 1, 60, 35, 250]];
-            var costSet = [19000, 19000, 19000, 19000, 19000, 19000, 20000, 20000, 20000, 32000, 32000, 40000, 40000, 50000, 50000, 50000, 50000];
-            item = itemSet[selectedItem];
-            mats = matSet[selectedItem];
-            matQty = matQtySet[selectedItem];
-            cost = costSet[selectedItem];
-        } else if (selectedType == 3) { //magician shoe
-            var matSet = [[4021000, 4000021, 4003000], [4021002, 4000021, 4003000], [4011004, 4000021, 4003000], [4021008, 4000021, 4003000], [4021001, 4021006, 4000021, 4000030, 4003000], [4021000, 4021006, 4000021, 4000030, 4003000],
-                [4021008, 4021006, 4000021, 4000030, 4003000], [4021000, 4000030, 4000110, 4003000], [4021005, 4000030, 4000111, 4003000], [4011006, 4021007, 4000030, 4000100, 4003000], [4021008, 4021007, 4000030, 4000112, 4003000],
-                [4021009, 4011006, 4021000, 4000030, 4003000], [4021009, 4011006, 4021005, 4000030, 4003000], [4021009, 4011006, 4021001, 4000030, 4003000], [4021009, 4011006, 4021003, 4000030, 4003000]];
-            var matQtySet = [[2, 50, 15], [2, 50, 15], [2, 50, 15], [1, 50, 15], [3, 1, 30, 15, 20], [3, 1, 30, 15, 20], [2, 1, 40, 25, 20], [4, 40, 100, 25], [4, 40, 100, 25], [2, 1, 40, 100, 25], [2, 1, 40, 100, 30],
-                [1, 3, 3, 60, 40], [1, 3, 3, 60, 40], [1, 3, 3, 60, 40], [1, 3, 3, 60, 40]];
-            var costSet = [18000, 18000, 18000, 18000, 20000, 20000, 22000, 30000, 30000, 35000, 40000, 50000, 50000, 50000, 50000];
-            item = itemSet[selectedItem];
-            mats = matSet[selectedItem];
-            matQty = matQtySet[selectedItem];
-            cost = costSet[selectedItem];
-        } else if (selectedType == 4) { //thief shoe
-            var matSet = [[4011000, 4000021, 4003000], [4011001, 4000021, 4003000], [4011004, 4000021, 4003000], [4011006, 4000021, 4003000], [4021000, 4021004, 4000021, 4000030, 4003000], [4021003, 4021004, 4000021, 4000030, 4003000],
-                [4021002, 4021004, 4000021, 4000030, 4003000], [4021000, 4000030, 4000113, 4003000], [4021003, 4000030, 4000095, 4003000], [4021006, 4000030, 4000096, 4003000], [4021005, 4000030, 4000097, 4003000], [4011007, 4021005, 4000030, 4000114, 4003000],
-                [4011007, 4021000, 4000030, 4000115, 4003000], [4011007, 4021003, 4000030, 4000109, 4003000], [4011007, 4021001, 4000030, 4000036, 4003000]];
-            var matQtySet = [[3, 50, 15], [3, 50, 15], [2, 50, 15], [2, 50, 15], [3, 1, 30, 15, 20], [3, 1, 30, 15, 20], [3, 1, 30, 15, 20],
-                [5, 45, 100, 30], [4, 45, 100, 30], [4, 45, 100, 30], [4, 45, 100, 30], [2, 3, 50, 100, 35], [2, 3, 50, 100, 35], [2, 3, 50, 100, 35], [2, 3, 50, 80, 35]];
-            var costSet = [19000, 19000, 19000, 21000, 20000, 20000, 20000, 40000, 32000, 35000, 35000, 50000, 50000, 50000, 50000];
-            item = itemSet[selectedItem];
-            mats = matSet[selectedItem];
-            matQty = matQtySet[selectedItem];
-            cost = costSet[selectedItem];
-        }
-        //Ludi fee is -10%, array not changed unlike 2040016 and 2040020
-        cost *= 0.9;
-        var prompt = "你想让我制作 #b#t"+ item +":# #k吗？这样的话，我需要你提供一些特定的材料才能制作。不过，要确保你的背包有足够空间哦！\r\n#b";
-        if (stimulator) {
-            prompt += "\r\n#i" + stimID + "# 1 #t" + stimID + "#";
-        }
-        if (mats instanceof Array) {
-            for (var i = 0; i < mats.length; i++) {
-                prompt += "\r\n#i" + mats[i] + "# " + matQty[i] + " #t" + mats[i] + "#";
-            }
-        } else {
-            prompt += "\r\n#i" + mats + "# " + matQty + " #t" + mats + "#";
-        }
-        if (cost > 0) {
-            prompt += "\r\n#i4031138# " + cost + " 金币";
-        }
-        cm.sendYesNo(prompt);
-    } else if (status == 3) {
-        var complete = true;
+        var craftType = (categoryData.getCraftType() + "").toUpperCase();
+        var warningText = categoryData.getWarningText() != null ? categoryData.getWarningText() + "" : "";
 
-        if (!cm.canHold(item, 1)) {
-            cm.sendOk("首先检查你的物品栏是否有空位。");
-            cm.dispose();
+        // 如果有警告文本，Status 2 才展示配方列表
+        if (warningText.length > 0) {
+            renderOptionList();
             return;
-        } else if (cm.getMeso() < cost) {
-            cm.sendOk("抱歉，我们只接受黄金币。");
-            cm.dispose();
-            return;
-        } else {
-            if (mats instanceof Array) {
-                for (var i = 0; complete && i < mats.length; i++) {
-                    if (!cm.haveItem(mats[i], matQty[i])) {
-                        complete = false;
-                    }
+        }
+
+        // 记录选中的配方
+        if (selectedOptionIndex == -1) {
+            selectedOptionIndex = selection;
+        }
+        selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
+
+        // 如果是批量制作材料/提炼类型，要求玩家输入要制作的数量
+        if (craftType == "MATERIAL_BATCH") {
+            var mats = selectedRecipe.getMats();
+            var matQty = selectedRecipe.getMatQty();
+            var item = selectedRecipe.getItemId();
+            var yieldCount = selectedRecipe.getYieldQty();
+            var cost = selectedRecipe.getCost();
+
+            var prompt = "";
+
+            // 判断是付费冶炼还是免费合成，读取不同的台词模版
+            if (cost > 0) {
+                // 读取付费冶炼台词模版
+                var defaultTpl = "冶炼1个#t{item}#需要下面的物品，怎么样？你想试试吗？\r\n{mats}";
+                var tpl = getDialog("quantity_prompt_refine", defaultTpl);
+
+                // 拼接材料与金币列表
+                var matStr = "";
+                for (var i = 0; i < mats.size(); i++) {
+                    matStr += "\r\n#i" + mats.get(i) + "# #b#t" + mats.get(i) + "# " + matQty.get(i) + "个#k";
                 }
-            } else if (!cm.haveItem(mats, matQty)) {
+                if (cost > 0) {
+                    matStr += "\r\n#i4031138# #b" + cost + " 金币#k";
+                }
+
+                // 替换模版中的变量
+                prompt = tpl.replace("{item}", item + "")
+                            .replace("{mats}", matStr)
+                            .replace("{yield}", yieldCount + "");
+
+            } else {
+                // 读取免费合成台词模版
+                var defaultTpl = "使用 {mats}能做#t{item}#{yield}个，都是免费的。所以你应该谢谢我，怎么样？你想做几次？";
+                var tpl = getDialog("quantity_prompt_free", defaultTpl);
+
+                // 拼接材料简述 (如 "#b#t4000000# 10个#k ")
+                var matStr = "";
+                for (var i = 0; i < mats.size(); i++) {
+                    matStr += "#b#t" + mats.get(i) + "# " + matQty.get(i) + "个#k ";
+                }
+
+                // 替换模版中的变量
+                prompt = tpl.replace("{item}", item + "")
+                            .replace("{mats}", matStr)
+                            .replace("{yield}", yieldCount + "");
+            }
+
+            // 弹出输入框，默认 1，范围 1~100
+            cm.sendGetNumber(prompt, 1, 1, 100);
+
+        } else {
+            // 装备/单品类无需输入数量，自动跳到 Status 3 确认页
+            status = 2; // 修正 status 步进
+            action(1, 0, 0);
+        }
+
+    // -------------------------------------------------------------------------
+    // Status 3: 材料清单与最终确认
+    // -------------------------------------------------------------------------
+    } else if (status == 3) {
+        var craftType = (categoryData.getCraftType() + "").toUpperCase();
+
+        // 如果是批量制作，获取输入的数量
+        if (craftType == "MATERIAL_BATCH") {
+            craftQty = selection;
+            if (selectedRecipe == null && selectedOptionIndex != -1) {
+                selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
+            }
+        } else {
+            // 装备类型配方在上一步设置
+            if (selectedOptionIndex == -1) {
+                selectedOptionIndex = selection;
+            }
+            selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
+            craftQty = 1;
+        }
+
+        var prompt = "";
+
+        if (craftType == "MATERIAL_BATCH") {
+            var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
+            var totalYield = selectedRecipe.getYieldQty() * craftQty;
+            prompt = "你想制作 #b#t" + selectedRecipe.getItemId() + "##k " + totalYield + " 个吗？这需要以下材料：\r\n";
+
+        } else if (selectedRecipe.getIsEquip()) {
+            prompt = "你想做一个 #b#z" + selectedRecipe.getItemId() + "##k 吗？这需要下面的道具，等级限制是 #r" + selectedRecipe.getReqLevel() + "#k。怎么样？想做吗？\r\n";
+        } else {
+            var yieldText = selectedRecipe.getYieldQty() > 1 ? selectedRecipe.getYieldQty() + "个 " : "";
+            var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
+            prompt = "你想制作 " + yieldText + "#b" + nameText + "#k 吗？这需要以下材料：\r\n";
+        }
+
+        // 拼接材料列表 (自动按制作次数 craftQty 计算总需材料)
+        var mats = selectedRecipe.getMats();
+        var matQty = selectedRecipe.getMatQty();
+        for (var i = 0; i < mats.size(); i++) {
+            var totalMatReq = matQty.get(i) * craftQty;
+            prompt += "\r\n#i" + mats.get(i) + "##b #t" + mats.get(i) + "# " + totalMatReq + " 个#k";
+        }
+
+        // 计算总手续费
+        var totalCost = selectedRecipe.getCost() * craftQty;
+        if (totalCost > 0) {
+            prompt += "\r\n#i4031138# #b" + totalCost + " 金币#k";
+        }
+
+        cm.sendYesNo(prompt);
+
+    // -------------------------------------------------------------------------
+    // Status 4: 校验与执行发放
+    // -------------------------------------------------------------------------
+    } else if (status == 4) {
+        var totalYield = selectedRecipe.getYieldQty() * craftQty;
+        var totalCost = selectedRecipe.getCost() * craftQty;
+
+        // 1. 检查背包空间
+        if (!cm.canHold(selectedRecipe.getItemId(), totalYield)) {
+            cm.sendOk(getDialog("no_space", "首先检查你的物品栏是否有空位。"));
+            cm.dispose();
+            return;
+        }
+
+        // 2. 检查金币
+        if (totalCost > 0 && cm.getMeso() < totalCost) {
+            cm.sendOk(getDialog("no_meso", "恐怕你支付不起我的服务费。"));
+            cm.dispose();
+            return;
+        }
+
+        // 3. 检查材料是否充足
+        var complete = true;
+        var mats = selectedRecipe.getMats();
+        var matQty = selectedRecipe.getMatQty();
+        for (var i = 0; i < mats.size(); i++) {
+            var totalMatReq = matQty.get(i) * craftQty;
+            if (!cm.haveItem(mats.get(i), totalMatReq)) {
                 complete = false;
+                break;
             }
         }
-        if (stimulator) { //check for stimulator
-            if (!cm.haveItem(stimID)) {
-                complete = false;
-            }
-        }
+
         if (!complete) {
-            cm.sendOk("抱歉，但我必须拥有这些物品才能完全正确。也许下次吧。");
+            cm.sendOk(getDialog("no_mat", "请你确认有需要的物品或背包的其他窗口有空间。"));
         } else {
-            if (mats instanceof Array) {
-                for (var i = 0; i < mats.length; i++) {
-                    cm.gainItem(mats[i], -matQty[i]);
-                }
-            } else {
-                cm.gainItem(mats, -matQty);
+            // 扣除材料与金币
+            for (var i = 0; i < mats.size(); i++) {
+                var totalMatReq = matQty.get(i) * craftQty;
+                cm.gainItem(mats.get(i), -totalMatReq);
             }
-            cm.gainMeso(-cost);
-            if (stimulator) { //check for stimulator
-                cm.gainItem(stimID, -1);
-                var deleted = Math.floor(Math.random() * 10);
-                if (deleted != 0) {
-                    cm.gainItem(item, 1, true, true);
-                    cm.sendOk("鞋子已经准备好了。小心，它们还很烫。");
-                } else {
-                    cm.sendOk("哎呀！我想我不小心加了太多的刺激剂，嗯，整个东西现在都不能用了……抱歉，但我不能退款。");
-                }
-            } else {
-                cm.gainItem(item, 1);
-                cm.sendOk("鞋子已经准备好了。小心，它们还很烫。");
+            if (totalCost > 0) {
+                cm.gainMeso(-totalCost);
             }
+
+            // 发放成果
+            cm.gainItem(selectedRecipe.getItemId(), totalYield);
+            cm.sendOk(getDialog("craft_success", "好了，完成了。你觉得怎么样，是不是一件艺术品？嗯，如果你需要其他东西，请再来找我。"));
         }
         cm.dispose();
     }
+}
+
+// 渲染配方列表
+function renderOptionList() {
+    var promptText = categoryData.getPromptText();
+    var hasPrompt = promptText != null && (promptText + "").length > 0;
+    var selStr = hasPrompt ? promptText : "你想做什么样的道具？#b";
+
+    var options = categoryData.getOptions();
+    for (var i = 0; i < options.size(); i++) {
+        var opt = options.get(i);
+        if (opt.getIsEquip()) {
+            selStr += "\r\n#L" + i + "##z" + opt.getItemId() + "##k (等级限制：" + opt.getReqLevel() + "，" + opt.getJobName() + ")#l#b";
+        } else {
+            var rawDisplayText = opt.getDisplayText();
+            var nameStr = (rawDisplayText != null && (rawDisplayText + "").length > 0)
+                          ? rawDisplayText
+                          : "#t" + opt.getItemId() + "#";
+            var yieldStr = opt.getYieldQty() > 1 ? " [" + opt.getYieldQty() + "个]" : "";
+            selStr += "\r\n#L" + i + "# " + nameStr + yieldStr + "#l#b";
+        }
+    }
+    cm.sendSimple(selStr);
 }
