@@ -38,7 +38,7 @@ var vipcost = 999;
 var iwantreg = 0;
 
 function start() {
-    cm.sendNext("欢迎光临。我们是冬青树镇酒店。我们的酒店一直努力为您提供最好的服务。如果您因打猎而感到疲惫不堪，不妨在我们的酒店放松一下吧？");
+    cm.sendNext("你好，这里是林中之城宾馆。我们宾馆将尽力为您提供最好的服务。如果你打猎觉得疲劳，就到我们宾馆休息放松一下，怎么样？");
 }
 
 function action(mode, type, selection) {
@@ -46,19 +46,19 @@ function action(mode, type, selection) {
         cm.dispose();
     } else {
         if (mode == 0 && status == 2) {
-"We offer other kinds of services, too, so please think carefully and then make your decision."
+            cm.sendNext("我们还可以为你提供其他更多服务。欢迎下次光临！");
             cm.dispose();
             return;
         }
         status++;
         if (status == 1) {
-            cm.sendSimple("我们提供两种房间供您选择。请选择您喜欢的一种。\r\n#b#L0#普通桑拿房（每次使用" + regcost + " 枚金币）#l\r\n#L1#VIP桑拿房（每次使用" + vipcost + " 枚金币）#l");
+            cm.sendSimple("我们宾馆提供两种桑拿服务。请选择你要用什么样的桑拿。\r\n#b#L0#普通桑拿房（1次" + regcost + " 金币）#l\r\n#L1#高级桑拿房（1次" + vipcost + " 金币）#l");
             iwantreg = 1;
         } else if (status == 2) {
             if (selection == 0) {
-                cm.sendYesNo("你选择了普通桑拿浴。你的生命值和魔法值将会快速恢复，你甚至可以在那里购买一些物品。你确定要进去吗？");
+                cm.sendYesNo("你选了普通桑拿房。你可以更快恢复生命值和魔法力，而且也可以购买多种物品。你要使用吗？");
             } else if (selection == 1) {
-                cm.sendYesNo("你选择了VIP桑拿。你的HP和MP恢复速度甚至比普通桑拿还要快，而且你甚至可以在那里找到一个特别的物品。你确定要进去吗？");
+                cm.sendYesNo("你选了高级桑拿房。比普通桑拿房更快恢复生命值和废法力而且在里面可以获得特别的物品，你要入场吗？");
                 iwantreg = 0;
             }
         } else if (status == 3) {
