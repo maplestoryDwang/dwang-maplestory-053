@@ -198,7 +198,7 @@
                       :width="150"
                     >
                       <template #cell="{ record }">
-                        {{ record.itemName || `道具 ${record.itemId}` }}
+                        {{ record.displayText || record.itemName || `道具 ${record.itemId}` }}
                       </template>
                     </a-table-column>
                     <a-table-column title="类型" :width="100">

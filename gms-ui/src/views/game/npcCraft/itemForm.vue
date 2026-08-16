@@ -55,10 +55,14 @@
           />
         </a-form-item>
         <a-form-item label="职业要求">
-          <a-input
-            v-model="formData.jobName"
-            placeholder="如：战士、飞侠（可留空）"
-          />
+          <a-select v-model="formData.jobName">
+            <a-option value="全职业">全职业</a-option>
+            <a-option value="战士">战士</a-option>
+            <a-option value="魔法师">魔法师</a-option>
+            <a-option value="飞侠">飞侠</a-option>
+            <a-option value="弓箭手">弓箭手</a-option>
+          </a-select>
+
         </a-form-item>
         <a-form-item label="消耗金币">
           <a-input-number
