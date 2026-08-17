@@ -30,6 +30,7 @@ public interface NpcCraftService {
      * 获取指定 NPC 绑定的全量 Key-Value 垂直台词 Map (支持模板降级)
      */
     Map<String, String> loadDialogMap(int npcId, String dialogType);
+    List<NpcDialog> loadDialogList(int npcId, String dialogType);
 
     /**
      * 获取指定 NPC 配置的所有一级分类菜单列表

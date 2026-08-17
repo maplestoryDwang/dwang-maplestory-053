@@ -25,6 +25,7 @@ import jakarta.annotation.PostConstruct;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.constants.game.NextLevelType;
+import org.gms.dto.NpcMenuDTO;
 import org.gms.model.pojo.NextLevelContext;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.scripting.ScriptServiceContext;
@@ -53,6 +54,11 @@ public class NPCScriptManager extends AbstractScriptManager {
 
     private static NPCScriptManager instance;
 
+    private final Map<Client, NPCConversationManager> cms = new HashMap<>();
+    private final Map<Client, Invocable> scripts = new HashMap<>();
+    private final Map<Integer, Boolean> craftNpcCache = new HashMap<>();
+
+
     /**
      * 获取上下文
      */
@@ -78,8 +84,7 @@ public class NPCScriptManager extends AbstractScriptManager {
         return scriptServiceContext;
     }
 
-    private final Map<Client, NPCConversationManager> cms = new HashMap<>();
-    private final Map<Client, Invocable> scripts = new HashMap<>();
+
 
     // -------------------------------------------------------------------------
     // 脚本启动逻辑
@@ -167,8 +172,11 @@ public class NPCScriptManager extends AbstractScriptManager {
                         engine = getInvocableScriptEngine("item/" + fileName + ".js", c);
                     }
                 }
+
+                // 原生npc脚本
                 if (engine == null) {
-                    engine = getInvocableScriptEngine("npc/" + npc + ".js", c);
+                    String path = getOriginNpcPath(npc);
+                    engine = getInvocableScriptEngine(path, c);
                     cm.resetItemScript();
                 }
 
@@ -199,6 +207,32 @@ public class NPCScriptManager extends AbstractScriptManager {
             dispose(c, true);
 
             return false;
+        }
+    }
+
+    /**
+     * 获取原生js脚本，包含templat的判断
+     * @param npc
+     * @return
+     */
+    private String getOriginNpcPath(int npc) {
+        Boolean b = craftNpcCache.get(npc);
+        if (b == null) {
+            // 查找是否有目录，是否是craftNpc
+            List<NpcMenuDTO> npcMenuList = scriptServiceContext.getCraftService().getNpcMenuList(npc);
+            if (npcMenuList == null || npcMenuList.isEmpty()) {
+                craftNpcCache.put(npc, Boolean.FALSE);
+                return  "npc/" + npc + ".js";
+            } else {
+                craftNpcCache.put(npc, Boolean.TRUE);
+                return  "template/npcCraft.js";
+            }
+        } else {
+            if (b) {
+                return  "template/npcCraft.js";
+            } else {
+                return  "npc/" + npc + ".js";
+            }
         }
     }
 

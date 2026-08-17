@@ -1,15 +1,12 @@
 package org.gms.service;
 
 import com.mybatisflex.core.query.QueryWrapper;
-import com.mybatisflex.core.row.Row;
 import org.gms.dao.entity.*;
 import org.gms.dao.mapper.*;
 import org.gms.dto.NpcCraftCategoryDTO;
 import org.gms.dto.NpcCraftItemDTO;
 import org.gms.dto.NpcMenuDTO;
 import org.gms.model.dto.CraftSearchRtnDTO;
-import org.gms.model.dto.ShopSearchReqDTO;
-import org.gms.model.dto.ShopSearchRtnDTO;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.StringInfoProvider;
 import org.gms.util.RequireUtil;
@@ -24,8 +21,6 @@ import static org.gms.dao.entity.table.NpcCraftCatTableDef.NPC_CRAFT_CAT;
 import static org.gms.dao.entity.table.NpcCraftItemTableDef.NPC_CRAFT_ITEM;
 import static org.gms.dao.entity.table.NpcCraftMatTableDef.NPC_CRAFT_MAT;
 import static org.gms.dao.entity.table.NpcDialogTableDef.NPC_DIALOG;
-import static org.gms.dao.entity.table.ShopitemsDOTableDef.SHOPITEMS_D_O;
-import static org.gms.dao.entity.table.ShopsDOTableDef.SHOPS_D_O;
 
 /**
  * NPC 锻造/合成服务实现类 (基于 MyBatis-Flex)
@@ -213,6 +208,38 @@ public class NpcCraftServiceImpl implements NpcCraftService {
         }
         return resultMap;
     }
+
+
+    @Override
+    public List<NpcDialog> loadDialogList(int npcId, String dialogType) {
+        // 先查该 NPC 配置的 templateId，默认退回 1 (通用魔法师)
+        QueryWrapper limit = QueryWrapper.create()
+                .select(NPC_CRAFT_CAT.TEMPLATE_ID)
+                .from(NPC_CRAFT_CAT)
+                .where(NPC_CRAFT_CAT.NPC_ID.eq(npcId))
+                .limit(1);
+
+        Integer templateId = (Integer) catMapper.selectObjectByQuery(limit);
+        if (templateId == null) {
+            templateId = 1;
+        }
+
+        return loadDialist(npcId, templateId, dialogType);
+    }
+
+    private List<NpcDialog> loadDialist(int npcId, Integer templateId, String dialogType) {
+        QueryWrapper qw = QueryWrapper.create()
+                .from(NPC_DIALOG)
+                .where(NPC_DIALOG.DIALOG_TYPE.eq(dialogType))
+                .and(
+                        NPC_DIALOG.NPC_ID.eq(npcId)
+
+                );
+
+        List<NpcDialog> list = dialogMapper.selectListByQuery(qw);
+        return list;
+    }
+
 
     // =========================================================================
     // 以下为管理后台增删改接口实现

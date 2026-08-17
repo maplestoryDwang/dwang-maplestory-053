@@ -92,21 +92,70 @@
       <!-- 2. 详情展示：NPC 台词与配方 Tab 详情 (craftId > 0 时显示) -->
       <div v-if="craftId > 0" style="margin-top: 16px">
         <a-spin :loading="detailLoading" style="width: 100%">
-          <!-- 对应 NPC 对话台词 -->
+          <!-- 对应 NPC 对话台词 (已修改为支持增删改) -->
           <a-card
-            title="NPC 对话台词 (Dialog Map)"
+            title="NPC 对话台词 (Dialog List)"
             size="small"
             style="margin-bottom: 16px"
           >
-            <a-descriptions :column="2" bordered>
-              <a-descriptions-item
-                v-for="(val, key) in dialogs"
-                :key="key"
-                :label="String(key)"
+            <template #extra>
+              <a-button
+                type="primary"
+                status="success"
+                size="small"
+                @click="handleAddDialog"
               >
-                <a-tag color="arcoblue">{{ val }}</a-tag>
-              </a-descriptions-item>
-            </a-descriptions>
+                新增台词
+              </a-button>
+            </template>
+
+            <a-table
+              :data="dialogs"
+              row-key="id"
+              :pagination="false"
+              bordered
+              size="small"
+            >
+              <template #columns>
+                <a-table-column
+                  title="ID"
+                  data-index="id"
+                  :width="80"
+                  align="center"
+                />
+                <a-table-column
+                  title="Dialog Key (类型/标识)"
+                  data-index="dialogKey"
+                  :width="200"
+                />
+                <a-table-column title="台词文本 (Text)" data-index="dialogText">
+                  <template #cell="{ record }">
+                    <a-tag color="arcoblue">{{ record.dialogText }}</a-tag>
+                  </template>
+                </a-table-column>
+                <a-table-column title="操作" :width="140" align="center">
+                  <template #cell="{ record }">
+                    <a-space>
+                      <a-button
+                        type="text"
+                        size="mini"
+                        @click="handleEditDialog(record)"
+                      >
+                        编辑
+                      </a-button>
+                      <a-popconfirm
+                        content="确定要删除这条台词吗？"
+                        @ok="handleDeleteDialog(record)"
+                      >
+                        <a-button type="text" status="danger" size="mini">
+                          删除
+                        </a-button>
+                      </a-popconfirm>
+                    </a-space>
+                  </template>
+                </a-table-column>
+              </template>
+            </a-table>
           </a-card>
 
           <!-- 分类与配方 Tab 选项卡 -->
@@ -198,7 +247,11 @@
                       :width="150"
                     >
                       <template #cell="{ record }">
-                        {{ record.displayText || record.itemName || `道具 ${record.itemId}` }}
+                        {{
+                          record.displayText ||
+                          record.itemName ||
+                          `道具 ${record.itemId}`
+                        }}
                       </template>
                     </a-table-column>
                     <a-table-column title="类型" :width="100">
@@ -313,11 +366,36 @@
     <category-form ref="categoryFormRef" @load-data="reloadDetail" />
     <!-- 配方新增/编辑模态框 -->
     <item-form ref="itemFormRef" @load-data="reloadDetail" />
+
+    <!-- 台词新增/编辑 Modal 弹窗 -->
+    <a-modal
+      v-model:visible="dialogModalVisible"
+      :title="isEditDialog ? '编辑 NPC 台词' : '新增 NPC 台词'"
+      @before-ok="handleSaveDialog"
+      @cancel="dialogModalVisible = false"
+    >
+      <a-form :model="dialogForm">
+        <a-form-item field="dialogKey" label="Dialog Key" required>
+          <a-input
+            v-model="dialogForm.dialogKey"
+            placeholder="请输入台词 Key，如: ask_craft / craft_success"
+            :disabled="isEditDialog"
+          />
+        </a-form-item>
+        <a-form-item field="dialogText" label="台词文本" required>
+          <a-textarea
+            v-model="dialogForm.dialogText"
+            placeholder="请输入 NPC 的具体对话内容"
+            :auto-size="{ minRows: 3, maxRows: 6 }"
+          />
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import useLoading from '@/hooks/loading';
   import { Message } from '@arco-design/web-vue';
   import { getIconUrl } from '@/utils/mapleStoryAPI';
@@ -326,9 +404,12 @@
     getNpcMenuList,
     getCraftCategoryData,
     getNpcDialogs,
+    saveDialog,
+    deleteDialog,
     getCraftFilter,
     CraftSearchRtnDTO,
     NpcCraftCat,
+    NpcDialogForm,
     deleteCategory,
     deleteItem,
   } from '@/api/npcCraft';
@@ -398,21 +479,41 @@
   };
 
   // 详情数据加载（台词 + 菜单 + 分类配方）
-  const dialogs = ref<Record<string, string>>({});
+  const dialogs = ref<NpcDialogForm[]>([]);
+
   const categories = ref<NpcCraftCat[]>([]);
+
+  // 计算属性：将后端返回的 Record<string, string> 转换为表格可用数据格式
+  const dialogTableData = computed(() => {
+    return Object.entries(dialogs.value).map(([key, value]) => ({
+      key,
+      value,
+    }));
+  });
+
+  // 2. 单独刷新台词逻辑
+  const fetchNpcDialogsOnly = async (npcId: number) => {
+    try {
+      const dialogRes = await getNpcDialogs(npcId);
+      dialogs.value = dialogRes.data || [];
+    } catch (err: any) {
+      Message.error(err.message || '刷新 NPC 台词失败');
+    }
+  };
 
   const showCraftDetailClick = async (cId: number, npcId: number) => {
     craftId.value = cId;
     currentNpcId.value = npcId;
     detailLoading.value = true;
     try {
-      // 1. 并发获取对话台词 & 菜单列表
       const [dialogRes, menuRes] = await Promise.all([
         getNpcDialogs(npcId),
         getNpcMenuList(npcId),
       ]);
 
-      dialogs.value = dialogRes.data || {};
+      // 直接赋值数组
+      dialogs.value = dialogRes.data || [];
+
       const menuList = menuRes.data || [];
 
       // 2. 获取各个 Menu 对应的详细配方项
@@ -438,6 +539,75 @@
       Message.error(err.message || '获取配方详情失败');
     } finally {
       detailLoading.value = false;
+    }
+  };
+
+  // ===================== 台词 Dialog 增删改操作 =====================
+  // 弹窗表单初始化与逻辑
+  const dialogModalVisible = ref(false);
+  const isEditDialog = ref(false);
+  const dialogForm = ref<NpcDialogForm>({
+    id: undefined,
+    npcId: 0,
+    dialogKey: '',
+    dialogText: '',
+  });
+
+  // 打开新增
+  const handleAddDialog = () => {
+    isEditDialog.value = false;
+    dialogForm.value = {
+      id: undefined,
+      npcId: currentNpcId.value,
+      dialogKey: '',
+      dialogText: '',
+    };
+    dialogModalVisible.value = true;
+  };
+
+  // 打开编辑 (传入当前行 record 对象，包含 id)
+  const handleEditDialog = (record: NpcDialogForm) => {
+    isEditDialog.value = true;
+    dialogForm.value = {
+      id: record.id,
+      npcId: record.npcId || currentNpcId.value,
+      dialogKey: record.dialogKey,
+      dialogText: record.dialogText,
+    };
+    dialogModalVisible.value = true;
+  };
+
+  // 保存（新增/编辑）
+  const handleSaveDialog = async (done: (closed: boolean) => void) => {
+    if (!dialogForm.value.dialogKey) {
+      Message.warning('请输入 Dialog Key');
+      done(false);
+      return;
+    }
+    try {
+      // 提交数据中包含了 id (编辑时有 id，新增时为 undefined)
+      await saveDialog(dialogForm.value);
+      Message.success('保存成功！');
+      done(true);
+      fetchNpcDialogsOnly(currentNpcId.value);
+    } catch (err: any) {
+      Message.error(err.message || '保存失败');
+      done(false);
+    }
+  };
+
+  // 删除台词 (传入完整对象或主键 id)
+  const handleDeleteDialog = async (record: NpcDialogForm) => {
+    try {
+      await deleteDialog({
+        id: record.id, // 优先使用 id 传给后端删
+        npcId: record.npcId || currentNpcId.value,
+        dialogKey: record.dialogKey,
+      });
+      Message.success('删除成功！');
+      fetchNpcDialogsOnly(currentNpcId.value);
+    } catch (err: any) {
+      Message.error(err.message || '删除失败');
     }
   };
 

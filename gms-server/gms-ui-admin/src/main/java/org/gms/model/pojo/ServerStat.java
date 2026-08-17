@@ -1,7 +1,7 @@
 package org.gms.model.pojo;
 
 /**
- * TODO
+ * 单独一个字段表示服务是否在线, 还是应该放数据库好一点
  *
  * @author dwang
  * @version 1.0

@@ -116,11 +116,19 @@ export function getCraftCategoryData(npcId: number, menuIndex: number) {
 }
 
 // 3. 获取 NPC 台词 Map
-export function getNpcDialogs(npcId: number) {
+export function getNpcDialogsMap(npcId: number) {
   return axios.get<HttpResponse<Record<string, string>>>(
-    `/api/npc-craft/v1/dialogs/${npcId}`
+    `/api/npc-craft/v1/dialogsMap/${npcId}`
   );
 }
+
+// 3. 获取 NPC 台词 list
+export function getNpcDialogs(npcId: number) {
+    return axios.get<HttpResponse<NpcDialogForm[]>>(
+        `/api/npc-craft/v1/dialogs/${npcId}`
+    );
+}
+
 
 // 4. 新增或修改锻造分类
 export function saveCategory(data: NpcCraftCat) {

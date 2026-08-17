@@ -74,20 +74,7 @@ public class NpcCraftController {
         return ResultBody.success(categoryData);
     }
 
-    /**
-     * 获取指定 NPC 绑定的全量 Key-Value 垂直台词 Map
-     *
-     * @param npcId      NPC ID
-     * @param dialogType 台词类型 (例如: craft, default 等，可通过 QueryParam 传入，非必填时默认传 "craft")
-     */
-    @Operation(summary = "获取 NPC 垂直台词 Map")
-    @GetMapping("/" + ApiConstant.LATEST + "/dialogs/{npcId}")
-    public ResultBody<Map<String, String>> loadDialogMap(
-            @Parameter(description = "NPC ID", required = true) @PathVariable("npcId") int npcId,
-            @Parameter(description = "台词类型") @RequestParam(value = "dialogType", defaultValue = "craft") String dialogType) {
-        Map<String, String> dialogMap = npcCraftService.loadDialogMap(npcId, dialogType);
-        return ResultBody.success(dialogMap);
-    }
+
 
     /**
      * 新增或修改锻造分类
@@ -127,6 +114,30 @@ public class NpcCraftController {
     public ResultBody<Object> deleteItem(@RequestBody SubmitBody<NpcCraftItemDTO> request) {
         npcCraftService.deleteItem(request.getData().getId());
         return ResultBody.success(request, null);
+    }
+
+    /**
+     * 获取指定 NPC 绑定的全量 Key-Value 垂直台词 Map
+     *
+     * @param npcId      NPC ID
+     * @param dialogType 台词类型 (例如: craft, default 等，可通过 QueryParam 传入，非必填时默认传 "craft")
+     */
+    @Operation(summary = "获取 NPC 垂直台词 Map")
+    @GetMapping("/" + ApiConstant.LATEST + "/dialogsMap/{npcId}")
+    public ResultBody<Map<String, String>> loadDialogMap(
+            @Parameter(description = "NPC ID", required = true) @PathVariable("npcId") int npcId,
+            @Parameter(description = "台词类型") @RequestParam(value = "dialogType", defaultValue = "craft") String dialogType) {
+        Map<String, String> dialogMap = npcCraftService.loadDialogMap(npcId, dialogType);
+        return ResultBody.success(dialogMap);
+    }
+
+    @Operation(summary = "获取 NPC 台词List")
+    @GetMapping("/" + ApiConstant.LATEST + "/dialogs/{npcId}")
+    public ResultBody<List<NpcDialog>> getNpcDialogs( @Parameter(description = "NPC ID", required = true) @PathVariable("npcId") int npcId,
+                                                      @Parameter(description = "台词类型") @RequestParam(value = "dialogType", defaultValue = "craft") String dialogType) {
+        // 调用 Service 查询该 npcId 下的所有台词列表（包含 id, npcId, dialogKey, dialogText 等）
+        List<NpcDialog> list = npcCraftService.loadDialogList(npcId, dialogType);
+        return ResultBody.success(list);
     }
 
     /**

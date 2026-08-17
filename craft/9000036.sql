@@ -14,7 +14,7 @@ INSERT INTO `npc_craft_list` (`npc_id`) values (9000036);
 DELETE FROM `npc_dialog` WHERE `npc_id` = 9000036 AND `dialog_type` = 'craft';
 
 INSERT INTO `npc_dialog` (`npc_id`, `template_id`, `dialog_type`, `dialog_key`, `dialog_text`) VALUES
-(9000036, 1, 'craft', 'craft_start', 'Hello, I am the #bAccessory NPC Crafter#k! My works are widely recognized to be too fine, up to the point at which all my items mimic not only the appearance but too the attributes of them! Everything I charge is some ''ingredients'' to make them and, of course, a fee for my services. On what kind of equipment are you interessed?#b'),
+(9000036, 1, 'craft', 'craft_start', '你好，我是#b饰品NPC工匠#k！我的作品被广泛认为过于精美，以至于我制作的所有物品不仅模仿外观，连它们的属性也一并模仿！我收取的报酬是制作所需的“材料”，当然，还有我的服务费。你对哪种装备感兴趣？#b'),
 (9000036, 1, 'craft', 'no_space', '你的库存中没有空闲的插槽。'),
 (9000036, 1, 'craft', 'no_meso', '这是我制作物品所收取的费用！不接受信用。'),
 (9000036, 1, 'craft', 'no_mat', '你确定你拿齐了所有需要的物品吗？再检查一遍！'),

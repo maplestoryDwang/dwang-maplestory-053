@@ -72,3 +72,7 @@ DELETE from drop_data where itemId >= 4007000  and itemId <= 4007007
 ## 删除部分不存在数据
 混沌卷轴：2049100
 delete from drop_data_global where itemId = 2049100
+
+
+## 新增表示在线字段 
+alter table characters add loggedin tinyint default 0 after partySearch
