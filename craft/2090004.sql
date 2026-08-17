@@ -176,7 +176,7 @@ INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 
 -- 产出目标: 4001124 (用于制作卷轴的弹珠)
 -- =========================================================================
 INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_id`, `craft_type`, `prompt_text`, `warning_text`) VALUES
-    (2090004, 2, '捐赠药材材料', 1, 'MATERIAL_BATCH', '你想捐赠哪种药材材料来兑换弹珠？#b', '');
+    (2090004, 2, '捐赠药材材料', 1, 'MATERIAL_BATCH', '所以你希望捐赠一些药材材料？这真是个好消息！捐赠将以 #b100#k 个为单位接收。捐赠者将获得可以制作卷轴的弹珠。你想捐赠以下哪一种？#b', '');
 SET @cat_donate = LAST_INSERT_ID();
 
 -- 配方 2-0: 捐赠 4000276 (奖励 7 个弹珠)
