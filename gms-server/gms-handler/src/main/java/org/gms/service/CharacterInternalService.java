@@ -134,7 +134,7 @@ public class CharacterInternalService {
         mtsService.deleteMtsByCharacterId(cid);
 
         // 补充取消改名/跨区事务
-        nameChangeService.cancelPendingNameChange(player, false);
+        nameChangeService.cancelPendingNameChange(player.getId(), false);
         worldTransferService.cancelPendingWorldTransfer(player, false);
     }
 

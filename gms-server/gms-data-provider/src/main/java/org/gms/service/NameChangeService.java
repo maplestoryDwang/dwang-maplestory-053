@@ -3,7 +3,6 @@ package org.gms.service;
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.gms.client.Character;
 import org.gms.config.GameConfig;
 import org.gms.dao.entity.CharactersDO;
 import org.gms.dao.entity.NamechangesDO;
@@ -12,7 +11,6 @@ import org.gms.dao.mapper.CharactersMapper;
 import org.gms.dao.mapper.InventoryitemsMapper;
 import org.gms.dao.mapper.NamechangesMapper;
 import org.gms.dao.mapper.RingsMapper;
-import org.gms.manager.ServerManager;
 import org.gms.util.I18nUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +37,7 @@ public class NameChangeService {
         namechangesDOList.forEach(namechangesDO -> {
             try {
                 // 事物隔离
-                ServerManager.getApplicationContext().getBean(NameChangeService.class).doNameChange(namechangesDO);
+                doNameChange(namechangesDO);
             } catch (Exception e) {
                 log.error(I18nUtil.getLogMessage("Server.init.error4"), e);
             }
@@ -52,7 +50,7 @@ public class NameChangeService {
         if (!namechangesDOList.isEmpty()) {
             NamechangesDO namechangesDO = namechangesDOList.getFirst();
             try {
-                ServerManager.getApplicationContext().getBean(NameChangeService.class).doNameChange(NamechangesDO.builder()
+                doNameChange(NamechangesDO.builder()
                         .id(namechangesDO.getId())
                         .characterid(characterId)
                         .older(characterName)
@@ -84,20 +82,20 @@ public class NameChangeService {
         log.info(I18nUtil.getLogMessage("CharacterService.doNameChange.info1"), data.getOlder(), data.getNewer());
     }
 
-    public boolean registerNameChange(Character chr, String newName) {
+    public boolean registerNameChange(int charId, String oldName, String newName) {
         List<NamechangesDO> namechangesDOList = namechangesMapper.selectListByQuery(QueryWrapper.create()
-                .where(NAMECHANGES_D_O.CHARACTERID.eq(chr.getId())));
+                .where(NAMECHANGES_D_O.CHARACTERID.eq(charId)));
         // 已有改名未生效或改名未冷却
         if (!namechangesDOList.isEmpty() && namechangesDOList.stream().anyMatch(namechangesDO ->
                 namechangesDO.getCompletionTime() == null || namechangesDO.getCompletionTime().getTime() + GameConfig.getServerLong("name_change_cooldown") > System.currentTimeMillis())) {
             return false;
         }
-        namechangesMapper.insertSelective(NamechangesDO.builder().characterid(chr.getId()).older(chr.getName()).newer(newName).build());
+        namechangesMapper.insertSelective(NamechangesDO.builder().characterid(charId).older(oldName).newer(newName).build());
         return true;
     }
 
-    public void cancelPendingNameChange(Character chr, boolean needFinish) {
-        QueryWrapper queryWrapper = QueryWrapper.create().where(NAMECHANGES_D_O.CHARACTERID.eq(chr.getId()));
+    public void cancelPendingNameChange(int charId,boolean needFinish) {
+        QueryWrapper queryWrapper = QueryWrapper.create().where(NAMECHANGES_D_O.CHARACTERID.eq(charId));
         if (needFinish) queryWrapper.and(NAMECHANGES_D_O.COMPLETION_TIME.isNull());
         namechangesMapper.deleteByQuery(queryWrapper);
     }

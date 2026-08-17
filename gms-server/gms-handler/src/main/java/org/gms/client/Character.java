@@ -9675,7 +9675,7 @@ public class Character extends AbstractCharacterObject {
 
     public boolean registerNameChange(String newName) {
         try {
-            if (nameChangeService.registerNameChange(this, newName)) {
+            if (nameChangeService.registerNameChange(getId(), getName(), newName)) {
                 pendingNameChange = true;
                 return true;
             }
@@ -9687,7 +9687,7 @@ public class Character extends AbstractCharacterObject {
 
     public boolean cancelPendingNameChange() {
         try {
-            nameChangeService.cancelPendingNameChange(this, true);
+            nameChangeService.cancelPendingNameChange(getId(), true);
             return true;
         } catch (Exception e) {
             log.error(I18nUtil.getLogMessage("Character.cancelPendingNameChange.error1"), getName(), e);

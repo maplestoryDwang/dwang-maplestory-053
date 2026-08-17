@@ -36,7 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.maps.HiredMerchant;
-import org.gms.service.NoteService;
+import org.gms.service.NoteInteralService;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
@@ -58,10 +58,10 @@ public class FredrickProcessor {
     private static final Logger log = LoggerFactory.getLogger(FredrickProcessor.class);
     private static final int[] dailyReminders = new int[]{2, 5, 10, 15, 30, 60, 90, Integer.MAX_VALUE};
 
-    private final NoteService noteService;
+    private final NoteInteralService noteInteralService;
 
-    public FredrickProcessor(NoteService noteService) {
-        this.noteService = noteService;
+    public FredrickProcessor(NoteInteralService noteInteralService) {
+        this.noteInteralService = noteInteralService;
     }
 
     private static byte canRetrieveFromFredrick(Character chr, List<Pair<Item, InventoryType>> items) {
@@ -247,7 +247,7 @@ public class FredrickProcessor {
                         ps.addBatch();
 
                         String msg = fredrickReminderMessage(cid.getRight() - 1);
-                        noteService.sendNormal(msg, "FREDRICK", cid.getLeft().getRight());
+                        noteInteralService.sendNormal(msg, "FREDRICK", cid.getLeft().getRight());
                     }
 
                     ps.executeBatch();

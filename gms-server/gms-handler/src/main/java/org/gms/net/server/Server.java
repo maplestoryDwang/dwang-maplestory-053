@@ -147,7 +147,7 @@ public class Server {
     public static long uptime = System.currentTimeMillis();
     private long nextTime;
 
-    private static final NpcService npcService = ServerManager.getApplicationContext().getBean(NpcService.class);
+    private static final PlayerNpcService PLAYER_NPC_SERVICE = ServerManager.getApplicationContext().getBean(PlayerNpcService.class);
     private static final NxCouponService nxCouponService = ServerManager.getApplicationContext().getBean(NxCouponService.class);
     private static final CharacterInternalService CHARACTER_INTERNAL_SERVICE = ServerManager.getApplicationContext().getBean(CharacterInternalService.class);
     private static final AccountService accountService = ServerManager.getApplicationContext().getBean(AccountService.class);
@@ -156,7 +156,7 @@ public class Server {
     private static final NameChangeService nameChangeService = ServerManager.getApplicationContext().getBean(NameChangeService.class);
     private static final WorldTransferService worldTransferService = ServerManager.getApplicationContext().getBean(WorldTransferService.class);
     private static final FamilyService familyService = ServerManager.getApplicationContext().getBean(FamilyService.class);
-    private static final NoteService noteService = ServerManager.getApplicationContext().getBean(NoteService.class);
+    private static final NoteInteralService NOTE_INTERAL_SERVICE = ServerManager.getApplicationContext().getBean(NoteInteralService.class);
     private static final HpMpAlertService hpMpAlertService = ServerManager.getApplicationContext().getBean(HpMpAlertService.class);
     private static final ServiceProperty serviceProperty = ServerManager.getApplicationContext().getBean(ServiceProperty.class);
     private static final AutobanConfigService autobanConfigService = ServerManager.getApplicationContext().getBean(AutobanConfigService.class);
@@ -216,7 +216,7 @@ public class Server {
     }
 
     private void loadPlayerNpcMapStepFromDb() {
-        List<PlayernpcsFieldDO> playernpcsFieldDOList = npcService.getPlayerNpcFields(new PlayernpcsFieldDO());
+        List<PlayernpcsFieldDO> playernpcsFieldDOList = PLAYER_NPC_SERVICE.getPlayerNpcFields(new PlayernpcsFieldDO());
         playernpcsFieldDOList.forEach(playernpcsFieldDO -> {
             World world = getWorld(playernpcsFieldDO.getWorld());
             if (world != null) world.setPlayerNpcMapData(playernpcsFieldDO.getMap(), playernpcsFieldDO.getStep(), playernpcsFieldDO.getPodium());
@@ -759,8 +759,8 @@ public class Server {
     }
 
     private void registerChannelDependencies() {
-        FredrickProcessor fredrickProcessor = new FredrickProcessor(noteService);
-        ChannelDependencies channelDependencies = new ChannelDependencies(noteService, fredrickProcessor);
+        FredrickProcessor fredrickProcessor = new FredrickProcessor(NOTE_INTERAL_SERVICE);
+        ChannelDependencies channelDependencies = new ChannelDependencies(NOTE_INTERAL_SERVICE, fredrickProcessor);
         PacketProcessor.registerGameHandlerDependencies(channelDependencies);
         this.channelDependencies = channelDependencies;
     }
@@ -1000,7 +1000,7 @@ public class Server {
     public void expelMember(GuildCharacter initiator, String name, int cid) {
         Guild g = guilds.get(initiator.getGuildId());
         if (g != null) {
-            g.expelMember(initiator, name, cid, channelDependencies.noteService());
+            g.expelMember(initiator, name, cid, channelDependencies.noteInteralService());
         }
     }
 

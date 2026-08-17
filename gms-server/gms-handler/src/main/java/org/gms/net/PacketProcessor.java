@@ -26,29 +26,18 @@ import org.gms.net.netty.LoginServer;
 import org.gms.net.opcodes.Opcode;
 import org.gms.net.opcodes.RecvOpcode;
 import org.gms.net.server.channel.handlers.*;
-import org.gms.net.server.handlers.CustomPacketHandler;
 import org.gms.net.server.handlers.KeepAliveHandler;
 import org.gms.net.server.handlers.LoginRequiringNoOpHandler;
-import org.gms.net.server.handlers.login.AcceptToSHandler;
 import org.gms.net.server.handlers.login.AfterLoginHandler;
 import org.gms.net.server.handlers.login.CharSelectedHandler;
-import org.gms.net.server.handlers.login.CharSelectedWithPicHandler;
 import org.gms.net.server.handlers.login.CharlistRequestHandler;
 import org.gms.net.server.handlers.login.CheckCharNameHandler;
 import org.gms.net.server.handlers.login.CreateCharHandler;
 import org.gms.net.server.handlers.login.DeleteCharHandler;
-import org.gms.net.server.handlers.login.GuestLoginHandler;
 import org.gms.net.server.handlers.login.LoginPasswordHandler;
-import org.gms.net.server.handlers.login.RegisterPicHandler;
-import org.gms.net.server.handlers.login.RegisterPinHandler;
 import org.gms.net.server.handlers.login.RelogRequestHandler;
 import org.gms.net.server.handlers.login.ServerStatusRequestHandler;
 import org.gms.net.server.handlers.login.ServerlistRequestHandler;
-import org.gms.net.server.handlers.login.SetGenderHandler;
-import org.gms.net.server.handlers.login.ViewAllCharHandler;
-import org.gms.net.server.handlers.login.ViewAllCharRegisterPicHandler;
-import org.gms.net.server.handlers.login.ViewAllCharSelectedHandler;
-import org.gms.net.server.handlers.login.ViewAllCharSelectedWithPicHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -180,7 +169,7 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.ITEM_SORT, new InventoryMergeHandler());
         registerHandler(RecvOpcode.ITEM_MOVE, new ItemMoveHandler());                                        //   check
         registerHandler(RecvOpcode.MESO_DROP, new MesoDropHandler());
-        registerHandler(RecvOpcode.PLAYER_LOGGEDIN, new PlayerLoggedinHandler(channelDeps.noteService()));
+        registerHandler(RecvOpcode.PLAYER_LOGGEDIN, new PlayerLoggedinHandler(channelDeps.noteInteralService()));
         registerHandler(RecvOpcode.CHANGE_MAP, new ChangeMapHandler());                                        //   check
         registerHandler(RecvOpcode.MOVE_LIFE, new MoveLifeHandler());                                          //   check
         registerHandler(RecvOpcode.CLOSE_RANGE_ATTACK, new CloseRangeDamageHandler());                       //   check
@@ -188,7 +177,7 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.MAGIC_ATTACK, new MagicDamageHandler());
         registerHandler(RecvOpcode.TAKE_DAMAGE, new TakeDamageHandler());
         registerHandler(RecvOpcode.MOVE_PLAYER, new MovePlayerHandler());                                    //   check
-        registerHandler(RecvOpcode.USE_CASH_ITEM, new UseCashItemHandler(channelDeps.noteService()));
+        registerHandler(RecvOpcode.USE_CASH_ITEM, new UseCashItemHandler(channelDeps.noteInteralService()));
         registerHandler(RecvOpcode.USE_ITEM, new UseItemHandler());
         registerHandler(RecvOpcode.CALC_Damage_Stat_Request, new DefaultUsedPacketHandler());
         registerHandler(RecvOpcode.USE_RETURN_SCROLL, new UseItemHandler());
@@ -231,7 +220,7 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.MESSENGER, new MessengerHandler());
         registerHandler(RecvOpcode.NPC_ACTION, new NPCAnimationHandler());                                              //   check
         registerHandler(RecvOpcode.CHECK_CASH, new TouchingCashShopHandler());                                           //   check
-        registerHandler(RecvOpcode.CASHSHOP_OPERATION, new CashOperationHandler(channelDeps.noteService()));            //   check了常用功能，后面的功能没修
+        registerHandler(RecvOpcode.CASHSHOP_OPERATION, new CashOperationHandler(channelDeps.noteInteralService()));            //   check了常用功能，后面的功能没修
 //        registerHandler(RecvOpcode.COUPON_CODE, new CouponCodeHandler());
         registerHandler(RecvOpcode.SPAWN_PET, new SpawnPetHandler());  //CUser::OnActivatePetRequest(this, (int)pExceptionObject);
         registerHandler(RecvOpcode.MOVE_PET, new MovePetHandler());                                                    //   check

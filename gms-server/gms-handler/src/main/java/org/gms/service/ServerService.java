@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// 本来是controller调用，但是前端没用先关掉了了
+// 20260817
 @Service
 public class ServerService {
 

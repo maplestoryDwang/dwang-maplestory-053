@@ -25,7 +25,7 @@ import org.gms.client.Client;
 import org.gms.dao.entity.NotesDO;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
-import org.gms.service.NoteService;
+import org.gms.service.NoteInteralService;
 import org.gms.util.PacketCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +35,10 @@ import java.util.Optional;
 public final class NoteActionHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(NoteActionHandler.class);
 
-    private final NoteService noteService;
+    private final NoteInteralService noteInteralService;
 
-    public NoteActionHandler(NoteService noteService) {
-        this.noteService = noteService;
+    public NoteActionHandler(NoteInteralService noteInteralService) {
+        this.noteInteralService = noteInteralService;
     }
 
     @Override
@@ -51,7 +51,7 @@ public final class NoteActionHandler extends AbstractPacketHandler {
                 c.sendPacket(PacketCreator.showCashInventory(c));
             }
             try {
-                noteService.sendWithFame(message, c.getPlayer().getName(), charname);
+                noteInteralService.sendWithFame(message, c.getPlayer().getName(), charname);
                 c.getPlayer().getCashShop().decreaseNotes();
             } catch (Exception e) {
                 log.error("Failed to send note", e);
@@ -65,7 +65,7 @@ public final class NoteActionHandler extends AbstractPacketHandler {
                 int id = p.readInt();
                 p.readByte(); //Fame, but we read it from the database :)
 
-                Optional<NotesDO> discardedNote = noteService.delete(id);
+                Optional<NotesDO> discardedNote = noteInteralService.delete(id);
                 if (discardedNote.isEmpty()) {
                     log.warn("Note with id {} not able to be discarded. Already discarded?", id);
                     continue;

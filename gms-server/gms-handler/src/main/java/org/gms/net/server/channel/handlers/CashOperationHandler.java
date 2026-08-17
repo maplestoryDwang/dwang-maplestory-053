@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 import org.gms.server.CashShop;
 import org.gms.server.CashItemFactory;
 import org.gms.server.ItemInformationProvider;
-import org.gms.service.NoteService;
+import org.gms.service.NoteInteralService;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
 
@@ -58,10 +58,10 @@ import static java.util.concurrent.TimeUnit.DAYS;
 public final class CashOperationHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(CashOperationHandler.class);
 
-    private final NoteService noteService;
+    private final NoteInteralService noteInteralService;
 
-    public CashOperationHandler(NoteService noteService) {
-        this.noteService = noteService;
+    public CashOperationHandler(NoteInteralService noteInteralService) {
+        this.noteInteralService = noteInteralService;
     }
 
 
@@ -167,11 +167,11 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                     c.sendPacket(PacketCreator.showCash(chr));
 
                     String noteMessage = chr.getName() + " 给你送了一份礼物！快去现金商城查看吧。";
-                    noteService.sendNormal(noteMessage, chr.getName(), charactersDO.getName());
+                    noteInteralService.sendNormal(noteMessage, chr.getName(), charactersDO.getName());
 
                     Character receiver = c.getChannelServer().getPlayerStorage().getCharacterByName(charactersDO.getName());
                     if (receiver != null) {
-                        noteService.show(receiver);
+                        noteInteralService.show(receiver);
                     }
                 } else if (action == 4) { // Modify wish list
 //                } else if (action == 0x05) { // Modify wish list
@@ -382,8 +382,8 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                                 cs.gainCash(toCharge, itemRing, chr.getWorld());
                                 cs.gift(partner.getId(), chr.getName(), text, eqp.getSN(), rings.getRight());
                                 chr.getCrushRings().add(Ring.loadFromDb(rings.getLeft()));
-                                noteService.sendWithFame(text, chr.getName(), partner.getName());
-                                noteService.show(partner);
+                                noteInteralService.sendWithFame(text, chr.getName(), partner.getName());
+                                noteInteralService.show(partner);
                             }
                         }
                     } else {
@@ -444,8 +444,8 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                                 cs.gainCash(payment, -itemRing.getPrice());
                                 cs.gift(partner.getId(), chr.getName(), text, eqp.getSN(), rings.getRight());
                                 chr.getFriendshipRings().add(Ring.loadFromDb(rings.getLeft()));
-                                noteService.sendWithFame(text, chr.getName(), partner.getName());
-                                noteService.show(partner);
+                                noteInteralService.sendWithFame(text, chr.getName(), partner.getName());
+                                noteInteralService.show(partner);
                             }
                         }
                     } else {

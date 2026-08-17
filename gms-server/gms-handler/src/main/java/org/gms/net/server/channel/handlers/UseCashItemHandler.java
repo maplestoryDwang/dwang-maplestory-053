@@ -69,7 +69,7 @@ import org.gms.server.maps.Mist;
 import org.gms.server.maps.MapleMap;
 import org.gms.server.maps.MapleTVEffect;
 import org.gms.server.maps.PlayerShopItem;
-import org.gms.service.NoteService;
+import org.gms.service.NoteInteralService;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
 
@@ -84,10 +84,10 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public final class UseCashItemHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(UseCashItemHandler.class);
 
-    private final NoteService noteService;
+    private final NoteInteralService noteInteralService;
 
-    public UseCashItemHandler(NoteService noteService) {
-        this.noteService = noteService;
+    public UseCashItemHandler(NoteInteralService noteInteralService) {
+        this.noteInteralService = noteInteralService;
     }
 
     @Override
@@ -390,7 +390,7 @@ public final class UseCashItemHandler extends AbstractPacketHandler {
             String sendTo = p.readString();
             String msg = p.readString();
             try {
-                noteService.sendNormal(msg, player.getName(), sendTo);
+                noteInteralService.sendNormal(msg, player.getName(), sendTo);
                 remove(c, position, itemId);
                 c.sendPacket(new SendNoteSuccessPacket());
             } catch (Exception e) {

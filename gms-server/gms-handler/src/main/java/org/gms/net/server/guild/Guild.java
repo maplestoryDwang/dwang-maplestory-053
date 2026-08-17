@@ -34,7 +34,7 @@ import org.gms.net.server.coordinator.world.InviteCoordinator.InviteResult;
 import org.gms.net.server.coordinator.world.InviteCoordinator.InviteType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.gms.service.NoteService;
+import org.gms.service.NoteInteralService;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 
@@ -504,7 +504,7 @@ public class Guild {
         }
     }
 
-    public void expelMember(GuildCharacter initiator, String name, int cid, NoteService noteService) {
+    public void expelMember(GuildCharacter initiator, String name, int cid, NoteInteralService noteInteralService) {
         membersLock.lock();
         try {
             java.util.Iterator<GuildCharacter> itr = members.iterator();
@@ -519,7 +519,7 @@ public class Guild {
                         if (mgc.isOnline()) {
                             Server.getInstance().getWorld(mgc.getWorld()).setGuildAndRank(cid, 0, 5);
                         } else {
-                            noteService.sendNormal("You have been expelled from the guild.", initiator.getName(), mgc.getName());
+                            noteInteralService.sendNormal("You have been expelled from the guild.", initiator.getName(), mgc.getName());
                             Server.getInstance().getWorld(mgc.getWorld()).setOfflineGuildStatus((short) 0, (byte) 5, cid);
                         }
                     } catch (Exception re) {

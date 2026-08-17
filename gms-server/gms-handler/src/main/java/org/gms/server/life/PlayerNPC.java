@@ -34,7 +34,7 @@ import org.gms.manager.ServerManager;
 import org.gms.net.server.Server;
 import org.gms.net.server.channel.Channel;
 import org.gms.net.server.world.World;
-import org.gms.service.NpcService;
+import org.gms.service.PlayerNpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.life.positioner.PlayerNPCPodium;
@@ -68,7 +68,7 @@ public class PlayerNPC extends AbstractMapObject {
     private static final AtomicInteger runningOverallRank = new AtomicInteger();
     private static final List<AtomicInteger> runningWorldRank = new ArrayList<>();
     private static final Map<Pair<Integer, Integer>, AtomicInteger> runningWorldJobRank = new HashMap<>();
-    private static final NpcService npcService = ServerManager.getApplicationContext().getBean(NpcService.class);
+    private static final PlayerNpcService PLAYER_NPC_SERVICE = ServerManager.getApplicationContext().getBean(PlayerNpcService.class);
 
     @Getter
     private Map<Short, Integer> equips = new HashMap<>();
@@ -141,7 +141,7 @@ public class PlayerNPC extends AbstractMapObject {
     }
 
     public static void loadRunningRankData(int worlds) {
-        List<PlayernpcsDO> playernpcsDOList = npcService.getPlayerNpcDOs(new PlayernpcsDO());
+        List<PlayernpcsDO> playernpcsDOList = PLAYER_NPC_SERVICE.getPlayerNpcDOs(new PlayernpcsDO());
         runningOverallRank.set(playernpcsDOList.size() + 1);
 
         for (int i = 0; i < worlds; i++) {
@@ -202,7 +202,7 @@ public class PlayerNPC extends AbstractMapObject {
     }
 
     public static boolean canSpawnPlayerNpc(String name, int mapid) {
-        List<PlayernpcsDO> playerNpcDOs = npcService.getPlayerNpcDOs(PlayernpcsDO.builder().name(name).map(mapid).build());
+        List<PlayernpcsDO> playerNpcDOs = PLAYER_NPC_SERVICE.getPlayerNpcDOs(PlayernpcsDO.builder().name(name).map(mapid).build());
         return playerNpcDOs.isEmpty();
     }
 
@@ -318,7 +318,7 @@ public class PlayerNPC extends AbstractMapObject {
         int worldId = chr.getWorld();
         int jobId = (chr.getJob().getId() / 100) * 100;
 
-        List<PlayernpcsDO> playerNpcDOs = npcService.getPlayerNpcDOs(PlayernpcsDO.builder().scriptid(scriptId).build());
+        List<PlayernpcsDO> playerNpcDOs = PLAYER_NPC_SERVICE.getPlayerNpcDOs(PlayernpcsDO.builder().scriptid(scriptId).build());
         if (!playerNpcDOs.isEmpty()) {
             return null;
         }
@@ -348,7 +348,7 @@ public class PlayerNPC extends AbstractMapObject {
                         .equippos(equip.getPosition())
                         .build())
                 .toList();
-        return npcService.createPlayerNPC(playerNpcDO, playerNpcEquipDOS);
+        return PLAYER_NPC_SERVICE.createPlayerNPC(playerNpcDO, playerNpcEquipDOS);
     }
 
     private static List<Integer> removePlayerNPCInternal(MapleMap map, Character chr) {
@@ -518,7 +518,7 @@ public class PlayerNPC extends AbstractMapObject {
     }
 
     public static void addPlayerNPCMapObject(MapleMap map) {
-        List<PlayerNPC> playerNPCList = npcService.getPlayerNPC(PlayernpcsDO.builder().map(map.getId()).world(map.getWorld()).build());
+        List<PlayerNPC> playerNPCList = PLAYER_NPC_SERVICE.getPlayerNPC(PlayernpcsDO.builder().map(map.getId()).world(map.getWorld()).build());
         playerNPCList.forEach(map::addPlayerNPCMapObject);
     }
 }

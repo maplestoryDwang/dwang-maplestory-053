@@ -57,7 +57,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.event.EventInstanceManager;
 import org.gms.server.life.MobSkill;
-import org.gms.service.NoteService;
+import org.gms.service.NoteInteralService;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
@@ -73,12 +73,12 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(PlayerLoggedinHandler.class);
     private static final Set<Integer> attemptingLoginAccounts = new HashSet<>();
 
-    private final NoteService noteService;
+    private final NoteInteralService noteInteralService;
 
     private static final HpMpAlertService hpMpAlertService = ServerManager.getApplicationContext().getBean(HpMpAlertService.class);
 
-    public PlayerLoggedinHandler(NoteService noteService) {
-        this.noteService = noteService;
+    public PlayerLoggedinHandler(NoteInteralService noteInteralService) {
+        this.noteInteralService = noteInteralService;
     }
 
     private boolean tryAcquireAccount(int accId) {
@@ -326,7 +326,7 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
                 }
             }
             //展示服务信息
-            noteService.show(player);
+            noteInteralService.show(player);
             //异常地图掉线信息提示
             c.getSysRescue().showMapChangeMessage(player);
 

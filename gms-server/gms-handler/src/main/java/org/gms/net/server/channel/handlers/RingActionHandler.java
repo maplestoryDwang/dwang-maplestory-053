@@ -38,7 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.event.EventInstanceManager;
 import org.gms.server.ItemInformationProvider;
-import org.gms.service.NoteService;
+import org.gms.service.NoteInteralService;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
@@ -57,10 +57,10 @@ import java.sql.SQLException;
 public final class RingActionHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(RingActionHandler.class);
 
-    private final NoteService noteService;
+    private final NoteInteralService noteInteralService;
 
-    public RingActionHandler(NoteService noteService) {
-        this.noteService = noteService;
+    public RingActionHandler(NoteInteralService noteInteralService) {
+        this.noteInteralService = noteInteralService;
     }
 
     private static int getEngagementBoxId(int useItemId) {
@@ -434,7 +434,7 @@ public final class RingActionHandler extends AbstractPacketHandler {
                                     if (guestChr != null && guestChr.isLoggedInWorld()) {
                                         guestChr.dropMessage(6, "[Wedding] %s".formatted(dueyMessage));
                                     } else {
-                                        noteService.sendNormal(dueyMessage, groom, name);
+                                        noteInteralService.sendNormal(dueyMessage, groom, name);
                                     }
 
                                     Item weddingTicket = new Item(newItemId, (short) 0, (short) 1);

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class NpcService {
+public class PlayerNpcService {
     private final PlayernpcsMapper playernpcsMapper;
     private final PlayernpcsEquipMapper playernpcsEquipMapper;
     private final PlayernpcsFieldMapper playernpcsFieldMapper;
