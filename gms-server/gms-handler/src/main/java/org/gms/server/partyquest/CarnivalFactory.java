@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 嘉年华
  * @author Drago (Dragohe4rt)
  */
 public class CarnivalFactory {

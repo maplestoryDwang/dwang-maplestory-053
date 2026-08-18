@@ -32,6 +32,7 @@ import org.gms.client.command.Command;
 import org.gms.provider.Data;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.wz.WzFiles;
+import org.gms.server.StringInfoProvider;
 import org.gms.util.I18nUtil;
 
 public class ResetSkillCommand extends Command {
@@ -42,7 +43,8 @@ public class ResetSkillCommand extends Command {
     @Override
     public void execute(Client c, String[] params) {
         Character player = c.getPlayer();
-        for (Data skill_ : DataProviderFactory.getDataProvider(WzFiles.STRING).getData("Skill.img").getChildren()) {
+        Data skillStringData = StringInfoProvider.getSkillStringData();
+        for (Data skill_ : skillStringData.getChildren()) {
             try {
                 Skill skill = SkillFactory.getSkill(Integer.parseInt(skill_.getName()));
                 player.changeSkillLevel(skill, (byte) 0, skill.getMaxLevel(), -1);

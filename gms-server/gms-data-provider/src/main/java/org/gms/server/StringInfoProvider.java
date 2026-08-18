@@ -1,15 +1,12 @@
 package org.gms.server;
 
+import lombok.Getter;
 import org.gms.provider.*;
 import org.gms.provider.wz.WzFiles;
-import org.gms.provider.wz.XMLWZFile;
+import org.gms.util.Pair;
 import org.gms.util.RequireUtil;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * 提供WZ的String信息
@@ -18,14 +15,34 @@ import java.util.stream.Stream;
  * @version 1.0
  * @since 2026/8/10 11:42
  */
-public class StringInfoProvider {
 
+public class StringInfoProvider {
+    @Getter
     private final static DataProvider stringDataWZ = DataProviderFactory.getDataProvider(WzFiles.STRING);
 
-
+    @Getter
     private static final Data mobStringData = stringDataWZ.getData("Mob.img");
+    @Getter
     private static final Data npcStringData = stringDataWZ.getData("Npc.img");
+    @Getter
     private static final Data mapStringData = stringDataWZ.getData("Map.img");
+    @Getter
+    private static final Data skillStringData = stringDataWZ.getData("Skill.img");
+    @Getter
+    private static final Data cashStringData = stringDataWZ.getData("Cash.img");
+    @Getter
+    private static final Data consumeStringData = stringDataWZ.getData("Consume.img");
+    @Getter
+    private static final Data eqpStringData = stringDataWZ.getData("Eqp.img").getChildByPath("Eqp");
+    @Getter
+    private static final Data etcStringData = stringDataWZ.getData("Etc.img").getChildByPath("Etc");
+    @Getter
+    private static final Data insStringData = stringDataWZ.getData("Ins.img");
+    @Getter
+    private static final Data petStringData = stringDataWZ.getData("Pet.img");
+
+
+
 
     private final static DataProvider questDataWZ = DataProviderFactory.getDataProvider(WzFiles.QUEST);
     private static final Data questInfoData = questDataWZ.getData("QuestInfo.img");
@@ -34,9 +51,8 @@ public class StringInfoProvider {
     private static final Map<Integer, String> questNames = new HashMap<>();
 
 
-    private static final Map<Integer, List<MapStrInfo>> npcMap = new LinkedHashMap<>();
-    private static final Map<Integer, List<MapStrInfo>> mobMap = new LinkedHashMap<>();
-
+    private static final Map<Integer, List<MapStrInfo>> NPC_EXIST_MAP = new LinkedHashMap<>();
+    private static final Map<Integer, List<MapStrInfo>> MOB_EXIST_MAP = new LinkedHashMap<>();
 
     static {
         initMapStr();
@@ -50,8 +66,8 @@ public class StringInfoProvider {
      */
     private static void initMapStr() {
         // 1. 先清空历史数据，防止重复调用 initMapStr 时数据叠加
-        npcMap.clear();
-        mobMap.clear();
+        NPC_EXIST_MAP.clear();
+        MOB_EXIST_MAP.clear();
 
         Map<Integer, String> mobNames = buildParamName(mobStringData);
         Map<Integer, String> npcNames = buildParamName(npcStringData);
@@ -111,12 +127,12 @@ public class StringInfoProvider {
 
                                 if ("n".equalsIgnoreCase(type)) {
                                     String npcName = npcNames.getOrDefault(lifeId, "unknow");
-                                    npcMap.computeIfAbsent(lifeId, k -> new ArrayList<>())
+                                    NPC_EXIST_MAP.computeIfAbsent(lifeId, k -> new ArrayList<>())
                                             .add(new MapStrInfo(lifeId, type, npcName, mapId, mapName));
 
                                 } else if ("m".equalsIgnoreCase(type)) {
                                     String mobName = mobNames.getOrDefault(lifeId, "unknow");
-                                    mobMap.computeIfAbsent(lifeId, k -> new ArrayList<>())
+                                    MOB_EXIST_MAP.computeIfAbsent(lifeId, k -> new ArrayList<>())
                                             .add(new MapStrInfo(lifeId, type, mobName, mapId, mapName));
                                 }
                             } catch (NumberFormatException ignored) {
@@ -191,7 +207,7 @@ public class StringInfoProvider {
     }
 
     public static String getNpcExistMapName(Integer npcId) {
-        List<MapStrInfo> mapStrInfos = npcMap.get(npcId);
+        List<MapStrInfo> mapStrInfos = NPC_EXIST_MAP.get(npcId);
         StringBuilder stringBuilder = new StringBuilder();
         if (mapStrInfos == null || mapStrInfos.size() == 0) {
             return "当前版本不存在";
@@ -202,4 +218,36 @@ public class StringInfoProvider {
         }
         return stringBuilder.toString();
     }
+
+    public static String getSkillName(int skillid) {
+        Data data = skillStringData;
+        StringBuilder skill = new StringBuilder();
+        skill.append(skillid);
+        if (skill.length() == 4) {
+            skill.delete(0, 4);
+            skill.append("000").append(skillid);
+        }
+        if (data.getChildByPath(skill.toString()) != null) {
+            for (Data skilldata : data.getChildByPath(skill.toString()).getChildren()) {
+                if (skilldata.getName().equals("name")) {
+                    return DataTool.getString(skilldata, null);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public List<Pair<Integer, String>> getAllEtcItems() {
+
+        List<Pair<Integer, String>> itemPairs = new ArrayList<>();
+        Data itemsData;
+
+        itemsData = StringInfoProvider.getEtcStringData();
+        for (Data itemFolder : itemsData.getChildren()) {
+            itemPairs.add(new Pair<>(Integer.parseInt(itemFolder.getName()), DataTool.getString("name", itemFolder, "NO-NAME")));
+        }
+        return itemPairs;
+    }
+
 }

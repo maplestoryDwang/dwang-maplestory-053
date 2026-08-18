@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.gms.server.life;
 
 import org.gms.dwutil.MobUtils;
+import org.gms.server.StringInfoProvider;
 import org.gms.util.RequireUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +46,8 @@ import java.util.Set;
 public class LifeFactory {
     private static final Logger log = LoggerFactory.getLogger(LifeFactory.class);
     private static final DataProvider data = DataProviderFactory.getDataProvider(WzFiles.MOB);
-    private final static DataProvider stringDataWZ = DataProviderFactory.getDataProvider(WzFiles.STRING);
-    private static final Data mobStringData = stringDataWZ.getData("Mob.img");
-    private static final Data npcStringData = stringDataWZ.getData("Npc.img");
+    private static final Data mobStringData = StringInfoProvider.getMobStringData();
+    private static final Data npcStringData = StringInfoProvider.getNpcStringData();
     private static final Map<Integer, MonsterStats> monsterStats = new HashMap<>();
     private static final Set<Integer> hpbarBosses = getHpBarBosses();
     private static final Map<Integer, String> npcNames = new HashMap<>();

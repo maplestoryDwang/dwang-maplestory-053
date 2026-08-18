@@ -71,17 +71,4 @@ public class MobUtils {
         return boss;
     }
 
-    public static String getMobNameFromId(int id) {
-        String mobName = mobNameCache.get(id);
-        if (mobName == null) {
-            DataProvider dataProvider = DataProviderFactory.getDataProvider(WzFiles.STRING);
-            Data mobData = dataProvider.getData("Mob.img");
-
-            mobName = DataTool.getString(mobData.getChildByPath(id + "/name"), "");
-            mobNameCache.put(id, mobName);
-        }
-
-        return mobName;
-    }
-
 }

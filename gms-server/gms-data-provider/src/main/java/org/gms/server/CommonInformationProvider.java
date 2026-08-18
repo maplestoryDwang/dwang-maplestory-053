@@ -5,10 +5,7 @@ import org.gms.exception.BizException;
 import org.gms.model.pojo.InformationSearch;
 import org.gms.model.pojo.InformationResult;
 import org.gms.provider.Data;
-import org.gms.provider.DataProvider;
-import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WzFiles;
 import org.gms.util.I18nUtil;
 import org.gms.util.RequireUtil;
 
@@ -17,10 +14,8 @@ import java.util.List;
 
 public class CommonInformationProvider {
     private static CommonInformationProvider instance;
-    private final DataProvider stringData;
 
     private CommonInformationProvider() {
-        stringData = DataProviderFactory.getDataProvider(WzFiles.STRING);
     }
 
     public static CommonInformationProvider getInstance() {
@@ -51,47 +46,47 @@ public class CommonInformationProvider {
         Data data;
         switch (infType) {
             case CASH -> {
-                data = stringData.getData("Cash.img");
+                data = StringInfoProvider.getCashStringData();
                 addResult(results, infType, data, filter, filterType, fullMatch);
             }
             case CONSUME -> {
-                data = stringData.getData("Consume.img");
+                data = StringInfoProvider.getConsumeStringData();
                 addResult(results, infType, data, filter, filterType, fullMatch);
             }
             case EQP -> {
-                data = stringData.getData("Eqp.img").getChildByPath("Eqp");
+                data = StringInfoProvider.getEqpStringData();
                 for (Data child : data.getChildren()) {
                     addResult(results, infType, child, filter, filterType, fullMatch);
                 }
             }
             case ETC -> {
-                data = stringData.getData("Etc.img").getChildByPath("Etc");
+                data = StringInfoProvider.getEtcStringData();
                 addResult(results, infType, data, filter, filterType, fullMatch);
             }
             case INS -> {
-                data = stringData.getData("Ins.img");
+                data = StringInfoProvider.getInsStringData();
                 addResult(results, infType, data, filter, filterType, fullMatch);
             }
             case MAP -> {
-                data = stringData.getData("Map.img");
+                data = StringInfoProvider.getEtcStringData();
                 for (Data child : data.getChildren()) {
                     addMapResult(results, infType, child, filter, filterType, fullMatch);
                 }
             }
             case MOB -> {
-                data = stringData.getData("Mob.img");
+                data = StringInfoProvider.getMobStringData();
                 addResult(results, infType, data, filter, filterType, fullMatch);
             }
             case NPC -> {
-                data = stringData.getData("Npc.img");
+                data = StringInfoProvider.getNpcStringData();
                 addResult(results, infType, data, filter, filterType, fullMatch);
             }
             case PET -> {
-                data = stringData.getData("Pet.img");
+                data = StringInfoProvider.getPetStringData();
                 addResult(results, infType, data, filter, filterType, fullMatch);
             }
             case SKILL -> {
-                data = stringData.getData("Skill.img");
+                data = StringInfoProvider.getSkillStringData();
                 addResult(results, infType, data, filter, filterType, fullMatch);
             }
         }

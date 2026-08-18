@@ -437,7 +437,8 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public void maxMastery() {
-        for (Data skill_ : DataProviderFactory.getDataProvider(WzFiles.STRING).getData("Skill.img").getChildren()) {
+        Data skillStringData = StringInfoProvider.getSkillStringData();
+        for (Data skill_ : skillStringData.getChildren()) {
             try {
                 Skill skill = SkillFactory.getSkill(Integer.parseInt(skill_.getName()));
                 getPlayer().changeSkillLevel(skill, (byte) 0, skill.getMaxLevel(), -1);

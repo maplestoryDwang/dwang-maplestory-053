@@ -22,13 +22,11 @@ package org.gms.server.life;
 
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.server.StringInfoProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.provider.Data;
-import org.gms.provider.DataProvider;
-import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WzFiles;
 import org.gms.server.ItemInformationProvider;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.Pair;
@@ -220,9 +218,8 @@ public class MonsterInformationProvider {
     }
 
     public static ArrayList<Pair<Integer, String>> getMobsIDsFromName(String search) {
-        DataProvider dataProvider = DataProviderFactory.getDataProvider(WzFiles.STRING);
         ArrayList<Pair<Integer, String>> retMobs = new ArrayList<>();
-        Data data = dataProvider.getData("Mob.img");
+        Data data = StringInfoProvider.getMobStringData();
         List<Pair<Integer, String>> mobPairList = new LinkedList<>();
         for (Data mobIdData : data.getChildren()) {
             int mobIdFromData = Integer.parseInt(mobIdData.getName());
@@ -242,8 +239,7 @@ public class MonsterInformationProvider {
     public String getMobNameFromId(int id) {
         String mobName = mobNameCache.get(id);
         if (mobName == null) {
-            DataProvider dataProvider = DataProviderFactory.getDataProvider(WzFiles.STRING);
-            Data mobData = dataProvider.getData("Mob.img");
+            Data mobData = StringInfoProvider.getMobStringData();
 
             mobName = DataTool.getString(mobData.getChildByPath(id + "/name"), "");
             mobNameCache.put(id, mobName);

@@ -28,11 +28,9 @@ import org.gms.client.Client;
 import org.gms.client.command.Command;
 import org.gms.constants.id.NpcId;
 import org.gms.provider.Data;
-import org.gms.provider.DataProvider;
-import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
-import org.gms.provider.wz.WzFiles;
 import org.gms.server.ItemInformationProvider;
+import org.gms.server.StringInfoProvider;
 import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.I18nUtil;
@@ -47,11 +45,10 @@ public class SearchCommand extends Command {
     {
         setDescription(I18nUtil.getMessage("SearchCommand.message1"));
 
-        DataProvider dataProvider = DataProviderFactory.getDataProvider(WzFiles.STRING);
-        npcStringData = dataProvider.getData("Npc.img");
-        mobStringData = dataProvider.getData("Mob.img");
-        skillStringData = dataProvider.getData("Skill.img");
-        mapStringData = dataProvider.getData("Map.img");
+        npcStringData   = StringInfoProvider.getNpcStringData();
+        mobStringData   = StringInfoProvider.getMobStringData();
+        skillStringData = StringInfoProvider.getSkillStringData();
+        mapStringData   = StringInfoProvider.getMapStringData();
     }
 
     @Override

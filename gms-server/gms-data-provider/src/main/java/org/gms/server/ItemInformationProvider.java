@@ -68,14 +68,16 @@ public class ItemInformationProvider {
 
     protected DataProvider itemData;
     protected DataProvider equipData;
-    protected DataProvider stringData;
     protected DataProvider etcData;
+
+    protected DataProvider stringData;
     protected Data cashStringData;
     protected Data consumeStringData;
     protected Data eqpStringData;
     protected Data etcStringData;
     protected Data insStringData;
     protected Data petStringData;
+
     protected Map<Integer, Short> slotMaxCache = new HashMap<>();
     protected Map<Integer, Map<String, Integer>> equipStatsCache = new HashMap<>();
     protected Map<Integer, Equip> equipCache = new HashMap<>();
@@ -124,14 +126,16 @@ public class ItemInformationProvider {
         loadCardIdData();
         itemData = DataProviderFactory.getDataProvider(WzFiles.ITEM);
         equipData = DataProviderFactory.getDataProvider(WzFiles.CHARACTER);
-        stringData = DataProviderFactory.getDataProvider(WzFiles.STRING);
         etcData = DataProviderFactory.getDataProvider(WzFiles.ETC);
-        cashStringData = stringData.getData("Cash.img");
+
+
+        stringData = StringInfoProvider.getStringDataWZ();
+        cashStringData    = stringData.getData("Cash.img");
         consumeStringData = stringData.getData("Consume.img");
-        eqpStringData = stringData.getData("Eqp.img");
-        etcStringData = stringData.getData("Etc.img");
-        insStringData = stringData.getData("Ins.img");
-        petStringData = stringData.getData("Pet.img");
+        eqpStringData     = stringData.getData("Eqp.img");
+        etcStringData     = stringData.getData("Etc.img");
+        insStringData     = stringData.getData("Ins.img");
+        petStringData     = stringData.getData("Pet.img");
 
         isQuestItemCache.put(0, false);
         isPartyQuestItemCache.put(0, false);
@@ -173,20 +177,6 @@ public class ItemInformationProvider {
         return itemPairs;
     }
 
-    public List<Pair<Integer, String>> getAllEtcItems() {
-        if (!itemNameCache.isEmpty()) {
-            return itemNameCache;
-        }
-
-        List<Pair<Integer, String>> itemPairs = new ArrayList<>();
-        Data itemsData;
-
-        itemsData = stringData.getData("Etc.img").getChildByPath("Etc");
-        for (Data itemFolder : itemsData.getChildren()) {
-            itemPairs.add(new Pair<>(Integer.parseInt(itemFolder.getName()), DataTool.getString("name", itemFolder, "NO-NAME")));
-        }
-        return itemPairs;
-    }
 
     private Data getStringData(int itemId) {
         String cat = "null";

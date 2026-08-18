@@ -384,22 +384,5 @@ public class SkillFactory {
         return ret;
     }
 
-    public static String getSkillName(int skillid) {
-        Data data = DataProviderFactory.getDataProvider(WzFiles.STRING).getData("Skill.img");
-        StringBuilder skill = new StringBuilder();
-        skill.append(skillid);
-        if (skill.length() == 4) {
-            skill.delete(0, 4);
-            skill.append("000").append(skillid);
-        }
-        if (data.getChildByPath(skill.toString()) != null) {
-            for (Data skilldata : data.getChildByPath(skill.toString()).getChildren()) {
-                if (skilldata.getName().equals("name")) {
-                    return DataTool.getString(skilldata, null);
-                }
-            }
-        }
 
-        return null;
-    }
 }
