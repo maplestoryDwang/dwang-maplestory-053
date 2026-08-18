@@ -13,7 +13,15 @@ public class ServiceProperty {
     private String wanHost;
     private String lanHost;
     private String localhost;
+
+    /**
+     * 客户端启动登录端口
+     */
     private int loginPort;
+    /**
+     *
+     */
+    private int channelPort;
 
     @Data
     public static class RateLimitProperty {

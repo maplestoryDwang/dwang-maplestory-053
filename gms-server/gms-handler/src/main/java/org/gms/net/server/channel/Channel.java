@@ -78,7 +78,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public final class Channel {
     private static final Logger log = LoggerFactory.getLogger(Channel.class);
-    private static final int BASE_PORT = 17575;
+    private static final int BASE_PORT = ServerManager.getApplicationContext().getBean(ServiceProperty.class).getChannelPort();
 
     private final int port;
     private final String ip;
