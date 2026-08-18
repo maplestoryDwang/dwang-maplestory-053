@@ -74,6 +74,13 @@
             align="center"
           />
           <a-table-column
+              title="出没地图"
+              data-index="mapName"
+              :width="200"
+              align="center"
+              :cell-style="{ whiteSpace: 'pre-line' }"
+          />
+          <a-table-column
             title="NPC图片"
             data-index="npcId"
             :width="100"

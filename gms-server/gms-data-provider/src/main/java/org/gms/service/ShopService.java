@@ -49,6 +49,7 @@ public class ShopService {
         for (Row row : queryAsList) {
             Integer npcId = row.getInt("npcid");
             String npcName = StringInfoProvider.getNPCName(npcId);
+            String mapName = StringInfoProvider.getNpcExistMapName(npcId);
             if (RequireUtil.isEmpty(npcName)) {
                 continue;
             }
@@ -69,6 +70,7 @@ public class ShopService {
                     .shopId(row.getLong("shopid"))
                     .npcId(row.getInt("npcid"))
                     .npcName(npcName)
+                    .mapName(mapName)
                     .build());
         }
         return matchedShopsDOList;

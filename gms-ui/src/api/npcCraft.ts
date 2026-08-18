@@ -6,6 +6,7 @@ export interface CraftSearchRtnDTO {
   craftId?: number;
   npcId?: number;
   npcName?: string;
+  mapName?: string;
 }
 
 // 对应请求过滤器参数 (参照 getShopFilter 保持一致)

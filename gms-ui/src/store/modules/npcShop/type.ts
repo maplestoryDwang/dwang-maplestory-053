@@ -2,6 +2,7 @@ export interface NpcShopState {
   shopId?: number;
   npcId?: number;
   npcName?: string;
+  mapName?: string;
 }
 
 export interface NpcShopItemState {

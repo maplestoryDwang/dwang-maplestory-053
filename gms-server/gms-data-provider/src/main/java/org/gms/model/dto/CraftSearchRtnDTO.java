@@ -13,4 +13,5 @@ public class CraftSearchRtnDTO {
     private Integer craftId;
     private Integer npcId;
     private String npcName;
+    private String mapName;
 }

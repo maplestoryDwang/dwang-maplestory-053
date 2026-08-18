@@ -13,4 +13,5 @@ public class ShopSearchRtnDTO {
     private Long shopId;
     private Integer npcId;
     private String npcName;
+    private String mapName;
 }

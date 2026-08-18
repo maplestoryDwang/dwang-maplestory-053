@@ -46,7 +46,6 @@ public class NpcCraftServiceImpl implements NpcCraftService {
 
 
     public List<CraftSearchRtnDTO> getCraftList() {
-
         List<NpcCraftListDO> queryAsList = craftListMapper.selectAll();
         List<CraftSearchRtnDTO> matchedShopsDOList = new ArrayList<>();
         for (NpcCraftListDO row : queryAsList) {
@@ -55,15 +54,18 @@ public class NpcCraftServiceImpl implements NpcCraftService {
             if (RequireUtil.isEmpty(npcName)) {
                 continue;
             }
+            String mapName = StringInfoProvider.getNpcExistMapName(npcId);
 
             matchedShopsDOList.add(CraftSearchRtnDTO.builder()
                     .craftId(row.getId())
                     .npcId(npcId)
                     .npcName(npcName)
+                    .mapName(mapName)
                     .build());
         }
         return matchedShopsDOList;
     }
+
     /**
      * 1. 获取指定 NPC 配置的所有一级分类菜单列表 (用于 status == 0 阶段)
      */

@@ -1,304 +1,279 @@
 /*
-    通用数据驱动 - NPC 引擎 (支持 EQUIP_UPGRADE / EQUIP_SINGLE / MATERIAL_BATCH)
+	This file is part of the OdinMS Maple Story Server
+    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
+		       Matthias Butz <matze@odinms.de>
+		       Jan Christian Meyer <vimes@odinms.de>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation version 3 as published by
+    the Free Software Foundation. You may not use, modify or distribute
+    this program under any other version of the GNU Affero General Public
+    License.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+var status = 0;
+var selectedType = -1;
+var selectedItem = -1;
+var stimulator = false;
+var item;
+var mats;
+var matQty;
+var cost;
+var stimID;
 
-var status = -1;
-var selectedCategoryIndex = -1;
-var selectedOptionIndex = -1;
-var craftQty = 1; // 制作数量 (用于 MATERIAL_BATCH 批量制作)
-
-var categoryData = null;   // 选中某个分类后加载的 DTO
-var selectedRecipe = null; // 当前选中的配方
-var dialogMap = null;      // 存储初始加载的 Key-Value 台词 Map
-
-// 辅助方法：安全获取 Java Map 中的台词
-function getDialog(key, defaultText) {
-    if (dialogMap != null) {
-        var val = dialogMap.get(key);
-        if (val != null) return val + "";
-    }
-    if (categoryData != null && categoryData.getDialogs() != null) {
-        var val = categoryData.getDialogs().get(key);
-        if (val != null) return val + "";
-    }
-    return defaultText;
-}
+var cd_item = 4001078;
+var cd_mats = [4011001, 4011002, 4001079];
+var cd_matQty = [1, 1, 1];
+var cd_cost = 25000;
 
 function start() {
     cm.getPlayer().setCS(true);
-    status = -1;
+    var selStr = "龙的力量不容小觑。如果你愿意，我可以将龙之力注入你的某件武器中。但前提是，这件武器的潜力足以承载龙之力……#b";
+    var options = ["什么是刺激剂？", "制作战士武器", "制作弓箭手武器", "制作魔法师武器", "制作盗贼武器", "制作海盗武器",
+        "使用刺激剂制作战士武器", "使用刺激剂制作弓箭手武器", "使用刺激剂制作魔法师武器", "使用刺激剂制作盗贼武器", "使用刺激剂制作海盗武器"];
 
-    // 1. 获取该 NPC 的台词 Map
-    dialogMap = cm.getNpcDialogs(cm.getNpc());
-
-    // 2. 校验该 NPC 是否配置了主菜单分类
-    var menuList = cm.getNpcMenuList(cm.getNpc());
-    if (menuList == null || menuList.isEmpty()) {
-        cm.sendOk("该 NPC 暂未配置任何功能。");
-        cm.dispose();
-        return;
+    if (cm.isQuestStarted(7301) || cm.isQuestStarted(7303)) {
+        options.push("Make #t4001078#");
     }
 
-    // 3. 弹出开场白
-    var startMsg = getDialog("craft_start", "你想锻造道具吗？");
-    cm.sendYesNo(startMsg);
+    for (var i = 0; i < options.length; i++) {
+        selStr += "\r\n#L" + i + "# " + options[i] + "#l";
+    }
+    cm.sendSimple(selStr);
 }
 
 function action(mode, type, selection) {
-    if (mode == 1) {
+    if (mode > 0) {
         status++;
     } else {
-        // 拒绝/取消逻辑
-        if (selectedCategoryIndex == -1) {
-            cm.sendNext(getDialog("craft_cancel_start", "好的，下次有需要再来找我。"));
-        } else {
-            cm.sendNext(getDialog("craft_cancel_menu", "收集齐材料后再来找我吧！"));
-        }
         cm.dispose();
         return;
     }
-
-    // -------------------------------------------------------------------------
-    // Status 0: 显示主菜单（列出该 NPC 的所有 NpcCraftCat 分类）
-    // -------------------------------------------------------------------------
-    if (status == 0) {
-        var menuList = cm.getNpcMenuList(cm.getNpc()); // 返回 List<NpcMenuDTO>
-        var selStr = getDialog("craft_menu_title", "请选择制作类型：#b");
-
-        for (var i = 0; i < menuList.size(); i++) {
-            var menu = menuList.get(i);
-            selStr += "\r\n#L" + menu.getMenuIndex() + "# " + menu.getCategoryName() + "#l";
-        }
-        cm.sendSimple(selStr);
-
-    // -------------------------------------------------------------------------
-    // Status 1: 选中分类，判断展示警告还是直接展示选择列表
-    // -------------------------------------------------------------------------
-    } else if (status == 1) {
-        // 如果是从 Status 0 刚选完分类进来
-        if (selectedCategoryIndex == -1) {
-            selectedCategoryIndex = selection;
-        }
-
-        // 获取分类配方数据
-        categoryData = cm.getCraftCategoryData(cm.getNpc(), selectedCategoryIndex);
-
-        if (categoryData == null || categoryData.getOptions() == null || categoryData.getOptions().isEmpty()) {
-            cm.sendOk("当前分类下暂无可以制作的道具。");
-            cm.dispose();
-            return;
-        }
-
-        var craftType = (categoryData.getCraftType() + "").toUpperCase();
-        var warningText = categoryData.getWarningText() != null ? categoryData.getWarningText() + "" : "";
-
-        // 如果配置了警告文案（如装备合成警告），先弹 Warning 提示框
-        if (warningText.length > 0) {
-            cm.sendNext(warningText);
+    if (status == 1) {
+        selectedType = selection;
+        if (selectedType > 5 && selectedType < 11) {
+            stimulator = true;
+            selectedType -= 5;
         } else {
-            // 没有警告则直接展示配方列表
-            renderOptionList();
+            stimulator = false;
         }
-
-    // -------------------------------------------------------------------------
-    // Status 2: 处理配方选择或数量输入
-    // -------------------------------------------------------------------------
+        if (selectedType == 0) { //What's a stim?
+            cm.sendNext("刺激剂是一种特殊药剂，我可以在制作特定物品时加入它。它能让物品生成类似怪物掉落的随机属性。但也有可能毫无变化，甚至属性低于平均值。而且使用刺激剂时有10%的概率无法获得任何物品，所以请谨慎选择。");
+            cm.dispose();
+        } else if (selectedType == 1) { //warrior weapon
+            var selStr = "好的，那你想让哪件战士武器承载龙之力？#b";
+            var weapon = ["狂龙闪电剑#k - 110级 单手剑#b", "狂龙怒斩#k - 110级 单手斧#b", "狂龙地锤#k - 110级 单手钝器#b", "飞龙巨剑#k - 110级 双手剑#b", "炼狱魔龙斧#k - 110级 双手斧#b", "金龙轰天锤#k - 110级 双手钝器#b",
+                "盘龙七冲枪#k - 110级 长枪#b", "血龙神斧#k - 110级 长杖#b"]; // BW：Blunt Weapon（钝器）
+            for (var i = 0; i < weapon.length; i++) {
+                selStr += "\r\n#L" + i + "# " + weapon[i] + "#l";
+            }
+            cm.sendSimple(selStr);
+        } else if (selectedType == 2) { //bowman weapon
+            var selStr = "好的，那你想让哪件弓箭手武器承载龙之力？#b";
+            var weapon = ["金龙振翅弓#k - 110级 弓#b", "黄金飞龙弩#k - 110级 十字弓#b"];
+            for (var i = 0; i < weapon.length; i++) {
+                selStr += "\r\n#L" + i + "# " + weapon[i] + "#l";
+            }
+            cm.sendSimple(selStr);
+        } else if (selectedType == 3) { //magician weapon
+            var selStr = "好的，那你想让哪件魔法师武器承载龙之力？#b";
+            var weapon = ["佘太君龙杖#k - 108级 魔杖#b", "黑精灵王杖#k - 110级 法杖#b"];
+            for (var i = 0; i < weapon.length; i++) {
+                selStr += "\r\n#L" + i + "# " + weapon[i] + "#l";
+            }
+            cm.sendSimple(selStr);
+        } else if (selectedType == 4) { //thief weapon
+            var selStr = "好的，那你想让哪件盗贼武器承载龙之力？#b";
+            var weapon = ["蝉翼龙牙破#k - 110级 力量型匕首#b", "半月龙鳞裂#k - 110级 运气型匕首#b", "寒木升龙拳#k - 110级 飞镖#b"]; // Claw：盗贼使用的飞镖武器
+            for (var i = 0; i < weapon.length; i++) {
+                selStr += "\r\n#L" + i + "# " + weapon[i] + "#l";
+            }
+            cm.sendSimple(selStr);
+        } else if (selectedType == 5) { //pirate weapon
+            var selStr = "好的，那你想让哪件海盗武器承载龙之力？#b";
+            var weapon = ["撕裂者#k - 110级 指虎#b", "枭龙#k - 110级 手枪#b"]; // Knuckle：海盗（拳手）使用的指虎武器
+            for (var i = 0; i < weapon.length; i++) {
+                selStr += "\r\n#L" + i + "# " + weapon[i] + "#l";
+            }
+            cm.sendSimple(selStr);
+        } else if (selectedType == 11) { //cornian's dagger
+            var selStr = "哦，你是想混进这些蜥蜴怪里去救莫伊拉（Moira）吗？我会尽全力支持你。给我一些材料，我就能帮你做一把和#t4001078#几乎一样的匕首。";
+            cm.sendNext(selStr);
+        }
     } else if (status == 2) {
-        var craftType = (categoryData.getCraftType() + "").toUpperCase();
-        var warningText = categoryData.getWarningText() != null ? categoryData.getWarningText() + "" : "";
+        selectedItem = selection;
 
-        // 如果有警告文本，Status 2 才展示配方列表
-        if (warningText.length > 0) {
-            renderOptionList();
-            return;
+        if (selectedType == 1) { //warrior weapon
+            var itemSet = [1302059, 1312031, 1322052, 1402036, 1412026, 1422028, 1432038, 1442045];
+            var matSet = [[1302056, 4000244, 4000245, 4005000], [1312030, 4000244, 4000245, 4005000], [1322045, 4000244, 4000245, 4005000], [1402035, 4000244, 4000245, 4005000],
+                [1412021, 4000244, 4000245, 4005000], [1422027, 4000244, 4000245, 4005000], [1432030, 4000244, 4000245, 4005000], [1442044, 4000244, 4000245, 4005000]];
+            var matQtySet = [[1, 20, 25, 8], [1, 20, 25, 8], [1, 20, 25, 8], [1, 20, 25, 8], [1, 20, 25, 8], [1, 20, 25, 8], [1, 20, 25, 8], [1, 20, 25, 8]];
+            var costSet = [120000, 120000, 120000, 120000, 120000, 120000, 120000, 120000];
+            item = itemSet[selectedItem];
+            mats = matSet[selectedItem];
+            matQty = matQtySet[selectedItem];
+            cost = costSet[selectedItem];
+        } else if (selectedType == 2) { //bowman weapon
+            var itemSet = [1452044, 1462039];
+            var matSet = [[1452019, 4000244, 4000245, 4005000, 4005002], [1462015, 4000244, 4000245, 4005000, 4005002]];
+            var matQtySet = [[1, 20, 25, 3, 5], [1, 20, 25, 5, 3]];
+            var costSet = [120000, 120000];
+            item = itemSet[selectedItem];
+            mats = matSet[selectedItem];
+            matQty = matQtySet[selectedItem];
+            cost = costSet[selectedItem];
+        } else if (selectedType == 3) { //magician weapon
+            var itemSet = [1372032, 1382036];
+            var matSet = [[1372010, 4000244, 4000245, 4005001, 4005003], [1382035, 4000244, 4000245, 4005001, 4005003]];
+            var matQtySet = [[1, 20, 25, 6, 2], [1, 20, 25, 6, 2]];
+            var costSet = [120000, 120000];
+            item = itemSet[selectedItem];
+            mats = matSet[selectedItem];
+            matQty = matQtySet[selectedItem];
+            cost = costSet[selectedItem];
+        } else if (selectedType == 4) { //thief weapon
+            var itemSet = [1332049, 1332050, 1472051];
+            var matSet = [[1332051, 4000244, 4000245, 4005000, 4005002], [1332052, 4000244, 4000245, 4005002, 4005003], [1472053, 4000244, 4000245, 4005002, 4005003]];
+            var matQtySet = [[1, 20, 25, 5, 3], [1, 20, 25, 3, 5], [1, 20, 25, 2, 6]];
+            var costSet = [120000, 120000, 120000];
+            item = itemSet[selectedItem];
+            mats = matSet[selectedItem];
+            matQty = matQtySet[selectedItem];
+            cost = costSet[selectedItem];
+        } else if (selectedType == 5) { //pirate weapon
+            var itemSet = [1482013, 1492013];
+            var matSet = [[1482012, 4000244, 4000245, 4005000, 4005002], [1492012, 4000244, 4000245, 4005000, 4005002]];
+            var matQtySet = [[1, 20, 25, 5, 3], [1, 20, 25, 3, 5]];
+            var costSet = [120000, 120000];
+            item = itemSet[selectedItem];
+            mats = matSet[selectedItem];
+            matQty = matQtySet[selectedItem];
+            cost = costSet[selectedItem];
+        } else if (selectedType == 11) { //cornian's dagger
+            item = cd_item;
+            mats = cd_mats;
+            matQty = cd_matQty;
+            cost = cd_cost;
         }
 
-        // 记录选中的配方
-        if (selectedOptionIndex == -1) {
-            selectedOptionIndex = selection;
+        var prompt = "你想让我制作一把 #t"+ item +"# 吗？这样的话，我需要你提供一些特定的材料才能制作。不过要确保你的背包里有足够的空间哦！#b";
+        if (stimulator) {
+            stimID = getStimID(item);
+            prompt += "\r\n#i" + stimID + "# 1 #t" + stimID + "#";
         }
-        selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
-
-        // 如果是批量制作材料/提炼类型，要求玩家输入要制作的数量
-        if (craftType == "MATERIAL_BATCH") {
-            var mats = selectedRecipe.getMats();
-            var matQty = selectedRecipe.getMatQty();
-            var item = selectedRecipe.getItemId();
-            var yieldCount = selectedRecipe.getYieldQty();
-            var cost = selectedRecipe.getCost();
-
-            var prompt = "";
-
-            // 判断是付费冶炼还是免费合成，读取不同的台词模版
-            if (cost > 0) {
-                // 读取付费冶炼台词模版
-                var defaultTpl = "冶炼1个#t{item}#需要下面的物品，怎么样？你想试试吗？\r\n{mats}";
-                var tpl = getDialog("quantity_prompt_refine", defaultTpl);
-
-                // 拼接材料与金币列表
-                var matStr = "";
-                for (var i = 0; i < mats.size(); i++) {
-                    matStr += "\r\n#i" + mats.get(i) + "# #b#t" + mats.get(i) + "# " + matQty.get(i) + "个#k";
-                }
-                if (cost > 0) {
-                    matStr += "\r\n#i4031138# #b" + cost + " 金币#k";
-                }
-
-                // 替换模版中的变量
-                prompt = tpl.replace("{item}", item + "")
-                            .replace("{mats}", matStr)
-                            .replace("{yield}", yieldCount + "");
-
-            } else {
-                // 读取免费合成台词模版
-                var defaultTpl = "使用 {mats}能做#t{item}#{yield}个，都是免费的。所以你应该谢谢我，怎么样？你想做几次？";
-                var tpl = getDialog("quantity_prompt_free", defaultTpl);
-
-                // 拼接材料简述 (如 "#b#t4000000# 10个#k ")
-                var matStr = "";
-                for (var i = 0; i < mats.size(); i++) {
-                    matStr += "#b#t" + mats.get(i) + "# " + matQty.get(i) + "个#k ";
-                }
-
-                // 替换模版中的变量
-                prompt = tpl.replace("{item}", item + "")
-                            .replace("{mats}", matStr)
-                            .replace("{yield}", yieldCount + "");
-            }
-
-            // 弹出输入框，默认 1，范围 1~100
-            cm.sendGetNumber(prompt, 1, 1, 100);
-
-        } else {
-            // 装备/单品类无需输入数量，自动跳到 Status 3 确认页
-            status = 2; // 修正 status 步进
-            action(1, 0, 0);
-        }
-
-    // -------------------------------------------------------------------------
-    // Status 3: 材料清单与最终确认
-    // -------------------------------------------------------------------------
-    } else if (status == 3) {
-        var craftType = (categoryData.getCraftType() + "").toUpperCase();
-
-        // 如果是批量制作，获取输入的数量
-        if (craftType == "MATERIAL_BATCH") {
-            craftQty = selection;
-            if (selectedRecipe == null && selectedOptionIndex != -1) {
-                selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
+        if (mats instanceof Array) {
+            for (var i = 0; i < mats.length; i++) {
+                prompt += "\r\n#i" + mats[i] + "# " + matQty[i] + " #t" + mats[i] + "#";
             }
         } else {
-            // 装备类型配方在上一步设置
-            if (selectedOptionIndex == -1) {
-                selectedOptionIndex = selection;
-            }
-            selectedRecipe = categoryData.getOptions().get(selectedOptionIndex);
-            craftQty = 1;
+            prompt += "\r\n#i" + mats + "# " + matQty + " #t" + mats + "#";
         }
-
-        var prompt = "";
-
-        if (craftType == "MATERIAL_BATCH") {
-            var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
-            var totalYield = selectedRecipe.getYieldQty() * craftQty;
-            prompt = "你想制作 #b#t" + selectedRecipe.getItemId() + "##k " + totalYield + " 个吗？这需要以下材料：\r\n";
-
-        } else if (selectedRecipe.getIsEquip()) {
-            prompt = "你想做一个 #b#z" + selectedRecipe.getItemId() + "##k 吗？这需要下面的道具，等级限制是 #r" + selectedRecipe.getReqLevel() + "#k。怎么样？想做吗？\r\n";
-        } else {
-            var yieldText = selectedRecipe.getYieldQty() > 1 ? selectedRecipe.getYieldQty() + "个 " : "";
-            var nameText = selectedRecipe.getDisplayText() || ("#t" + selectedRecipe.getItemId() + "#");
-            prompt = "你想制作 " + yieldText + "#b" + nameText + "#k 吗？这需要以下材料：\r\n";
+        if (cost > 0) {
+            prompt += "\r\n#i4031138# " + cost + " meso";
         }
-
-        // 拼接材料列表 (自动按制作次数 craftQty 计算总需材料)
-        var mats = selectedRecipe.getMats();
-        var matQty = selectedRecipe.getMatQty();
-        for (var i = 0; i < mats.size(); i++) {
-            var totalMatReq = matQty.get(i) * craftQty;
-            prompt += "\r\n#i" + mats.get(i) + "##b #t" + mats.get(i) + "# " + totalMatReq + " 个#k";
-        }
-
-        // 计算总手续费
-        var totalCost = selectedRecipe.getCost() * craftQty;
-        if (totalCost > 0) {
-            prompt += "\r\n#i4031138# #b" + totalCost + " 金币#k";
-        }
-
         cm.sendYesNo(prompt);
-
-    // -------------------------------------------------------------------------
-    // Status 4: 校验与执行发放
-    // -------------------------------------------------------------------------
-    } else if (status == 4) {
-        var totalYield = selectedRecipe.getYieldQty() * craftQty;
-        var totalCost = selectedRecipe.getCost() * craftQty;
-
-        // 1. 检查背包空间
-        if (!cm.canHold(selectedRecipe.getItemId(), totalYield)) {
-            cm.sendOk(getDialog("no_space", "首先检查你的物品栏是否有空位。"));
-            cm.dispose();
-            return;
-        }
-
-        // 2. 检查金币
-        if (totalCost > 0 && cm.getMeso() < totalCost) {
-            cm.sendOk(getDialog("no_meso", "恐怕你支付不起我的服务费。"));
-            cm.dispose();
-            return;
-        }
-
-        // 3. 检查材料是否充足
+    } else if (status == 3) {
         var complete = true;
-        var mats = selectedRecipe.getMats();
-        var matQty = selectedRecipe.getMatQty();
-        for (var i = 0; i < mats.size(); i++) {
-            var totalMatReq = matQty.get(i) * craftQty;
-            if (!cm.haveItem(mats.get(i), totalMatReq)) {
+
+        if (!cm.canHold(item, 1)) {
+            cm.sendOk("首先检查你的物品栏是否有空位。");
+            cm.dispose();
+            return;
+        } else if (cm.getMeso() < cost) {
+            cm.sendOk("你没有满足我需要的物资。");
+            cm.dispose();
+            return;
+        } else {
+            if (mats instanceof Array) {
+                for (var i = 0; complete && i < mats.length; i++) {
+                    if (!cm.haveItem(mats[i], matQty[i])) {
+                        complete = false;
+                    }
+                }
+            } else if (!cm.haveItem(mats, matQty)) {
                 complete = false;
-                break;
             }
         }
-
+        if (stimulator) { //check for stimulator
+            if (!cm.haveItem(stimID)) {
+                complete = false;
+            }
+        }
         if (!complete) {
-            cm.sendOk(getDialog("no_mat", "请你确认有需要的物品或背包的其他窗口有空间。"));
+            cm.sendOk("恐怕没有正确的物品，龙之精华就不能成为一个非常可靠的武器。下次请带来正确的物品。");
         } else {
-            // 扣除材料与金币
-            for (var i = 0; i < mats.size(); i++) {
-                var totalMatReq = matQty.get(i) * craftQty;
-                cm.gainItem(mats.get(i), -totalMatReq);
+            if (mats instanceof Array) {
+                for (var i = 0; i < mats.length; i++) {
+                    cm.gainItem(mats[i], -matQty[i]);
+                }
+            } else {
+                cm.gainItem(mats, -matQty);
             }
-            if (totalCost > 0) {
-                cm.gainMeso(-totalCost);
-            }
+            cm.gainMeso(-cost);
+            if (stimulator) { //check for stimulator
+                cm.gainItem(stimID, -1);
+                var deleted = Math.floor(Math.random() * 10);
+                if (deleted != 0) {
+                    // 获得随机属性物品
+                    cm.gainItem(item, 1, true, true);
+                    cm.sendOk("过程已经完成。好好对待你的武器，免得招惹龙的愤怒。");
+                } else {
 
-            // 发放成果
-            cm.gainItem(selectedRecipe.getItemId(), totalYield);
-            cm.sendOk(getDialog("craft_success", "好了，完成了。你觉得怎么样，是不是一件艺术品？嗯，如果你需要其他东西，请再来找我。"));
+                    // 武器直接炸了。。。
+                    cm.sendOk("不幸的是，龙的精华与你的武器产生了冲突。对你的损失我深感抱歉。");
+                }
+            } else {//just give basic item
+                cm.gainItem(item, 1);
+                cm.sendOk("过程已经完成。好好对待你的武器，免得招惹龙的愤怒。");
+            }
         }
         cm.dispose();
     }
 }
 
-// 渲染配方列表
-function renderOptionList() {
-    var promptText = categoryData.getPromptText();
-    var hasPrompt = promptText != null && (promptText + "").length > 0;
-    var selStr = hasPrompt ? promptText : "你想做什么样的道具？#b";
-
-    var options = categoryData.getOptions();
-    for (var i = 0; i < options.size(); i++) {
-        var opt = options.get(i);
-        if (opt.getIsEquip()) {
-            selStr += "\r\n#L" + i + "##z" + opt.getItemId() + "##k (等级限制：" + opt.getReqLevel() + "，" + opt.getJobName() + ")#l#b";
-        } else {
-            var rawDisplayText = opt.getDisplayText();
-            var nameStr = (rawDisplayText != null && (rawDisplayText + "").length > 0)
-                          ? rawDisplayText
-                          : "#t" + opt.getItemId() + "#";
-            var yieldStr = opt.getYieldQty() > 1 ? " [" + opt.getYieldQty() + "个]" : "";
-            selStr += "\r\n#L" + i + "# " + nameStr + yieldStr + "#l#b";
-        }
+function getStimID(equipID) {
+    var cat = Math.floor(equipID / 10000);
+    switch (cat) {
+        case 130: //1h sword
+            return 4130002;
+        case 131: //1h axe
+            return 4130003;
+        case 132: //1h bw
+            return 4130004;
+        case 140: //2h sword
+            return 4130005;
+        case 141: //2h axe
+            return 4130006;
+        case 142: //2h bw
+            return 4130007;
+        case 143: //spear
+            return 4130008;
+        case 144: //polearm
+            return 4130009;
+        case 137: //wand
+            return 4130010;
+        case 138: //staff
+            return 4130011;
+        case 145: //bow
+            return 4130012;
+        case 146: //xbow
+            return 4130013;
+        case 148: //knuckle
+            return 4130016;
+        case 149: //pistol
+            return 4130017;
+        case 133: //dagger
+            return 4130014;
+        case 147: //claw
+            return 4130015;
     }
-    cm.sendSimple(selStr);
+    return 4130002;
 }

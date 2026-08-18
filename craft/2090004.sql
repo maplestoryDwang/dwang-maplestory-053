@@ -38,54 +38,54 @@ DELETE FROM `npc_craft_item` WHERE `category_id` IN (
 DELETE FROM `npc_craft_cat` WHERE `npc_id` = 2090004;
 
 -- =========================================================================
--- 分类 0: 制作药物 (MATERIAL_BATCH)
+-- 分类 0: 制作药物 (MATERIAL_BATCH) - 修改 display_text 为产出物图标及名称
 -- =========================================================================
 INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_id`, `craft_type`, `prompt_text`, `warning_text`) VALUES
     (2090004, 0, '制作药物', 1, 'MATERIAL_BATCH', '你对制作哪种药物感兴趣？#b', '');
 SET @cat_medicine = LAST_INSERT_ID();
 
 -- 配方 0-0: (2022145)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022145, 0, 1, 0, '', 0, 1);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022145, '#v2022145# #t2022145#', 0, 1, 0, '', 0, 1);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 2022116, 3);
 
 -- 配方 0-1: (2022146)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022146, 0, 1, 0, '', 0, 2);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022146, '#v2022146# #t2022146#', 0, 1, 0, '', 0, 2);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 2022116, 3);
 
 -- 配方 0-2: (2022147)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022147, 0, 1, 0, '', 910, 3);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022147, '#v2022147# #t2022147#', 0, 1, 0, '', 910, 3);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000281, 10), (@rec_id, 4000293, 10);
 
 -- 配方 0-3: (2022148)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022148, 0, 1, 0, '', 950, 4);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022148, '#v2022148# #t2022148#', 0, 1, 0, '', 950, 4);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000276, 20), (@rec_id, 2002005, 1);
 
 -- 配方 0-4: (2022149)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022149, 0, 1, 0, '', 1940, 5);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022149, '#v2022149# #t2022149#', 0, 1, 0, '', 1940, 5);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000288, 20), (@rec_id, 4000292, 20);
 
 -- 配方 0-5: (2022150)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022150, 0, 1, 0, '', 600, 6);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2022150, '#v2022150# #t2022150#', 0, 1, 0, '', 600, 6);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000295, 10);
 
 -- 配方 0-6: (2050004)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2050004, 0, 1, 0, '', 700, 7);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 2050004, '#v2050004# #t2050004#', 0, 1, 0, '', 700, 7);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 2022131, 1), (@rec_id, 2022132, 1);
 
 -- 配方 0-7: (4031554)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 4031554, 0, 1, 0, '', 1000, 8);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_medicine, 4031554, '#v4031554# #t4031554#', 0, 1, 0, '', 1000, 8);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000286, 20), (@rec_id, 4000287, 20), (@rec_id, 4000293, 20);
 
 -- =========================================================================
--- 分类 1: 制作卷轴 (EQUIP_SINGLE)
+-- 分类 1: 制作卷轴 (EQUIP_SINGLE) - 不变
 -- =========================================================================
 INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_id`, `craft_type`, `prompt_text`, `warning_text`) VALUES
     (2090004, 1, '制作卷轴', 1, 'EQUIP_SINGLE', '你对制作哪种卷轴感兴趣？#b', '');
@@ -172,7 +172,7 @@ SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4001124, 100), (@rec_id, 4010001, 10);
 
 -- =========================================================================
--- 分类 2: 捐赠药材材料 (兑换弹珠) (MATERIAL_BATCH)
+-- 分类 2: 捐赠药材材料 (兑换弹珠) (MATERIAL_BATCH) - 修改 display_text 为捐赠消耗材料图标及名称
 -- 产出目标: 4001124 (用于制作卷轴的弹珠)
 -- =========================================================================
 INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_id`, `craft_type`, `prompt_text`, `warning_text`) VALUES
@@ -180,101 +180,101 @@ INSERT INTO `npc_craft_cat` (`npc_id`, `menu_index`, `category_name`, `template_
 SET @cat_donate = LAST_INSERT_ID();
 
 -- 配方 2-0: 捐赠 4000276 (奖励 7 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 7, 0, '', 0, 1);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000276# #t4000276#', 0, 7, 0, '', 0, 1);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000276, 100);
 
 -- 配方 2-1: 捐赠 4000277 (奖励 7 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 7, 0, '', 0, 2);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000277# #t4000277#', 0, 7, 0, '', 0, 2);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000277, 100);
 
 -- 配方 2-2: 捐赠 4000278 (奖励 8 个弹珠 [原 7~8 取最大值 8])
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 8, 0, '', 0, 3);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000278# #t4000278#', 0, 8, 0, '', 0, 3);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000278, 100);
 
 -- 配方 2-3: 捐赠 4000279 (奖励 10 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 10, 0, '', 0, 4);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000279# #t4000279#', 0, 10, 0, '', 0, 4);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000279, 100);
 
 -- 配方 2-4: 捐赠 4000280 (奖励 11 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 11, 0, '', 0, 5);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000280# #t4000280#', 0, 11, 0, '', 0, 5);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000280, 100);
 
 -- 配方 2-5: 捐赠 4000291 (奖励 8 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 8, 0, '', 0, 6);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000291# #t4000291#', 0, 8, 0, '', 0, 6);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000291, 100);
 
 -- 配方 2-6: 捐赠 4000292 (奖励 8 个弹珠 [原 7~8 取最大值 8])
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 8, 0, '', 0, 7);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000292# #t4000292#', 0, 8, 0, '', 0, 7);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000292, 100);
 
 -- 配方 2-7: 捐赠 4000286 (奖励 9 个弹珠 [原 7~9 取最大值 9])
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 9, 0, '', 0, 8);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000286# #t4000286#', 0, 9, 0, '', 0, 8);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000286, 100);
 
 -- 配方 2-8: 捐赠 4000287 (奖励 8 个弹珠 [原 7~8 取最大值 8])
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 8, 0, '', 0, 9);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000287# #t4000287#', 0, 8, 0, '', 0, 9);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000287, 100);
 
 -- 配方 2-9: 捐赠 4000293 (奖励 9 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 9, 0, '', 0, 10);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000293# #t4000293#', 0, 9, 0, '', 0, 10);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000293, 100);
 
 -- 配方 2-10: 捐赠 4000294 (奖励 10 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 10, 0, '', 0, 11);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000294# #t4000294#', 0, 10, 0, '', 0, 11);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000294, 100);
 
 -- 配方 2-11: 捐赠 4000298 (奖励 11 个弹珠 [原 10~11 取最大值 11])
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 11, 0, '', 0, 12);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000298# #t4000298#', 0, 11, 0, '', 0, 12);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000298, 100);
 
 -- 配方 2-12: 捐赠 4000284 (奖励 11 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 11, 0, '', 0, 13);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000284# #t4000284#', 0, 11, 0, '', 0, 13);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000284, 100);
 
 -- 配方 2-13: 捐赠 4000288 (奖励 12 个弹珠 [原 11~12 取最大值 12])
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 12, 0, '', 0, 14);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000288# #t4000288#', 0, 12, 0, '', 0, 14);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000288, 100);
 
 -- 配方 2-14: 捐赠 4000285 (奖励 13 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 13, 0, '', 0, 15);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000285# #t4000285#', 0, 13, 0, '', 0, 15);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000285, 100);
 
 -- 配方 2-15: 捐赠 4000282 (奖励 13 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 13, 0, '', 0, 16);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000282# #t4000282#', 0, 13, 0, '', 0, 16);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000282, 100);
 
 -- 配方 2-16: 捐赠 4000295 (奖励 14 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 14, 0, '', 0, 17);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000295# #t4000295#', 0, 14, 0, '', 0, 17);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000295, 100);
 
 -- 配方 2-17: 捐赠 4000289 (奖励 15 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 15, 0, '', 0, 18);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000289# #t4000289#', 0, 15, 0, '', 0, 18);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000289, 100);
 
 -- 配方 2-18: 捐赠 4000296 (奖励 16 个弹珠 [原 15~16 取最大值 16])
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 16, 0, '', 0, 19);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000296# #t4000296#', 0, 16, 0, '', 0, 19);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000296, 100);
 
 -- 配方 2-19: 捐赠 4000297 (奖励 17 个弹珠)
-INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '捐赠 100 个材料', 0, 17, 0, '', 0, 20);
+INSERT INTO `npc_craft_item` (`category_id`, `item_id`, `display_text`, `is_equip`, `yield_qty`, `req_level`, `job_name`, `cost`, `sort_order`) VALUES (@cat_donate, 4001124, '#v4000297# #t4000297#', 0, 17, 0, '', 0, 20);
 SET @rec_id = LAST_INSERT_ID();
 INSERT INTO `npc_craft_mat` (`recipe_id`, `mat_id`, `mat_qty`) VALUES (@rec_id, 4000297, 100);
