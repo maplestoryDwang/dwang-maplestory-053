@@ -1,12 +1,19 @@
 package org.gms.server.quest.v2;
 
 
+import org.gms.client.QuestStatus.Status;
 import org.gms.config.GameConfig;
 import org.gms.server.quest.QuestActionType;
 import org.gms.server.quest.QuestRequirementType;
 import org.gms.server.quest.v2.action.data.AbstractQuestActionData;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.InfoExRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.InfoNumberRequirementData;
 import org.gms.server.quest.v2.requirement.data.imp.IntervalRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.ItemRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.MobRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.NpcRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.ScriptRequirementData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,6 +102,71 @@ public class QuestV2 {
     public Map<QuestRequirementType, AbstractQuestRequirementData> getCompleteReqs() { return completeReqs; }
     public Map<QuestActionType, AbstractQuestActionData> getStartActs() { return startActs; }
     public Map<QuestActionType, AbstractQuestActionData> getCompleteActs() { return completeActs; }
+
+    // ==================== 查询辅助方法 (对齐 V1 Quest) ====================
+
+    public int getStartItemAmountNeeded(int itemid) {
+        AbstractQuestRequirementData req = startReqs.get(QuestRequirementType.ITEM);
+        if (req == null) return Integer.MIN_VALUE;
+        return ((ItemRequirementData) req).getItemAmountNeeded(itemid, false);
+    }
+
+    public int getCompleteItemAmountNeeded(int itemid) {
+        AbstractQuestRequirementData req = completeReqs.get(QuestRequirementType.ITEM);
+        if (req == null) return Integer.MAX_VALUE;
+        return ((ItemRequirementData) req).getItemAmountNeeded(itemid, true);
+    }
+
+    public int getMobAmountNeeded(int mid) {
+        AbstractQuestRequirementData req = completeReqs.get(QuestRequirementType.MOB);
+        if (req == null) return 0;
+        return ((MobRequirementData) req).getMobs().getOrDefault(mid, 0);
+    }
+
+    public short getInfoNumber(Status qs) {
+        boolean checkEnd = qs.equals(Status.STARTED);
+        Map<QuestRequirementType, AbstractQuestRequirementData> reqs = !checkEnd ? startReqs : completeReqs;
+        AbstractQuestRequirementData req = reqs.get(QuestRequirementType.INFO_NUMBER);
+        return req != null ? ((InfoNumberRequirementData) req).getInfoNumber() : 0;
+    }
+
+    public String getInfoEx(Status qs, int index) {
+        boolean checkEnd = qs.equals(Status.STARTED);
+        Map<QuestRequirementType, AbstractQuestRequirementData> reqs = !checkEnd ? startReqs : completeReqs;
+        try {
+            AbstractQuestRequirementData req = reqs.get(QuestRequirementType.INFO_EX);
+            return ((InfoExRequirementData) req).getInfo().get(index);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public java.util.List<String> getInfoEx(Status qs) {
+        boolean checkEnd = qs.equals(Status.STARTED);
+        Map<QuestRequirementType, AbstractQuestRequirementData> reqs = !checkEnd ? startReqs : completeReqs;
+        try {
+            AbstractQuestRequirementData req = reqs.get(QuestRequirementType.INFO_EX);
+            return ((InfoExRequirementData) req).getInfo();
+        } catch (Exception e) {
+            return new java.util.LinkedList<>();
+        }
+    }
+
+    public int getNpcRequirement(boolean checkEnd) {
+        Map<QuestRequirementType, AbstractQuestRequirementData> reqs = !checkEnd ? startReqs : completeReqs;
+        AbstractQuestRequirementData mqr = reqs.get(QuestRequirementType.NPC);
+        return mqr != null ? ((NpcRequirementData) mqr).getReqNPC() : -1;
+    }
+
+    public boolean hasScriptRequirement(boolean checkEnd) {
+        Map<QuestRequirementType, AbstractQuestRequirementData> reqs = !checkEnd ? startReqs : completeReqs;
+        AbstractQuestRequirementData mqr = reqs.get(QuestRequirementType.SCRIPT);
+        return mqr != null && ((ScriptRequirementData) mqr).isReqScript();
+    }
+
+    public boolean hasNextQuestAction() {
+        return completeActs.get(QuestActionType.NEXTQUEST) != null;
+    }
 
 
 }

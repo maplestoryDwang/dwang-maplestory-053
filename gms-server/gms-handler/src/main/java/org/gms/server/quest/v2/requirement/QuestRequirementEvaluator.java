@@ -27,6 +27,21 @@ public class QuestRequirementEvaluator {
         CHECKERS.put(QuestRequirementType.END_DATE, new EndDateChecker());
         CHECKERS.put(QuestRequirementType.FIELD_ENTER, new FieldEnterChecker());
         CHECKERS.put(QuestRequirementType.INFO_EX, new InfoExChecker());
+        CHECKERS.put(QuestRequirementType.INFO_NUMBER, new InfoNumberChecker());
+        CHECKERS.put(QuestRequirementType.INTERVAL, new IntervalChecker());
+        CHECKERS.put(QuestRequirementType.ITEM, new ItemChecker());
+        CHECKERS.put(QuestRequirementType.JOB, new JobChecker());
+        CHECKERS.put(QuestRequirementType.MAX_LEVEL, new MaxLevelChecker());
+        CHECKERS.put(QuestRequirementType.MESO, new MesoChecker());
+        CHECKERS.put(QuestRequirementType.MIN_LEVEL, new MinLevelChecker());
+        CHECKERS.put(QuestRequirementType.MIN_PET_TAMENESS, new MinTamenessChecker());
+        CHECKERS.put(QuestRequirementType.MOB, new MobChecker());
+        CHECKERS.put(QuestRequirementType.MONSTER_BOOK, new MonsterBookCountChecker());
+        CHECKERS.put(QuestRequirementType.NPC, new NpcChecker());
+        CHECKERS.put(QuestRequirementType.PET, new PetChecker());
+        CHECKERS.put(QuestRequirementType.POP, new PopularityChecker());
+        CHECKERS.put(QuestRequirementType.QUEST, new QuestChecker());
+        CHECKERS.put(QuestRequirementType.SCRIPT, new ScriptChecker());
 
 
 

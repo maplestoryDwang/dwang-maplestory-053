@@ -7,10 +7,44 @@ import org.gms.provider.DataTool;
 import org.gms.provider.wz.WzFiles;
 import org.gms.server.quest.QuestActionType;
 import org.gms.server.quest.QuestRequirementType;
+import org.gms.server.quest.Quest;
 import org.gms.server.quest.v2.action.data.AbstractQuestActionData;
+import org.gms.server.quest.v2.action.data.ext.BuffActionData;
+import org.gms.server.quest.v2.action.data.ext.ExpActionData;
+import org.gms.server.quest.v2.action.data.ext.FameActionData;
+import org.gms.server.quest.v2.action.data.ext.InfoActionData;
+import org.gms.server.quest.v2.action.data.ext.IntervalActionData;
 import org.gms.server.quest.v2.action.data.ext.ItemActionData;
+import org.gms.server.quest.v2.action.data.ext.JobActionData;
+import org.gms.server.quest.v2.action.data.ext.MapActionData;
+import org.gms.server.quest.v2.action.data.ext.MesoActionData;
+import org.gms.server.quest.v2.action.data.ext.NextQuestActionData;
+import org.gms.server.quest.v2.action.data.ext.PetSkillActionData;
+import org.gms.server.quest.v2.action.data.ext.PetSpeedActionData;
+import org.gms.server.quest.v2.action.data.ext.PetTamenessActionData;
+import org.gms.server.quest.v2.action.data.ext.SkillActionData;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 import org.gms.server.quest.v2.requirement.data.imp.BuffExceptRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.BuffRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.CompletedQuestRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.EndDateRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.FieldEnterRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.InfoExRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.InfoNumberRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.IntervalRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.ItemRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.JobRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.MaxLevelRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.MesoRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.MinLevelRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.MinTamenessRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.MobRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.MonsterBookCountRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.NpcRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.PetRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.PopularityRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.QuestRequirementData;
+import org.gms.server.quest.v2.requirement.data.imp.ScriptRequirementData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +53,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * TODO
+ * v2版本questData加载
  *
  * @author dwang
  * @version 1.0
@@ -105,7 +139,7 @@ public class QuestDataProviderV2 {
     private void parseRequirements(QuestV2 quest, Data reqDataNode, boolean isStart) {
         for (Data reqNode : reqDataNode.getChildren()) {
             QuestRequirementType type = QuestRequirementType.getByWZName(reqNode.getName());
-            AbstractQuestRequirementData req = getRequirementData(type, reqNode);
+            AbstractQuestRequirementData req = getRequirementData(quest.getId(), type, reqNode);
             if (req != null) {
                 if (isStart) {
                     quest.getStartReqs().put(type, req);
@@ -119,7 +153,7 @@ public class QuestDataProviderV2 {
     private void parseActions(QuestV2 quest, Data actDataNode, boolean isStart) {
         for (Data actNode : actDataNode.getChildren()) {
             QuestActionType questActionType = QuestActionType.getByWZName(actNode.getName());
-            AbstractQuestActionData act = getActionData(questActionType, actNode);
+            AbstractQuestActionData act = getActionData(quest.getId(), questActionType, actNode);
             if (act != null) {
                 if (isStart) {
                     quest.getStartActs().put(questActionType, act);
@@ -131,18 +165,50 @@ public class QuestDataProviderV2 {
     }
 
     // 工厂解析：只进行 Data -> Data POJO 实例化
-    private AbstractQuestRequirementData getRequirementData(QuestRequirementType type, Data data) {
+    private AbstractQuestRequirementData getRequirementData(int questId, QuestRequirementType type, Data data) {
+        Quest v1Quest = new Quest((short) questId);
         switch (type) {
             case EXCEPT_BUFF: return new BuffExceptRequirementData(data);
-            // case MIN_LEVEL: return new MinLevelRequirementData(data);
+            case BUFF: return new BuffRequirementData(v1Quest, data);
+            case COMPLETED_QUEST: return new CompletedQuestRequirementData(v1Quest, data);
+            case END_DATE: return new EndDateRequirementData(v1Quest, data);
+            case FIELD_ENTER: return new FieldEnterRequirementData(v1Quest, data);
+            case INFO_EX: return new InfoExRequirementData(v1Quest, data);
+            case INFO_NUMBER: return new InfoNumberRequirementData(v1Quest, data);
+            case INTERVAL: return new IntervalRequirementData(v1Quest, data);
+            case ITEM: return new ItemRequirementData(v1Quest, data);
+            case JOB: return new JobRequirementData(data);
+            case MAX_LEVEL: return new MaxLevelRequirementData(data);
+            case MESO: return new MesoRequirementData(data);
+            case MIN_LEVEL: return new MinLevelRequirementData(data);
+            case MIN_PET_TAMENESS: return new MinTamenessRequirementData(data);
+            case MOB: return new MobRequirementData(questId, data);
+            case MONSTER_BOOK: return new MonsterBookCountRequirementData(data);
+            case NPC: return new NpcRequirementData(data);
+            case PET: return new PetRequirementData(data);
+            case POP: return new PopularityRequirementData(data);
+            case QUEST: return new QuestRequirementData(data);
+            case SCRIPT: return new ScriptRequirementData(data);
             default: return null;
         }
     }
 
-    private AbstractQuestActionData getActionData(QuestActionType type, Data data) {
+    private AbstractQuestActionData getActionData(int questId, QuestActionType type, Data data) {
         switch (type) {
             case ITEM: return new ItemActionData(data);
-            // case EXP: return new ExpActionData(data);
+            case EXP: return new ExpActionData(data);
+            case MESO: return new MesoActionData(data);
+            case FAME: return new FameActionData(data);
+            case BUFF: return new BuffActionData(data);
+            case INFO: return new InfoActionData(questId, data);
+            case NEXTQUEST: return new NextQuestActionData(questId, data);
+            case PETSKILL: return new PetSkillActionData(questId, data);
+            case PETTAMENESS: return new PetTamenessActionData(data);
+            case PETSPEED: return new PetSpeedActionData(data);
+            case SKILL: return new SkillActionData(data);
+            case JOB: return new JobActionData(data);
+            case MAP: return new MapActionData(data);
+            case INTERVAL: return new IntervalActionData(questId, data);
             default: return null;
         }
     }

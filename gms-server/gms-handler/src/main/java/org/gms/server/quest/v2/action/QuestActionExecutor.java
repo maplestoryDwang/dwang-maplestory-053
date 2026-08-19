@@ -7,7 +7,20 @@ import java.util.Map;
 import org.gms.client.Character;
 import org.gms.server.quest.v2.action.data.AbstractQuestActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.BuffActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.ExpActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.FameActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.InfoActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.IntervalActionHandler;
 import org.gms.server.quest.v2.action.handler.imp.ItemActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.JobActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.MapActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.MesoActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.NextQuestActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.PetSkillActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.PetSpeedActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.PetTamenessActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.SkillActionHandler;
 
 /**
  * 任务执行器
@@ -21,10 +34,19 @@ public class QuestActionExecutor {
 
     static {
         HANDLERS.put(QuestActionType.ITEM, new ItemActionHandler());
-
-
-        // HANDLERS.put(QuestActionType.EXP, new ExpActionHandler());
-        // 注册其他 Action Handler...
+        HANDLERS.put(QuestActionType.EXP, new ExpActionHandler());
+        HANDLERS.put(QuestActionType.MESO, new MesoActionHandler());
+        HANDLERS.put(QuestActionType.FAME, new FameActionHandler());
+        HANDLERS.put(QuestActionType.BUFF, new BuffActionHandler());
+        HANDLERS.put(QuestActionType.INFO, new InfoActionHandler());
+        HANDLERS.put(QuestActionType.NEXTQUEST, new NextQuestActionHandler());
+        HANDLERS.put(QuestActionType.PETSKILL, new PetSkillActionHandler());
+        HANDLERS.put(QuestActionType.PETTAMENESS, new PetTamenessActionHandler());
+        HANDLERS.put(QuestActionType.PETSPEED, new PetSpeedActionHandler());
+        HANDLERS.put(QuestActionType.SKILL, new SkillActionHandler());
+        HANDLERS.put(QuestActionType.JOB, new JobActionHandler());
+        HANDLERS.put(QuestActionType.MAP, new MapActionHandler());
+        HANDLERS.put(QuestActionType.INTERVAL, new IntervalActionHandler());
     }
 
     @SuppressWarnings("unchecked")
