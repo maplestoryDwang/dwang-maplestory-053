@@ -65,10 +65,10 @@ public class ItemAction extends AbstractQuestAction {
         for (Data iEntry : data.getChildren()) {
             int id = DataTool.getInt(iEntry.getChildByPath("id"));
             int count = DataTool.getInt(iEntry.getChildByPath("count"), 1);
-            int period = DataTool.getInt(iEntry.getChildByPath("period"), 0);
+            int period = DataTool.getInt(iEntry.getChildByPath("period"), 0);   // 限时时间
 
             Integer prop = null;
-            Data propData = iEntry.getChildByPath("prop");
+            Data propData = iEntry.getChildByPath("prop");  // 获取奖励概率，一共100，获取奖励不同概率
             if (propData != null) {
                 prop = DataTool.getInt(propData);
             }

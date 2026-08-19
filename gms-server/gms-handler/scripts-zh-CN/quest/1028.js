@@ -66,7 +66,7 @@ function start(mode, type, selection) {
                  qm.dispose();
              }
          } else if (status == 3) {
-             if (qm.isQuestCompleted(1027) {
+             if (qm.isQuestCompleted(1027)) {
 
              } else {
                  qm.gainMeso(-150);

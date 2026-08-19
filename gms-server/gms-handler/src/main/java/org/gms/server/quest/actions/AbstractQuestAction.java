@@ -39,6 +39,11 @@ public abstract class AbstractQuestAction {
     }
 
     public abstract void run(Character chr, Integer extSelection);
+
+    /**
+     * 加载的时候需要提取的数据
+     * @param data
+     */
     public abstract void processData(Data data);
 
     public boolean check(Character chr, Integer extSelection) {

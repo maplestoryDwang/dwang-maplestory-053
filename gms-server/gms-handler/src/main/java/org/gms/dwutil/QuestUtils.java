@@ -88,6 +88,7 @@ public class QuestUtils {
 
         for (AbstractQuestRequirement r : completeReqs.values()) {
             if (!r.check(chr, npcid)) {
+                log.info("无法完成任务, name: {}, questId: {}, 不满足: {}", quest.getName(), quest.getId(), r.getType());
                 return false;
             }
         }

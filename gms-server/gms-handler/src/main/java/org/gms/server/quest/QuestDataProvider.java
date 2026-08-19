@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -43,7 +44,7 @@ public class QuestDataProvider {
      * 加载所有任务数据并返回缓存容器
      */
     public LoadedQuestContainer loadAll() {
-        Map<Integer, Quest> loadedQuests = new HashMap<>();
+        Map<Integer, Quest> loadedQuests = new LinkedHashMap<>();
         Map<Integer, Integer> loadedInfoNumberQuests = new HashMap<>();
         Map<Short, Integer> loadedMedals = new HashMap<>();
 
@@ -85,7 +86,7 @@ public class QuestDataProvider {
 
         Quest quest = new Quest((short) id);
 
-        // 1. 解析 QuestInfo 基本属性
+        // 1. 解析 QuestInfo 基本属性  QuestInfo.img
         if (questInfo != null) {
             Data reqInfo = questInfo.getChildByPath(String.valueOf(id));
             if (reqInfo != null) {
@@ -93,9 +94,9 @@ public class QuestDataProvider {
                 quest.setParent(DataTool.getString("parent", reqInfo, ""));
                 quest.setTimeLimit(DataTool.getInt("timeLimit", reqInfo, 0));
                 quest.setTimeLimit2(DataTool.getInt("timeLimit2", reqInfo, 0));
-                quest.setAutoStart(DataTool.getInt("autoStart", reqInfo, 0) == 1);
+                quest.setAutoStart(DataTool.getInt("autoStart", reqInfo, 0) == 1);    // 头顶的灯泡
                 quest.setAutoPreComplete(DataTool.getInt("autoPreComplete", reqInfo, 0) == 1);
-                quest.setAutoComplete(DataTool.getInt("autoComplete", reqInfo, 0) == 1);
+                quest.setAutoComplete(DataTool.getInt("autoComplete", reqInfo, 0) == 1);          // 没用
 
                 int medalid = DataTool.getInt("viewMedalItem", reqInfo, 0);
                 if (medalid != 0 && medalMap != null) {
@@ -109,12 +110,12 @@ public class QuestDataProvider {
         // 2. 解析 Requirements (Check.img)
         Data startReqData = reqData.getChildByPath("0");
         if (startReqData != null) {
-            parseRequirements(quest, startReqData, true);
+            parseRequirementsFromCheckImg(quest, startReqData, true);
         }
 
         Data completeReqData = reqData.getChildByPath("1");
         if (completeReqData != null) {
-            parseRequirements(quest, completeReqData, false);
+            parseRequirementsFromCheckImg(quest, completeReqData, false);
         }
 
         // 3. 解析 Actions (Act.img)
@@ -122,35 +123,34 @@ public class QuestDataProvider {
         if (actData != null) {
             Data startActData = actData.getChildByPath("0");
             if (startActData != null) {
-                parseActions(quest, startActData, true);
+                parseActionsFromActImg(quest, startActData, true);  // 开始任务的条件
             }
 
             Data completeActData = actData.getChildByPath("1");
             if (completeActData != null) {
-                parseActions(quest, completeActData, false);
+                parseActionsFromActImg(quest, completeActData, false);  // 完成任务的奖励
             }
         }
 
         return quest;
     }
 
-    private void parseRequirements(Quest quest, Data reqDataNode, boolean isStart) {
+    private void parseRequirementsFromCheckImg(Quest quest, Data reqDataNode, boolean isStart) {
         for (Data reqNode : reqDataNode.getChildren()) {
+            // 获取任务需求类型
             QuestRequirementType type = QuestRequirementType.getByWZName(reqNode.getName());
-            if (type == null) continue;
+            if (type == QuestRequirementType.UNDEFINED) {
+                log.error("questId:{}, unhandle requirementType:{}", quest.getId(), reqNode.getName());
+            }
 
             if (isStart) {
                 if (type == QuestRequirementType.INTERVAL) {
-                    quest.setRepeatable(true);
-                } else if (type == QuestRequirementType.MOB) {
-                    for (Data mob : reqNode.getChildren()) {
-                        quest.getRelevantMobs().add(DataTool.getInt(mob.getChildByPath("id")));
-                    }
+                    quest.setRepeatable(true);                                                  // 间隔时间。客户端控制？
                 }
             } else {
                 if (type == QuestRequirementType.MOB) {
                     for (Data mob : reqNode.getChildren()) {
-                        quest.getRelevantMobs().add(DataTool.getInt(mob.getChildByPath("id")));
+                        quest.getRelevantMobs().add(DataTool.getInt(mob.getChildByPath("id"))); // 都是这种情况
                     }
                 }
             }
@@ -162,14 +162,18 @@ public class QuestDataProvider {
                 } else {
                     quest.getCompleteReqs().put(type, req);
                 }
+            } else {
+//                log.error("questId:{}, unhandle getRequirement:[{}]", quest.getId(), type);
             }
         }
     }
 
-    private void parseActions(Quest quest, Data actDataNode, boolean isStart) {
+    private void parseActionsFromActImg(Quest quest, Data actDataNode, boolean isStart) {
         for (Data actNode : actDataNode.getChildren()) {
             QuestActionType questActionType = QuestActionType.getByWZName(actNode.getName());
-            if (questActionType == null) continue;
+            if (questActionType == QuestActionType.UNDEFINED) {
+                log.error("questId:{}, unhandle actionsType:{}", quest.getId(), actNode.getName());
+            }
 
             AbstractQuestAction act = getAction(quest, questActionType, actNode);
             if (act != null) {
@@ -178,6 +182,8 @@ public class QuestDataProvider {
                 } else {
                     quest.getCompleteActs().put(questActionType, act);
                 }
+            } else {
+//                log.error("questId:{}, unhandle getAction:[{}]", quest.getId(), questActionType);
             }
         }
     }
@@ -204,6 +210,7 @@ public class QuestDataProvider {
             case BUFF: return new BuffRequirement(quest, data);
             case EXCEPT_BUFF: return new BuffExceptRequirement(quest, data);
             case SCRIPT: return new ScriptRequirement(quest, data);
+            case POP: return new PopularityRequirement(quest, data);
             default: return null;
         }
     }
@@ -222,6 +229,9 @@ public class QuestDataProvider {
             case PETTAMENESS: return new PetTamenessAction(quest, data);
             case PETSPEED: return new PetSpeedAction(quest, data);
             case INFO: return new InfoAction(quest, data);
+            case MAP: return new MapAction(quest, data);
+            case JOB: return new JobAction(quest, data);
+            case INTERVAL: return new IntervalAction(quest, data);
             default: return null;
         }
     }

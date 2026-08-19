@@ -42,7 +42,7 @@ public class CommonController {
     }
 
     @Tag(name = "/common/" + ApiConstant.LATEST)
-    @Operation(summary = "资料查询，根据id或者name查询对应信息")
+    @Operation(summary = "wz的String资料查询，根据id或者name查询对应信息")
     @PostMapping("/" + ApiConstant.LATEST + "/informationSearch")
     public ResultBody<List<InformationResult>> informationSearch(@RequestBody SubmitBody<InformationSearch> submitBody) {
         return ResultBody.success(commonService.getInformation(submitBody.getData()));
