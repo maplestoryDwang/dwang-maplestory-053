@@ -28,7 +28,7 @@ import org.gms.server.quest.QuestRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.AbstractScriptManager;
-import org.gms.server.quest.Quest;
+import org.gms.server.quest.v2.QuestV2;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -60,7 +60,7 @@ public class QuestScriptManager extends AbstractScriptManager {
     }
 
     public void start(Client c, short questid, int npc) {
-        Quest quest = QuestRepository.getInstance(questid);
+        QuestV2 quest = QuestRepository.getInstance(questid);
         try {
             QuestActionManager qm = new QuestActionManager(c, questid, npc, true);
             if (qms.containsKey(c)) {
@@ -76,7 +76,7 @@ public class QuestScriptManager extends AbstractScriptManager {
 
                 ScriptEngine engine = getQuestScriptEngine(c, questid);
                 if (engine == null) {
-                    log.warn("START Quest {} is uncoded.", questid);
+                    log.warn("START QuestV2 {} is uncoded.", questid);
                     qm.dispose();
                     return;
                 }
@@ -108,7 +108,7 @@ public class QuestScriptManager extends AbstractScriptManager {
     }
 
     public void end(Client c, short questid, int npc) {
-        Quest quest = QuestRepository.getInstance(questid);
+        QuestV2 quest = QuestRepository.getInstance(questid);
         if (!c.getPlayer().getQuest(quest).getStatus().equals(QuestStatus.Status.STARTED) || (!c.getPlayer().getMap().containsNPC(npc) && !quest.isAutoComplete())) {
             dispose(c);
             return;
@@ -128,7 +128,7 @@ public class QuestScriptManager extends AbstractScriptManager {
 
                 ScriptEngine engine = getQuestScriptEngine(c, questid);
                 if (engine == null) {
-                    log.warn("END Quest {} is uncoded.", questid);
+                    log.warn("END QuestV2 {} is uncoded.", questid);
                     qm.dispose();
                     return;
                 }
@@ -170,7 +170,7 @@ public class QuestScriptManager extends AbstractScriptManager {
 
                 ScriptEngine engine = getQuestScriptEngine(c, questid);
                 if (engine == null) {
-                    //FilePrinter.printError(FilePrinter.QUEST_UNCODED, "RAISE Quest " + questid + " is uncoded.");
+                    //FilePrinter.printError(FilePrinter.QUEST_UNCODED, "RAISE QuestV2 " + questid + " is uncoded.");
                     qm.dispose();
                     return;
                 }

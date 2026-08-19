@@ -9,7 +9,7 @@ import org.gms.dao.entity.QueststatusDO;
 import org.gms.dao.mapper.MedalmapsMapper;
 import org.gms.dao.mapper.QuestprogressMapper;
 import org.gms.dao.mapper.QueststatusMapper;
-import org.gms.server.quest.Quest;
+import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ public class QuestService {
         List<MedalmapsDO> medalmapsDOList = medalmapsMapper.selectListByQuery(QueryWrapper.create().where(MEDALMAPS_D_O.CHARACTERID.eq(cid)));
 
         return queststatusDOList.stream().map(queststatusDO -> {
-            Quest quest = QuestRepository.getInstance(queststatusDO.getQuest());
+            QuestV2 quest = QuestRepository.getInstance(queststatusDO.getQuest());
             QuestStatus questStatus = new QuestStatus(quest, QuestStatus.Status.getById(queststatusDO.getStatus()));
             if (queststatusDO.getTime() > -1) {
                 questStatus.setCompletionTime(TimeUnit.SECONDS.toMillis(queststatusDO.getTime()));

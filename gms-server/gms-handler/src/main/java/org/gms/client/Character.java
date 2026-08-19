@@ -109,7 +109,7 @@ import org.gms.server.partyquest.AriantColiseum;
 import org.gms.server.partyquest.MonsterCarnival;
 import org.gms.server.partyquest.MonsterCarnivalParty;
 import org.gms.server.partyquest.PartyQuest;
-import org.gms.server.quest.Quest;
+import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.service.*;
 import org.gms.util.*;
@@ -401,7 +401,7 @@ public class Character extends AbstractCharacterObject {
     @Setter
     private QuickslotBinding quickSlotKeyMapped;
     private Door pdoor = null;
-    private Map<Quest, Long> questExpirations = new LinkedHashMap<>();
+    private Map<QuestV2, Long> questExpirations = new LinkedHashMap<>();
     private ScheduledFuture<?> dragonBloodSchedule;
     private ScheduledFuture<?> hpDecreaseTask;
     private ScheduledFuture<?> beholderHealingSchedule, beholderBuffSchedule, berserkSchedule;
@@ -5367,7 +5367,7 @@ public class Character extends AbstractCharacterObject {
         return getQuest(QuestRepository.getInstance(quest));
     }
 
-    public QuestStatus getQuest(Quest quest) {
+    public QuestStatus getQuest(QuestV2 quest) {
         synchronized (quests) {
             short questid = quest.getId();
             QuestStatus qs = quests.get(questid);
@@ -5379,7 +5379,7 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    public final QuestStatus getQuestNAdd(final Quest quest) {
+    public final QuestStatus getQuestNAdd(final QuestV2 quest) {
         synchronized (quests) {
             if (!quests.containsKey(quest.getId())) {
                 final QuestStatus status = new QuestStatus(quest, QuestStatus.Status.NOT_STARTED);
@@ -5390,7 +5390,7 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    public final QuestStatus getQuestNoAdd(final Quest quest) {
+    public final QuestStatus getQuestNoAdd(final QuestV2 quest) {
         synchronized (quests) {
             return quests.get(quest.getId());
         }
@@ -8794,11 +8794,11 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void setQuestProgress(int id, int infoNumber, String progress) {
-        Quest q = QuestRepository.getInstance(id);
+        QuestV2 q = QuestRepository.getInstance(id);
         QuestStatus qs = getQuest(q);
 
         if (qs.getInfoNumber() == infoNumber && infoNumber > 0) {
-            Quest iq = QuestRepository.getInstance(infoNumber);
+            QuestV2 iq = QuestRepository.getInstance(infoNumber);
             QuestStatus iqs = getQuest(iq);
             iqs.setProgress(0, progress);
         } else {
@@ -8888,7 +8888,7 @@ public class Character extends AbstractCharacterObject {
             }
             announceUpdateQuest(DelayedQuestUpdate.INFO, qs);
         } else if (qs.getStatus().equals(QuestStatus.Status.COMPLETED)) {
-            Quest mquest = qs.getQuest();
+            QuestV2 mquest = qs.getQuest();
             short questid = mquest.getId();
             if (!mquest.isSameDayRepeatable() && !QuestRepository.isExploitableQuest(questid)) {
                 awardQuestPoint(GameConfig.getServerInt("quest_point_per_quest_complete"));
@@ -8921,7 +8921,7 @@ public class Character extends AbstractCharacterObject {
     public void forfeitExpirableQuests() {
         evtLock.lock();
         try {
-            for (Quest quest : questExpirations.keySet()) {
+            for (QuestV2 quest : questExpirations.keySet()) {
                 QuestUtils.forfeit(this, quest);
             }
 
@@ -8948,16 +8948,16 @@ public class Character extends AbstractCharacterObject {
         evtLock.lock();
         try {
             long timeNow = Server.getInstance().getCurrentTime();
-            List<Quest> expireList = new LinkedList<>();
+            List<QuestV2> expireList = new LinkedList<>();
 
-            for (Entry<Quest, Long> qe : questExpirations.entrySet()) {
+            for (Entry<QuestV2, Long> qe : questExpirations.entrySet()) {
                 if (qe.getValue() <= timeNow) {
                     expireList.add(qe.getKey());
                 }
             }
 
             if (!expireList.isEmpty()) {
-                for (Quest quest : expireList) {
+                for (QuestV2 quest : expireList) {
                     QuestUtils.expireQuest(this, quest);
                     questExpirations.remove(quest);
                 }
@@ -8972,7 +8972,7 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    private void registerQuestExpire(Quest quest, long time) {
+    private void registerQuestExpire(QuestV2 quest, long time) {
         evtLock.lock();
         try {
             if (questExpireTask == null) {
@@ -8985,12 +8985,12 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    public void questTimeLimit(final Quest quest, int seconds) {
+    public void questTimeLimit(final QuestV2 quest, int seconds) {
         registerQuestExpire(quest, SECONDS.toMillis(seconds));
         sendPacket(PacketCreator.addQuestTimeLimit(quest.getId(), (int) SECONDS.toMillis(seconds)));
     }
 
-    public void questTimeLimit2(final Quest quest, long expires) {
+    public void questTimeLimit2(final QuestV2 quest, long expires) {
         long timeLeft = expires - System.currentTimeMillis();
 
         if (timeLeft <= 0) {

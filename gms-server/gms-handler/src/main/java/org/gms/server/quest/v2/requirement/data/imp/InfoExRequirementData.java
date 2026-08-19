@@ -22,12 +22,9 @@
 package org.gms.server.quest.v2.requirement.data.imp;
 
 import lombok.Getter;
-import org.gms.client.Character;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
-import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.requirements.AbstractQuestRequirement;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 
 import java.util.ArrayList;
@@ -42,9 +39,9 @@ public class InfoExRequirementData extends AbstractQuestRequirementData {
     private final int questID;
 
 
-    public InfoExRequirementData(Quest quest, Data data) {
+    public InfoExRequirementData(int questId, Data data) {
         super(QuestRequirementType.INFO_EX);
-        questID = quest.getId();
+        questID = questId;
         // Because we have to...
         for (Data infoEx : data.getChildren()) {
             Data value = infoEx.getChildByPath("value");

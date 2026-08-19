@@ -21,7 +21,7 @@
 */
 package org.gms.client;
 
-import org.gms.server.quest.Quest;
+import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.StringUtil;
 
@@ -70,7 +70,7 @@ public class QuestStatus {
     private int forfeited = 0, completed = 0;
     private String customData;
 
-    public QuestStatus(Quest quest, Status status) {
+    public QuestStatus(QuestV2 quest, Status status) {
         this.questID = quest.getId();
         this.setStatus(status);
         this.completionTime = System.currentTimeMillis();
@@ -81,7 +81,7 @@ public class QuestStatus {
         }
     }
 
-    public QuestStatus(Quest quest, Status status, int npc) {
+    public QuestStatus(QuestV2 quest, Status status, int npc) {
         this.questID = quest.getId();
         this.setStatus(status);
         this.setNpc(npc);
@@ -93,7 +93,7 @@ public class QuestStatus {
         }
     }
 
-    public Quest getQuest() {
+    public QuestV2 getQuest() {
         return QuestRepository.getInstance(questID);
     }
 
@@ -205,21 +205,21 @@ public class QuestStatus {
     }
 
     public short getInfoNumber() {
-        Quest q = this.getQuest();
+        QuestV2 q = this.getQuest();
         Status s = this.getStatus();
 
         return q.getInfoNumber(s);
     }
 
     public String getInfoEx(int index) {
-        Quest q = this.getQuest();
+        QuestV2 q = this.getQuest();
         Status s = this.getStatus();
 
         return q.getInfoEx(s, index);
     }
 
     public List<String> getInfoEx() {
-        Quest q = this.getQuest();
+        QuestV2 q = this.getQuest();
         Status s = this.getStatus();
 
         return q.getInfoEx(s);

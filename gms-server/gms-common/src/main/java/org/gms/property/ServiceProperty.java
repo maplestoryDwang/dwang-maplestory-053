@@ -1,6 +1,7 @@
 package org.gms.property;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ public class ServiceProperty {
     /**
      *
      */
+    @Value("17575")
     private int channelPort;
 
     @Data

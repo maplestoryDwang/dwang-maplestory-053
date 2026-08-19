@@ -20,12 +20,9 @@
 package org.gms.server.quest.v2.requirement.data.imp;
 
 import lombok.Getter;
-import org.gms.client.Character;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
-import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.requirements.AbstractQuestRequirement;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 
 /**
@@ -37,9 +34,9 @@ public class InfoNumberRequirementData extends AbstractQuestRequirementData {
     private short infoNumber;
     private final int questID;
 
-    public InfoNumberRequirementData(Quest quest, Data data) {
+    public InfoNumberRequirementData(int questId, Data data) {
         super(QuestRequirementType.INFO_NUMBER);
-        questID = quest.getId();
+        questID = questId;
         infoNumber = (short) DataTool.getIntConvert(data, 0);
 
     }

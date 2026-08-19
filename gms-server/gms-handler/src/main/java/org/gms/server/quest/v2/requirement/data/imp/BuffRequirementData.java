@@ -21,7 +21,6 @@ package org.gms.server.quest.v2.requirement.data.imp;
 
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
-import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRequirementType;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 
@@ -31,7 +30,7 @@ import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 public class BuffRequirementData extends AbstractQuestRequirementData {
     private int buffId = 1;
 
-    public BuffRequirementData(Quest quest, Data data) {
+    public BuffRequirementData(Data data) {
         super(QuestRequirementType.BUFF);
         // item buffs are negative
         buffId = -1 * Integer.parseInt(DataTool.getString(data));

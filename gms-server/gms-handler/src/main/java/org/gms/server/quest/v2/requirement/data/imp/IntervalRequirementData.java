@@ -22,14 +22,11 @@
 package org.gms.server.quest.v2.requirement.data.imp;
 
 import lombok.Getter;
-import org.gms.client.Character;
 import org.gms.client.QuestStatus;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
-import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.requirements.AbstractQuestRequirement;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 
 import static java.util.concurrent.TimeUnit.HOURS;
@@ -43,9 +40,9 @@ public class IntervalRequirementData extends AbstractQuestRequirementData {
     private long interval = -1;
     private final int questID;
 
-    public IntervalRequirementData(Quest quest, Data data) {
+    public IntervalRequirementData(int questId, Data data) {
         super(QuestRequirementType.INTERVAL);
-        questID = quest.getId();
+        questID = questId;
         interval = MINUTES.toMillis(DataTool.getInt(data));
     }
 

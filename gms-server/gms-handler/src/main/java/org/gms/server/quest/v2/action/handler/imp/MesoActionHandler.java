@@ -11,14 +11,7 @@ import org.gms.util.NumberTool;
  */
 public class MesoActionHandler implements IQuestActionHandler<MesoActionData> {
 
-    @Override
-    public boolean check(MesoActionData actionData, Character chr, Integer extSelection) {
-        return true;
-    }
-
-    @Override
-    public void run(MesoActionData actionData, Character chr, Integer extSelection) {
-        int gain = actionData.getMesos();
+    public static void runAction(Character chr, int gain) {
         if (gain < 0) {
             chr.gainMeso(gain, true, false, true);
         } else {
@@ -28,5 +21,15 @@ public class MesoActionHandler implements IQuestActionHandler<MesoActionData> {
                 chr.gainMeso(NumberTool.floatToInt(gain * chr.getQuestMesoRate()), true, false, true);
             }
         }
+    }
+
+    @Override
+    public boolean check(MesoActionData actionData, Character chr, Integer extSelection) {
+        return true;
+    }
+
+    @Override
+    public void run(MesoActionData actionData, Character chr, Integer extSelection) {
+        runAction(chr, actionData.getMesos());
     }
 }

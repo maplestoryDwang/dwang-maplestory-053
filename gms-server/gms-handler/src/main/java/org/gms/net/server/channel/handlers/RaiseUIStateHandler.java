@@ -8,7 +8,7 @@ import org.gms.dwutil.QuestUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.scripting.quest.QuestScriptManager;
-import org.gms.server.quest.Quest;
+import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.QuestRepository;
 
 /**
@@ -23,7 +23,7 @@ public class RaiseUIStateHandler extends AbstractPacketHandler {
         if (c.tryacquireClient()) {
             try {
                 Character chr = c.getPlayer();
-                Quest quest = QuestRepository.getInstanceFromInfoNumber(infoNumber);
+                QuestV2 quest = QuestRepository.getInstanceFromInfoNumber(infoNumber);
                 QuestStatus mqs = chr.getQuest(quest);
 
                 QuestScriptManager.getInstance().raiseOpen(c, (short) infoNumber, mqs.getNpc());

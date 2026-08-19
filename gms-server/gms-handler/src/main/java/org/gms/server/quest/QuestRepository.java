@@ -1,5 +1,8 @@
 package org.gms.server.quest;
 
+import org.gms.server.quest.v2.QuestDataProviderV2;
+import org.gms.server.quest.v2.QuestV2;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -9,15 +12,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 任务数据的全局缓存与查询管理类
+ * 任务数据的全局缓存与查询管理类 (V2 数据驱动版)
  */
 public class QuestRepository {
-    private static final Map<Integer, Quest> quests = new ConcurrentHashMap<>();
+    private static final Map<Integer, QuestV2> quests = new ConcurrentHashMap<>();
     private static final Map<Integer, Integer> infoNumberQuests = new ConcurrentHashMap<>();
     private static final Map<Short, Integer> medals = new ConcurrentHashMap<>();
 
     private static final Set<Short> exploitableQuests = new HashSet<>();
-    private static final QuestDataProvider dataProvider = new QuestDataProvider();
+    private static final QuestDataProviderV2 dataProvider = new QuestDataProviderV2();
 
     static {
         exploitableQuests.add((short) 2338);
@@ -27,7 +30,7 @@ public class QuestRepository {
     }
 
     public static void loadAllQuests() {
-        QuestDataProvider.LoadedQuestContainer container = dataProvider.loadAll();
+        QuestDataProviderV2.LoadedQuestContainer container = dataProvider.loadAll();
 
         quests.clear();
         quests.putAll(container.quests);
@@ -39,17 +42,16 @@ public class QuestRepository {
         medals.putAll(container.medals);
     }
 
-    public static Quest getInstance(int id) {
-        Quest ret = quests.get(id);
+    public static QuestV2 getInstance(int id) {
+        QuestV2 ret = quests.get(id);
         if (ret == null) {
-            ret = new Quest((short) id);
+            ret = new QuestV2((short) id);
             quests.put(id, ret);
         }
         return ret;
-//        return quests.computeIfAbsent(id, key -> dataProvider.buildQuest(key, medals));
     }
 
-    public static Quest getInstanceFromInfoNumber(int infoNumber) {
+    public static QuestV2 getInstanceFromInfoNumber(int infoNumber) {
         Integer id = infoNumberQuests.get(infoNumber);
         if (id == null) {
             id = infoNumber;
@@ -66,10 +68,10 @@ public class QuestRepository {
         return exploitableQuests.contains(questid);
     }
 
-    public static List<Quest> getMatchedQuests(String search) {
-        List<Quest> ret = new LinkedList<>();
+    public static List<QuestV2> getMatchedQuests(String search) {
+        List<QuestV2> ret = new LinkedList<>();
         String lowerSearch = search.toLowerCase();
-        for (Quest mq : quests.values()) {
+        for (QuestV2 mq : quests.values()) {
             if (mq.getName().toLowerCase().contains(lowerSearch) || mq.getParentName().toLowerCase().contains(lowerSearch)) {
                 ret.add(mq);
             }

@@ -22,12 +22,9 @@
 package org.gms.server.quest.v2.requirement.data.imp;
 
 import lombok.Getter;
-import org.gms.client.Character;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
-import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.requirements.AbstractQuestRequirement;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 
 import java.util.Calendar;
@@ -40,7 +37,7 @@ public class EndDateRequirementData extends AbstractQuestRequirementData {
     private String timeStr;
 
 
-    public EndDateRequirementData(Quest quest, Data data) {
+    public EndDateRequirementData(Data data) {
         super(QuestRequirementType.END_DATE);
         timeStr = DataTool.getString(data);
     }

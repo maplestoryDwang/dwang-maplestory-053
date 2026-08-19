@@ -2,14 +2,19 @@ package org.gms.dwutil;
 
 import org.gms.client.Character;
 import org.gms.client.QuestStatus;
+import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.DelayedQuestUpdate;
-import org.gms.server.quest.Quest;
+import org.gms.server.ItemInformationProvider;
 import org.gms.server.quest.QuestActionType;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.actions.AbstractQuestAction;
-import org.gms.server.quest.actions.ItemAction;
-import org.gms.server.quest.requirements.AbstractQuestRequirement;
+import org.gms.server.quest.QuestRepository;
+import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.v2.action.QuestActionExecutor;
+import org.gms.server.quest.v2.action.data.AbstractQuestActionData;
+import org.gms.server.quest.v2.action.data.ext.ItemActionData;
+import org.gms.server.quest.v2.requirement.QuestRequirementEvaluator;
+import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 import org.gms.util.PacketCreator;
 import org.gms.util.StringUtil;
 import org.slf4j.Logger;
@@ -22,7 +27,7 @@ import java.util.Map;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
- * 任务和char调用
+ * 任务和char调用 (V2 数据驱动版)
  *
  * @author dwang
  * @version 1.0
@@ -33,13 +38,13 @@ public class QuestUtils {
     private static final Logger log = LoggerFactory.getLogger(QuestUtils.class);
 
 
-    public static boolean canStartQuestByStatus(Character chr, Quest quest) {
+    public static boolean canStartQuestByStatus(Character chr, QuestV2 quest) {
         QuestStatus mqs = chr.getQuest(quest);
         return !(!mqs.getStatus().equals(QuestStatus.Status.NOT_STARTED) && !(mqs.getStatus().equals(QuestStatus.Status.COMPLETED) && quest.isRepeatable()));
     }
 
 
-    public static boolean canQuestByInfoProgress(Character chr, Quest quest) {
+    public static boolean canQuestByInfoProgress(Character chr, QuestV2 quest) {
         QuestStatus mqs = chr.getQuest(quest);
         List<String> ix = mqs.getInfoEx();
         if (!ix.isEmpty()) {
@@ -62,15 +67,15 @@ public class QuestUtils {
         return true;
     }
 
-    public static boolean canStart(Character chr, int npcid, Quest quest) {
+    public static boolean canStart(Character chr, int npcid, QuestV2 quest) {
         if (!canStartQuestByStatus(chr, quest)) {
             return false;
         }
-        Map<QuestRequirementType, AbstractQuestRequirement> startReqs = quest.getStartReqs();
+        Map<QuestRequirementType, AbstractQuestRequirementData> startReqs = quest.getStartReqs();
         String name = quest.getName();
         short questId = quest.getId();
-        for (AbstractQuestRequirement r : startReqs.values()) {
-            if (!r.check(chr, npcid)) {
+        for (AbstractQuestRequirementData r : startReqs.values()) {
+            if (!QuestRequirementEvaluator.check(r, chr, npcid)) {
                 log.info("无法开始任务, name: {}, questId: {}, 不满足: {}", name, questId, r.getType());
                 return false;
             }
@@ -79,58 +84,58 @@ public class QuestUtils {
         return canQuestByInfoProgress(chr, quest);
     }
 
-    public static boolean canComplete(Character chr, Integer npcid, Quest quest) {
+    public static boolean canComplete(Character chr, Integer npcid, QuestV2 quest) {
         QuestStatus mqs = chr.getQuest(quest);
         if (!mqs.getStatus().equals(QuestStatus.Status.STARTED)) {
             return false;
         }
-        Map<QuestRequirementType, AbstractQuestRequirement> completeReqs = quest.getCompleteReqs();
+        Map<QuestRequirementType, AbstractQuestRequirementData> completeReqs = quest.getCompleteReqs();
 
-        for (AbstractQuestRequirement r : completeReqs.values()) {
-            if (!r.check(chr, npcid)) {
+        for (AbstractQuestRequirementData r : completeReqs.values()) {
+            if (!QuestRequirementEvaluator.check(r, chr, npcid)) {
                 log.info("无法完成任务, name: {}, questId: {}, 不满足: {}", quest.getName(), quest.getId(), r.getType());
                 return false;
             }
         }
 
-        return canQuestByInfoProgress(chr,quest);
+        return canQuestByInfoProgress(chr, quest);
     }
 
 
-    public static void start(Character chr, int npc, Quest quest) {
+    public static void start(Character chr, int npc, QuestV2 quest) {
         boolean autoStart = quest.isAutoStart();
-        Map<QuestActionType, AbstractQuestAction> startActs = quest.getStartActs();
+        Map<QuestActionType, AbstractQuestActionData> startActs = quest.getStartActs();
         if (autoStart || canStart(chr, npc, quest)) {
-            Collection<AbstractQuestAction> acts = startActs.values();
-            for (AbstractQuestAction a : acts) {
-                if (!a.check(chr, null)) {
+            Collection<AbstractQuestActionData> acts = startActs.values();
+            for (AbstractQuestActionData a : acts) {
+                if (!QuestActionExecutor.check(a, chr, null)) {
                     return;
                 }
             }
-            for (AbstractQuestAction a : acts) {
-                a.run(chr, null);
+            for (AbstractQuestActionData a : acts) {
+                QuestActionExecutor.run(a, chr, null);
             }
             forceStart(chr, npc, quest);
         }
     }
 
-    public static void complete(Character chr, int npc, Quest quest) {
+    public static void complete(Character chr, int npc, QuestV2 quest) {
         complete(chr, npc, null, quest);
     }
 
-    public static void complete(Character chr, int npc, Integer selection, Quest quest) {
+    public static void complete(Character chr, int npc, Integer selection, QuestV2 quest) {
         boolean autoPreComplete = quest.isAutoPreComplete();
-        Map<QuestActionType, AbstractQuestAction> completeActs = quest.getCompleteActs();
+        Map<QuestActionType, AbstractQuestActionData> completeActs = quest.getCompleteActs();
         if (autoPreComplete || canComplete(chr, npc, quest)) {
-            Collection<AbstractQuestAction> acts = completeActs.values();
-            for (AbstractQuestAction a : acts) {
-                if (!a.check(chr, selection)) {
+            Collection<AbstractQuestActionData> acts = completeActs.values();
+            for (AbstractQuestActionData a : acts) {
+                if (!QuestActionExecutor.check(a, chr, selection)) {
                     return;
                 }
             }
             forceComplete(chr, npc, quest);
-            for (AbstractQuestAction a : acts) {
-                a.run(chr, selection);
+            for (AbstractQuestActionData a : acts) {
+                QuestActionExecutor.run(a, chr, selection);
             }
             if (!quest.hasNextQuestAction()) {
                 chr.announceUpdateQuest(DelayedQuestUpdate.INFO, chr.getQuest(quest));
@@ -138,12 +143,12 @@ public class QuestUtils {
         }
     }
 
-    public static void reset(Character chr, Quest quest) {
+    public static void reset(Character chr, QuestV2 quest) {
         QuestStatus newStatus = new QuestStatus(quest, QuestStatus.Status.NOT_STARTED);
         chr.updateQuestStatus(newStatus);
     }
 
-    public static boolean forfeit(Character chr, Quest quest) {
+    public static boolean forfeit(Character chr, QuestV2 quest) {
         if (!chr.getQuest(quest).getStatus().equals(QuestStatus.Status.STARTED)) {
             return false;
         }
@@ -158,7 +163,7 @@ public class QuestUtils {
         return true;
     }
 
-    public static boolean forceStart(Character chr, int npc, Quest quest) {
+    public static boolean forceStart(Character chr, int npc, QuestV2 quest) {
         QuestStatus newStatus = new QuestStatus(quest, QuestStatus.Status.STARTED, npc);
 
         short questId = quest.getId();
@@ -197,7 +202,7 @@ public class QuestUtils {
         return true;
     }
 
-    public static boolean forceComplete(Character chr, int npc , Quest quest) {
+    public static boolean forceComplete(Character chr, int npc, QuestV2 quest) {
         int timeLimit = quest.getTimeLimit();
         short id = quest.getId();
 
@@ -217,18 +222,42 @@ public class QuestUtils {
         return true;
     }
 
-    public static boolean restoreLostItem(Character chr, int itemid, Quest quest) {
-        Map<QuestActionType, AbstractQuestAction> startActs = quest.getStartActs();
+    public static boolean restoreLostItem(Character chr, int itemid, QuestV2 quest) {
+        Map<QuestActionType, AbstractQuestActionData> startActs = quest.getStartActs();
         if (chr.getQuest(quest).getStatus().equals(QuestStatus.Status.STARTED)) {
-            ItemAction itemAct = (ItemAction) startActs.get(QuestActionType.ITEM);
+            ItemActionData itemAct = (ItemActionData) startActs.get(QuestActionType.ITEM);
             if (itemAct != null) {
-                return itemAct.restoreLostItem(chr, itemid);
+                return restoreLostItem(chr, itemid, itemAct);
             }
         }
         return false;
     }
 
-    public static void expireQuest(Character chr, Quest quest) {
+    private static boolean restoreLostItem(Character chr, int itemid, ItemActionData itemAct) {
+        if (!ItemInformationProvider.getInstance().isQuestItem(itemid)) {
+            return false;
+        }
+
+        for (ItemActionData.ItemData item : itemAct.getItems()) {
+            if (item.getId() == itemid) {
+                int missingQty = item.getCount() - chr.countItem(itemid);
+                if (missingQty > 0) {
+                    if (!chr.canHold(itemid, missingQty)) {
+                        chr.dropMessage(1, "Please check if you have enough inventory space.");
+                        return false;
+                    }
+
+                    InventoryManipulator.addById(chr.getClient(), item.getId(), (short) missingQty);
+                    log.debug("Chr {} obtained {}x {} from questId {}", chr, itemid, missingQty, itemAct);
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void expireQuest(Character chr, QuestV2 quest) {
         if (forfeit(chr, quest)) {
             chr.sendPacket(PacketCreator.questExpire(quest.getId()));
         }

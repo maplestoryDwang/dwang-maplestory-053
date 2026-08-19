@@ -24,10 +24,10 @@ package org.gms.scripting.quest;
 import org.gms.client.Client;
 import org.gms.scripting.npc.NPCConversationManager;
 import org.gms.server.ItemInformationProvider;
-import org.gms.server.quest.Quest;
+import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.QuestRepository;
-import org.gms.server.quest.actions.ExpAction;
-import org.gms.server.quest.actions.MesoAction;
+import org.gms.server.quest.v2.action.handler.imp.ExpActionHandler;
+import org.gms.server.quest.v2.action.handler.imp.MesoActionHandler;
 
 /**
  * @author RMZero213
@@ -75,16 +75,16 @@ public class QuestActionManager extends NPCConversationManager {
 
     @Override
     public void gainExp(int gain) {
-        ExpAction.runAction(getPlayer(), gain);
+        ExpActionHandler.runAction(getPlayer(), gain);
     }
 
     @Override
     public void gainMeso(int gain) {
-        MesoAction.runAction(getPlayer(), gain);
+        MesoActionHandler.runAction(getPlayer(), gain);
     }
 
     public String getMedalName() {  // usable only for medal quests (id 299XX)
-        Quest q = QuestRepository.getInstance(quest);
+        QuestV2 q = QuestRepository.getInstance(quest);
         return ItemInformationProvider.getInstance().getName(QuestRepository.getMedalRequirement(q.getId()));
     }
 }

@@ -26,7 +26,7 @@ package org.gms.client.command.commands.gm3;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.command.Command;
-import org.gms.server.quest.Quest;
+import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.I18nUtil;
 
@@ -47,7 +47,7 @@ public class QuestStartCommand extends Command {
         int questid = Integer.parseInt(params[0]);
 
         if (player.getQuestStatus(questid) == 0) {
-            Quest quest = QuestRepository.getInstance(questid);
+            QuestV2 quest = QuestRepository.getInstance(questid);
             if (quest != null && quest.getNpcRequirement(false) != -1) {
                 c.getAbstractPlayerInteraction().forceStartQuest(questid, quest.getNpcRequirement(false));
             } else {

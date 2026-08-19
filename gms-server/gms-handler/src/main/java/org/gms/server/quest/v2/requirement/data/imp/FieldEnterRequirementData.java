@@ -22,12 +22,9 @@
 package org.gms.server.quest.v2.requirement.data.imp;
 
 import lombok.Getter;
-import org.gms.client.Character;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
-import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.requirements.AbstractQuestRequirement;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 
 
@@ -36,7 +33,7 @@ public class FieldEnterRequirementData extends AbstractQuestRequirementData {
     private int mapId = -1;
 
 
-    public FieldEnterRequirementData(Quest quest, Data data) {
+    public FieldEnterRequirementData(Data data) {
         super(QuestRequirementType.FIELD_ENTER);
         Data zeroField = data.getChildByPath("0");
         if (zeroField != null) {

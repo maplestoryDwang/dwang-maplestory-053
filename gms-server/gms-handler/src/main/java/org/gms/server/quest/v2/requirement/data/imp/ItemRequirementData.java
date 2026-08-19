@@ -22,16 +22,13 @@
 package org.gms.server.quest.v2.requirement.data.imp;
 
 import lombok.Getter;
-import org.gms.client.Character;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.ItemInformationProvider;
-import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.requirements.AbstractQuestRequirement;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 
 import java.util.HashMap;
@@ -45,7 +42,7 @@ public class ItemRequirementData extends AbstractQuestRequirementData {
     Map<Integer, Integer> items = new HashMap<>();
 
 
-    public ItemRequirementData(Quest quest, Data data) {
+    public ItemRequirementData(Data data) {
         super(QuestRequirementType.ITEM);
         for (Data itemEntry : data.getChildren()) {
             int itemId = DataTool.getInt(itemEntry.getChildByPath("id"));

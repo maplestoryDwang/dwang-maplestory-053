@@ -27,7 +27,7 @@ import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.constants.id.MapId;
 import org.gms.dwutil.QuestUtils;
 import org.gms.scripting.AbstractPlayerInteraction;
-import org.gms.server.quest.Quest;
+import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.PacketCreator;
 
@@ -104,7 +104,7 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
     }
 
     public void explorerQuest(short questid, String questName) {
-        Quest quest = QuestRepository.getInstance(questid);
+        QuestV2 quest = QuestRepository.getInstance(questid);
         if (isQuestCompleted(questid)) {
             return;
         }
@@ -122,7 +122,7 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
         String infoex = qs.getInfoEx(0);
 
         // explorer quests all have an infoex/infonumber requirement that points to another quest
-        // THAT quest's progress needs to be updated for Quest.canComplete() to return true
+        // THAT quest's progress needs to be updated for QuestV2.canComplete() to return true
         getPlayer().setQuestProgress(quest.getId(), (int)quest.getInfoNumber(qs.getStatus()), status);
 
         StringBuilder smp = new StringBuilder();
@@ -141,7 +141,7 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
     }
 
     public void touchTheSky() { //29004
-        Quest quest = QuestRepository.getInstance(29004);
+        QuestV2 quest = QuestRepository.getInstance(29004);
         if (!isQuestStarted(29004)) {
             if (!QuestUtils.forceStart(getPlayer(), 9000066, quest)) {
                 return;

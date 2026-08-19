@@ -5,9 +5,9 @@ import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
 import org.gms.provider.wz.WzFiles;
+import org.gms.client.QuestStatus.Status;
 import org.gms.server.quest.QuestActionType;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.Quest;
 import org.gms.server.quest.v2.action.data.AbstractQuestActionData;
 import org.gms.server.quest.v2.action.data.ext.BuffActionData;
 import org.gms.server.quest.v2.action.data.ext.ExpActionData;
@@ -90,6 +90,16 @@ public class QuestDataProviderV2 {
                 QuestV2 q = buildQuest(questID, loadedMedals);
                 if (q != null) {
                     loadedQuests.put(questID, q);
+
+                    int infoNumberStart = q.getInfoNumber(Status.STARTED);
+                    if (infoNumberStart > 0) {
+                        loadedInfoNumberQuests.put(infoNumberStart, questID);
+                    }
+
+                    int infoNumberComplete = q.getInfoNumber(Status.COMPLETED);
+                    if (infoNumberComplete > 0) {
+                        loadedInfoNumberQuests.put(infoNumberComplete, questID);
+                    }
                 }
             } catch (NumberFormatException e) {
                 log.warn("无效的任务ID节点: {}", quest.getName());
@@ -113,6 +123,16 @@ public class QuestDataProviderV2 {
             if (reqInfo != null) {
                 quest.setName(DataTool.getString("name", reqInfo, ""));
                 quest.setParent(DataTool.getString("parent", reqInfo, ""));
+                quest.setTimeLimit(DataTool.getInt("timeLimit", reqInfo, 0));
+                quest.setTimeLimit2(DataTool.getInt("timeLimit2", reqInfo, 0));
+                quest.setAutoStart(DataTool.getInt("autoStart", reqInfo, 0) == 1);
+                quest.setAutoPreComplete(DataTool.getInt("autoPreComplete", reqInfo, 0) == 1);
+                quest.setAutoComplete(DataTool.getInt("autoComplete", reqInfo, 0) == 1);
+
+                int medalid = DataTool.getInt("viewMedalItem", reqInfo, 0);
+                if (medalid != 0 && medalMap != null) {
+                    medalMap.put(quest.getId(), medalid);
+                }
             }
         }
 
@@ -139,6 +159,19 @@ public class QuestDataProviderV2 {
     private void parseRequirements(QuestV2 quest, Data reqDataNode, boolean isStart) {
         for (Data reqNode : reqDataNode.getChildren()) {
             QuestRequirementType type = QuestRequirementType.getByWZName(reqNode.getName());
+
+            if (isStart) {
+                if (type == QuestRequirementType.INTERVAL) {
+                    quest.setRepeatable(true);
+                }
+            } else {
+                if (type == QuestRequirementType.MOB) {
+                    for (Data mob : reqNode.getChildren()) {
+                        quest.getRelevantMobs().add(DataTool.getInt(mob.getChildByPath("id")));
+                    }
+                }
+            }
+
             AbstractQuestRequirementData req = getRequirementData(quest.getId(), type, reqNode);
             if (req != null) {
                 if (isStart) {
@@ -166,17 +199,16 @@ public class QuestDataProviderV2 {
 
     // 工厂解析：只进行 Data -> Data POJO 实例化
     private AbstractQuestRequirementData getRequirementData(int questId, QuestRequirementType type, Data data) {
-        Quest v1Quest = new Quest((short) questId);
         switch (type) {
             case EXCEPT_BUFF: return new BuffExceptRequirementData(data);
-            case BUFF: return new BuffRequirementData(v1Quest, data);
-            case COMPLETED_QUEST: return new CompletedQuestRequirementData(v1Quest, data);
-            case END_DATE: return new EndDateRequirementData(v1Quest, data);
-            case FIELD_ENTER: return new FieldEnterRequirementData(v1Quest, data);
-            case INFO_EX: return new InfoExRequirementData(v1Quest, data);
-            case INFO_NUMBER: return new InfoNumberRequirementData(v1Quest, data);
-            case INTERVAL: return new IntervalRequirementData(v1Quest, data);
-            case ITEM: return new ItemRequirementData(v1Quest, data);
+            case BUFF: return new BuffRequirementData(data);
+            case COMPLETED_QUEST: return new CompletedQuestRequirementData(data);
+            case END_DATE: return new EndDateRequirementData(data);
+            case FIELD_ENTER: return new FieldEnterRequirementData(data);
+            case INFO_EX: return new InfoExRequirementData(questId, data);
+            case INFO_NUMBER: return new InfoNumberRequirementData(questId, data);
+            case INTERVAL: return new IntervalRequirementData(questId, data);
+            case ITEM: return new ItemRequirementData(data);
             case JOB: return new JobRequirementData(data);
             case MAX_LEVEL: return new MaxLevelRequirementData(data);
             case MESO: return new MesoRequirementData(data);

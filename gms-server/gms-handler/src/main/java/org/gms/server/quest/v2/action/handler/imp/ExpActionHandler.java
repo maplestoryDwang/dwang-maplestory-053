@@ -11,6 +11,14 @@ import org.gms.util.NumberTool;
  */
 public class ExpActionHandler implements IQuestActionHandler<ExpActionData> {
 
+    public static void runAction(Character chr, int gain) {
+        if (!GameConfig.getServerBoolean("use_quest_rate")) {
+            chr.gainExp(NumberTool.floatToInt(gain * chr.getExpRate()), true, true);
+        } else {
+            chr.gainExp(NumberTool.floatToInt(gain * chr.getQuestExpRate()), true, true);
+        }
+    }
+
     @Override
     public boolean check(ExpActionData actionData, Character chr, Integer extSelection) {
         return true;
@@ -18,11 +26,6 @@ public class ExpActionHandler implements IQuestActionHandler<ExpActionData> {
 
     @Override
     public void run(ExpActionData actionData, Character chr, Integer extSelection) {
-        int exp = actionData.getExp();
-        if (!GameConfig.getServerBoolean("use_quest_rate")) {
-            chr.gainExp(NumberTool.floatToInt(exp * chr.getExpRate()), true, true);
-        } else {
-            chr.gainExp(NumberTool.floatToInt(exp * chr.getQuestExpRate()), true, true);
-        }
+        runAction(chr, actionData.getExp());
     }
 }

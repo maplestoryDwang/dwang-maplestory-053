@@ -4,7 +4,7 @@ import org.gms.client.Character;
 import org.gms.client.QuestStatus;
 import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.server.life.Monster;
-import org.gms.server.quest.Quest;
+import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.QuestRepository;
 
 public final class VeteranHunterMedal {
@@ -30,7 +30,7 @@ public final class VeteranHunterMedal {
     }
 
     public static void onMonsterKilled(Character player, Monster monster) {
-        Quest quest = QuestRepository.getInstance(QUEST_ID);
+        QuestV2 quest = QuestRepository.getInstance(QUEST_ID);
         QuestStatus status = player.getQuest(quest);
         if (status.getStatus() != QuestStatus.Status.STARTED || isComplete(player)) {
             return;
