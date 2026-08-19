@@ -17,33 +17,27 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.server.quest.requirements;
+package org.gms.server.quest.v2.requirement.data.imp;
 
-import org.gms.client.Character;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.quest.Quest;
 import org.gms.server.quest.QuestRequirementType;
+import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 
 /**
  * @author Ronan
  */
-public class BuffExceptRequirement extends AbstractQuestRequirement {
-    private int buffId = -1;
+public class BuffRequirementData extends AbstractQuestRequirementData {
+    private int buffId = 1;
 
-    public BuffExceptRequirement(Quest quest, Data data) {
-        super(QuestRequirementType.EXCEPT_BUFF);
-        processData(data);
-    }
-
-    @Override
-    public void processData(Data data) {
+    public BuffRequirementData(Quest quest, Data data) {
+        super(QuestRequirementType.BUFF);
         // item buffs are negative
         buffId = -1 * Integer.parseInt(DataTool.getString(data));
     }
 
-    @Override
-    public boolean check(Character chr, Integer npcid) {
-        return !chr.hasBuffFromSourceid(buffId);
+    public int getBuffId() {
+        return buffId;
     }
 }
