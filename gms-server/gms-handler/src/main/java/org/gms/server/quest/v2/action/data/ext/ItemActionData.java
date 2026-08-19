@@ -59,7 +59,7 @@ public class ItemActionData extends AbstractQuestActionData {
     private static final Logger log = LoggerFactory.getLogger(ItemActionData.class);
     List<ItemData> items = new ArrayList<>();
 
-    public ItemActionData(Quest quest, Data data) {
+    public ItemActionData(Data data) {
         super(QuestActionType.ITEM);
         for (Data iEntry : data.getChildren()) {
             int id = DataTool.getInt(iEntry.getChildByPath("id"));

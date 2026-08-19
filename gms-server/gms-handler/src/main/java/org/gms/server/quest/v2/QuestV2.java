@@ -1,9 +1,9 @@
-package org.gms.server.quest;
+package org.gms.server.quest.v2;
 
 
-import org.gms.client.QuestStatus.Status;
 import org.gms.config.GameConfig;
-import org.gms.server.quest.requirements.*;
+import org.gms.server.quest.QuestActionType;
+import org.gms.server.quest.QuestRequirementType;
 import org.gms.server.quest.v2.action.data.AbstractQuestActionData;
 import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
 import org.gms.server.quest.v2.requirement.data.imp.IntervalRequirementData;
