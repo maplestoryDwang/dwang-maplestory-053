@@ -74,6 +74,8 @@ function start() {
             cm.dispose();
             return;
         }
+    } else{
+        cm.sendOk("你来找我干什么？");
     }
 
     cm.dispose();
