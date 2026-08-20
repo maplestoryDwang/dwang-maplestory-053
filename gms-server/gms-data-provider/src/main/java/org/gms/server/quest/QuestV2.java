@@ -1,6 +1,8 @@
 package org.gms.server.quest;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.gms.server.quest.QuestStatus.Status;
 import org.gms.config.GameConfig;
 import org.gms.server.quest.actions.AbstractQuestActionData;
@@ -21,7 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.concurrent.TimeUnit.HOURS;
-
+@Setter
+@Getter
 public class QuestV2 {
     private static final Logger log = LoggerFactory.getLogger(QuestV2.class);
 
@@ -41,6 +44,10 @@ public class QuestV2 {
     private boolean repeatable = false;
     private String name = "";
     private String parent = "";
+    /**
+     * 地区
+     */
+    private String area = "";
 
     public QuestV2(short id) {
         this.id = id;

@@ -73,6 +73,19 @@ public class QuestDataProviderV2 {
     }
 
     public LoadedQuestContainer loadAll() {
+        HashMap<Integer, String> questCatMap = new HashMap<>();
+        Data questCategoryData = DataProviderFactory.getDataProvider(WzFiles.ETC).getData("QuestCategory.img");
+        for (Data questCat : questCategoryData.getChildren()) {
+            String name = questCat.getName();
+            String value = questCat.getAttributeValue("value");
+            if ("empty".equals(value)) {
+                continue;
+            }
+            questCatMap.put(Integer.parseInt(name), value);
+
+        }
+
+
         Map<Integer, QuestV2> loadedQuests = new LinkedHashMap<>();
         Map<Integer, Integer> loadedInfoNumberQuests = new HashMap<>();
         Map<Short, Integer> loadedMedals = new HashMap<>();
@@ -85,7 +98,7 @@ public class QuestDataProviderV2 {
         for (Data quest : questInfo.getChildren()) {
             try {
                 int questID = Integer.parseInt(quest.getName());
-                QuestV2 q = buildQuest(questID, loadedMedals);
+                QuestV2 q = buildQuest(questID, loadedMedals, questCatMap);
                 if (q != null) {
                     loadedQuests.put(questID, q);
 
@@ -107,7 +120,7 @@ public class QuestDataProviderV2 {
         return new LoadedQuestContainer(loadedQuests, loadedInfoNumberQuests, loadedMedals);
     }
 
-    public QuestV2 buildQuest(int id, Map<Short, Integer> medalMap) {
+    public QuestV2 buildQuest(int id, Map<Short, Integer> medalMap, HashMap<Integer, String> questCatMap) {
         Data reqData = questReq.getChildByPath(String.valueOf(id));
         if (reqData == null) {
             return null;
@@ -126,6 +139,10 @@ public class QuestDataProviderV2 {
                 quest.setAutoStart(DataTool.getInt("autoStart", reqInfo, 0) == 1);
                 quest.setAutoPreComplete(DataTool.getInt("autoPreComplete", reqInfo, 0) == 1);
                 quest.setAutoComplete(DataTool.getInt("autoComplete", reqInfo, 0) == 1);
+
+                Integer area = DataTool.getInteger("area", reqInfo);
+                String areaName = questCatMap.get(area);
+                quest.setArea(areaName);
 
                 int medalid = DataTool.getInt("viewMedalItem", reqInfo, 0);
                 if (medalid != 0 && medalMap != null) {

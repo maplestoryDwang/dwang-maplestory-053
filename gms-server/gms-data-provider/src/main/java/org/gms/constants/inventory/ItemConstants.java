@@ -347,7 +347,7 @@ public final class ItemConstants {
     public final static short Pet1MesoMagnet = -134;
     public final static short Pet2MesoMagnet = -142;
 
-    // itemId = 1812001
+    // itemId = 1812001 宠物拣去卷
     public final static short Pet0ItemPouch = -122;
     public final static short Pet1ItemPouch = -133;
     public final static short Pet2ItemPouch = -141;

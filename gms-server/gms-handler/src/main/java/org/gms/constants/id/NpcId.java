@@ -4,8 +4,9 @@ public class NpcId {
     public static final int CUSTOM_DEV = 9977777;
 
     public static final int MAPLE_ADMINISTRATOR = 9010000;
-    public static final int STEWARD = 9201143;
-    public static final int DIMENSIONAL_MIRROR = 9010022;
+    public static final int STEWARD = 9010000;
+    public static final int DIMENSIONAL_MIRROR = 9010000;
+
     public static final int SPINEL = 9000020;
     public static final int DUEY = 9010009;
     public static final int RPS_ADMIN = 9000019;
