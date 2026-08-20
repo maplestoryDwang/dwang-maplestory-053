@@ -8,13 +8,13 @@ import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.quest.QuestActionType;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.QuestRepository;
+import org.gms.server.quest.requirements.imp.InfoNumberRequirementData;
 import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.v2.action.QuestActionExecutor;
-import org.gms.server.quest.v2.action.data.AbstractQuestActionData;
-import org.gms.server.quest.v2.action.data.ext.ItemActionData;
+import org.gms.server.quest.actions.AbstractQuestActionData;
+import org.gms.server.quest.actions.ext.ItemActionData;
 import org.gms.server.quest.v2.requirement.QuestRequirementEvaluator;
-import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
+import org.gms.server.quest.requirements.AbstractQuestRequirementData;
 import org.gms.util.PacketCreator;
 import org.gms.util.StringUtil;
 import org.slf4j.Logger;
@@ -262,5 +262,4 @@ public class QuestUtils {
             chr.sendPacket(PacketCreator.questExpire(quest.getId()));
         }
     }
-
 }

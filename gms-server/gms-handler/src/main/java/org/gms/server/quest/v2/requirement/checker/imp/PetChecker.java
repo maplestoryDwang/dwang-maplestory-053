@@ -3,7 +3,7 @@ package org.gms.server.quest.v2.requirement.checker.imp;
 import org.gms.client.Character;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.server.quest.v2.requirement.checker.QuestRequirementChecker;
-import org.gms.server.quest.v2.requirement.data.imp.PetRequirementData;
+import org.gms.server.quest.requirements.imp.PetRequirementData;
 
 /**
  * 宠物检查

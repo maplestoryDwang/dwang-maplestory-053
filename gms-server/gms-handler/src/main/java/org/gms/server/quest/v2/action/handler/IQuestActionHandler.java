@@ -9,7 +9,7 @@ package org.gms.server.quest.v2.action.handler;
  */
 
 import org.gms.client.Character;
-import org.gms.server.quest.v2.action.data.AbstractQuestActionData;
+import org.gms.server.quest.actions.AbstractQuestActionData;
 
 /**
  * Action 逻辑处理器接口

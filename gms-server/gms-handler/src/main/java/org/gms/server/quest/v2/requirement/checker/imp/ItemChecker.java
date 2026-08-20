@@ -6,7 +6,7 @@ import org.gms.client.inventory.Item;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.quest.v2.requirement.checker.QuestRequirementChecker;
-import org.gms.server.quest.v2.requirement.data.imp.ItemRequirementData;
+import org.gms.server.quest.requirements.imp.ItemRequirementData;
 
 import java.util.Map;
 

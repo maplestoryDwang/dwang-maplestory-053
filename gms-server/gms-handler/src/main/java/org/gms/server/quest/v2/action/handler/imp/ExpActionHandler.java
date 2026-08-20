@@ -2,7 +2,7 @@ package org.gms.server.quest.v2.action.handler.imp;
 
 import org.gms.client.Character;
 import org.gms.config.GameConfig;
-import org.gms.server.quest.v2.action.data.ext.ExpActionData;
+import org.gms.server.quest.actions.ext.ExpActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 import org.gms.util.NumberTool;
 

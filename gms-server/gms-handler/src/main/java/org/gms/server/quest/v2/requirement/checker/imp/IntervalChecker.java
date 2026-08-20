@@ -4,7 +4,7 @@ import org.gms.client.Character;
 import org.gms.client.QuestStatus;
 import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.v2.requirement.checker.QuestRequirementChecker;
-import org.gms.server.quest.v2.requirement.data.imp.IntervalRequirementData;
+import org.gms.server.quest.requirements.imp.IntervalRequirementData;
 
 import static java.util.concurrent.TimeUnit.HOURS;
 import static java.util.concurrent.TimeUnit.MINUTES;

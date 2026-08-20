@@ -4,7 +4,7 @@ import org.gms.client.Character;
 import org.gms.client.QuestStatus;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.server.quest.QuestRepository;
-import org.gms.server.quest.v2.action.data.ext.PetSkillActionData;
+import org.gms.server.quest.actions.ext.PetSkillActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 
 /**

@@ -12,7 +12,7 @@ import org.gms.client.Character;
 import org.gms.server.quest.QuestRequirementType;
 import org.gms.server.quest.v2.requirement.checker.imp.*;
 import org.gms.server.quest.v2.requirement.checker.QuestRequirementChecker;
-import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
+import org.gms.server.quest.requirements.AbstractQuestRequirementData;
 
 import java.util.EnumMap;
 import java.util.Map;

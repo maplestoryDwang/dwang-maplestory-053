@@ -3,7 +3,7 @@ package org.gms.server.quest.v2.action.handler.imp;
 import org.gms.client.Character;
 import org.gms.client.QuestStatus;
 import org.gms.server.quest.QuestRepository;
-import org.gms.server.quest.v2.action.data.ext.NextQuestActionData;
+import org.gms.server.quest.actions.ext.NextQuestActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 import org.gms.util.PacketCreator;
 

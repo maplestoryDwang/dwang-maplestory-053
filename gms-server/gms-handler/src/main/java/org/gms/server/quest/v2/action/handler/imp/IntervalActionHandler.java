@@ -1,7 +1,7 @@
 package org.gms.server.quest.v2.action.handler.imp;
 
 import org.gms.client.Character;
-import org.gms.server.quest.v2.action.data.ext.IntervalActionData;
+import org.gms.server.quest.actions.ext.IntervalActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 
 /**

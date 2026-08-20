@@ -4,7 +4,7 @@ import org.gms.client.Character;
 import org.gms.client.QuestStatus;
 import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.v2.requirement.checker.QuestRequirementChecker;
-import org.gms.server.quest.v2.requirement.data.imp.QuestRequirementData;
+import org.gms.server.quest.requirements.imp.QuestRequirementData;
 
 /**
  * 前置任务状态检查

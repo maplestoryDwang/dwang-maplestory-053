@@ -4,7 +4,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.dwutil.PetUtils;
-import org.gms.server.quest.v2.action.data.ext.PetTamenessActionData;
+import org.gms.server.quest.actions.ext.PetTamenessActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 
 /**

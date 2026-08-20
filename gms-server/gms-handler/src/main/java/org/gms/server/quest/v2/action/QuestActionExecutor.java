@@ -5,7 +5,7 @@ import org.gms.server.quest.QuestActionType;
 import java.util.EnumMap;
 import java.util.Map;
 import org.gms.client.Character;
-import org.gms.server.quest.v2.action.data.AbstractQuestActionData;
+import org.gms.server.quest.actions.AbstractQuestActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 import org.gms.server.quest.v2.action.handler.imp.BuffActionHandler;
 import org.gms.server.quest.v2.action.handler.imp.ExpActionHandler;

@@ -7,7 +7,7 @@ import org.gms.client.inventory.Item;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.server.ItemInformationProvider;
-import org.gms.server.quest.v2.action.data.ext.ItemActionData;
+import org.gms.server.quest.actions.ext.ItemActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 import org.gms.util.I18nUtil;
 import org.gms.util.PacketCreator;

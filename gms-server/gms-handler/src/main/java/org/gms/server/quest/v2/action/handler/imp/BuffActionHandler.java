@@ -2,7 +2,7 @@ package org.gms.server.quest.v2.action.handler.imp;
 
 import org.gms.client.Character;
 import org.gms.dwutil.ItemUtils;
-import org.gms.server.quest.v2.action.data.ext.BuffActionData;
+import org.gms.server.quest.actions.ext.BuffActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 
 /**

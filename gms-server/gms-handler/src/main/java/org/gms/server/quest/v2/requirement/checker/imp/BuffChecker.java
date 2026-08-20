@@ -2,7 +2,7 @@ package org.gms.server.quest.v2.requirement.checker.imp;
 
 import org.gms.client.Character;
 import org.gms.server.quest.v2.requirement.checker.QuestRequirementChecker;
-import org.gms.server.quest.v2.requirement.data.imp.BuffRequirementData;
+import org.gms.server.quest.requirements.imp.BuffRequirementData;
 
 /**
  * buff异常需求

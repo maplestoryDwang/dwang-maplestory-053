@@ -1,7 +1,7 @@
 package org.gms.server.quest.v2.requirement.checker;
 
 import org.gms.client.Character;
-import org.gms.server.quest.v2.requirement.data.AbstractQuestRequirementData;
+import org.gms.server.quest.requirements.AbstractQuestRequirementData;
 
 /**
  * Requirement 逻辑校验接口

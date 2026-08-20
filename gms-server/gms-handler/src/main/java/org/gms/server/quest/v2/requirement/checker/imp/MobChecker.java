@@ -4,7 +4,7 @@ import org.gms.client.Character;
 import org.gms.client.QuestStatus;
 import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.v2.requirement.checker.QuestRequirementChecker;
-import org.gms.server.quest.v2.requirement.data.imp.MobRequirementData;
+import org.gms.server.quest.requirements.imp.MobRequirementData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
