@@ -37,7 +37,6 @@ import org.gms.server.life.LifeFactory;
 import org.gms.server.life.Monster;
 import org.gms.server.maps.MapObject;
 import org.gms.server.maps.MapObjectType;
-import org.gms.server.quest.v2.QuestV2;
 import org.gms.util.PacketCreator;
 import org.gms.util.Randomizer;
 

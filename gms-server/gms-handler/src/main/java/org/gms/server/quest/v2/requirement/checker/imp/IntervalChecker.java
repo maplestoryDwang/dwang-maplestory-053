@@ -1,7 +1,7 @@
 package org.gms.server.quest.v2.requirement.checker.imp;
 
 import org.gms.client.Character;
-import org.gms.client.QuestStatus;
+import org.gms.server.quest.QuestStatus;
 import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.v2.requirement.checker.QuestRequirementChecker;
 import org.gms.server.quest.requirements.imp.IntervalRequirementData;

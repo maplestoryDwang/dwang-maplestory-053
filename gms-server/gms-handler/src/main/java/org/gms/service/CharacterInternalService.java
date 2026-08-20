@@ -21,6 +21,7 @@ import org.gms.server.life.MobSkill;
 import org.gms.server.life.MobSkillFactory;
 import org.gms.server.life.MobSkillType;
 import org.gms.server.maps.*;
+import org.gms.server.quest.QuestStatus;
 import org.gms.util.I18nUtil;
 import org.gms.util.Pair;
 import org.gms.util.RequireUtil;

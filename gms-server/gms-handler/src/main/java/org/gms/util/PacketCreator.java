@@ -35,6 +35,7 @@ import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.dao.entity.ModifiedCashItemDO;
 import org.gms.dwutil.CharacterUtils;
 import org.gms.dwutil.ItemUtils;
+import org.gms.dwutil.QuestUtils;
 import org.gms.model.pojo.NewYearCardRecord;
 import org.gms.client.status.MonsterStatus;
 import org.gms.client.status.MonsterStatusEffect;
@@ -90,6 +91,7 @@ import org.gms.server.maps.PlayerShopItem;
 import org.gms.server.maps.Reactor;
 import org.gms.server.maps.Summon;
 import org.gms.server.movement.LifeMovementFragment;
+import org.gms.server.quest.QuestStatus;
 
 import java.awt.*;
 import java.lang.reflect.Field;
@@ -415,17 +417,18 @@ public class PacketCreator {
         List<QuestStatus> started = chr.getStartedQuests();
         int startedSize = 0;
         for (QuestStatus qs : started) {
-            if (qs.getInfoNumber() > 0) {
+//            if (qs.getInfoNumber() > 0) {
+            if (QuestUtils.qsInfoNumberExist(qs)) {
                 startedSize++;
             }
             startedSize++;
         }
         p.writeShort(startedSize);
         for (QuestStatus qs : started) {
-            p.writeShort(qs.getQuest().getId());
+            p.writeShort(qs.getQuestID());
             p.writeString(qs.getProgressData());
 
-            short infoNumber = qs.getInfoNumber();
+            short infoNumber = QuestUtils.getInfoNumber(qs);
             if (infoNumber > 0) {
                 QuestStatus iqs = chr.getQuest(infoNumber);
                 p.writeShort(infoNumber);
@@ -435,7 +438,7 @@ public class PacketCreator {
         List<QuestStatus> completed = chr.getCompletedQuests();
         p.writeShort(completed.size());
         for (QuestStatus qs : completed) {
-            p.writeShort(qs.getQuest().getId());
+            p.writeShort(qs.getQuestID());
             p.writeLong(getTime(qs.getCompletionTime()));
         }
     }
@@ -3395,12 +3398,12 @@ public class PacketCreator {
         final OutPacket p = OutPacket.create(SendPacketOpcode.SHOW_STATUS_INFO);
         p.writeByte(1);
         if (infoUpdate) {
-            QuestStatus iqs = chr.getQuest(qs.getInfoNumber());
+            QuestStatus iqs = chr.getQuest(QuestUtils.getInfoNumber(qs));
             p.writeShort(iqs.getQuestID());
             p.writeByte(1);
             p.writeString(iqs.getProgressData());
         } else {
-            p.writeShort(qs.getQuest().getId());
+            p.writeShort(qs.getQuestID());
             p.writeByte(qs.getStatus().getId());
             p.writeString(qs.getProgressData());
         }

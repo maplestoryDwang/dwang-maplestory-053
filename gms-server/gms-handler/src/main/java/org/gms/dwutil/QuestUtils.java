@@ -1,15 +1,15 @@
 package org.gms.dwutil;
 
 import org.gms.client.Character;
-import org.gms.client.QuestStatus;
+import org.gms.server.quest.QuestStatus;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.quest.QuestActionType;
+import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.requirements.imp.InfoNumberRequirementData;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.v2.action.QuestActionExecutor;
 import org.gms.server.quest.actions.AbstractQuestActionData;
 import org.gms.server.quest.actions.ext.ItemActionData;
@@ -46,10 +46,10 @@ public class QuestUtils {
 
     public static boolean canQuestByInfoProgress(Character chr, QuestV2 quest) {
         QuestStatus mqs = chr.getQuest(quest);
-        List<String> ix = mqs.getInfoEx();
+        List<String> ix = quest.getInfoEx(mqs.getStatus());
         if (!ix.isEmpty()) {
             short questid = mqs.getQuestID();
-            short infoNumber = mqs.getInfoNumber();
+            short infoNumber = getInfoNumber(mqs);
             if (infoNumber <= 0) {
                 infoNumber = questid;
             }
@@ -144,7 +144,7 @@ public class QuestUtils {
     }
 
     public static void reset(Character chr, QuestV2 quest) {
-        QuestStatus newStatus = new QuestStatus(quest, QuestStatus.Status.NOT_STARTED);
+        QuestStatus newStatus = new QuestStatus(quest.getId(), QuestStatus.Status.NOT_STARTED);
         chr.updateQuestStatus(newStatus);
     }
 
@@ -157,14 +157,14 @@ public class QuestUtils {
         if (timeLimit > 0) {
             chr.sendPacket(PacketCreator.removeQuestTimeLimit(id));
         }
-        QuestStatus newStatus = new QuestStatus(quest, QuestStatus.Status.NOT_STARTED);
+        QuestStatus newStatus = new QuestStatus(quest.getId(), QuestStatus.Status.NOT_STARTED);
         newStatus.setForfeited(chr.getQuest(quest).getForfeited() + 1);
         chr.updateQuestStatus(newStatus);
         return true;
     }
 
     public static boolean forceStart(Character chr, int npc, QuestV2 quest) {
-        QuestStatus newStatus = new QuestStatus(quest, QuestStatus.Status.STARTED, npc);
+        QuestStatus newStatus = new QuestStatus(quest.getId(), QuestStatus.Status.STARTED, npc);
 
         short questId = quest.getId();
         int timeLimit = quest.getTimeLimit();
@@ -211,7 +211,7 @@ public class QuestUtils {
             chr.sendPacket(PacketCreator.removeQuestTimeLimit(id));
         }
 
-        QuestStatus newStatus = new QuestStatus(quest, QuestStatus.Status.COMPLETED, npc);
+        QuestStatus newStatus = new QuestStatus(quest.getId(), QuestStatus.Status.COMPLETED, npc);
         newStatus.setForfeited(chr.getQuest(quest).getForfeited());
         newStatus.setCompleted(chr.getQuest(quest).getCompleted());
         newStatus.setCompletionTime(System.currentTimeMillis());
@@ -261,5 +261,16 @@ public class QuestUtils {
         if (forfeit(chr, quest)) {
             chr.sendPacket(PacketCreator.questExpire(quest.getId()));
         }
+    }
+
+
+    public static short getInfoNumber(QuestStatus qs) {
+        QuestV2 q = QuestRepository.getInstance(qs.getQuestID());
+        QuestStatus.Status s = qs.getStatus();
+        return q.getInfoNumber(s);
+    }
+
+    public static boolean qsInfoNumberExist(QuestStatus qs) {
+        return getInfoNumber(qs) > 0;
     }
 }

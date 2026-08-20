@@ -29,7 +29,7 @@ import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.scripting.quest.QuestScriptManager;
 import org.gms.server.life.NPC;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.I18nUtil;
 

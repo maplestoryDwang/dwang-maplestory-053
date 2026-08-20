@@ -2,7 +2,7 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.QuestStatus;
+import org.gms.server.quest.QuestStatus;
 import org.gms.client.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.manipulator.InventoryManipulator;
@@ -10,7 +10,7 @@ import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.ItemInformationProvider.QuestConsItem;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.PacketCreator;
 

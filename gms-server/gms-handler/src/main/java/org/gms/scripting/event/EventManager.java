@@ -42,7 +42,6 @@ import org.gms.server.expeditions.Expedition;
 import org.gms.server.life.LifeFactory;
 import org.gms.server.life.Monster;
 import org.gms.server.maps.MapleMap;
-import org.gms.server.quest.v2.QuestV2;
 import org.gms.exception.EventInstanceInProgressException;
 
 import javax.script.Invocable;

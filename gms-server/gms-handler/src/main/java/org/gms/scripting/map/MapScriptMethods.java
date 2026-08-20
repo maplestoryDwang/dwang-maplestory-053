@@ -22,12 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.gms.scripting.map;
 
 import org.gms.client.Client;
-import org.gms.client.QuestStatus;
-import org.gms.constants.game.DelayedQuestUpdate;
+import org.gms.server.quest.QuestStatus;
 import org.gms.constants.id.MapId;
 import org.gms.dwutil.QuestUtils;
 import org.gms.scripting.AbstractPlayerInteraction;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.PacketCreator;
 
@@ -119,7 +118,9 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
             return;
         }
         String status = Integer.toString(qs.getMedalProgress());
-        String infoex = qs.getInfoEx(0);
+        QuestStatus.Status s = qs.getStatus();
+        String infoex = quest.getInfoEx(s, 0);
+
 
         // explorer quests all have an infoex/infonumber requirement that points to another quest
         // THAT quest's progress needs to be updated for QuestV2.canComplete() to return true
@@ -155,7 +156,10 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
         getPlayer().setQuestProgress(quest.getId(), (int)quest.getInfoNumber(qs.getStatus()), status);
         getPlayer().sendPacket(PacketCreator.earnTitleMessage(status + "/5 已完成"));
         getPlayer().sendPacket(PacketCreator.earnTitleMessage("站在巅峰的人 勋章挑战正在进行中"));
-        if (Integer.toString(qs.getMedalProgress()).equals(qs.getInfoEx(0))) {
+
+        QuestStatus.Status s = qs.getStatus();
+        String infoEx = quest.getInfoEx(s, 0);
+        if (Integer.toString(qs.getMedalProgress()).equals(infoEx)) {
             showInfoText("站在巅峰的人" + rewardstring);
             getPlayer().sendPacket(PacketCreator.getShowQuestCompletion(quest.getId()));
         } else {

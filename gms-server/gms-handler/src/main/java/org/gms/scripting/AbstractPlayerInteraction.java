@@ -58,6 +58,7 @@ import org.gms.server.maps.MapleMap;
 import org.gms.server.partyquest.PartyQuest;
 import org.gms.server.partyquest.Pyramid;
 import org.gms.server.quest.QuestRepository;
+import org.gms.server.quest.QuestStatus;
 import org.gms.service.ExtendDataService;
 import org.gms.util.*;
 import org.slf4j.Logger;
@@ -429,7 +430,7 @@ public class AbstractPlayerInteraction {
     public String getQuestProgress(int id, int infoNumber) {
         QuestStatus qs = getPlayer().getQuest(QuestRepository.getInstance(id));
 
-        if (qs.getInfoNumber() == infoNumber && infoNumber > 0) {
+        if (QuestUtils.getInfoNumber(qs) == infoNumber && infoNumber > 0) {
             qs = getPlayer().getQuest(QuestRepository.getInstance(infoNumber));
             infoNumber = 0;
         }

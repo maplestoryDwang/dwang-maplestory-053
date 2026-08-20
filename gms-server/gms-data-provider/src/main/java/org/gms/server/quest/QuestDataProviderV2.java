@@ -1,13 +1,11 @@
-package org.gms.server.quest.v2;
+package org.gms.server.quest;
 
 import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
 import org.gms.provider.wz.WzFiles;
-import org.gms.client.QuestStatus.Status;
-import org.gms.server.quest.QuestActionType;
-import org.gms.server.quest.QuestRequirementType;
+import org.gms.server.quest.QuestStatus.Status;
 import org.gms.server.quest.actions.AbstractQuestActionData;
 import org.gms.server.quest.actions.ext.BuffActionData;
 import org.gms.server.quest.actions.ext.ExpActionData;

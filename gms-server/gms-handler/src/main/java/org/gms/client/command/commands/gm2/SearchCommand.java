@@ -31,7 +31,7 @@ import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.StringInfoProvider;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.I18nUtil;
 import org.gms.util.Pair;

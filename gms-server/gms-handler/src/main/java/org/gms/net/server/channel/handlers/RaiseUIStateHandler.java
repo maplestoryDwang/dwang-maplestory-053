@@ -2,13 +2,13 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.QuestStatus;
+import org.gms.server.quest.QuestStatus;
 import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.dwutil.QuestUtils;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.scripting.quest.QuestScriptManager;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 
 /**
@@ -32,7 +32,7 @@ public class RaiseUIStateHandler extends AbstractPacketHandler {
                     QuestUtils.forceStart(chr, 22000, quest);
                     c.getAbstractPlayerInteraction().setQuestProgress(quest.getId(), infoNumber, 0);
                 } else if (mqs.getStatus() == QuestStatus.Status.STARTED) {
-                    chr.announceUpdateQuest(DelayedQuestUpdate.UPDATE, mqs, mqs.getInfoNumber() > 0);
+                    chr.announceUpdateQuest(DelayedQuestUpdate.UPDATE, mqs, QuestUtils.qsInfoNumberExist(mqs));
                 }
             } finally {
                 c.releaseClient();

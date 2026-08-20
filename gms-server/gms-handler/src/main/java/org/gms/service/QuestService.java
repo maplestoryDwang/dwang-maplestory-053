@@ -2,14 +2,14 @@ package org.gms.service;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.AllArgsConstructor;
-import org.gms.client.QuestStatus;
+import org.gms.server.quest.QuestStatus;
 import org.gms.dao.entity.MedalmapsDO;
 import org.gms.dao.entity.QuestprogressDO;
 import org.gms.dao.entity.QueststatusDO;
 import org.gms.dao.mapper.MedalmapsMapper;
 import org.gms.dao.mapper.QuestprogressMapper;
 import org.gms.dao.mapper.QueststatusMapper;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +36,11 @@ public class QuestService {
         queststatusMapper.deleteByQuery(QueryWrapper.create().where(QUESTSTATUS_D_O.CHARACTERID.eq(cid)));
     }
 
+    /**
+     * 获取所有用户的任务状态
+     * @param cid
+     * @return
+     */
     public List<QuestStatus> getQuestStatusByCharacter(int cid) {
         List<QueststatusDO> queststatusDOList = queststatusMapper.selectListByQuery(QueryWrapper.create().where(QUESTSTATUS_D_O.CHARACTERID.eq(cid)));
         List<QuestprogressDO> questprogressDOList = questprogressMapper.selectListByQuery(QueryWrapper.create().where(QUESTPROGRESS_D_O.CHARACTERID.eq(cid)));
@@ -43,7 +48,7 @@ public class QuestService {
 
         return queststatusDOList.stream().map(queststatusDO -> {
             QuestV2 quest = QuestRepository.getInstance(queststatusDO.getQuest());
-            QuestStatus questStatus = new QuestStatus(quest, QuestStatus.Status.getById(queststatusDO.getStatus()));
+            QuestStatus questStatus = new QuestStatus(quest.getId(), QuestStatus.Status.getById(queststatusDO.getStatus()));
             if (queststatusDO.getTime() > -1) {
                 questStatus.setCompletionTime(TimeUnit.SECONDS.toMillis(queststatusDO.getTime()));
             }

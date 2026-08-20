@@ -1,10 +1,10 @@
 package org.gms.server.quest.medal;
 
 import org.gms.client.Character;
-import org.gms.client.QuestStatus;
+import org.gms.server.quest.QuestStatus;
 import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.server.life.Monster;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 
 public final class VeteranHunterMedal {

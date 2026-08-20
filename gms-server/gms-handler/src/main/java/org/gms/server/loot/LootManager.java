@@ -22,7 +22,7 @@ package org.gms.server.loot;
 import org.gms.client.Character;
 import org.gms.server.life.MonsterDropEntry;
 import org.gms.server.life.MonsterInformationProvider;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 
 import java.util.LinkedList;

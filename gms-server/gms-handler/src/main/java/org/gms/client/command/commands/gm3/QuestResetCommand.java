@@ -27,7 +27,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.command.Command;
 import org.gms.dwutil.QuestUtils;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.I18nUtil;
 

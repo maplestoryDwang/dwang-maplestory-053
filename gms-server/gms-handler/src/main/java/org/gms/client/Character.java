@@ -109,7 +109,8 @@ import org.gms.server.partyquest.AriantColiseum;
 import org.gms.server.partyquest.MonsterCarnival;
 import org.gms.server.partyquest.MonsterCarnivalParty;
 import org.gms.server.partyquest.PartyQuest;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestStatus;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.service.*;
 import org.gms.util.*;
@@ -5372,7 +5373,7 @@ public class Character extends AbstractCharacterObject {
             short questid = quest.getId();
             QuestStatus qs = quests.get(questid);
             if (qs == null) {
-                qs = new QuestStatus(quest, QuestStatus.Status.NOT_STARTED);
+                qs = new QuestStatus(quest.getId(), QuestStatus.Status.NOT_STARTED);
                 quests.put(questid, qs);
             }
             return qs;
@@ -5382,7 +5383,7 @@ public class Character extends AbstractCharacterObject {
     public final QuestStatus getQuestNAdd(final QuestV2 quest) {
         synchronized (quests) {
             if (!quests.containsKey(quest.getId())) {
-                final QuestStatus status = new QuestStatus(quest, QuestStatus.Status.NOT_STARTED);
+                final QuestStatus status = new QuestStatus(quest.getId(), QuestStatus.Status.NOT_STARTED);
                 quests.put(quest.getId(), status);
                 return status;
             }
@@ -6692,7 +6693,7 @@ public class Character extends AbstractCharacterObject {
     public void reloadQuestExpirations() {
         for (QuestStatus mqs : getStartedQuests()) {
             if (mqs.getExpirationTime() > 0) {
-                questTimeLimit2(mqs.getQuest(), mqs.getExpirationTime());
+                questTimeLimit2(QuestRepository.getInstance(mqs.getQuestID()), mqs.getExpirationTime());
             }
         }
     }
@@ -6757,22 +6758,34 @@ public class Character extends AbstractCharacterObject {
         try {
             synchronized (quests) {
                 for (QuestStatus qs : getQuestValues()) {
-                    lastQuestProcessed = qs.getQuest().getId();
-                    if (qs.getStatus() == QuestStatus.Status.COMPLETED || QuestUtils.canComplete(this, null, qs.getQuest())) {
+                    // todo 为啥process是questid
+                    lastQuestProcessed = qs.getQuestID();
+//                    lastQuestProcessed = qs.getQuest().getId();
+                    if (qs.getStatus() == QuestStatus.Status.COMPLETED || QuestUtils.canComplete(this, null, QuestRepository.getInstance(lastQuestProcessed))) {
                         continue;
                     }
 
                     if (qs.progress(id)) {
-                        announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, false);
-                        if (qs.getInfoNumber() > 0) {
-                            announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, true);
+                        boolean infoUpdate = false;
+                        announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, infoUpdate);
+                        if (qsInfoNumberExist(qs)) {
+                            infoUpdate = true;
+                            announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, infoUpdate);
                         }
                     }
                 }
             }
         } catch (Exception e) {
-            log.warn("Character.mobKilled. chrId {}, last quest processed: {}", this.id, lastQuestProcessed, e);
+            log.warn("Character.mobKilled. chrId {}, last questid processed: {}", this.id, lastQuestProcessed, e);
         }
+    }
+
+    private short qsInfoNumber(QuestStatus qs) {
+        return QuestUtils.getInfoNumber(qs);
+    }
+
+    private boolean qsInfoNumberExist(QuestStatus qs) {
+        return QuestUtils.qsInfoNumberExist(qs);
     }
 
     public Mount mount(int id, int skillid) {
@@ -7894,7 +7907,7 @@ public class Character extends AbstractCharacterObject {
                     psStatus.setInt(1, id);
 
                     for (QuestStatus qs : getQuestValues()) {
-                        psStatus.setInt(2, qs.getQuest().getId());
+                        psStatus.setInt(2, qs.getQuestID());
                         psStatus.setInt(3, qs.getStatus().getId());
                         psStatus.setInt(4, (int) (qs.getCompletionTime() / 1000));
                         psStatus.setLong(5, qs.getExpirationTime());
@@ -8797,7 +8810,7 @@ public class Character extends AbstractCharacterObject {
         QuestV2 q = QuestRepository.getInstance(id);
         QuestStatus qs = getQuest(q);
 
-        if (qs.getInfoNumber() == infoNumber && infoNumber > 0) {
+        if (qsInfoNumber(qs) == infoNumber && infoNumber > 0) {
             QuestV2 iq = QuestRepository.getInstance(infoNumber);
             QuestStatus iqs = getQuest(iq);
             iqs.setProgress(0, progress);
@@ -8806,7 +8819,7 @@ public class Character extends AbstractCharacterObject {
         }
 
         announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, false);
-        if (qs.getInfoNumber() > 0) {
+        if (qsInfoNumberExist(qs)) {
             announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, true);
         }
     }
@@ -8847,7 +8860,7 @@ public class Character extends AbstractCharacterObject {
             // 任務完成之後NPC還會有對話
             case INFO:
                 QuestStatus qs = (QuestStatus) objs[0];
-                sendPacket(PacketCreator.updateQuestInfo(qs.getQuest().getId(), qs.getNpc()));
+                sendPacket(PacketCreator.updateQuestInfo(qs.getQuestID(), qs.getNpc()));
                 break;
         }
     }
@@ -8883,12 +8896,12 @@ public class Character extends AbstractCharacterObject {
         }
         if (qs.getStatus().equals(QuestStatus.Status.STARTED)) {
             announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, false);
-            if (qs.getInfoNumber() > 0) {
+            if (qsInfoNumberExist(qs)) {
                 announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, true);
             }
             announceUpdateQuest(DelayedQuestUpdate.INFO, qs);
         } else if (qs.getStatus().equals(QuestStatus.Status.COMPLETED)) {
-            QuestV2 mquest = qs.getQuest();
+            QuestV2 mquest = QuestRepository.getInstance(qs.getQuestID());
             short questid = mquest.getId();
             if (!mquest.isSameDayRepeatable() && !QuestRepository.isExploitableQuest(questid)) {
                 awardQuestPoint(GameConfig.getServerInt("quest_point_per_quest_complete"));
@@ -8899,7 +8912,7 @@ public class Character extends AbstractCharacterObject {
             //announceUpdateQuest(DelayedQuestUpdate.INFO, qs); // happens after giving rewards, for non-next quests only
         } else if (qs.getStatus().equals(QuestStatus.Status.NOT_STARTED)) {
             announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, false);
-            if (qs.getInfoNumber() > 0) {
+            if (qsInfoNumberExist(qs)) {
                 announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, true);
             }
             // reminder: do not reset quest progress of infoNumbers, some quests cannot backtrack

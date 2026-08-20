@@ -24,7 +24,7 @@ package org.gms.scripting.quest;
 import org.gms.client.Client;
 import org.gms.scripting.npc.NPCConversationManager;
 import org.gms.server.ItemInformationProvider;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.v2.action.handler.imp.ExpActionHandler;
 import org.gms.server.quest.v2.action.handler.imp.MesoActionHandler;

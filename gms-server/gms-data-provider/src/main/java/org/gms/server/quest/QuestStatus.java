@@ -19,10 +19,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client;
+package org.gms.server.quest;
 
-import org.gms.server.quest.v2.QuestV2;
-import org.gms.server.quest.QuestRepository;
 import org.gms.util.StringUtil;
 
 import java.util.Collections;
@@ -33,6 +31,10 @@ import java.util.Map;
 
 /**
  * @author Matze
+ *
+ * @update dwang 20260820
+ * @desc 把Quest拆出来
+ *
  */
 public class QuestStatus {
     public enum Status {
@@ -70,8 +72,8 @@ public class QuestStatus {
     private int forfeited = 0, completed = 0;
     private String customData;
 
-    public QuestStatus(QuestV2 quest, Status status) {
-        this.questID = quest.getId();
+    public QuestStatus(short questID, Status status) {
+        this.questID = questID;
         this.setStatus(status);
         this.completionTime = System.currentTimeMillis();
         this.expirationTime = 0;
@@ -81,8 +83,8 @@ public class QuestStatus {
         }
     }
 
-    public QuestStatus(QuestV2 quest, Status status, int npc) {
-        this.questID = quest.getId();
+    public QuestStatus(short questID, Status status, int npc) {
+        this.questID = questID;
         this.setStatus(status);
         this.setNpc(npc);
         this.completionTime = System.currentTimeMillis();
@@ -91,10 +93,6 @@ public class QuestStatus {
         if (status == Status.STARTED) {
             registerMobs();
         }
-    }
-
-    public QuestV2 getQuest() {
-        return QuestRepository.getInstance(questID);
     }
 
     public short getQuestID() {
@@ -108,20 +106,7 @@ public class QuestStatus {
     public final void setStatus(Status status) {
         this.status = status;
     }
-    
-    /*
-    public boolean wasUpdated() {
-        return updated;
-    }
-    
-    private void setUpdated() {
-        this.updated = true;
-    }
-    
-    public void resetUpdated() {
-        this.updated = false;
-    }
-    */
+
 
     public int getNpc() {
         return npc;
@@ -155,19 +140,19 @@ public class QuestStatus {
         return medalProgress;
     }
 
-    public boolean progress(int id) {
-        String currentStr = progress.get(id);
+    public boolean progress(int mobId) {
+        String currentStr = progress.get(mobId);
         if (currentStr == null) {
             return false;
         }
 
         int current = Integer.parseInt(currentStr);
-        if (current >= this.getQuest().getMobAmountNeeded(id)) {
+        if (current >= QuestRepository.getInstance(questID).getMobAmountNeeded(mobId)) {
             return false;
         }
 
         String str = StringUtil.getLeftPaddedStr(Integer.toString(++current), '0', 3);
-        progress.put(id, str);
+        progress.put(mobId, str);
         //this.setUpdated();
         return true;
     }
@@ -202,27 +187,6 @@ public class QuestStatus {
 
     public Map<Integer, String> getProgress() {
         return Collections.unmodifiableMap(progress);
-    }
-
-    public short getInfoNumber() {
-        QuestV2 q = this.getQuest();
-        Status s = this.getStatus();
-
-        return q.getInfoNumber(s);
-    }
-
-    public String getInfoEx(int index) {
-        QuestV2 q = this.getQuest();
-        Status s = this.getStatus();
-
-        return q.getInfoEx(s, index);
-    }
-
-    public List<String> getInfoEx() {
-        QuestV2 q = this.getQuest();
-        Status s = this.getStatus();
-
-        return q.getInfoEx(s);
     }
 
     public long getCompletionTime() {

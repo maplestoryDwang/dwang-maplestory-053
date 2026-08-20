@@ -22,13 +22,13 @@
 package org.gms.scripting.quest;
 
 import org.gms.client.Client;
-import org.gms.client.QuestStatus;
+import org.gms.server.quest.QuestStatus;
 import org.gms.constants.game.GameConstants;
 import org.gms.server.quest.QuestRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.AbstractScriptManager;
-import org.gms.server.quest.v2.QuestV2;
+import org.gms.server.quest.QuestV2;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;

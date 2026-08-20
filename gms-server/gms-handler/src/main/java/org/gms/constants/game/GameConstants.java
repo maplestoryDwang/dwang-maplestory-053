@@ -9,7 +9,6 @@ import org.gms.provider.*;
 import org.gms.provider.wz.WzFiles;
 import org.gms.server.maps.FieldLimit;
 import org.gms.server.maps.MapleMap;
-import org.gms.server.quest.v2.QuestV2;
 import org.gms.server.quest.QuestRepository;
 import org.gms.util.Pair;
 
