@@ -120,6 +120,7 @@ public class SearchCommand extends Command {
                     }
                 }
             } else {
+                // 搜索任务
                 for (QuestV2 mq : QuestRepository.getMatchedQuests(search)) {
                     sb.append("#b").append(mq.getId()).append("#k - #r");
 

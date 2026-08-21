@@ -22,9 +22,12 @@ import static org.gms.dao.entity.table.MedalmapsDOTableDef.MEDALMAPS_D_O;
 import static org.gms.dao.entity.table.QuestprogressDOTableDef.QUESTPROGRESS_D_O;
 import static org.gms.dao.entity.table.QueststatusDOTableDef.QUESTSTATUS_D_O;
 
+/**
+ * 用户的任务数据记录
+ */
 @Service
 @AllArgsConstructor
-public class QuestService {
+public class QuestUserDataService {
     private final MedalmapsMapper medalmapsMapper;
     private final QuestprogressMapper questprogressMapper;
     private final QueststatusMapper queststatusMapper;

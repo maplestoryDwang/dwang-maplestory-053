@@ -1,10 +1,9 @@
 package org.gms.server.quest;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.alibaba.druid.util.StringUtils;
+import org.gms.model.dto.QuestSearchReqDTO;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -84,4 +83,24 @@ public class QuestRepository {
         infoNumberQuests.clear();
         medals.clear();
     }
+    public static List<QuestV2> getQuestList(QuestSearchReqDTO data) {
+        List<QuestV2> ret = new LinkedList<>();
+        String questName = data.getQuestName();
+        Integer questId = data.getQuestId();
+        if (questId != null) {
+            QuestV2 questV2 = quests.get(questId);
+            return Collections.singletonList(questV2);
+        }
+
+        if (!StringUtils.isEmpty(questName)) {
+            for (QuestV2 mq : quests.values()) {
+                if (mq.getName().toLowerCase().contains(questName) || mq.getParentName().toLowerCase().contains(questName)) {
+                    ret.add(mq);
+                }
+            }
+            return ret;
+        }
+        return new ArrayList<>(quests.values());
+    }
+
 }

@@ -40,6 +40,7 @@ public enum QuestRequirementType {
     JOB(0),
     /**
      * 收集物品要求
+     * 完成就是获取的需求
      */
     ITEM(1),
     /**

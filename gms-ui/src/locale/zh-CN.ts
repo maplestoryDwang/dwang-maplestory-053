@@ -19,6 +19,7 @@ export default {
   'menu.dashboard.informationSearch': '资料查询',
   'menu.game': '游戏管理',
   'menu.game.config': '参数管理',
+  'menu.game.quest': '任务管理',
   'menu.game.npcShop': 'NPC商店',
   'menu.game.cashShop': '商城管理',
   'menu.game.drop': '怪物爆率',

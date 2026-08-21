@@ -38,7 +38,7 @@ public class CharacterInternalService {
 
     private final CharacterDataService characterDataService;
     private final InventoryService inventoryService;
-    private final QuestService questService;
+    private final QuestUserDataService questUserDataService;
     private final MtsService mtsService;
     private final NameChangeService nameChangeService;
     private final WorldTransferService worldTransferService;
@@ -131,7 +131,7 @@ public class CharacterInternalService {
 
         // 删除服务层业务关联数据
         inventoryService.deleteInventoryByCharacterId(cid);
-        questService.deleteQuestProgressByCharacter(cid);
+        questUserDataService.deleteQuestProgressByCharacter(cid);
         mtsService.deleteMtsByCharacterId(cid);
 
         // 补充取消改名/跨区事务
@@ -193,7 +193,7 @@ public class CharacterInternalService {
         }
         chr.setLoggedIn(true);
 
-        List<QuestStatus> questStatusList = questService.getQuestStatusByCharacter(cid);
+        List<QuestStatus> questStatusList = questUserDataService.getQuestStatusByCharacter(cid);
         questStatusList.forEach(questStatus -> chr.getQuests().put(questStatus.getQuestID(), questStatus));
 
         List<SkillsDO> skillsDOList = characterDataService.getSkillsByCharacterId(cid);

@@ -18,6 +18,7 @@ export default {
   'menu.dashboard.informationSearch': 'Information Search',
   'menu.game': 'Game',
   'menu.game.config': 'Config',
+  'menu.game.quest': 'Quest',
   'menu.game.npcShop': 'NPC Shop',
   'menu.game.cashShop': 'Cash Shop',
   'menu.game.drop': 'Mob Drop',

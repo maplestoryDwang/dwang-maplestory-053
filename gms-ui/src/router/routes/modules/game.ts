@@ -33,6 +33,16 @@ const GAME: AppRouteRecordRaw = {
       },
     },
     {
+        path: 'quest',
+        name: 'quest',
+        component: () => import('@/views/game/quest/index.vue'),
+        meta: {
+            locale: 'menu.game.quest',
+            requiresAuth: true,
+            roles: ['admin'],
+        },
+    },
+    {
       path: 'npcShop',
       name: 'NpcShop',
       component: () => import('@/views/game/npcShop/index.vue'),
