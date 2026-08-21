@@ -68,7 +68,7 @@
               <a-tag v-else color="gray">不可重复</a-tag>
             </template>
           </a-table-column>
-          <a-table-column title="自动启动" align="center" :width="100">
+          <a-table-column title="自动开始" align="center" :width="100">
             <template #cell="{ record }">
               <a-tag v-if="record.autoStart" color="blue">是</a-tag>
               <a-tag v-else color="arcoblue">否</a-tag>
@@ -297,6 +297,28 @@ const hasData = (obj?: Record<string, any>) => {
   return obj && Object.keys(obj).length > 0;
 };
 
+/**
+ * 将毫秒数转换为 xx天xx时xx分
+ * @param ms 毫秒数
+ */
+const formatInterval = (ms: number | string): string => {
+  const totalMs = Number(ms);
+  if (isNaN(totalMs) || totalMs <= 0) return '0分';
+
+  const totalMinutes = Math.floor(totalMs / (1000 * 60));
+  const days = Math.floor(totalMinutes / (60 * 24));
+  const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+  const minutes = totalMinutes % 60;
+
+  const parts: string[] = [];
+  if (days > 0) parts.push(`${days}天`);
+  if (hours > 0) parts.push(`${hours}时`);
+  if (minutes > 0 || parts.length === 0) parts.push(`${minutes}分`);
+
+  return parts.join('');
+};
+
+
 // ==================== 核心 VO 动态解析渲染函数 ====================
 
 /**
@@ -304,14 +326,28 @@ const hasData = (obj?: Record<string, any>) => {
  */
 const renderRequirementData = (key: string, data: any) => {
   if (!data) return h('span', '-');
-
+  console.log(data);
   switch (key) {
     case 'JOB':
       // 职业需求: { jobs: [0, 100] }
       return h(
           Space,
           { wrap: true },
-          () => data.jobs?.map((jobId: number) => h(Tag, { color: 'arcoblue' }, () => `职业 ID: ${jobId}`))
+          () => data.jobs?.map((jobId: number) => h(Tag, { color: 'green' }, () => `职业 : ${jobId}`))
+      );
+
+    case 'MIN_LEVEL':
+      return h(
+          Space,
+          { wrap: true },
+          `最低等级：${data.minLevel}`
+      );
+
+    case 'QUEST':
+      return h(
+          Space,
+          { wrap: true },
+          () => Object.entries(data.quests || {}).map(([questId, questState]) =>h(Tag, { color: 'red' }, () => `前置任务${questId}，状态： ${questState}`))
       );
 
     case 'MOB':
@@ -322,10 +358,24 @@ const renderRequirementData = (key: string, data: any) => {
             Space,
             { direction: 'vertical', fill: true },
             () => Object.entries(data.mobs || {}).map(([mobId, count]) =>
-                h(Tag, { color: 'red' }, () => `怪物 ID [${mobId}] : 需击杀 ${count} 只`)
+              h(Tag, {}, () => [
+                h(Image, { src: getIconUrl('mob', Number(mobId)), width: 20, style: 'margin-right: 4px' }),
+                `怪物 ID [${mobId}] 需要击杀 ${count}只`,
+              ])
             )
         ),
       ]);
+
+    case 'INTERVAL':
+      // 提取毫秒数值（兼容 data 为 { value: 86400000 } 或直接传入数字/字符串）
+      const rawMs = typeof data === 'object' ? data?.value : data;
+      const formattedTime = formatInterval(rawMs);
+
+      return h(
+        Space,
+        { wrap: true },
+        () => `重置时间：${formattedTime}`
+      );
 
     case 'ITEM':
       // 物品需求: { items: { "2000000": 5 } }
@@ -341,9 +391,24 @@ const renderRequirementData = (key: string, data: any) => {
       );
 
     case 'NPC':
+      // 支持数据格式: { npcId: 1012000, npcName: "长老" } 
+      // 或者兼容仅传入简单数字的情况
+      const npcId = typeof data === 'object' ? data.npcId : data;
+      const npcName = data?.npcName;
+      const npcMap = data?.npcMap;
+
+      return h(Tag, {}, () => [
+        npcId ? h(Image, { 
+          src: getIconUrl('npc', Number(npcId)), 
+          width: 20, 
+          style: 'margin-right: 4px; vertical-align: middle;' 
+        }) : null,
+        `NPC: ${npcName ? `${npcName} ` : ''}[${npcId ?? '-'}] 出没地区：[${npcMap ?? '-'}]`
+      ]);
+      
     case 'INFO_NUMBER':
       // 简单的数值对象需求: { value: 1012000 }
-      return h('span', `目标 / 参数值: ${data.value ?? data}`);
+      return h('span', `目标 / 参数值: ${data.npcId ?? data}`);
 
     default:
       // 未定义的通用 JSON 展示
@@ -371,9 +436,10 @@ const renderActionData = (key: string, data: any) => {
             width: 60,
             render: ({ record }: any) => h(Image, { src: getIconUrl('item', record.id), width: 24 }),
           },
-          { title: '物品ID', dataIndex: 'id', width: 90 },
+          { title: '物品ID', dataIndex: 'id', width: 80 },
+          { title: '名字', dataIndex: 'name', width: 100 },
           { title: '数量', dataIndex: 'count', width: 70 },
-          { title: '概率(%)', dataIndex: 'prop', width: 80, render: ({ record }: any) => record.prop ?? 100 },
+          { title: '概率(%)', dataIndex: 'propPercent', width: 80, render: ({ record }: any) => record.propPercent ?? "" },
           { title: '职业限定', dataIndex: 'job', width: 90 },
           { title: '性别', dataIndex: 'gender', width: 70 },
         ],
@@ -383,7 +449,14 @@ const renderActionData = (key: string, data: any) => {
       return h(Tag, { color: 'gold' }, () => `经验值: +${data.exp ?? data.value ?? data}`);
 
     case 'MESO':
-      return h(Tag, { color: 'gold' }, () => `金币: +${data.meso ?? data.value ?? data}`);
+      return h(Tag, { color: 'gold' }, () => `金币: ${data.mesos ?? data.value ?? data}`);
+
+    case 'FAME':
+      return h(Tag, { color: 'gold' }, () => `人气: +${data.fame ?? data.value ?? data}`);
+    
+    case 'NEXTQUEST':
+      return h(Tag, { color: 'gold' }, () => `后置任务: ${data.nextQuest ?? data.value ?? data}`);
+
 
     default:
       // 未定义的通用 JSON 展示

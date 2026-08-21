@@ -22,15 +22,20 @@
 package org.gms.server.quest.actions.ext;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
+import org.gms.server.ItemInformationProvider;
+import org.gms.server.StringInfoProvider;
 import org.gms.server.quest.QuestActionType;
 import org.gms.server.quest.actions.AbstractQuestActionData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tyler (Twdtwd)
@@ -44,6 +49,8 @@ public class ItemActionData extends AbstractQuestActionData {
 
     public ItemActionData(Data data) {
         super(QuestActionType.ITEM);
+        Map<Integer, Integer> propMap = new HashMap<>();
+        int propAll = 0;
         for (Data iEntry : data.getChildren()) {
             int id = DataTool.getInt(iEntry.getChildByPath("id"));
             int count = DataTool.getInt(iEntry.getChildByPath("count"), 1);
@@ -53,6 +60,7 @@ public class ItemActionData extends AbstractQuestActionData {
             Data propData = iEntry.getChildByPath("prop");  // 获取奖励概率，一共100，获取奖励不同概率
             if (propData != null) {
                 prop = DataTool.getInt(propData);
+                propAll += prop;
             }
 
             int gender = 2;
@@ -64,9 +72,28 @@ public class ItemActionData extends AbstractQuestActionData {
             if (iEntry.getChildByPath("job") != null) {
                 job = DataTool.getInt(iEntry.getChildByPath("job"));
             }
+            String name = ItemInformationProvider.getInstance().getName(id);
 
-            items.add(new ItemData(Integer.parseInt(iEntry.getName()), id, count, prop, job, gender, period));
+            items.add(new ItemData(Integer.parseInt(iEntry.getName()), id, name, count, prop, job, gender, period));
         }
+
+        // 计算百分比
+        if (propAll > 0) {
+            for (ItemData item : items) {
+                if (item.prop != null && item.prop != 0) {
+                    // 1. 转为 double 进行浮点运算
+                    double percentage = ((double) item.prop / propAll) * 100;
+
+                    // 2. 格式化输出为字符串（例如保留2位小数：12.34%，或保留整数：12%）
+                    String percentStr = String.format("%.2f%%", percentage); // 保留两位小数
+                    // String percentStr = String.format("%.0f%%", percentage); // 取整，无小数
+
+                    // 3. 将格式化后的 percentStr 赋值或存入 item 对象中
+                     item.setPropPercent(percentStr);
+                }
+            }
+        }
+
 
         items.sort((o1, o2) -> o1.map - o2.map);
     }
@@ -75,10 +102,17 @@ public class ItemActionData extends AbstractQuestActionData {
     public static class ItemData {
         public final int map, id, count, job, gender, period;
         public final Integer prop;
+        public final String name;
 
-        public ItemData(int map, int id, int count, Integer prop, int job, int gender, int period) {
+        @Setter
+        @Getter
+        // 动态计算概率百分比
+        public String propPercent;
+
+        public ItemData(int map, int id, String name, int count, Integer prop, int job, int gender, int period) {
             this.map = map;
             this.id = id;
+            this.name = name;
             this.count = count;
             this.prop = prop;
             this.job = job;

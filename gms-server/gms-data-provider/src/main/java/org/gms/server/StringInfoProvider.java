@@ -47,7 +47,10 @@ public class StringInfoProvider {
     private final static DataProvider questDataWZ = DataProviderFactory.getDataProvider(WzFiles.QUEST);
     private static final Data questInfoData = questDataWZ.getData("QuestInfo.img");
 
-    private static final Map<Integer, String> npcNames = new HashMap<>();
+    private static Map<Integer, String> npcNames = new HashMap<>();
+    private static Map<Integer, String> mobNames = new HashMap<>();
+    private static Map<Integer, String> mapNames = new HashMap<>();
+
     private static final Map<Integer, String> questNames = new HashMap<>();
 
 
@@ -69,9 +72,9 @@ public class StringInfoProvider {
         NPC_EXIST_MAP.clear();
         MOB_EXIST_MAP.clear();
 
-        Map<Integer, String> mobNames = buildParamName(mobStringData);
-        Map<Integer, String> npcNames = buildParamName(npcStringData);
-        Map<Integer, String> mapNames = buildMapName(mapStringData);
+        mobNames = buildParamName(mobStringData);
+        npcNames = buildParamName(npcStringData);
+        mapNames = buildMapName(mapStringData);
 
         DataProvider mapSource = DataProviderFactory.getDataProvider(WzFiles.MAP);
         DataDirectoryEntry root = mapSource.getRoot();
@@ -165,6 +168,13 @@ public class StringInfoProvider {
         return name;
     }
 
+    public static String getMobName(int mid) {
+        return mobNames.get(mid);
+    }
+    public static String getMapName(int mapId) {
+        return mobNames.get(mapId);
+    }
+
 
     private static HashMap<Integer, String> buildMapName(Data data) {
         HashMap<Integer, String> paramMap = new HashMap<>();
@@ -190,7 +200,7 @@ public class StringInfoProvider {
      * 生成ID和参数名对照
      *
      */
-    private static HashMap<Integer, String> buildParamName(Data data) {
+    private static Map<Integer, String> buildParamName(Data data) {
         HashMap<Integer, String> paramMap = new HashMap<>();
         for (Data searchData : data.getChildren()) {
             String imgIdName = searchData.getName();

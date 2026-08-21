@@ -36,6 +36,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 public class IntervalRequirementData extends AbstractQuestRequirementData {
     private long interval = -1;
     private final int questID;
+    private final String unit = "毫秒";
 
     public IntervalRequirementData(int questId, Data data) {
         super(QuestRequirementType.INTERVAL);

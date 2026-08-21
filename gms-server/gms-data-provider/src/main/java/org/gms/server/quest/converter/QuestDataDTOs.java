@@ -20,7 +20,7 @@ public class QuestDataDTOs {
     @Data
     @Builder
     public static class JobReqVO {
-        private List<Integer> jobs;
+        private List<String> jobs;
     }
 
     @Data
@@ -33,6 +33,14 @@ public class QuestDataDTOs {
     @Builder
     public static class ItemReqVO {
         private Map<Integer, Integer> items; // itemId -> count
+    }
+
+    @Data
+    @Builder
+    public static class NPCReqVO {
+        private String npcMap;
+        private String npcName;
+        private int npcId;
     }
 
     @Data
@@ -55,11 +63,13 @@ public class QuestDataDTOs {
         public static class ItemDataVO {
             private int map;
             private int id;
+            private String name;
             private int count;
             private Integer prop;
             private int job;
             private int gender;
             private int period;
+            private String propPercent;
         }
     }
 

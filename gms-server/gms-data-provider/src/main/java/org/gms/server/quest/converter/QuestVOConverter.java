@@ -7,6 +7,8 @@ package org.gms.server.quest.converter;
  * @version 1.0
  * @since 2026/8/21 11:38
  */
+
+import org.gms.client.Job;
 import org.gms.server.quest.QuestActionType;
 import org.gms.server.quest.QuestRequirementType;
 import org.gms.server.quest.QuestV2;
@@ -15,7 +17,9 @@ import org.gms.server.quest.actions.ext.ItemActionData;
 import org.gms.server.quest.requirements.AbstractQuestRequirementData;
 import org.gms.server.quest.requirements.imp.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -102,7 +106,7 @@ public class QuestVOConverter {
                 return QuestDataDTOs.SimpleValueReqVO.builder()
                         .value(completedReq.getReqQuest())
                         .build();
-            case END_DATE:{
+            case END_DATE: {
                 EndDateRequirementData data = (EndDateRequirementData) req;
                 return QuestDataDTOs.SimpleValueReqVO.builder()
                         .value(data.getTimeStr())
@@ -121,9 +125,14 @@ public class QuestVOConverter {
                         .build();
             }
             case JOB:
-            JobRequirementData jobReq = (JobRequirementData) req;
+                JobRequirementData jobReq = (JobRequirementData) req;
+                List<Integer> jobs = jobReq.getJobs();
+                List<String> jobNames = new ArrayList<>();
+                for (Integer job : jobs) {
+                    jobNames.add(Job.getById(job).getName());
+                }
                 return QuestDataDTOs.JobReqVO.builder()
-                        .jobs(jobReq.getJobs())
+                        .jobs(jobNames)
                         .build();
 
             case MOB:
@@ -146,8 +155,10 @@ public class QuestVOConverter {
 
             case NPC:
                 NpcRequirementData npcReq = (NpcRequirementData) req;
-                return QuestDataDTOs.SimpleValueReqVO.builder()
-                        .value(npcReq.getReqNPC())
+                return QuestDataDTOs.NPCReqVO.builder()
+                        .npcId(npcReq.getReqNPC())
+                        .npcName(npcReq.getNpcName())
+                        .npcMap(npcReq.getNpcMap())
                         .build();
 
             // 如果还有其他类型，继续添加 case
@@ -170,11 +181,13 @@ public class QuestVOConverter {
                                 .map(i -> QuestDataDTOs.ItemActionVO.ItemDataVO.builder()
                                         .map(i.map)
                                         .id(i.id)
+                                        .name(i.name)
                                         .count(i.count)
                                         .prop(i.prop)
                                         .job(i.job)
                                         .gender(i.gender)
                                         .period(i.period)
+                                        .propPercent(i.propPercent)
                                         .build())
                                 .collect(Collectors.toList()))
                         .build();
