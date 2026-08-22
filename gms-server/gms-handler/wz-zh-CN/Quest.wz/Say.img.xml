@@ -4,64 +4,64 @@
     <imgdir name="1">
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="还没有去见#r#p2100# 姐姐#k吗？应该就在东部小山那里啊... 离这里很近，应该很容易找到的。"/>
+          <string name="0" value="还没找到#r#p2100#姐姐#k嘛？她应该在前面的小山上。。。从这里过去很近，你很容易就能找到她。"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="是位新的旅行者吧？还很陌生吧？我会告诉你一些，好好听着，跟我一起做。首先，如果想跟我们说话的话请用鼠标#b双击#k我们。按下#b左、右方向键#k可以移动，按下#bAlt键#k就可以跳跃。"/>
-      <string name="1" value="和方向键一同按下的话可以对角线跳跃。回头练习一下吧。想要到达目的地，有时候还需要用到绳索或梯子。按下#r方向键↑#k的话可以从绳索或梯子上去。这些都很重要，请好好记住。"/>
-      <string name="2" value="啊~ 太阳晒的好厉害哦。我这白玉般的皮肤都要坏掉了... 有件事情想要拜托您，可以吗...? 请去找离这里不远处正在晒衣服的#r#p2100# 姐姐#k借来#b镜子#k吧。"/>
+      <string name="0" value="你是新来的吧？看来还不熟悉。让我来告诉你一些操作技巧，请注意听。想要跟NPC对话，用鼠标#b双击#kNPC就行了，就像双击我一样。按#b左右方向键#k可以移动角色。按#bAlt键#k可以跳跃。"/>
+      <string name="1" value="同时按左右方向键和Alt键，就可以向对角方向跳跃。这些是今后冒险的基本技巧，需要多练习。为到更高的地方还需要使用用梯子或绳子。按#b向上键#k可以爬梯或吊绳。这是非常重要的，你别忘记呀~"/>
+      <string name="2" value="啊~ 太阳好大！我美丽的肌肤都被晒伤了。。。我想请你帮个忙，可以么？找#r#p2100#姐姐#k问她借镜子，然后给我。"/>
       <imgdir name="yes">
-        <string name="0" value="谢谢。#r#p2100# 姐姐#k应该在东部小山正努力晒衣服呢... #i4031003# 是这样的镜子。\n\n...哦对了！如果想知道刚刚接到的#b任务#k内容，可按下键盘的#b快捷键 Q#k进行确认。"/>
+        <string name="0" value="太谢谢你了。#r#p2100#姐姐#k肯定在前面的小山上晾晒衣服。。。是像#i4031003#的镜子。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="不想接受我的请求吗？唔~ 如果改变心意的再来找我吧。"/>
+        <string name="0" value="难道你不愿意帮我么？唉~ 等你改变主意，再来找我吧。"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="1001">
     <imgdir name="0">
-      <string name="0" value="这什么时候才能晒完啊…唉呀…啊？你是说我的镜子？ 是不是#p2101#托你来的...？"/>
-      <string name="1" value="哎呀~ 都不会亲自来拿…真的是懒到骨子里去了。这是我的镜子。"/>
+      <string name="0" value="要晾晒的衣服这么多呀。。。 嗯。。。什么？我的镜子吗？肯定是#p2101#让你来找我的吧？"/>
+      <string name="1" value="哎呀~ 她可以自己来嘛。。。这个懒虫。给，我的镜子。按下#rI#k键，你可以确认背包里有什么道具，请你先确认背包里确实有镜子，去#p2101#吧。"/>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="啊！#p2100#你带姐姐的镜子来了！非常感谢。看看…皮肤有没有被晒黑吧…？ 哦呵~"/>
+      <string name="0" value="哟！你带来了#p2100#姐姐的镜子！真感谢。让我看看皮肤有没有被晒伤。。。？哼~"/>
       <imgdir name="yes">
-        <string name="0" value="地图上可以看到发出蓝色光芒的地点，那就是#b可以到达其它地方的传送点#k。在那地方前面站着按着键盘的#b方向键↑#k，你就能到别的地方。祝你一路顺风~"/>
+        <string name="0" value="你去右边可以看见有一个闪耀的地点，那就是#b可以区别的地方的门口#k。在门口前面站着按下#b方向键↑#k，你会去别的地方。那祝你一路顺风~"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="你把镜子弄丢了吗？还是还没收下镜子？你按下#bI#k键可以确认道具栏里有什么东西，请你确认看看，如果没有，再去找姐姐吧，让她帮忙找一下。"/>
+          <string name="0" value="你把镜子弄丢了吗？还是还没收下了镜子？你按下#bI#k键可以确认背包里有什么东西，请你确认背包后，如果没有，再去找姐姐吧，让她帮忙找一下。"/>
         </imgdir>
       </imgdir>
       <imgdir name="lost">
-        <string name="0" value="这什么时候才能晒完啊…唉呀…啊？你是说我的镜子？ 是不是#p2101#托你来的...？"/>
-        <string name="1" value="哎呀~ 都不会亲自来拿…真的是懒到骨子里去了。这是我的镜子。"/>
+        <string name="0" value="要晾晒的衣服这么多呀。。。 嗯。。。什么？我的镜子吗？肯定是#p2101#让你来找我的吧？"/>
+        <string name="1" value="哎呀~ 她可以自己来嘛。。。这个懒虫。给，我的镜子。"/>
         <imgdir name="yes"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="1003">
     <imgdir name="0">
-      <string name="0" value="妈呀…这不是旅行者吗！来的正是时候啊。哦…有件事想请你帮忙，可以帮我吗？在这里稍微往东边走，那里就有#b水世界景观的水族箱#k。"/>
-      <string name="1" value="珊就在那里，请帮我问问我的弟弟珊，今天晚上想吃什么？"/>
+      <string name="0" value="哎哟。。。你准备去冒险吧！太好了。我可不可以麻烦你一件事呢？从这里往前走一点，有一座#b黄色的屋顶#k的房子。"/>
+      <string name="1" value="那个房子就是我家。现在我的弟弟在看家，可不可以问下我弟弟#r#p2001##k他今天晚饭想吃什么? 走到门前按#b↑键#k，就可以进入房子。"/>
     </imgdir>
     <imgdir name="1">
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="还没有见到#p2001#吗?就在右边的水世界景观的水族箱前。"/>
+          <string name="0" value="你还没见到#p2001#吗？走到我家门前#b↑键#k，就可以进入房子。。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="1004">
     <imgdir name="0">
-      <string name="0" value="啊~饿死了。姐姐去哪里了~本来想跟姐姐说晚上想吃蘑菇汤呢…好饿喔~"/>
-      <string name="1" value="姐姐让你给我问想吃什么吗? 请一定跟姐姐说，我实在太想吃#b蘑菇汤#k，千万不要忘了！"/>
+      <string name="0" value="啊~ 饿死了。姐姐去哪里了？今晚我想吃蘑菇汤。饿死了~~"/>
+      <string name="1" value="请你转告我姐姐，我很想吃#b蘑菇汤#k！"/>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="你是说想喝蘑菇汤。今天晚上就做这道汤了~ 谢谢你帮了我的忙。"/>
+      <string name="0" value="他说他想吃蘑菇汤是吗？那么，今天晚饭应该准备蘑菇汤~ 谢谢你！"/>
     </imgdir>
   </imgdir>
   <imgdir name="1005">
@@ -116,12 +116,12 @@
       <string name="0" value="没想到你能够收集全，有两下子！好！我兑现承诺，现在给你道具。反正我也没用。"/>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="还没收集全 #e1个#n#b#t4000001##k和 #e5#n个#k#b#t4000000##k吧？哈。。。不用太着急，慢慢来吧。"/>
+          <string name="0" value="还没收集全 #e10个#n#b#t4000001##k和 #e30#n个#k#b#t4000000##k吧？哈。。。不用太着急，慢慢来吧。"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="如果你拿#e1#n个#k#b#t4000001##k 和#e5#n个#k#b#t4000000##k 来的话，我就给你一样好东西！那些东西在打死怪物时你就可以获得！不过，看上去你太虚弱，好像不能完成这么危险的任务。"/>
+      <string name="0" value="如果你拿#e10#n个#k#b#t4000001##k 和#e30#n个#k#b#t4000000##k 来的话，我就给你一样好东西！那些东西在打死怪物时你就可以获得！不过，看上去你太虚弱，好像不能完成这么危险的任务。"/>
     </imgdir>
   </imgdir>
   <imgdir name="1008">
@@ -129,7 +129,7 @@
       <string name="0" value="啊。。。大家太容易丢弃那些还能用的东西嘛。。。我看村里到处都有很多还能再用的物品。你可以收集那些物品后给我吗？\n我给你的报酬很丰厚哦。"/>
       <imgdir name="yes">
         <string name="0" value="对了！你在彩虹岛各处收集人家扔掉的东西给我。我会给你适当的报酬。哈哈哈！！"/>
-        <string name="1" value="嗯。。。你来这里的时候看见过各处被扔掉的木制箱吗？看见了？就是破坏那些箱子后收集箱子里的垃圾的事情。破坏木制箱子会有#t4031162#, #t4031161#等东西。你收集各5个来吧。 \n\n#i4031161# #t4031161# #b5?#k\n#i4031162# #t4031162# #b5?#k"/>
+        <string name="1" value="嗯。。。你来这里的时候看见过各处被扔掉的木制箱吗？看见了？就是破坏那些箱子后收集箱子里的垃圾的事情。破坏木制箱子会有#t4031162#, #t4031161#等东西。你收集各10个来吧。\n\n#i4031161# #b10个#k#t4031161#\n#i4031162# #b10个#k#t4031162#"/>
       </imgdir>
       <imgdir name="no">
         <string name="0" value="哎~ 你试试做吧。不难的。你打我旁边的箱子吧。很容易啊。"/>
@@ -179,7 +179,7 @@
       <string name="0" value="好~ 那你准备好回答下个问题了，就来跟我说。"/>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="只要双击装备类道具，就可以将道具装备在身上吗？\n\n#L0##b是#l\n#L1#不是#k#l"/>
+      <string name="0" value="只要双击装备类道具，就可以将道具装备在身上吗？\n\n#L0##b是#l\n#L1#不是#k#l "/>
       <string name="1" value="对。只要双击就可以装备。如果不能使用，请你确认一下道具有没有限制。"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
@@ -252,7 +252,7 @@
       <imgdir name="stop">
         <imgdir name="0">
           <string name="0" value="比2点多~ 你升级的时候按下S键确认下。"/>
-          <string name="1" value="比10点少~ 你升级的时候按下S键确认下。"/>
+          <string name="1" value="比10点少~ 你升级的时候按下S键确认下。 "/>
           <int name="answer" value="3"/>
         </imgdir>
       </imgdir>
@@ -317,22 +317,22 @@
   </imgdir>
   <imgdir name="1018">
     <imgdir name="0">
-      <string name="0" value="喔~你是新的冒险家吗？如何？你是不是想知道这世界的打怪方式啊？那里有些小石球，原本是不会出现在这个区域的高强怪物，但为了方便新手冒险家们进行训练，因此由大魔法师汉斯封印了这家伙的能力。若你还不熟悉打怪的方法，你要不要试着去击败那家伙？"/>
+      <string name="0" value="哦~ 你是新来的冒险者吗？你想不想知道打怪的办法？这个小石球怪物原来在彩虹岛是看不见的。但为了新手的锻炼，大魔法师汉斯封印了它的力量。你要做打退它的任务吗？打退一个后拿着它暴的东西给#b#p2002##k就可以。很容易啊。"/>
       <imgdir name="yes">
-        <string name="0" value="你看~画面左侧的小地图(#bM#k)，东北方是不是有一个绿色的亮点？那里就是#b#p2002##k所在的地点。在前去见#p2002#的途中会遇到#r一只小石球#k，等你打倒它并搜集#b#t4000142##k#b1个#k后，再去和#b#p2002##k聊聊吧！"/>
+        <string name="0" value="哦~ 你是新来的冒险者吗？你想不想知道打怪的办法？这个小石球怪物原来在彩虹岛是看不见的。但为了新手的锻炼，大魔法师汉斯封印了它的力量。你要做打退它的任务吗？打退一个后拿着它暴的东西给#b#p2002##k就可以。很容易啊。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="你就是#p2004#说的正在学习打怪方法的冒险家啊？听说你有相当潜力可以成为非常伟大的冒险家耶！让我来看看打怪训练的成效吧！"/>
+      <string name="0" value="你是#p2004#培训打怪方法的那冒险者吗？看来以后能成为很了不起的冒险者。我看你锻炼的怎么样。"/>
       <imgdir name="yes">
-        <string name="0" value="等你日后更加茁壮强大，到时候就需要对付能力未被封印的小石球吧…真是让人期待啊！还有…以后每当等级提升时，记得使用#b快捷键S#k来确认能力值。\n\n若想要前往下一张地图，就到右边的传点上按下方向键#b↑#k，或者你再和我进行对话，就帮你传送到下一张地图吧！嗯…再向我问话进行移动，应该也是个不错的经验。"/>
+        <string name="0" value="你。。。以后更强大起来的话，会有机会跟原来的小石球打架。。。还有一件事情要告诉你。你以后升级的时候必须按#rS键#k确认能力值。\n\n你要移动到下个地方，在右边的门口前按下#b↑键#k或跟我说话吧。 我送你别的地方。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="嗯嗯~你是#p2004#派来的人吗？若真是如此，就应该知道要先攻击(Ctrl)并打倒下方的小石球后，再来找我问话吧？"/>
+          <string name="0" value="哼。。。下面肯定还有你没找到的小石球？你消灭(Ctrl)它后回来吧。"/>
         </imgdir>
         <imgdir name="item">
-          <string name="0" value="嗯？你身上好像没有#b#t4000142##k耶！要不要再确认一下？只要打倒这里的小石球，就会掉出#t4000142#...然后按#bZ键#k，就可以捡取道具，那就请你加快脚步吧！"/>
+          <string name="0" value="嗯？你好像没有#b#t4000142##k？请你再确认下。打退小石球，它肯定暴#b#t4000142##k了吧。按下#rZ键#k, 可以拣取东西。你快点去拿来那个东西。"/>
         </imgdir>
       </imgdir>
     </imgdir>
@@ -362,9 +362,9 @@
   </imgdir>
   <imgdir name="1020">
     <imgdir name="0">
-      <string name="0" value="用收集来的废气物品制作的新东西…还剩下一些材料吗？那我就用这些剩下的材料为你做个有用的东西吧？"/>
+      <string name="0" value="用收集來的废弃物品制作的新东西…还剩下一些材料吗？那我就用这些剩下的材料为你做个有用的东西吧？"/>
       <imgdir name="yes">
-        <string name="0" value="啊，之前收藏的草绿色布料放在哪里啊… 嗯，还有把这个木板…锯掉…栓上螺丝… 唔？等一下再来找我吧，到时候就完成了！"/>
+        <string name="0" value="啊，之前收藏的草绿色布料放在哪里啊… 嗯，还有把这个木板…锯掉…栓上螺丝… 唔？等一下再來找我吧，到時候就完成了！"/>
       </imgdir>
       <imgdir name="no">
         <string name="0" value="怎么了？难道你不相信我的手艺吗？"/>
@@ -374,7 +374,7 @@
       <string name="0" value="知道我完成了作品，就跑来找我了？你的消息还满灵通的嘛~"/>
       <imgdir name="yes">
         <string name="0" value="唔，看起来很舒适吧？这个椅子嘛~当失去很多HP和MP的时候，就要马上取出来坐！"/>
-        <string name="1" value="马上就能放松紧张的情绪，恢复速度也会大幅度提高。呃……根据这个特性，我给它取了个名字，叫做~休闲~椅子！！名字很不错吧？别忘了这可是我皮奥大师的杰作喔！"/>
+        <string name="1" value="马上就能放松紧张的情绪，恢复速度也会大幅度提高。呃……根据这个特性，我给它区了个名字，叫做~休闲~椅子！！名字很不错吧？别忘了这可是我皮奥大师的杰作喔！"/>
       </imgdir>
     </imgdir>
   </imgdir>
@@ -612,40 +612,40 @@
   </imgdir>
   <imgdir name="8007">
     <imgdir name="0">
-      <string name="0" value="This kitty is covered with scars, and it must be hungry. Should I feed this kitty some pet food?"/>
+      <string name="0" value="喂一些饲料给受伤的猫好吗？感觉它遍体鳞伤，而且好像还饿着肚子…。"/>
       <imgdir name="yes">
-        <string name="0" value="I heard there&apos;s some food for pets only. Can you give me some, too?"/>
+        <string name="0" value="抱歉提出过分的请求。那样的话…原来你是真的很忙…知道啦~！ 不过，如果下次有空的话能不能帮我忙啊？"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="The scarred kitty is looking up here with apprehension, but ... it looks way too exhausted to even move."/>
+        <string name="0" value="受伤的猫恐惧地看着这边。但是，好像连动的力气都没有…。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="I&apos;m so hungry that I feel like I&apos;m too weak to even move anymore. I need something to... eat... right... now..."/>
+      <string name="0" value="因为肚子饿，现在连动都动不了。快给我一些吃的…。"/>
       <imgdir name="yes">
-        <string name="0" value="Wow! Thank you so much! There&apos;s actually a person with warmth and compassion around here... hmmm? Are you surprised a cat like me speaks in human language? Meow! I know, I know, I must be the &quot;MONSTER CAT&quot;! Do you think I like being different? Why does no one just leave me alone!! Meow!! But then again, you helped me. I owe you one, meow! If you ever run into a tight situation, I&apos;ll be more than happy to help you out!"/>
+        <string name="0" value="哇啊~！ 谢谢…。也有亲切的人啊…。嗯？ 因为猫咪说人话而惊讶吗~？ 对~我，是怪物猫咪~！ 谁会喜欢这样~？ 为什么都认为我是怪物而伤害我啊~！ 不过，你却帮助了我~。你是我的恩人~。如果有什么困难，无论是什么只要我能做到的都会帮你~。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="The scarred kitty is looking up here with apprehension, but ... it looks way too exhausted to even move."/>
+          <string name="0" value="受伤的猫恐惧地看着这边。但是，好像连动的力气都没有…。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="8008">
     <imgdir name="0">
-      <string name="0" value="My father works at a city, and comes home very rarely as a result. It&apos;s good that he brings something nice everytime he comes home, but... one time, he gave me this beautiful Orange Marble, and i LOST IT to some cat! What am I supposed to do? I consider it an utmost treasure, and... arrgh! Please help me! Help me find that marble back!"/>
+      <string name="0" value=" 我父亲去城市赚钱，偶尔回来一次。每次回来，都会买漂亮的礼物给我…。但是父亲给的，很漂亮的雨珠子被猫咪抢走了。怎么办啊~~！ 是我的宝物啊…。拜托了！ 帮我找回我的宝物吧！"/>
       <imgdir name="yes">
-        <string name="0" value="Thanks~! I&apos;ll be counting on you!"/>
+        <string name="0" value="谢谢！ 那就拜托了~！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="I&apos;m sorry I asked for something difficult from you. I understand you must be busy... but hey, if you ever find some time, can you please help me out? Thanks~"/>
+        <string name="0" value="抱歉提出过分的请求。那样的话…原来你是真的很忙…知道啦~！ 不过，如果下次有空的话能不能帮我忙啊？"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Hey, you look pretty strong... please help me find my lost jewelry~!"/>
+      <string name="0" value=" 看起来他应该就是抢走美代子宝物的猫咪吧。"/>
       <imgdir name="yes">
-        <string name="0" value="Thank you soooooo much! Did you get scratched up by those menacing cats? What? The cat spoke to you? Whatever... I know I may look young, but I&apos;m a little smarter than that! I don&apos;t believe you!"/>
+        <string name="0" value="那就跟他对话看看吧，不知道他听不听的懂人类的话，要是听不懂就得去请教 受伤的猫了。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="npc">
@@ -656,17 +656,17 @@
   </imgdir>
   <imgdir name="8009">
     <imgdir name="0">
-      <string name="0" value="Hoo~~~~! Meow~! Meow~!"/>
+      <string name="0" value="呼~~~！ 喵~！ 呜~！"/>
       <imgdir name="yes">
-        <string name="0" value="Hoo~!"/>
+        <string name="0" value="呼~！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Meow~!"/>
+        <string name="0" value="呜~！"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
       <imgdir name="yes">
-        <string name="0" value="Did something happen? Meow~ That&apos;s the Boss Kitty you&apos;re talking about, meow~ The Boss probably tried to say something to you, meow~ Maybe I should teach you some kitty language~ But remember, even kitty language has dialects, and you may only communicate with the kitties in this town, okay? Meow!"/>
+        <string name="0" value="有什么困难的事吗~？……喵~呜~~，那是这个村里的头目猫咪~！ 也许头目要跟你说什么吧~。那么，我教你一些猫语~。不过，猫语也有方言喵~呜。能听懂的，也只有这个村里的猫咪，要注意啊！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="npc">
@@ -677,38 +677,38 @@
   </imgdir>
   <imgdir name="8010">
     <imgdir name="0">
-      <string name="0" value="Hoo~~~~! Meow meow~! Meow~!"/>
+      <string name="0" value="呼~~~！ 喵喵喵喵喵！ 呜~！"/>
       <imgdir name="yes">
-        <string name="0" value="Hmmm...? Hey... do you, by any chance, understand the words that are coming out of my mouth?"/>
+        <string name="0" value="嗯哼？ 难道你...听得懂我的话？"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="What does a human like you want from me? Get out of here unless you got something to say!"/>
+        <string name="0" value="人类找我有什么事啊？ 没有事就赶快回去吧！"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
       <imgdir name="yes">
-        <string name="0" value="I like pretty objects, the ones that sparkle, because they do not turn their backs on me like humans did. I admit, what I did was stealing, and if the owner wants it back, then I&apos;ll have to return it, but you know what? I&apos;ve been abused by humans for so long, as are all the kitties here. That&apos;s why, I don&apos;t feel like just giving away the item for free. We&apos;ll do it like this, then. I&apos;ll give you the questions, and you answer them all. If you answer them all right, then the Orange Marble is yours. Remember, these questions aren&apos;t for free~. You will need to get me #b300 fried chickens#k first to start the quiz. Each time you get it wrong, it will cost you #b300 fried chickens#k to start again."/>
+        <string name="0" value="我喜欢美丽的事物。闪闪发光的，不会像人类那样背叛。当然，我也知道我的行为跟偷窃没什么区别。如果要求归还的话也只好这样做，不过你知道到现在我被人类欺负过多少次吗？ 在这里的家伙也都一样。所以，不想就老老实实的归还。那么，这样吧。回答我出的所有问题。全部答对的话，立即归还这个雨珠子。但是！ 没有回答的机会。好吧，那么…每给一次回答机会，就要收集300只炸鸡给我。不愿意就算了…。"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="8012">
     <imgdir name="0">
-      <string name="0" value="Alright, are you ready to answer the questions?"/>
+      <string name="0" value=" 来，准备好答题了吗？"/>
       <imgdir name="no">
-        <string name="0" value="Well, if you aren&apos;t ready, then there&apos;s nothing I can do about it~ Come back when you are ready."/>
+        <string name="0" value="没准备好就没办法喽~以后再来吧。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Yay, you&apos;re back!"/>
+      <string name="0" value=" 来得好！"/>
       <imgdir name="yes">
-        <string name="0" value="Thank you soooooo much! Did you get scratched up by those menacing cats? What? The cat spoke to you? Whatever... I know I may look young, but I&apos;m a little smarter than that! I don&apos;t believe you!"/>
+        <string name="0" value="谢谢~~！！ 没被猫咪阻挠吧？ 什么？ 跟猫咪说话啦？ 胡说八道，就算我看起来年轻…你以为我会相信那种话吗？"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="npc">
           <string name="0" value="Are you ready to ace the quiz?"/>
         </imgdir>
         <imgdir name="item">
-          <string name="0" value="Sniff sniff... what should I do? Where&apos;s my Orange Marble?"/>
+          <string name="0" value="呜呜，呜呜…怎么办呢…。我的雨珠子怎么样了啊~？"/>
         </imgdir>
       </imgdir>
     </imgdir>
@@ -749,7 +749,7 @@
   <imgdir name="2002">
     <imgdir name="0">
       <string name="0" value="咳咳...啊...哎呀？是冒险者呀！不好意思我可以请你帮个忙吗？我得了一种奇怪的病，用了很多得药都无效听说是没法治了，我已经被它折磨了很长时间了。最近病情突然加重了，现在生活都不能自理了…"/>
-      <string name="1" value="不好意思，你可以帮我把#b#t4031006##k找来吗？ 我也不知道怎么才能得到那个药。可能#b#m104000000##k的#r#p1002001##k会知道吧。拜托你了。"/>
+      <string name="1" value="不好意思，你可以帮我把#b#t4031006##k找来吗？ 我也不知道怎么才能得到那个药。可能#b#m104000000##k的#r#p1002001##k会知道吧。拜托你了了。"/>
     </imgdir>
     <imgdir name="1">
       <imgdir name="stop">
@@ -870,7 +870,7 @@
   </imgdir>
   <imgdir name="2009">
     <imgdir name="1">
-      <string name="0" value="啊!! 那是不是#b#t4000009##k和 #b#t4000012##k呀？ 你收集了这么多...你真棒~！谢谢！！！我的心情比以前好多了。啊哈哈~！真令人欣慰！啊哈哈哈~"/>
+      <string name="0" value="啊!! 那是不是#b#t4000009##k和 #b#t4000012##k呀？ 你收集了这么多...你真棒~！谢谢！！！我的心情比以前好多了。啊哈哈~！真令人欣慰！啊哈哈哈~ "/>
       <string name="1" value="啊呀！怪不得我总觉得忘记了什么…虽然这不是什么贵重的东西！…作为你帮我的答礼，特意送给你的。真是太辛苦你了。"/>
       <imgdir name="yes">
         <string name="0" value="这张卷轴…好像能增加头盔的某种属性。操作很简单，同时打开背包的消耗窗和装备窗，然后把我给你的卷轴拖拉到现在你的头盔上就可以了。但是有可能失败，所以要小心点。"/>
@@ -1918,7 +1918,7 @@
     <imgdir name="0">
       <string name="0" value="我等你多时了~！什么？我又弄丢了钱？对了！而且这次我弄丢的钱挺多的。有人托我买100个#t2000004# 。那么多钱口袋里放不下，所以防在钱包里。但是在某个地方暂时休息的时候，地下突然出现一个洞，钱包掉下去了。你可以帮我找回来吗？"/>
       <imgdir name="yes">
-        <string name="0" value="真感谢你！其实托我买东西的人就在那边儿的#p1052002#，那是他做买卖赚来的钱。要是他知道我弄丢他的钱，他肯定不会放过我的。他很凶的！哎呀～拜托你，一定要帮我！除了你没人能帮我啦！"/>
+        <string name="0" value="真感谢你！其实托我买东西的人就在那边儿的#p1052002#，那是他做买卖赚来的钱。要是他知道我弄丢他的钱，他肯定不会不防过我的。他很凶的！哎呀～拜托你，一定要帮我！除了你没人能帮我啦！"/>
         <string name="1" value="钱包掉下去的地方肯定是#b地铁工地B3#k。我也想去找，但是那里的障碍物比上次更厉害，我没办法了。你也要当心啊！拜托了，尽快把钱包找回来吧！"/>
       </imgdir>
       <imgdir name="no">
@@ -2123,7 +2123,7 @@
         </imgdir>
       </imgdir>
       <imgdir name="lost">
-        <string name="0" value="I think you left this here ... you have to be more careful than that."/>
+        <string name="0" value="你竟然把它忘在这里了……怎么这么不小心……啧啧"/>
         <imgdir name="yes"/>
       </imgdir>
     </imgdir>
@@ -2321,7 +2321,7 @@
       <imgdir name="stop">
         <imgdir name="npc">
           <string name="0" value="啊。。。那宝物珠是。。。你还没见过由塔吗？麻烦你在他的生日之前给他。你是不是不知道去那里的路？"/>
-          <string name="1" value="在射手村东部树林你可以发现到由塔的猪猪农场的入口。"/>
+          <string name="1" value="在射手村东部树林你可以发现到由塔的猪猪农场的入口。　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"/>
         </imgdir>
         <imgdir name="item">
           <string name="0" value="你是谁？这里是我的农场。我在饲养#o1210101#。它们比野生的#o1210101#更强。请问你有什么事？"/>
@@ -2334,7 +2334,7 @@
     </imgdir>
     <imgdir name="0">
       <string name="0" value="我有一个朋友叫#b#p1012107##k。我们从小一起成长的。几天后是#p1012107#的生日。所以我送他礼物，礼物是#b#t4031156##k。"/>
-      <string name="1" value="但是有了问题。最近好像农场的工作很忙，#p1012107#很长时间没来了村落，我不能送他礼物。我也想我自己去。。。但我很可怕尤塔农场的#o1210101#。如果你有空能不能替我送#p1012107#这个礼物？"/>
+      <string name="1" value="但是有了问题。最近好像农场的工作很忙，#p1012107#很长时间没来了村落，我不能送他礼物。我也想我自己去。。。但我很可怕由塔农场的#o1210101#。如果你有空能不能替我送#p1012107#这个礼物？"/>
       <imgdir name="yes">
         <string name="0" value="啊。真谢谢！这里是礼物。我在里给#p1012107#写了几个字。由塔农场位于射手村东部树林附近。那拜托你了。"/>
       </imgdir>
@@ -2349,7 +2349,7 @@
       <imgdir name="yes">
         <string name="0" value="啊。。。真好。我一看就知道你会帮我。\n你要找回纪录这个世界历史的#b冒险岛古书#k。怎么回事呢？就是这样。。。\n啊。故事会长一点，你坐这里吧。"/>
         <string name="1" value="原来这些古书是这个世界的重要人物收藏的。但最近发生了事故。幸亏其中一本没事，但另外两本被抢走或处于随时被抢的危险。你找#b三本[冒险岛古书]#k后给#r玩具城的#p2041022##k吧。"/>
-        <string name="2" value="#b#t4031157##k是纪录冒险岛诞生过程的。但这本书在去天空之城的时候消失了。可能在开往天空之城的船里弄丢了。去天空之城的时候受到了#k #o8150000#的攻击吧。你在船上好好找吧。"/>
+        <string name="2" value=" #b#t4031157##k是纪录冒险岛诞生过程的。但这本书在去天空之城的时候消失了。可能在开往天空之城的船里弄丢了。去天空之城的时候受到了#k #o8150000#的攻击吧。你在船上好好找吧。"/>
         <string name="3" value="#b#t4031158##k是纪录冒险岛的发展过程。那本书在魔法密林的大魔法师汉斯的家里。你去汉斯的家调查箱子就能找到那本书。"/>
         <string name="4" value="最后，#t4031159#是#r玩具城的怪物#o3230306#抢走了#k。消灭它们可能会找到那本书吧。 最后的冒险岛古书纪录了怪物出现的背景和有关打退它们的故事。你必须从怪物那找回这本书！你能不能找这些书给#p2041022#？\n\n#i4031157#   #i4031158#   #i4031159#"/>
       </imgdir>
@@ -2420,11 +2420,11 @@
         <string name="0" value="不错。#r战士#k这个职业重视#b力量(Str)#k，也需要一定程度的敏捷(Dex)。現在立刻去见#r勇士部落#k的#b#p1022000##k。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="不想成为战士吗？哦..不管是什么职业，若做好了准备再来找我吧。"/>
+        <string name="0" value="不想成为战士吗？哦..不管是什么职业，若做好了准备再來找我吧。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="来找我是想要成为战士吧...那你就来对了。"/>
+      <string name="0" value="来找我是想要成为战士吧...那你就來对了。"/>
       <imgdir name="yes">
         <string name="0" value="如果你的#b等级#k在#r10#k以上的话，就能让你转职成#b战士#k。做好准备之后随时都可以来找我.."/>
       </imgdir>
@@ -3129,7 +3129,7 @@
           <string name="0" value="消灭怪物之后请向#r记忆者#k报告！"/>
         </imgdir>
       </imgdir>
-      <string name="1" value="Oh hey there! You did manage to eliminate #b99 #o1110100#s#k. I can see 99 #o1110100#s hovering behind you. Incredible!"/>
+      <string name="1" value="啊！你！你除掉了#b99只#o1110100##k。有99只#o1110100#萦绕在你背后。真了不起！"/>
     </imgdir>
     <imgdir name="0">
       <string name="0" value="请消灭99只！ #r - #p1061011# -"/>
@@ -4104,7 +4104,7 @@
       <string name="2" value="听你说话吗？哼… 我忙极了。"/>
       <string name="3" value="#b赫拉#k？哼… 我没时间回答那么没有意义的问题。"/>
       <string name="4" value="我觉得你真的很麻烦。#b赫拉#k嘛… 好像听说过，但我现在很忙啊！"/>
-      <string name="5" value="嗯… 你倒是挺坚忍不拔。好！我试试看你有多少耐心。你现在找叫#b赫拉#k的女人吧？我知道，但不能白白告诉你。几天前我为了收集魔法材料去了雪原，但弄丢了贵重的#b黑水晶#k。你找回水晶的话，我就告诉你她的消息。去吧。"/>
+      <string name="5" value="嗯… 你到是挺坚忍不拔的。好！我试试看你有多少耐心。你现在找叫#b赫拉#k的女人吧？我知道，但不能白白告诉你。几天前我为了收集魔法材料去了雪原，但弄丢了贵重的#b黑水晶#k。你找回水晶的话，我就告诉你她的消息。去吧。"/>
     </imgdir>
     <imgdir name="1">
       <imgdir name="stop">
@@ -4116,7 +4116,7 @@
   </imgdir>
   <imgdir name="3010">
     <imgdir name="0">
-      <string name="0" value="看见白雪覆盖的石头里有件闪闪发光的东西吗？你想去拿么？"/>
+      <string name="0" value="看间白雪覆盖石头里有件闪闪发光的东西吗？你想去拿么？"/>
       <imgdir name="yes">
         <string name="0" value="石头里的东西看上去像斯皮罗纳弄丢的#b#t4031050##k。"/>
       </imgdir>
@@ -4827,7 +4827,7 @@
     <imgdir name="1">
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="I don&apos;t think you have gathered up all the ingredients yet. I need all of them in order to make a hearty Nependeath Juice."/>
+          <string name="0" value="材料还没全部搜集到吗～要制作出美味的果汁，一样材料都是不能少的～"/>
         </imgdir>
       </imgdir>
     </imgdir>
@@ -5625,7 +5625,7 @@
       <string name="1" value="难道是我太过于敏感了吗？可是，自从台风过后就开始出现这样的异常现象，总是让人忧心忡忡。我想进行调查，您可以帮助我吗？"/>
       <imgdir name="yes">
         <string name="0" value="这么爽快就答应帮助我，非常感谢您。想拜托您帮我收集一些水之路动物的细胞样本。虽然目前还不是很确定动物们发生了什么事，但是可以从细胞样本的变化去了解。"/>
-        <string name="1" value="研究动物们的细胞样本，也许就能发现一些线索。请收集#r小海马、大海马、海胆#k的#b细胞样本#k#b各1个#k。\n\n#i4031259# #t4031259# 1个\n#i4031260# #t4031260# 1个\n#i4031261# #t4031261# 1个"/>
+        <string name="1" value="研究动物们的细胞样本，也许就能发现一些线索。请收集#r小海马、大海马、黑海参#k的#b细胞样本#k#b各1个#k。\n\n#i4031259# #t4031259# 1个\n#i4031260# #t4031260# 1个\n#i4031261# #t4031261# 1个"/>
       </imgdir>
       <imgdir name="no">
         <string name="0" value="有可能需要很长的时间，如果改变心意的话随时可以来找我，好吗？"/>
@@ -5782,7 +5782,7 @@
   </imgdir>
   <imgdir name="3086">
     <imgdir name="1">
-      <string name="0" value="你不要来烦我啦~如果还怕就早点离开天空之城算了！\r\n#L0# #b#p2032001# 等一下！真的没办法阻挡吗？"/>
+      <string name="0" value="你不要来烦我啦~如果还怕就早点离开天空之城算了！\r\n#L0# #b#p2032001# 等一下！真的没办法阻挡吗？ "/>
       <string name="1" value="你还真烦邪！如果你胆敢再来打扰我，小心我把你赶出去！"/>
       <imgdir name="yes">
         <string name="0" value="...(斯皮罗纳陷入冥想状态…)"/>
@@ -6284,7 +6284,7 @@
     <imgdir name="1">
       <string name="0" value="怎么可能…是真的消除了#b#o4130103##k吗？尽管不是一般人，还是很了不起呀。好，既然为我和玩具城全部居民消除了威胁，应该报答才是呀。这是对你以后的旅行肯定有帮助的物品，请不要拒绝，收下吧！"/>
       <imgdir name="yes">
-        <string name="0" value="谢谢你帮忙。好像终于找回了玩具城与玩具塔的和平。在这样困难的时候能够见到像你这样的人，是我们的荣幸啊。非常感谢这段期间的帮忙。请你经常过来坐吧~"/>
+        <string name="0" value=" 谢谢你帮忙。好像终于找回了玩具城与玩具塔的和平。在这样困难的时候能够见到像你这样的人，是我们的荣幸啊。非常感谢这段期间的帮忙。请你经常过来坐吧~"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
@@ -6896,11 +6896,11 @@
           <string name="0" value="你快点把我给你的#b#t4031094##k给#b#p2040029##k吧。他可能在时间塔的#b丢失的时间#k里有。那里有很危险的怪物。所以你要注意。那拜托你了。"/>
         </imgdir>
         <imgdir name="item">
-          <string name="0" value="Can I help you...? What? Olson sent you here? Then you must have brought #b#t4031094##k with you. But where&apos;s #t4031094#? If you lost it, then please go get it from Olson again."/>
+          <string name="0" value="找我有什么事吗？是哦尔萨恩让你来的？那#b#t4031094##k带来了吧？#t4031094#在哪儿呢？丢了的话，请你再去哦尔萨恩那里拿一趟。"/>
         </imgdir>
       </imgdir>
       <imgdir name="lost">
-        <string name="0" value="I can&apos;t believe you lost such an important item. Good thing I found it. Please don&apos;t lose it next time!"/>
+        <string name="0" value="竟然把这么重要的东西弄丢了……还好被我找到了。以后千万别再弄丢了。"/>
         <imgdir name="yes"/>
       </imgdir>
     </imgdir>
@@ -6919,7 +6919,7 @@
       <string name="1" value="我知道在哪里安装。。。但是我最近太努力工作，现在我身体的发条已经几乎没有动力。你在这附近打闹钟啾啾#b#o4230113##k后拿一个#b#t4031098##k给我吧。那我会帮你。"/>
       <imgdir name="yes">
         <string name="0" value="谢谢。。。现在发条没有动力。。。我说话也很难。。。那么你快点去打退#b#o4230113##k后拿#b#t4031098##k来吧。时间不多。。。我在这里等你回来。"/>
-        <string name="1" value="I&apos;ll be ... taking care ... of #b#t4031094##k ... good luck ..."/>
+        <string name="1" value="这段时间……#b#t4031094##k……先……保管在我这里。请你快去快回。"/>
       </imgdir>
       <imgdir name="no">
         <string name="0" value="哼。。。你可能有别的事情要忙。但只有我一个人才可以安装#b#t4031094##k。你想让玩具城时间塔启动，请帮我。以后你想法改变再来找我吧。"/>
@@ -6928,7 +6928,7 @@
   </imgdir>
   <imgdir name="3233">
     <imgdir name="1">
-      <string name="0" value="哦。。。你终于找到了#b#p2040029##k把#b#t4031094##k给他了吧。刚才我听到了玩具城时间开始正常启动的消息。太好了。你这么为我们辛苦了，我一定要给你答礼。这不是什么很好的东西，但你不要客气！"/>
+      <string name="0" value=" 哦。。。你终于找到了#b#p2040029##k把#b#t4031094##k给他了吧。刚才我听到了玩具城时间开始正常启动的消息。太好了。你这么为我们辛苦了，我一定要给你答礼。这不是什么很好的东西，但你不要客气！"/>
       <string name="1" value="好。。。请你选择你想得到的卷轴。成功率都是60%。"/>
       <imgdir name="yes">
         <string name="0" value="希望我给你的卷轴对你有用。这次异界的怪物消失而玩具城时间塔也开始正常启动，这里也将恢复和平了吧。谢谢你的帮忙。那以后有机会再见面。"/>
@@ -7108,7 +7108,7 @@
   </imgdir>
   <imgdir name="3242">
     <imgdir name="0">
-      <string name="0" value="想不想测试你的胆量？#m220000000#为与新发现的#m240000000#建立友好关系决定派去亲善使者。想不想成为代表#m220000000#的亲善使者？"/>
+      <string name="0" value="想不想测试你的胆量？#m220000000#为与新发现的#m240000000#村建立友好关系决定派去亲善使者。想不想成为代表#m220000000#的亲善使者？"/>
       <imgdir name="yes">
         <string name="0" value="要成为#m220000000#的亲善使者，需要几种资格条件。为证明做长期旅行对身体无妨的健康程度，请抓来栖息在塔里的#r#o3110102#10只，#o3210205#10只，#o3210208#10只#k。"/>
       </imgdir>
@@ -7389,7 +7389,7 @@
     <imgdir name="0">
       <string name="0" value="哦哦…发生了紧急状况。有了非常危险的家伙出没的消息，但是新型机器人还在开发中…真不知道该怎么办…！你！要是可以，能帮我们吗？由于是紧急状况，没有时间考虑，请你尽快答复！"/>
       <imgdir name="yes">
-        <string name="0" value="真谢谢你！有消息说外星人中马剔安种族最强士兵等级的#b#o5120100##k，已通过地球防御总部周围野地罗斯威尔草原的隐秘地方，正在逼近中。这家伙和其它外星人根本没有办法比，非常强，所以让我们的队伍吃尽苦头。尽管是训练有素的军队，但还是没有办法靠近那家伙。"/>
+        <string name="0" value="真谢谢你！有消息说外星人中马剔安种族最强士兵级别的#b#o5120100##k，已通过地球防御总部周围野地罗斯威尔草原的隐秘地方，正在逼近中。这家伙和其它外星人根本没有办法比，非常强，所以让我们的队伍吃尽苦头。尽管是训练有素的军队，但还是没有办法靠近那家伙。"/>
         <string name="1" value="你去击倒5个叫做#b#o5120100##k的外星人机器，听说那是用外星人的尖端技术制作而成的家伙，破坏力超出我们的想象。如果可以，自己去不如跟别人组成队伍，加强力量后再去。那我在这里等你回来，加油吧！"/>
       </imgdir>
       <imgdir name="no">
@@ -7546,7 +7546,7 @@
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="您好，我是在这里执行秘密任务的地球防御总部部属，叫做#b#p2041012##k。最近有重要的任务，所以过着没法合眼的日子，但是…能帮我一些忙吗?"/>
+      <string name="0" value="您好，我是在这里执行秘密任务的地球防御总部部属，叫做#b#p2041012##k。最近有重要的任务，所以过着没法阖眼的日子，但是…能帮我一些忙吗?"/>
       <imgdir name="yes">
         <string name="0" value="真谢谢你！其实因为我爱睡懒觉，所以经常被点名批评。不管多有能力，因为赖床不能准时出发，还不是没用？ 因为这个原因，上级严厉批评我，所以我很紧张，请让我早晨能早点起床吧！"/>
         <string name="1" value="听说在玩具城钟塔内部深处叫做#b#o4230113##k的怪物有#b#t4000114##k? 请收集20个那种闹钟吧。如果20个闹钟能在该起床的时候同时响起，我再懒，也不会起不来吧。那就拜托了！"/>
@@ -7620,7 +7620,7 @@
   </imgdir>
   <imgdir name="3419">
     <imgdir name="0">
-      <string name="0" value="你好！外星人会说地球的语言，你很吃惊吧？哈哈。。。我们外星人是为你们帮助而来的。所以你不用太紧张。看起来你已经去过地球本部吧？那你可不可以帮我一下？"/>
+      <string name="0" value="你好！外星人会说地球的语言，你很吃惊吧？哈哈。。。我们外星人s是为帮助你们而来的。所以你不用太紧张。看起来你已经去过地球本部吧？那你可不可以帮我一下？"/>
       <imgdir name="yes">
         <string name="0" value="你真是好人。好的! 真感谢你这么为我们费心。那么我告诉你我要拜托你的事情。你可能见过地球本部的人吧? 但是。。。你知道他们的真正的想法吗？"/>
         <string name="1" value="他们应该常说他们的目标就是打退外星人。但事实上对善良的老百姓来说，更危险的就是他们地球本部。他们常常攻击我们，但我们来这里的目标不是战争而是和你们和平共存的。。。"/>
@@ -8178,7 +8178,7 @@
     <imgdir name="0">
       <string name="0" value="啊啊～我正忙着要赶去治疗受伤的灵魂，幽灵的数量越来越多，现在只好求助于我们幽灵猎人了…"/>
       <string name="1" value="咦…不过…唔？或许我以前跟你说过？我见过很多人…或许我们以前也曾见过面？"/>
-      <string name="2" value="不管怎么说，那个死灵王…好像因为某种枷锁，他的灵魂正受到束缚。听说本来是个蛮可爱的熊木偶呢…"/>
+      <string name="2" value="不管怎么说，那个死灵王…好像因为某种枷锁，他的灵魂正受到束缚。听说本来是个蛮可爱的熊木偶呢… "/>
       <string name="3" value="看到他现在的样子简直就难以想象，是吧？解除束缚他的枷锁，让他找回原来的样子，可以吗？"/>
       <imgdir name="yes">
         <string name="0" value="只要你能带来束缚之手…我就可以把那枷锁拿去分析那个地方发生的怪异现象了。"/>
@@ -9431,7 +9431,7 @@
   <imgdir name="3704">
     <imgdir name="0">
       <string name="0" value="好担心。不久前有人到森林里被卷入半人马的领土争夺战争，受伤回来了。听说住在塔林深处的半人马之间的关系不太好...真另人担心。"/>
-      <string name="1" value="听村长说只有邪恶绵羊嚼过的草能制作治疗药。可是我们刺猬族讨厌打仗，所以无法靠近邪恶绵羊。能为我们村里的人收集#b#t4000241#80个#k?"/>
+      <string name="1" value="听村长说只有邪恶绵羊嚼过的草能制作治疗药。可是我们半身人讨厌打仗，所以无法靠近邪恶绵羊。能为我们村里的人收集#b#t4000241#80个#k?"/>
       <imgdir name="yes">
         <string name="0" value="真的吗?哇~非常感谢。收集#b#t4000241#80个#k拿过来就可以了。拜托了~"/>
       </imgdir>
@@ -9442,11 +9442,11 @@
     <imgdir name="1">
       <string name="0" value="天啊!这么快就拿到了?制作治疗药这些就足够了。非常感谢。"/>
       <imgdir name="yes">
-        <string name="0" value="谢谢你的帮助。村里的刺猬族也会很感谢你。以后经常来。我觉得你是个值得信任的人。"/>
+        <string name="0" value="谢谢你的帮助。村里的半身人也会很感谢你。以后经常来。我觉得你是个值得信任的人。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="为了治疗受伤的刺猬族需要#b#t4000241#80个#k。"/>
+          <string name="0" value="为了治疗受伤的半身人需要#b#t4000241#80个#k。"/>
         </imgdir>
       </imgdir>
     </imgdir>
@@ -10577,210 +10577,210 @@
   </imgdir>
   <imgdir name="3835">
     <imgdir name="1">
-      <string name="0" value="Hmmm? What is it? Are you interested in physical training? Whaatt? You saw a bear outside and did what? It&apos;s really hard to tell since there are so many bears around here... They all are my students, but... they all look alike. No?"/>
+      <string name="0" value="嗯？什么事？锻炼体力？嗯？村外看到的熊怎么啦？因为不止一两只，所以不太清楚。都是诺功的弟子……长得都差不多。长得有点怪？"/>
       <imgdir name="yes">
-        <string name="0" value="A big, hulking bear with a scar on his eye? And he helped Tae Soo out...?  No way... #rTae Roon#k...?"/>
+        <string name="0" value="眼周围有伤疤的大块熊？那个家伙帮助了韩太守……是#r肯德熊#k吗？"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="You haven&apos;t gone to see #bNo Gong#k yet. He lives at #bMu Lung Temple#k."/>
+          <string name="0" value="好像还没去#b诺功#k那儿。他住在武陵村庄，#b武陵寺院#k里。"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="The animals that inhabit around Mu Lung are unlike any other animals in the world. A great majority of them are equipped with intelligence and dilligence, as they train to become Master. Of course, every once in a while, you&apos;ll run into a few that will act up on their instincts and attack humans. I ran into a bear like that a while ago at the Sky Forest."/>
-      <string name="1" value="I was stunned when I was attacked, because Sky Forest is normally a peaceful place. Its long, sharp claws were ferociously swung literally inches from my eyes. Then, something incredible happened. A powerful force fired by someone took out the wild bear and rescued me, but..."/>
-      <string name="2" value="The one that helped me wasn&apos;t a human, either. He actually looked even more ferocious than the wild bear... he was #ba Hulking Bear with a Scar on His Eye#k. I found myself controlled by fear once again. He looked like he was going to use me as his lunch pale, but... he just turned around and left... without saying a word... without acknowledging my &apos;thank you&apos;."/>
-      <string name="3" value="I feel terrible that he may have felt offended my response, eventhough I was more than grateful for helping me out. His attire suggests that he may be one of the bears training to become the Master at Sky Forest... who must that be? If it&apos;s okay with you, can you do me a huge favor and find out what he&apos;s all about?"/>
+      <string name="0" value="生活在武陵周围的动物与其他地方的动物不一样。那些动物中绝大多数有着知性，是为了成仙人而修炼的。虽然还有动物会本能地攻击人。前不久在通天林就碰到了那种熊。"/>
+      <string name="1" value="在和平的通天林突然受到攻击，我都吓得不敢动弹了。野生熊的熊掌在眼前晃动。就在那时，发生了不可思议的事情。不知是谁的力量，把那只熊打倒拯救了我。可是……"/>
+      <string name="2" value="帮助我的竟然也不是人。比那只野生熊更加杀气腾腾…… #b眼周围有伤疤的大块头的熊#k。我又害怕起来。怕它吃了我……不过它没说什么转过身消失了。还没听我说声谢谢……"/>
+      <string name="3" value="它帮我，却没能说声感谢，我觉得很抱歉。看衣服好像是在通天林为了成仙人而修炼的熊中的一只……会是谁呢？如果方便，您能帮我找到它的真实身份吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Ahh... thank you. From looking at his uniform, he may be one of the students of #bNo Gong#k. Pretty much everyone around here that&apos;s involved in physical training is a student of No Gong, so... that&apos;s my guess. Please go see No Gong and ask about him. Thanks!"/>
+        <string name="0" value="啊……太感谢您了。看它穿的道服应该是#b诺功#k的弟子。武陵周边的修炼者中，锻炼体力的都是诺功弟子……应该是吧？到诺功那儿问问吧。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Hmmm... you must be really busy. There&apos;s nothing I can do, then. Please be aware of the bad Peach Monkeys around the Peach Farm."/>
+        <string name="0" value="哦……很忙的样子啊。那就没办法了。蟠桃园周边有很多讨厌的猿公小心点啊。"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="3836">
     <imgdir name="0">
-      <string name="0" value="#bTae Roon#k... He was the most intelligent, dedicated student I, No Gong, have ever had. He was a courageous kid who could not turn his back away from evil. The only way this bright kid is wandering around like a loose cannon these days is because of that Master Goblin."/>
-      <string name="1" value="Tae Roon had always been a thorn on Master Goblin&apos;s side, because he was dedicated to defeating 요괴s, so one day Master Goblin casted a spell on him that made him lose his mind. All he did was let go of himself for a bit, and Tae Roon lost his mind. Once that happened... he began to attack the good people in this town, as well as numerous travelers..."/>
-      <string name="2" value="It broke my heart knowing that I couldn&apos;t do anything to help him get back on his feet. The only thing I could do to help Tae Roon, who felt miserable by his actions everytime he regained consciousness, to... exile him from this town so he won&apos;t injure another person."/>
-      <string name="3" value="For that Tae Roon to help Tae Soo... Maybe the spell on him has weakened over time... if the spell casted on him by Master Goblin can be broken, then Tae Roon will be able to live in the friendly confines Mu Lung just like the old times... can you check up on this?"/>
+      <string name="0" value="#b肯德熊#k……它是诺功中弟子中最聪明诚实的孩子。比谁都正义，路见不平会拔刀相助……让它沦落到在村子外面流浪都要怪妖怪禅师。"/>
+      <string name="1" value="肯德熊努力击退妖怪，却成为妖怪禅师的眼中钉。他施了魔法让它失去理智。肯德熊因为暂时放松警惕而失去了理智…… 攻击了村民和旅行者。"/>
+      <string name="2" value="心爱的弟子沦落到如此地步，却没法帮它。看着清醒时难过的肯德熊，唯一能帮它做的，就是不让它伤害其他人，把它赶出村庄。"/>
+      <string name="3" value="不过就是那个肯德熊帮了韩太守……是不是魔法在它身上削弱了？只要能解开妖怪禅师施的魔法，肯德熊就能重新回到武陵了……你再确认一下吧。"/>
       <imgdir name="yes">
-        <string name="0" value="#bDo Gong#k should be able to determine the strength of the spell casted on Tae Roon even from afar, so please go talk to him immediately."/>
+        <string name="0" value="如果是#b道功#k在远处也能知道施在 肯德熊身上魔法削弱到什么程度。去找他吧。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="I understand that it&apos;s a difficult task, but ... please reconsider."/>
+        <string name="0" value="如果不行那也没有办法……你再想想吧……"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="...are you a trainee looking to become Master? Hmmm...? No Gong sent you here? ...he thinks Tae Roon is regaining consciousness?"/>
+      <string name="0" value=".是想成为仙人的修炼者吗？嗯……？是诺功托你来的？肯德熊醒过来了？"/>
       <imgdir name="yes">
-        <string name="0" value="If you&apos;re requesting that I check up on the spell that&apos;s gripping Tae Roon, I can happily do that. He&apos;s a student of Mu Lung, first and foremost, even before being No Gong&apos;s student. It breaks my heart seeing a fine kid being controlled by Master Goblin, and I can&apos;t let that go on. Hold on for a second."/>
+        <string name="0" value="如果是为确认施在肯德熊身上的魔法我随时可以帮忙。那个孩子即是诺功的弟子，也是武陵全体的弟子。不能眼看着可怜的孩子被妖怪禅师戏弄。等一会儿。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="Haven&apos;t you gone to #bDo Gong#k yet? He&apos;s right there, so go now."/>
+          <string name="0" value="还没去#b道功#k那儿吗？就在那旁边，快去吧。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="3837">
     <imgdir name="0">
-      <string name="0" value="Tae Roon hasn&apos;t been away from town just to avoid people in general. He&apos;s a straight-edged kid, and when he realized the magnitude of the acts he had committed, he put himself away from civilization meditate and redeem himself."/>
-      <string name="1" value="The solitary times he had spent might be doing wonders for him now. The spell that had bounded Tae Roon has gotten much weaker than before. The times Tae Roon finds himself fully conscious has gained significantly as well. This would be a perfect time for me, Do Gong, to caste a spell that effectively neutralizes Master Goblin&apos;s hideous spell."/>
-      <string name="2" value="All spells require preparations, however. In order to neutralize Master Goblin&apos;s evil powers, I&apos;ll need some items to work with. It would be great if you can find those items for me. Can you do that?"/>
+      <string name="0" value="肯德熊不只为了避开人才到村庄外边。品行刚正的它知道 自己闯下的祸有多严重，为了赎罪聚精会神的把所有时间都用在了苦行上。"/>
+      <string name="1" value="苦行好像起到效果了。施在肯德熊的魔法比以前削弱了许多。肯德熊清醒的时间也越来越长了。现在道功的魔法应该可以解开妖怪禅师的魔法了。"/>
+      <string name="2" value="不过施法需要做好准备。为了打败妖怪禅师的需要些材料……能否帮我呢？"/>
       <imgdir name="yes">
-        <string name="0" value="Great. I&apos;ll need #r10 Sheets of Old Paper#k, #r10 Broken Deer Horns#k, and #r50 Peach Seeds#k. All these items can be found around Mu Lung, so I have no doubt in my mind that a powerful traveler like you can get the job done."/>
+        <string name="0" value="那就拜托弄 #r白纸10张#k, #r天鹿的角10个#k, #r蟠桃核50个#k。这些都可以在武陵周围弄到。像你这样强大的冒险家应该没有问题。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="That&apos;s unfortunate... without those items, I won&apos;t be able to caste the spell. What can I do?"/>
+        <string name="0" value="要觉得难就没办法了……没有材料施法很困难……该怎么办呢？"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="You did gather up all the items... okay now it&apos;s time for me to get to work. This is the spell that neutralizes the evil forces that cloud the judgement of anyone affected by it."/>
+      <string name="0" value="弄到了所有的材料……请稍等。先使用解除魔法的静化酒……"/>
       <imgdir name="yes">
         <string name="0" value="......"/>
-        <string name="1" value="...NOO...!"/>
-        <string name="2" value="While in the middle of the spell, I felt a strong force of disturbance from Master Goblin. I thought he was losing interest in Tae Roon... but that wasn&apos;t it. If nothing else, Master Goblin had been observing Tae Roon, and used him as a pawn to attract other Masters at Mu Lung...!"/>
-        <string name="3" value="The real problem here, though, lies in Tae Roon. Tae Roon&apos;s strong feelings for forgiveness... actually strengthens the grip Master Goblin has on him. Tae Roon&apos;s kindness is actually reigning him in the firm grip of evil. If not for that, then I would have been able to safely separate him from that. Sigh..."/>
-        <string name="4" value="Until Tae Roon&apos;s feelings for forgiveness weakens a bit, we&apos;ll never be able to wrest him away from the evil spell of Master Goblin... I really don&apos;t know what to say. I am ashamed to say that I really don&apos;t know what to do now. Please send my apologies to #bNo Gong#k..."/>
+        <string name="1" value="天呐！"/>
+        <string name="2" value="施法的时候有妖怪禅师在妨碍。以为他对肯德熊失去了兴趣……原来不是。 妖怪禅师虎视眈眈地盯着肯德熊，并把那个孩子当诱饵伺机想暗算其他武陵的仙人……！"/>
+        <string name="3" value="问题在于肯德熊自身。肯德熊希望赎罪的心境反而加强了 妖怪禅师的魔法。那孩子善良的品性更把它束缚在魔的黑暗里。要不是那样兴许能救那孩子……呼唔……"/>
+        <string name="4" value="在肯德熊的负罪感减轻之前很难从妖怪禅师的魔法中把它救出来……对不起。把我的歉意转达给#b诺功#k……"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="I don&apos;t think you have gathered up all the necessary items to begin the spell. 파마의 술 requires #b10 Sheets of Old Paper#k, #b10 Broken Deer Horns#k, and #b50 Peach Seeds#k. "/>
+          <string name="0" value="还没找到所有施法用的材料。酒需要#b废纸10张#k和#b天鹿的角10个#k, #b蟠桃核50个#k。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="3838">
     <imgdir name="0">
-      <string name="0" value="So what did Do Gong say? ...really? So the very same emotion that calls for Tae Roon to redeem himself is actually the reason why he&apos;s still bound to that spell? Poor kid... I feel so ashamed to be just standing here, not knowing what to do... sigh.."/>
-      <string name="1" value="When Tae Roon attacks humans, it&apos;s really just him being controlled by Master Goblin&apos;s spells. Even so, he&apos;ll probably think everything&apos;s his fault. Don&apos;t you think it&apos;s a better idea just to stop him from committing those acts of violence?"/>
-      <string name="2" value="That&apos;s why... I want you to take down #rTae Roon#k if he shows signs of violence. Don&apos;t hesitate to attack that boy if he loses it and starts attacking innocent people. As cruel as this may be, I think it&apos;s one of the ways to help Tae Roon."/>
+      <string name="0" value="道功说什么？是吗？是肯德熊的负罪感封锁着它？可怜的孩子……师父该怎么帮你啊……呼唔……"/>
+      <string name="1" value="只是被妖怪禅师操纵，攻击人类并不是肯德熊的意志所致。它觉得所有的错都在于它……那还不如不让它犯罪？"/>
+      <string name="2" value="所以……请你打败 #r肯德熊#k。如果遇到失去理性而变得残暴的肯德熊，请不要犹豫请立即阻止。只有那种粗暴的方法才能帮助肯德熊。"/>
       <imgdir name="yes">
-        <string name="0" value="As twisted as this may sound, I think it&apos;s better to hurt him on the outside as opposed to hurting his feelings... if physically damaging the kid will result in freeing him from the wrath of evil, then so be it... so be it..."/>
+        <string name="0" value="皮肉之苦比起精神上的痛苦还是轻的……无数次的皮肉之苦能让它减轻负罪感就只能这么做了。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="...have you defeated Tae Roon? Okay... hopefully this will ease the burden he&apos;s been carrying with him..."/>
-      <string name="1" value="I wish he was shallow enough to think that this one beating will wash away all his sins, but he isn&apos;t. The very reason everyone at Mu Lung loved him was because he was so straight-edged, with unwavering belief in goodness."/>
-      <string name="2" value="If Tae Roon chose the path of constant defeat as a way of redeeming himself for the sins, then as a teacher, I have no choice but to observe his every step until the very end. It&apos;s heartbreaking to say the least, but that&apos;s for Tae Roon&apos;s best."/>
+      <string name="0" value="打倒肯德熊了吗？是吗……希望能减轻它的负罪感。"/>
+      <string name="1" value="倒是希望一次的皮肉之苦能让它觉得已经洗刷了罪孽，但那是不可能的。武陵仙人们之所以那么爱它，都是因为它非常正直。"/>
+      <string name="2" value="只有无数次的皮肉之苦才是肯德熊的赎罪之路，做为师父我会一直在旁关注它的。很心疼，但只有那样才能帮助肯德熊。"/>
       <imgdir name="yes">
-        <string name="0" value="...ah, I just remembered that Tae Soo had been wondering Tae Roon&apos;s whereabouts... Please give the kid my &apos;thank you&apos; for updating me on Tae Roon&apos;s whereabouts. Thanks to him, I have finally found out that in spite of all this, Tae Roon managed to keep his kindness in tact."/>
+        <string name="0" value="啊，对了，韩太守对肯德熊挺关心的……是他把肯德熊的近况告诉我的。所以也跟他说声谢谢吧。多亏他我们才知道肯德熊在巨大的痛苦中还具有善良的品质。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="You haven&apos;t defeated #rTae Roon#k yet. Please do this for me... and especially for Tae Roon."/>
+          <string name="0" value="还没打倒#r肯德熊#k吗？为了我诺功，也为了肯德熊……请打倒肯德熊吧。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="3839">
     <imgdir name="0">
-      <string name="0" value="Hello traveler! Have you met No Gong? Did he tell you anything about the bear?"/>
-      <string name="1" value="...ahh... I see. So HE&apos;s Tae Roon... I&apos;ve heard about him before, a student from Mu Lung who lost his mind through the evil spells of Master Goblin..."/>
-      <string name="2" value="But I didn&apos;t know there was such a heartbreaking story behind all this. I do know that anyone who has a heart of gold like him should be able to overcome the spell of Master Goblin."/>
-      <string name="3" value="Before that... I wanted to say thanks for all the help, and... here&apos;s a box of Peaches for him. I don&apos;t know how to get this to him, and based on what you&apos;ve told me, it may not be easy to approach him, so... Can you please help me out once more?"/>
+      <string name="0" value="冒险家！见过诺功了吗？那位是否知道有关熊的事 ？"/>
+      <string name="1" value="啊啊，原来如此。它就是肯德熊啊。听说过。被妖怪禅师施了魔法失去理智的武陵的弟子……"/>
+      <string name="2" value="不过真没想到事实这么让人心痛。既然能帮助处在危险中的人们，那么肯定能战胜妖怪禅师的魔法。"/>
+      <string name="3" value="为了答谢它，我帮忙准备了蟠桃，但不知该怎么送给它。而且再与它见面也不是件容易的事……冒险家，您能在帮我一次吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Thank you so much. I think facing Tae Roon again will be difficult, so... anyway, he should be wandering around #bWild Bear Area#k, so if you can #bdrop the peach somewhere around there#k, then don&apos;t you think he&apos;ll pick it up? You can find the spot where Tae Roon will most likely pick up the Peach.."/>
+        <string name="0" value="谢谢。虽然没太多机会遇到肯德熊，不过它在#b野生熊的地盘#k周边修行，我就#b在那周边放好蟠桃#k它应该能发现吧？冒险家您可以帮我找一下显眼的位置放蟠桃吗？"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="I understand if you find it difficult to do. I owe you a lot already for what you&apos;ve done."/>
+        <string name="0" value="您觉得难就没办法了。很抱歉一直麻烦您。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Hey... this is ... it&apos;s written by Tae Roon! Wow... I really didn&apos;t expect him to write a thank you letter from him. He really is a nice guy. I really hope he gets to escape that evil spell of Master Goblin&apos;s..."/>
+      <string name="0" value="啊……这是？肯德熊写的？哇啊……真没想到能收到感谢信。果然是好人呐！希望早日解开妖怪禅师的魔法……"/>
       <imgdir name="yes">
-        <string name="0" value="Thank you so much for your help, traveler. I&apos;ll have to drop some Peaches there at the Wild Bear Area for Tae Roon from time to time. I&apos;m sure he&apos;ll be very happy with it."/>
-        <string name="1" value="How about giving Tae Roon a Peach yourself? He&apos;ll make sure to properly thank you for your work."/>
+        <string name="0" value="谢谢您的帮助。冒险家。为了肯德熊，以后我也会经常送蟠桃到野生熊领地的。它一定会很高兴的。"/>
+        <string name="1" value="冒险家您也试着送蟠桃给肯德熊吧？它会感激您的。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="I don&apos;t think you have given Tae Roon the Peaches yet. If you have lost the Peach I have you last time, then it&apos;s okay to pick one of these Peaches at the farm and give it to him."/>
+          <string name="0" value="肯德熊好像还没收到蟠桃。如果把刚才的蟠桃丢了可以在果园摘其他的桃送给它。"/>
         </imgdir>
       </imgdir>
       <imgdir name="lost">
-        <string name="0" value="Whaaaat? You lost the Peach? Sigh... please don&apos;t tell me you ate it all. The Peach is for Tae Roon, so I&apos;ll give you another one, but... please be careful with it. Tae Sang told it it&apos;s okay to take a couple from the farm, but ... I&apos;m sure he will be mad if anyone takes a whole bunch from his farm."/>
+        <string name="0" value="啊？丢了蟠桃？应该不会是冒险家您自己吃光了吧？为了肯德熊我会再准备蟠桃……请小心。太上说拿几个没关系……但是一次拿太多他会发火的。"/>
         <imgdir name="yes"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="3840">
     <imgdir name="0">
-      <string name="0" value="From outside looking in, Mu Lung looks like a haven for the select few wanting to train themselves to continue their lives as Master, free from trouble and worries, but... even Mu Lung can be subject to concerns at times. There&apos;s someone out there posing as a threat to Mu Lung... #rMaster Goblin#k."/>
-      <string name="1" value="He used to be a divine creature himself, but after more than a thousand years, all he gained was cunning deceit, which turned him into a goblin, Master Goblin. He&apos;s blinded by his foolish ambition to take over Mu Lung, but his spells are very powerful. So powerful, that the students here are vulnerable to those spells, unable to fend off the evil forces."/>
-      <string name="2" value="Previously he had been threatening the security of Mu Lung with his disciples, but now... he has decided to show himself. I am afraid he&apos;s starting to really show his true dirty ambitions. I can&apos;t just watch him take over Mu Lung like that. We need to find a way to defeat Master Goblin. I know you would be of great help to us. What do you think?"/>
+      <string name="0" value="在外人看来，武陵是全世界没有烦恼的人们为了修炼成仙而修炼的地方……事实上，武陵也有烦恼。有人使宁静的武陵陷入到混乱当中…… #r妖怪禅师#k就是那个肇事者。"/>
+      <string name="1" value="当年也是英雄人物，但在超过千年的古老岁月中变得越来越狡猾，最终变成妖怪，那就是妖怪禅师。沉浸在支配武陵虚无缥缈的欲望之中。但法力无边，一般的修炼生抵不了他的魔法……"/>
+      <string name="2" value="利用手下威胁武陵的他，现在亲自出马了。显示出贪婪的欲望。不能再坐视不理了。是时候击退妖怪禅师了。您的帮助对我们很有意义……怎么样？"/>
       <imgdir name="yes">
-        <string name="0" value="Thank you for accepting the offer. First, we need to try to weaken Master Goblin. We&apos;ll need to defeat the #rSage Cats#k that have been controlled by him, and take away #b100 Cat Dolls#k that transmit the forces of evil. This should definitely affect the Master Goblin, so... good luck."/>
+        <string name="0" value="谢谢您帮我们。首先试图削弱妖怪禅师的力量吧。先击退听命于妖怪禅师的#r妙仙#k再收集拥有其力量的#b猫咪娃娃#k#b100个#k ，再厉害的妖怪禅师也会受到伤害的。拜托了。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="If you can&apos;t help us here, then... there&apos;s nothing we can do about it."/>
+        <string name="0" value="不能帮的话也没办法……"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="You managed to reclaim the Cat Dolls from the Sage Cats. Thank you very much. Now, if I write this sentence that I&apos;ve prepared, then..."/>
+      <string name="0" value="从妙仙那儿收回猫咪娃娃了。谢谢。那么记录准备好的文章……"/>
       <imgdir name="yes">
-        <string name="0" value="ah! Success! Okay... now please head over to #bGoblin Forest#k. I have neutralized Master Goblin&apos;s spells, and have casted a spell of my own. If it worked properly, then the number of Sage Cats should be decreasing as we speak!"/>
+        <string name="0" value="哈！成功了。赶快去#b妖怪森林#k吧。解除妖怪禅师的魔法之后有了新的魔法，如果魔法起作用的话，妙仙会减少的！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="Hmmm... you haven&apos;t managed to defeat the #rSage Cats#k and gather up #b100 Cat Dolls#k. Are you still a long way to go before collecting 100?"/>
+          <string name="0" value="呼……击退 #r妙仙#k后，没收回#b猫咪娃娃 100个#k吧。猫咪娃娃还差的多吗?"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="3841">
     <imgdir name="1">
-      <string name="0" value="Ohhh, you&apos;re here! You&apos;re HERE, traveler! Of course, justice shall prevail in the end! Hohohoho... now, I shall break down the &apos;gap&apos; between you and me. Allow me to separate the truth from fiction."/>
+      <string name="0" value="您来了！冒险家先生～！心有灵犀啊！哈哈哈哈～从现在开始我会一一解释您对我的误会和偏见。"/>
       <imgdir name="yes">
-        <string name="0" value="What did Do Gong say about this King Sage Cats? I am sure he mentioned something about me being a threat to Mu Lung and all. What I want you to know here, however, is that I have NOTHING against Mu Lung at all~ I mean, I am not human, but I also am a trained Master from Mu Lung. Why would I despise Mu Lung?"/>
+        <string name="0" value="道功怎么评价我妙仙王？肯定说是威胁村庄的坏蛋吧？我对武陵没有任何要求。虽不是人类，但我是在武陵修炼成仙的啊，没理由讨厌武陵啊？"/>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Hey traveler~ I can tell you&apos;re from Do Gong, based on that hideous-looking item you are carrying. Throw that away, and just listen to what I have to say, okay? I will be more than happy to dispell the rumors surrounding me here. Please come... hohoho~"/>
+      <string name="0" value="冒险家先生～看你拿着这么丑陋的东西，肯定是道功派来的……暂且扔了那个东西，你先听我说如何？我给你解释所有的误会。这边请。呼呼～"/>
       <imgdir name="yes">
-        <string name="0" value="You have entered the deepest part of Goblin Forest... But if you go through the #bRock Support of the Disappeared Statue at the Second Goblin Forest#k, then it won&apos;t be as hard for you to enter. Please come to this area immediately. I will show you what I am really about, the King Sage Cats."/>
+        <string name="0" value="这里是林中最隐蔽的地方……不过通过#b第二个妖怪森林消失的铜像的石头垫#k就不难访问这个地方了。请赶快到这儿来。我要表达我的真情。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Are you declining my invitation? That&apos;s... too bad. I really wanted to dispell the rumors and be on good terms with Mu Lung once more..."/>
+        <string name="0" value="拒绝……太过分了。本想解除所有误会，与武陵好好相处的……"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="3842">
     <imgdir name="0">
-      <string name="0" value="I have no intention of being angry at Do Gong. I, the King Sage Cat, am forgiving and generous, and I can&apos;t let petty quarrel stand in our way of peaceful harmony, right? I may have been ridiculed by Do Gong, but I do not wish to fight him. I only wish to kiss and make up. Of course, you the traveler will help fascilitate this, right?"/>
+      <string name="0" value="没想对道功发火。善良慈祥的妙仙王不会因为一点点小事而发火。虽然被道功诬陷，但是不想和他斗。真想解除误会好好相处……冒险家先生肯定会帮我的是吧？"/>
       <imgdir name="yes">
-        <string name="0" value="Hohohoho~ I knew you would say that. Now, please take this #rMiracle Medicine#k to #bDo Gong#k. It&apos;s a great Miracle Medicine that should help everyone focus while training. This should also help Do Gong on his spells. Hopefully this will open the doors for us to be on friendly terms again. Ho ho ho!!"/>
+        <string name="0" value="哈哈哈哈~就知道您会这么说。那么请把这个#r灵药#k送给 #b道功#k吧。这是有助于修炼的灵药哦。对道功的法术会大有帮助的。真想与他和解啊。哈哈哈！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="You don&apos;t wish to help us be back on friendly terms? Traveler, you... have some issues, I think."/>
+        <string name="0" value="不想从中和解？冒险家先生，您的脾气比我想得还要臭哦。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="ou&apos;re back... now, if you did what you needed to do, then it&apos;ll greatly decrease the powers of Master Goblin... hmmm, what&apos;s that you&apos;re holding there?"/>
+      <string name="0" value="来了……只要您能成功，可以大大削弱妖怪禅师的力量。嗯？那是什么？"/>
       <imgdir name="yes">
-        <string name="0" value="...Huk!!! That.. That&apos;s poison?!! A poison made out of magic?"/>
+        <string name="0" value="唔！这……这是毒药？!用法术制作的毒药……！！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="You haven&apos;t gone to #bDo Gong#k yet? I want to be on friendly terms with Do Gong ASAP! Ho ho ho!"/>
+          <string name="0" value="还没去#b道功#k那儿吗？真希望早点与道功和好如初啊～哈哈！"/>
         </imgdir>
         <imgdir name="item">
-          <string name="0" value="Hmmm... it doesn&apos;t seem like the power of Master Goblin has been decreasing or anything, but..."/>
+          <string name="0" value="嗯……妖怪禅师的力量还没削弱……"/>
         </imgdir>
       </imgdir>
       <imgdir name="lost">
-        <string name="0" value="Whaaaaat?? You lost the red marble? That precious marble...! How... how did you??? Hmmph, I can&apos;t lose dignity over this. Okay, I will forgive you for now. I will give you the red marble one more time, so ... PLEASE! PLEASE give that to Do Gong."/>
+        <string name="0" value="什么～？丢了红珠？怎么丢的？那么珍贵……！怎么丢的……！不不，呼呼，不能没有教养。那好，这次就原谅你。再给你一个红珠，一定要送给道功啊。"/>
         <imgdir name="yes"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="3843">
     <imgdir name="0">
-      <string name="0" value="Oh... oh no... I should have told you more about Master Goblin... *gasping for air* Master Goblin is ruthless and cunning, to say the least. He is the master of breaking people&apos;s trust from one another and make them turn their backs on each other. That&apos;s an even more dangerous than his powerful spells...\r\n#L0# #b Oh no..."/>
-      <string name="1" value="This is no ordinary poison... it&apos;s a poison made out of magic spells. It only works on someone casting an opposite spell on Master Goblin...! Ouch... I have a bad feeling that Master Goblin had been waiting for a moment like this... ahhh ... good thing I was prepared for something like this, but... it&apos;s difficult for me to withstand this much longer....\r\n#L0# #b I&apos;ll get the antidote for this!"/>
-      <string name="2" value="Ca... can you? Only the person who created such poison has the antidote of it.... Cough cough! Please go see the Master Goblin you just met...!"/>
+      <string name="0" value="哎，哎……应该跟你讲清楚妖怪禅师的真面目才对……呼呼呼……妖怪禅师，这个狡猾残忍的家伙。挑拨离间让人们互相失去信任，这是他的强项…… \r\n#L0# #b哇...怎么会这样..."/>
+      <string name="1" value="这毒药并非一般的毒药。是使用魔法制成的毒药。对修炼与妖怪禅师相反的法术的人有效。看来妖怪禅师就是为这个时刻而准备的……呜呜……幸亏早已有了防备……但是快支持不住了……\r\n#L0# #b我去找解药！"/>
+      <string name="2" value="真……真的吗？这种毒药的解药只有制作毒药的人才会有……咳咳！你去找之前遇到过的妖怪禅师吧……！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
@@ -10792,19 +10792,19 @@
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Oh ho~ let&apos;s give a warm welcome to the traveler fully responsible for helping the King Sage Cat make a giant leap towards his ultimate goal! Ho ho ho ho... how&apos;s my friend Do Gong doing? Well, of course, he should be bedridden by now from that devastating poison... ho ho ho ho! \r\n#L0##bGive me the antidote now!!!"/>
-      <string name="1" value="No no no. Aren&apos;t you supposed to question anything you receive from a stranger? But I tell you what, I will give you ONE chance, ONE chance to receive the Antidote Crystal. Of course, if you refuse this opportunity, then it&apos;s over~ \r\n#L0# #b ...opportunity?"/>
-      <string name="2" value="Yes! I will give you THREE questions. If you can answer all three, then I will hand you the antidote crystal, the real deal that can neutralize the red crystal. What do you think? Are you ready to answer the questions?\r\n#L0# #b Yeah, I am! #l \r\n#L1# #b No way #l"/>
-      <string name="3" value="Okay, here&apos;s the first question... Mu Lung is a place where Masters train, but seriously, is there a Master as great as the King Sage Cat?  \r\n#L0# #b Yes #l \r\n#L1# #b ...... #l"/>
-      <string name="4" value="Here&apos;s the second question. Back in the day, there was a foolish student here at Mu Lung who thought, if he could wield his strength, he will be able to defeat the Sage Cats and bring &apos;peace&apos; to Mu Lung. Now, those Sage Cats were the disciples of me, the King Sage Cats. Rather than being totally unnerved by his actions, the King Sage Cat, mercifully, awarded him with a spell that soothes and uncomplicates his mind. Is this &apos;punishment&apos; feasible?   \r\n#L0# #b No, it isn&apos;t. #l \r\n#L1# #b ...#l"/>
-      <string name="5" value="Hohoho... here&apos;s the last question. Okay, here it is... Even someone as pure and honest like the King Sage Cat may want to have some fun every once in a while. How about this? Do you think King Sage Cat meant it when he said he&apos;ll give you the antidote crystal when all three questions were answered right?\r\n#L0# #b Yes, he did. #l \r\n#L1# #b No way....#l"/>
-      <string name="6" value="Ho ho ho ... of course I meant it~ If you would have answered the questions RIGHT, then the crystal would have been yours, but no no no~ You were unable to answer the question right! Ho ho ho ... that&apos;s unfortunate. So unfortunate!"/>
+      <string name="0" value="啊哈～是那个帮我实现计划的冒险家啊。哈哈哈。道功现在怎样啊？肯定中毒奄奄一息了吧……？哈哈哈哈！\r\n#L0##b快把解药拿出来！"/>
+      <string name="1" value="真不该啊。对别人送的东西本该提防点，不是吗？你要实在觉得冤枉，我就给你一次机会。拒绝就再也没有机会了～  \r\n#L0# #b 机会？"/>
+      <string name="2" value="好！现在开始给你出三个题。如果全部答对就给你解药。能解红珠毒药的真正的解药。怎么样？试一试吗？  \r\n#L0# #b 解题！ #l \r\n#L1# #b 拒绝解题。 #l"/>
+      <string name="3" value="那好，第一道题……都说武陵是仙人修炼的地方，但果真有能与妙仙王相媲美的仙人吗？  \r\n#L0# #b 有。 #l \r\n#L1# #b ...... #l"/>
+      <string name="4" value="那么第二道题……过去武陵有个四肢发达，头脑却很简单的弟子。它经常欺负妙仙王的弟子妙仙。妙仙王惩罚它并给它施了能让人心平气和的法术。这么惩罚合适吗？ \r\n#L0# #b不合适。 #l \r\n#L1# #b ...#l"/>
+      <string name="5" value="哈哈。最后一道题了。这道题是……像我这么纯洁的人有时也想开玩笑。怎么样？妙仙王所说的答对三道题就给解药的承诺是真是假？  \r\n#L0# #b 真心 #l \r\n#L1# #b 假意#l"/>
+      <string name="6" value="啊啊，能不是真心吗？只要能答对题肯定给！不过您答错了！哈哈～这可怎么办啊。好可惜啊！"/>
       <imgdir name="yes">
-        <string name="0" value="Ho ho ho!!! You&apos;re ALL WRONG! You didn&apos;t answer a SINGLE question right! What? None of the answers made sense? Ho ho ho! I told you the antidote was real; I didn&apos;t really say the questions were! No way will I ever give you an antidote for Do Gong!"/>
+        <string name="0" value="哈哈哈哈！全部都错了！一个都没对！一个都没对！哈哈哈！解药是真，但我没说问题是真啊？怎么可能会给道功解药呢！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="Ahhh... only Master Goblin has the antidote..."/>
+          <string name="0" value="啊……只有妖怪禅师有解药……"/>
         </imgdir>
         <imgdir name="0">
           <int name="answer" value="1"/>
@@ -10813,19 +10813,19 @@
           <int name="answer" value="1"/>
         </imgdir>
         <imgdir name="2">
-          <string name="1" value="Hah, if you are like this, then I sure can&apos;t give you the antidote crystal. Is that all the guilt you have on Do Gong? That&apos;s it?"/>
+          <string name="1" value="哼……解药当然不能给你。你对道功的罪恶感就不过如此吗？"/>
           <int name="answer" value="1"/>
         </imgdir>
         <imgdir name="3">
-          <string name="0" value="Hahaha! You didn&apos;t mean that, did you? If you were, then there&apos;s no point of giving Do Gong, who isn&apos;t even a real Master, an antidote!"/>
+          <string name="0" value="哈！你该不会是真心吧？如果是真心的话，就不必为了一个仙人道功拿出解药！"/>
           <int name="answer" value="2"/>
         </imgdir>
         <imgdir name="4">
-          <string name="0" value="Of course! Of course! In that regard, the item I gave to Do Gong is also a medicine of sort, so I shouldn&apos;t bother giving you an antidote crystal!"/>
+          <string name="0" value="好！好！照你说的意思，之前给的灵药也是类似的东西，不用特意给解药了。"/>
           <int name="answer" value="2"/>
         </imgdir>
         <imgdir name="5">
-          <string name="0" value="Wrong! I didn&apos;t mean it! I was FINALLY able to put Do Gong in a tough spot, so WHY should I help him out now? Even if you answered them all correct, I would never give you the antidote! Never!"/>
+          <string name="0" value="答对了！当然不是真心了～费尽心思才让道功掉入陷阱，怎么可能给你解药呢！即使你答对了全部的问题，也没想给过给你解药！哈哈！"/>
           <int name="answer" value="2"/>
         </imgdir>
       </imgdir>
@@ -10834,237 +10834,237 @@
   </imgdir>
   <imgdir name="4300">
     <imgdir name="0">
-      <string name="0" value="My goodness... I&apos;ve been sweeping and sweeping, and it&apos;s still dirty around here! Arghh! Oh, hello there... well, that was embarassing..."/>
-      <string name="1" value="I&apos;m sorry about that. The thing is, lately there have been so many #o9400000#s near the shrine, and they are causing the world-renowned #m800000000# to lose its beauty and be covered in filth. It&apos;s really sad to see. I&apos;m sorry to ask this to a complete stranger, but if you have any time, will you help me clean #b#t4000064##k up?"/>
+      <string name="0" value="啊啊…… 再怎么清扫也还是很脏啊！啊，你好？很抱歉…… 让客人看到了这个模样……"/>
+      <string name="1" value="抱歉。实际上，最近神龛周边出现了很多#o9400000#。看到以樱花闻名的#m800000000#变得如此脏乱，我觉得很伤心。如果你有时间的话，可以帮我一起打扫#b#t4000064##k吗？"/>
       <imgdir name="yes">
-        <string name="0" value="You&apos;re really going to help me? Wow ... you&apos;re awesome! Well, okay. What do I need to really clean this place up... oh, I know! Okay, I&apos;ll need #b100 #t4000064#s#k from you. Please gather them up for me, and I&apos;ll take care of the rest. I&apos;ll be waiting~"/>
+        <string name="0" value="可以帮我一起打扫……？ 您真是个善良的人啊！那么，帮我收集#b#t4000064##k100个。之后的事儿交给我就可以了。那么，拜托你了。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Ok, you must be really busy - I understand. Now, if you&apos;ll excuse me, I have to figure out a way to clean up the #m800000000# even better than last time..."/>
+        <string name="0" value="哦…… 看来您很忙，那没办法了。怎样才能让#m800000000#更干净呢……"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Wow, you must have gathered up all the #t4000064#s!"/>
+      <string name="0" value="啊，收集完#t4000064#了啊！"/>
       <imgdir name="yes">
-        <string name="0" value="Awesome! This is such a big help for me! Now that we&apos;re cleaning up #t4000064#, I&apos;m sure the shrine will look a little nicer than it does right now. Thank you so much for your help."/>
+        <string name="0" value="感谢你答应我的请求！打扫了#t4000064#，神龛多少变得干净一些了。非常感谢。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="I don&apos;t think you have many #b#t4000064#s#k yet. We&apos;ll need more feathers if we are to really clean up #m800000000#."/>
+          <string name="0" value="还没找齐#b#t4000064##k哦。想让#m800000000#变得干净的话，需要捡更多的羽毛。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4301">
     <imgdir name="0">
-      <string name="0" value="Hello! Isn&apos;t #m800000000# just beautiful? Unfortunately, we&apos;ve been experiencing some troubles around #m800000000# lately. The restaurants around here have been ambushed by packs of #b#o9400001#s#k, ruining our food in the process. The #m800000000# is famous around the Maple World for its beauty and fantastic food from many areas. People are afraid of being attacked by #o9400001#s now, so they&apos;ve stopped coming. We have to turn this around somehow..."/>
-      <string name="1" value="You look quite strong, though ... can you do us all a favor and drive off the #o9400001#s? You&apos;ll have to hunt them, but you&apos;ll help us preserve the #m800000000#&apos;s beauty and legendary food. What do you say?"/>
+      <string name="0" value="你好？#m800000000#很美丽吧？不过最近#m800000000#也发生了令人头痛的事情。经常发生#b#o9400001##k袭击食品商店的事情。#m800000000#的另一个亮点是销售各类食品的商店…… 因为#o9400001#捣乱，居民们都很担心。"/>
+      <string name="1" value="您看起来很强…… 方便的话，可以帮居民击退#o9400001#吗？也为了#m800000000#的特色食品。"/>
       <imgdir name="yes">
-        <string name="0" value="Really? Thank you so much! Okay, I&apos;d like for you to eliminate #b100 #o9400001#s#k, then come see me. 100 should be enough to decrease the suffering these people are going through. Good luck!"/>
+        <string name="0" value="可以帮忙？！非常感谢！抓到#b#o9400001# 100只#k后告诉我一声。这样的话，可以降低村庄居民的损失。拜托你了。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Ahhh ... I&apos;m sorry. I must have asked for too much. Hmmm... what should we do with #o9400001#, then?"/>
+        <string name="0" value="啊…… 可能是我提了过分的要求。那怎么处理这些#o9400001#呢……？"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="You really did eliminate all those #o9400001#s. Wow... I really asked for a lot, though..."/>
+      <string name="0" value="击退全部#o9400001#了。不是少数哦……"/>
       <imgdir name="yes">
-        <string name="0" value="I really don&apos;t know what to say... except thank you SO much for your help! Hopefully the people here won&apos;t be gripped with fear as they try to eat at restaurants again. Here&apos;s a small reward for your work; a homemade food from the people of #m800000000#. Thank you!"/>
+        <string name="0" value="非常感谢。居民们不用再担心了！这是村庄居民做的食品，也算是酬谢。非常感谢。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="I don&apos;t think you have gotten all of the #b#o9400001#s#k, yet. I mean, a 100 of them are a lot to handle. Keep going!"/>
+          <string name="0" value="还没抓完#b#o9400001##k是吗。也是，抓100只也不是很容易的事儿。再加把劲儿。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4302">
     <imgdir name="0">
-      <string name="0" value="What do you think? This is a newly-made Kimono. This costs a lot, but isn&apos;t it beautiful to look at? The flowers at #m800000000# are generally that of pretty pink. Anyway, I&apos;m pretty sure I&apos;m the only person here that can pull this color off...! But then again, something seems to be lacking here. What would that be...?"/>
-      <string name="1" value="Oh yeah! A gorgeous muffler to match this Kimono! If I put them both on, everyone will look at me with awe and reverence. Hey, you. If you aren&apos;t busy or something, then can you help me get some materials for the muffler?"/>
+      <string name="0" value="你觉得如何？这是我新买的和服。虽然有点贵，但色泽特别漂亮。和#m800000000#的樱花一样是美丽的粉红色。呼呼，只有我才能配上这种颜色吧？……不过总觉得缺了些什么…… 缺什么呢？"/>
+      <string name="1" value="噢！对了！得给这个和服配上一个漂亮的披肩。戴着披肩散步，多么有诗意啊！那边，你，如果不忙的话，能不能帮我找找披肩的材料？"/>
       <imgdir name="yes">
-        <string name="0" value="Thanks~ You are much more courteous than your looks suggest. What I need for the muffler will be #b100 #t4000066#s#k. I swear, the best mufflers are made out of #t4000066#. I put on nothing but the finest. Hohoho~"/>
+        <string name="0" value="噢～ 谢谢。你还蛮亲切的嘛。需要找到#b#t4000066# 100个#k。披肩还是以#t4000066#制的最好。我只买最好的。呵呵呵～"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="What? You said no to a lady? That&apos;s so rude!"/>
+        <string name="0" value="哼。居然拒绝淑女的请求，太无礼了吧？"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Hey, you gathered up #t4000066#s like I asked you to~!"/>
+      <string name="0" value="噢，收集了#t4000066#啊～"/>
       <imgdir name="yes">
-        <string name="0" value="Not bad at all~ Well, will these be enough to make the muffler? Hmmm ... talk to me in a bit."/>
+        <string name="0" value="谢谢。不错哦。这些足够做披肩了吧？嗯…… 待会儿再和我搭话。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="That&apos;s not 100! I want 100, #b100 #t4000066#s#k! Do it right!"/>
+          <string name="0" value="什么…… 不到100个啊？需要#b#t4000066# 100个#k，拜托。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4303">
     <imgdir name="0">
-      <string name="0" value="Hey, you&apos;re the one that got me a whole bunch of #t4000066#s before, right? Why did you give me that little? I SPECIFICALLY told you to get me 300 #t4000066#s!!!"/>
-      <string name="1" value="Nooo, I NEVER said 100! I said 300!! 300!! Mufflers can&apos;t be made with just 100 #t4000066#s! That&apos;s common sense, okay? Now, get me some more #t4000066#s~"/>
+      <string name="0" value="喂，你！是上次拿来#t4000066#的人吧？为什么只给我找那些啊？我明明让你找#t4000066# 300个啊！"/>
+      <string name="1" value="什么～！我什么时候说100个啊，我说300个！100个#t4000066#怎么够制一个披肩呢？这是常识～ 快，再去找#t4000066#～"/>
       <imgdir name="yes">
-        <string name="0" value="Hohoho~ you&apos;re so kind. Well, since you got me 100 last time, I need #b200 more #t4000066#s#k! Don&apos;t forget it this time! Okay?"/>
+        <string name="0" value="呼呼～ 果然是个亲切的人啊～ 之前找过100个，还需要再找#b#t4000066# 200个#k！这次不能忘记哦～"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="What? You said no to a lady? That&apos;s so rude!"/>
+        <string name="0" value="哼。居然拒绝淑女的请求，真是无礼！"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Hey, you gathered up #t4000066#s like I asked you to~! I knew you looked pretty strong, but this is impressive~"/>
+      <string name="0" value="哦，找齐了所有#t4000066#哦。看起来你很强哦，这些对你来说很轻松哦～"/>
       <imgdir name="yes">
-        <string name="0" value="Thanks a lot! #t4000066# is really really soft, and I just love that feeling of it rubbing against my skin. There&apos;s nothing quite like fox skin! This should probably help me make the muffler."/>
+        <string name="0" value="谢谢。#t4000066#的毛皮真是柔软啊～ 制衣还是要用狐狸皮！这些足够我做披肩了。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="That&apos;s not 200! I want 200, #b200 #t4000066#s#k! How many times do I have to tell you this?"/>
+          <string name="0" value="什么…… 不够200个啊？我说过多少次了，需要#b#t4000066# 200个#k！"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4304">
     <imgdir name="0">
-      <string name="0" value="Hey, aren&apos;t you the one that got me some #t4000066#s for the muffler? Nice to see you~! Thanks to your good work, I was able to make the best muffler in the world! But you know what...? Don&apos;t I look like ... something&apos;s missing? I mean, look. It just doesn&apos;t seem complete. You know what? I think this Kimono needs not just the muffler, but a matching coat! Don&apos;t you think so?"/>
-      <string name="1" value="Getting #t4000066# should be a piece of cake for you. Please get me some~"/>
+      <string name="0" value="噢～ 你是上次帮我找#t4000066#披肩材料的那位哦？很高兴见到你～ 呼呼，多亏你帮忙，制了一件漂亮的披肩。不过，还觉得缺了些什么？ 这件和服，除了披肩外，还要再配一件外套。那样就很完美了。不是吗？是吧？"/>
+      <string name="1" value="对你来说，找#t4000066#不算什么难事吧，帮帮我吧～"/>
       <imgdir name="yes">
-        <string name="0" value="Hohoho~ you&apos;re so kind. Well, since the coat requires much more materials than the muffler, just get me #b400 #t4000066#s#k. That should be enough for me to make the coat~"/>
+        <string name="0" value="呼呼呼呼～ 果然是位亲切的人啊。比起披肩，外套需要找更多的材料。找#b#t4000066# 400个#k吧。应该够了。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Hey, you got me those last time. Why not now? Sheesh..."/>
+        <string name="0" value="什么～ 这次不能帮忙？"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Hey~! You did get all 400 of the #t4000066#s! I needed a lot of #t4000066# to make the coat, you know..."/>
+      <string name="0" value="噢噢噢～ 找全了#t4000066# 400个哦～ 制外套需要很多#t4000066#。"/>
       <imgdir name="yes">
-        <string name="0" value="You are indeed much stronger than your looks may suggest. Seriously, thank you soooo much for all this! This should finally complete the dream look for me. A Kimono, combined with #t4000066# muffler and #t4000066# coat? This screams elegance!"/>
+        <string name="0" value="果然很强啊。非常感谢～ 这次可以用这个制#t4000066# 披肩和#t4000066#外套，完成我优雅的风格了！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="This isn&apos;t 400! I need at least 400 to make the coat! Do it right!"/>
+          <string name="0" value="不够400个啊？至少需要400个才能完成外套哦～ 拜托！"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4305">
     <imgdir name="0">
-      <string name="0" value="Arrrrgh! This is reaaaallly making me upset! Why am I so upset? Well, listen to this. Lately, I haven&apos;t found any new clothes worth buying, so I went ahead and bought this fabric that featured a nice drawing of a bunny. I hung it up at the back porch for a second, so I could get my tools ready, and... #o9400004# came in and snatched it away!!! Arrrghh!!!"/>
-      <string name="1" value="You are pretty strong, right? Well, then I beg you to go eliminate #o9400004#! Because of it, I am too worried to buy new clothes now!"/>
+      <string name="0" value="真是让人气愤！为什么发火？你听我说，最近没有合身的衣服。为了制新衣服，我去买了非常漂亮的，有兔图案的布料。制衣之前，挂在了后院上，结果#o9400004#过来，把布料都给咬烂了！那个漂亮的兔子图案！"/>
+      <string name="1" value="你是很强的冒险家吧？如果是，请帮我击退那个#o9400004#！我觉得很不安，都不敢买衣服了！"/>
       <imgdir name="yes">
-        <string name="0" value="Wow, really? You&apos;re really going to fight #o9400004#? You should know that it&apos;s much more powerful than #o9400002#. Are you sure you can do it? Don&apos;t get me wrong--I want your help, and I think you can do it; I just don&apos;t want you coming back with a busted face. So if you&apos;re ready, go take down #b100 #o9400004#es#k for me. I&apos;m counting on you!"/>
+        <string name="0" value="哦～ 真的可以帮我击退它们？#o9400004#比一般的#o9400002#强很多，你可以做到吗？当然，我不是不相信你。拜托你了。帮我击退#b#o9400004# 100只#k。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="What? You said no? You know what? I can&apos;t believe this. #o9400004# is out stealing more clothes as we speak. Your clothes might be next!"/>
+        <string name="0" value="不行？真是小气。大#o9400002#可能还会盯上你的衣服呢～"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Hey, all 100 #o9400004#!! A lot of people tend to underestimate #o9400004#&apos;s power, but I guess you weren&apos;t like that!"/>
+      <string name="0" value="击退#o9400004#100只？很多人看它长得弱不禁风，都会轻敌。看来你没有犯这种错误啊？"/>
       <imgdir name="yes">
-        <string name="0" value="Seriously, thank you so much!! The fabric I bought just now will now be hung up at the back porch, thanks to your good work!"/>
+        <string name="0" value="非常感谢！刚买的衣服可以安心挂在后院了。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="You haven&apos;t eliminated all the #b#o9400004#es#k, yet? I told you they&apos;re strong. Do it fast! I don&apos;t know where would be safe to put my fabric from those #o9400004#es!"/>
+          <string name="0" value="还没击退#b#o9400004##k？我说它们很强吧～ 快点啊，我都没地儿放布料了～"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4306">
     <imgdir name="0">
-      <string name="0" value="Oh no. This isn&apos;t good. Hey, there. If you aren&apos;t really busy, then can you help me out? There&apos;s not much to worry. It may take up a little of your time, but it&apos;s nothing big."/>
+      <string name="0" value="真是为难啊。那边，你，如果不忙，可以帮帮我吗？不用担心，虽然有些麻烦，但不难。"/>
       <imgdir name="yes">
-        <string name="0" value="I appreciate that. We have been experiencing problems with the lanterns in the streets lately. I mean, the #t4000222#s got stuck with ghosts! What? No no, there&apos;s nothing to worry. It&apos;s really nothing. Just go ahead and kill #b100 #o9400011#s#k, and I also want you to gather up #b50 #t4000222#s#k to be used at various places in this town. See, it&apos;s pretty simple!"/>
+        <string name="0" value="感谢你答应我的请求。最近在村庄使用的灯出了些问题。#t4000222#有鬼附体。嗯？不用怕，没什么大惊小怪的。只要击退#b#o9400011# 100只#k，找可以在村庄使用的#b#t4000222# 50个#k就可以了。怎么样？简单吧？"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Really? I am sure you have your own issues to deal with. Where am I going to find #t4000222#, then?"/>
+        <string name="0" value="是吗？看来你也有烦心事啊？那，去哪儿找#t4000222#呢……"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Hmmm, okay. I guess you killed some #o9400011#s. What do you think? That wasn&apos;t too difficult, was it?"/>
+      <string name="0" value="恩，不错…… 击退了一些#o9400011#啊。怎么样？没想象中那么可怕吧？"/>
       <imgdir name="yes">
-        <string name="0" value="Great work there. It&apos;s really dangerous at night here without the #t4000222#s brightening up the streets. It&apos;s to make sure no one gets hurt walking in the dark. That&apos;s why we really needed these #t4000222#s. Thank you."/>
+        <string name="0" value="谢谢。没有#t4000222#，晚上很黑，挺危险的。村里的人也可能会伤着，挺需要#t4000222#的。非常感谢。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="You haven&apos;t finished yet, right? Please go ahead and kill #b100 #o9400011#s#k and gather up #b50 #t4000222#s#k in the process."/>
+          <string name="0" value="看来还没完成啊。快去击退#b#o9400011##k100只，找50个#b#t4000222##k 给我们吧。"/>
         </imgdir>
         <imgdir name="item">
-          <string name="0" value="You haven&apos;t finished yet, right? Please go ahead and kill #b100 #o9400011#s#k and gather up #b50 #t4000222#s#k in the process."/>
+          <string name="0" value="看来还没完成啊。快去击退#b#o9400011##k100只，找50个#b#t4000222##k 给我们吧。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4307">
     <imgdir name="0">
-      <string name="0" value="Hey you! Yes, you! You look like someone that can seriously use a good advise right now. What do you think? Do you want to hear it?"/>
+      <string name="0" value="你！就是你！你现在可能急需指点…… 不想听听吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Have you been feeling heavy on your neck, with your back aching and your legs shaking, and you feel fatigued for no apparent reason? You feel tired even with the red potion in your hand, and you just can&apos;t seem to do anything even after taking the blue potion. I know you might be going through that right now. Right? No? Right? No, it SHOULD be right!"/>
-        <string name="1" value="The reason you seem lethargic is because you&apos;re stuck with #o9400003#! With #o9400003#!! You need to get it off immediately! Now, go out there and kill #b100 #o9400003#s#k!!"/>
+        <string name="0" value="你最近有没有觉得脖子发酸，腰疼，腿脚无力，全身乏力呢？再怎么吃红药也缺体力，再怎么吃蓝药也觉得没有帮助？没有这种感觉？应该有吧？得有啊？"/>
+        <string name="1" value="你疲劳是因为#o9400003# ！有#o9400003#附体！要马上击退它！来，快击退#b#o9400003# 100只#k！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="...hmmm, so you are saying no to a sound advise. That&apos;s your loss."/>
+        <string name="0" value="…什么，既然拒绝这种指点。没有办法…… 不过吃亏的是你。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Ohh, did you really kill all those #o9400003#s?"/>
+      <string name="0" value="噢噢！看来击退所有敌人了。"/>
       <imgdir name="yes">
-        <string name="0" value="Good. Now that #o9400003#s are nowhere to be found, my, I mean, our lives will be a little easier. You don...t believe me? Well, then ... I don&apos;t know what to tell you."/>
+        <string name="0" value="好……  看不到#o9400003#，可以放心了。是不是真的？不相信我就算了。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="Huh? You haven&apos;t killed them all yet! You need to kill #b100 #o9400003#s#k! All of them!"/>
+          <string name="0" value="嗯？什么？还没击退它们啊？#b#o9400003# 100只#k。要全部击退才行。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4308">
     <imgdir name="1">
-      <string name="0" value="Hoh... you found the Water Goblins came for more #t4000223#s before they decided to eat them all!"/>
+      <string name="0" value="噢噢！在水怪吃光#t4000223#之前，找回#t4000223#了！"/>
       <imgdir name="yes">
-        <string name="0" value="Okay, with these #t4000223#s I won&apos;t have to worry about lack of food anymore. Thanks a lot!"/>
+        <string name="0" value="可以用找回的#t4000223#做可口的美食了！感谢！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="You haven&apos;t defeated #b#o9400012#s#k yet. You need to take care of all of them so that the #t4000223#s will stay safe. Talk to me when you defeat 100 of them."/>
+          <string name="0" value="看来还没击退#b#o9400012##k哦。要把它们全部击退，才能保住#t4000223#，击退100只后再和我搭话吧。"/>
         </imgdir>
         <imgdir name="item">
-          <string name="0" value="You haven&apos;t found all the #t4000223#s yet? Hmmm ... even if you defeated all the #o9400012#s, without the #t4000223#s, it&apos;s nothing."/>
+          <string name="0" value="#t4000223#还没找齐吗？嗯…… 就算击退所有#o9400012#，如果找不回#b#t4000223##k也没用啊……"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Sigh... There seemed to be lots of #t4000223#s waiting to be plucked this year, but ... all the other #t4000223#s remain untouched EXCEPT the one in MY FARM! My goodness, what should I do? I&apos;m sure who the real culprit is... excuse me, but do you mind catching the culprit that&apos;s responsible for the mass disappearance of #t4000223#s?"/>
+      <string name="0" value="嗯，据说这次是#t4000223#大丰收…… 不过其他地的#t4000223#碰都不碰，专偷这个地的#t4000223#啊…… 怎么办呢，罪犯肯定是那个家伙…… 你，如果方便的话，可以帮我抓偷#b#t4000223##k的小偷吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Ahh, thank you. I&apos;m pretty sure #b#o9400012##k is the guilty one. It seems to really obsess in #t4000223#, more than anything else. Well, the #t4000223#s in our farm are known for their great taste, and I think it was aware of that, too. I want you to hunt #b100 #o9400012#s#k and bring back #b50 #t4000223#s#k in return."/>
+        <string name="0" value="噢噢，感谢你帮忙。罪犯肯定是#b#o9400012##k。它们非常喜欢#t4000223#。因为这个地产的#t4000223#特别好吃，它们一直在盯着。肯定是它们偷走的。击退#b#o9400012# 100只#k后，找#b#t4000223# 50个#k给我吧。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Hmmm... if you are busy, then there&apos;s nothing I can do about it. I am sure who did this, though. How am I supposed to catch it?"/>
+        <string name="0" value="嗯…… 比较忙，那就没有办法了。罪犯很明确，怎么抓呢……？"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4309">
     <imgdir name="1">
-      <string name="0" value="Oh my! You really defeated #o9400205#! I can&apos;t believe it... I mean, it&apos;s just so powerful. No one in this town dared going outside for the fear of being attacked by it."/>
+      <string name="0" value="噢噢！居然击退了#o9400205#！那么强的家伙…… 因为它，村庄居民都不敢外出啊！"/>
       <imgdir name="yes">
-        <string name="0" value="You must really be something special. On behalf of everyone in this town, I salute you for your incredible work. Without you, there&apos;s no telling what would have happened to this town. Thank you so much. Really, thank you."/>
-        <string name="1" value="Unfortunately, I also hear that this is not the end of #o9400205#. I&apos;d appreciate it if you can help me out here once a day. I&apos;ll see you around."/>
+        <string name="0" value="你是真正强大的冒险家哦。我代表村庄向你表示感谢。如果不是你，真不知这个村庄会变成什么样。非常感谢，感谢。"/>
+        <string name="1" value="但据说#o9400205#不会完全消失…… 如果能每天帮我一次就好了…… 希望下次你也过来…… "/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="Did you not defeat #b#o9400205##k? I understand that it&apos;s a very powerful monster, but ... if you see a blue mushroom cap, PLEASE attack it. You&apos;ll find it at #b#m800010100##k."/>
+          <string name="0" value="还没抓住#b#o9400205##k？也是…… 它可是很强悍的家伙哦。如果看到蓝色蘑菇，一定要帮我抓住它。去#b#m800010100##k就可以看到。"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="This place right here, #m800000000#, has been a prime spot for mushrooms from the beginning. Since it&apos;s always spring here in #m800000000#, the mushrooms grew unlike other places. We&apos;ve lived through numerous different kinds of mushrooms, to the point where they have taken up an important part of our lives."/>
-      <string name="1" value="The mushrooms pretty much represent our town. It&apos;s not just our prime source of income, but much more than that. The problem is, a number of mushrooms around here have lately been acting strange, and it&apos;s a cause for concern. You seem to be pretty powerful. Will you help save our town?"/>
+      <string name="0" value="这里，#m800000000#，很久以前就以盛产蘑菇而闻名。#m800000000#四季长青，非常适合蘑菇生长。我们已经习惯了与各式各样的蘑菇一同生活。蘑菇已经成为我们村庄特别重要的一员。"/>
+      <string name="1" value="可以说蘑菇就是这个村庄的象征。不仅仅是生存手段。不过最近，周边的蘑菇都有些不大对劲…… 你看起来很强，能帮帮我们吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Ohh, okay. Thank you for taking up the offer. There are numerous types of mushrooms in this town, and among those, you may find a strange mushroom that sports a blue mushroom cap. I think it&apos;s one of those mutant mushroooms, seeing that it&apos;s different from other mushrooms. They are much more powerful than other mushrooms, and are also very violent. We need to eliminate those mushrooms before they get really out of hand."/>
-        <string name="1" value="It&apos;s called #b#o9400205##k. It sports the same, non-assuming look of other mushrooms, but underneath it lies a very violent mushroom eager to attack at will. Please eliminate it for us."/>
+        <string name="0" value="噢噢，好。感谢。村庄周边有各式各样的蘑菇，其中有一种带蓝色的奇怪的蘑菇。和一般的蘑菇颜色不一样，应该是突然变异蘑菇。它们比一般的蘑菇强，并且性格也很暴躁。如果不击退它们，恐怕村庄就无法恢复和平。"/>
+        <string name="1" value="那家伙的名字是#b#o9400205##k。和其他蘑菇一样，有着可爱的面孔，但非常危险。要非常小心。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="If you are indeed a traveler with immense strength, don&apos;t you think it&apos;s only fair that you use it on those that are in need of help? Please reconsider..."/>
+        <string name="0" value="如果你是个拥有强大力量的冒险家，就应该帮助那些处于困境的人们，不是吗？你再想想吧。"/>
       </imgdir>
     </imgdir>
   </imgdir>
@@ -11102,14 +11102,14 @@
   <imgdir name="4900">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="Where are you? \n\n#L0##b Aqua Road#l\n#L1# The Forest of Golem#l\n#L2# New Leaf City#l\n#L3# Henesys#k#l"/>
-      <string name="1" value="That&apos;s right! You are Right now at New Leaf City of Masteria!"/>
+      <string name="0" value="你在哪里?\n\n#L0##b绿色的路#l\n#L1#巨人森林#l\n#L2#新叶城#l\n#L3#绿色的树#k#l"/>
+      <string name="1" value="这是正确的!你现在在Masteria的新叶城!"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="0" value="wrong"/>
-          <string name="1" value="wrong"/>
-          <string name="3" value="wrong"/>
+          <string name="0" value="答错了！"/>
+          <string name="1" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="3"/>
         </imgdir>
       </imgdir>
@@ -11118,14 +11118,14 @@
   <imgdir name="4901">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="Who is Professor Foxwit? \n\n#L0##b Professional Crackpot#l\n#L1# Mad Scientist#l\n#L2# Time-traveler#l\n#L3# Madman who chases mushrooms#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="福斯魏德教授是谁？\n\n#L0##b专业的狂想家#l\n#L1#疯狂科学家#l\n#L2#时空旅行者#l\n#L3#追逐蘑菇的疯子#k#l"/>
+      <string name="1" value="答对了！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="0" value="Wrong!"/>
-          <string name="1" value="Wrong!"/>
-          <string name="3" value="Wrong!"/>
+          <string name="0" value="答错了！"/>
+          <string name="1" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="3"/>
         </imgdir>
       </imgdir>
@@ -11134,14 +11134,14 @@
   <imgdir name="4902">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="What&apos;s a Foxwit Door? \n\n#L0##b A door made of candy and hope#l\n#L1# The transport system of New Leaf City#l\n#L2# Someplace where foxes hide and play tennis#l\n#L3# A mysterious hole that predicts the future#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="福斯魏德之门是什么？\n\n#L0##b一扇由糖果与希望制成的门#l\n#L1#新叶城的交通运输系统#l\n#L2#某个狐狸躲藏和打网球的地方#l\n#L3#一个预测未来的神秘之洞#k#l"/>
+      <string name="1" value="答对了！！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="0" value="Wrong!"/>
-          <string name="2" value="Wrong!"/>
-          <string name="3" value="Wrong!"/>
+          <string name="0" value="答错了！"/>
+          <string name="2" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="2"/>
         </imgdir>
       </imgdir>
@@ -11150,14 +11150,14 @@
   <imgdir name="4903">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="Where are the MesoGears? \n\n#L0##b Earth#l\n#L1# Amoria#l\n#L2# Under the sea#l\n#L3# Under Bigger Ben#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="内部齿轮装置在那里？\n\n#L0##b陆地上#l\n#L1#天上#l\n#L2#海底下#l\n#L3#大笨钟底下#k#l"/>
+      <string name="1" value="答对了！！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="0" value="Wrong!"/>
-          <string name="1" value="Wrong!"/>
-          <string name="2" value="Wrong!"/>
+          <string name="0" value="答错了！"/>
+          <string name="1" value="答错了！"/>
+          <string name="2" value="答错了！"/>
           <int name="answer" value="4"/>
         </imgdir>
       </imgdir>
@@ -11166,14 +11166,14 @@
   <imgdir name="4904">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="What is the Krakian Jungle? \n\n#L0##b A magical place of fish and pie#l\n#L1# A mall made of gold#l\n#L2# A Unicorn-sponsored tea party#l\n#L3# The dangerous outskirts of New Leaf City#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="克兰卡丛林是哪里？\n\n#L0##b海魔女施展魔法地点#l\n#L1#用金子打造的购物中心#l\n#L2#独角兽群聚的地方#l\n#L3#新叶城的危险郊区#k#l"/>
+      <string name="1" value="答对了！！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="0" value="Wrong!"/>
-          <string name="1" value="Wrong!"/>
-          <string name="2" value="Wrong!"/>
+          <string name="0" value="答错了！"/>
+          <string name="1" value="答错了！"/>
+          <string name="2" value="答错了！"/>
           <int name="answer" value="4"/>
         </imgdir>
       </imgdir>
@@ -11182,14 +11182,14 @@
   <imgdir name="4905">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="What&apos;s a Gear Portal? \n\n#L0##b A special place where honey drips out#l\n#L1# A weird switch that transports you to a different place.#l\n#L2# A bear&apos;s resting place#l\n#L3# No clue!#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="齿轮入口是什么？齿轮入口? \n\n#L0##b蜂蜜会滴出来的地方#l\n#L1#可以运送你到不同地点的怪异开关#l\n#L2#熊的栖息地#l\n#L3#玩具城的秘密基地！#k#l"/>
+      <string name="1" value="答对了！！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="0" value="Wrong!"/>
-          <string name="2" value="Wrong!"/>
-          <string name="3" value="Wrong!"/>
+          <string name="0" value="答错了！"/>
+          <string name="2" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="2"/>
         </imgdir>
       </imgdir>
@@ -11198,14 +11198,14 @@
   <imgdir name="4906">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="What do the street signs mean? \n\n#L0##b Do not enter until Doomsday#l\n#L1# Entering them sends you to the place listed#l\n#L2# No magic permitted#l\n#L3# Need a permit to enter#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="这些路标代表什么?\n\n#L0##b世界末日之前请勿进入#l\n#L1#进入之后会把你送到所列出的地点#l\n#L2#不准使用魔法#l\n#L3# 需要许可才能进入#k#l"/>
+      <string name="1" value="答对了！！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="0" value="Wrong!"/>
-          <string name="2" value="Wrong!"/>
-          <string name="3" value="Wrong!"/>
+          <string name="0" value="答错了！"/>
+          <string name="2" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="2"/>
         </imgdir>
       </imgdir>
@@ -11214,14 +11214,14 @@
   <imgdir name="4907">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="What do the stoplights do? \n\n#L0##b Stop#l\n#L1# Go#l\n#L2# Depending on the Red or Green light, the area with the stoplight may or may not be open#l\n#L3# They tell time. With colors#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="停止号志的功能是什么?\n\n#L0##b停止#l\n#L1# 前进#l\n#L2#视红灯或绿灯而定，有停止号志的地区可以和不可以开放#l\n#L3#指示时间。用颜色表示。#k#l"/>
+      <string name="1" value="答对了！！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="0" value="Wrong!"/>
-          <string name="1" value="Wrong!"/>
-          <string name="3" value="Wrong!"/>
+          <string name="0" value="答错了！"/>
+          <string name="1" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="3"/>
         </imgdir>
       </imgdir>
@@ -11230,14 +11230,14 @@
   <imgdir name="4908">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="Who&apos;s Jack Masque? \n\n#L0##b A dashing bandit prince from Amoria#l\n#L1# A professional hobo#l\n#L2# An advocate of Compassion for Balrogs#l\n#L3# Garden clerk#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="蒙面侠 杰克是谁？\n\n#L0##b来自不知名地方的潇洒侠盗王子#l\n#L1#职业游民#l\n#L2#同情炎魔的拥护者#l\n#L3#庭园修士#k#l"/>
+      <string name="1" value="答对了！！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="1" value="Wrong!"/>
-          <string name="2" value="Wrong!"/>
-          <string name="3" value="Wrong!"/>
+          <string name="1" value="答错了！"/>
+          <string name="2" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="1"/>
         </imgdir>
       </imgdir>
@@ -11246,14 +11246,14 @@
   <imgdir name="4909">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="Who&apos;s Lita Lawless? \n\n#L0##b Sheriff of New Leaf City#l\n#L1# A princess#l\n#L2# An exceptional juggler#l\n#L3# Cake-loving Wacko#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="莉塔 罗莉丝是谁？\n\n#L0##b新叶城的警长#l\n#L1#公主#l\n#L2#厉害的骗子#l\n#L3#蛋糕狂#k#l"/>
+      <string name="1" value="答对了！！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="1" value="Wrong!"/>
-          <string name="2" value="Wrong!"/>
-          <string name="3" value="Wrong!"/>
+          <string name="1" value="答错了！"/>
+          <string name="2" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="1"/>
         </imgdir>
       </imgdir>
@@ -11262,14 +11262,14 @@
   <imgdir name="4910">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="Who&apos;s John Barricade? \n\n#L0##b Famous treasure hunter and explorer#l\n#L1# Famed Typist#l\n#L2# Mushmom&apos;s friend#l\n#L3# Obstacle builder#k#l"/>
-      <string name="1" value="That&apos;s right!!"/>
+      <string name="0" value="强 贝瑞加德是谁？\n\n#L0##b知名的寻宝人和探险家#l\n#L1#著名的打字员#l\n#L2#蘑菇的朋友#l\n#L3#制造麻烦的人#k#l"/>
+      <string name="1" value="答对了！！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="1" value="Wrong!"/>
-          <string name="2" value="Wrong!"/>
-          <string name="3" value="Wrong!"/>
+          <string name="1" value="答错了！"/>
+          <string name="2" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="1"/>
         </imgdir>
       </imgdir>
@@ -11278,14 +11278,14 @@
   <imgdir name="4911">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="When will new boroughs open up in the city? \n\n#L0##b When I can eat MushMom#l\n#L1# 2012#l\n#L2# The moment they are ready to go#l\n#L3# When Golden Pigs fly#k#l"/>
-      <string name="1" value="That&apos;s right!! You&apos;ve solved all the questions!"/>
+      <string name="0" value="这座城市中的新区何时会开放？\n\n#L0##b当我可以吃蘑菇王的时候#l\n#L1#宝贝龙长大的时候#l\n#L2#准备好开放的时候#l\n#L3#当黄金猪会飞的时候#k#l"/>
+      <string name="1" value="答对了！！你已经解答了所有的问题！"/>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="0" value="Wrong!"/>
-          <string name="1" value="Wrong!"/>
-          <string name="3" value="Wrong!"/>
+          <string name="0" value="答错了！"/>
+          <string name="1" value="答错了！"/>
+          <string name="3" value="答错了！"/>
           <int name="answer" value="3"/>
         </imgdir>
       </imgdir>
@@ -11293,24 +11293,24 @@
   </imgdir>
   <imgdir name="4912">
     <imgdir name="0">
-      <string name="0" value="Hello there. Do you have a moment to spare? "/>
+      <string name="0" value="嗨。你可以抽出一点时间吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Wonderful. Name&apos;s Jack. Jack Masque. I&apos;m from Amoria, but that neither here nor there...it&apos;s a long story why I left...but since you&apos;re still here, I&apos;ll give you the short version. I&apos;m in love! I am lost in the throes of passion with the most beautiful creature I have laid eyes upon...a Princess. Princess Restless to be exact. I&apos;m competing for her with some snob-nosed prince. We were out on our first date, and the time was perfect. The sun was shining, birds were tweeting, and just as I was about to receive a kiss from her sweet lips, this strange spider attacked us! I fought the beast off, but that was a one in a million chance with her! I swore to wear this mask in shame until I could return to Amoria with honor. But I must hurry, that accursed Prince Vince is sure to attempt to steal her away...So, I want you to go and eliminate 100 Wolf Spiders, which should ensure that this never happens again. If you&apos;re successful, I have a particularly rare crystal that may suit you...get going!"/>
+        <string name="0" value="太好了。我的名字叫杰克。蒙面 杰克。我来自于遥远的地方，不过既不是这里也不是那里...我为什么离开了说来话长...不过既然你还在这里，我就长话短说。我恋爱了！我迷失在和最美丽的女人的痛苦恋情中，我迷恋上一位...公主。确切地说是位活泼好动的公主。我和一些骄傲自大的王子们争夺她。在第一次约会时我们外出，而且一切是那么地美好。阳光灿烂，鸟儿歌唱，而正当我即将得到她甜美之吻时，有只奇怪蜘蛛却攻击了我们！我和那只野兽搏斗，但是却被牠给打败了！我感到羞耻而发誓带上这个面罩，直到我可以光荣返回那个地方为止。不过我必须赶快，那个该死的文斯王子肯定会试图抢走她...所以，我需要你去消灭 100 只机械蜘蛛，以确保不再发生这样的事情。如果你成功了，我有一种非常珍贵的水晶送给你...出发吧！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Unfortunate. Be on your way then!"/>
+        <string name="0" value="可惜。那么再会吧！"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Fantastic! I&apos;ll be able to face her again without worrying if one of those pesky Wolf Spiders will spoil the moment. As promised, here is your reward. Enjoy! And in three days time, you may return to me for another hunt! \n\n#L0##bActually, can you tell me more about yourself?#k#l"/>
-      <string name="1" value="Anything else you wish to know? \n\n#L0##bWhy is that mask really on your face?#k#l"/>
-      <string name="2" value="I&apos;m a prideful man, and the thought that I lost my chance due to spider is...rather embarrassing to be honest. Icebyrd offered me a chance to redeem myself, and I took it. I won&apos;t take off this mask until I can return to Amoria with honor! You&apos;ve helped me and I never forget a favor. I may have a few tasks for you in the future. With your help, I&apos;m sure that I&apos;d get a leg up on that walking waste of space known as Prince Vince... Does this answer your question?"/>
+      <string name="0" value="太棒了！我可以再面对她而不用担心是否那些讨厌的机械蜘蛛会来破坏重要时刻。依照承诺，这是你的报酬。好好利用吧！ \n\n#L0##b 其实，你能不能告诉我更多关于你自己的事？#k#l"/>
+      <string name="1" value="还有任何你想知道的事吗？\n\n#L0##b 那个面罩会在你脸上的真正原因？#k#l"/>
+      <string name="2" value="我是个高傲的人，由于蜘蛛我失去了公主... 宁可丢脸也不想面对。在能光荣回到那个地方之前我都不会脱下这个面罩！ 你帮助了我，我永远不会忘记恩情。将来我或许会给你几项任务。在你的帮助之下，我肯定可以挽回我高傲的自尊... 这样是否回答了你的问题呢？"/>
       <imgdir name="yes">
-        <string name="0" value="As promised, here is your reward. Enjoy! And in three days time, you may return to me for another hunt!"/>
+        <string name="0" value="依照承诺，这是你的报酬。好好利用！在三天之后，你可以为其它狩猎回来找我！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="Tsk, tsk. So sad. I said #b100 Wolf Spiders#k. Not 74, not 32, not 99. 100. Come back when you have something to show for your effort-besides a tired face. "/>
+          <string name="0" value="啧啧...。真令人难过。我说的是 #b100 只机械蜘蛛#k。不是 74只、不是 32只、也不是 99只。是 100只。除了一张疲惫的脸之外，等你有一些可以展示努力的东西时再回来。 "/>
         </imgdir>
         <imgdir name="0">
           <int name="answer" value="1"/>
@@ -11324,27 +11324,27 @@
   </imgdir>
   <imgdir name="4913">
     <imgdir name="0">
-      <string name="0" value="Hey. Got a sec?"/>
+      <string name="0" value="喂。有空吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Then you&apos;ve come to the right place! Name&apos;s John Barricade, one half of the world-famous Barricade Bros. Treasure Hunting Co. I&apos;ve been trying to explore the Temple Hive, but I haven&apos;t got that far in. But with your help, I think we can make a push to discover some treasure...First, I&apos;ll need you to clear the area. Wipe out #b50 Killa Bees, 30 Mighty Maple Eaters#k and #b40 Fire Tusks#k. After that, head back to me and we&apos;ll get some real work done. Hop to it, kid!"/>
+        <string name="0" value="那么你来对地方了！我的名字叫作强 贝瑞加德，举世闻名的贝瑞加德兄弟寻宝公司之一。我一直尝试探险蜂巢神殿，但是我尚未深入其中。不过在你的帮助之下，我想可以发现一些宝藏...首先，我需要你清除这个地区。消灭 #b 50只杀人虎头蜂，30株巨灵食人花#k 以及 #b 40 头火焰象#k。之后，回头来找我，然后我们完成一些真正的工作。出发吧，孩子！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="It&apos;s called &quot;distinct fashion sense&quot;. And I wouldn&apos;t talk if I were you..."/>
+        <string name="0" value="难道你对那个地方的秘密不感兴趣？如果我是你的话就不会拒绝…"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Great work, kid! Ready to hear about the treasure? \n\n#L0##bOk, what else have you discovered?#k#l"/>
-      <string name="1" value="Well, it&apos;s a pretty long list. I always liked history, even when I was a kid. All my other subjects were ok, but I always got straight A&apos;s in History-probably because my dad would kick my butt if I didn&apos;t. That what happens when you grow up with an archeologist for a father. \n\n#L0##bWhat about your family?#k#l"/>
-      <string name="2" value="You must mean my brother, Jack Barricade. We&apos;ve agreed to something that I&apos;ll tell you about a bit later, but essentially, he&apos;s looking for something in Aqua Road, and I&apos;m searching here. \n\n#L0##bOk, you still haven&apos;t told me what was the first thing you discovered?#k#l"/>
-      <string name="3" value="Oh, sorry. It happens sometimes. After college, my brother and I concluded that the only way to live forever was to find the Fountain of Youth. It took 3 years, but we finally found it! \n\n#L0##bNO WAY!#k#l"/>
-      <string name="4" value="WAY! \n\n#L0##bThat&apos;s awesome!#k#l"/>
-      <string name="5" value="We thought so too, but man we made a lot of businesses mad with that one..."/>
+      <string name="0" value="表现非常好，孩子！准备听听关于宝藏的事吗？\n\n#L0##b 好吧，你发现到什么其他东西了吗？"/>
+      <string name="1" value="嗯，这张表相当长。我一直都喜欢历史，甚至于当我小的时候就开始了。我其它的学科都还不错，但我的历史总是拿到90分，或许是因为如果没有得到，我爸爸会踢我的屁股。那就是有一个考古学家的爸爸会发生的事。\n\n#L0##b你的家庭如何呢？#k#l"/>
+      <string name="2" value="这一定要说到我弟弟，杰克 贝瑞加德。，他正在水世界研究，而我在这里考古。\n\n#L0##b好吧，你还没告诉我你发现的第一样东西是什么？"/>
+      <string name="3" value="喔，抱歉。偶尔会这样。大学毕业之后，我弟弟和我认为长生不死的唯一方法就是找到青春之泉。花费了三年时间，不过我们终于找到了！\n\n#L0##b不行！#k#l "/>
+      <string name="4" value="行！ \n\n#L0##b那是令人敬畏的！#k#l"/>
+      <string name="5" value="我们也这样想过，不过老兄，我们因为那个做了很多疯狂的事…"/>
       <imgdir name="yes">
-        <string name="0" value="Ok, let&apos;s get going. Clear a path, come on back and let&apos;s figure out this mystery."/>
+        <string name="0" value="好，我们开始吧。清出一条路，随后回来解开这个秘密。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="Not even close to done, shorty. Get back out there and knock out #b50 Killa Bees, 30 Mighty Maple Eaters#k and #b40 Fire Tusks#k. After that, we can talk."/>
+          <string name="0" value="回到那里去并且击败 #b50 只杀人虎头蜂、30株巨灵食人花#k 和 #b40 头紫色火焰象#k。完成之后，我们可以谈谈。"/>
         </imgdir>
         <imgdir name="0">
           <int name="answer" value="1"/>
@@ -11367,16 +11367,16 @@
   </imgdir>
   <imgdir name="4914">
     <imgdir name="1">
-      <string name="0" value="Nice work! Now, I&apos;ll need some time to study these markings.\n\n#L0##bTell me some more about your discoveries.#k#l"/>
-      <string name="1" value="Heh, ok. You asked for a list, well, my bro and I have discovered King Solomon&apos;s Mines, solved the mystery of Stonehenge, found Captain Kidd&apos;s gold horde, unearthed the trove of the Knights Templar, the Lost Dutchman&apos;s Gold Mine, the Sphinx Chamber, and countless Spanish galleons. Not bad for a few years! \n\n#L0##bHoly crap! What do you think we&apos;ll find here?#k#l"/>
-      <string name="2" value="I have a hunch that Subani left something here. I remember when I explored the Sphinx Chamber, I discovered an old legend that was eerily similar to that of Subani and Naricain. It also foretells that the act that created the Dark Scrolls was not their final battle. I&apos;m not sure what we&apos;ll find, but I&apos;m sure it pertains to that. It also mentioned another world... \n\n#L0##bAnother world? Elpam&apos;s outside, have you spoken with him?#k#l"/>
-      <string name="3" value="Not yet, he smells a bit too much like old cheese... but if he really is from where he said, I might have to..."/>
+      <string name="0" value="做得不错！现在，我需要一些时间研究这些东西。\n\n#L0##b告诉我多一点关于你的发现。#k#l"/>
+      <string name="1" value="哈，好吧。我们发现了索罗门王的矿山，解开了史前时期巨大石柱群的秘密，找到了虎克船长的金币，挖掘出圣殿骑士的珍贵收藏品，失落的荷兰人金矿，人面狮身密室，以及数不尽的西班牙大型帆船。几年下来还不错！\n\n#L0##b 胡说八道！你认为我们会在这里找到什么呢？#k#l"/>
+      <string name="2" value="我有直觉苏白尼留下某样东西在此。当我探险人面狮身密室时，我发现了一个古老的传奇故事，关于苏白尼和纳瑞希安。故事说明了黑暗卷轴并非他们最后战斗的原因。我不确定我们会找到什么东西，但是我确定与那有关。内容也提到了另一个世界… \n\n#L0##b 另一个世界？艾尔潘就在外面，你和他说过了吗？#k#l"/>
+      <string name="3" value="还没，他的味道闻起来太像过时的奶酪…不过如果他真的来自他说的地方，我可能得…"/>
       <imgdir name="yes">
-        <string name="0" value="Ok, kid, get going! Return to me soon, and I should have more information!"/>
+        <string name="0" value="好吧，孩子，出发吧！快点回来找我，我应该会有更多消息！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="Looking good, kid-but I&apos;ll need #b50 Hyper Glyphs#k to read the markings. I&apos;ll be waiting!"/>
+          <string name="0" value="看起来不错，孩子-不过我需要#b50 个翻译水晶#k 来读懂这些标志。我会等待！"/>
         </imgdir>
         <imgdir name="0">
           <int name="answer" value="1"/>
@@ -11391,35 +11391,35 @@
       <int name="ask" value="1"/>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Back already, huh? Well, you proved your worth, so I&apos;ll tell you a little story..."/>
+      <string name="0" value="已经回来了，咦？很好，你证明了你的价值，所以我会讲一点故事给你听…"/>
       <imgdir name="yes">
-        <string name="0" value="Well, if you&apos;ve heard of Dark Scrolls, you&apos;ve heard about Subani. He was the powerful magician who sacrificed himself to seal away the evil demon, Naricain. The scrolls are all over the place, but that&apos;s not what we&apos;re here for. I got a tip from this funny looking guy over in Purplewood Forest, went by the name of Glimmer Man. He mentioned that Subani had a horde of items stashed away, and that the MesoGears would be a good place to look. I did some digging, thanks to the path you cleared, and found some strange markings. I don&apos;t know what they say, but I do know that there only one thing that deciphers marking like these-a #bHyper Glyph#k. It can decipher other languages, but the problem is, you can only use it once, and there are 50 markings. I&apos;ll need you to hunt down #b50 Hyper Glyphs#k so we can keep going-I know we&apos;re close to something...Try those weird-looking elephants that shoot electricity. I&apos;m willing to bet they&apos;re hiding something in that mechanism on top of their heads! "/>
+        <string name="0" value="嗯，如果你听说过黑暗卷轴的话，就会听过苏白尼。他是一位牺牲自己去封印恶魔纳瑞希安的厉害法师。这些卷轴到处都是，但却不是我们来此地的原因。我在森林中从这个长像滑稽的家伙身上得到了一个小秘密。苏白尼曾经藏起一堆东西，而内部齿轮装置区就是可能埋藏的地方。我做了些挖掘，幸亏你清开了那条路，发现了一些奇怪的标志。我不懂他们的意思，但我确实知道那里只有一样东西可以解读这些标志-一座#b翻译水晶#k。它可以译码其他语言，但问题在于，你只能使用一次 ，然而有 50个标志。我将需要你追捕到 #b50座翻译水晶#k 那么我们就可以继续前进-我知道我们离某样东西很近...试试那些射出电力的怪异大象。我敢打赌在牠们头顶上的机置中隐藏着某种东西！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Well, ok. You never turn down a good legend though, they always turn out to be true..."/>
+        <string name="0" value="嗯，好吧。虽然你从不排斥精彩的传奇故事，它们总是会变成真的..."/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4915">
     <imgdir name="0">
-      <string name="0" value="Right on time! We&apos;ve got a problem..."/>
+      <string name="0" value="刚好准时！我们面临到一个问题…"/>
       <imgdir name="yes">
-        <string name="0" value="Ok, I &quot;borrowed&quot; a few robots from Foxwit&apos;s hidden lab to help me decipher the markings, but the second they finished, those frigging robots went nuts! It was like they were being controlled...Anyways, they have the #bMesoGears Map Pieces#k. All of #b50#k of them. I&apos;ll need you to hunt them down and bring them back so I can start assembling the map. I&apos;ll poke around a bit in the MesoGears and see what I can find..."/>
+        <string name="0" value="好吧，我向福斯魏德的隐秘实验室「借了」一些机器人来帮我解读这些标志，但它们完成第二个的时候，那些该死的机器人就失控了！它们就好像受到控制一样，它们有 #b内部齿轮装置地图碎片#k。我需要你去追捕它们并把它们带回来，这样我就可以开始组合地图。我会在内部齿轮装置附近打听看看能发现什么..."/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="ust when you were getting good... I guess it was too good to be true. "/>
+        <string name="0" value="正当你向我询问时…我以为你可以帮助我解开谜团。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="A+ plus, kid. Truly outstanding! I&apos;ll start putting those pieces together right now! \n\n#L0##bI&apos;m just wondering... Have you heard from your brother yet?#k#l"/>
-      <string name="1" value="No...we haven&apos;t spoken for a while now. I hope something hasn&apos;t happened to him... \n\n#L0##bYou mentioned another world in the prophecy; do you think we could travel there?#k#l"/>
-      <string name="2" value="You know, that&apos;s probably a better question for Elpam or The Glimmer Man. But I will say this, trouble&apos;s gonna find you anyway, so you might as well have fun looking for it! Ok. Time for me to get back on the map. Before that, I&apos;ve got something for you. "/>
+      <string name="0" value="干的好，孩子。非常杰出！我会马上开始把那些碎片放在一起！\n\n#L0##b 我只想知道…你有没有你弟弟的消息？#k#l"/>
+      <string name="1" value="没有…现在我们有好一阵子没交谈了。我希望他没发生什么意外... \n\n#L0##b 你提到了在预言中的另一个世界；你认为我们可能进到那里去吗？#k#l"/>
+      <string name="2" value="你知道，这个问题或许去问艾尔潘会比较适合。但我得先警告你，任何麻烦都会找上你，所以你可以带着这些麻烦去寻找你想要的东西！好吧。我有东西送给你。"/>
       <imgdir name="yes">
-        <string name="0" value="Might not be the treasure we wanted off the bat, but when I&apos;m done putting this map together, you and I are going hunting, Barricade Bros. style!"/>
+        <string name="0" value="&quot;或许不是我们想要得到的宝藏，但当我完成这张地图时，我们即将去探险，这是我们贝瑞加德家族的风格！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="I like the effort you&apos;re showing kiddo, but #b50 MesoGears Map Pieces#k is what we need to put the MesoGears Map together. I&apos;m headed back into the MesoGears to see what I can dig up..."/>
+          <string name="0" value="我喜欢你展现的努力，老兄，但是 #b50 张内部齿轮装置地图碎片#k 才是我们拼成内部齿轮装置地图所需要的。"/>
         </imgdir>
         <imgdir name="0">
           <int name="answer" value="1"/>
@@ -11433,25 +11433,25 @@
   </imgdir>
   <imgdir name="4916">
     <imgdir name="1">
-      <string name="0" value="Yes! This will do it. I can now adjust my enchanted compass! Thank you so much! "/>
+      <string name="0" value="没错！就是这样。现在我可以破除被施了魔法的指南针！非常感谢你！"/>
       <imgdir name="yes">
-        <string name="0" value=" If you should have the time, please see me again, for I require a final task. "/>
+        <string name="0" value="如果你还有时间的话，请再来找我，因为我还有最后一项任务要找你。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="If I am to re-calibrate this compass, I&apos;ll need more #bElpam Magnets, 30 to be exact#k. I await your return."/>
+          <string name="0" value="如果我重新校准这个指南针，我会需要更多 #b艾尔潘 磁石，确切数量是30 块#k。我等你回来。"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Hello, my name is Elpam Gorlab. I am in need of assistance, do you think you can spare a moment? \n\n#L0##bYes. At the very least, you can tell me why you look so different.#k#l"/>
-      <string name="1" value="Ah. Therein lay the tale of my current predicament. I am from Versal. It is best described as a parallel dimension to the Maple World, as many things are different, yet familiar. I travel here for certain occasions to observe the people that inhabit this land. However, this time when I traveled here, I noticed that I was in a strange place. In speaking with the one called Icebyrd Slimm, I discovered my calculations were off due to the appearance of the new land, Amoria. I need to get home, but I have to adjust my enchanted compass first. I will need 30 Elpam Magnets to do this properly?I believe the Barnard Grays are the only creatures in this world that may have them. I have translated this to your Quest Journal from my native language. I wish you luck, and shall await your return! \n\n#L0##bTell me more about your world, Versal.#k\n#L1##bNo way. You smell like old cheese!#k#l"/>
-      <string name="2" value="It can be thought of as the mirror dimension for the Maple World. There are similarities, but many differences as well. For instance, you may have noticed my last name is a monster here. In our world, they are benevolent creatures, and it is a mark of honor to be associated with them. It seems strange to me that they are so fearsome here... Would you help me?"/>
+      <string name="0" value="哈啰，我的名字叫艾尔潘 葛拉博。我需要帮忙，你觉得你可以抽出点时间吗？ \n\n#L0##b是的。你可以告诉我为什么你看起来如此不同吗？#k#l"/>
+      <string name="1" value="唉！每一个孤独的人，都有一段悲惨的故事。我来自于另一个世界。 由于很多事物都不同，但却又相似，因此常被描述成异世界。由于某些机缘之故我旅行至此地并观察居住在这座岛上的人们。在和那位叫做艾斯比亚德 史林姆谈话时，我发现回家的路消失了。我必须回家去，但是我得先破除被施了魔法的指南针。我会需要 30 块艾尔潘磁石来确切完成此事。我相信同样来自外星球的白外星人卫兵是这个世界上唯一可能会拥有它们的生物。我已经把这个从我的母语翻译成你的任务日志。祝你好运，我一定会等你回来！\n\n#L0##b 告诉我更多关于你的世界。#k\n#L1##b 不行。你的味道闻起来像是过期的奶酪！#k#l"/>
+      <string name="2" value="我所在的世界可能被想成像是枫之世界的相反次元。有相似点，但也有相异处。你愿意帮助我吗？"/>
       <imgdir name="yes">
-        <string name="0" value="If I am to re-calibrate this compass, I&apos;ll need more #bElpam Magnets, 30 to be exact#k. I await your return."/>
+        <string name="0" value="如果我恢复这个指南针，我会需要更多 #b艾尔潘磁石，确切数量是30 块#k。我等你回来。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Please see me again if you change your mind."/>
+        <string name="0" value="如果你改变主意，请再来找我。"/>
       </imgdir>
       <int name="ask" value="1"/>
       <imgdir name="stop">
@@ -11459,7 +11459,7 @@
           <int name="answer" value="1"/>
         </imgdir>
         <imgdir name="1">
-          <string name="1" value="Er...well, cheese is a popular form of cologne in our world...please see me again should you change your mind."/>
+          <string name="1" value="呃…嗯，在我们的世界中，奶酪是一种受欢迎的香水…要是你改变主意的话请再来找我吧。"/>
           <int name="answer" value="1"/>
         </imgdir>
       </imgdir>
@@ -11467,17 +11467,17 @@
   </imgdir>
   <imgdir name="4917">
     <imgdir name="1">
-      <string name="0" value="Fantabulstanding work! My apologies if that phrase did not turn out the way I planned. I can now make the journey home. \n\n#L0##bHold on, Hold on! I have questions... like... tell me something crazy about Versal!#k#l"/>
-      <string name="1" value="Very well, you have aided me, the least I can do is tell you a few tidbits about my home. The creature known as Mushmom is the most dangerous creature there...and she&apos;s not alone. \n\n#L0##bWHAT?#k#l"/>
-      <string name="2" value="Your surprise is expected, but nevertheless, it remains the truth. It puzzles me as to why she is regarded as cute and lovable here... \n\n#L0##bWhy are you so pale?#k#l"/>
-      <string name="3" value="Hmm. I do not believe my skin to be pale, it is a natural pigment. The sun only shines in Versal for a period of...3 munf? No, 3 months...out of one...what do you call them...year? I believe that is the correct measurement. At any rate, it is nice to see the sun glow so brightly here for an extended period. \n\n#L0##bHow do you get there?#k#l"/>
-      <string name="4" value="I am still working on my way back, but when I do figure out how to bring others there, I will most assuredly notify you. In the mean time, in return for your effort, here is something I found between worlds."/>
+      <string name="0" value="棒极了！如果那句话没有变成我所计划的方向我很抱歉。现在我可以安排回家的旅程。\n\n#L0##b 等一下，等一下！我有些问题... 像是... 告诉我一些关于你们世界的事吧！#k#l"/>
+      <string name="1" value="非常好，你帮了我的忙，我至少可以告诉你一点关于我故乡的趣闻。被称为菇菇的生物在那里是最危险的生物…而且她不是单独的。\n\n#L0##b 什么？#k#l"/>
+      <string name="2" value="不意外你的惊讶，不过，那依然是事实。至于为什么牠在这里被视为可爱讨喜令我迷惑... \n\n#L0##b 你为什么这么苍白？#k#l"/>
+      <string name="3" value="哼。我的皮肤不是苍白，那是自然的肤色。在那里太阳只照耀大约三个月时间吧，在一…什么的当中....你们叫做...年的吗？ 我相信那是正确的计算。无论如何，看高兴看到太阳在这里延长时间散发如此明亮的光芒。\n\n#L0##b 你要怎么回家呢？#k#l"/>
+      <string name="4" value="我还在研究回家的路线，不过等我弄清楚如何带其他人去那里的时候，我铁定会第一个通知你。同时，为了回报你的努力，这是我在这个世界发现的东西。"/>
       <imgdir name="yes">
-        <string name="0" value="May it serve you well and see you around!"/>
+        <string name="0" value="但愿它对你非常有用，待会儿见！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="It seems as if you have, quite literally, &quot;lost time&quot;. I will need #b60 Temporal Fragments#k if I am to make the journey home. Please acquire them, and return to me."/>
+          <string name="0" value="如果要让我能够回家，将需要#b60个时光手表#k。请取得它们，然后回来找我。"/>
         </imgdir>
         <imgdir name="0">
           <int name="answer" value="1"/>
@@ -11495,18 +11495,18 @@
       <int name="ask" value="1"/>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="So glad to see you, friend. I&apos;ve got the compass adjusted, but could still use a hand if you&apos;re willing to lend it. \n\n#L0##bSure, as long as you give it back.#k\n#L1##bYou&apos;re sick! No way am I giving you my hands! They&apos;re mine!#k#l"/>
-      <string name="1" value="Ha. Ha. Ha. That was a joke, as you call it? Fascinating. I&apos;ll need to travel back to the exact moment that everything went haywire. Doing so will allow me to go to my intended place and get home as normal. However, I&apos;ll need #b60 Temporal Fragments#k to give me enough time to do it. I believe the creatures you refer to as Tick-Tocks will have them, although it is a rather rare item. I will remain here until your return."/>
+      <string name="0" value="非常高兴见到你，朋友。我已经把指南针搞定了，但是你是否仍然可以再使用一只手帮忙如果你愿意出借的话。\n\n#L0##b 当然，只要你会把手还来。#k\n#L1##b 你有病！别想我再把手给你了！那是我的手！#k#l"/>
+      <string name="1" value="哈哈哈。就像你所说的，那是个笑话吗？ 好极了。我必须旅行返回我的家乡。但是，我将需要#b60个时光手表#k给我足够时间完成此事。你提到闹钟啾啾可能会有，虽然那是非常稀有罕见的道具。我会留在这里直到你回来为止。"/>
       <imgdir name="yes">
-        <string name="0" value="I will need #b60 Temporal Fragments#k if I am to make the journey home. Please acquire them, and return to me."/>
+        <string name="0" value="如果我要安排回家的旅程，我将需要 #b60个时光手表#k。请取得它们，然后回来找我。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Ok... Please return when you can help me."/>
+        <string name="0" value="好吧... 等你可以帮助我的时候请回来。"/>
       </imgdir>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="1" value="You misunderstand...or maybe I do. Any rate, please return when you can help me."/>
+          <string name="1" value="你误会了…或者可能是我误会了。无论如何，等你可以帮助我的时候请回来。"/>
           <int name="answer" value="1"/>
         </imgdir>
       </imgdir>
@@ -11514,38 +11514,38 @@
   </imgdir>
   <imgdir name="4918">
     <imgdir name="0">
-      <string name="0" value="So glad to see you! I need your help!"/>
+      <string name="0" value="真是高兴见到你！我需要你的帮助！"/>
       <imgdir name="yes">
-        <string name="0" value="Perfect! We&apos;re building the new areas, but we&apos;ve come under attack from Gryphons, who are destroying my cranes, and Boomers, who are damaging my machinery! It&apos;s madness! I&apos;ll need you to kick some booty-#b100 Gryphons#k and enough #bBoomers#k to gather #b150 #t4000391##k. You do that for me, and I won&apos;t forget it!"/>
+        <string name="0" value="太完美了！我们正在建造新区域，但是受到狮鹫兽的攻击，它们正在摧毁我的起重机，还有黄色炸弹球，正在破坏我的机械装置！我快疯掉了！我将需要你帮我清除掉#b100 只狮鹫兽#k 以及 足够的 #b黄色炸弹球#k 以便收集 #b150 #t4000391##k. 你帮我作的事，我不会忘记的！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Guess we&apos;ll have to get it done without you then..."/>
+        <string name="0" value="我们必须因为你没有完成任务而作出某些处置..."/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Nice, nice. You got skills, I recognize that."/>
+      <string name="0" value="好，好。你有学到方法，我看出来了。"/>
       <imgdir name="yes">
-        <string name="0" value="Here&apos;s a little something for your trouble. Even though you beat them back, they&apos;ll be back. See me when you&apos;re ready for action!"/>
+        <string name="0" value="有件小事要麻烦你。虽然你击退了他们，他们还会再回来。等你准备好行动时来见我！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="You got jokes, I see. That&apos;s funny, cause I know I said #b150 #t4000391##k and #b100 Gryphons#k. Not &quot;way less than that&quot;. Do you understand the words that are coming out of my mouth? Get to it! "/>
+          <string name="0" value="你听得懂我的话了，我明白。因为我知道我说了 #b150 #个t4000391##k 和 #b100只狮鹫兽 #k。你听得懂我所说出来的话吗？去吧！"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4919">
     <imgdir name="1">
-      <string name="0" value="OUTSTANDING! I knew you were special the second I looked at you. \n\n#L0##bI have a question. So... you were a Thief?#k#l"/>
-      <string name="1" value="The very best. I trained under the Dark Lord&apos;s watchful eye for many years. Once you train past a certain point, fighting becomes second nature. \n\n#L0##bHow did the Dark Lord let you leave? I&apos;ve never heard of that before...#k#l"/>
-      <string name="2" value="It&apos;s a long story, but The Dark Lord allowed me to leave if I touched him once with my weapon. It&apos;s much different from fighting his clone, his speed and multiple techniques are incredible. The fight was a true test of my skill...it was a stroke of luck that let me touch him. I promised to help others train as he helped me. \n\n#L0##bDid Icebyrd have anything to do with that?#k#l"/>
-      <string name="3" value="In a way, yes. He showed me that my destiny is here, in New Leaf City, and to a greater extent, Masteria. It&apos;s a brave new world out there...and I want to know where my fate lies. Ok. End of the story. It&apos;s time to get paid for your work!"/>
+      <string name="0" value="真是太杰出了！看着你的时候，我就知道你很特别。 \n\n#L0##b 我有一个疑问。所以... 你以前是盗贼吗？#k#l "/>
+      <string name="1" value="非常优秀。在达克鲁的监视之眼下练习多年。一旦你通过了考验，就变为第二种能力。\n\n#L0##b 达克鲁如何让你离开？我以前从未听说...#k#l"/>
+      <string name="2" value="说来话长，假如我用武器碰触到他的话，达克鲁就会允许我离开。和他的分身作战有极大不同，他的速度与多项技巧都很惊人。战斗是真正测验我的能力…那是突然的幸运让我碰触到他。我答应过要像他帮助我一样帮忙其他人练习。\n\n#L0##b 曾经有过这样的训练吗？#k#l"/>
+      <string name="3" value="我想这就是我的命运，在新叶城，而且更延伸更广至马莱尼西亚岛。而你应该也要知道你的命运在哪里。好吧。结束这个故事。该付给你工作酬劳的时间到了！"/>
       <imgdir name="yes">
-        <string name="0" value="Here&apos;s your class reward, as promised. I&apos;m proud of you! You can come and see me anytime you wish perform your duty as a citizen of New Leaf City!"/>
+        <string name="0" value="这是你的奖励，依照承诺。我以你为傲！你想履行身为新叶城的市民义务时，随时可以来找我！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="Come on, you&apos;re not done yet, but I have faith. You can do it!"/>
+          <string name="0" value="继续，你还没完成，不过我有信心。你可以做得到！"/>
         </imgdir>
         <imgdir name="0">
           <int name="answer" value="1"/>
@@ -11560,18 +11560,18 @@
       <int name="ask" value="1"/>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Hiya Sport! I&apos;m the new sheriff in town. You ready for some law and order? \n\n#L0##bOnly if I get to help enforce it!#k\n#L1##bLaw? Order? Please. You couldn&apos;t tame a fly. I&apos;m leaving!#k#l"/>
-      <string name="1" value="That&apos;s the attitude that got me where I am today! Ok, I&apos;m Lita Lawless, and with your help, I&apos;m going to corral this town into a crime-free zone."/>
+      <string name="0" value="你好！我是镇上新来的警长。准备好了解一些法律和命令吗？\n\n#L0##b 等到我想知道的时候再说吧！#k\n#L1##b 法律？命令？拜托。你脑袋有问题喔。我要走了！#k#l"/>
+      <string name="1" value="让我达到今天的地位就是态度！好吧，我是莉塔 罗莉丝，有了你的帮助，我就可以把这个城镇变成无犯罪区。"/>
       <imgdir name="yes">
-        <string name="0" value=" I know how the devious monster mind works, having trained as a thief for many years. So, you&apos;re going to have to wipe out #b200#k of two types-I believe #bElectrophants and Gryphons#k should prove a suitable test of your skills! Take your time and report back when you&apos;re done! I&apos;ve got something just for your class!"/>
+        <string name="0" value="多年当盗贼的经验告诉我怪物想法是什么。你必须要消灭两种怪物 #b200#k只 - 我相信#b电击象和狮鹫兽#k应该会是证明你能力的适当测验！把握时间并且在完成之后回报！我已经找到方式可以测试你了！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Grumpy little thing, aren&apos;t you?"/>
+        <string name="0" value="你是性情古怪的人，不是吗？"/>
       </imgdir>
       <int name="ask" value="1"/>
       <imgdir name="stop">
         <imgdir name="0">
-          <string name="1" value="Grumpy little thing, aren&apos;t you?"/>
+          <string name="1" value="你是性情古怪的人，不是吗？"/>
           <int name="answer" value="1"/>
         </imgdir>
       </imgdir>
@@ -11579,16 +11579,16 @@
   </imgdir>
   <imgdir name="4920">
     <imgdir name="0">
-      <string name="0" value="I want to thank you. You&apos;ve been pushed to your limits in helping us, and shown you&apos;re a true Urban Warrior. As my way of saying thanks, I want you to have this chair. Check it out, and be sure to come back anytime you want. New Leaf City wouldn&apos;t be here without you! \n\n#L0##bSo, about that favor you mentioned...#k#l"/>
-      <string name="1" value="We&apos;re tight, but not that tight yet. I&apos;ll tell you in time though... \n\n#L0##bI&apos;ve noticed the city has quite a bit of diversity!#k#l"/>
-      <string name="2" value="Yes. I felt it&apos;d be best to be a little different. Masteria is a big place, and while we&apos;re only just starting, I have a feeling we&apos;re in for one wild ride! \n\n#L0##bWhat&apos;s up with you and Lita?#k#l"/>
-      <string name="3" value="We&apos;re very good friends, but nothing more. She&apos;s a tough one, though! \n\n#L0##bJohn and Elpam both mentioned another world, Versal. What do you know about this?#k#l"/>
-      <string name="4" value="Well, there&apos;s a rumor that a portal can be opened somehow from within the city, but I&apos;m not sure how that&apos;s possible. \n\n#L0##bWhat do you mean? You built this city.#k#l"/>
-      <string name="5" value="Correction-I rebuilt this city. The foundations are still there, as is some of the technology; you&apos;ve probably seen some of it when you were outside the city. There&apos;s some stuff that just works, and I don&apos;t mean the Foxwit Doors themselves-I mean the energy that powers them. Foxwit is a genius and some of that is way beyond even his understanding. I&apos;m a bit wary of using it all, just because of the old tales of Masteria-the immortal warriors, a mad scientist, a threat from the stars, some of their legends are pretty heavy stuff. In addition to that, this is where Subani and Naricain are originally from. Not the city, another region of Masteria. John probably mentioned that. \n\n#L0##bJust level with me, Icebyrd. Tell me what you know.#k#l"/>
-      <string name="6" value="Ok, but keep this a secret, don&apos;t want people panicking. The Masteria of old was a sprawling utopia, one far advanced in technology. However, their ambition far outstripped their control of the technology, and there was an accident. Masteria, the great land, finally fell into the sea, its secrets lost forever. Until now. I made a deal with someone to raise the continent, and establish the city in the ruins of Olde Sapp Village. He brought my dream to life, and it cost me next to nothing. And that&apos;s where we are now. However, the city has many, many secrets that even I don&apos;t know about. Tread carefully; you never know what can open up... \n\n#L0##bOk, I know what how it was raised, but who raised it? What did you have to do?#k#l"/>
-      <string name="7" value="That&apos;s a bit personal, but I will say this-if there&apos;s ever a time when you need to know more, I&apos;ll tell you. Until then, don&apos;t worry about it. That burden is mine alone to bear. For now, just let me give you a gift for the appreciation of helping our city."/>
+      <string name="0" value="我要感谢你。你增加了个人的麻烦而帮助了我们，你是真正的英雄。要怎么感谢你呢？没有你的话，就没有新叶城了！ \n\n#L0##b这不算什么...#k#l  "/>
+      <string name="1" value="我得告诉你... \n\n#L0##b我察觉到这个城市相当奇怪！#k#l"/>
+      <string name="2" value="是的。的确是跟之前有所不同。马莱尼西亚岛是个大地方，而且我们才刚刚开始，我觉得我们正处于一种正在改变的状态！\n\n#L0##b你和莉塔发生什么事了？#k#l "/>
+      <string name="3" value="我们是非常要好的朋友，但是仅止于此。她是个严格的人！ \n\n#L0##b强和艾尔潘两人都提及了另外的世界，维索尔 。你对此事了解多少？#k#l "/>
+      <string name="4" value="嗯，谣传说有个入口可能会以某种方式从这个城市内部打开，不过我不确定真实性如何。\n\n#L0##b 你是什么意思？入口？#k#l"/>
+      <string name="5" value="&quot;我更新了这座城市。当你在城市外面的时候可能看见过一些科技。有些只是运转的东西，我说的不是福斯魏德之门本身-我指的是启动它们的能量。福斯魏德是个天才而且有些甚至于不是我们所能理解的。我对他有点戒心，只是因为马莱尼西亚岛的古老传说-不死的战士，疯狂科学家，来自外星球的恐惧，某些传说的真实性是非常高的。除了那些之外，这个地方同时也是苏白尼和纳瑞希安的发源地，但不是这座城市，是马莱尼西亚岛的另一个区域。强或许提到过。\n\n#L0##b 艾斯比亚德，把你所知道的一切都告诉我。#k#l"/>
+      <string name="6" value="好吧，不过你要保守这个秘密，别让人们惊慌。古代的马莱尼西亚岛是一个美好的理想国，科技极为先进。然而，他们的企图心远远超过了他们所能控制的科技，而发生了一个意外。马莱尼西亚岛，伟大的陆地，最后坠入了大海，它们一切文明永远消失了。直到今天，我和某个人约定要使这片大陆重现，并且建造了一座城市。那就是我们现在所在的地方。然而，这座城市有很多、很多甚至我都不知道的秘密。小心脚步；很难说有什么可能会发生... \n\n#L0##b好的，但是是谁使它重现的呢？你必须怎么做呢？"/>
+      <string name="7" value="有一天当你必须知道更多时我会说此事，我会告诉你。但在那时间之前，别担心。这是我一个人要独自背负的包袱。现在，让我送你一份礼物感谢你帮助我们的城市。"/>
       <imgdir name="yes">
-        <string name="0" value="Where did I put it... Just give me a second and talk to me, ok?"/>
+        <string name="0" value="我把它放在哪里了呢？我得找到它... 给我一点时间再和我说话，好吗？"/>
       </imgdir>
       <int name="ask" value="1"/>
       <imgdir name="stop">
@@ -11616,67 +11616,67 @@
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="I want you to have this chair. Check it out, and be sure to come back anytime you want. New Leaf City wouldn&apos;t be here without you!"/>
+      <string name="0" value="感谢你的帮忙。没有你的话，这里就没有新叶城了！"/>
       <imgdir name="yes">
-        <string name="0" value="Looks good! Just give it a try and sit on it sometimes!"/>
+        <string name="0" value="看起来不错！"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4921">
     <imgdir name="1">
-      <string name="0" value="Fantastic! I&apos;ll be able to face her again without worrying if one of those pesky Wolf Spiders will spoil the moment. As promised, here is your reward. Enjoy! And in three days time, you may return to me for another hunt!"/>
+      <string name="0" value="太棒了！我可以再面对她而不用担心是否那些讨厌的机械蜘蛛会来破坏重要时刻。依照承诺，这是你的报酬。好好利用！在三天之内，你可以狩猎牠再回来找我！"/>
       <imgdir name="yes">
-        <string name="0" value="As promised, here is your reward. Enjoy! And in three days time, you may return to me for another hunt!"/>
+        <string name="0" value="依照承诺，这是你的报酬。好好利用！在三天之内，你可以狩猎牠再回来找我！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="Tsk, tsk. So sad. I said #b100 Wolf Spiders#k. Not 74, not 32, not 99. 100. Come back when you have something to show for your effort-besides a tired face. "/>
+          <string name="0" value="啧、啧。 真令人难过。我说的是 #b100 只机械蜘蛛#k。不是 74只、不是 32只、也不是 99只。是 100只。除了一张疲惫的脸之外，等你有一些可以展示努力的东西时再回来。 "/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Welcome back! Are you ready for another hunt?"/>
+      <string name="0" value="欢迎归来！你准备好去另一个狩猎了吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Ok, then! Same as last time. 100 Wolf Spiders for one Leaf Crystal. See you when you return!"/>
+        <string name="0" value="那么，好吧！和上次一样。100只机械蜘蛛换五个水晶。再见！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Unfortunate. Be on your way then!"/>
+        <string name="0" value="可惜。那么踏上你的旅途吧！"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4922">
     <imgdir name="1">
-      <string name="0" value="OUTSTANDING! I knew you were special the second I looked at you. "/>
+      <string name="0" value="真是太杰出了！看着你的时候，我就知道你很特别。 "/>
       <imgdir name="yes">
-        <string name="0" value="Here&apos;s your reward, as promised. I&apos;m proud of you! You can come and see me anytime you wish perform your duty as a citizen of New Leaf City!"/>
+        <string name="0" value="这是你的奖励，依照承诺。我以你为傲！你想要挺身而出为新叶城做点事时，随时可以来找我！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="Come on, you&apos;re not done yet, but I have faith. You can do it!"/>
+          <string name="0" value="继续，你还没完成，不过我有信心。你可以做得到！"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Hey! If it isn&apos;t my favorite deputy. Ready for some hunting?"/>
+      <string name="0" value="喂！这不是我最喜欢的副业。你准备好打猎了吗？"/>
       <imgdir name="yes">
-        <string name="0" value="That&apos;s the attitude that got me where I am today! Ok, let&apos;s do this again! I&apos;m going to corral this town into a crime-free zone. I know how the devious monster mind works, having trained as a thief for many years. So, you&apos;re going to have to wipe out #b200#k of two types-I believe #bElectrophants and Gryphons#k should prove a suitable test of your skills! Take your time and report back when you&apos;re done!"/>
+        <string name="0" value="让我爬到今天地位的就是态度！好吧，让我们再做一次吧！我想把这个城镇变成无犯罪区。由于多年练习的经验，我知道迂回的怪物想法是什么。你必须要消灭两种怪物 #b200#k只 - 我相信#b电击象和狮鹫兽#k应该会是证明你能力的适当测验！把握时间并且在完成之后回报！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Grumpy little thing, aren&apos;t you?"/>
+        <string name="0" value="你是性情古怪的人，不是吗？"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="4923">
     <imgdir name="0"/>
     <imgdir name="1">
-      <string name="0" value="So what else would you like to know? \n\n#L0##bWhat inspired you to start New Leaf City?#k#l"/>
-      <string name="1" value="Well, I always envisioned a place where those could come and live their dreams. When I arrived here, there was nothing, just the jungle and the machinery that was left. I had some help in building this place in exchange for a favor... \n\n#L0##bWhat kind of favor?#k#l"/>
-      <string name="2" value="...really not allowed to talk about it, but it&apos;s nothing you have to worry about...hopefully. \n\n#L0##bWhat continent am I on?#k#l"/>
-      <string name="3" value="You&apos;re on the continent of Masteria. There&apos;s an old legend that surrounds the continent, but you&apos;re standing in the rebuilt portion of Olde Sapp Village. There&apos;s an old saying that Masteria is where warriors of all kinds come to master their fate. The continent has risen once more from the sea, and people of all kinds are here, some good, some bad. We&apos;re clearing a path deeper into the continent, who knows what we&apos;ll find? \n\n#L0##bWait, wait?the city was already here?#k#l"/>
-      <string name="4" value="Not exactly. This was once known as Olde Sapp Village, and was smaller than what you see here. Essentially, Masteria has an old fable, but I&apos;m not sure you&apos;d want to hear about that...\n\n#L0##bYou mentioned it had &quot;risen from the sea&quot; I&apos;d like to hear about how it sunk sometime...#k#l"/>
-      <string name="5" value="It&apos;s only an old fable, I&apos;m sure it wouldn&apos;t interest you. Maybe if you help out around the city, I can tell you some more..."/>
+      <string name="0" value="所以你还想知道其他什么呢？\n\n#L0##b 启发你更新新叶城的灵感是什么？#k#l"/>
+      <string name="1" value="嗯，我一直很想拥有一个可以居住并实现梦想的地方。当我到达这里时，什么都没有，只有丛林和被遗弃的机械。我以利益交换的方式得到一些帮助建造这个地方... \n\n#L0##b什么样的利益呢？#k#l "/>
+      <string name="2" value="这个…真的不能跟你说，但是你没什么需要担心的…。\n\n#L0##b我在哪一个大陆上呢？#k#l"/>
+      <string name="3" value="你在马莱尼西亚岛大陆上。有一个古老的传说围绕着这片大陆，你正站在历史悠久的地方。有句古老的谚语说马莱尼西亚岛是所有各种冒险者掌控他们命运的地方 。这片大陆已经再次从海洋升起，而且这里有各种人，有些好人，有些坏人。我们正在开启一条能更深入大陆内部的路径，谁知道我们会找到什么呢？\n\n#L0##b等一下，等一下？这座城市以前就已经在这里了吗？#k#l"/>
+      <string name="4" value="不完全正确。本来，马莱尼西亚岛有一个古老的神话，但我不确定你会想听与那有关的事...\n\n#L0##b你刚刚提到了它「从海洋升起」我想听听那段时间它如何下陷... #k#l"/>
+      <string name="5" value="那只是一则古老神话，我确定不会引起你的兴趣。也许如果你帮忙我，我可能会告诉你更多一些..."/>
       <imgdir name="yes">
-        <string name="0" value="Ok. That&apos;s it for this time. Welcome to New Leaf City and hope you enjoy your stay here!"/>
+        <string name="0" value="好吧。这次就这样吧。欢迎光临新叶城并且希望你在这里的期间感到愉快！"/>
       </imgdir>
       <int name="ask" value="1"/>
       <imgdir name="stop">
@@ -16269,7 +16269,7 @@
       <string name="0" value="你好，法师来这里是有什么事情?…我不能回答你所有的问题，但可以给你一点助言…你或许是来问你的那个书？"/>
       <imgdir name="yes">
         <string name="0" value="虽然什么都没有写着，但书的封面明显画着火的图片。还有这么强烈的魔法气息，我能肯定这里一定隐藏着某种魔法的魔法书籍。而且是非常强大的…"/>
-        <string name="1" value="Go to see #b#p1032001##k in Ellinia...He&apos;s been a elder of magicians for ages. He can help you."/>
+        <string name="1" value="去找魔法森林的#b#p1032001##k…他作了很长时间的魔法师长老，他会帮你很大的忙。"/>
       </imgdir>
       <imgdir name="no">
         <string name="0" value="我以为你会追求更多的知识…你是不是太自信了？"/>
@@ -16293,7 +16293,7 @@
       <string name="0" value="我已经解开了书中的魔法，来看看。出现了以下的文章。\r\n#b只有能吸进地狱火焰的人，才可以在体内燃起熊熊火焰。#k0"/>
       <string name="1" value="我#b#p1032001##k这样多年研究魔法的人，也不懂这文章的意思。但这本书的魔法确实货真价实，不能轻易忽视的。你想了解更多的秘密？"/>
       <imgdir name="yes">
-        <string name="0" value="Go to see the magician #b#p2020009##k in El Nath. She, the elder of magicians in Ossyria, will know more about this."/>
+        <string name="0" value="那你可以去找冰封雪域的魔法师#b#p2020009##k，作为雪域的魔法师长老，她会知道更多的内容。"/>
       </imgdir>
       <imgdir name="no">
         <string name="0" value="哦，那对这本书不是很感兴趣？作为火属性魔法师，我觉得任何人都想得到的…"/>
@@ -16324,7 +16324,7 @@
       <string name="0" value="…有什么事情？"/>
       <imgdir name="yes">
         <string name="0" value="魔法书? #r#q2121003##k?但我不是魔法师，那些东西不是很清楚。不过我敢肯定的是，人类绝对不能喝掉熔岩。别说能不能喝，人类连盛上熔岩的容器都无法造出来的。别胡说了。"/>
-        <string name="1" value="Although...there may be someone who can make it.#b#p2020000##k is the best blacksmith in El Nath. Do you know him?  Maybe he can make a bottle strong enough to carry the lava..."/>
+        <string name="1" value="不，不是。好像有人可以做到。你认识#b#p2020000##k？冰封雪域的最高匠人。他应该造得出能盛上熔岩的容器。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="npc">
@@ -18180,67 +18180,67 @@
   </imgdir>
   <imgdir name="8821">
     <imgdir name="0">
-      <string name="0" value="Hello there! You look like you&apos;ve been out on a few adventures! I&apos;m in dire need of some high-quality Turkey Eggs for a Thanksgiving breakfast I&apos;m cooking. Do you have any Yellow eggs for me?"/>
+      <string name="0" value="您好啊！看起来您又出去冒险了！我现在特别需要一些高质量的火鸡蛋，用于感恩节的早餐。您有黄鸡蛋吗？"/>
       <imgdir name="yes">
-        <string name="0" value="I&apos;m in dire need of some high-quality Turkey Eggs for a Thanksgiving breakfast I&apos;m cooking. Will you gather some #bYellow Turkey Eggs#k for me? Yellow Turkey Eggs can be obtained from tamed turkeys. Good luck!"/>
+        <string name="0" value="我现在特别需要一些高质量的火鸡蛋，用于感恩节的早餐。您能替我收集一些#b黄色火鸡蛋#k吗？驯化的火鸡生产黄色鸡蛋。祝您好运！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Oh, ok.  Be sure to come back, because I won&apos;t wait forever to get my eggs!"/>
+        <string name="0" value="对了，请尽快回来，我可不会一直干等这些鸡蛋！"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Excellent work! That is a fine Turkey egg you&apos;ve got...in return, let me dig around in the backpack here...I think I do have something here for you..."/>
+      <string name="0" value="干得好！您带来的真是一枚不错的火鸡蛋……为了表示感谢，我从背包中给您找样东西作为奖赏，我知道该给您什么……"/>
       <imgdir name="yes">
-        <string name="0" value="Take this and I hope it helps out in your travels! Thank you! Find me more eggs and I&apos;ll reward you!"/>
+        <string name="0" value="收下吧，希望它能够对您的旅途有所帮助！谢谢您！多给我找些鸡蛋，我还会报答您的！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="Hmm, looks like your bag has some lint, but no #bYellow Turkey Eggs#k! Collect some #bYellow Turkey Eggs#k and I&apos;ll make it worth your while!"/>
+          <string name="0" value="哦，看起来您的包里就是一些布头而已，没有#b黄色火鸡蛋#k！帮我搜寻一些#b黄色火鸡蛋#k，我保证会给您丰厚的回报！"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="8822">
     <imgdir name="0">
-      <string name="0" value="Hello there! You look like you&apos;ve been out on a few adventures! I&apos;m in dire need of some high-quality Turkey Eggs for a Thanksgiving breakfast I&apos;m cooking. Do you have any Green eggs for me?"/>
+      <string name="0" value="您好啊！看起来您又出去冒险了！我现在特别需要一些高质量的火鸡蛋，用于感恩节的早餐。您有绿鸡蛋吗？"/>
       <imgdir name="yes">
-        <string name="0" value="I&apos;m in dire need of some high-quality Turkey Eggs for a Thanksgiving breakfast I&apos;m cooking. Will you gather some #bGreen Turkey Eggs#k for me?"/>
+        <string name="0" value="我现在特别需要一些高质量的火鸡蛋，用于感恩节的早餐。您能替我收集一些#b绿色火鸡蛋#k吗？"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Oh, ok.  Be sure to come back, because I won&apos;t wait forever to get my eggs!"/>
+        <string name="0" value="对了，请尽快回来，我可不会一直干等这些鸡蛋！"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Excellent work! That is a fine Turkey eggs you&apos;ve got...in return, let me dig around in the backpack here...I think I do have something here for you...! "/>
+      <string name="0" value="干得好！您带来的真是一枚不错的火鸡蛋……为了表示感谢，我从背包中给您找样东西作为奖赏，我知道该给您什么……"/>
       <imgdir name="yes">
-        <string name="0" value="Take this and I hope it helps out in your travels! Thank you! Find me more eggs and I&apos;ll reward you!"/>
+        <string name="0" value="收下吧，希望它能够对您的旅途有所帮助！谢谢您！多给我找些鸡蛋，我还会报答您的！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="Hmm, looks like your bag has some lint, but no #bGreen Turkey Eggs#k! Collect some #bGreen Turkey Eggs#k and I&apos;ll make it worth your while!"/>
+          <string name="0" value="哦，看起来您的包里就是一些布头而已，没有#b绿色火鸡蛋#k！帮我搜寻一些#b绿色火鸡蛋#k，我保证会给您丰厚的回报！"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="8823">
     <imgdir name="1">
-      <string name="0" value="Fantastic! This looks like enough to make the pie. As promised, here is a reward for your kindness. Don&apos;t let it get cold, eat up!"/>
+      <string name="0" value="太棒了！这些足够烹制馅饼了。给，这是我答应给您的回报。别冷了，赶紧吃！"/>
       <imgdir name="yes">
-        <string name="0" value="Thanks for your help! There&apos;s also a contest to see which guild can gather the most Pumpkin Pies. Check Nexon.net for details and come back soon!"/>
+        <string name="0" value="谢谢您的帮助！人们举办了一个比赛，看看哪个行会能够收集到最多南瓜馅饼！查看官网活动专区了解详情并赶紧回来！"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="I don&apos;t think you have everything yet. Trying to fool an old woman? I&apos;ve been your age, but you&apos;ve never been mine. Remember, I need #bPie Crust, Pumpkin, Flour, and Sugar#k! Get going!"/>
+          <string name="0" value="你似乎并没能收集到所有的配料。想欺骗我这老太婆？我也年轻过，可你还嫩了点。记住，我需要的是#b馅饼皮、南瓜、面粉及糖#k！赶紧去！"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="My, you look like a fine young spirit! Care to help me out?"/>
+      <string name="0" value="上帝，您看起来真是个善良又精神的年轻人！可以帮我个忙吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Great! I&apos;m trying to make some pie, but those pesky monsters stole my ingredients! I&apos;m sure gathering them will be no problem for a seasoned adventurer like yourself! I&apos;ll need #bPie Crust, Pumpkin, Flour, and Sugar#k. Bring them back to me, and I&apos;ll give you something that&apos;ll fix you right up! "/>
+        <string name="0" value="太棒了！我想烹制一些馅饼，不过那些烦人的怪物偷走了我的配料！收集配料对您这样一个久经考验的冒险家来说肯定是小菜一碟！我需要#b馅饼皮、南瓜、面粉及糖#k。把它们带给我，我就会给您一样可以立刻让您精神百倍的物品！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Darn, I was hoping you&apos;d help! Oh well, come back and see me soon!"/>
+        <string name="0" value="见鬼，我希望你能帮忙的！快点回来找我吧！"/>
       </imgdir>
     </imgdir>
   </imgdir>
@@ -18662,22 +18662,22 @@
   </imgdir>
   <imgdir name="8860">
     <imgdir name="0">
-      <string name="0" value="Hey there! My name&apos;s Claudia and I&apos;m new around here. To help my clients&apos; hair hold up a little better, I&apos;m working on a new hair gel formula, called &quot;Slick Slime&quot;. I&apos;ll need 25 Squishy Liquids though. Think you can help?"/>
+      <string name="0" value="嘿!我叫克劳迪娅，是新来的。为了帮助我的客户更好地保持头发，我正在研究一种新的发胶配方，叫做“光滑黏液”。不过我需要25块软软的液体。你能帮忙吗?"/>
       <imgdir name="yes">
-        <string name="0" value="Ha-ha, good one! You know how to negotiate! Ok, I&apos;m game. If you can get me #b25 Squishy Liquids#k, I&apos;ll grant you a free haircut. Hurry though; I have a long line of customers!"/>
+        <string name="0" value="哈哈,不错!你知道怎么谈判!好吧,我游戏。如果你能帮我弄到#b25黏糊糊的液体#k，我就给你免费理发。匆忙;我的顾客排了很长的队!"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="That&apos;s a shame. If you change your mind, pay me a visit!"/>
+        <string name="0" value="真可惜。如果你改变主意了，来找我!"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Wonderful! My masterpiece of &quot;Slick Slime&quot; hair gel will at last be completed! So, as promised, here&apos;s your free EXP Hair coupon! See me when you&apos;re ready for your free haircut!"/>
+      <string name="0" value="太棒了!我的杰作“光滑黏液”发胶终于要完成了!所以，正如我所承诺的，这是你的免费EXP头发优惠券!等你准备好免费理发了再来找我!"/>
       <imgdir name="yes">
-        <string name="0" value="See me when you&apos;re ready for your free haircut!"/>
+        <string name="0" value="等你准备好免费理发了再来找我!"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="I still need the #bSquishy Liquid#k, #b25#k to be exact; don&apos;t return until you&apos;ve got them all! Next!"/>
+          <string name="0" value="我仍然需要#b粘糊糊的液体#k，#b25#k。不把它们都弄到手就别回来!下一个!"/>
         </imgdir>
       </imgdir>
     </imgdir>
@@ -19492,15 +19492,15 @@
   </imgdir>
   <imgdir name="2122">
     <imgdir name="0">
-      <string name="0" value="This is not good... for some reason I keep thinking about those people..So strange...\r\n#L0# #bWhat is it?#l"/>
-      <string name="1" value="A while ago, a group of strangers came to see me. They claimed to have come a long way to see me, and asked me if I could help them. If it&apos;s for a good deed, I&apos;m all for it--but they did not reveal any information about themselves. Kind of hard to trust someone when they don&apos;t open up to you. I have no idea who they are, or what they want to do with me.\r\n#L0# #bDo you think they have bad intentions?#l"/>
-      <string name="2" value="Well... that, I don’t know, but they didn&apos;t seem too bad. I could definitely see the desire in their eyes. Eventually, I had to say no to them, because I had to take care of another matter... but it&apos;s been really bothering me ever since. What do you think? Can you help them out for me?"/>
+      <string name="0" value="怎么办呢……我一直很担心……？\r\n#L0# #b是什么事情？#l"/>
+      <string name="1" value="不久前，有一些奇怪的人找到了我。说是从很远的地方来的，让我帮助他们。如果是好事，我当然会帮助他们。但是他们却不肯告诉我自己是谁？想要做什么事情？\r\n#L0# #b是坏人吗？#l"/>
+      <string name="2" value="这个嘛……我也不知道，但看上去不像是坏人。因为从他们的眼神中可以感受到坚强的意志。但是我不能离开这里，所以拒绝了他们的请求。不过我却一直放心不下。怎么办呢？你愿意代我去帮助他们吗？"/>
       <imgdir name="yes">
-        <string name="0" value="I guess you&apos;ve made your choice. If you want to help them, you&apos;ll need to show me your skills so I can make sure you&apos;re strong enough."/>
-        <string name="1" value="I need to see if you can really help them or not, so I must test your strength. #r15 #o2130100#s#k should be good enough."/>
+        <string name="0" value="看来你已经决定了。如果你愿意去帮助他们的话，我会把你送到他们所在的地方。但是在这之前，你需要展示一下你的能力。"/>
+        <string name="1" value="我得看一下你有没有帮助他们的能力，不是吗？如果你能捕捉到#r10头#o2130100##k的话，应该就能证明你的实力。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Okay, I understand. A lot of things about them remain uncertain, and ... I understand that it&apos;s hard to help out strangers that you know nothing of. Please return to me if you change your mind."/>
+        <string name="0" value="好的，这也可以理解。在做出如此重要的决定的时候，却连他们是谁，他们要做什么都不清楚。我尊重你的选择。"/>
       </imgdir>
       <int name="ask" value="1"/>
       <imgdir name="stop">
@@ -19513,45 +19513,45 @@
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="You&apos;re back. I see that you&apos;re more than capable of helping them!"/>
+      <string name="0" value="终于回来啦。你的实力我认可了。"/>
       <imgdir name="yes">
-        <string name="0" value="Let me know when you&apos;re ready to make your way there, and I&apos;ll show you the way."/>
+        <string name="0" value="做好离开这里的准备之后，你再来找我吧。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="mob">
-          <string name="0" value="I don&apos;t think that&apos;s enough to prove your strength. You must be stronger than this! Come back when you&apos;ve defeated all #r15 #o2130100#s#k."/>
+          <string name="0" value="这好像还不足以证明你的实力。#r请你在捕到10头#o2130100##k之后再来找我。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="2123">
     <imgdir name="0">
-      <string name="0" value="I&apos;ve been waiting for you. A stranger came by and asked me to pass you this note. Unfortunately, I got careless and wound up burning the note, but I do remember what was written on it. Are you interested in hearing what I can remember?"/>
+      <string name="0" value="我正在等你呢。奇怪的人给了我一张纸条，让我交给你。但是纸条被我不小心烧掉了。不过内容我还清楚地记得。你感兴趣吗？"/>
       <imgdir name="yes">
-        <string name="0" value="The note said this: #b&apos;Pick up #p2012019# in #m200000000#.&apos;#k That was it. I&apos;m sorry my memory isn&apos;t better..."/>
+        <string name="0" value="纸条上是这样写的。#b“请去#m200000000#找#p2012019#。”#k就是这些。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="If you&apos;re not interested, then there&apos;s no point of you knowing what&apos;s in it."/>
+        <string name="0" value="如果不感兴趣的话，就没有必要知道内容了。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Bark Bark!! (Wagging its tail in delight.)"/>
+      <string name="0" value="汪！汪！(开心地摇着尾巴。)"/>
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="The note said this: #b&apos;Pick up #p2012019# in #m200000000#.&apos;#k That was it."/>
+          <string name="0" value="纸条上是这样写的。#b“请去#m200000000#找#p2012019#。”#k就是这些。"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="2124">
     <imgdir name="0">
-      <string name="0" value="Bark! Bark bark!(There seems to be a small box around Moppie&apos;s neck.)\r\n#L0# #bExamine the box.#l"/>
-      <string name="1" value="Would you like to remove the box from Moppie&apos;s neck and examine it?"/>
+      <string name="0" value="汪！汪汪汪！发现(波达的脖子上挂着一只箱子。)\r\n#L0# #b查看箱子。#l"/>
+      <string name="1" value="要把箱子从波达的脖子上摘下来看看吗？"/>
       <imgdir name="yes">
-        <string name="0" value="The box contained a phrase.\n\n#b&apos;To #p2101002# of #m260000000#...&apos;#k"/>
+        <string name="0" value="箱子上用很小的字体写着：\n\n#b“交给#m260000000#的#p2101002#……”#k"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Bark bark-!"/>
+        <string name="0" value="汪汪-！"/>
       </imgdir>
       <int name="ask" value="1"/>
       <imgdir name="stop">
@@ -19563,33 +19563,33 @@
     <imgdir name="1">
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="Bark bark-!"/>
+          <string name="0" value="汪汪-！"/>
         </imgdir>
         <imgdir name="item">
-          <string name="0" value="Don&apos;t you have something for me ...? The item that you got from #p2012019# of #m200000000#."/>
+          <string name="0" value="你应该有东西要交给我吧？就是从#m200000000#的#p2012019#那里拿到的东西。"/>
         </imgdir>
       </imgdir>
       <imgdir name="lost">
-        <string name="0" value="Bark bark-!(Moppie picked up a small box from somewhere.)"/>
+        <string name="0" value="汪汪-！(波达从什么地方衔来了一个箱子。)"/>
         <imgdir name="yes"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="2125">
     <imgdir name="0">
-      <string name="0" value="I&apos;ve been waiting for you. A stranger came by and asked me to pass you this note. Unfortunately, I got careless and wound up burning the note, but I do remember what was written on it. Are you interested in hearing what I remember?"/>
+      <string name="0" value="我正在等你呢。奇怪的人给了我一张纸条，让我交给你。但是纸条被我不小心烧掉了。不过内容我还清楚地记得。你感兴趣吗？"/>
       <imgdir name="yes">
-        <string name="0" value="The note said this: #b&apos;Pick up #p2012019# in #m200000000#.&apos;#k That was it."/>
+        <string name="0" value="纸条上是这样写的。#b“请去#m200000000#找#p2012019#。”#k就是这些。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="If you&apos;re not interested, then there&apos;s no point of you knowing what&apos;s in it."/>
+        <string name="0" value="如果不感兴趣的话，就没有必要知道内容了。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Bark Bark!! (Wagging its tail in delight.)"/>
+      <string name="0" value="汪！汪！(开心地摇着尾巴。)"/>
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="The note said this: #b&apos;Pick up #p2012019# in #m200000000#.&apos;#k That was it."/>
+          <string name="0" value="纸条上是这样写的。#b“请去#m200000000#找#p2012019#。”#k就是这些。"/>
         </imgdir>
       </imgdir>
     </imgdir>
@@ -19598,25 +19598,25 @@
     <imgdir name="1">
       <imgdir name="stop">
         <imgdir name="npc">
-          <string name="0" value="Bark bark-!"/>
+          <string name="0" value="汪汪-！"/>
         </imgdir>
         <imgdir name="item">
-          <string name="0" value="Don&apos;t you have something for me ...? The item that you got from #p2012019# of #m200000000#."/>
+          <string name="0" value="你应该有东西要交给我吧？就是从#m200000000#的#p2012019#那里拿到的东西。"/>
         </imgdir>
       </imgdir>
       <imgdir name="lost">
-        <string name="0" value="Bark bark-!(Moppie picked up a small box from somewhere.)"/>
+        <string name="0" value="汪汪-！(波达从什么地方衔来了一个箱子。)"/>
         <imgdir name="yes"/>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Bark! Bark bark!(There seems to be a small box around #p2022019#&apos;s neck.)\r\n#L0# #bObserve the box.#l"/>
-      <string name="1" value="Would you like to remove the box from Moppie&apos;s neck and observe it?"/>
+      <string name="0" value="汪！汪汪汪！(发现波达的脖子上挂着一只箱子。)\r\n#L0# #b查看箱子。#l"/>
+      <string name="1" value="要把箱子从波达的脖子上摘下来看看吗？"/>
       <imgdir name="yes">
-        <string name="0" value="The box contained a phrase.\n\n#b&apos;To #p2101002# of #m260000000#...&apos;#k"/>
+        <string name="0" value="箱子上用很小的字体写着：\n\n#b“交给#m260000000#的#p2101002#……”#k"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Bark bark-!"/>
+        <string name="0" value="汪汪-！"/>
       </imgdir>
       <int name="ask" value="1"/>
       <imgdir name="stop">
@@ -19629,12 +19629,12 @@
   <imgdir name="2127">
     <imgdir name="1"/>
     <imgdir name="0">
-      <string name="0" value="Are you ready to leave? You seem a bit tense, since this is your first time. Don&apos;t worry, I think you&apos;ll do just fine."/>
+      <string name="0" value="做好离开的准备了吗？第一次去，看上去好像有点紧张嘛。别担心。你应该能做得很好的。"/>
       <imgdir name="yes">
-        <string name="0" value="Ah, I should tell you this right now. With my abilities, I can only take you there five more times after this. If you&apos;re ready for the path ahead, please give me a moment to focus, and speak with me once more."/>
+        <string name="0" value="啊，我得先和你说明。以我的能力，今后只能送你去那里五次。如果你理解了我的话，就再和我说话吧。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Please let me know when you&apos;re ready."/>
+        <string name="0" value="请在准备好了之后再来找我吧。"/>
       </imgdir>
     </imgdir>
   </imgdir>
@@ -19893,100 +19893,100 @@
   </imgdir>
   <imgdir name="9412">
     <imgdir name="0">
-      <string name="0" value="How did you find your way here? As you can see, I am busy researching... but I have run into a problem, and my research has hit a dead end."/>
-      <string name="1" value="When I&apos;m conducting studies and researching, I go through a lot of pencils for maps, blueprints, equations, etc.. This also creates enough mess to erase, but alas, I have used up all my erasers... this is the reason why I can&apos;t erase my mistakes..."/>
-      <string name="2" value="This is exactly the reason why I need an eraser... so if you have one, can you give one to me?"/>
+      <string name="0" value="你来这里干什么？你也知道，我现在正在埋头研究……但是最近遇到了一点问题，研究没办法进行下去了。"/>
+      <string name="1" value="为了进行研究，经常需要使用铅笔来计算公式、画设计图，也经常需要修改。但是我的橡皮擦全部用光了，现在没办法修改错误的地方。"/>
+      <string name="2" value="所以我需要橡皮擦。你好像有橡皮擦，能送给我吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Good choice. You don&apos;t need to carry that around if you don&apos;t put that to good use... and since I will be conducting studies inside, I hardly ever have time to go outside and get one myself."/>
-        <string name="1" value="Hey you have a variety of erasers. Just give me one each of #b#t4001038#, #t4001039#, #t4001040#, #t4001041#, #t4001042#, or #t4001043##k. Let me know when you&apos;re ready to go on."/>
+        <string name="0" value="太好了。你就算带在身上也没用。我因为要进行研究，所以没时间。有时间的话，我会到外面去买。"/>
+        <string name="1" value="你好像有很多种橡皮擦。#b#t4001038#、#t4001039#、#t4001040#、#t4001041#、#t4001042#、#t4001043##k，只要每样给我一个就行了。准备好了的话，你再来找我。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="You hardly ever use erasers... in that case, leave my lab immediately! You&apos;re nothing but a distraction! *grumbles*"/>
+        <string name="0" value="你不是说用不着橡皮擦吗……那你快从我的研究室里出去！你妨碍到我研究了！"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Thank you so much. I&apos;ll put these erasers to good use. Thank you!"/>
+      <string name="0" value="谢谢。我会好好使用这些橡皮擦的。问题解决了，这下可以继续进行研究了。"/>
       <imgdir name="yes">
-        <string name="0" value="I have to reward you for this... but this is all I have right now. I found this around the lab the other day."/>
+        <string name="0" value="我得给你点东西作为报答……现在只有这个东西……这是之前我在研究室周围散步的时候发现的。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="Check it once more! Are you sure you have the erasers ready to give?"/>
+          <string name="0" value="你再确认一下！你确定有可以给我的橡皮擦吗？"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="9413">
     <imgdir name="1">
-      <string name="0" value="Thank you. I can&apos;t believe you&apos;re giving me this important item. I need to pay you back for this. Tell you what, I&apos;ll give you #b#t01302049##k. This is a weapon made by us aliens."/>
+      <string name="0" value="谢谢。把看上去这么重要的东西让给我，我也得表示一下心意才行。我把#b#t01302049##k送给你。这是用我们外星人的先进技术制造的武器。"/>
       <imgdir name="yes">
-        <string name="0" value="Again, thank you so much! Enjoy your weapon!"/>
+        <string name="0" value="不管怎样，再次对你表示感谢。希望那个武器对你有用～"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="Are you sure you have the correct list of erasers from me? Please check it again."/>
+          <string name="0" value="你确定有可以给我的橡皮擦吗？你再确认一下！"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Hey, how&apos;s it going? We the aliens are eternally grateful for your generosity. Thanks to your marvelous reporting, we were able to acquire a lot of information about the humans."/>
-      <string name="1" value="Hey, I see something very intriguing with you... can you show me one? I&apos;ll just take a quick look at is give it back to you."/>
+      <string name="0" value="你好！这段时间过得怎么样？咦？我们是不是什么时候见过？"/>
+      <string name="1" value="等等，你身上有个神奇的东西！能给我看看吗？我马上就还给你～"/>
       <imgdir name="yes">
-        <string name="0" value="Okay, so what&apos;s this called? An eraser? What are they used for...?"/>
-        <string name="1" value="It looks very interstng... and it resembles a creature we&apos;ve been looking for... has this been frozen using special equipments?"/>
-        <string name="2" value="Anyway you and your eraser... are you willing to give me some? I just need one of each of the following: #b#t4001038#, #t4001039#, #t4001040#, #t4001041#, #t4001042#, and #t4001043##k."/>
+        <string name="0" value="这是什么？橡皮擦？橡皮擦是用来干什么的？"/>
+        <string name="1" value="真神奇。和我们最近正在研究的生物体长得一样……不是活着的东西，是经过特殊装备的冷却吗？"/>
+        <string name="2" value="总之你能把那些橡皮擦送给我吗？#b#t4001038#、#t4001039#、#t4001040#、#t4001041#、#t4001042#、#t4001043##k，只要每样给我一个就行。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Are you still wary of being around me because of that? Why don&apos;t we just forget about it and move on? No? Well, let me know when you change your mind."/>
+        <string name="0" value="因为那件事，你还在怀疑我吗？请忘了那件事，你能把东西给我看看吗？如果你改变了主意，可以再来找我。"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="9414">
     <imgdir name="1">
-      <string name="0" value="The one who has both the Monster Eraser and Undine&apos;s Cloth. The one who&apos;s ready to own the sword. You are now the rightful owner of this sword, #b#t01302063##k. Thank you. Thank you for freeing me from the sword."/>
+      <string name="0" value="拥有怪物橡皮擦和匀迪尼的衣角的人，做好拥有宝剑的准备的人，你成为了这把剑#b#t01302063##k的主人。谢谢你，把我从剑中解放出来……"/>
       <imgdir name="yes">
-        <string name="0" value="It was really tragic to think that the one sword I have adored more than anything had become the very thing that took away my freedom... thank you for freeing me from it."/>
+        <string name="0" value="把心爱的宝剑当成监狱，实在太可惜了……真的非常感谢。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="Unless you have #b1 #t4001038#, 1 #t4001040#, 1 #t4001039#, 1 #t4001041#, 1 #t4001043#, 1 #t4001042#, and #b#t4001115##, no one can become a rightful owner of this sword."/>
+          <string name="0" value="#b1个#t4001038#、1个#t4001040#、1个#t4001039#、1个#t4001041#、1个#t4001043#、1个#t4001042##k，还有#b#t4001115##。没有这些东西的话，就无法成为剑的主人。"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="You look like you are worthy of becoming the rightful owner of this sword. Don&apos;t be shocked... I am the owner of this sword, as well as the spirit that has been trapped in the sword for a long, long time. I&apos;ve been waiting for a day like this, where a rightful new owner would step in and free me from this forged prison."/>
-      <string name="1" value="Long ago, I used this sword to fight the Spirit of Fire, Salamander. I was able to slay him, but as a result, I lost all my powers and in the end, became part of the sword. The sword, that had just lost its owner was also bound to my remains. Now, try pulling this sword out. It will not move. This sword is utterly immovable, even the remains of the spirit... my sword became the immovable sword.."/>
-      <string name="2" value="But that doesn&apos;t mean there&apos;s no way to remove the sword. With the #bMonster Eraser#k, the evil forces from it will awaken the power of the sword that had laid dormant. With that power, the sword will be able to be removed. But don&apos;t think about hastily awakening the sword. This sword is already a part of the ashes, and when the powers are reawaken, it&apos;ll be surrounded by the flames of Salamdander... which means no one will be able to touch it."/>
-      <string name="3" value="That&apos;s why you&apos;ll also need #b#t4001115##k. It&apos;s the one thing that can neutralize Salamander&apos;s massive force. It&apos;s really hard to find, though. I&apos;ve been waiting for a long time in the sword, but I&apos;ve never met anyone who had both the Monster Erasers and the #t4001115#. You&apos;re the only one... what do you think? Would you like to become the rightful owner of this sword?"/>
+      <string name="0" value="你好像有成为剑的主人的资格……别吃惊。我是这把剑的主人，同时也是被关在剑中的灵魂。在漫长的岁月里，我一直在等待有人能把我从剑中解放出来。"/>
+      <string name="1" value="很久以前，我曾经用这把剑和暴走的火精灵塞拉曼德战斗。虽然最终打倒了他，但我也失去了所有的力量，沉睡在了剑中。失去主人的剑也被埋在了精灵的残骸之中。好了，试着拔出这把剑吧。你应该没办法拔出。因为这把剑连战胜精灵的残骸的力量也没有……我的剑是任何人都拔不出的剑。"/>
+      <string name="2" value="但是也不是完全没办法把剑拔出来。如果有#b怪物橡皮擦#k的话，就能用其中含有的魔力唤醒剑的力量。如果能获得那种力量，就能把剑拔出来。但是不能急着把剑唤醒。剑已经被精灵的残骸同化，它也许会带着塞拉曼德的火焰一起复活。那样的话，就算把剑拔出来，也没有人可以把它拿在手上。"/>
+      <string name="3" value="应此需要用到水精灵#b#t4001115##k。那是唯一可以组织塞拉曼德的力量的东西。但是拥有那种东西的人非常少。我在剑中等待了这么长时间，还是没能找到同时拥有怪物橡皮擦和#t4001115#的人。除了你……怎么样？你想成为这把剑的主人吗？"/>
       <imgdir name="yes">
-        <string name="0" value="Then please bring all the items required and make your way back here. I need #b1 #t4001038#, 1 #t4001040#, 1 #t4001039#, 1 #t4001041#, 1 #t4001043#, 1 #t4001042#, and #t4001115##k. That should be enough for you to own this sword."/>
+        <string name="0" value="那就请你带着所有材料过来。如果你有#b1个#t4001038#、1个#t4001040#、1个#t4001039#、1个#t4001041#、1个#t4001043#、1个#t4001042##k，以及#b#t4001115##的话，你就能成为这把剑的主人。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="For you to say no, even after having all these items... #b#t01302063##k is an immensely powerful weapon that combines its natural power with the spirits laden in it. I have no idea why you&apos;d say no to that..."/>
+        <string name="0" value="你有所有的材料但是却拒绝了……#b#t01302063##k在原来力量的基础上又拥有了精灵的力量。是什么理由让你拒绝这么好的武器呢？"/>
       </imgdir>
     </imgdir>
   </imgdir>
   <imgdir name="9415">
     <imgdir name="1">
-      <string name="0" value="Oh, you are only interested in trading for it! Here it is, the Seal Cushion! Now please give me the #bMonster Eraser#k and #bHectagon Crystal Necklace#k."/>
+      <string name="0" value="哎呀，你终于下定决心交换啦！给，这是海狗靠垫。请把#b怪物橡皮擦#k和#b六角水晶项链#k给我。"/>
       <imgdir name="yes">
-        <string name="0" value="Ahhh... this is indeed a beautiful necklace. Of course, it looks much better on fairies like me!"/>
+        <string name="0" value="哎呀，这条项链真美。比起人类，它更适合妖精，呵呵。"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="item">
-          <string name="0" value="Don&apos;t just give me the #bHectagon Crystal Necklace#k. I also want one of each: #bStump Eraser, Lupin Eraser, Mushmom Eraser, Wraith Eraser, Octopus Eraser, and Slime Eraser#k. I mean, I&apos;m giving you this lovely cushion. That&apos;s the least you can do!!"/>
+          <string name="0" value="除了#b六角水晶项链#k之外，还需要#b木妖橡皮擦、猴子橡皮擦、蘑菇王橡皮擦、大幽灵橡皮擦、三眼章鱼橡皮擦、绿水灵橡皮擦#k。为了得到可爱的海狗靠垫这么多东西也是应该的，不是吗？"/>
         </imgdir>
       </imgdir>
     </imgdir>
     <imgdir name="0">
-      <string name="0" value="Hello, human! Yes, you! Please stop for a second. That necklace you have there... isn&apos;t that the Hectagon Crystal Necklace? Oh my gosh, it&apos;s real! Amazing! How did you get this? \r\n#L0# #bI got it from Pigmy&apos;s Egg.#k#l"/>
-      <string name="1" value="Ahhh, really! I&apos;ve never seen Hectagon Crystal Necklace up close before. This is mesmerizing... hey... can you give me this? It doesn&apos;t look good on humans anyway. You don&apos;t even know what to do with it!\r\n#L0# #bWhat do you mean??#k#l"/>
-      <string name="2" value="The Hectagon Crystal Necklace contains incredible power to stop monsters. In order to awaken it, however, you&apos;ll need Monster Erasers. Awaken its dormant power with the Monster Eraser, and it&apos;ll become a powerful necklace. Oh, and it&apos;s not compatible to humans. It only reacts to fairies. That&apos;s why you cannot harness its power... will you give it to me? I&apos;ll give you something else... an adorable Seal Cushion!"/>
+      <string name="0" value="喂，人类！我说的是你。请稍等一下。你手上拿着的，是六角水晶项链吗？哎呀，真的吗？真了不起！你到底是在哪里弄到的？\r\n#L0# #b是从猪美美蛋里得到的。#k#l"/>
+      <string name="1" value="啊，原来如此！我还是头一次见到六角水晶项链。这迷人的光彩……你能把它给我吗？反正它不适合人类，你也不知道怎么使用它，不是吗？\r\n#L0# #b你在说什么啊？#k#l"/>
+      <string name="2" value="六角水晶项链蕴藏着阻止怪物的力量。但是要想唤醒它，需要有怪物橡皮擦。用怪物橡皮擦唤醒项链的力量后，可以制作成漂亮而又强力的吊坠。啊，那个吊坠不是人类可以使用的东西，那种力量只有对妖精才会起反应。你能把它送给我吗？我可以给你其他东西。我用可爱的海狗靠垫和你交换。"/>
       <imgdir name="yes">
-        <string name="0" value="Look. Isn&apos;t it adorable? I really cherish this item, but for a #bHectagon Crystal Necklace#k... I can make that sacrifice. Please get me #b1 Stump Eraser, 1 Mushmom Eraser, 1 Lupin Eraser, 1 Wraith Eraser, 1 Slime Eraser, 1 Octopus Eraser, and a Hectagon Crystal Necklace#k, and I&apos;ll give you the cushion."/>
+        <string name="0" value="看，是非常可爱的海狗靠垫吧？这是我心爱的东西，但是为了获得#b六角水晶项链#k，没有办法……如果你能给我#b1个木妖橡皮擦、1个蘑菇王橡皮擦、1个猴子橡皮擦、1个大幽灵橡皮擦、1个绿水灵橡皮擦、1个三眼章鱼橡皮擦#k，以及#b六角水晶项链#k，我就把海狗靠垫送给你。"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="What? You&apos;re telling me you don&apos;t like the cushion? How can you say no to this? Humans are very, very strange sometimes..."/>
+        <string name="0" value="嗯？你是不喜欢海狗靠垫吗？这么可爱的靠垫，怎么会不喜欢呢？"/>
       </imgdir>
       <int name="ask" value="1"/>
       <imgdir name="stop">
@@ -20200,12 +20200,12 @@
   </imgdir>
   <imgdir name="8018">
     <imgdir name="0">
-      <string name="0" value="Sakura must be still crying. Go see what&apos;s up with her."/>
+      <string name="0" value="去看一看美代子正在哭泣的地方吧。"/>
     </imgdir>
     <imgdir name="1">
-      <string name="0" value="Sniff... sniff..."/>
+      <string name="0" value="呜呜…呜呜…。"/>
       <imgdir name="yes">
-        <string name="0" value="Would you please sit down and listen to my story?"/>
+        <string name="0" value="能不能听一听我的事情啊？"/>
       </imgdir>
       <imgdir name="stop">
         <imgdir name="npc">
@@ -20216,17 +20216,17 @@
   </imgdir>
   <imgdir name="8019">
     <imgdir name="0">
-      <string name="0" value="Now that you&apos;ve mastered the Kitty Language, go up to the Boss Kitty and start up a conversation with it."/>
+      <string name="0" value="既然现在学会了猫语，就去波斯猫那吧。"/>
       <imgdir name="yes">
-        <string name="0" value="Alright, good luck~!"/>
+        <string name="0" value="那么，加油啊~！"/>
       </imgdir>
       <imgdir name="no">
-        <string name="0" value="Busy? Alright then, next time..."/>
+        <string name="0" value="很忙吗？ 那么，下次再说吧…。"/>
       </imgdir>
     </imgdir>
     <imgdir name="1">
       <imgdir name="yes">
-        <string name="0" value="Ohhh~~~ not a human!!"/>
+        <string name="0" value=" 呜~~！ 不是人类！"/>
       </imgdir>
     </imgdir>
   </imgdir>

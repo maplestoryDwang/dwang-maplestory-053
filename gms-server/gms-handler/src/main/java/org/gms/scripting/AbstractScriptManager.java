@@ -90,15 +90,15 @@ public abstract class AbstractScriptManager {
     }
 
     protected ScriptEngine getInvocableScriptEngine(String path, Client c) {
-        if (GameConfig.getServerBoolean("use_debug")) {
-            log.info("开始脚本任务：{}", path);
-        }
         ScriptEngine engine = c.getScriptEngine("scripts/" + path);
         if (engine == null) {
             engine = getInvocableScriptEngine(path);
             c.setScriptEngine(path, engine);
+            return engine;
         }
-
+        if (GameConfig.getServerBoolean("use_debug")) {
+            log.info("开始脚本任务：{}", path);
+        }
         return engine;
     }
 
