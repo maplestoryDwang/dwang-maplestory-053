@@ -3,6 +3,7 @@ package org.gms.net.server.handlers.login;
 import org.gms.client.Client;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.net.server.Server;
 import org.gms.util.PacketCreator;
 
 /**
@@ -22,9 +23,14 @@ public final class AcceptToSHandler extends AbstractPacketHandler {
             return;
         }
         if (c.finishLogin() == 0) {
-            c.sendPacket(PacketCreator.getAuthSuccess(c));
+            login(c);
         } else {
             c.sendPacket(PacketCreator.getLoginFailed(9));//shouldn't happen XD
         }
+    }
+
+    private static void login(Client c) {
+        c.sendPacket(PacketCreator.getAuthSuccessRequestPin(c));//why the fk did I do c.getAccountName()?
+        Server.getInstance().registerLoginState(c);
     }
 }

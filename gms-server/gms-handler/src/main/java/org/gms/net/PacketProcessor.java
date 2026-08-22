@@ -28,16 +28,7 @@ import org.gms.net.opcodes.RecvOpcode;
 import org.gms.net.server.channel.handlers.*;
 import org.gms.net.server.handlers.KeepAliveHandler;
 import org.gms.net.server.handlers.LoginRequiringNoOpHandler;
-import org.gms.net.server.handlers.login.AfterLoginHandler;
-import org.gms.net.server.handlers.login.CharSelectedHandler;
-import org.gms.net.server.handlers.login.CharlistRequestHandler;
-import org.gms.net.server.handlers.login.CheckCharNameHandler;
-import org.gms.net.server.handlers.login.CreateCharHandler;
-import org.gms.net.server.handlers.login.DeleteCharHandler;
-import org.gms.net.server.handlers.login.LoginPasswordHandler;
-import org.gms.net.server.handlers.login.RelogRequestHandler;
-import org.gms.net.server.handlers.login.ServerStatusRequestHandler;
-import org.gms.net.server.handlers.login.ServerlistRequestHandler;
+import org.gms.net.server.handlers.login.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,7 +121,7 @@ public final class PacketProcessor {
     }
 
     private void registerLoginHandlers() {
-//        registerHandler(RecvOpcode.ACCEPT_TOS, new AcceptToSHandler());
+        registerHandler(RecvOpcode.ACCEPT_TOS, new AcceptToSHandler());
         registerHandler(RecvOpcode.AFTER_LOGIN, new AfterLoginHandler());                       //   check
         registerHandler(RecvOpcode.SERVERLIST_REREQUEST, new ServerlistRequestHandler());       //   check
         registerHandler(RecvOpcode.CHARLIST_REQUEST, new CharlistRequestHandler());             //   check

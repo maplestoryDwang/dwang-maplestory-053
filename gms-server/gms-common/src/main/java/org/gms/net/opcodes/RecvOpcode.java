@@ -75,7 +75,10 @@ public enum RecvOpcode implements Opcode {
      */
     PLAYER_LOGGEDIN(0x14),
 
-    // 0x15 未使用
+    /**
+     * 接受服务条款
+     */
+    ACCEPT_TOS(0x15),
 
     /**
      * 选择角色
@@ -488,7 +491,6 @@ public enum RecvOpcode implements Opcode {
     SERVERLIST_REREQUEST(0x04), // 重新请求服务器列表
     CHARLIST_REQUEST(0x05), // 请求角色列表
     SERVERSTATUS_REQUEST(0x06), // 请求服务器状态
-    ACCEPT_TOS(0x07), // 接受服务条款
     SET_GENDER(0x08), // 设置性别
     AFTER_LOGIN(0x09), // 登录后操作
     REGISTER_PIN(0x0A), // 注册PIN码

@@ -53,9 +53,9 @@ function action(mode, type, selection) {
     }
     if (cm.c.getPlayer().getMapId() == 0 || cm.c.getPlayer().getMapId() == 3) {
         if (status == 0) {
-            cm.sendNext("好的，那么，我会让你进入训练营地。请跟着你的教练。");
+            cm.sendNext("好的，那么，我会让你进入训练营地。请跟着你的教练，对了，记得查看一下你的#r背包(快捷键：I)#k，给你准备了一些帮助你成长的道具");
         } else if (status == 1 && type == 1) {
-            cm.sendNext("看起来你想要开始你的冒险之旅而不接受训练计划。那么，我会让你前往训练场地。小心~");
+            cm.sendNext("看起来你想要开始你的冒险之旅而不接受训练计划。那么，我会让你前往训练场地。对了，记得查看一下你的#r背包(快捷键：I)#k，给你准备了一些帮助你成长的道具");
         } else if (status == 1) {
             cm.warp(1, 0);
             cm.dispose();
