@@ -15,6 +15,7 @@ import base from './en-US/base';
 export default {
   'menu.dashboard': 'Dashboard',
   'menu.dashboard.workplace': 'Workplace',
+  'menu.dashboard.event': 'Event config',
   'menu.dashboard.informationSearch': 'Information Search',
   'menu.game': 'Game',
   'menu.game.config': 'Config',

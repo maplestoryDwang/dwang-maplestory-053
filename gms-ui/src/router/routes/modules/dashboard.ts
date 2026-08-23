@@ -23,6 +23,16 @@ const DASHBOARD: AppRouteRecordRaw = {
       },
     },
     {
+      path: 'event',
+      name: 'event',
+      component: () => import('@/views/dashboard/event/index.vue'),
+      meta: {
+        locale: 'menu.dashboard.event',
+        requiresAuth: true,
+        roles: ['admin'],
+      },
+    },
+    {
       path: 'informationSearch',
       name: 'informationSearch',
       component: () => import('@/views/dashboard/informationSearch/index.vue'),

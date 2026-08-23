@@ -16,6 +16,7 @@ export default {
   // 左侧菜单
   'menu.dashboard': '仪表盘',
   'menu.dashboard.workplace': '工作台',
+  'menu.dashboard.event': '事件管理',
   'menu.dashboard.informationSearch': '资料查询',
   'menu.game': '游戏管理',
   'menu.game.config': '参数管理',

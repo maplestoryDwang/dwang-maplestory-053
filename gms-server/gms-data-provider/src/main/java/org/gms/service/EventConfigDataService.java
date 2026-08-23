@@ -2,7 +2,9 @@ package org.gms.service;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.AllArgsConstructor;
+import org.gms.dao.entity.EventConfigDO;
 import org.gms.dao.mapper.EventConfigMapper;
+import org.gms.model.dto.EventConfigDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,4 +36,27 @@ public class EventConfigDataService {
         );
     }
 
+    public List<EventConfigDO> getAllEvents() {
+        List<EventConfigDO> eventConfigDOS = eventConfigMapper.selectAll();
+        return eventConfigDOS;
+    }
+
+    public void saveEvent(EventConfigDTO data) {
+        EventConfigDO eventConfigDO = new EventConfigDO();
+        eventConfigDO.setId(data.getId());
+        eventConfigDO.setEventName(data.getEventName());
+        eventConfigDO.setEnabled(data.getEnabled());
+        eventConfigDO.setRemark(data.getRemark());
+
+        if (eventConfigDO.getId() == null) {
+            eventConfigMapper.insert(eventConfigDO);
+        } else {
+            eventConfigMapper.update(eventConfigDO);
+        }
+
+    }
+
+    public void deleteEvent(Integer eventId) {
+        eventConfigMapper.deleteById(eventId);
+    }
 }
