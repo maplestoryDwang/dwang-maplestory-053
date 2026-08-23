@@ -168,6 +168,7 @@ public class GenericPortal implements Portal {
     }
 
     /**
+     * todo 这个方法还是有BUG
      * 测试先查看是否有传送门脚本
      *
      * @param eventInstance
@@ -176,7 +177,7 @@ public class GenericPortal implements Portal {
     private boolean checkEventCantEnter(EventInstanceManager eventInstance) {
         // 天空组队可以自由进入
         // 原因： 因为有一些地图可以去到多个地图,有多个传送口，无法只绑定一个脚本名，除非去重构绑定传送口的脚本改成数组
-        List<String> forbidEnter = Arrays.asList("KerningPQ", "LudiPQ");
+        List<String> forbidEnter = Arrays.asList("Kerning0", "Ludi0");
         if (eventInstance != null) {
             return forbidEnter.contains(eventInstance.getName());
         }
