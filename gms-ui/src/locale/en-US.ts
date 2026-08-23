@@ -5,6 +5,7 @@ import npcShop from '@/views/game/npcShop/locale/en-US';
 import gachapon from '@/views/game/gachapon/locale/en-US';
 import commandInfo from '@/views/game/commandInfo/locale/en-US';
 import workplace from '@/views/dashboard/workplace/locale/en-US';
+import event from '@/views/dashboard/event/locale/en-US';
 import informationSearch from '@/views/dashboard/informationSearch/locale/en-US';
 import account from '@/views/account/locale/en-US';
 import login from '@/views/login/locale/en-US';
@@ -49,6 +50,7 @@ export default {
   'settings.version': 'Version',
   ...base,
   ...workplace,
+  ...event,
   ...login,
   ...account,
   ...npcShop,

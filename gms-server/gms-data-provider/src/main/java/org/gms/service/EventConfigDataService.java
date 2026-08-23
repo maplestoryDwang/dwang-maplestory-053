@@ -48,7 +48,7 @@ public class EventConfigDataService {
         eventConfigDO.setEnabled(data.getEnabled());
         eventConfigDO.setRemark(data.getRemark());
 
-        if (eventConfigDO.getId() == null) {
+        if (eventConfigDO.getId() == null || eventConfigDO.getId() == 0) {
             eventConfigMapper.insert(eventConfigDO);
         } else {
             eventConfigMapper.update(eventConfigDO);

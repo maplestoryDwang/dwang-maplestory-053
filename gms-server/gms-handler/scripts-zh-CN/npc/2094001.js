@@ -21,6 +21,8 @@
 */
 
 var status = -1;
+var need = "你需要#b10个#t4001118##k来获得下一个帽子。";
+var notice = "在兑换帽子之前，#r请在您的装备物品栏中腾出空间，并把帽子脱下来#k。";
 
 function start() {
     status = -1;
@@ -56,56 +58,57 @@ function action(mode, type, selection) {
             }
         } else {
             if (status == 0) {
-                cm.sendSimple("谢谢你救了我！我能帮你什么忙吗？\r\n#b#L0#带我离开这里。\r\n#L1#给我海盗帽子。");
+                cm.sendSimple("谢谢你救了我！我能帮你什么忙吗？\r\n#b#L0#带我离开这里。\r\n#L1#给我海盗帽。");
             } else if (status == 1) {
                 if (selection == 0) {
-                    if (!cm.canHold(4001158, 1)) {
+                    if (!cm.canHold(4001118, 1)) {
                         cm.sendOk("请在杂项栏中腾出空间。");
                         cm.dispose();
                         return;
                     }
-                    cm.gainItem(4001158, 1);
+                    cm.gainItem(4001118, 1);
+                    cm.gainExp(80000);
                     cm.warp(251010404, 0);
                 } else {
-                    if (cm.haveItem(1003267, 1)) {
+                    if (cm.haveItem(1002574, 1)) {
                         cm.sendOk("你有最好的帽子。");
                     } else if (cm.haveItem(1002573, 1)) {
-                        if (cm.haveItem(4001158, 20)) {
-                            if (cm.canHold(1003267, 1)) {
+                        if (cm.haveItem(4001118, 20)) {
+                            if (cm.canHold(1002574, 1)) {
                                 cm.gainItem(1002573, -1);
-                                cm.gainItem(4001158, -20);
-                                cm.gainItem(1003267, 1);
-                                cm.sendOk("我已经给你帽子了。");
+                                cm.gainItem(4001118, -10);// 替换了，这个版本没有其他的
+                                cm.gainItem(1002574, 1);
+                                cm.sendOk("恭喜你兑换了海盗帽，海贼王就是你！");
                             } else {
-                                cm.sendOk("在收到帽子之前，请在您的装备物品栏中腾出空间。");
+                                cm.sendOk(notice);
                             }
                         } else {
-                            cm.sendOk("你需要20个#t4001158#来获得下一个帽子。");
+                            cm.sendOk(need);
                         }
                     } else if (cm.haveItem(1002572, 1)) {
-                        if (cm.haveItem(4001158, 20)) {
+                        if (cm.haveItem(4001118, 10)) {
                             if (cm.canHold(1002573, 1)) {
                                 cm.gainItem(1002572, -1);
-                                cm.gainItem(4001158, -20);
+                                cm.gainItem(4001118, -10);
                                 cm.gainItem(1002573, 1);
-                                cm.sendOk("我已经给你帽子了。");
+                                cm.sendOk("我把帽子给了你。");
                             } else {
-                                cm.sendOk("在收到帽子之前，请在您的装备物品栏中腾出空间。");
+                                cm.sendOk(notice);
                             }
                         } else {
-                            cm.sendOk("你需要20个#t4001158#来获得下一个帽子。");
+                            cm.sendOk(need);
                         }
                     } else {
-                        if (cm.haveItem(4001158, 20)) {
+                        if (cm.haveItem(4001118, 10)) {
                             if (cm.canHold(1002572, 1)) {
-                                cm.gainItem(4001158, -20);
+                                cm.gainItem(4001118, -10);
                                 cm.gainItem(1002572, 1);
-                                cm.sendOk("我已经给你帽子了。");
+                                cm.sendOk("我把帽子给了你。");
                             } else {
-                                cm.sendOk("在收到帽子之前，请在您的装备物品栏中腾出空间。");
+                                cm.sendOk(notice);
                             }
                         } else {
-                            cm.sendOk("你需要20个#t4001158#来获得下一个帽子。");
+                            cm.sendOk(need);
                         }
                     }
                 }

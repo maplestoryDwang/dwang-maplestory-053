@@ -44,8 +44,30 @@ public class EventConfigController {
             eventConfigDTOS.add(new EventConfigDTO(event.getId(), event.getEventName(), event.getEnabled(), event.getRemark()));
         }
 
-        Page<EventConfigDTO> page = BasePageUtil.create(eventConfigDTOS.stream().distinct().toList(), request.getData()).page();
+        EventConfigDTO query = request.getData();
+        Page<EventConfigDTO> page = BasePageUtil.create(eventConfigDTOS.stream().distinct().toList(), query)
+                .filter(item -> matchEvent(query, item))
+                .page();
         return ResultBody.success(request, page);
+    }
+
+    private boolean matchEvent(EventConfigDTO query, EventConfigDTO item) {
+        if (query == null) {
+            return true;
+        }
+        if (query.getId() != null && !query.getId().equals(item.getId())) {
+            return false;
+        }
+        if (query.getEventName() != null && !query.getEventName().isBlank()) {
+            String name = item.getEventName() == null ? "" : item.getEventName();
+            if (!name.toLowerCase().contains(query.getEventName().toLowerCase())) {
+                return false;
+            }
+        }
+        if (query.getEnabled() != null && !query.getEnabled().equals(item.getEnabled())) {
+            return false;
+        }
+        return true;
     }
 
 

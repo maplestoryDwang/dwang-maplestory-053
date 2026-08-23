@@ -76,7 +76,7 @@ public class QuestUtils {
         short questId = quest.getId();
         for (AbstractQuestRequirementData r : startReqs.values()) {
             if (!QuestRequirementEvaluator.check(r, chr, npcid)) {
-                log.info("无法开始任务, name: {}, questId: {}, 不满足: {}", name, questId, r.getType());
+                log.debug("无法开始任务, name: {}, questId: {}, 不满足: {}", name, questId, r.getType());
                 return false;
             }
         }
@@ -93,7 +93,7 @@ public class QuestUtils {
 
         for (AbstractQuestRequirementData r : completeReqs.values()) {
             if (!QuestRequirementEvaluator.check(r, chr, npcid)) {
-                log.info("无法完成任务, name: {}, questId: {}, 不满足: {}", quest.getName(), quest.getId(), r.getType());
+                log.debug("无法完成任务, name: {}, questId: {}, 不满足: {}", quest.getName(), quest.getId(), r.getType());
                 return false;
             }
         }

@@ -457,7 +457,7 @@ public enum SendPacketOpcode implements Opcode {
 
     SET_QUEST_CLEAR(-1), // 设置任务完成   ===========================    0x96
     SET_QUEST_TIME(0x97), // 设置任务时间
-    ARIANT_RESULT(0x98),    // thanks lrenex // ARIANT结果
+    ARIANT_RESULT(-1),    // thanks lrenex // ARIANT结果
     SET_OBJECT_STATE(0x99), // 设置物体状态
     STOP_CLOCK(-1), // 停止时钟
     ARIANT_ARENA_SHOW_RESULT(0x9B), // ARIANT竞技场显示结果

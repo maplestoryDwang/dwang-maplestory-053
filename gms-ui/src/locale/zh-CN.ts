@@ -5,6 +5,7 @@ import npcShop from '@/views/game/npcShop/locale/zh-CN';
 import gachapon from '@/views/game/gachapon/locale/zh-CN';
 import commandInfo from '@/views/game/commandInfo/locale/zh-CN';
 import workplace from '@/views/dashboard/workplace/locale/zh-CN';
+import event from '@/views/dashboard/event/locale/zh-CN';
 import informationSearch from '@/views/dashboard/informationSearch/locale/zh-CN';
 import account from '@/views/account/locale/zh-CN';
 import login from '@/views/login/locale/zh-CN';
@@ -53,6 +54,7 @@ export default {
   'settings.version': '版本',
   ...baseConfig, // 基本配置（示范如何外部导入）
   ...workplace,
+  ...event,
   ...login,
   ...account,
   ...npcShop,
