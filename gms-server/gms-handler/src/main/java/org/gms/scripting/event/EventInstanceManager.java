@@ -26,6 +26,7 @@ import org.gms.client.Skill;
 import org.gms.client.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.dwutil.DebugUtils;
 import org.gms.dwutil.ItemUtils;
 import org.gms.net.server.coordinator.world.EventRecallCoordinator;
 import org.gms.net.server.world.Party;
@@ -1007,6 +1008,13 @@ public class EventInstanceManager {
         setEventRewards(eventLevel, rwds, qtys, 0);
     }
 
+    /**
+     * 设置奖励
+     * @param eventLevel
+     * @param rwds
+     * @param qtys
+     * @param expGiven
+     */
     public final void setEventRewards(int eventLevel, List<Object> rwds, List<Object> qtys, int expGiven) {
         // fixed EXP will be rewarded at the same time the random item is given
 
@@ -1355,14 +1363,29 @@ public class EventInstanceManager {
         giveEventPlayersMeso(list.get(1));
     }
 
+    // 链接下一个脚本传送口 包含获取经验
     public final void linkToNextStage(int thisStage, String eventFamily, int thisMapId) {
         giveEventPlayersStageReward(thisStage);
+        justLinkNextStageMap(thisStage, eventFamily, thisMapId, "next00");
+    }
+
+    /**
+     * 事件，对于没有奖励的情况，只是链接event的地图
+     * @author dwang
+     * @param thisStage   当前状态
+     * @param eventFamily 当前事件组状态名字
+     * @param thisMapId   当前地图ID
+     */
+    public final void justLinkNextStageMap(int thisStage, String eventFamily, int thisMapId, String portalName) {
         thisStage--;    //stages counts from ONE, scripts from ZERO
 
         MapleMap nextStage = getMapInstance(thisMapId);
-        Portal portal = nextStage.getPortal("next00");
+        // 进入下一个地图
+        Portal portal = nextStage.getPortal(portalName);
         if (portal != null) {
-            portal.setScriptName(eventFamily + thisStage);
+            String newName = eventFamily + thisStage;
+            portal.setScriptName(newName);
+            log.info("当前eventInstance 链接地图：{}, portal:{}, scriptName:{}", thisMapId, portalName, newName);
         }
     }
 

@@ -58,7 +58,11 @@ function action(mode, type, selection) {
                 return;
             }
 
-            cm.sendSimple("#e#b<组队任务：阿莫利亚挑战>\r\n#k#n" + em.getProperty("party") + "\r\n\r\n如果你足够勇敢去尝试阿莫利亚挑战，和其他像你一样的人一起加入，让你的#b队长#k与我交谈。如果一个由整对已婚夫妇组成的队伍注册参加挑战，将会有更好的奖品等着他们。#b\r\n#L0#我想参加这个组队任务。\r\n#L1#我想" + (cm.getPlayer().isRecvPartySearchInviteEnabled() ? "禁用" : "启用") + "组队搜索。\r\n#L2#我想了解更多细节。");
+            cm.sendSimple("#e#b<组队任务：阿莫利亚挑战>\r\n#k#n" + em.getProperty("party") + "\r\n\r\n如果你足够勇敢去尝试阿莫利亚挑战，和其他像你一样的人一起加入，让你的#b队长#k与我交谈。如果一个由整对已婚夫妇组成的队伍注册参加挑战，将会有更好的奖品等着他们。#b\r\n"
+                + "#L0#我想参加这个组队任务。\r\n"
+                + "#L1#我想" + (cm.getPlayer().isRecvPartySearchInviteEnabled() ? "禁用" : "启用") + "组队搜索。\r\n"
+                + "#L2#我想了解更多细节。\r\n"
+                + "#L3#我想出去。(入场卷会返还)");
         } else if (status == 1) {
             if (selection == 0) {
                 if (cm.getParty() == null) {
@@ -83,8 +87,13 @@ function action(mode, type, selection) {
                 var psState = cm.getPlayer().toggleRecvPartySearchInvite();
                 cm.sendOk("你的组队搜索状态现在是：#b" + (psState ? "enabled" : "disabled") + "#k。想要改变状态时随时找我。");
                 cm.dispose();
-            } else {
+            } else if (selection == 2) {
                 cm.sendOk("#e#b<组队任务：阿莫利亚挑战>#k#n\r\n我是阿莫斯，主办了备受赞誉的阿莫利亚挑战。这个副本包含许多团队谜题，合作是取得进展的基本关键。与其他玩家组队尝试挑战奖励阶段，在副本结束时可以获得许多好东西。如果组成全是情侣的队伍，他们可以在额外的奖励阶段获得更好的奖品。");
+                cm.dispose();
+            } else if (selection == 3) {
+                cm.gainItem(4031592, 1)
+                cm.warp(670010000);
+                 // 670010000
                 cm.dispose();
             }
         }

@@ -258,7 +258,11 @@ public enum RecvOpcode implements Opcode {
      */
     CANCEL_BUFF(0x4E),
 
-    // 0x4F - 0x50 未使用
+    /**
+     * 使用内部传送门
+     */
+    USE_INNER_PORTAL(0x4F),
+
 
     /**
      * 特殊动作/技能释放   OnSkillUseRequest

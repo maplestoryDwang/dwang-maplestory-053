@@ -25,10 +25,13 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.MapId;
+import org.gms.scripting.event.EventInstanceManager;
 import org.gms.scripting.portal.PortalScriptManager;
 import org.gms.util.PacketCreator;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -143,13 +146,18 @@ public class GenericPortal implements Portal {
         } else if (getTargetMapId() != MapId.NONE) {
             Character chr = c.getPlayer();
             if (!(chr.getChalkboard() != null && GameConstants.isFreeMarketRoom(getTargetMapId()))) {
-                MapleMap to = chr.getEventInstance() == null ? c.getChannelServer().getMapFactory().getMap(getTargetMapId()) : chr.getEventInstance().getMapInstance(getTargetMapId());
-                Portal pto = to.getPortal(getTarget());
-                if (pto == null) {// fallback for missing portals - no real life case anymore - interesting for not implemented areas
-                    pto = to.getPortal(0);
+                if (checkEventCantEnter(chr.getEventInstance())) {
+                    chr.dropMessage(5, "你还不能进入下一个地图，当前地图事件未完成。");
+
+                } else {
+                    MapleMap to = c.getChannelServer().getMapFactory().getMap(getTargetMapId());
+                    Portal pto = to.getPortal(getTarget());
+                    if (pto == null) {// fallback for missing portals - no real life case anymore - interesting for not implemented areas
+                        pto = to.getPortal(0);
+                    }
+                    chr.changeMap(to, pto); //late resolving makes this harder but prevents us from loading the whole world at once
+                    changed = true;
                 }
-                chr.changeMap(to, pto); //late resolving makes this harder but prevents us from loading the whole world at once
-                changed = true;
             } else {
                 chr.dropMessage(5, "You cannot enter this map with the chalkboard opened.");
             }
@@ -157,6 +165,22 @@ public class GenericPortal implements Portal {
         if (!changed) {
             c.sendPacket(PacketCreator.enableActions());
         }
+    }
+
+    /**
+     * 测试先查看是否有传送门脚本
+     *
+     * @param eventInstance
+     * @return
+     */
+    private boolean checkEventCantEnter(EventInstanceManager eventInstance) {
+        // 天空组队可以自由进入
+        // 原因： 因为有一些地图可以去到多个地图,有多个传送口，无法只绑定一个脚本名，除非去重构绑定传送口的脚本改成数组
+        List<String> forbidEnter = Arrays.asList("KerningPQ", "LudiPQ");
+        if (eventInstance != null) {
+            return forbidEnter.contains(eventInstance.getName());
+        }
+        return false;
     }
 
     @Override

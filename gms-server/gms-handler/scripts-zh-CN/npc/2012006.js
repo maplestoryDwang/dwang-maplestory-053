@@ -1,8 +1,8 @@
 var status = -1;
 var sel;
 
-var destinations = ["魔法密林","玩具城","神木村","武陵","阿里安特","圣地"];
-var boatType = ["飞船", "飞船", "飞艇", "鹤", "精灵", "渡船"];
+var destinations = ["魔法密林","玩具城","神木村","武陵"];
+var boatType = ["飞船", "飞船", "飞艇", "鹤"];
 
 function start() {
     var message = "天空之城的站台有许多个月台，请按照你的目的地进行选择。你想要前往哪里？\r\n";

@@ -23,6 +23,7 @@ package org.gms.scripting.portal;
 
 import org.gms.client.Client;
 import org.gms.config.GameConfig;
+import org.gms.dwutil.DebugUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.AbstractScriptManager;
@@ -72,12 +73,9 @@ public class PortalScriptManager extends AbstractScriptManager {
     public boolean executePortalScript(Portal portal, Client c) {
         try {
             String strPortalName = portal.getScriptName();
-            if (GameConfig.getServerBoolean("use_debug") && c.getPlayer().isGM() )
-            {
-                c.getPlayer().dropMessage("您已建立与传送门脚本: " + strPortalName + ".js 的关联。");
-            }
             PortalScript script = getPortalScript(strPortalName);
             if (script != null) {
+                DebugUtils.printDropMsg(c, "您已建立与传送门脚本: " + strPortalName + ".js 的关联。");
                 return script.enter(new PortalPlayerInteraction(c, portal));
             }
         } catch (Exception e) {

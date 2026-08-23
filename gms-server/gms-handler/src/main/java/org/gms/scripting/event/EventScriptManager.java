@@ -22,13 +22,18 @@
 package org.gms.scripting.event;
 
 import org.gms.net.server.channel.Channel;
+import org.gms.util.DatabaseConnection;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.AbstractScriptManager;
 import org.gms.scripting.SynchronizedInvocable;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -63,17 +68,28 @@ public class EventScriptManager extends AbstractScriptManager {
      * @param channel 游戏频道（上下文）
      * @param scripts 事件脚本名称数组
      */
-    public EventScriptManager(final Channel channel, String[] scripts) {
-//        for (String script : scripts) {
-//            if (!script.isEmpty()) {
-//                events.put(script, initializeEventEntry(script, channel)); // 加载并存储每个脚本
-//            }
-//        }
+    public EventScriptManager(final Channel channel, List<String> scripts) {
+        for (String script : scripts) {
+            if (!script.isEmpty()) {
+                events.put(script, initializeEventEntry(script, channel)); // 加载并存储每个脚本
+            }
+        }
+
         // todo 初始化事件
-        log.info(" 当前不启动任何事件 --dwang");
+//        log.info(" 当前不启动任何事件 --dwang");
+        log.info(" 当前启动的事件：");
+        for (String script : scripts) {
+            log.info("scriptName: ==========={}===========", script);
+        }
+
+
+
         init(); // 初始化所有事件
         fallback = events.remove("0_EXAMPLE"); // 移除并保留后备事件
     }
+
+
+
 
     /**
      * 获取指定事件的事件管理器
@@ -83,7 +99,9 @@ public class EventScriptManager extends AbstractScriptManager {
     public EventManager getEventManager(String event) {
         EventEntry entry = events.get(event); // 查找事件
         if (entry == null) {
-            return fallback.em; // 返回后备事件
+            log.error("event cant find: {}", event);
+//            return fallback.em; // 返回后备事件
+            return null;
         }
         return entry.em; // 返回找到的事件
     }

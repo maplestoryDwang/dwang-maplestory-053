@@ -34,6 +34,6 @@ function act() {
     eim.giveEventPlayersExp(3500);
     eim.showClearEffect(true);
 
-    // 10分钟给你进监狱还有搜索
-    rm.getEventInstance().startEventTimer(10 * 60000); //bonus time
+    // 20分钟给你进监狱还有搜索
+    rm.getEventInstance().startEventTimer(20 * 60000); //bonus time
 }

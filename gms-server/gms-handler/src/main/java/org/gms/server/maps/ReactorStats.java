@@ -102,6 +102,10 @@ public class ReactorStats {
         }
     }
 
+    public Map<Byte, List<StateData>> getStateInfo() {
+        return stateInfo;
+    }
+
     public int getType(byte state) {
         List<StateData> list = stateInfo.get(state);
         if (list != null) {

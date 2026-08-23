@@ -76,3 +76,43 @@ delete from drop_data_global where itemId = 2049100
 
 ## 新增表示在线字段 
 alter table characters add loggedin tinyint default 0 after partySearch
+
+20260823
+## 新增事件
+导入sql/event/event_config.sql
+
+## 新增女神日记爆率数据
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001064, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001065, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001066, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001067, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001068, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001069, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001070, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001071, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001072, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300051, 4001073, 1, 1, 0, 100000);
+
+
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001064, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001065, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001066, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001067, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001068, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001069, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001070, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001071, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001072, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300052, 4001073, 1, 1, 0, 100000);
+
+
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001064, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001065, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001066, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001067, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001068, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001069, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001070, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001071, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001072, 1, 1, 0, 100000);
+INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001073, 1, 1, 0, 100000);

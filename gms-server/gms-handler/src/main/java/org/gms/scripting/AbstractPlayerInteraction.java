@@ -602,7 +602,8 @@ public class AbstractPlayerInteraction {
         Pet evolved;
         int petId = -1;
 
-        if (quantity >= 0) {
+        // 为什么可以 == 0？
+        if (quantity > 0) {
             if (ItemConstants.isPet(id)) {
                 petId = Pet.createPet(id);
 

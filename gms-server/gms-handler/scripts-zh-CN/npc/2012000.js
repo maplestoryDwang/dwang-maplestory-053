@@ -1,7 +1,7 @@
-var ticket = [4031047, 4031074, 4031331, 4031576];
-var cost = [5000, 6000, 30000, 6000];
-var mapNames = new Array("魔法密林", "玩具城", "神木村", "阿里安特");
-var mapName2 = new Array("魔法密林", "玩具城", "神木村", "阿里安特");
+var ticket = [4031047, 4031074, 4031331];
+var cost = [5000, 6000, 30000];
+var mapNames = new Array("魔法密林", "玩具城", "神木村");
+var mapName2 = new Array("魔法密林", "玩具城", "神木村");
 var select;
 var status = 0;
 

@@ -1325,7 +1325,7 @@ public class ItemInformationProvider {
             name = DataTool.getString("name", strings, null);
             desc = DataTool.getString("desc", strings, null);
         } catch (Exception e) {
-            log.error("getNameDesc error: {} name:{}, desc:{}", itemId, name, desc, e);
+            log.error("getNameDesc error: {} name:{}, desc:{}", itemId, name, desc);
         }
         if (strings == null) {
             return null;

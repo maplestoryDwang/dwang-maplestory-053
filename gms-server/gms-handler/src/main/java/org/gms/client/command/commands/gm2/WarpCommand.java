@@ -78,7 +78,7 @@ public class WarpCommand extends Command {
             }
             player.changeMap(target, portal);
         } catch (Exception ex) {
-            player.yellowMessage(I18nUtil.getMessage("WarpCommand.message3", params[0]));
+            player.message(I18nUtil.getMessage("WarpCommand.message3", params[0]));
         }
     }
 }

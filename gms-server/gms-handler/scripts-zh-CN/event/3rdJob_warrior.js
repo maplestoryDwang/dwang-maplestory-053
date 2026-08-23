@@ -57,6 +57,9 @@ function playerEntry(eim, player) {
     const PacketCreator = Java.type('org.gms.util.PacketCreator');
     player.sendPacket(PacketCreator.getClock(eventTime * 60));
     eim.startEventTimer(eventTime * 60000);
+
+     var stage = 1;
+     eim.justLinkNextStageMap(stage, "job3warrior", entryMap, "in00");
 }
 
 function playerUnregistered(eim, player) {}

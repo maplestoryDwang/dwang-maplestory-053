@@ -2308,7 +2308,12 @@ public class MapleMap {
 
         for (final MapObject o : getReactors()) {
             final Reactor react = (Reactor) o;
+            //  先获取是否有event的状态，然后获取event的state是多少。不要直接判断state 0 才能触发事件
+            // 当前处理为直接到event的state，跳过之前的hit动作
+            byte nextReactorTypeState = react.getNextReactorTypeState();
+            react.setState(nextReactorTypeState);
 
+            // 然后再去获取
             if (react.getReactorType() == 100) {
                 if (react.getReactItem(react.getEventState()).getLeft() == item.getItemId() && react.getReactItem(react.getEventState()).getRight() == item.getQuantity()) {
 

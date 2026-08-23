@@ -41,7 +41,7 @@ function action(mode, type, selection) {
             if (status == 0) {
                 cm.sendYesNo("我已经解除了阻止通往塔楼监狱储藏室的咒语。你可能会在那里找到一些好东西……或者，你可能想现在离开。你准备好离开了吗？");
             } else if (status == 1) {
-                cm.getEventInstance().startEventTimer(60000); //bonus time
+                cm.getEventInstance().restartEventTimer(60000); //bonus time
                 cm.getEventInstance().warpEventTeam(920011100); // 奖励关
                 cm.dispose();
             }
@@ -51,6 +51,8 @@ function action(mode, type, selection) {
                 cm.sendYesNo("所以，你准备好退出了吗？");
             } else if (status == 1) {
                 cm.warp(920011300, 0);
+                // 停止计时器
+                cm.getEventInstance().stopEventTimer();
                 cm.dispose();
             }
 
@@ -106,9 +108,9 @@ function action(mode, type, selection) {
 
 function giveOriginalReward() {
     // 原有奖励：经验、女神的羽毛、传送出去（使用giveEventReward检查背包）
-    if (cm.getEventInstance() != null && cm.getEventInstance().giveEventReward(cm.getPlayer()) && cm.canHold(4001158)) {
+    if (cm.getEventInstance() != null && cm.getEventInstance().giveEventReward(cm.getPlayer())) {
         cm.gainExp(720000);
-        cm.gainItem(4001158, 1); // 女神的羽毛
+//        cm.gainItem(4001158, 1); // 女神的羽毛
         cm.warp(200080101, 0);
         cm.dispose();
     } else {

@@ -48,7 +48,7 @@ function action(mode, type, selection) {
         if (selection == 0) {
             cm.sendYesNo("门票的价格是5,000金币。你要购买门票吗？");
         } else if (selection == 1) {
-            cm.sendYesNo("您现在想要进去吗？一旦您进去，您的票就会作废！感谢您选择北斗航空。");
+            cm.sendYesNo("您现在想要进去吗？一旦您进去，您的票就会作废！感谢您选择DWANG航空。");
         }
         oldSelection = selection;
     } else if (status == 1) {

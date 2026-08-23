@@ -94,6 +94,16 @@ public enum SendPacketOpcode implements Opcode {
     MULTICHAT(0x55), // 频道/组队/公会多功能聊天
     WHISPER(0x5E), // 密聊回应/寻找玩家
     CLOCK(0x61), // 显示时钟倒计时
+
+    /**
+     * 连续移动
+     */
+    CONTI_MOVE(0x62),
+    /**
+     * 连续状态
+     */
+    CONTI_STATE(0x63),
+
     SPAWN_PLAYER(0x65), // 地图加载玩家(生成别的玩家)
     REMOVE_PLAYER_FROM_MAP(0x70), // 地图移除玩家
     CHATTEXT(0x71), // 玩家普通聊天显示
@@ -391,8 +401,8 @@ public enum SendPacketOpcode implements Opcode {
     FAMILY_INFO_RESULT(0x5F), // 家族信息结果
     FAMILY_RESULT(0x60), // 家族结果
     FAMILY_JOIN_REQUEST(0x61), // 家族加入请求
-    FAMILY_JOIN_REQUEST_RESULT(0x62), // 家族加入请求结果
-    FAMILY_JOIN_ACCEPTED(0x63), // 家族加入接受
+    FAMILY_JOIN_REQUEST_RESULT(-1), // 家族加入请求结果
+    FAMILY_JOIN_ACCEPTED(-1), // 家族加入接受
     FAMILY_PRIVILEGE_LIST(0x64), // 家族权限列表
     FAMILY_REP_GAIN(-1), // 家族声望获得
     FAMILY_NOTIFY_LOGIN_OR_LOGOUT(-1), // 通知家族成员登录或登出
@@ -443,8 +453,8 @@ public enum SendPacketOpcode implements Opcode {
     ADMIN_RESULT(-1), // 管理员结果                                 没找到
     OX_QUIZ(0x91), // QUIZ（OX问答）
     GMEVENT_INSTRUCTIONS(0x92), // DESC（游戏事件说明）
-    CONTI_MOVE(0x94), // 连续移动
-    CONTI_STATE(0x95), // 连续状态
+    // CField_ContiMove::OnPacket
+
     SET_QUEST_CLEAR(-1), // 设置任务完成   ===========================    0x96
     SET_QUEST_TIME(0x97), // 设置任务时间
     ARIANT_RESULT(0x98),    // thanks lrenex // ARIANT结果

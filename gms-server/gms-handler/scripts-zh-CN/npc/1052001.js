@@ -58,7 +58,7 @@ function start() {
             } else {
                 cm.sendNext("你取得的进步令人惊讶。");
             }
-        } else if (actionx["3thJobI"] || (cm.getPlayer().gotPartyQuestItem("JB3") && cm.getLevel() >= 70 && cm.getJobId() % 10 == 0 && parseInt(cm.getJobId() / 100) == 4 && !cm.getPlayer().gotPartyQuestItem("JBP"))) {
+        } else if (!cm.haveItem(4031057) && (actionx["3thJobI"] || (cm.getPlayer().gotPartyQuestItem("JB3") && cm.getLevel() >= 70 && cm.getJobId() % 10 == 0 && parseInt(cm.getJobId() / 100) == 4 && !cm.getPlayer().gotPartyQuestItem("JBP")))) {
             actionx["3thJobI"] = true;
             cm.sendNext("你来了。几天前，奥西里亚的#b#p2020011##k跟我谈到了你。我看到你对于成为盗贼职业的第三次转职很感兴趣。为了实现这个目标，我需要测试一下你的实力，看看你是否配得上这个晋升。在金银岛的一个深水沼泽中有一个洞口，会带你通往一个秘密通道。一旦进入，你将面对我的分身。你的任务是打败他，并带着#b#t4031059##k回来。");
         } else if (cm.getPlayer().gotPartyQuestItem("JBP") && !cm.haveItem(4031059)) {

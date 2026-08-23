@@ -33,13 +33,16 @@ import org.gms.util.Randomizer;
 
 /**
  * @author Xotic (XoticStory) & BubblesDev
+ *  * 2026-08-22T19:17:35.744+08:00  INFO 31800 --- [ntLoopGroup-3-1] o.gms.net.packet.logging.InPacketLogger  : ClientSend:MOB_DAMAGE_MOB_FRIENDLY [0x9E] (len:10) <HEX> 9E 00 B5 00 00 00 92 00 00 00 <TEXT> �.�...�...、
+ *  * 2026-08-22T19:17:45.348+08:00  INFO 31800 --- [ntLoopGroup-3-1] o.gms.net.packet.logging.InPacketLogger  : ClientSend:MOB_DAMAGE_MOB_FRIENDLY [0x9E] (len:10) <HEX> 9E 00 BC 00 00 00 92 00 00 00 <TEXT> �.�...�...
+ *  * 2026-08-22T19:18:20.775+08:00  WARN 31800 --- [ntLoopGroup-3-1] org.gms.client.Client
  */
 
 public final class MobDamageMobFriendlyHandler extends AbstractPacketHandler {
     @Override
     public final void handlePacket(InPacket p, Client c) {
         int attacker = p.readInt();
-        p.readInt();
+//        p.readInt();
         int damaged = p.readInt();
 
         MapleMap map = c.getPlayer().getMap();

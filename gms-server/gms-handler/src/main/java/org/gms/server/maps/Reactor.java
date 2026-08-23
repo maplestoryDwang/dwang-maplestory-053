@@ -35,6 +35,8 @@ import org.gms.util.Pair;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -198,6 +200,25 @@ public class Reactor extends AbstractMapObject {
     public int getReactorType() {
         return stats.getType(state);  // 返回当前状态的类型
     }
+
+
+    /**
+     * 找到下一个有事件的event。
+     * @return
+     */
+    public byte getNextReactorTypeState() {
+        Map<Byte, List<ReactorStats.StateData>> stateInfo = stats.getStateInfo();
+        Set<Byte> bytes = stateInfo.keySet();
+        List<Byte> list = bytes.stream().sorted().toList();
+        for (Byte b : list) {
+            if (b >= state) {
+                return b;
+            }
+
+        }
+        return state;
+    }
+
 
     /**
      * 检查是否最近被攻击击中

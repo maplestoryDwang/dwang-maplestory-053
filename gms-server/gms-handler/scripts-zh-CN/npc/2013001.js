@@ -67,6 +67,8 @@ function action(mode, type, selection) {
                     eim.warpEventTeamToMapSpawnPoint(920010000, 2);
                     eim.giveEventPlayersExp(3500);
                     clearStage(0, eim);
+                    var state = 1;
+                    eim.justLinkNextStageMap(state, "OrbisPQ", 920010000, "in00");
 
                     cm.sendNext("请救救雅典娜，她被远古精灵困在封印中，远古精灵是我们塔楼的恐怖存在！他把雅典娜雕像的所有部分都弄丢了，我们必须把它们全部找回来！哦，请原谅我，我是塔楼的管家易克。我是雅典娜的皇家仆人。");
                 } else {

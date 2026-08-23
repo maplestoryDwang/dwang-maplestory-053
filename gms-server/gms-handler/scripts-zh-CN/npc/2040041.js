@@ -30,5 +30,9 @@
 
 function start() {
     cm.sendOk("尝试找到正确的数字组合来达到顶部。");
+    var curMap = cm.getMapId();
+    var stage = Math.floor((curMap - 922010100) / 100) + 1;
+    var eim = cm.getPlayer().getEventInstance();
+    eim.justLinkNextStageMap(stage, "lpq", curMap, "next00");
     cm.dispose();
 }

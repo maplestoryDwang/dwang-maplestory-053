@@ -76,7 +76,9 @@ function takeoff() {
     em.setProperty("docked", "false");
 
     // 随机决定是否会有蝙蝠魔船只接近
-    if (Math.random() < 0.42) {
+//    if (Math.random() < 0.42) {
+    //测试一定有
+    if (Math.random() < 1) {
         em.schedule("approach", invasionStartTime + Math.trunc(Math.random() * invasionDelayTime));
     }
 

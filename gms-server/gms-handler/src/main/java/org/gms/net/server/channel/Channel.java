@@ -36,6 +36,8 @@ import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.net.server.world.World;
 import org.gms.property.ServiceProperty;
+import org.gms.scripting.ScriptServiceContext;
+import org.gms.service.EventConfigDataService;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,10 +146,11 @@ public final class Channel {
             expedType.addAll(Arrays.asList(ExpeditionType.values()));
 
             if (Server.getInstance().isOnline()) {  // postpone event loading to improve boot time... thanks Riizade, daronhudson for noticing slow startup times
-                eventSM = new EventScriptManager(this, getEvents());
+                eventSM = new EventScriptManager(this, getEventsV2());
                 eventSM.init();
             } else {
-                String[] ev = {"0_EXAMPLE"};
+//                String[] ev = {"0_EXAMPLE"};
+                List<String> ev = List.of("0_EXAMPLE");
                 eventSM = new EventScriptManager(this, ev);
             }
 
@@ -181,7 +184,7 @@ public final class Channel {
 
         eventSM.cancel();
         eventSM = null;
-        eventSM = new EventScriptManager(this, getEvents());
+        eventSM = new EventScriptManager(this, getEventsV2());
     }
 
     public synchronized void shutdown() {
@@ -453,7 +456,12 @@ public final class Channel {
         getWorldServer().resetDisabledServerMessages();
     }
 
-    private static String[] getEvents() {
+    private static List<String> getEventsV2() {
+        EventConfigDataService eventConfigDataService = ScriptServiceContext.getInstance().getEventConfigDataService();
+        return eventConfigDataService.getEnabledEventNames();
+    }
+
+    private static List<String> getEvents() {
         // 优先取语言文件夹，没有则取scripts
         String scriptName = "scripts";
         String eventPath = "event";
@@ -474,7 +482,7 @@ public final class Channel {
             log.warn("Unable to load events !");
             e.printStackTrace();
         }
-        return events.toArray(new String[0]);
+        return events;
     }
 
     public int getStoredVar(int key) {

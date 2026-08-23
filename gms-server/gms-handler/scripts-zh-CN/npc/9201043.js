@@ -28,7 +28,7 @@ var status = 0;
 var MySelection = -1;
 
 function start() {
-    cm.sendSimple("我的名字是强壮的阿莫斯。你想做什么？\r\n#b#L0#参加阿莫利亚挑战！#l\r\n#L1#用10把钥匙交换门票！#l\r\n#k");
+    cm.sendSimple("你好，我的名字是强壮的阿莫斯。你想做什么？\r\n#b#L0#参加阿莫利亚挑战！#l\r\n#L1#用10把钥匙交换门票！#l\r\n#k");
 }
 
 function action(mode, type, selection) {

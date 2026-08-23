@@ -1,6 +1,10 @@
 package org.gms.scripting;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.gms.net.server.services.task.channel.EventService;
 import org.gms.property.ServiceProperty;
+import org.gms.service.EventConfigDataService;
 import org.gms.service.GachaponService;
 import org.gms.service.NpcCraftService;
 import org.springframework.stereotype.Component;
@@ -22,14 +26,19 @@ public class ScriptServiceContext {
     private final NpcCraftService craftService;
     private final GachaponService gachaponService;
     private final ServiceProperty serviceProperty;
+    @Getter
+    private final EventConfigDataService eventConfigDataService;
 
     // Spring 自动将依赖注入构造函数
     public ScriptServiceContext(NpcCraftService craftService,
                                 GachaponService gachaponService,
-                                ServiceProperty serviceProperty) {
+                                ServiceProperty serviceProperty,
+                                EventConfigDataService eventConfigDataService
+    ) {
         this.craftService = craftService;
         this.gachaponService = gachaponService;
         this.serviceProperty = serviceProperty;
+        this.eventConfigDataService = eventConfigDataService;
 
         // 赋值给静态变量
         ScriptServiceContext.instance = this;
