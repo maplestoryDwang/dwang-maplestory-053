@@ -1320,13 +1320,21 @@ public class ItemInformationProvider {
         Data strings = null;
         String name = null;
         String desc = null;
-        try {
-            strings = getStringData(itemId);
-            name = DataTool.getString("name", strings, null);
-            desc = DataTool.getString("desc", strings, null);
-        } catch (Exception e) {
-            log.error("getNameDesc error: {} name:{}, desc:{}", itemId, name, desc);
+
+        if (itemId == 0) {
+            name = "金币";
+            desc = "金币";
+
+        } else {
+            try {
+                strings = getStringData(itemId);
+                name = DataTool.getString("name", strings, null);
+                desc = DataTool.getString("desc", strings, null);
+            } catch (Exception e) {
+                log.error("getNameDesc error: itemId: {} name:{}, desc:{}", itemId, name, desc);
+            }
         }
+
         if (strings == null) {
             return null;
         }

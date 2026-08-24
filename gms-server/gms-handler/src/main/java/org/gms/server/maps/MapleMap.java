@@ -713,8 +713,12 @@ public class MapleMap {
                 } else {
                     pos.x = mobpos + ((d % 2 == 0) ? (25 * ((d + 1) / 2)) : -(25 * (d / 2)));
                 }
+                int addNum = de.Maximum - de.Minimum;
                 if (de.itemId == 0) { // meso
-                    int mesos = Randomizer.nextInt(de.Maximum - de.Minimum) + de.Minimum;
+                    int mesos = de.Minimum;
+                    if (addNum > 0) {
+                        mesos = Randomizer.nextInt(addNum) + de.Minimum;
+                    }
 
                     if (mesos > 0) {
                         if (chr.getBuffedValue(BuffStat.MESOUP) != null) {
@@ -731,7 +735,7 @@ public class MapleMap {
                     if (ItemConstants.getInventoryType(de.itemId) == InventoryType.EQUIP) {
                         idrop = ii.randomizeStats((Equip) ii.getEquipById(de.itemId));
                     } else {
-                        idrop = new Item(de.itemId, (short) 0, (short) (de.Maximum != 1 ? Randomizer.nextInt(de.Maximum - de.Minimum) + de.Minimum : 1));
+                        idrop = new Item(de.itemId, (short) 0, (short) (de.Maximum != 1 ? Randomizer.nextInt(addNum) + de.Minimum : 1));
                     }
                     spawnDrop(idrop, calcDropPos(pos, mob.getPosition()), mob, chr, droptype, de.questid);
                 }

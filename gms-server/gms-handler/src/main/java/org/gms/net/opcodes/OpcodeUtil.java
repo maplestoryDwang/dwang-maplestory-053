@@ -26,6 +26,10 @@ public class OpcodeUtil {
            RecvOpcode.MOVE_PLAYER.getValue(),
            RecvOpcode.NPC_ACTION.getValue(),
            RecvOpcode.MOVE_LIFE.getValue(),
+           RecvOpcode.TAKE_DAMAGE.getValue(),
+           RecvOpcode.HEAL_OVER_TIME.getValue(),
+
+
             RecvOpcode.MOVE_PET.getValue()
 
     );
@@ -37,6 +41,11 @@ public class OpcodeUtil {
 //            SendPacketOpcode.MOVE_PET.getValue(),
             SendPacketOpcode.UPDATE_PARTYMEMBER_HP.getValue(),
             SendPacketOpcode.NPC_ACTION.getValue(),
+            SendPacketOpcode.SPAWN_MONSTER.getValue(),
+            SendPacketOpcode.SPAWN_MONSTER_CONTROL.getValue(),
+            SendPacketOpcode.STAT_CHANGED.getValue(),
+            SendPacketOpcode.CANCEL_CHAIR.getValue(),
+
             SendPacketOpcode.MOVE_MONSTER_RESPONSE.getValue()
 
     );

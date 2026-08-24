@@ -10,6 +10,7 @@ import com.mybatisflex.core.query.QueryWrapper;
 import org.gms.ServerApplication;
 import org.gms.dao.entity.DropDataDO;
 import org.gms.dao.mapper.DropDataMapper;
+import org.gms.server.ItemInformationProvider;
 import org.gms.service.DropService; // 假设 DropService 位于 org.gms.service 包下
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,20 +48,50 @@ public class DropServiceTest {
     @Test
     void syncDropDataFromXml() {
         // 1. 解析 XML 获取掉落数据
-        Path cnPath = Path.of("E:\\javaguide\\053\\dwang-maplestory-old\\table");
+//        Path cnPath = Path.of("E:\\javaguide\\053\\dwang-maplestory-old\\table");
+        Path cnPath = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\table");
         Map<Integer, DropGroup> rewardMap = DropRewardParser.parseReward(cnPath, "Reward_ori.img", DropGroupType.MOB);
 
+        // 2. 从数据库获取所有不同的 dropperid（使用 groupBy）
+        QueryWrapper queryWrapper = QueryWrapper.create()
+                .select(DROP_DATA_D_O.DROPPERID)      // 只查询这一列
+                .groupBy(DROP_DATA_D_O.DROPPERID);    // 去重
+
+        List<DropDataDO> list = dropDataMapper.selectListByQuery(queryWrapper);
+        // 提取 dropperid 列表（去重）
+        List<Integer> dropIds = list.stream()
+                .map(DropDataDO::getDropperid)
+                .collect(Collectors.toList());
+
+        System.out.println("共发现 " + dropIds.size() + " 个不同的怪物 ID，开始同步...");
+
+        // 3. 逐个同步
+        for (Integer dropId : dropIds) {
+            updateDropFromXml(dropId, rewardMap);
+        }
+
+        System.out.println("所有怪物掉落同步完成！");
+    }
+
+    private void updateDropFromXml(Integer dropId, Map<Integer, DropGroup> rewardMap) {
+
+        // 2. 从数据库查询该怪物的现有掉落记录
+        QueryWrapper queryWrapper = QueryWrapper.create().where(DROP_DATA_D_O.DROPPERID.eq(dropId));
+        List<DropDataDO> dbList = dropDataMapper.selectListByQuery(queryWrapper);
+
+
         // 假设我们要同步的怪物ID（可以从参数传入或循环所有）
-        Integer dropperid = 1130100;
-        DropGroup dropGroup = rewardMap.get(dropperid);
+        DropGroup dropGroup = rewardMap.get(dropId);
         if (dropGroup == null) {
-            System.out.println("XML中未找到怪物 " + dropperid + " 的掉落数据");
+            System.out.println("XML中未找到怪物 " + dropId + " 的掉落数据 ，当前决定保留");
+//            // xml没有的数据全部删除
+//            for (DropDataDO dropDataDO : dbList) {
+//                dropDataMapper.deleteById(dropDataDO.getId());
+//            }
             return;
         }
 
-        // 2. 从数据库查询该怪物的现有掉落记录
-        QueryWrapper queryWrapper = QueryWrapper.create().where(DROP_DATA_D_O.DROPPERID.eq(dropperid));
-        List<DropDataDO> dbList = dropDataMapper.selectListByQuery(queryWrapper);
+
 
         // 3. 将 XML 条目转为 Map（key = itemid，value = DropEntry）
         //    注意：金币条目 itemid = 0，但一个怪物只有一个金币条目，直接覆盖
@@ -127,7 +158,7 @@ public class DropServiceTest {
             DropEntry xmlEntry = entry.getValue();
 
             DropDataDO newRecord = new DropDataDO();
-            newRecord.setDropperid(dropperid);
+            newRecord.setDropperid(dropId);
             newRecord.setItemid(itemid);
             newRecord.setChance(xmlEntry.getProb());
 
@@ -135,24 +166,30 @@ public class DropServiceTest {
                 // 金币
                 newRecord.setMinimumQuantity(xmlEntry.getMoney());
                 newRecord.setMaximumQuantity(xmlEntry.getMoney());
-                newRecord.setChance(xmlEntry.getProb());
+                newRecord.setQuestid(0);
 
             } else {
                 // 普通物品
                 if (xmlEntry.getMin() != null) {
                     newRecord.setMinimumQuantity(xmlEntry.getMin());
+                } else {
+                    newRecord.setMinimumQuantity(1);
                 }
                 if (xmlEntry.getMax() != null) {
                     newRecord.setMaximumQuantity(xmlEntry.getMax());
+                } else {
+                    newRecord.setMaximumQuantity(1);
                 }
                 // 其他字段（如过期时间、地区限制等）可以设置默认值或从 XML 获取
-                newRecord.setChance(xmlEntry.getProb());
+                newRecord.setQuestid(0);
 
             }
             toInsert.add(newRecord);
         }
 
         // 5. 执行数据库操作，并打印日志
+        System.out.println("XML中开始更新怪物 " + dropId + " 的掉落数据");
+
         if (!toDelete.isEmpty()) {
             System.out.println("=== 需要删除的记录（共 " + toDelete.size() + " 条）===");
             toDelete.forEach(rec -> System.out.println("  itemid=" + rec.getItemid()));
@@ -175,10 +212,17 @@ public class DropServiceTest {
 
         if (!toInsert.isEmpty()) {
             System.out.println("=== 需要新增的记录（共 " + toInsert.size() + " 条）===");
-            toInsert.forEach(rec -> System.out.println("  itemid=" + rec.getItemid() + ", chance=" + rec.getChance()));
-            dropDataMapper.insertBatch(toInsert);
+            toInsert.forEach(rec -> {
+                System.out.println("  itemid=" + rec.getItemid() + ", chance=" + rec.getChance());
+                String name = ItemInformationProvider.getInstance().getName(rec.getItemid());
+                if (name == null) {
+                    System.out.println("WZ没找到这个item, 不插入=" + rec.getItemid() );
+                } else {
+                    System.out.println("WZ到这个item, 即将插入=" + rec.getItemid() + " name = " + name);
+                    dropDataMapper.insert(rec);
+                }
+            });
         }
 
-        System.out.println("同步完成！");
     }
 }
