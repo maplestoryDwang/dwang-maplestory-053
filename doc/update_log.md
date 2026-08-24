@@ -1,3 +1,26 @@
+## 20260824
+### 任务相关
+1. 修复Quest.wz相关的解析缺失。
+2. 重构Quest相关的处理
+3. 新增任务管理后台显示
+![](../asset/Snipaste_2026-08-24_10-57-46.png)
+
+### 事件相关
+1. 检查053可以开启的的事件
+2. 修复部分事件因版本问题无法获取item的问题、开船码头显示问题
+3. 组队任务重大BUG！部分Portal可以直接通过，被处理像普通过图一样，代码逻辑错误。当前解决方式也有问题```org.gms.server.maps.GenericPortal.checkEventCantEnter```
+4. 新增任务管理器管理。（后续功能，添加奖励和经验配置等）
+5. Boss测试，都可以攻略。建议画质调节到最低，打BOSS前重启客户端，否则容易炸
+![](../asset/event-config.png)
+![](../asset/Snipaste_2026-08-23_16-30-57.png)
+
+### 其他
+1. 修复账号自动创建。默认的生日```2005-05-11```, 在文件：```org.gms.property.DefaultDates```修改
+2. 修复丢物品无法触发reactor,如果state不为0的type = 100无法触发任务 ```org.gms.server.maps.MapleMap.activateItemReactors```。
+3. 新增```天空组队```女神日记本掉落
+
+
+
 ## 20260817
 ### 初步重构记录
 详情查看： [重构记录](20260817项目重构整理.md)

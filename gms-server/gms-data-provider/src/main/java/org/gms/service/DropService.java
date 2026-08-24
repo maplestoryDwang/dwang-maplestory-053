@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+import static org.gms.dao.entity.table.DropDataDOTableDef.DROP_DATA_D_O;
+
 @Service
 @AllArgsConstructor
 public class DropService {
@@ -172,4 +174,12 @@ public class DropService {
 //        return questId == null ? null : QuestRepository.getInstance(questId).getName();
         return questId == null ? null : StringInfoProvider.getQuestName(questId);
     }
+
+    public List<DropDataDO> getDropAll(Integer dropperid) {
+        QueryWrapper queryWrapper = QueryWrapper.create().where(DROP_DATA_D_O.DROPPERID.eq(dropperid));
+
+        return  dropDataMapper.selectListByQuery(queryWrapper);
+    }
+
+
 }

@@ -33,11 +33,9 @@ DELETE from shopitems  where itemId > 4160029  and itemId < 4161000
 
 
 ## 新增活动怪物掉落
-
 INSERT INTO `kaentake`.`drop_data` ( `dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`)
 VALUES
 ( 9400511, 4031284, 1, 1, 0, 1000);
-
 
 ## 删除怪物掉落的书卡片
 2380000 -   2388043
