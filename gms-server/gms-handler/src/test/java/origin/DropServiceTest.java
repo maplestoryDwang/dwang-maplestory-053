@@ -85,7 +85,7 @@ public class DropServiceTest {
             DropEntry xmlEntry = xmlEntryMap.get(itemid);
 
             // 任务道具就保留，不是任务道具就丢
-            if (xmlEntry == null && dbRecord.getQuestid() == 0) {
+            if (xmlEntry == null && dbRecord.getQuestid() != 0) {
                 // 直接加回去得了
                 toUpdate.add(dbRecord);
             } else if (xmlEntry == null ){
