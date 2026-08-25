@@ -463,7 +463,6 @@ public class LifeFactory {
                 int skillId = DataTool.getInt(i + "/skill", monsterSkillInfoData, 0);
                 int skillLv = DataTool.getInt(i + "/level", monsterSkillInfoData, 0);
                 MobSkillType type = MobSkillType.from(skillId).orElseThrow();
-                skills.add(new MobSkillId(type, skillLv));
 
                 Data monsterSkillData = monsterData.getChildByPath("skill" + (i + 1));
                 if (monsterSkillData != null) {
@@ -473,8 +472,13 @@ public class LifeFactory {
                     }
 
                     MobSkill skill = MobSkillFactory.getMobSkillOrThrow(type, skillLv);
+                    if (skill == null) {
+                        i++;
+                        continue;
+                    }
                     MobUtils.setMobSkillAnimationTime(skill, animationTime);
                 }
+                skills.add(new MobSkillId(type, skillLv));
 
                 i++;
             }

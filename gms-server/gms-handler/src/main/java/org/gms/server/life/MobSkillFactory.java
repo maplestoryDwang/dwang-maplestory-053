@@ -26,6 +26,8 @@ import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
 import org.gms.provider.wz.WzFiles;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -43,6 +45,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * @author Danny (Leifde)
  */
 public class MobSkillFactory {
+
+    private static Logger log = LoggerFactory.getLogger(MobSkillFactory.class);
+
     private static final Map<String, MobSkill> mobSkills = new HashMap<>();
     private static final DataProvider dataSource = DataProviderFactory.getDataProvider(WzFiles.SKILL);
     private static final Data skillRoot = dataSource.getData("MobSkill.img");
@@ -51,9 +56,13 @@ public class MobSkillFactory {
     private static final Lock writeLock = readWriteLock.writeLock();
 
     public static MobSkill getMobSkillOrThrow(MobSkillType type, int level) {
-        return getMobSkill(type, level).orElseThrow(
-                () -> new IllegalArgumentException("No MobSkill exists for type %s, level %d".formatted(type, level))
-        );
+        Optional<MobSkill> mobSkill1 = getMobSkill(type, level);
+        if (mobSkill1.isEmpty()){
+            log.error("No MobSkill exists for type %s, level %d".formatted(type, level));
+            return null;
+        } else {
+            return mobSkill1.get();
+        }
     }
 
     public static Optional<MobSkill> getMobSkill(final MobSkillType type, final int level) {
