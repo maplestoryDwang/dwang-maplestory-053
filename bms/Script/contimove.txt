@@ -1,0 +1,130 @@
+contimove.s.2.1	sell_ticket
+contimove.s.3.1	Seu nível parece estar muito baixo para isso. Por motivo de segurança, não autorizamos ninguém abaixo do nível 10 a entrar neste percurso.
+contimove.s.31.1	Você deve ter alguns negócios para tratar aqui, certo?
+contimove.s.32.1	Ah, não… Não creio que tenha seu bilhete consigo. Não pode embarcar sem ele. Por favor, compre o bilhete no balcão de bilhetes.
+contimove.s.34.1	Este navio está ficando pronto para partir. Desculpe, mas você deverá pegar o próximo. A escala das viagens está disponível por meio dos agentes do balcão de bilhetes.
+contimove.s.35.1	Sinto muito, mas este passeio já está CHEIO. Não podemos aceitar mais nenhum passageiro. Por favor, embarque no próximo.
+contimove.s.37.1	Você deve ter alguns negócios para tratar aqui, certo?
+contimove.s.38.1	Ah, não… Não creio que tenha seu bilhete consigo. Não pode embarcar sem ele. Por favor, compre o bilhete no balcão de bilhetes.
+contimove.s.40.1	Quer deixar a sala de espera? Você pode, mas NÃO haverá reembolso do bilhete. Tem certeza de que quer sair desta sala?
+contimove.s.41.1	Chegará logo a seu destino. Vá em frente e converse com outras pessoas e, antes que perceba, já estará lá.
+contimove.s.43.1	st00
+contimove.s.44.1	No momento, o elevador não está disponível para este trajeto. Por favor, tente mais tarde.
+contimove.s.46.1	No momento, o elevador não está disponível para este trajeto. Por favor, tente mais tarde.
+contimove.s.47.1	minar_elli
+contimove.s.49.1	elli00
+contimove.s.50.1	minar00
+contimove.s.52.1	elli
+contimove.s.53.1	lith
+contimove.s.55.1	kern
+contimove.s.56.1	orbi
+contimove.s.58.1	ludi
+contimove.s.59.1	mina
+contimove.s.21.1	Começaremos o embarque 5 minutos antes da saída. Por favor, seja paciente e aguarde alguns minutos. Esteja certo de que o navio partirá no horário e não receberemos mais bilhetes 1 minuto antes dele partir, então, por favor, esteja aqui a tempo.
+contimove.s.24.1	Parece que está cheio de lugares vazios para esta viagem. Por favor, tenha seu bilhete em mãos para embarcar. O trajeto será longo, mas chegará bem a seu destino. O que você acha? Quer embarcar neste?
+contimove.s.27.1	Começaremos o embarque 5 minutos antes da saída. Por favor, seja paciente e aguarde alguns minutos. Esteja certo de que o navio partirá no horário e não receberemos mais bilhetes 1 minuto antes dele partir, então, por favor, esteja aqui a tempo.
+contimove.s.30.1	Parece que está cheio de lugares vazios para esta viagem. Por favor, tenha seu bilhete em mãos para embarcar. O trajeto será longo, mas chegará bem a seu destino. O que você acha? Quer embarcar neste?
+contimove.s.33.1	Começaremos o embarque 5 minutos antes da saída. Por favor, seja paciente e aguarde alguns minutos. Esteja certo de que o navio partirá no horário e não receberemos mais bilhetes 1 minuto antes dele partir, então, por favor, esteja aqui a tempo.
+contimove.s.36.1	Parece que está cheio de lugares vazios para esta viagem. Por favor, tenha seu bilhete em mãos para embarcar. O trajeto será longo, mas chegará bem a seu destino. O que você acha? Quer embarcar neste?
+contimove.s.39.1	goOutWaitingRoom
+contimove.s.42.1	elevator
+contimove.s.45.1	st00
+contimove.s.48.1	Usou a semente mágica e será transferido para outro lugar.
+contimove.s.51.1	A Semente Mágica é necessária para passar pelo portal.
+contimove.s.54.1	peri
+contimove.s.57.1	elna
+contimove.s.60.1	Amor
+contimove.s.61.1	muru
+contimove.s.63.1	elli
+contimove.s.64.1	lith
+contimove.s.66.1	kern
+contimove.s.67.1	orbi
+contimove.s.69.1	ludi
+contimove.s.70.1	mina
+contimove.s.72.1	muru
+contimove.s.73.1	world_trip
+contimove.s.75.1	Se está entediado com a vida cotidiana, que tal cair fora, pra variar? Não há nada como mergulhar numa nova cultura, aprender algo novo em um minuto! Aproveite para cair fora e viajar. Nós da Agência de Viagens Maple recomendamos você embarcar em um #b Tour Mundial#k! Está preocupado com a despesa da viagem? Não deveria! Nós da #bAgência de Viagens Maple#k, temos um pacote para você por SOMENTE #b3.000 mesos!#k
+contimove.s.76.1	Agora lhe oferecemos este lugar para ter o prazer de viajar: #bSantuário dos Cogumelos no Japão#k. Estaremos lá, como seu guia turístico. Descanso garantido, o número de destinos ainda vão aumentar. Gostaria de ir agora para o Santuário dos Cogumelos?\r\n#b#L0# Sim, leve-me ao Santuário dos Cogumelos (Japão)#k#l
+contimove.s.78.1	Veja a sacerdotisa servir ao Deus Cogumelo e não deixe de provar Takoyaki, Yakisoba e outras delícias vendidas nas ruas do Japão. Agora vamos para o #bSantuário dos Cogumelos#k, um lugar mítico, como se um dia tivesse sido de fato.
+contimove.s.79.1	Por favor, confira se tem mesos suficientes para ir.
+contimove.s.81.1	Como está a viagem? Está curtindo?\r\n#b#L0#Sim, já basta de viajar. Posso voltar #m
+contimove.s.82.2	#? #l\r\n#b#L1#NNão, gostaria de continuar a explorar este lugar.#l
+contimove.s.84.1	Ok. Caso mude de idéia, por favor, me avise.
+contimove.s.85.1	crane
+contimove.s.87.2	mesos#k.\r\n#b#L0# Está bem, leve-me a Orbis.#l
+contimove.s.88.1	Tem certeza de que você tem mesos suficientes?
+contimove.s.90.1	Alguém mais está indo a Orbis neste exato momento. Fale comigo daqui a pouco.
+contimove.s.91.1	Alguém mais está indo a Orbis neste exato momento. Fale comigo daqui a pouco.
+contimove.s.93.2	mesos#k, te levarei agora mesmo.
+contimove.s.94.1	Ok. Caso mude de idéia, por favor, me avise.
+contimove.s.96.1	Olá! Eu sou a cegonha que voa de #bMu Lung#k para #bOrbis#k e volta. Vôo o tempo todo, então imaginei por que não fazer algum dinheiro levando viajantes como você por um preço baixo? É um bom negócio para mim. O que você acha? \r\n#b#L0# Orbis(
+contimove.s.97.2	mesos)#l\r\n#L1# Vila das Ervas(
+contimove.s.99.1	Tem certeza de que você tem mesos suficientes?
+contimove.s.100.1	Crane_SS
+contimove.s.102.1	Alguém mais está indo a Orbis neste exato momento. Fale comigo daqui a pouco.
+contimove.s.103.1	Quer mudar para #b#m251000000##k agora? Se tiver #b
+contimove.s.62.1	hene
+contimove.s.65.1	peri
+contimove.s.68.1	elna
+contimove.s.71.1	Amor
+contimove.s.74.1	Se está entediado com a vida cotidiana, que tal cair fora, pra variar? Não há nada como mergulhar numa nova cultura, aprender algo novo em um minuto! Aproveite para cair fora e viajar. Recomendamos uma #bTour Mundial#k! Está preocupado com a despesa da viagem? Sem preocupações! A #bAgência de Viagnes Maple#k oferece primeira classe pelo precinho de #b300 mesos#k
+contimove.s.77.1	Gostaria de viajar para o #bSantuário dos Cogumelos no Japão#k? Se deseja sentir a essência do Japão, nada como visitar o Templo, um pólo cultural japonês. O Santuário dos Cogumelos é um lugar mítico que adora o Incomparável Deus Cogumelo dos tempos antigos.
+contimove.s.80.1	st00
+contimove.s.83.1	Muito bem. Agora levarei você de volta para onde estava antes de visitar o Japão. Caso queira por o pé na estrada novamente, por favor, me avise!
+contimove.s.86.1	Olá! Eu sou a cegonha que voa de #bMu Lung#k para #bOrbis#k e volta. Vôo o tempo todo, então imaginei por que não fazer algum dinheiro levando viajantes como você por um preço baixo? É um bom negócio para mim. O que você acha? Quer voar para #bOrbis#k agora mesmo? Para iniciantes, cobro só #b
+contimove.s.89.1	Crane_SS
+contimove.s.92.1	Quer mudar para #b#m251000000##k agora? Se tiver #b
+contimove.s.95.1	Tem certeza de que você tem mesos suficientes?
+contimove.s.98.3	mesos#l
+contimove.s.101.1	Alguém mais está indo a Orbis neste exato momento. Fale comigo daqui a pouco.
+contimove.s.104.2	mesos#k, te levarei agora mesmo.
+contimove.s.105.1	Ok. Caso mude de idéia, por favor, me avise.
+contimove.s.107.1	Olá! Eu sou a cegonha que voa de #bOrbis#k para #bMu Lung#k e volta. Vôo o tempo todo, então imaginei por que não fazer algum dinheiro levando viajantes como você por um preço baixo? É um bom negócio para mim. O que você acha? Quer voar para #bMu Lung#k agora mesmo? Para iniciantes, cobro só #b
+contimove.s.108.2	mesos#k.\r\n#b#L0# Está bem, leve-me a Mu Lung.#l
+contimove.s.110.1	Crane_MR
+contimove.s.111.1	Alguém mais está indo a Mu Lung neste exato momento. Fale comigo daqui a pouco.
+contimove.s.113.1	Alguém mais está indo a Mu Lung neste exato momento. Fale comigo daqui a pouco.
+contimove.s.114.1	Olá! Eu sou a cegonha que voa de #bOrbis#k para #bMu Lung#k e volta. Vôo o tempo todo, então imaginei por que não fazer algum dinheiro levando viajantes como você por um preço baixo? É um bom negócio para mim. O que você acha? \r\n#b#L0# Mu Lung(
+contimove.s.116.1	Tem certeza de que você tem mesos suficientes?
+contimove.s.117.1	Crane_MR
+contimove.s.119.1	Alguém mais está indo a Mu Lung neste exato momento. Fale comigo daqui a pouco.
+contimove.s.120.1	Alguém mais está indo a Mu Lung neste exato momento. Fale comigo daqui a pouco.
+contimove.s.122.2	mesos#k.
+contimove.s.123.1	Olá! Eu sou a cegonha que voa de de #bOrbis#k para #bMu Lung#k e volta. Vôo o tempo todo, então imaginei por que não fazer algum dinheiro levando viajantes como você por um preço baixo? É um bom negócio para mim. O que você acha? Quer voar para #bMu Lung#k agora mesmo? Cobro só #b
+contimove.s.125.1	Ok. Caso mude de idéia, por favor, me avise.
+contimove.s.126.1	Tem certeza de que você tem mesos suficientes?
+contimove.s.128.1	Crane_MR
+contimove.s.129.1	crane_SS
+contimove.s.106.1	Tem certeza de que você tem mesos suficientes?
+contimove.s.109.1	Tem certeza de que você tem mesos suficientes?
+contimove.s.112.1	Alguém mais está indo a Mu Lung neste exato momento. Fale comigo daqui a pouco.
+contimove.s.115.2	mesos)#l
+contimove.s.118.1	Alguém mais está indo a Mu Lung neste exato momento. Fale comigo daqui a pouco.
+contimove.s.121.1	Olá! Eu sou a cegonha que voa de #bOrbis#k para #bMu Lung#k e volta. Vôo o tempo todo, então imaginei por que não fazer algum dinheiro levando viajantes como você por um preço baixo? É um bom negócio para mim. O que você acha? Quer voar para #bMu Lung#k agora mesmo? Para iniciantes, cobro só #b
+contimove.s.124.2	mesos#k.
+contimove.s.127.1	crane_MR
+contimove.s.130.1	Crane_SS
+contimove.s.5.1	O passeio para Ellinia na Ilha Victória sai a cada 15 minutos, começando em horas cheias, e vai lhe custar #b1.000 mesos#k. Tem certeza de que quer comprar #b#t4031046##k?
+contimove.s.6.1	O passeio para Ellinia na Ilha Victória sai a cada 15 minutos, começando em horas cheias, e vai lhe custar #b5.000 mesos#k. Tem certeza de que quer comprar #b#t4031047##k?
+contimove.s.8.1	O passeio para Ludibrium sai a cada 10 minutos, começando em horas cheias, e vai lhe custar #b6.000 mesos#k. Tem certeza de que quer comprar #b#t4031074##k?
+contimove.s.9.1	O passeio para a Floresta de Minar perto de Leafre sai a cada 10 minutos, começando em horas cheias, e vai lhe custar #b10.000 mesos#k. Tem certeza de que quer comprar #b#t4031330##k?
+contimove.s.11.1	Olá, sou o responsável pela venda de bilhetes para o passeio de navio para a Estação Orbis em Ossyria. O passeio para Orbis sai a cada 10 minutos, começando em horas cheias, e vai lhe custar #b2.000 mesos#k. Tem certeza de que quer comprar #b#t4031044##k?
+contimove.s.12.1	Olá, sou o responsável pela venda de bilhetes para o passeio de navio para a Estação Orbis em Ossyria. O passeio para Orbis sai a cada 10 minutos, começando em horas cheias, e vai lhe custar #b6.000 mesos#k. Tem certeza de que quer comprar #b#t4031045##k?
+contimove.s.14.1	Olá, sou o responsável pela venda de bilhetes para o passeio de navio para a Estação Orbis em Ossyria. O passeio para Orbis sai a cada 15 minutos, começando em horas cheias, e vai lhe custar #b5.000 mesos#k. Tem certeza de que quer comprar #b#t4031045##k?
+contimove.s.15.1	Olá, sou o responsável pela venda de bilhetes para o passeio de navio para a Estação Orbis em Ossyria. O passeio para Orbis sai a cada 10 minutos, começando em horas cheias, e vai lhe custar #b2.000 mesos#k. Tem certeza de que quer comprar #b#t4031044##k?
+contimove.s.17.1	Você deve ter alguns negócios para tratar aqui, certo?
+contimove.s.18.1	Tem certeza de que você tem um #b?
+contimove.s.1.1	standard.s
+contimove.s.4.1	Olá, sou o responsável pela venda de bilhetes para o passeio de navio a todos os destinos. Qual bilhete gostaria de comprar?\r\n#b#L0# Ellinia na Ilha Victória#l#k\r\n#b#L1# Ludibrium#l\r\n#b#L2# Leafre#l#k
+contimove.s.7.1	O passeio para Ludibrium sai a cada 10 minutos, começando em horas cheias, e vai lhe custar #b2.000 mesos#k. Tem certeza de que quer comprar #b#t4031073##k?
+contimove.s.10.1	O passeio para a Floresta de Minar perto de Leafre sai a cada 10 minutos, começando em horas cheias, e vai lhe custar #b30.000 mesos#k. Tem certeza de que quer comprar #b#t4031331##k?
+contimove.s.13.1	Olá, sou o responsável pela venda de bilhetes para o passeio de navio para a Estação Orbis em Ossyria. O passeio para Orbis sai a cada 15 minutos, começando em horas cheias, e vai lhe custar #b1.000 mesos#k. Tem certeza de que quer comprar #b#t4031044##k?
+contimove.s.16.1	Olá, sou o responsável pela venda de bilhetes para o passeio de navio para a Estação Orbis em Ossyria. O passeio para Orbis sai a cada 15 minutos, começando em horas cheias, e vai lhe custar #b30.000 mesos#k. Tem certeza de que quer comprar #b#t4031045##k?
+contimove.s.19.2	mesos#k? Se sim, então devo conferir seu inventário de etc. e ver se está cheio ou não.
+contimove.s.20.1	get_ticket
+contimove.s.22.1	Este navio está prestes a partir. Desculpe, mas você deverá pegar o próximo. A escala das viagens está disponível por meio dos agentes do balcão de bilhetes.
+contimove.s.23.1	Sinto muito, mas este passeio já está CHEIO. Não podemos aceitar mais nenhum passageiro. Por favor, embarque no próximo.
+contimove.s.25.1	Você deve ter alguns negócios para tratar aqui, certo?
+contimove.s.26.1	Ah, não… Não creio que tenha seu bilhete consigo. Não pode embarcar sem ele. Por favor, compre o bilhete no balcão de bilhetes.
+contimove.s.28.1	Este navio está ficando pronto para partir. Desculpe, mas você deverá pegar o próximo. A escala das viagens está disponível por meio dos agentes do balcão de bilhetes.
+contimove.s.29.1	Sinto muito, mas este passeio já está CHEIO. Não podemos aceitar mais nenhum passageiro. Por favor, embarque no próximo.

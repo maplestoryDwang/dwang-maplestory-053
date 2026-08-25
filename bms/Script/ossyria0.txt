@@ -1,0 +1,39 @@
+ossyria0.s.2.1	getAboard
+ossyria0.s.3.1	A Estação de Orbis tem muitas plataformas à escolha. Você precisa escolher aquela que vai levar ao destino escolhido. Qual plataforma você vai pegar?\r\n#b#L0# A plataforma para o navio que segue para Ellinia #l\r\n#b#L1#A plataforma do navio que segue para Ludibrium#l#k\r\n#b#L2# A plataforma para Hak, que segue para Leafre#l\r\n#b#L3# A plataforma para Hak, que segue para Mu Lung#l
+ossyria0.s.16.1	goDungeon
+ossyria0.s.19.1	Outros personagem estão na missão. Converse comigo depois.
+ossyria0.s.22.1	Mesmo seu nível sendo alto, é difícil entrar lá. Mas, se mudar de idéia, fale comigo. Afinal, meu dever é proteger este lugar.
+ossyria0.s.25.1	Vamos ver, você quer trocar seu #b100 #t
+ossyria0.s.28.1	Hmmm... Tem certeza de que coletou #b100 #t
+ossyria0.s.31.2	#s#k, aqui está meu #b
+ossyria0.s.34.1	Seu inventário de etc. parece estar cheio. Você precisa de espaço livre para trocar comigo! Abra espaço e me encontre…
+ossyria0.s.35.1	carlie
+ossyria0.s.37.1	O trato é simples. Você consegue algo que preciso e eu arranjo algo que você precisa. O problema é que lido com muita gente. Então, os itens que tenho para oferecer podem mudar cada vez que nos encontrarmos. O que acha? Ainda quer fazer?
+ossyria0.s.38.1	Hmmm… não vai ser nada mau para você. Encontre-me na hora certa e você pode conseguir itens muito melhores. Mas me avise quando mudar de idéia.
+ossyria0.s.33.4	#(s)#k. O que você acha? Gostou do item que dei em troca? Devo ficar aqui por um tempo, então, se juntar mais itens, estou sempre disposto a negociar...
+ossyria0.s.36.1	Ei, tem um tempinho? Bem, meu trabalho é coletar itens aqui e vender em outro lugar, mas ultimamente os monstros têm ficado mais hostis e ficou muito difícil conseguir bons itens... O que você acha? Quer fazer negócio comigo?
+ossyria0.s.39.1	Ok! Antes, você precisa escolher o item que deseja trocar. Quanto melhor for o item, maior será a chance de receber um item melhor em troca.\r\n#b#L0# 100 #t4000073#s#l\r\n#L1# 100 #t4000059#s#l\r\n#L2# 100 #t4000076#s#l\r\n#L3# 100 #t4000058#s#l\r\n#L4# 100 #t4000078#s#l\r\n#L5# 100 #t4000060#s#l\r\n#L6# 100 #t4000062#s#l\r\n#L7# 100 #t4000048#s#l\r\n#L8# 100 #t4000081#s#l\r\n#L9# 100 #t4000061#s#l\r\n#L10# 100 #t4000070#s#l\r\n#L11# 100 #t4000071#s#l\r\n#L12# 100 #t4000072#s#l\r\n#L13# 100 #t4000051#s#l\r\n#L14# 100 #t4000055#s#l\r\n#L15# 100 #t4000069#s#l\r\n#L16# 100 #t4000052#s#l\r\n#L17# 100 #t4000050#s#l\r\n#L18# 100 #t4000057#s#l\r\n#L19# 100 #t4000049#s#l\r\n#L20# 100 #t4000056#s#l\r\n#L21# 100 #t4000079#s#l\r\n#L22# 100 #t4000053#s#l\r\n#L23# 100 #t4000054#s#l\r\n#L24# 100 #t4000080#s#l
+ossyria0.s.5.1	Por favor, tenha certeza de para onde está indo e siga para a plataforma através de mim. A saída é programada, não vá perder!
+ossyria0.s.6.1	west00
+ossyria0.s.8.1	Por favor, tenha certeza de para onde está indo e siga para a plataforma através de mim. A saída é programada, não vá perder!
+ossyria0.s.9.1	west00
+ossyria0.s.11.1	Por favor, tenha certeza de para onde está indo e siga para a plataforma através de mim. A saída é programada, não vá perder!
+ossyria0.s.12.1	west00
+ossyria0.s.14.1	Por favor, tenha certeza de para onde quer ir e siga para a plataforma através de mim.
+ossyria0.s.15.1	west00
+ossyria0.s.17.1	Você… Fez mesmo o #b#t4031450##k. Ninguém garante mais qualidade do que Vogen. Certo, vou deixar você entrar no #m921100100#.\r\n#b#L0# Sim. Por favor, leve-me para #m921100100#.#l\r\n#L1# Eu gostaria de entrar no Monte El Nath.#l
+ossyria0.s.18.1	S4congelar
+ossyria0.s.20.1	Ei, parece que você quer ir muito mais longe daqui. Lá, no entanto, você vai se ver com monstros por todos os lados, agressivos, perigosos e, mesmo se achar que já está #Gpronto:pronta#, tenha cuidado. Há muito tempo, alguns homens corajosos da nossa cidade seguiram para eliminar quem ameaçasse a cidade, mas nunca voltaram...
+ossyria0.s.21.1	Se estiver pensando em entrar, sugiro que mude de idéia. Mas se realmente quiser entrar… Só será permitido quem for forte o suficiente para continuar vivo lá dentro. Eu não quero ver mais ninguém morrer. Vamos ver... Humm...! Você parece bastante forte. Certo, deseja entrar?
+ossyria0.s.23.1	under00
+ossyria0.s.24.1	Se estiver pensando em entrar, sugiro que mude de idéia. Mas se realmente quiser entrar… Só será permitido quem for forte o suficiente para continuar vivo lá dentro. Eu não quero ver mais ninguém morrer. Vamos ver... Hmmm… você ainda não chegou ao nível 50. Não posso deixar você entrar, esqueça.
+ossyria0.s.26.2	#s#k pelo que tenho, certo? Antes de trocar, tenha certeza de que possui um slot livre no seu inventário de uso ou etc. Então, deseja realmente trocar?
+ossyria0.s.27.1	Hmmm… não vai ser nada mau para você. Se vier falar comigo na hora certa, posso arranjar ótimos itens. De qualquer maneira, quando quiser trocar, é só vir até mim.
+ossyria0.s.29.2	#s#k? Se sim, verifique se seu inventário está cheio.
+ossyria0.s.30.1	Para seu #b100 #t
+ossyria0.s.32.3	#t
+ossyria0.s.1.1	standard.s
+ossyria0.s.4.1	Mesmo se pegar a passagem errada, você pode voltar aqui usando o portal. Deseja ir para a #bplataforma do navio que vai para Ellinia#k?
+ossyria0.s.7.1	Mesmo se pegar a passagem errada, você pode voltar aqui usando o portal. Deseja ir para a #bplataforma do navio que vai para Ludibrium#k?
+ossyria0.s.10.1	Mesmo se pegar a passagem errada, você pode voltar aqui usando o portal. .\r\nDeseja ir para a #bplataforma do navio que vai para Leafre#k?
+ossyria0.s.13.1	Mesmo se pegar a passagem errada, você pode voltar aqui usando o portal. Deseja ir para a #bplataforma de Hak, que vai para Mu Lung#k?
