@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.gms.constants.api.ApiConstant;
 import org.gms.dao.entity.NpcCraftCat;
 import org.gms.dao.entity.NpcDialog;
-import org.gms.dto.NpcCraftItemDTO;
+import org.gms.model.dto.NpcCraftItemDTO;
 import org.gms.model.dto.*;
 import org.gms.service.NpcCraftService;
 import org.gms.util.BasePageUtil;
@@ -17,11 +17,10 @@ import java.util.Map;
 
 
 import io.swagger.v3.oas.annotations.Parameter;
-import org.gms.dto.NpcCraftCategoryDTO;
-import org.springframework.web.bind.annotation.*;
+import org.gms.model.dto.NpcCraftCategoryDTO;
 
 import java.util.List;
-import org.gms.dto.NpcMenuDTO;
+import org.gms.model.dto.NpcMenuDTO;
 
 
 /**

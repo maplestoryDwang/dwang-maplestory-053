@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.gms.constants.api.ApiConstant;
 import org.gms.dao.entity.EventConfigDO;
-import org.gms.dto.NpcCraftItemDTO;
 import org.gms.model.dto.*;
 import org.gms.service.EventConfigDataService;
 import org.gms.util.BasePageUtil;

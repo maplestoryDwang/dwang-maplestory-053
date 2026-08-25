@@ -3,9 +3,9 @@ package org.gms.service;
 
 import org.gms.dao.entity.NpcCraftCat;
 import org.gms.dao.entity.NpcDialog;
-import org.gms.dto.NpcCraftCategoryDTO;
-import org.gms.dto.NpcCraftItemDTO;
-import org.gms.dto.NpcMenuDTO;
+import org.gms.model.dto.NpcCraftCategoryDTO;
+import org.gms.model.dto.NpcCraftItemDTO;
+import org.gms.model.dto.NpcMenuDTO;
 import org.gms.model.dto.CraftSearchRtnDTO;
 
 import java.util.List;

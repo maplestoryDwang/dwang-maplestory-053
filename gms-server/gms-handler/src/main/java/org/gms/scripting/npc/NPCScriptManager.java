@@ -25,7 +25,7 @@ import jakarta.annotation.PostConstruct;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.constants.game.NextLevelType;
-import org.gms.dto.NpcMenuDTO;
+import org.gms.model.dto.NpcMenuDTO;
 import org.gms.model.pojo.NextLevelContext;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.scripting.ScriptServiceContext;
