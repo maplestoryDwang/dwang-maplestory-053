@@ -21,9 +21,8 @@
 */
 function enter(pi) {
     if (pi.isQuestCompleted(3706)) {
-        pi.playPortalSound();
-        pi.warp(240040612, "out00");
-        return true;
+        pi.openNpc(2081008);  // 直接给他NPC兑换就行了。不要进去了
+        return false;
     } else if (pi.isQuestStarted(100203) || pi.getPlayer().haveItem(4001094)) {
         var em = pi.getEventManager("NineSpirit");
         if (!em.startInstance(pi.getPlayer())) {

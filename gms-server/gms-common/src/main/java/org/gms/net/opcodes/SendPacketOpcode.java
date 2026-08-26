@@ -428,7 +428,7 @@ public enum SendPacketOpcode implements Opcode {
     SET_EXTRA_PENDANT_SLOT(0x79), // 设置额外饰品插槽
 
     // 53没有这个接口
-    SCRIPT_PROGRESS_MESSAGE(0x7A), // 脚本进度消息
+    SCRIPT_PROGRESS_MESSAGE(-1), // 脚本进度消息
     DATA_CRC_CHECK_FAILED(0x7B), // 数据CRC检查失败
     MACRO_SYS_DATA_INIT(-1), // 宏系统数据初始化
 

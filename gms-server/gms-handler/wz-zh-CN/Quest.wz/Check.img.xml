@@ -14281,8 +14281,6 @@
     <imgdir name="0">
       <int name="npc" value="9220006"/>
       <int name="interval" value="5"/>
-      <string name="start" value="2007112700"/>
-      <string name="end" value="2008011500"/>
       <imgdir name="item">
         <imgdir name="0">
           <int name="id" value="4000425"/>

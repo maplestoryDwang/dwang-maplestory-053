@@ -36,7 +36,7 @@ public class EventConfigController {
     @Tag(name = "/event/" + ApiConstant.LATEST)
     @Operation(summary = "分页获取事件列表")
     @PostMapping("/" + ApiConstant.LATEST + "/getEventList")
-    public ResultBody<Page<EventConfigDTO>> getQuestList(@RequestBody SubmitBody<EventConfigDTO> request) {
+    public ResultBody<Page<EventConfigDTO>> getEventList(@RequestBody SubmitBody<EventConfigDTO> request) {
         List<EventConfigDO> allEvents = eventConfigDataService.getAllEvents();
         List<EventConfigDTO> eventConfigDTOS = new ArrayList<>();
         for (EventConfigDO event : allEvents) {

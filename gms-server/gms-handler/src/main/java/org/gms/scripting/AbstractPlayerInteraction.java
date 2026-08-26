@@ -991,6 +991,18 @@ public class AbstractPlayerInteraction {
         c.sendPacket(PacketCreator.modifyInventory(false, Collections.singletonList(new ModifyInventory(0, newItem))));
     }
 
+    /**
+     * 一些特殊的传送口可能需要
+     * @param npcId
+     * @param x
+     * @param y
+     * @param map
+     */
+    public void spawnNpc(int npcId, int x, int y, MapleMap map) {
+        Point point = new Point(x, y);
+        spawnNpc(npcId, point, map);
+    }
+
     public void spawnNpc(int npcId, Point pos, MapleMap map) {
         NPC npc = LifeFactory.getNPC(npcId);
         if (npc != null) {

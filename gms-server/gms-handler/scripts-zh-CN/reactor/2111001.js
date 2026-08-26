@@ -29,6 +29,6 @@ function act() {
     for (i = 8800003; i < 8800011; i++) {
         rm.spawnMonster(i);
     }
-    rm.createMapMonitor(280030000, "ps00");
+    rm.createMapMonitor(280030000, "ps00"); // 没人自动取消
     rm.mapMessage(5, "【炎魔苏醒】火焰之眼的力量正在召唤扎昆！");
 }

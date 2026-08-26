@@ -2043,6 +2043,10 @@ public class MapleMap {
 
         monster.changeDifficulty(difficulty, isPq);
 
+        // 统一控制
+        updateMonsterHp(monster);
+
+
         monster.setMap(this);
         if (getEventInstance() != null) {
             getEventInstance().registerMonster(monster);
@@ -2088,6 +2092,18 @@ public class MapleMap {
         applyRemoveAfter(monster);  // thanks LightRyuzaki for pointing issues with spawned CWKPQ mobs not applying this
     }
 
+    // 队长的任务状态
+    private void updateMonsterHp(Monster monster) {
+        for (Character character : characters) {
+            if (character.isPartyLeader()) {
+                // todo  boss血量设置
+                if (monster.getId() ==  8800000) {
+                    monster.setStartingHp(100);
+                }
+            }
+        }
+    }
+
     public void spawnDojoMonster(final Monster monster) {
         Point[] pts = {new Point(140, 0), new Point(190, 7), new Point(187, 7)};
         spawnMonsterWithEffect(monster, 15, pts[Randomizer.nextInt(3)]);
@@ -2122,6 +2138,9 @@ public class MapleMap {
     public void spawnFakeMonster(final Monster monster) {
         monster.setMap(this);
         monster.setFake(true);
+
+        updateMonsterHp(monster);
+
         spawnAndAddRangedMapObject(monster, c -> c.sendPacket(PacketCreator.spawnFakeMonster(monster, 0)));
 
         spawnedMonstersOnMap.incrementAndGet();
@@ -2129,7 +2148,7 @@ public class MapleMap {
     }
 
     /**
-     * 扎昆手臂回血？
+     * 咋困手臂都死了，本体出现
      * @param monster
      */
     public void makeMonsterReal(final Monster monster) {

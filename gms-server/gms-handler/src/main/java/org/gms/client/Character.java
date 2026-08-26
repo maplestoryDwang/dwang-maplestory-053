@@ -6750,7 +6750,8 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void yellowMessage(String m) {
-        sendPacket(PacketCreator.sendYellowTip(m));
+//        sendPacket(PacketCreator.sendYellowTip(m));
+        sendPacket(PacketCreator.serverNotice(5, m));
     }
 
     public void raiseQuestMobCount(int id) {
