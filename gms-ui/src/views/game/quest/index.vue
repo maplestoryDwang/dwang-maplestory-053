@@ -441,7 +441,8 @@ const renderActionData = (key: string, data: any) => {
           { title: '数量', dataIndex: 'count', width: 70 },
           { title: '概率(%)', dataIndex: 'propPercent', width: 80, render: ({ record }: any) => record.propPercent ?? "" },
           { title: '职业限定', dataIndex: 'job', width: 90 },
-          { title: '性别', dataIndex: 'gender', width: 70 },
+          // { title: '性别', dataIndex: 'gender', width: 70 },
+          { title: '倒计时（分）', dataIndex: 'period', width: 70 },
         ],
       });
 

@@ -12,6 +12,7 @@ import org.gms.dao.entity.DropDataDO;
 import org.gms.dao.mapper.DropDataMapper;
 import org.gms.server.ItemInformationProvider;
 import org.gms.service.DropService; // 假设 DropService 位于 org.gms.service 包下
+import org.gms.util.PathUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,7 +39,12 @@ public class DropServiceTest {
     @Test
     void syncDropDataFromXml() {
         // 1. 解析 XML
-        Path cnPath = Path.of("E:\\game\\ms\\gms053\\server\\gms53-Server\\bms\\table");
+        Path bms = PathUtils.getRootPath("bms");
+        Path cnPath = bms.resolve("bms").resolve("table");
+        if (!cnPath.toFile().exists()) {
+            return;
+        }
+
         Map<Integer, DropGroup> rewardMap = DropRewardParser.parseReward(cnPath, "Reward_ori.img", DropGroupType.MOB);
 
         // 2. 从数据库获取所有不同的 dropperid（使用 groupBy）
@@ -68,188 +74,101 @@ public class DropServiceTest {
         System.out.println("所有怪物掉落同步完成！");
     }
 
-
     private void syncDropByDropperId(Integer dropId, Map<Integer, DropGroup> rewardMap) {
         DropGroup dropGroup = rewardMap.get(dropId);
-        if (dropGroup == null) {
-            // XML 中没有该怪物数据，则删除数据库中所有该怪物的掉落（根据业务决定）
-//            QueryWrapper deleteWrapper = QueryWrapper.create()
-//                    .where(DROP_DATA_D_O.DROPPERID.eq(dropId));
-//            dropDataMapper.deleteByQuery(deleteWrapper);
-//            System.out.println("删除怪物 " + dropId + " 的所有掉落记录");
 
-            System.out.println("dropId" + dropId + "保留");
+        if (dropGroup == null) {
+            System.out.println("dropId " + dropId + " 在 XML 中不存在，保留原样");
             rewardMap.remove(dropId);
             return;
         }
 
-        // 1. 从数据库查询该怪物的现有掉落
-        QueryWrapper queryWrapper = QueryWrapper.create()
-                .where(DROP_DATA_D_O.DROPPERID.eq(dropId));
-        List<DropDataDO> dbList = dropDataMapper.selectListByQuery(queryWrapper);
-        // 构建数据库现有记录的 Map，key = itemid (统一使用 Long)
-        Map<Integer, DropDataDO> dbMap = dbList.stream()
-                .collect(Collectors.toMap(
-                        rec -> rec.getItemid(),
-                        rec -> rec,
-                        (old, newVal) -> old
-                ));
+        // -------------------------------------------------------------
+        // 1. 先查询数据库中该怪物【已有的任务道具 itemid 集合】(questid != 0)
+        // -------------------------------------------------------------
+        QueryWrapper questQuery = QueryWrapper.create()
+                .select(DROP_DATA_D_O.ITEMID)
+                .where(DROP_DATA_D_O.DROPPERID.eq(dropId))
+                .and(DROP_DATA_D_O.QUESTID.ne(0)); // questid != 0
 
-        // 2. 构建 XML 掉落条目的 Map，key = itemid (Long)
-        Map<Integer, List<DropEntry>> xmlMap = new HashMap<>();
-        for (DropEntry entry : dropGroup.getEntries()) {
-            if (entry.getMoney() != null && entry.getMoney() > 0) {
-                // 金币条目，使用 itemid = 0L
-                xmlMap.put(0, List.of(entry));
-            } else {// 只是把数量拼接了一下
-                Integer itemId = entry.getItem();
-                if (itemId != null && itemId > 0) {
-                    List<DropEntry> dropEntries = xmlMap.get(itemId);
-                    if (dropEntries == null) {
-                        List<DropEntry> newItems = new ArrayList<>();
-                        newItems.add(entry);
-                        xmlMap.put(itemId, newItems);  // 显式转为 Long
-                    } else {
-                        dropEntries.add(entry);
-                    }
-                }
-            }
-        }
+        List<DropDataDO> dbQuestRecords = dropDataMapper.selectListByQuery(questQuery);
 
-        // 3. 准备增删改列表
+        // 收集所有数据库已存在的任务 itemId，方便极速查找
+        Set<Integer> dbQuestItemIds = dbQuestRecords.stream()
+                .map(DropDataDO::getItemid)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        // -------------------------------------------------------------
+        // 2. 删除数据库中该怪物所有的【非任务掉落记录】(questid == 0)
+        // -------------------------------------------------------------
+        QueryWrapper deleteWrapper = QueryWrapper.create()
+                .where(DROP_DATA_D_O.DROPPERID.eq(dropId))
+                .and(DROP_DATA_D_O.QUESTID.eq(0));
+
+        dropDataMapper.deleteByQuery(deleteWrapper);
+
+        // -------------------------------------------------------------
+        // 3. 解析 XML 并过滤任务道具
+        // -------------------------------------------------------------
         List<DropDataDO> toInsert = new ArrayList<>();
-        List<DropDataDO> toUpdate = new ArrayList<>();
-        List<DropDataDO> toDelete = new ArrayList<>();
 
-        // 4. 遍历数据库现有记录，决定是更新还是删除
-        for (Map.Entry<Integer, DropDataDO> dbEntry : dbMap.entrySet()) {
-            Integer itemid = dbEntry.getKey();
-            DropDataDO dbRecord = dbEntry.getValue();
-
-            // 判断是否为任务道具（questid != 0），这类记录通常由任务系统管理，不参与同步
-            if (dbRecord.getQuestid() != null && dbRecord.getQuestid() != 0) {
-                // 任务道具保留，不做任何修改（即使 XML 中没有也保留）
-                System.out.println("保留任务道具 itemid=" + itemid + ", questid=" + dbRecord.getQuestid());
+        for (DropEntry entry : dropGroup.getEntries()) {
+            // A. 金币处理 (itemid = 0)
+            if (entry.getMoney() != null && entry.getMoney() > 0) {
+                toInsert.add(buildNewRecord(dropId, 0, entry));
                 continue;
             }
 
-            List<DropEntry> dropEntries = xmlMap.get(itemid);
-            if (dropEntries == null || dropEntries.isEmpty()) {
-                // XML 中没有该物品，标记删除
-                toDelete.add(dbRecord);
+            // B. 普通物品 / 任务物品处理
+            Integer itemId = entry.getItem();
+            if (itemId == null || itemId <= 0) {
+                continue;
+            }
+
+            // 核心判定：如果 XML 中的这个 itemId 已经在数据库的任务道具列表中，直接跳过！
+            if (dbQuestItemIds.contains(itemId)) {
+                System.out.println("怪物 " + dropId + " 的 itemid=" + itemId + " 属于已有任务道具，XML 数据跳过插入");
+                continue;
+            }
+
+            // 校验 WZ 资源库是否存在该物品
+            String name = ItemInformationProvider.getInstance().getName(itemId);
+            if (name != null) {
+                toInsert.add(buildNewRecord(dropId, itemId, entry));
             } else {
-                if (dropEntries.size() == 1) {
-                    DropEntry xmlEntry = dropEntries.get(0);
-
-                    // XML 中有，需要更新
-                    // 更新字段（根据 XML 的 prob、min、max 等）
-                    dbRecord.setChance(xmlEntry.getProb());
-                    if (itemid == 0L) {
-                        // 金币
-                        dbRecord.setMinimumQuantity(xmlEntry.getMoney());
-                        dbRecord.setMaximumQuantity(xmlEntry.getMoney());
-                    } else {
-                        if (xmlEntry.getMin() != null) {
-                            dbRecord.setMinimumQuantity(xmlEntry.getMin());
-                        }
-                        if (xmlEntry.getMax() != null) {
-                            dbRecord.setMaximumQuantity(xmlEntry.getMax());
-                        }
-                    }
-                    toUpdate.add(dbRecord);
-
-                } else {
-                    // 存在多个,只加数量，不加概率
-                    for (DropEntry dropEntry : dropEntries) {
-                        if (dropEntry.getMin() != null) {
-                            dbRecord.setMinimumQuantity(dbRecord.getMinimumQuantity() + dropEntry.getMin());
-                        }
-                        if (dropEntry.getMax() != null) {
-                            dbRecord.setMaximumQuantity(dbRecord.getMaximumQuantity() + dropEntry.getMax());
-                        }
-
-                    }
-                }
-
-                // 从 xmlMap 中移除已处理的条目，剩下的就是需要新增的
-                xmlMap.remove(itemid);
+                System.out.println("WZ 库未找到该物品，跳过插入: itemId=" + itemId);
             }
         }
 
-        // 5. 处理需要新增的记录（xmlMap 中剩余的条目）
-        xmlMap.forEach((itemId, list) -> {
-            for (DropEntry dropEntry : list) {
-                DropDataDO newRecord = buildNewRecord(dropId, itemId, dropEntry);
-                toInsert.add(newRecord);
-            }
-
-        });
-
-
-        // 6. 执行数据库操作
-        System.out.println("怪物 " + dropId + " 同步详情：");
-        if (!toDelete.isEmpty()) {
-            System.out.println("  删除 " + toDelete.size() + " 条");
-            for (DropDataDO rec : toDelete) {
-                dropDataMapper.deleteById(rec.getId());
-            }
-        }
-        if (!toUpdate.isEmpty()) {
-            System.out.println("  更新 " + toUpdate.size() + " 条");
-            for (DropDataDO rec : toUpdate) {
-                dropDataMapper.update(rec);
-            }
-        }
+        // -------------------------------------------------------------
+        // 4. 执行批量插入（其余重复的 dropperid + itemid 会正常直接插入）
+        // -------------------------------------------------------------
         if (!toInsert.isEmpty()) {
-            System.out.println("  新增 " + toInsert.size() + " 条");
-            for (DropDataDO rec : toInsert) {
-                // 先检查是否真的不存在（防止因并发或之前误操作导致重复）
-                QueryWrapper check = QueryWrapper.create()
-                        .where(DROP_DATA_D_O.DROPPERID.eq(rec.getDropperid()))
-                        .and(DROP_DATA_D_O.ITEMID.eq(rec.getItemid()));
-                DropDataDO existing = dropDataMapper.selectOneByQuery(check);
-                if (existing == null) {
-                    dropDataMapper.insert(rec);
-                } else {
-                    // 如果已经存在，更新它（以防万一）
-                    // 数量+1
-                    System.out.println("数据已存在，  " + rec.getDropperid() + " itemId " + rec.getItemid() + "  =》 min + " +  rec.getMinimumQuantity() + "max + " +  rec.getMaximumQuantity() );
-                    existing.setMinimumQuantity(existing.getMinimumQuantity() + rec.getMinimumQuantity());
-                    existing.setMaximumQuantity(existing.getMaximumQuantity() + rec.getMaximumQuantity());
-//                    rec.setId(existing.getId());
-                    dropDataMapper.update(existing);
-
-
-
-                }
-            }
+            System.out.println("怪物 " + dropId + " 同步新增 " + toInsert.size() + " 条掉落数据");
+            dropDataMapper.insertBatch(toInsert);
         }
 
-        // 7. 从 rewardMap 中移除已处理的怪物，避免重复处理
+        // 处理完成，清理缓存 Map
         rewardMap.remove(dropId);
     }
 
-    private DropDataDO buildNewRecord(Integer dropId, Integer itemid, DropEntry xmlEntry) {
+    private DropDataDO buildNewRecord(Integer dropId, Integer itemId, DropEntry xmlEntry) {
         DropDataDO record = new DropDataDO();
         record.setDropperid(dropId);
-        record.setItemid(itemid); // 因为实体类是 Integer，所以转换
-        record.setChance(xmlEntry.getProb());
+        record.setItemid(itemId);
+        record.setChance(xmlEntry.getProb() != null ? xmlEntry.getProb() : 0);
+        record.setQuestid(0); // 从 XML 插入的新数据统一作为普通掉落 (questid = 0)
 
-        if (itemid == 0L) {
-            // 金币
+        if (itemId == 0) { // 金币
             record.setMinimumQuantity(xmlEntry.getMoney());
             record.setMaximumQuantity(xmlEntry.getMoney());
-            record.setQuestid(0);
-        } else {
+        } else { // 装备/消耗品/普通道具
             record.setMinimumQuantity(xmlEntry.getMin() != null ? xmlEntry.getMin() : 1);
             record.setMaximumQuantity(xmlEntry.getMax() != null ? xmlEntry.getMax() : 1);
-            record.setQuestid(0);
         }
         return record;
     }
-
-
-
 
     private void insertDropFromXml(Integer dropId, DropGroup dropGroup) {
         List<DropEntry> entries = dropGroup.getEntries();

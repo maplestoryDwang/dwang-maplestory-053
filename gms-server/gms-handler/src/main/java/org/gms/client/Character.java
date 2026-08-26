@@ -4837,6 +4837,10 @@ public class Character extends AbstractCharacterObject {
         return null;
     }
 
+    public Inventory getInventory(int index) {
+        return inventory[index];
+    }
+
     public Inventory getInventory(InventoryType type) {
         return inventory[type.ordinal()];
     }

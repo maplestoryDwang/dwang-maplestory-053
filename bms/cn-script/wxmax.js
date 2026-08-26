@@ -1,15 +1,5 @@
 module "standard.s";
 
-function mittlost // lost all mittens
-{
-    inven = target.inventory;
-    ItemB = inven.itemCount( 1472063 ) ; //
-    if ( ItemB > 0 ) 	ret = inven.exchange( 0, 1472063 , -ItemB );
-    ItemC = inven.itemCount( 2060005 ) ; //
-    if ( ItemC > 0 ) 	ret = inven.exchange( 0, 2060005 , -ItemC );
-    ItemD = inven.itemCount( 2060006 ) ; //
-    if ( ItemD > 0 ) 	ret = inven.exchange( 0, 2060006 , -ItemD );
-}
 
 function resetallmob
 {
@@ -20,7 +10,7 @@ function resetallmob
     field.summonMob( 1450, 140, 2101083 );  // 空罐子
     field.snowOn(30);      // 下雪
 }
-
+// 9220005
 script "wxmasA"
 {
     field = self.field;
@@ -135,7 +125,7 @@ script "wxmasA"
 }
 
 
-
+// 9220004
 script "wxmasB"
 {
     field = Field( 209080000 );
@@ -334,6 +324,7 @@ script "wxmasB"
     }
 }
 
+// 2099000 reactor
 script "wxmas_End"
 {
 //quest = FieldSet( "wxmas" );
