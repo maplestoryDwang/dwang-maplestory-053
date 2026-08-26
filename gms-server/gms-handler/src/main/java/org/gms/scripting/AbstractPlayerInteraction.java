@@ -352,7 +352,7 @@ public class AbstractPlayerInteraction {
     }
 
     //---- \/ \/ \/ \/ \/ \/ \/  NOT TESTED  \/ \/ \/ \/ \/ \/ \/ \/ \/ ----
-
+    // 存储特殊数据
     public final QuestStatus getQuestRecord(final int id) {
         return c.getPlayer().getQuestNAdd(QuestRepository.getInstance(id));
     }

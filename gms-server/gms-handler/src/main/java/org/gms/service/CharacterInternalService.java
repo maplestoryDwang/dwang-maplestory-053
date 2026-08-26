@@ -4,6 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.gms.client.*;
 import org.gms.client.Character;
+import org.gms.client.character.buddy.BuddyList;
+import org.gms.client.character.buddy.BuddylistEntry;
+import org.gms.client.inventory.Inventory;
+import org.gms.client.inventory.InventoryType;
+import org.gms.client.inventory.Item;
+import org.gms.client.inventory.pet.Pet;
 import org.gms.client.keybind.KeyBinding;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
@@ -12,6 +18,7 @@ import org.gms.exception.BizException;
 import org.gms.model.pojo.SkillEntry;
 import org.gms.net.server.Server;
 import org.gms.net.server.guild.GuildCharacter;
+import org.gms.net.server.services.task.world.CharacterSaveService;
 import org.gms.net.server.world.Messenger;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
@@ -29,7 +36,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.*;
+import java.util.Map.Entry;
 
 @Service
 @AllArgsConstructor
@@ -139,16 +148,177 @@ public class CharacterInternalService {
         worldTransferService.cancelPendingWorldTransfer(player, false);
     }
 
+    /**
+     * 重构后的保存角色逻辑：采用 Spring 声明式事务，拆分为子模块保持代码清晰
+     * todo 未完成。
+     */
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.READ_UNCOMMITTED)
-    public void saveCharToDB(Character player, boolean notAutosave) {
+    public synchronized void saveCharToDBV2(Character player, boolean notAutosave) {
         if (!player.isLoggedIn()) {
+            CharacterSaveService service = player.getCharacterSaveService();
+            if (service != null) {
+                service.unregisterSaveCharacter(player.getId());
+            }
             return;
         }
+
         log.info(I18nUtil.getLogMessage(notAutosave ? "Character.saveCharToDB.info1" : "Character.saveCharToDB.info2"), player.getName());
         Server.getInstance().updateCharacterEntry(player);
 
-        CharactersDO cdo = Character.toCharactersDO(player);
-        characterDataService.insertCharacter(cdo);
+        int cid = player.getId();
+
+        // 1. 保存角色主表数据 (在 toCharactersDO 内部已完成并发属性锁提取)
+        CharactersDO cdo = player.toCharactersDO();
+        characterDataService.updateOrInsertCharacter(cdo);
+
+        // 2. 保存宠物
+        for (Pet pet : player.getPetListSnapshot()) {
+            pet.saveToDb();
+        }
+
+        // 3. 保存按键绑定 (Keymap)
+        saveKeymap(cid, player.getKeymap());
+
+        // 4. 保存快捷栏 (Quickslot)
+        saveQuickslot(player);
+
+        // 5. 保存技能宏
+        saveSkillMacros(cid, player.getSkillMacros());
+
+        // 6. 保存背包物品
+        saveInventoryItems(player);
+
+        // 7. 保存技能列表
+        saveSkills(cid, player.getSkills());
+
+        // 8. 保存地图保存点与传送石
+        saveLocationsAndTrocks(player);
+
+        // 9. 保存好友列表
+        saveBuddies(cid, player.getBuddylist());
+
+        // 10. 保存区域信息与事件数据
+        saveAreaAndEventStats(player);
+
+        // 11. 保存任务与勋章
+        saveQuestsAndMedals(player);
+
+        // 12. 保存家族与仓库
+        saveFamilyReputation(player);
+        saveCashShopAndStorage(player);
+    }
+
+    private void saveKeymap(int cid, Map<Integer, KeyBinding> keymap) {
+        characterDataService.deleteKeymapByCharacterId(cid);
+        List<KeymapDO> list = new ArrayList<>();
+        for (Entry<Integer, KeyBinding> entry : keymap.entrySet()) {
+            KeymapDO k = new KeymapDO();
+            k.setCharacterid(cid);
+            k.setKey(entry.getKey());
+            k.setType(entry.getValue().getType());
+            k.setAction(entry.getValue().getAction());
+            list.add(k);
+        }
+        if (!list.isEmpty()) {
+            characterDataService.batchInsertKeymap(list);
+        }
+    }
+
+    private void saveQuickslot(Character player) {
+
+    }
+
+    private void saveSkillMacros(int cid, SkillMacro[] skillMacros) {
+        characterDataService.deleteSkillMacrosByCharacterId(cid);
+        List<SkillmacrosDO> list = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            SkillMacro macro = skillMacros[i];
+            if (macro != null) {
+                SkillmacrosDO m = new SkillmacrosDO();
+                m.setCharacterid(cid);
+                m.setSkill1(macro.getSkill1());
+                m.setSkill2(macro.getSkill2());
+                m.setSkill3(macro.getSkill3());
+                m.setName(macro.getName());
+                m.setShout(macro.getShout());
+                m.setPosition(i);
+                list.add(m);
+            }
+        }
+        if (!list.isEmpty()) {
+            characterDataService.batchInsertSkillMacros(list);
+        }
+    }
+
+    private void saveInventoryItems(Character player) {
+
+    }
+
+    private void saveSkills(int cid, Map<Skill, SkillEntry> skills) {
+        List<SkillsDO> list = new ArrayList<>();
+        for (Entry<Skill, SkillEntry> entry : skills.entrySet()) {
+            SkillsDO s = new SkillsDO();
+            s.setCharacterid(cid);
+            s.setSkillid(entry.getKey().getId());
+            s.setSkilllevel((int) entry.getValue().skillLevel);
+            s.setMasterlevel(entry.getValue().masterLevel);
+            s.setExpiration(entry.getValue().expiration);
+            list.add(s);
+        }
+        characterDataService.replaceSkills(list);
+    }
+
+    private void saveLocationsAndTrocks(Character player) {
+
+    }
+
+    private void saveBuddies(int cid, BuddyList buddylist) {
+        characterDataService.deleteBuddiesWhereNotPending(cid);
+        List<BuddiesDO> list = new ArrayList<>();
+        for (BuddylistEntry entry : buddylist.getBuddies()) {
+            if (entry.isVisible()) {
+                BuddiesDO b = new BuddiesDO();
+                b.setCharacterid(cid);
+                b.setBuddyid(entry.getCharacterId());
+                b.setPending(0);
+                b.setGroup(entry.getGroup());
+                list.add(b);
+            }
+        }
+        if (!list.isEmpty()) {
+            characterDataService.batchInsertBuddies(list);
+        }
+    }
+
+    private void saveAreaAndEventStats(Character player) {
+
+    }
+
+    private void saveQuestsAndMedals(Character player) {
+
+    }
+
+    private void saveFamilyReputation(Character player) {
+        FamilyEntry familyEntry = player.getFamilyEntry();
+        if (familyEntry != null) {
+            familyEntry.saveReputation();
+            familyEntry.savedSuccessfully();
+
+            FamilyEntry senior = familyEntry.getSenior();
+            if (senior != null && senior.getChr() == null) {
+                senior.saveReputation();
+                senior.savedSuccessfully();
+                senior = senior.getSenior();
+                if (senior != null && senior.getChr() == null) {
+                    senior.saveReputation();
+                    senior.savedSuccessfully();
+                }
+            }
+        }
+    }
+
+    private void saveCashShopAndStorage(Character player) {
+
     }
 
     public Character loadCharFromDB(int cid, Client client, boolean channelServer) {

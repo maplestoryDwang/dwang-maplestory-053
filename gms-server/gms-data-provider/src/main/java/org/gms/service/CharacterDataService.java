@@ -10,6 +10,7 @@ package org.gms.service;
 
 import com.mybatisflex.core.query.QueryMethods;
 import com.mybatisflex.core.query.QueryWrapper;
+import com.mybatisflex.core.row.Db;
 import lombok.AllArgsConstructor;
 import org.gms.client.Client;
 import org.gms.constants.string.ExtendType;
@@ -264,5 +265,78 @@ public class CharacterDataService {
         QueryWrapper where = QueryWrapper.create().where(CHARACTERS_D_O.WORLD.eq(worldId)).and(CHARACTERS_D_O.LOGGEDIN.eq(Boolean.TRUE));
         return charactersMapper.selectListByQuery(where);
 
+    }
+
+
+
+    /** 1. 更新或插入角色主表 */
+    public void updateOrInsertCharacter(CharactersDO cdo) {
+        update(cdo);
+    }
+
+    /** 2. 保存/更新快捷栏（使用 MyBatis-Flex 的原生 SQL 执行或 Db 接口） */
+    public void saveOrUpdateQuickSlot(int accountId, byte[] keymap) {
+        String sql = "INSERT INTO quickslotkeymapped (accountid, keymap) VALUES (?, ?) " +
+                "ON DUPLICATE KEY UPDATE keymap = ?";
+        Db.updateBySql(sql, accountId, keymap, keymap);
+    }
+
+    /** 3. Keymap 处理：先清空，再批量插入 */
+    public void deleteKeymapByCharacterId(int cid) {
+        QueryWrapper qw = QueryWrapper.create().where(KEYMAP_D_O.CHARACTERID.eq(cid));
+        Db.deleteByQuery(KEYMAP_D_O.getSchema(), KEYMAP_D_O.getTableName(), qw);
+    }
+
+    public void batchInsertKeymap(List<KeymapDO> list) {
+        Db.executeBatch(list, 1000, KeymapMapper.class, KeymapMapper::insert);
+    }
+
+    /** 4. 技能宏处理 */
+    public void deleteSkillMacrosByCharacterId(int cid) {
+        QueryWrapper qw = QueryWrapper.create().where(SKILLMACROS_D_O.CHARACTERID.eq(cid));
+        Db.deleteByQuery(SKILLMACROS_D_O.getSchema(), SKILLMACROS_D_O.getTableName(), qw);
+    }
+
+    public void batchInsertSkillMacros(List<SkillmacrosDO> list) {
+        Db.executeBatch(list, 1000, SkillmacrosMapper.class, SkillmacrosMapper::insert);
+    }
+
+    /** 5. 技能列表：使用 Replace 或 SaveOrUpdateBatch */
+    public void replaceSkills(List<SkillsDO> list) {
+        if (list == null || list.isEmpty()) return;
+        // 使用 MyBatis-Flex 的批量覆盖插入机制
+        Db.executeBatch(list, 1000, SkillsMapper.class, SkillsMapper::insertOrUpdate);
+    }
+
+    /** 6. 保存点处理 */
+    public void deleteSavedLocationsByCharacterId(int cid) {
+        QueryWrapper qw = QueryWrapper.create().where(SAVEDLOCATIONS_D_O.CHARACTERID.eq(cid));
+        Db.deleteByQuery(SAVEDLOCATIONS_D_O.getSchema(), SAVEDLOCATIONS_D_O.getTableName(), qw);
+    }
+
+    public void batchInsertSavedLocations(List<SavedlocationsDO> list) {
+        Db.executeBatch(list, 1000, SavedlocationsMapper.class, SavedlocationsMapper::insert);
+    }
+
+    /** 7. 传送石处理 */
+    public void deleteTrockLocationsByCharacterId(int cid) {
+        QueryWrapper qw = QueryWrapper.create().where(TROCKLOCATIONS_D_O.CHARACTERID.eq(cid));
+        Db.deleteByQuery(TROCKLOCATIONS_D_O.getSchema(), TROCKLOCATIONS_D_O.getTableName(), qw);
+    }
+
+    public void batchInsertTrockLocations(List<TrocklocationsDO> list) {
+        Db.executeBatch(list, 1000, TrocklocationsMapper.class, TrocklocationsMapper::insert);
+    }
+
+    /** 8. 好友列表处理（只删除 pending = 0 的） */
+    public void deleteBuddiesWhereNotPending(int cid) {
+        QueryWrapper qw = QueryWrapper.create()
+                .where(BUDDIES_D_O.CHARACTERID.eq(cid))
+                .and(BUDDIES_D_O.PENDING.eq(0));
+        Db.deleteByQuery(BUDDIES_D_O.getSchema(), BUDDIES_D_O.getTableName(), qw);
+    }
+
+    public void batchInsertBuddies(List<BuddiesDO> list) {
+        Db.executeBatch(list, 1000, BuddiesMapper.class, BuddiesMapper::insert);
     }
 }

@@ -5333,6 +5333,12 @@ public class Character extends AbstractCharacterObject {
         return getInventory(InventoryType.EQUIPPED).getItem(ItemConstants.PET_EQUIP_SLOTS.get(petIndex).chatBalloon()) != null;
     }
 
+    public boolean isEquipped(byte itemId) {
+        return getInventory(InventoryType.EQUIPPED).getItem(itemId) != null;
+
+    }
+
+
     public boolean isEquippedMesoMagnet(byte petIndex) {
         if (!ItemConstants.isValidPetIndex(petIndex)) {
             return false;
@@ -7586,11 +7592,79 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    private CharacterSaveService getCharacterSaveService() {
+    public CharacterSaveService getCharacterSaveService() {
         return (CharacterSaveService) getWorldServer().getServiceAccess(WorldServices.SAVE_CHARACTER);
     }
 
     //ItemFactory saveItems and monsterbook.saveCards are the most time consuming here.
+
+
+    // 在 Character.java 中添加以下方法，用于安全获取带锁的属性数据
+    public CharactersDO toCharactersDO() {
+        CharactersDO cdo = new CharactersDO();
+        cdo.setId(this.id);
+        cdo.setName(this.name);
+        cdo.setLevel(this.level);
+        cdo.setFame(this.fame);
+
+        // 加锁提取并发敏感的属性值
+        effLock.lock();
+        statWlock.lock();
+        try {
+            cdo.setAttrStr(this.attrStr);
+            cdo.setAttrDex(this.attrDex);
+            cdo.setAttrLuk(this.attrLuk);
+            cdo.setAttrInt(this.attrInt);
+            cdo.setExp(Math.abs(this.exp.get()));
+            cdo.setGachaexp(Math.abs(this.gachaExp.get()));
+            cdo.setHp(this.hp);
+            cdo.setMp(this.mp);
+            cdo.setMaxhp(this.maxHp);
+            cdo.setMaxmp(this.maxMp);
+
+            // 拼接 SP 字符串
+            StringBuilder sps = new StringBuilder();
+            for (int j : remainingSp) {
+                sps.append(j).append(",");
+            }
+            cdo.setSp(sps.length() > 0 ? sps.substring(0, sps.length() - 1) : "");
+            cdo.setAp(this.remainingAp);
+        } finally {
+            statWlock.unlock();
+            effLock.unlock();
+        }
+
+        // 其他不依赖锁的常规属性赋值...
+        cdo.setGm(this.gmLevel);
+        cdo.setSkincolor(this.skinColor.getId());
+        cdo.setGender(this.gender);
+        cdo.setJob(this.job.getId());
+        cdo.setHair(this.hair);
+        cdo.setFace(this.face);
+        cdo.setMeso(this.meso.get());
+
+        return cdo;
+    }
+
+    public List<Pet> getPetListSnapshot() {
+        List<Pet> petList = new ArrayList<>();
+        petLock.lock();
+        try {
+            for (Pet pet : pets) {
+                if (pet != null) {
+                    petList.add(pet);
+                }
+            }
+        } finally {
+            petLock.unlock();
+        }
+        return petList;
+    }
+
+    public synchronized void saveCharToDBV2(boolean notAutosave) {
+        CHARACTER_INTERNAL_SERVICE.saveCharToDBV2(this, notAutosave);
+
+    }
     public synchronized void saveCharToDB(boolean notAutosave) {
         if (!loggedIn) {
             // 如果已经退出登录，取消自动保存当前角色任务

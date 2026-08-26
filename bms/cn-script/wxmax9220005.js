@@ -12,7 +12,7 @@ function start() {
     var endTime = Date.parse("2008-01-15T06:00:00") - cTime; // 剩余毫秒，若正数则活动进行中
 
     // 频道限制：只能频道 1 和 3? 原代码 if(channelID==0 or channelID==2) 表示 1和3可用（因为通常0=1频道）
-    var channel = cm.getChannel();
+    var channel = cm.getClient().getChannel();
     if (channel == 1 || channel == 3) {
         // 允许进入
     } else {
