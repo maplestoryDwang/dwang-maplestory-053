@@ -2094,6 +2094,8 @@ public class MapleMap {
 
     // 队长的任务状态
     private void updateMonsterHp(Monster monster) {
+        monster.setStartingHp(100);
+
         for (Character character : characters) {
             if (character.isPartyLeader()) {
                 // todo  boss血量设置

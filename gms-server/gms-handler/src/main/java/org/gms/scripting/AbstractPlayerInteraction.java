@@ -38,6 +38,7 @@ import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;
 import org.gms.dwutil.ItemUtils;
 import org.gms.dwutil.QuestUtils;
+import org.gms.event.wxmas.WXMaxData;
 import org.gms.model.pojo.SkillEntry;
 import org.gms.net.server.Server;
 import org.gms.net.server.guild.Guild;
@@ -980,6 +981,11 @@ public class AbstractPlayerInteraction {
         InventoryManipulator.removeFromSlot(c, InventoryType.EQUIPPED, slot, tempItem.getQuantity(), false, false);
     }
 
+    public boolean isEquipped(int itemId) {
+        return c.getPlayer().haveItemEquipped(itemId);
+    }
+
+
     public void gainAndEquip(int itemid, short slot) {
         final Item old = c.getPlayer().getInventory(InventoryType.EQUIPPED).getItem(slot);
         if (old != null) {
@@ -1382,8 +1388,28 @@ public class AbstractPlayerInteraction {
         return getPlayer().getCurrentOnlineTime();
     }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // 简单实现先跑通
+    public Object getFieldSet(String key){
+        Object o = WXMaxData.fileSet.get(key);
+        if (o == null) {
+            WXMaxData.fileSet.put(key, new Object());
+        }
+        return o;
+    }
+
+    public Integer setVar(String key, Integer value){
+        return WXMaxData.varMaps.put(key, value);
+    }
+
+    public Integer getVar(String key){
+        return WXMaxData.varMaps.get(key);
+    }
+
+    public void snowOn() {
 
 
-
+    }
 
 }

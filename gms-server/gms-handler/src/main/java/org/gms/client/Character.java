@@ -4850,6 +4850,11 @@ public class Character extends AbstractCharacterObject {
                 || (checkEquipped && inventory[InventoryType.EQUIPPED.ordinal()].findById(itemid) != null);
     }
 
+    /**
+     * 判断是否穿某件装备
+     * @param itemid
+     * @return
+     */
     public boolean haveItemEquipped(int itemid) {
         return (inventory[InventoryType.EQUIPPED.ordinal()].findById(itemid) != null);
     }
@@ -5331,11 +5336,6 @@ public class Character extends AbstractCharacterObject {
         }
 
         return getInventory(InventoryType.EQUIPPED).getItem(ItemConstants.PET_EQUIP_SLOTS.get(petIndex).chatBalloon()) != null;
-    }
-
-    public boolean isEquipped(byte itemId) {
-        return getInventory(InventoryType.EQUIPPED).getItem(itemId) != null;
-
     }
 
 

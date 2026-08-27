@@ -213,6 +213,10 @@ public enum SendPacketOpcode implements Opcode {
 
     FIELD_EFFECT(0x53), // 场景效果  083 =》 0x8A
 
+
+    BLOW_WEATHER(0x54), // 吹风天气效果 083 0x8E
+
+
     // check ↓
     SHOW_CHAIR(0x91), // 显示椅子
 
@@ -447,7 +451,6 @@ public enum SendPacketOpcode implements Opcode {
     FIELD_OBSTACLE_ONOFF(-1), // 场景障碍物开关                       没找到
     FIELD_OBSTACLE_ONOFF_LIST(-1), // 场景障碍物开关列表               没找到
     FIELD_OBSTACLE_ALL_RESET(-1), // 重置所有场景障碍物                 没找到
-    BLOW_WEATHER(0x8E), // 吹风天气效果
     PLAY_JUKEBOX(0x8F), // 播放点唱机
 
     ADMIN_RESULT(-1), // 管理员结果                                 没找到

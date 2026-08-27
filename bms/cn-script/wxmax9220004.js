@@ -14,11 +14,11 @@ const WORLD_NEED_MAX = 50000;
 
 function start() {
     var field = cm.getMap(209080000);
-    var qr = cm.getPlayer().getQuestRecord(5008);
+    var qr = cm.getQuestRecord(5008);
     var inv = cm.getInventory(4);
     var nItem = inv.countById(4031875); // 永恒之雪
     var cTime = Date.now();
-    var endTime = Date.parse("2008-01-15T06:00:00") - cTime; // 活动结束
+    var endTime = Date.parse("2028-01-15T06:00:00") - cTime; // 活动结束
 
     var channel = cm.getChannel();
     // 获取除雪机进度（全局变量，可存在 FieldSet 或频道变量）
@@ -61,10 +61,9 @@ function start() {
 
     // 没有Boss时，正常收集雪
     if (bossA == 0 && bossB == 0 && bossC == 0 && dropMob == 0) {
-        cm.sendNext("嘿，我是费利兹。是的，这是我的名字，而且我真的很幸福！我在这里是护送除雪机里的所有雪去枫叶圣诞节。雪让人快乐，所以我要确保有足够的雪，并让雪持续在机器里。");
-        cm.sendNext("有了除雪机里这些新装载的永恒之雪，今年我们将有一个真正的白色圣诞节！希望这足以温暖这世界上每个人的心。我真的相信……");
+        cm.sendNext("嘿，我是#b#p9220004##k。是的，这是我的名字，而且我真的很幸福！我在这里是护送除雪机里的所有雪去枫叶圣诞节。雪让人快乐，所以我要确保有足够的雪，并让雪持续在机器里。有了除雪机里这些新装载的永恒之雪，今年我们将有一个真正的白色圣诞节！希望这足以温暖这世界上每个人的心。我真的相信……");
         if (nItem > 0) {
-            cm.sendYesNo("啊，你找到了更多的永恒之雪！还带来帮助我们！非常感谢！我想这能帮助大家过一个快乐的白色圣诞节！那么……你能把那些雪交给我吗？");
+//            cm.sendYesNo("啊，你找到了更多的永恒之雪！还带来帮助我们！非常感谢！我想这能帮助大家过一个快乐的白色圣诞节！那么……你能把那些雪交给我吗？");
             status = 1;
         } else {
             cm.dispose();
@@ -88,7 +87,7 @@ function action(mode, type, selection) {
 
     if (status == 1) {
         if (mode == 1) { // 选择是
-            cm.sendNumber("哇！真的？你能给我们多少雪？\r\n#b< 你目前拥有的永恒之雪数量：" + nItem + " >#k\r\n#b< 填满除雪机所需的数量：" + need + " >#k", nItem, 0, Math.min(nItem, need));
+            cm.sendGetNumber("哇！真的？你能给我们多少雪？\r\n#b< 你目前拥有的永恒之雪数量：" + nItem + " >#k\r\n#b< 填满除雪机所需的数量：" + need + " >#k", nItem, 0, Math.min(nItem, need));
             status = 2;
         } else {
             cm.sendOk("什么？你不想给我？这没更好的用处了……好吧，随你便！");
