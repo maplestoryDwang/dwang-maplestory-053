@@ -14280,7 +14280,6 @@
   <imgdir name="5009">
     <imgdir name="0">
       <int name="npc" value="9220006"/>
-      <int name="interval" value="5"/>
       <imgdir name="item">
         <imgdir name="0">
           <int name="id" value="4000425"/>
