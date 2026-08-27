@@ -117,6 +117,12 @@ function getEligibleParty(party) {      //selects, from the given party, the tea
     return Java.to(eligible, Java.type('org.gms.net.server.world.PartyCharacter[]'));
 }
 
+/**
+ * 初始化
+ * @param level
+ * @param lobbyid
+ * @returns {*}
+ */
 function setup(level, lobbyid) {
     var eim = em.newInstance("Orbis" + lobbyid);
     eim.setProperty("level", level);
@@ -177,6 +183,10 @@ function setup(level, lobbyid) {
 }
 
 function isTeamAllJobs(eim) {
+    if(GameConfig.getServerBoolean("use_enable_solo_expeditions")) {  // 单人进入直接加buff
+        return true;
+    }
+
     var eventJobs = eim.getEventPlayersJobs();
     var rangeJobs = parseInt('111110', 2);
 
@@ -185,8 +195,8 @@ function isTeamAllJobs(eim) {
 
 function afterSetup(eim) {
     if (isTeamAllJobs(eim)) {
-        var rnd = Math.floor(Math.random() * 4);
-        eim.applyEventPlayersItemBuff(2022090 + rnd);
+        var rnd = Math.floor(Math.random() * 4);  // 加buff
+        eim.applyEventPlayersItemBuff(2022090 + rnd);       // 有不同的buff
     }
     eim.dropAllExclusiveItems();
 }

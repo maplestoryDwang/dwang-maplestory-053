@@ -177,9 +177,15 @@ public class GenericPortal implements Portal {
     private boolean checkEventCantEnter(EventInstanceManager eventInstance) {
         // 天空组队可以自由进入
         // 原因： 因为有一些地图可以去到多个地图,有多个传送口，无法只绑定一个脚本名，除非去重构绑定传送口的脚本改成数组
-        List<String> forbidEnter = Arrays.asList("Kerning0", "Ludi0");
+        // 修改判断方式，Kerning0后面那个0表示的是房间数，之前没了解 0 0.
+        List<String> forbidEnter = Arrays.asList("Kerning", "Ludi");
         if (eventInstance != null) {
-            return forbidEnter.contains(eventInstance.getName());
+            String eimName = eventInstance.getName();
+            for (String name : forbidEnter) {
+                if (eimName.startsWith(name)) {
+                    return true;
+                }
+            }
         }
         return false;
     }

@@ -282,7 +282,7 @@ script "Event02" {
     qr = target.questRecord;
     valGstar = qr.get( 9200 );
     if ( valGstar == "1" ) {
-        registerTransferField( 109080003, "" );
+        registerTransferField( 109080003, "" ); //椰子
     }
     else {
         val = qr.get( 9000 );

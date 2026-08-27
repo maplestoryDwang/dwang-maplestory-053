@@ -56,6 +56,10 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * 事件管理器，负责管理游戏中的各种事件实例
+ * EventManager 使用了 Semaphore(7)（信号量）、lobbyLock（大厅锁）以及 queuedGuilds（排队队列），控制的是全局入口并发与资源抢占。
+ * EventInstanceManager 使用了 ReentrantReadWriteLock（读写锁）和 propertyLock，控制的是副本内部玩家血量/伤害/怪物的频繁同步。
+ * 拆分收益： 如果不拆分，某个副本内部玩家打怪触发的读写锁，极易挂起其他队伍申请进入副本的全局锁，导致高并发下的死锁或严重卡顿。
+ *
  * @author Matze
  * @author Ronan
  */
@@ -580,9 +584,9 @@ public class EventManager {
                         eim.setLeader(leader);
 
                         exped.start();
-                        eim.registerExpedition(exped);
+                        eim.registerExpedition(exped); // playerEntry
 
-                        eim.startEvent();
+                        eim.startEvent();  //afterSetup
                     } catch (ScriptException | NoSuchMethodException ex) {
                         log.error("Event script startInstance（事件脚本startInstance）", ex);
                     }

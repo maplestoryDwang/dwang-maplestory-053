@@ -162,6 +162,10 @@ public class EventInstanceManager {
         }
     }
 
+    /**
+     * 是否全部职业都有
+     * @return
+     */
     public int getEventPlayersJobs() {
         //Bits -> 0: BEGINNER 1: WARRIOR 2: MAGICIAN
         //        3: BOWMAN 4: THIEF 5: PIRATE
