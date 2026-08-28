@@ -24,6 +24,7 @@ import org.gms.client.Client;
 import org.gms.constants.game.GameConstants;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.server.StringInfoProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.life.Monster;
@@ -51,7 +52,7 @@ public class FieldDamageMobHandler extends AbstractPacketHandler {
         if (mob != null) {
             if (dmg < 0 || dmg > GameConstants.MAX_FIELD_MOB_DAMAGE) {
                 log.warn("Chr {} tried to use an obstacle on mapid {} to attack {} with damage {}", c.getPlayer().getName(),
-                        map.getId(), MonsterInformationProvider.getInstance().getMobNameFromId(mob.getId()), dmg);
+                        map.getId(), StringInfoProvider.getMobNameFromId(mob.getId()), dmg);
                 return;
             }
 

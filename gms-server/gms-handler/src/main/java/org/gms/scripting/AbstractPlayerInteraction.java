@@ -38,7 +38,7 @@ import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;
 import org.gms.dwutil.ItemUtils;
 import org.gms.dwutil.QuestUtils;
-import org.gms.event.wxmas.WXMaxData;
+import org.gms.event.wxmas.WXMacData;
 import org.gms.model.pojo.SkillEntry;
 import org.gms.net.server.Server;
 import org.gms.net.server.guild.Guild;
@@ -1392,19 +1392,19 @@ public class AbstractPlayerInteraction {
 
     // 简单实现先跑通
     public Object getFieldSet(String key){
-        Object o = WXMaxData.fileSet.get(key);
+        Object o = WXMacData.fileSet.get(key);
         if (o == null) {
-            WXMaxData.fileSet.put(key, new Object());
+            WXMacData.fileSet.put(key, new Object());
         }
         return o;
     }
 
     public Integer setVar(String key, Integer value){
-        return WXMaxData.varMaps.put(key, value);
+        return WXMacData.varMaps.put(key, value);
     }
 
     public Integer getVar(String key){
-        return WXMaxData.varMaps.get(key);
+        return WXMacData.varMaps.get(key);
     }
 
     public void snowOn() {

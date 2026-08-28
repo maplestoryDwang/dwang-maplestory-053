@@ -162,99 +162,6 @@ public class EventInstanceManager {
         }
     }
 
-    /**
-     * 是否全部职业都有
-     * @return
-     */
-    public int getEventPlayersJobs() {
-        //Bits -> 0: BEGINNER 1: WARRIOR 2: MAGICIAN
-        //        3: BOWMAN 4: THIEF 5: PIRATE
-
-        int mask = 0;
-        for (Character chr : getPlayers()) {
-            mask |= (1 << chr.getJob().getJobNiche());
-        }
-
-        return mask;
-    }
-
-    public void applyEventPlayersItemBuff(int itemId) {
-        List<Character> players = getPlayerList();
-        StatEffect mse = ItemUtils.getItemEffect(itemId);
-
-        if (mse != null) {
-            for (Character player : players) {
-                mse.applyTo(player);
-            }
-        }
-    }
-
-    public void applyEventPlayersSkillBuff(int skillId) {
-        applyEventPlayersSkillBuff(skillId, Integer.MAX_VALUE);
-    }
-
-    public void applyEventPlayersSkillBuff(int skillId, int skillLv) {
-        List<Character> players = getPlayerList();
-        Skill skill = SkillFactory.getSkill(skillId);
-
-        if (skill != null) {
-            StatEffect mse = skill.getEffect(Math.min(skillLv, skill.getMaxLevel()));
-            if (mse != null) {
-                for (Character player : players) {
-                    mse.applyTo(player);
-                }
-            }
-        }
-    }
-
-    public void giveEventPlayersExp(int gain) {
-        giveEventPlayersExp(gain, -1);
-    }
-
-    public void giveEventPlayersExp(int gain, int mapId) {
-        if (gain == 0) {
-            return;
-        }
-
-        List<Character> players = getPlayerList();
-
-        if (mapId == -1) {
-            for (Character mc : players) {
-                mc.gainExp(NumberTool.floatToInt(gain * mc.getExpRate()), true, true);
-            }
-        } else {
-            for (Character mc : players) {
-                if (mc.getMapId() == mapId) {
-                    mc.gainExp(NumberTool.floatToInt(gain * mc.getExpRate()), true, true);
-                }
-            }
-        }
-    }
-
-    public void giveEventPlayersMeso(int gain) {
-        giveEventPlayersMeso(gain, -1);
-    }
-
-    public void giveEventPlayersMeso(int gain, int mapId) {
-        if (gain == 0) {
-            return;
-        }
-
-        List<Character> players = getPlayerList();
-
-        if (mapId == -1) {
-            for (Character mc : players) {
-                mc.gainMeso(NumberTool.floatToInt(gain * mc.getMesoRate()));
-            }
-        } else {
-            for (Character mc : players) {
-                if (mc.getMapId() == mapId) {
-                    mc.gainMeso(NumberTool.floatToInt(gain * mc.getMesoRate()));
-                }
-            }
-        }
-
-    }
 
     public Object invokeScriptFunction(String name, Object... args) throws ScriptException, NoSuchMethodException {
         if (!disposed) {
@@ -263,6 +170,17 @@ public class EventInstanceManager {
             return null;
         }
     }
+
+    public final synchronized void startEvent() {
+        eventStarted = true;
+
+        try {
+            invokeScriptFunction("afterSetup", EventInstanceManager.this);
+        } catch (ScriptException | NoSuchMethodException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     public synchronized void registerPlayer(final Character chr) {
         registerPlayer(chr, true);
@@ -299,6 +217,42 @@ public class EventInstanceManager {
         }
     }
 
+    public void unregisterPlayer(final Character chr) {
+        try {
+            invokeScriptFunction("playerUnregistered", EventInstanceManager.this, chr);
+        } catch (ScriptException | NoSuchMethodException ex) {
+            log.error("事件脚本 {} 没有封装playerUnregistered函数", em.getName(), ex);
+        }
+
+        writeLock.lock();
+        try {
+            chars.remove(chr.getId());
+            chr.setEventInstance(null);
+        } finally {
+            writeLock.unlock();
+        }
+
+        gridRemove(chr);
+        dropExclusiveItems(chr);
+    }
+
+    public void clearPQ() {
+        try {
+            invokeScriptFunction("clearPQ", EventInstanceManager.this);
+        } catch (ScriptException | NoSuchMethodException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void removePlayer(final Character chr) {
+        try {
+            invokeScriptFunction("playerExit", EventInstanceManager.this, chr);
+        } catch (ScriptException | NoSuchMethodException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
     public void exitPlayer(final Character chr) {
         if (chr == null || !chr.isLoggedIn()) {
             return;
@@ -313,12 +267,11 @@ public class EventInstanceManager {
         }
     }
 
-    public void dropMessage(int type, String message) {
-        for (Character chr : getPlayers()) {
-            chr.dropMessage(type, message);
-        }
-    }
-
+    /**
+     * *****************************************************************************************************************
+     * *****************************************  事件时间设置  *******************************************************
+     * *****************************************************************************************************************
+     */
     public void restartEventTimer(long time) {
         stopEventTimer();
         startEventTimer(time);
@@ -361,126 +314,6 @@ public class EventInstanceManager {
             }
         } else {
             startEventTimer(time);
-        }
-    }
-
-    private void dismissEventTimer() {
-        for (Character chr : getPlayers()) {
-            chr.sendPacket(PacketCreator.removeClock());
-        }
-
-        event_schedule = null;
-        eventTime = 0;
-        timeStarted = 0;
-    }
-
-    public void stopEventTimer() {
-        if (event_schedule != null) {
-            event_schedule.cancel(false);
-            event_schedule = null;
-        }
-
-        dismissEventTimer();
-    }
-
-    public boolean isTimerStarted() {
-        return eventTime > 0 && timeStarted > 0;
-    }
-
-    public long getTimeLeft() {
-        return eventTime - (System.currentTimeMillis() - timeStarted);
-    }
-
-    public void registerParty(Character chr) {
-        if (chr.isPartyLeader()) {
-            registerParty(chr.getParty(), chr.getMap());
-        }
-    }
-
-    public void registerParty(Party party, MapleMap map) {
-        for (PartyCharacter mpc : party.getEligibleMembers()) {
-            if (mpc.isOnline()) {   // thanks resinate
-                Character chr = map.getCharacterById(mpc.getId());
-                if (chr != null) {
-                    registerPlayer(chr);
-                }
-            }
-        }
-    }
-
-    public void registerExpedition(Expedition exped) {
-        expedition = exped;
-        registerExpeditionTeam(exped, exped.getRecruitingMap().getId());
-    }
-
-    private void registerExpeditionTeam(Expedition exped, int recruitMap) {
-        expedition = exped;
-
-        for (Character chr : exped.getActiveMembers()) {
-            if (chr.getMapId() == recruitMap) {
-                registerPlayer(chr);
-            }
-        }
-    }
-
-    public void unregisterPlayer(final Character chr) {
-        try {
-            invokeScriptFunction("playerUnregistered", EventInstanceManager.this, chr);
-        } catch (ScriptException | NoSuchMethodException ex) {
-            log.error("事件脚本 {} 没有封装playerUnregistered函数", em.getName(), ex);
-        }
-
-        writeLock.lock();
-        try {
-            chars.remove(chr.getId());
-            chr.setEventInstance(null);
-        } finally {
-            writeLock.unlock();
-        }
-
-        gridRemove(chr);
-        dropExclusiveItems(chr);
-    }
-
-    public int getPlayerCount() {
-        readLock.lock();
-        try {
-            return chars.size();
-        } finally {
-            readLock.unlock();
-        }
-    }
-
-    public Character getPlayerById(int id) {
-        readLock.lock();
-        try {
-            return chars.get(id);
-        } finally {
-            readLock.unlock();
-        }
-    }
-
-    public List<Character> getPlayers() {
-        readLock.lock();
-        try {
-            return new ArrayList<>(chars.values());
-        } finally {
-            readLock.unlock();
-        }
-    }
-
-    private List<Character> getPlayerList() {
-        readLock.lock();
-        try {
-            return new LinkedList<>(chars.values());
-        } finally {
-            readLock.unlock();
-        }
-    }
-
-    public void registerMonster(Monster mob) {
-        if (!mob.getStats().isFriendly()) { //We cannot register moon bunny
-            mobs.add(mob);
         }
     }
 
@@ -612,6 +445,7 @@ public class EventInstanceManager {
 
     public void monsterKilled(Character chr, final Monster mob) {
         try {
+            // =1 表示有怪被打败
             final int inc = (int) invokeScriptFunction("monsterValue", EventInstanceManager.this, mob.getId());
 
             if (inc != 0) {
@@ -629,24 +463,6 @@ public class EventInstanceManager {
         } catch (ScriptException | NoSuchMethodException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public int getKillCount(Character chr) {
-        Integer kc = killCount.get(chr);
-        return (kc == null) ? 0 : kc;
-    }
-
-    public void dispose() {
-        readLock.lock();
-        try {
-            for (Character chr : chars.values()) {
-                chr.setEventInstance(null);
-            }
-        } finally {
-            readLock.unlock();
-        }
-
-        dispose(false);
     }
 
     public synchronized void dispose(boolean shutdown) {    // should not trigger any event script method after disposed
@@ -711,10 +527,29 @@ public class EventInstanceManager {
         }, MINUTES.toMillis(1));
     }
 
-    public MapManager getMapFactory() {
-        return mapManager;
+    public void leftParty(final Character chr) {
+        try {
+            invokeScriptFunction("leftParty", EventInstanceManager.this, chr);
+        } catch (ScriptException | NoSuchMethodException ex) {
+            ex.printStackTrace();
+        }
     }
 
+    public void disbandParty() {
+        try {
+            invokeScriptFunction("disbandParty", EventInstanceManager.this);
+        } catch (ScriptException | NoSuchMethodException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+
+    /**
+     * 定时调用脚本自带的方法
+     * @param methodName
+     * @param delay
+     */
     public void schedule(final String methodName, long delay) {
         readLock.lock();
         try {
@@ -733,6 +568,255 @@ public class EventInstanceManager {
             readLock.unlock();
         }
     }
+
+
+
+    /**
+     * 队伍中是否全部职业都有
+     * @return
+     */
+    public int getEventPlayersJobs() {
+        //Bits -> 0: BEGINNER 1: WARRIOR 2: MAGICIAN
+        //        3: BOWMAN 4: THIEF 5: PIRATE
+
+        int mask = 0;
+        for (Character chr : getPlayers()) {
+            mask |= (1 << chr.getJob().getJobNiche());
+        }
+
+        return mask;
+    }
+
+    public void applyEventPlayersItemBuff(int itemId) {
+        List<Character> players = getPlayerList();
+        StatEffect mse = ItemUtils.getItemEffect(itemId);
+
+        if (mse != null) {
+            for (Character player : players) {
+                mse.applyTo(player);
+            }
+        }
+    }
+
+    public void applyEventPlayersSkillBuff(int skillId) {
+        applyEventPlayersSkillBuff(skillId, Integer.MAX_VALUE);
+    }
+
+    public void applyEventPlayersSkillBuff(int skillId, int skillLv) {
+        List<Character> players = getPlayerList();
+        Skill skill = SkillFactory.getSkill(skillId);
+
+        if (skill != null) {
+            StatEffect mse = skill.getEffect(Math.min(skillLv, skill.getMaxLevel()));
+            if (mse != null) {
+                for (Character player : players) {
+                    mse.applyTo(player);
+                }
+            }
+        }
+    }
+
+    public void giveEventPlayersExp(int gain) {
+        giveEventPlayersExp(gain, -1);
+    }
+
+    public void giveEventPlayersExp(int gain, int mapId) {
+        if (gain == 0) {
+            return;
+        }
+
+        List<Character> players = getPlayerList();
+
+        if (mapId == -1) {
+            for (Character mc : players) {
+                mc.gainExp(NumberTool.floatToInt(gain * mc.getExpRate()), true, true);
+            }
+        } else {
+            for (Character mc : players) {
+                if (mc.getMapId() == mapId) {
+                    mc.gainExp(NumberTool.floatToInt(gain * mc.getExpRate()), true, true);
+                }
+            }
+        }
+    }
+
+    public void giveEventPlayersMeso(int gain) {
+        giveEventPlayersMeso(gain, -1);
+    }
+
+    public void giveEventPlayersMeso(int gain, int mapId) {
+        if (gain == 0) {
+            return;
+        }
+
+        List<Character> players = getPlayerList();
+
+        if (mapId == -1) {
+            for (Character mc : players) {
+                mc.gainMeso(NumberTool.floatToInt(gain * mc.getMesoRate()));
+            }
+        } else {
+            for (Character mc : players) {
+                if (mc.getMapId() == mapId) {
+                    mc.gainMeso(NumberTool.floatToInt(gain * mc.getMesoRate()));
+                }
+            }
+        }
+
+    }
+
+    public void dropMessage(int type, String message) {
+        for (Character chr : getPlayers()) {
+            chr.dropMessage(type, message);
+        }
+    }
+
+
+    private void dismissEventTimer() {
+        for (Character chr : getPlayers()) {
+            chr.sendPacket(PacketCreator.removeClock());
+        }
+
+        event_schedule = null;
+        eventTime = 0;
+        timeStarted = 0;
+    }
+
+    public void stopEventTimer() {
+        if (event_schedule != null) {
+            event_schedule.cancel(false);
+            event_schedule = null;
+        }
+
+        dismissEventTimer();
+    }
+
+    public boolean isTimerStarted() {
+        return eventTime > 0 && timeStarted > 0;
+    }
+
+    public long getTimeLeft() {
+        return eventTime - (System.currentTimeMillis() - timeStarted);
+    }
+
+    public void registerParty(Character chr) {
+        if (chr.isPartyLeader()) {
+            registerParty(chr.getParty(), chr.getMap());
+        }
+    }
+
+    public void registerParty(Party party, MapleMap map) {
+        for (PartyCharacter mpc : party.getEligibleMembers()) {
+            if (mpc.isOnline()) {   // thanks resinate
+                Character chr = map.getCharacterById(mpc.getId());
+                if (chr != null) {
+                    registerPlayer(chr);
+                }
+            }
+        }
+    }
+
+    public void registerExpedition(Expedition exped) {
+        expedition = exped;
+        registerExpeditionTeam(exped, exped.getRecruitingMap().getId());
+    }
+
+    private void registerExpeditionTeam(Expedition exped, int recruitMap) {
+        expedition = exped;
+
+        for (Character chr : exped.getActiveMembers()) {
+            if (chr.getMapId() == recruitMap) {
+                registerPlayer(chr);
+            }
+        }
+    }
+
+    private void disposeExpedition() {
+        if (expedition != null) {
+            expedition.dispose(eventCleared);
+
+            scriptLock.lock();
+            try {
+                expedition.removeChannelExpedition(em.getChannelServer());
+            } finally {
+                scriptLock.unlock();
+            }
+
+            expedition = null;
+        }
+    }
+
+
+
+    public int getPlayerCount() {
+        readLock.lock();
+        try {
+            return chars.size();
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    public Character getPlayerById(int id) {
+        readLock.lock();
+        try {
+            return chars.get(id);
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    public List<Character> getPlayers() {
+        readLock.lock();
+        try {
+            return new ArrayList<>(chars.values());
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    private List<Character> getPlayerList() {
+        readLock.lock();
+        try {
+            return new LinkedList<>(chars.values());
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    public void registerMonster(Monster mob) {
+        if (!mob.getStats().isFriendly()) { //We cannot register moon bunny
+            mobs.add(mob);
+        }
+    }
+
+
+
+    public int getKillCount(Character chr) {
+        Integer kc = killCount.get(chr);
+        return (kc == null) ? 0 : kc;
+    }
+
+    public void dispose() {
+        readLock.lock();
+        try {
+            for (Character chr : chars.values()) {
+                chr.setEventInstance(null);
+            }
+        } finally {
+            readLock.unlock();
+        }
+
+        dispose(false);
+    }
+
+
+
+    public MapManager getMapFactory() {
+        return mapManager;
+    }
+
+
 
     public String getName() {
         return name;
@@ -817,37 +901,6 @@ public class EventInstanceManager {
         }
     }
 
-    public void leftParty(final Character chr) {
-        try {
-            invokeScriptFunction("leftParty", EventInstanceManager.this, chr);
-        } catch (ScriptException | NoSuchMethodException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void disbandParty() {
-        try {
-            invokeScriptFunction("disbandParty", EventInstanceManager.this);
-        } catch (ScriptException | NoSuchMethodException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void clearPQ() {
-        try {
-            invokeScriptFunction("clearPQ", EventInstanceManager.this);
-        } catch (ScriptException | NoSuchMethodException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void removePlayer(final Character chr) {
-        try {
-            invokeScriptFunction("playerExit", EventInstanceManager.this, chr);
-        } catch (ScriptException | NoSuchMethodException ex) {
-            ex.printStackTrace();
-        }
-    }
 
     public boolean isLeader(Character chr) {
         return (chr.getParty().getLeaderId() == chr.getId());
@@ -1118,31 +1171,15 @@ public class EventInstanceManager {
         return true;
     }
 
-    private void disposeExpedition() {
-        if (expedition != null) {
-            expedition.dispose(eventCleared);
 
-            scriptLock.lock();
-            try {
-                expedition.removeChannelExpedition(em.getChannelServer());
-            } finally {
-                scriptLock.unlock();
-            }
 
-            expedition = null;
-        }
-    }
 
-    public final synchronized void startEvent() {
-        eventStarted = true;
 
-        try {
-            invokeScriptFunction("afterSetup", EventInstanceManager.this);
-        } catch (ScriptException | NoSuchMethodException ex) {
-            ex.printStackTrace();
-        }
-    }
-
+    /**
+     * *****************************************************************************************************************
+     * *****************************************  事件完成相关  *******************************************************
+     * *****************************************************************************************************************
+     */
     public final void setEventCleared() {
         eventCleared = true;
 
@@ -1233,6 +1270,12 @@ public class EventInstanceManager {
         }
     }
 
+
+    /**
+     * *****************************************************************************************************************
+     * *****************************************  组队换图  *******************************************************
+     * *****************************************************************************************************************
+     */
     public final void warpEventTeam(int warpFrom, int warpTo) {
         List<Character> players = getPlayerList();
 
@@ -1269,6 +1312,13 @@ public class EventInstanceManager {
         }
     }
 
+
+
+    /**
+     * *****************************************************************************************************************
+     * *****************************************  设置队长  *******************************************************
+     * *****************************************************************************************************************
+     */
     public final int getLeaderId() {
         readLock.lock();
         try {
@@ -1296,6 +1346,13 @@ public class EventInstanceManager {
         }
     }
 
+
+
+    /**
+     * *****************************************************************************************************************
+     * *****************************************  显示特效  *******************************************************
+     * *****************************************************************************************************************
+     */
     public final void showWrongEffect() {
         showWrongEffect(getLeader().getMapId());
     }
@@ -1329,6 +1386,11 @@ public class EventInstanceManager {
         showClearEffect(true, mapId, mapObj, newState);
     }
 
+    /**
+     * *****************************************************************************************************************
+     * *****************************************  打开通关传送门  *******************************************************
+     * *****************************************************************************************************************
+     */
     public final void showClearEffect(boolean hasGate, int mapId, String mapObj, int newState) {
         MapleMap map = getMapInstance(mapId);
         map.broadcastMessage(PacketCreator.showEffect("quest/party/clear"));
@@ -1360,6 +1422,15 @@ public class EventInstanceManager {
             chr.sendPacket(PacketCreator.environmentChange(gateData.getLeft(), gateData.getRight()));
         }
     }
+
+
+
+
+    /**
+     * *****************************************************************************************************************
+     * *****************************************  绑定传送口和脚本  *******************************************************
+     * *****************************************************************************************************************
+     */
 
     public final void giveEventPlayersStageReward(int thisStage) {
         List<Integer> list = getClearStageBonus(thisStage);     // will give bonus exp & mesos to everyone in the event
@@ -1404,6 +1475,12 @@ public class EventInstanceManager {
         }
     }
 
+
+    /**
+     * *****************************************************************************************************************
+     * *****************************************  绑定用户信息状态  *********************************************************
+     * *****************************************************************************************************************
+     */
     // registers a player status in an event
     public final void gridInsert(Character chr, int newStatus) {
         writeLock.lock();
@@ -1453,6 +1530,13 @@ public class EventInstanceManager {
         }
     }
 
+
+    /**
+     * *****************************************************************************************************************
+     * *****************************************  反应物全部触发  *********************************************************
+     * *****************************************************************************************************************
+     */
+
     public boolean activatedAllReactorsOnMap(int mapId, int minReactorId, int maxReactorId) {
         return activatedAllReactorsOnMap(this.getMapInstance(mapId), minReactorId, maxReactorId);
     }
@@ -1470,6 +1554,10 @@ public class EventInstanceManager {
 
         return true;
     }
+
+
+
+
 
     /**
      * 开始记录伤害（仅在全局开关开启时生效）

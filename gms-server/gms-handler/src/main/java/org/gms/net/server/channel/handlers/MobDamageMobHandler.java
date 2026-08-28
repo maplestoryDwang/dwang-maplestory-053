@@ -27,6 +27,7 @@ import org.gms.client.status.MonsterStatus;
 import org.gms.client.status.MonsterStatusEffect;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.server.StringInfoProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.life.Monster;
@@ -93,8 +94,8 @@ public final class MobDamageMobHandler extends AbstractPacketHandler {
             if (dmg > maxDmg) {
                 // 伤害计算有差异，StatEffect获取的时候，damage如果不存在默认为100，如果客户端也是这个逻辑，客户端是不是算上了这个damage导致实际数值比服务端高
 //                AutobanFactory.DAMAGE_HACK.alert(damageChr, "Possible packet editing hypnotize damage exploit.");   // thanks Rien dev team
-                String attackerName = MonsterInformationProvider.getInstance().getMobNameFromId(attacker.getId());
-                String damagedName = MonsterInformationProvider.getInstance().getMobNameFromId(damaged.getId());
+                String attackerName = StringInfoProvider.getMobNameFromId(attacker.getId());
+                String damagedName =  StringInfoProvider.getMobNameFromId(damaged.getId());
                 log.warn("Chr {} had hypnotized {} to attack {} with damage {} (max: {})", damageChr.getName(),
                         attackerName, damagedName, dmg, maxDmg);
                 dmg = maxDmg;

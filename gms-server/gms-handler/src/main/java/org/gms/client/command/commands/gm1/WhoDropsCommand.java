@@ -28,6 +28,7 @@ import org.gms.client.Client;
 import org.gms.client.command.Command;
 import org.gms.constants.id.NpcId;
 import org.gms.server.ItemInformationProvider;
+import org.gms.server.StringInfoProvider;
 import org.gms.server.life.MonsterInformationProvider;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.I18nUtil;
@@ -67,7 +68,7 @@ public class WhoDropsCommand extends Command {
 
                             try (ResultSet rs = ps.executeQuery()) {
                                 while (rs.next()) {
-                                    String resultName = MonsterInformationProvider.getInstance().getMobNameFromId(rs.getInt("dropperid"));
+                                    String resultName = StringInfoProvider.getMobNameFromId(rs.getInt("dropperid"));
                                     if (resultName != null) {
                                         output.append(resultName).append(", ");
                                     }

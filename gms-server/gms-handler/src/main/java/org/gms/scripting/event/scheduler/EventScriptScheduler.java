@@ -54,7 +54,7 @@ public class EventScriptScheduler {
             if (registeredEntries.isEmpty()) {
                 idleProcs++;
 
-                if (idleProcs >= GameConfig.getServerInt("mob_status_monitor_idle")) {
+                if (idleProcs >= GameConfig.getServerInt("mob_status_monitor_idle")) { //监控任务空闲多少次后销毁
                     if (schedulerTask != null) {
                         schedulerTask.cancel(false);
                         schedulerTask = null;

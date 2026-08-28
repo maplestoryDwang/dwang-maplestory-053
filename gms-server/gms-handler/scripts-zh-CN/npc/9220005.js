@@ -3,16 +3,21 @@
 */
 var status = 0;
 
+function getEventManager() {
+    return cm.getEventManager("Wxmac");
+}
+
+
 function start() {
+    var em = getEventManager();
+    if (em == null) {
+        cm.sendOk("活动当前未开启。");
+        cm.dispose();
+        return;
+    }
+
     var cmap = cm.getMapId();
     var qr = cm.getQuestRecord(5008);
-    var inv = cm.getInventory(1);
-    var itemA = inv.countById(1472063); // 魔法手套
-    var wearA = cm.isEquipped(1472063); // 是否装备
-    var cTime = Date.now(); // 当前时间（毫秒）
-    // 活动结束时间：2008年1月15日 06:00 (假设服务器时间，用时间戳比较)
-//    var endTime = Date.parse("2008-01-15T06:00:00") - cTime; // 剩余毫秒，若正数则活动进行中
-    var endTime = Date.parse("2028-01-15T06:00:00") - cTime; // todo 改成event控制
 
     // 频道限制：只能频道 1 和 3? 原代码 if(channelID==0 or channelID==2) 表示 1和3可用（因为通常0=1频道）
     var channel = cm.getClient().getChannel();

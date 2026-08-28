@@ -160,7 +160,7 @@ public class MonsterInformationProvider {
         final List<MonsterDropEntry> ret = new LinkedList<>();
 
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement("SELECT itemid, chance, minimum_quantity, maximum_quantity, questid FROM drop_data WHERE dropperid = ?")) {
+            PreparedStatement ps = con.prepareStatement("SELECT itemid, chance, minimum_quantity, maximum_quantity, questid FROM drop_data WHERE dropperid = ?")) {
             ps.setInt(1, monsterId);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -234,19 +234,6 @@ public class MonsterInformationProvider {
         return retMobs;
     }
 
-
-
-    public String getMobNameFromId(int id) {
-        String mobName = mobNameCache.get(id);
-        if (mobName == null) {
-            Data mobData = StringInfoProvider.getMobStringData();
-
-            mobName = DataTool.getString(mobData.getChildByPath(id + "/name"), "");
-            mobNameCache.put(id, mobName);
-        }
-
-        return mobName;
-    }
 
     public final void clearDrops() {
         drops.clear();

@@ -2119,7 +2119,7 @@ public class PacketCreator {
         p.writeInt(drop.getItemId()); // drop object ID
         p.writeInt(drop.getClientsideOwnerId()); // owner charid/partyid :)
         p.writeByte(dropType); // 0 = timeout for non-owner, 1 = timeout for non-owner's party, 2 = FFA, 3 = explosive/FFA
-        p.writePos(dropto);
+        p.writePos(dropto);    // 掉落的pos
         p.writeInt(drop.getDropper().getObjectId()); // dropper oid, found thanks to Li Jixue 用于getmob
 
         if (mod != 2) {

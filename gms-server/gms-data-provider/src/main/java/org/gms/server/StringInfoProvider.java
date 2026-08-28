@@ -260,4 +260,8 @@ public class StringInfoProvider {
         return itemPairs;
     }
 
+    public static String getMobNameFromId(int id) {
+        return mobNames.get(id);
+    }
+
 }

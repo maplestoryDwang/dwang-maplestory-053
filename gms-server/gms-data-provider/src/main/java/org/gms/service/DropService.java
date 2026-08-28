@@ -167,7 +167,7 @@ public class DropService {
     }
 
     private String getMobName(Integer mobId) {
-        return mobId == null ? null : MonsterInformationProvider.getInstance().getMobNameFromId(mobId);
+        return mobId == null ? null : StringInfoProvider.getMobNameFromId(mobId);
     }
 
     private String getQuestName(Integer questId) {

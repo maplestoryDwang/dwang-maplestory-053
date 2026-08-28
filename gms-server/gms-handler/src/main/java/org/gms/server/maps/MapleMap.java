@@ -47,6 +47,7 @@ import org.gms.net.server.services.task.channel.OverallService;
 import org.gms.net.server.services.type.ChannelServices;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.World;
+import org.gms.server.StringInfoProvider;
 import org.gms.util.NumberTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -616,6 +617,9 @@ public class MapleMap {
 
     // V053 简单粗暴，直接向上丢
     public Point calcDropPos(Point initial, Point fallback) {
+        return calcDropPos083(initial, fallback);
+    }
+    public Point calcDropPos53(Point initial, Point fallback) {
         Point ret = calcPointBelow(new Point(initial.x, initial.y - 99));
         if (ret == null) return fallback;
         return ret;
@@ -693,6 +697,18 @@ public class MapleMap {
         }
     }
 
+    /**
+     *
+     * @param dropEntry
+     * @param pos
+     * @param d
+     * @param chRate
+     * @param droptype
+     * @param mobpos
+     * @param chr
+     * @param mob
+     * @return
+     */
     private byte dropItemsFromMonsterOnMap(List<MonsterDropEntry> dropEntry, Point pos, byte d, float chRate, byte droptype, int mobpos, Character chr, Monster mob) {
         if (dropEntry.isEmpty()) {
             return d;
@@ -779,7 +795,7 @@ public class MapleMap {
             return;
         }
 
-        final byte droptype = (byte) (mob.getStats().isExplosiveReward() ? 3 : mob.getStats().isFfaLoot() ? 2 : chr.getParty() != null ? 1 : 0);
+        final byte droptype = (byte) (mob.getStats().isExplosiveReward() ? DropType.EXPLOSIVE_REWARD : mob.getStats().isFfaLoot() ? DropType.PUBLIC_REWARD : chr.getParty() != null ? DropType.PARTY_REWARD : DropType.SINGLE_REWARD).getId();
         final int mobpos = mob.getPosition().x;
         float chRate = !mob.isBoss() ? chr.getDropRate() : chr.getBossDropRate();
         Point pos = new Point(0, mob.getPosition().y);
@@ -3022,7 +3038,7 @@ public class MapleMap {
         }
         if (monster.isBoss()) {
             if (unclaimOwnership() != null) {
-                String mobName = MonsterInformationProvider.getInstance().getMobNameFromId(monster.getId());
+                String mobName = StringInfoProvider.getMobNameFromId(monster.getId());
                 if (mobName != null) {
                     mobName = mobName.trim();
                     this.dropMessage(5, "这片草坪已被" + mobName + "的部队占领，击败他们才能夺回控制权！");

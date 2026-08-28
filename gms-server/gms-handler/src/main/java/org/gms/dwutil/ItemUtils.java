@@ -19,6 +19,7 @@ import org.gms.constants.skills.other.NightWalker;
 import org.gms.provider.Data;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.StatEffect;
+import org.gms.server.StringInfoProvider;
 import org.gms.server.life.LifeFactory;
 import org.gms.server.life.MonsterInformationProvider;
 import org.gms.util.*;
@@ -236,7 +237,7 @@ public class ItemUtils {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    String resultName = MonsterInformationProvider.getInstance().getMobNameFromId(rs.getInt("dropperid"));
+                    String resultName = StringInfoProvider.getMobNameFromId(rs.getInt("dropperid"));
                     if (!resultName.isEmpty()) {
                         list.add(resultName);
                     }

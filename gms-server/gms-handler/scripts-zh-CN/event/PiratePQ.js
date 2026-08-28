@@ -363,6 +363,7 @@ function passedGrindMode(map, eim) {
     if (eim.getIntProperty("grindMode") == 0) {
         return true;
     }
+    // 打破反应物出怪物
     return eim.activatedAllReactorsOnMap(map, 2511000, 2517999);
 }
 
