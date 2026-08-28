@@ -9,7 +9,7 @@ function start() {
         return;
     }
     var val = cm.getPlayer().getQuestRecord(9000).getCustomData();
-    var inv = cm.getInventory(1);
+    var inv = cm.getInventory(4);
     if (inv.count(4031018) >= 1) {
         cm.sendSimple("您持有 #b#t4031018##k。与其跟我说话，不如去找 #p9000006# 用 #t4031018# 兑换奖品。\r\n\r\n#L0# 谁是 #p9000006#？#l\r\n#L1# 请送我回原来的地方。#l");
     } else {

@@ -2718,6 +2718,23 @@ public class PacketCreator {
         return p;
     }
 
+
+    public static Packet moveMonster(int oid, boolean skillPossible, int skill, int skillId, int skillLevel, int pOption,
+                                     Point startPos, List<LifeMovementFragment> moves) {
+        final OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_MONSTER);
+        p.writeInt(oid);
+        p.writeByte(0);
+        p.writeBool(skillPossible);
+        p.writeByte(skill);
+        p.writeByte(skillId);
+        p.writeByte(skillLevel);
+        p.writeShort(pOption);
+        p.writePos(startPos);
+        serializeMovementList(p, moves);
+        return p;
+    }
+
+
     public static Packet summonAttack(int cid, int summonOid, byte direction, List<SummonAttackEntry> allDamage) {
         OutPacket p = OutPacket.create(SendPacketOpcode.SUMMON_ATTACK);
         //b2 00 29 f7 00 00 9a a3 04 00 c8 04 01 94 a3 04 00 06 ff 2b 00

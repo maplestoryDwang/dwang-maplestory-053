@@ -251,23 +251,18 @@ public final class MoveLifeHandler extends AbstractMovementPacketHandler {
             c.sendPacket(PacketCreator.moveMonsterResponse(objectid, moveid, mobMp, aggro));
         }
 
-
-        int movementDataStart = p.getPosition();
-
-        // todo dwang:这里会导致掉落的物品到处飞
-//            updatePosition(p, monster, -2);  // Thanks Doodle & ZERO傑洛 for noticing sponge-based bosses moving out of stage in case of no-offset applied
-
-        long movementDataLength = p.getPosition() - movementDataStart; //how many bytes were read by updatePosition
-        p.seek(movementDataStart);
-
-        if (GameConfig.getServerBoolean("use_debug_show_life_move")) {
-            log.info("{} rawAct: {}, opt: {}, skillId: {}, skillLv: {}, allowSkill: {}, mobMp: {}",
-                    isSkill ? "SKILL" : (isAttack ? "ATTCK" : ""), rawActivity, pOption, useSkillId,
-                    useSkillLevel, nextMovementCouldBeSkill, mobMp);
+        // 原版解析移动数组
+        List<LifeMovementFragment> res = null;
+        try {
+            res = parseMovement(p);
+        } catch (EmptyMovementException e) {
+            throw new RuntimeException(e);
         }
 
-        map.broadcastMessage(player, PacketCreator.moveMonster(objectid, nextMovementCouldBeSkill, rawActivity, useSkillId, useSkillLevel, pOption, startPos, p, movementDataLength), serverStartPos);
-        //updatePosition(res, monster, -2); //does this need to be done after the packet is broadcast?
+        map.broadcastMessage(player, PacketCreator.moveMonster(objectid, nextMovementCouldBeSkill, rawActivity, useSkillId, useSkillLevel, pOption, startPos, res), serverStartPos);
+
+
+        updatePosition(res, monster, -2); //does this need to be done after the packet is broadcast?
         map.moveMonster(monster, monster.getPosition());
 
         if (banishPlayers != null) {

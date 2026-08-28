@@ -166,6 +166,9 @@ function action(mode, type, selection) {
     }
 }
 
+/**
+    连胜说明书
+*/
 function checkKawi() {
     var inv = cm.getInventory(1);
     for (var i = 0; i < 10; i++) {

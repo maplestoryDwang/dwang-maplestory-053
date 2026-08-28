@@ -2,6 +2,7 @@
 
 */
 var status = 0;
+const SNOW_ITEM = 4031875;
 
 function getEventManager() {
     return cm.getEventManager("Wxmac");
@@ -30,20 +31,15 @@ function start() {
     }
 
     if (cmap == 209000000) { // 幸福村
-        if (endTime > 0) {
-            var val = qr.getCustomData(); // 任务记录 5008 的自定义数据
-            if (val == null || val == "") {
-                cm.sendSimple("嘿，那边的人！我是#p9220005#。我在这里做什么？我的工作是确保幸福村永远下雪！但现在我们正面临危机！由于幸福村最近的改建，我们永恒之雪的库存消失了！\r\n\r\n#b#L0# 什么是永恒之雪？#l\r\n#L1# 不……没什么兴趣。#l");
-                status = 1;
-            } else if (val == "ing") {
-                cm.sendSimple("除雪机在超级冰冻地带。那里非常冷而且风很大，你一个人去可不容易，但如果我带你去，就轻松啦！一旦你找到一点永恒之雪，就需要放进除雪机里。你想现在就去超级冰冻地带吗？\r\n#b#L0# 好的，带我去吧！\r\n#L1# 好冷啊！我还是谢了吧……\r\n#l#k");
-                status = 4;
-            } else {
-                cm.sendOk("抱歉，我现在可以带你去超级冰冻地带。");
-                cm.dispose();
-            }
+        var val = qr.getCustomData(); // 任务记录 5008 的自定义数据
+        if (val == null || val == "") {
+            cm.sendSimple("嘿，那边的人！我是#p9220005#。我在这里做什么？我的工作是确保幸福村永远下雪！但现在我们正面临危机！由于幸福村最近的改建，我们#b#t" + SNOW_ITEM + "##k的库存消失了！\r\n\r\n#b#L0# 什么是#t" + SNOW_ITEM +"#？#l\r\n#L1# 不……没什么兴趣。#l");
+            status = 1;
+        } else if (val == "ing") {
+            cm.sendSimple("除雪机在超级冰冻地带。那里非常冷而且风很大，你一个人去可不容易，但如果我带你去，就轻松啦！一旦你找到一点永恒之雪，就需要放进除雪机里。你想现在就去超级冰冻地带吗？\r\n#b#L0# 好的，带我去吧！\r\n#L1# 好冷啊！我还是谢了吧……\r\n#l#k");
+            status = 4;
         } else {
-            cm.sendOk("抱歉，活动已结束。");
+            cm.sendOk("抱歉，我现在可以带你去超级冰冻地带。");
             cm.dispose();
         }
     } else if (cmap == 209080000) { // 超级冰冻地带
@@ -70,7 +66,7 @@ function action(mode, type, selection) {
     var wearA = cm.isEquipped(1472063);
 
     if (status == 1 && selection == 0) {
-        cm.sendSimple("永恒之雪能让幸福村全年覆盖白雪！它过去用于补充枫叶圣诞节的雪，但幸福村改建后，存放永恒之雪的容器被偷了！更糟的是，工人们以为那只是普通的雪，把剩下的都扔掉了！！！\r\n\r\n#b#L0# 那我们在哪里能找到更多永恒之雪呢？#l");
+        cm.sendSimple("#t" + SNOW_ITEM +"#能让幸福村全年覆盖白雪！它过去用于补充枫叶圣诞节的雪，但幸福村改建后，存放永恒之雪的容器被偷了！更糟的是，工人们以为那只是普通的雪，把剩下的都扔掉了！！！\r\n\r\n#b#L0# 那我们在哪里能找到更多永恒之雪呢？#l");
         status = 2;
     } else if (status == 1 && selection == 1) {
         cm.sendOk("啊，真的吗？真扫兴……");

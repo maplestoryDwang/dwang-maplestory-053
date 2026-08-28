@@ -39,6 +39,13 @@ public class CommonInformationProvider {
             }
             searchXML(results, infType, condition.getFilter(), condition.getFilterType(), condition.isFullMatch());
         }
+        for (InformationResult result : results) {
+            if (result.getType().equals(InformationType.NPC.getType())) {
+                String npcExistMapName = StringInfoProvider.getNpcExistMapName(result.getId());
+                result.setDesc(npcExistMapName);
+            }
+        }
+
         return results;
     }
 

@@ -45,15 +45,16 @@ function action(mode, type, selection) {
                     marr.setCustomData("0");
                 }
                 var dat = parseInt(marr.getCustomData());
-                if (dat + 3600000 >= cm.getCurrentTime()) {
+//                if (dat + 3600000 >= cm.getCurrentTime()) { //测试
+                if (dat + 3600000 == cm.getCurrentTime()) {
                     cm.sendNext("你在过去的一个小时内已经参加了这个活动。");
                 } else if (!cm.canHold(4031019)) {
                     cm.sendNext("在你的背包里留点空间。");
-                } else if (cm.getChannelServer().getEvent() > -1 && !cm.haveItem(4031019)) {
+                } else if (cm.getClient().getChannelServer().getEvent() > -1 && !cm.haveItem(4031019)) {
                     cm.getPlayer().saveLocation("EVENT");
                     cm.getPlayer().setChalkboard(null);
                     marr.setCustomData("" + cm.getCurrentTime());
-                    cm.warp(cm.getChannelServer().getEvent(), cm.getChannelServer().getEvent() == 109080000 || cm.getChannelServer().getEvent() == 109080010 ? 0 : "join00");
+                    cm.warp(cm.getClient().getChannelServer().getEvent(), cm.getClient().getChannelServer().getEvent() == 109080000 || cm.getClient().getChannelServer().getEvent() == 109080010 ? 0 : "join00");
                 } else {
                     cm.sendNext("要么活动还没有开始，你已经拥有了#b秘密卷轴#k，或者你在过去24小时内已经参与了这个活动。请稍后再试！");
                 }
