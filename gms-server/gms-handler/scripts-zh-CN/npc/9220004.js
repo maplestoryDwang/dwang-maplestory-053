@@ -140,7 +140,7 @@ function action(mode, type, selection) {
                 cm.playerMessage(6, "突然，最大的雪球变成了一个巨大的雪人！");
                 cm.playerMessage(6, "除雪机有足够的雪运行3小时。请这次打败雪人！");
 
-                field.broadcastMessage(PacketCreator.serverNotice(6, "雪人出现在#m" + MAP_ID + "#, 频道:" + cm.getClient().getChannel() + "！小心！"));
+                field.broadcastMessage(PacketCreator.serverNotice(6, "雪人出现在冰雪地带, 频道:" + cm.getClient().getChannel() + "！小心！"));
 
                 cm.sendOk("终于除雪机满了！！除雪机随时会开始运转。感谢你的帮助，今年大家将庆祝白色圣诞节！！");
             } else {

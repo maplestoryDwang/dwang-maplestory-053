@@ -32,6 +32,9 @@ import java.util.concurrent.ScheduledFuture;
  * @author kevintjuh93
  */
 public class Ola {
+
+    public static final int END_TIME_SECOND = 360;
+
     private final Character chr;
     private long time = 0;
     private long timeStarted = 0;
@@ -44,14 +47,14 @@ public class Ola {
                 chr.changeMap(chr.getMap().getReturnMap());
             }
             resetTimes();
-        }, 360000);
+        }, END_TIME_SECOND * 1000);
     }
 
     public void startOla() { // TODO: Messages
         chr.getMap().startEvent();
-        chr.sendPacket(PacketCreator.getClock(360));
+        chr.sendPacket(PacketCreator.getClock(END_TIME_SECOND));
         this.timeStarted = System.currentTimeMillis();
-        this.time = 360000;
+        this.time = END_TIME_SECOND * 1000;
 
         chr.getMap().getPortal("join00").setPortalStatus(true);
         chr.sendPacket(PacketCreator.serverNotice(0, "The portal has now opened. Press the up arrow key at the portal to enter."));

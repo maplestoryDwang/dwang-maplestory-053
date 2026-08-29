@@ -36,7 +36,7 @@ public class QuestApiService {
         });
         List<QuestSearchRtnDTO> questSearchRtnDTOS = new ArrayList<>();
         questList.forEach(quest -> {
-            questSearchRtnDTOS.add(new QuestSearchRtnDTO((int) quest.getId(), quest.getParentName(), quest.getName(), quest.getArea(), quest.isRepeatable()));
+            questSearchRtnDTOS.add(new QuestSearchRtnDTO((int) quest.getId(), quest.getParentName(), quest.getName(), quest.getArea(), quest.isRepeatable(), quest.isAutoStart()));
         });
         return BasePageUtil.create(questSearchRtnDTOS.stream().distinct().toList(), data).page();
     }

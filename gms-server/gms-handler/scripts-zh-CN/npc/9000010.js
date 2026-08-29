@@ -21,11 +21,11 @@
 */
 
 function start() {
-    cm.sendNext("很抱歉，但恐怕你没有赢得这个活动。以后再试试吧。你可以通过我回到原来的地方。");
+    cm.sendYesNo("很抱歉，但恐怕你没有赢得这个活动。以后再试试吧。你可以通过我回到原来的地方。");
 }
 
 function action(mode, type, selection) {
-    if (mode == -1) {
+    if (mode <= -1) {
         cm.dispose();
     }
     cm.warp(cm.getPlayer().getSavedLocation("EVENT"));

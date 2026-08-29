@@ -125,22 +125,30 @@ public class MapId {
     public static final int CYGNUS_INTRO_THIEF = 913040105;
     public static final int CYGNUS_INTRO_CONCLUSION = 913040106;
 
+
     // Event
     public static final int EVENT_COCONUT_HARVEST = 109080000;
     public static final int EVENT_OX_QUIZ = 109020001;
+
+
     // 向高地
     public static final int EVENT_PHYSICAL_FITNESS = 109040000;
     public static final int FITNESS_EVENT_LAST = 109040004;
 
+
+    // 向上 向上起始地图
     public static final int EVENT_OLA_OLA_0 = 109030001;
     public static final int EVENT_OLA_OLA_1 = 109030101;
     public static final int EVENT_OLA_OLA_2 = 109030201;
     public static final int EVENT_OLA_OLA_3 = 109030301;
     public static final int EVENT_OLA_OLA_4 = 109030401;
-    public static final int EVENT_SNOWBALL = 109060000;
-    public static final int EVENT_FIND_THE_JEWEL = 109010000;
+
     public static final int OLA_EVENT_LAST_1 = 109030003;
     public static final int OLA_EVENT_LAST_2 = 109030103;
+
+    public static final int EVENT_SNOWBALL = 109060000;
+    public static final int EVENT_FIND_THE_JEWEL = 109010000;
+
     public static final int WITCH_TOWER_ENTRANCE = 980040000;
     public static final int EVENT_WINNER = 109050000;
     public static final int EVENT_EXIT = 109050001;

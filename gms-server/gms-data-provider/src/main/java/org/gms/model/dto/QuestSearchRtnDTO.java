@@ -15,5 +15,6 @@ public class QuestSearchRtnDTO {
     private String questName;
     private String areaName;
     private boolean repeatable;
+    private boolean autoStart;
 
 }

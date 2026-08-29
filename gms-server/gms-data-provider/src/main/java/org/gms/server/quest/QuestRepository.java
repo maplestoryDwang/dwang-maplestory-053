@@ -37,6 +37,7 @@ public class QuestRepository {
         medals.putAll(container.medals);
     }
 
+    // 可能有自定义ID导致负数
     public static QuestV2 getInstance(int id) {
         QuestV2 ret = quests.get(id);
         if (ret == null) {

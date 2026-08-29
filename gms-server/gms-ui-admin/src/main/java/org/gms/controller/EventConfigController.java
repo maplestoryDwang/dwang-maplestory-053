@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.gms.constants.api.ApiConstant;
 import org.gms.dao.entity.EventConfigDO;
 import org.gms.model.dto.*;
+import org.gms.service.CommandApiService;
+import org.gms.service.CommandDataService;
 import org.gms.service.EventConfigDataService;
 import org.gms.util.BasePageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class EventConfigController {
 
     @Autowired
     EventConfigDataService eventConfigDataService;
+
+    @Autowired
+    CommandApiService commandApiService;
 
     @Tag(name = "/event/" + ApiConstant.LATEST)
     @Operation(summary = "分页获取事件列表")
@@ -77,6 +82,8 @@ public class EventConfigController {
     @PostMapping("/" + ApiConstant.LATEST + "/saveEvent")
     public ResultBody<Object> saveEvent(@RequestBody SubmitBody<EventConfigDTO> request) {
         eventConfigDataService.saveEvent(request.getData());
+        // 重载
+        commandApiService.reloadEventsByGMCommand();
         return ResultBody.success(request, null);
     }
 
