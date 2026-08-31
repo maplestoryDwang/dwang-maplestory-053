@@ -55,13 +55,13 @@ function action(mode, type, selection) {
     var nItem = inv.countById(FIREWORK_ITEM);
 
     if (status === 0) {
-        cm.sendNext("你好，我是阿拉米亚！我知道怎么制作烟花哦！如果你能从怪物身上收集到 #b#t" + FIREWORK_ITEM + "##k 交给我，我们就能放漂亮的烟花啦！");
+        cm.sendNext("你好，我是#p9010014#！我知道怎么制作烟花哦！如果你能从怪物身上收集到 #b#t" + FIREWORK_ITEM + "##k 交给我，我们就能放漂亮的烟花啦！");
     } else if (status === 1) {
-        cm.sendSimple("每次大家收集到足够的火药桶，我们就可以举行放烟花活动！\r\n#L0# 我带来了火药桶。#l\r\n#L1# 请显示当前火药桶收集进度。#l");
+        cm.sendSimple("每次大家收集到足够的火药桶，我们就可以举行放烟花活动！\r\n#b#L0# 我带来了火药桶。#l\r\n#L1# 请显示当前火药桶收集进度。#l#k");
     } else if (status === 2) {
         if (selection === 1) {
             var per = Math.floor((count / WORLD_NEED_MAX) * 100);
-            cm.sendOk("火药桶收集进度：\r\n#b" + per + "%#k (" + count + " / " + WORLD_NEED_MAX + ")\r\n如果我们集齐所有，就可以开始放烟花啦！");
+            cm.sendOk("火药桶#v" + FIREWORK_ITEM + "#收集进度：\r\n#b" + per + "%#k (" + count + " / " + WORLD_NEED_MAX + ")\r\n如果我们集齐所有，就可以开始放烟花啦！");
             cm.dispose();
             return;
         }

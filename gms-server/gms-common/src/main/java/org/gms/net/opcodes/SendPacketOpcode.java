@@ -158,10 +158,37 @@ public enum SendPacketOpcode implements Opcode {
     CANCEL_MONSTER_STATUS(0x9B), // check
     SHOW_MONSTER_HP(0x98), // 显示怪物血条
 
-    // check ↓
-    SPAWN_NPC(0xA7), // 地图生成NPC
-    // check ↓
-    SPAWN_NPC_REQUEST_CONTROLLER(0xAC), // 获取NPC控制权
+
+    /*
+            CNpcPool::OnPacket
+     */
+    /**
+     * 地图生成NPC
+     */
+    SPAWN_NPC(0xA7), // check
+
+    /**
+     * 设置NPC可脚本化
+     */
+    SET_NPC_SCRIPTABLE(0xA9), // check
+
+    /**
+     * 移除NPC
+     */
+    REMOVE_NPC(0xAB), // check
+
+    /**
+     * 获取NPC控制权
+     */
+    SPAWN_NPC_REQUEST_CONTROLLER(0xAC), // check
+
+    /**
+     * NPC_MOVE
+     */
+    NPC_ACTION(0xAD), // check
+
+
+
     // check ↓
     DROP_ITEM_FROM_MAPOBJECT(0xB8), // 地图掉落道具
     // check ↓
@@ -504,9 +531,7 @@ public enum SendPacketOpcode implements Opcode {
     CATCH_MONSTER(0xFB), // 捕捉怪物
     CATCH_MONSTER_WITH_ITEM(0xFC), // 使用物品捕捉怪物
     SHOW_MAGNET(0xFD), // 显示磁铁效果
-    REMOVE_NPC(0x102), // 移除NPC
-    NPC_ACTION(0x104), // NPC_MOVE
-    SET_NPC_SCRIPTABLE(0x107), // 设置NPC可脚本化
+
     SPAWN_HIRED_MERCHANT(0x109), // 生成雇佣商人
     DESTROY_HIRED_MERCHANT(0x10A), // 销毁雇佣商人
     UPDATE_HIRED_MERCHANT(0x10B), // 更新雇佣商人

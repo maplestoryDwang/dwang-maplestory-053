@@ -31,7 +31,9 @@ import org.gms.net.server.guild.Guild;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.net.server.world.World;
+import org.gms.server.life.NPC;
 import org.gms.server.quest.QuestRepository;
+import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +48,9 @@ import org.gms.exception.EventInstanceInProgressException;
 
 import javax.script.Invocable;
 import javax.script.ScriptException;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -1320,6 +1324,24 @@ public class EventManager {
         }
 
         instantiateQueuedInstance();    // 持续填充队列直到达到阈值
+    }
+
+    public MapleMap getMap(int map) {
+        MapleMap map1 = cserv.getMapFactory().getMap(map);
+        return map1;
+    }
+
+    public void spawnNpc(int npcId, Point pos, MapleMap map) {
+        NPC npc = LifeFactory.getNPC(npcId);
+        if (npc != null) {
+            npc.setPosition(pos);
+            npc.setCy(pos.y);
+            npc.setRx0(pos.x + 50);
+            npc.setRx1(pos.x - 50);
+            npc.setFh(map.getFootholds().findBelow(pos).getId());
+            map.addMapObject(npc);
+            map.broadcastMessage(PacketCreator.spawnNPC(npc));
+        }
     }
 
     /**
