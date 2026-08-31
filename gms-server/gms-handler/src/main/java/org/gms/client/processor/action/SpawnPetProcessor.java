@@ -21,7 +21,7 @@ package org.gms.client.processor.action;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.SkillFactory;
+import org.gms.client.skill.SkillFactory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.client.inventory.manipulator.InventoryManipulator;

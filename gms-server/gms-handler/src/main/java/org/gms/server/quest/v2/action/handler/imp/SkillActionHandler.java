@@ -1,8 +1,8 @@
 package org.gms.server.quest.v2.action.handler.imp;
 
 import org.gms.client.Character;
-import org.gms.client.Skill;
-import org.gms.client.SkillFactory;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillFactory;
 import org.gms.server.quest.actions.ext.SkillActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 

@@ -23,8 +23,8 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.Skill;
-import org.gms.client.SkillFactory;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.skills.other.Brawler;
 import org.gms.constants.skills.other.Corsair;
@@ -37,7 +37,6 @@ import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;
 import org.gms.server.StatEffect;
-import org.gms.server.life.Monster;
 import org.gms.util.PacketCreator;
 
 import java.awt.*;

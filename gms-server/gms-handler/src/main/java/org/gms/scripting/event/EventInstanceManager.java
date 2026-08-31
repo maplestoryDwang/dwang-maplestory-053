@@ -22,11 +22,10 @@
 package org.gms.scripting.event;
 
 import org.gms.client.Character;
-import org.gms.client.Skill;
-import org.gms.client.SkillFactory;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
-import org.gms.dwutil.DebugUtils;
 import org.gms.dwutil.ItemUtils;
 import org.gms.net.server.coordinator.world.EventRecallCoordinator;
 import org.gms.net.server.world.Party;
@@ -36,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.AbstractPlayerInteraction;
 import org.gms.scripting.event.scheduler.EventScriptScheduler;
-import org.gms.server.ItemInformationProvider;
 import org.gms.server.StatEffect;
 import org.gms.server.ThreadManager;
 import org.gms.server.TimerManager;

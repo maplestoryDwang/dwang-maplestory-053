@@ -23,8 +23,8 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.Skill;
-import org.gms.client.SkillFactory;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
 import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.InventoryType;
@@ -39,7 +39,6 @@ import org.slf4j.LoggerFactory;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.StatEffect;
 import org.gms.server.life.Monster;
-import org.gms.server.life.MonsterInformationProvider;
 import org.gms.server.maps.Summon;
 import org.gms.util.PacketCreator;
 

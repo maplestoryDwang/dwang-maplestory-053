@@ -1,5 +1,6 @@
-package origin; /**
- * TODO
+package origin;
+/**
+ * 掉落同步
  *
  * @author dwang
  * @version 1.0

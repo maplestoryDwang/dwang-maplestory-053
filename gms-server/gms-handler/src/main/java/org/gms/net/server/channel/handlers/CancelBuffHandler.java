@@ -22,7 +22,7 @@
 package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
-import org.gms.client.SkillFactory;
+import org.gms.client.skill.SkillFactory;
 import org.gms.constants.skills.adv.magician.cleric.Bishop;
 import org.gms.constants.skills.adv.archer.hunter.Bowmaster;
 import org.gms.constants.skills.other.Corsair;

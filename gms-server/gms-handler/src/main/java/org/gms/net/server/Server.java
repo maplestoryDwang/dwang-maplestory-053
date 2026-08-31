@@ -25,7 +25,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.SkillFactory;
+import org.gms.client.skill.SkillFactory;
 import org.gms.client.command.CommandsExecutor;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.ItemFactory;

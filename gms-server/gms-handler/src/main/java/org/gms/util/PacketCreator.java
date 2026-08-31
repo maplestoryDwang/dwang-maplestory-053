@@ -30,6 +30,8 @@ import org.gms.client.inventory.equip.Equip.ScrollResult;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.client.keybind.KeyBinding;
 import org.gms.client.keybind.QuickslotBinding;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillMacro;
 import org.gms.constants.game.CommodityFlag;
 import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.dao.entity.ModifiedCashItemDO;

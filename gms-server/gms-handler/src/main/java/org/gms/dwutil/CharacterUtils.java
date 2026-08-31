@@ -2,8 +2,8 @@ package org.gms.dwutil;
 
 import org.gms.client.Character;
 import org.gms.client.Job;
-import org.gms.client.Skill;
-import org.gms.client.SkillFactory;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillFactory;
 import org.gms.client.autoban.AutobanFactory;
 import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.*;

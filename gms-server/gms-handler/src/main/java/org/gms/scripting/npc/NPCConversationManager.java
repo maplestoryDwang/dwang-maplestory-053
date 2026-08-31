@@ -27,6 +27,8 @@ import org.gms.client.*;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.ItemFactory;
 import org.gms.client.inventory.pet.Pet;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.game.NextLevelType;

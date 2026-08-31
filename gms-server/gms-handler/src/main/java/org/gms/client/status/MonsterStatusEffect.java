@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.gms.client.status;
 
-import org.gms.client.Skill;
+import org.gms.client.skill.Skill;
 import org.gms.server.life.MobSkill;
 
 import java.util.Map;

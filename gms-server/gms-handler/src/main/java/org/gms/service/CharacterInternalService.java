@@ -6,11 +6,11 @@ import org.gms.client.*;
 import org.gms.client.Character;
 import org.gms.client.character.buddy.BuddyList;
 import org.gms.client.character.buddy.BuddylistEntry;
-import org.gms.client.inventory.Inventory;
-import org.gms.client.inventory.InventoryType;
-import org.gms.client.inventory.Item;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.client.keybind.KeyBinding;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillFactory;
+import org.gms.client.skill.SkillMacro;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
 import org.gms.dao.entity.*;
@@ -36,7 +36,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.*;
 import java.util.Map.Entry;
 

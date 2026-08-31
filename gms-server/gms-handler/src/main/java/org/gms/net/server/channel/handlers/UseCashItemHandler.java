@@ -23,9 +23,9 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.Skill;
-import org.gms.client.SkillFactory;
-import org.gms.client.SkillMacro;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillFactory;
+import org.gms.client.skill.SkillMacro;
 import org.gms.client.creator.veteran.BowmanCreator;
 import org.gms.client.creator.veteran.MagicianCreator;
 import org.gms.client.creator.veteran.PirateCreator;

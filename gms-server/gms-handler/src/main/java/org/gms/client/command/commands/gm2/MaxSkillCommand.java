@@ -26,12 +26,10 @@ package org.gms.client.command.commands.gm2;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.Job;
-import org.gms.client.Skill;
-import org.gms.client.SkillFactory;
+import org.gms.client.skill.Skill;
+import org.gms.client.skill.SkillFactory;
 import org.gms.client.command.Command;
 import org.gms.provider.Data;
-import org.gms.provider.DataProviderFactory;
-import org.gms.provider.wz.WzFiles;
 import org.gms.server.StringInfoProvider;
 import org.gms.util.I18nUtil;
 
