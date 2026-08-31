@@ -40,7 +40,7 @@ import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;
 import org.gms.dwutil.ItemUtils;
 import org.gms.dwutil.QuestUtils;
-import org.gms.event.wxmas.WXMacData;
+import org.gms.server.events.wxmas.WXMacData;
 import org.gms.model.pojo.SkillEntry;
 import org.gms.net.server.Server;
 import org.gms.net.server.guild.Guild;

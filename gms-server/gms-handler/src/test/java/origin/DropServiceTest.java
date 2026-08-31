@@ -1,6 +1,17 @@
 package origin;
 /**
  * 掉落同步
+ * 需要修改表结构。当前表结构是单个droperId和itemId是组合键。无法适配同一个DropperId掉落多个相同ItemId的情况，而且这多个掉落概率是不一样的，不知道官方为什么这么设计
+ * 需要修改表结构如下：
+ * ALTER TABLE drop_data DROP INDEX dropperid;
+ *
+ * -- 2. 删除重复/冗余的索引
+ * ALTER TABLE drop_data DROP INDEX dropperid_2;
+ * ALTER TABLE drop_data DROP INDEX mobid;
+ *
+ * -- 3. 新建普通的联合索引 (dropperid, itemid)
+ * CREATE INDEX idx_dropper_item ON drop_data (dropperid, itemid);
+ *
  *
  * @author dwang
  * @version 1.0

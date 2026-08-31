@@ -1,4 +1,4 @@
-package org.gms.event.wxmas;
+package org.gms.server.events.wxmas;
 
 import java.util.HashMap;
 import java.util.Map;

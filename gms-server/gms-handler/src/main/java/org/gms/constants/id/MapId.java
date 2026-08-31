@@ -127,16 +127,18 @@ public class MapId {
 
 
     // Event
+
+    //
+    public static final int EVENT_FIND_THE_JEWEL = 109010000;
+
+    // 打椰子
     public static final int EVENT_COCONUT_HARVEST = 109080000;
-    public static final int EVENT_OX_QUIZ = 109020001;
 
-
-    // 向高地
+    // 向高地 跳跳
     public static final int EVENT_PHYSICAL_FITNESS = 109040000;
     public static final int FITNESS_EVENT_LAST = 109040004;
 
-
-    // 向上 向上起始地图
+    // 向上 向上起始地图， 不能跳跃，向上找传送门过图，答案是唯一的
     public static final int EVENT_OLA_OLA_0 = 109030001;
     public static final int EVENT_OLA_OLA_1 = 109030101;
     public static final int EVENT_OLA_OLA_2 = 109030201;
@@ -146,13 +148,24 @@ public class MapId {
     public static final int OLA_EVENT_LAST_1 = 109030003;
     public static final int OLA_EVENT_LAST_2 = 109030103;
 
+    // 答题
+    public static final int EVENT_OX_QUIZ = 109020001;
+    // 雪球
     public static final int EVENT_SNOWBALL = 109060000;
-    public static final int EVENT_FIND_THE_JEWEL = 109010000;
+    public static final int EVENT_SNOWBALL_ENTRANCE = 109060001;
 
-    public static final int WITCH_TOWER_ENTRANCE = 980040000;
+
+
+
     public static final int EVENT_WINNER = 109050000;
     public static final int EVENT_EXIT = 109050001;
-    public static final int EVENT_SNOWBALL_ENTRANCE = 109060001;
+
+
+
+
+    // 魔女塔
+    public static final int WITCH_TOWER_ENTRANCE = 980040000;
+
 
     private static final int PHYSICAL_FITNESS_MIN = EVENT_PHYSICAL_FITNESS;
     private static final int PHYSICAL_FITNESS_MAX = FITNESS_EVENT_LAST;
@@ -196,7 +209,7 @@ public class MapId {
         return mapId >= DOJO_PARTY_MIN && mapId <= DOJO_PARTY_MAX;
     }
 
-    // Mini dungeon
+    // Mini dungeon  隐藏地图？
     public static final int ANT_TUNNEL_2 = 105050100;
     public static final int CAVE_OF_MUSHROOMS_BASE = 105050101;
     public static final int SLEEPY_DUNGEON_4 = 105040304;

@@ -3,6 +3,16 @@
 ![](../asset/Snipaste_2026-08-27_23-28-46.png)
 2. 修复九灵龙蛋任务因版本差异无法兑换黑龙项链使用的卷轴问题
 3. 从BMS的掉落文件同步掉落。详情查看：``` origin.DropServiceTest```
+```sql
+-- 需要修改表结构。当前表结构是单个droperId和itemId是组合键。无法适配同一个DropperId掉落多个相同ItemId的情况，而且这多个掉落概率是不一样的，不知道官方为什么这么设计
+-- 需要修改表结构如下：
+ALTER TABLE drop_data DROP INDEX dropperid;
+-- 2. 删除重复/冗余的索引
+ALTER TABLE drop_data DROP INDEX dropperid_2;
+ALTER TABLE drop_data DROP INDEX mobid;
+-- 3. 新建普通的联合索引 (dropperid, itemid)
+CREATE INDEX idx_dropper_item ON drop_data (dropperid, itemid);
+```
 4. 修复怪物掉落位置没有更新问题
 
 

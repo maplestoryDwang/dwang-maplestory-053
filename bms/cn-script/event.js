@@ -774,6 +774,7 @@ function ola_answer3( integer num ) {
 }
 
 // 随机 Ola 传送脚本
+// 109030001 109030002 109030003
 script "rand_ola" {
     field = portal.field;
     event = FieldSet( "Event1" );
@@ -862,6 +863,7 @@ script "rand_ola" {
 }
 
 // 烟花活动
+// map 100000200
 script "firework" {
     inven = target.inventory;
     nItem = inven.itemCount( 4001128 );
