@@ -12,7 +12,8 @@ import java.util.*;
 import java.util.stream.Stream;
 
 /**
- * TODO
+ * 生成String的静态类，和SKill的一样
+ *
  *
  * @author dwang
  * @version 1.0
@@ -21,7 +22,7 @@ import java.util.stream.Stream;
 public class MapIdGen {
 
 
-
+    // v1: 为了获取出现地图
     public static void main(String[] args) {
         // 名字对应
         Path cnPath = Path.of("E:\\javaguide\\053\\dwang-maplestory-old\\gms-server\\gms-handler\\wz-zh-CN\\String.wz");
