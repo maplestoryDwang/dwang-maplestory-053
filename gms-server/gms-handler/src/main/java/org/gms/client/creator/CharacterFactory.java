@@ -22,7 +22,7 @@ package org.gms.client.creator;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.SkinColor;
-import org.gms.client.inventory.Inventory;
+import org.gms.client.character.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;

@@ -17,8 +17,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client;
+package org.gms.client.character.family;
 
+import org.gms.client.Character;
+import org.gms.client.Job;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.Server;
 import org.slf4j.Logger;
@@ -43,7 +45,7 @@ public class FamilyEntry {
 
     private final int characterID;
     private volatile Family family;
-    private volatile Character character;
+    private volatile org.gms.client.Character character;
 
     private volatile FamilyEntry senior;
     private final FamilyEntry[] juniors = new FamilyEntry[2];
@@ -69,11 +71,11 @@ public class FamilyEntry {
         this.job = job;
     }
 
-    public Character getChr() {
+    public org.gms.client.Character getChr() {
         return character;
     }
 
-    public void setCharacter(Character newCharacter) {
+    public void setCharacter(org.gms.client.Character newCharacter) {
         if (newCharacter == null) {
             cacheOffline(newCharacter);
         } else {
@@ -82,7 +84,7 @@ public class FamilyEntry {
         this.character = newCharacter;
     }
 
-    private void cacheOffline(Character chr) {
+    private void cacheOffline(org.gms.client.Character chr) {
         if (chr != null) {
             charName = chr.getName();
             level = chr.getLevel();
@@ -230,7 +232,7 @@ public class FamilyEntry {
     }
 
     public String getName() {
-        Character chr = character;
+        org.gms.client.Character chr = character;
         if (chr != null) {
             return chr.getName();
         } else {
@@ -239,7 +241,7 @@ public class FamilyEntry {
     }
 
     public int getLevel() {
-        Character chr = character;
+        org.gms.client.Character chr = character;
         if (chr != null) {
             return chr.getLevel();
         } else {
@@ -248,7 +250,7 @@ public class FamilyEntry {
     }
 
     public Job getJob() {
-        Character chr = character;
+        org.gms.client.Character chr = character;
         if (chr != null) {
             return chr.getJob();
         } else {
@@ -302,7 +304,7 @@ public class FamilyEntry {
         if (gain > 0 && countTowardsTotal) {
             this.totalReputation += gain;
         }
-        Character chr = getChr();
+        org.gms.client.Character chr = getChr();
         if (chr != null) {
             chr.sendPacket(PacketCreator.sendGainRep(gain, from != null ? from.getName() : ""));
         }
@@ -478,7 +480,7 @@ public class FamilyEntry {
     public void announceToSenior(Packet packet, boolean includeSuperSenior) {
         FamilyEntry senior = getSenior();
         if (senior != null) {
-            Character seniorChr = senior.getChr();
+            org.gms.client.Character seniorChr = senior.getChr();
             if (seniorChr != null) {
                 seniorChr.sendPacket(packet);
             }

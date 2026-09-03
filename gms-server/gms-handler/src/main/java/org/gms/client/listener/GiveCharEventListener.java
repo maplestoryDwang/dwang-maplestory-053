@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.gms.client.Character;
 import org.gms.client.MapleStat;
 import org.gms.client.inventory.*;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.ExtendType;
@@ -24,7 +24,6 @@ import org.gms.util.I18nUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 
 import static java.util.concurrent.TimeUnit.DAYS;

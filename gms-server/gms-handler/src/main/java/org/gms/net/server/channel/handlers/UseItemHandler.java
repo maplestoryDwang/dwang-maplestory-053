@@ -26,7 +26,7 @@ import org.gms.client.Client;
 import org.gms.client.Disease;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;

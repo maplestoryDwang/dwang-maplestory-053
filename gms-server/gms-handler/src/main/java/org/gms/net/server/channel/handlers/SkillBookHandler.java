@@ -23,12 +23,12 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.skill.Skill;
-import org.gms.client.skill.SkillFactory;
-import org.gms.client.inventory.Inventory;
+import org.gms.client.character.skill.Skill;
+import org.gms.client.character.skill.SkillFactory;
+import org.gms.client.character.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.server.ItemInformationProvider;

@@ -19,14 +19,14 @@
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gms.client.inventory.manipulator;
+package org.gms.client.character.inventory.manipulator;
 
 import org.gms.client.BuffStat;
 import org.gms.client.Character;
 import org.gms.dwutil.CharacterUtils;
 import org.gms.client.Client;
 import org.gms.client.inventory.equip.Equip;
-import org.gms.client.inventory.Inventory;
+import org.gms.client.character.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.ModifyInventory;

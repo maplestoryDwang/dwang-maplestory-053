@@ -22,11 +22,11 @@
 package org.gms.server;
 
 import org.gms.client.Character;
-import org.gms.client.inventory.Inventory;
+import org.gms.client.character.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
-import org.gms.client.inventory.manipulator.KarmaManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.KarmaManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.net.server.coordinator.world.InviteCoordinator;

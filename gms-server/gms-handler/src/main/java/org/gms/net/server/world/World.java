@@ -29,7 +29,7 @@ import org.gms.client.character.buddy.BuddyList.BuddyAddResult;
 import org.gms.client.character.buddy.BuddyList.BuddyOperation;
 import org.gms.client.character.buddy.BuddylistEntry;
 import org.gms.client.Character;
-import org.gms.client.Family;
+import org.gms.client.character.family.Family;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.dao.entity.PlayernpcsFieldDO;

@@ -2,7 +2,7 @@ package org.gms.server.minigame;
 
 import org.gms.client.Client;
 import org.gms.client.inventory.Item;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.constants.id.ItemId;
 import org.gms.util.PacketCreator;
 import org.gms.util.Randomizer;

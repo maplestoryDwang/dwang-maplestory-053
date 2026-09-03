@@ -22,13 +22,9 @@
 package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
-import org.gms.client.inventory.InventoryType;
-import org.gms.client.inventory.Item;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
 import org.gms.client.processor.npc.StorageProcessor;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
-import org.gms.server.ItemInformationProvider;
 
 /**
  * @author Matze

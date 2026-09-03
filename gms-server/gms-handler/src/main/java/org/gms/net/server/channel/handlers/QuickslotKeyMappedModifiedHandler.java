@@ -1,7 +1,7 @@
 package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
-import org.gms.client.keybind.QuickslotBinding;
+import org.gms.client.character.keybind.QuickslotBinding;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 

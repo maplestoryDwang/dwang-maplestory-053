@@ -25,8 +25,8 @@ package org.gms.client.command.commands.gm2;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.skill.Skill;
-import org.gms.client.skill.SkillFactory;
+import org.gms.client.character.skill.Skill;
+import org.gms.client.character.skill.SkillFactory;
 import org.gms.client.command.Command;
 import org.gms.util.I18nUtil;
 

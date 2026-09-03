@@ -1,4 +1,4 @@
-package org.gms.client.keybind;
+package org.gms.client.character.keybind;
 
 import org.gms.net.packet.OutPacket;
 

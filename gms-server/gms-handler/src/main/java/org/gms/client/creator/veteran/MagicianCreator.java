@@ -21,8 +21,8 @@ package org.gms.client.creator.veteran;
 
 import org.gms.client.Client;
 import org.gms.client.Job;
-import org.gms.client.skill.Skill;
-import org.gms.client.skill.SkillFactory;
+import org.gms.client.character.skill.Skill;
+import org.gms.client.character.skill.SkillFactory;
 import org.gms.client.creator.CharacterFactory;
 import org.gms.client.creator.CharacterFactoryRecipe;
 import org.gms.client.inventory.InventoryType;

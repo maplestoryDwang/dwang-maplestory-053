@@ -23,11 +23,11 @@ package org.gms.server.maps;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.inventory.Inventory;
+import org.gms.client.character.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
-import org.gms.client.inventory.manipulator.KarmaManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.KarmaManipulator;
 import org.gms.net.packet.Packet;
 import org.gms.server.Trade;
 import org.gms.util.PacketCreator;

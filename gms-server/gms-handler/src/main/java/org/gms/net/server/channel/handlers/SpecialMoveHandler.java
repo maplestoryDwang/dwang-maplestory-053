@@ -23,8 +23,8 @@ package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.skill.Skill;
-import org.gms.client.skill.SkillFactory;
+import org.gms.client.character.skill.Skill;
+import org.gms.client.character.skill.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.skills.other.Brawler;
 import org.gms.constants.skills.other.Corsair;

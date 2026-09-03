@@ -20,7 +20,7 @@
 package org.gms.client.creator;
 
 import org.gms.client.Job;
-import org.gms.client.skill.Skill;
+import org.gms.client.character.skill.Skill;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;

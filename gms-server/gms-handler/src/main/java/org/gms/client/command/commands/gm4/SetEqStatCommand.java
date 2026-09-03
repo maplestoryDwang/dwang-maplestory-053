@@ -27,7 +27,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.command.Command;
 import org.gms.client.inventory.equip.Equip;
-import org.gms.client.inventory.Inventory;
+import org.gms.client.character.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.util.I18nUtil;

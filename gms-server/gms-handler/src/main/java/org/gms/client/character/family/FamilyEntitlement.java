@@ -1,4 +1,4 @@
-package org.gms.client;
+package org.gms.client.character.family;
 
 import org.gms.util.I18nUtil;
 

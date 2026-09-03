@@ -2,7 +2,7 @@ package org.gms.dwutil;
 
 import org.gms.client.Character;
 import org.gms.server.quest.QuestStatus;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.server.ItemInformationProvider;

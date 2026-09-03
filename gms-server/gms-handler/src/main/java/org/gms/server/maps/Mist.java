@@ -23,8 +23,8 @@ package org.gms.server.maps;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.skill.Skill;
-import org.gms.client.skill.SkillFactory;
+import org.gms.client.character.skill.Skill;
+import org.gms.client.character.skill.SkillFactory;
 import org.gms.constants.skills.other.BlazeWizard;
 import org.gms.constants.skills.other.Evan;
 import org.gms.constants.skills.adv.magician.fp_wizard.FpMage;

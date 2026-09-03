@@ -19,8 +19,9 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client;
+package org.gms.client.character.ring;
 
+import org.gms.client.Character;
 import org.gms.util.CashIdGenerator;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.Pair;
@@ -102,7 +103,7 @@ public class Ring implements Comparable<Ring> {
         }
     }
 
-    public static Pair<Integer, Integer> createRing(int itemid, final Character partner1, final Character partner2) {
+    public static Pair<Integer, Integer> createRing(int itemid, final org.gms.client.Character partner1, final Character partner2) {
         try {
             if (partner1 == null) {
                 return new Pair<>(-3, -3);

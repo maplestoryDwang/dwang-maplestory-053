@@ -23,12 +23,14 @@ package org.gms.scripting;
 
 import org.gms.client.Character;
 import org.gms.client.*;
+import org.gms.client.character.inventory.Inventory;
+import org.gms.client.character.inventory.InventoryProof;
 import org.gms.client.inventory.*;
 import org.gms.client.inventory.equip.Equip;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.client.inventory.pet.Pet;
-import org.gms.client.skill.Skill;
-import org.gms.client.skill.SkillFactory;
+import org.gms.client.character.skill.Skill;
+import org.gms.client.character.skill.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.constants.game.GameConstants;

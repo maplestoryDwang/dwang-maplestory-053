@@ -6,7 +6,7 @@
 package org.gms.server.events;
 
 import org.gms.client.Character;
-import org.gms.client.skill.SkillFactory;
+import org.gms.client.character.skill.SkillFactory;
 
 import static java.util.concurrent.TimeUnit.DAYS;
 

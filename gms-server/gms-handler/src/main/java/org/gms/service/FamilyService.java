@@ -2,8 +2,8 @@ package org.gms.service;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.AllArgsConstructor;
-import org.gms.client.Family;
-import org.gms.client.FamilyEntry;
+import org.gms.client.character.family.Family;
+import org.gms.client.character.family.FamilyEntry;
 import org.gms.client.Job;
 import org.gms.dao.entity.CharactersDO;
 import org.gms.dao.entity.FamilyCharacterDO;

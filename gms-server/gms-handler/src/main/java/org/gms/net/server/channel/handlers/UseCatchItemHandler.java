@@ -25,7 +25,7 @@ import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.InventoryType;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MobId;
 import org.gms.constants.inventory.ItemConstants;

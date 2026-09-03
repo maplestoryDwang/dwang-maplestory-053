@@ -20,8 +20,8 @@
 package org.gms.net.server.channel.handlers;
 
 import org.gms.client.Client;
-import org.gms.client.Family;
-import org.gms.client.FamilyEntry;
+import org.gms.client.character.family.Family;
+import org.gms.client.character.family.FamilyEntry;
 import org.gms.config.GameConfig;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;

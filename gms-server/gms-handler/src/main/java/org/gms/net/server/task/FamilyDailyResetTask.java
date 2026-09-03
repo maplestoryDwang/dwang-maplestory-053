@@ -1,6 +1,6 @@
 package org.gms.net.server.task;
 
-import org.gms.client.Family;
+import org.gms.client.character.family.Family;
 import org.gms.constants.game.GameConstants;
 import org.gms.net.server.Server;
 import org.gms.net.server.world.World;

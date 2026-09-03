@@ -27,7 +27,7 @@ import org.gms.client.character.CharacterNameAndId;
 import org.gms.client.character.buddy.BuddyList;
 import org.gms.client.character.buddy.BuddylistEntry;
 import org.gms.client.inventory.equip.Equip;
-import org.gms.client.inventory.Inventory;
+import org.gms.client.character.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.pet.Pet;

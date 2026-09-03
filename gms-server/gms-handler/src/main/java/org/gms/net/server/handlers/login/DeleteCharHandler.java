@@ -22,7 +22,7 @@
 package org.gms.net.server.handlers.login;
 
 import org.gms.client.Client;
-import org.gms.client.Family;
+import org.gms.client.character.family.Family;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;

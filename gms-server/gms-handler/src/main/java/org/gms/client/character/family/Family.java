@@ -19,8 +19,9 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gms.client;
+package org.gms.client.character.family;
 
+import org.gms.client.Character;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.Server;
 import org.gms.net.server.world.World;
@@ -36,6 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * 学院
  * @author Jay Estrella - Mr.Trash :3
  * @author Ubaware
  */
@@ -157,7 +159,7 @@ public class Family {
 
     public void broadcast(Packet packet, int ignoreID) {
         for (FamilyEntry entry : members.values()) {
-            Character chr = entry.getChr();
+            org.gms.client.Character chr = entry.getChr();
             if (chr != null) {
                 if (chr.getId() == ignoreID) {
                     continue;
@@ -169,7 +171,7 @@ public class Family {
 
     public void Familybuff(int duration) {
         for (FamilyEntry entry : members.values()) {
-            Character chr = entry.getChr();
+            org.gms.client.Character chr = entry.getChr();
             if (chr != null) {
                 chr.sendPacket(PacketCreator.familyBuff(4, 4, 1, duration  * 60000));
                 chr.setFamilyBuff(true,2,2);

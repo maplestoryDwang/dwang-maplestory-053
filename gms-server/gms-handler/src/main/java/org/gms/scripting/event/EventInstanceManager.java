@@ -22,8 +22,8 @@
 package org.gms.scripting.event;
 
 import org.gms.client.Character;
-import org.gms.client.skill.Skill;
-import org.gms.client.skill.SkillFactory;
+import org.gms.client.character.skill.Skill;
+import org.gms.client.character.skill.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.dwutil.ItemUtils;

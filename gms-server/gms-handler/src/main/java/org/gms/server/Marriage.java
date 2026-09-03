@@ -21,11 +21,11 @@ package org.gms.server;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.inventory.Inventory;
+import org.gms.client.character.inventory.Inventory;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.inventory.ItemFactory;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.scripting.event.EventInstanceManager;
 import org.gms.scripting.event.EventManager;
 import org.gms.util.DatabaseConnection;

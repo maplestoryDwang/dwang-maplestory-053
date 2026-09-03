@@ -19,12 +19,14 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client.inventory;
+package org.gms.client.character.inventory;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
+import org.gms.client.inventory.InventoryType;
+import org.gms.client.inventory.Item;
 import org.gms.client.inventory.equip.Equip;
-import org.gms.client.inventory.manipulator.InventoryManipulator;
+import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.constants.inventory.ItemConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
