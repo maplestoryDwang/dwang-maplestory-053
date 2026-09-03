@@ -379,31 +379,22 @@ public class Character extends AbstractCharacterObject {
 
 
     // mtc 拍卖
-    @Getter
     private int currentPage;
-    @Getter
     private int currentType = 0;
-    @Getter
     private int currentTab = 1;
-    @Getter
     private int ci = 0;
+    private String mtsSearch = null;
 
 
-
-    @Getter
-    @Setter
+    // 怪物卡
     private MonsterBook monsterBook;
-    @Setter
     private int monsterbookCover;
 
 
     // 海盗-战船血量
-    @Setter
-    @Getter
     private int battleshipHp = 0;
 
     // 报告，不知道是啥
-    @Getter
     private int possibleReports = 10;
 
 
@@ -415,28 +406,37 @@ public class Character extends AbstractCharacterObject {
     private long lastExpression = 0;
 
     // 监狱时间
-    @Setter
     private long jailExpiration = -1;
 
-    private boolean equipchanged = true, berserk, hasMerchant, hasSandboxItem = false;
-    @Setter
+    // equip
+    private boolean equipchanged = true;
+
+    // 恶龙附身识别
+    private boolean berserk = false;
+
+    // 雇佣商店是否有
+    private boolean hasMerchant = false;
+    // todo 未知
+    private boolean hasSandboxItem = false;
+
+    // 队伍搜索
     private boolean canRecvPartySearchInvite = true;
+
+    // 使用护身符
     private boolean usedSafetyCharm = false;
-    @Getter
-    @Setter
+
+    // 没用？
     private int linkedLevel = 0;
-    @Getter
-    @Setter
     private String linkedName = null;
 
+    // 使用仓库
     private boolean usedStorage = false;
 
-    @Setter
+    // 没用。。。。
     private String dataString;
-    @Getter
-    @Setter
-    private String search = null;
+
 //    private final AtomicBoolean mapTransitioning = new AtomicBoolean(true);  // player client is currently trying to change maps or log in the game map //玩家客户端当前正在尝试更改地图或登录游戏地图
+    // 设置地图转换完成
     private final AtomicBoolean mapTransitioning = new AtomicBoolean(false);  // player client is currently trying to change maps or log in the game map //玩家客户端当前正在尝试更改地图或登录游戏地图
     private final AtomicBoolean awayFromWorld = new AtomicBoolean(true);  // player is online, but on cash shop or mts
     private final AtomicInteger meso = new AtomicInteger();

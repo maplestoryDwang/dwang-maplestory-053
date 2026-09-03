@@ -240,10 +240,10 @@ public final class MTSHandler extends AbstractPacketHandler {
                 c.getPlayer().changePage(page);
                 if (tab == 4 && type == 0) {
                     c.sendPacket(getCart(c.getPlayer().getId()));
-                } else if (tab == c.getPlayer().getCurrentTab() && type == c.getPlayer().getCurrentType() && c.getPlayer().getSearch() != null) {
-                    c.sendPacket(getMTSSearch(tab, type, c.getPlayer().getCi(), c.getPlayer().getSearch(), page));
+                } else if (tab == c.getPlayer().getCurrentTab() && type == c.getPlayer().getCurrentType() && c.getPlayer().getMtsSearch() != null) {
+                    c.sendPacket(getMTSSearch(tab, type, c.getPlayer().getCi(), c.getPlayer().getMtsSearch(), page));
                 } else {
-                    c.getPlayer().setSearch(null);
+                    c.getPlayer().setMtsSearch(null);
                     c.sendPacket(getMTS(tab, type, page));
                 }
                 c.getPlayer().changeTab(tab);
@@ -259,7 +259,7 @@ public final class MTSHandler extends AbstractPacketHandler {
                 p.readInt();
                 int ci = p.readInt();
                 String search = p.readString();
-                c.getPlayer().setSearch(search);
+                c.getPlayer().setMtsSearch(search);
                 c.getPlayer().changeTab(tab);
                 c.getPlayer().changeType(type);
                 c.getPlayer().changeCI(ci);
