@@ -1,8 +1,8 @@
 /*
 	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc> 
-					   Matthias Butz <matze@odinms.de>
-					   Jan Christian Meyer <vimes@odinms.de>
+    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
+		       Matthias Butz <matze@odinms.de>
+		       Jan Christian Meyer <vimes@odinms.de>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -19,9 +19,34 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+package org.gms.client.status;
 
-package org.gms.client;
+public enum SkinColor {
+    NORMAL(0),
+    DARK(1),
+    BLACK(2),
+    PALE(3),
+    BLUE(4),
+    GREEN(5),
+    WHITE(9),
+    PINK(10);
 
-public interface LongValueHolder {
-	long getValue();
+    final int id;
+
+    SkinColor(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public static SkinColor getById(int id) {
+        for (SkinColor l : SkinColor.values()) {
+            if (l.getId() == id) {
+                return l;
+            }
+        }
+        return null;
+    }
 }

@@ -23,14 +23,11 @@ package org.gms.net.server.handlers.login;
 
 import lombok.extern.slf4j.Slf4j;
 import org.gms.client.Client;
-import org.gms.client.creator.novice.BeginnerCreator;
-import org.gms.client.creator.novice.LegendCreator;
-import org.gms.client.creator.novice.NoblesseCreator;
+import org.gms.client.character.creator.novice.BeginnerCreator;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
-import org.gms.util.I18nUtil;
 import org.gms.util.PacketCreator;
 
 @Slf4j

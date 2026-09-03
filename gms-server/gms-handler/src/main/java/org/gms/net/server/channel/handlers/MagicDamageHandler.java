@@ -21,7 +21,7 @@
  */
 package org.gms.net.server.channel.handlers;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.character.skill.Skill;
@@ -52,8 +52,8 @@ public final class MagicDamageHandler extends AbstractDealDamageHandler {
 
         AttackInfo attack = parseDamage(p, chr, false, true);
 
-        if (chr.getBuffEffect(BuffStat.MORPH) != null) {
-            if (chr.getBuffEffect(BuffStat.MORPH).isMorphWithoutAttack()) {
+        if (chr.getBuffEffect(CharBuffStat.MORPH) != null) {
+            if (chr.getBuffEffect(CharBuffStat.MORPH).isMorphWithoutAttack()) {
                 // How are they attacking when the client won't let them?
                 chr.getClient().disconnect(false, false);
                 return;

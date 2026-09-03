@@ -25,7 +25,7 @@ package org.gms.client.command.commands.gm3;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.MapleStat;
+import org.gms.client.status.MapleStat;
 import org.gms.client.command.Command;
 import org.gms.util.I18nUtil;
 import org.gms.util.StringUtil;

@@ -23,7 +23,7 @@
 */
 package org.gms.client.command.commands.gm3;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.command.Command;
@@ -40,8 +40,8 @@ public class CheckDmgCommand extends Command {
         Character victim = c.getWorldServer().getPlayerStorage().getCharacterByName(params[0]);
         if (victim != null) {
             int maxBase = victim.calculateMaxBaseDamage(victim.getTotalWatk());
-            Integer watkBuff = victim.getBuffedValue(BuffStat.WATK);
-            Integer matkBuff = victim.getBuffedValue(BuffStat.MATK);
+            Integer watkBuff = victim.getBuffedValue(CharBuffStat.WATK);
+            Integer matkBuff = victim.getBuffedValue(CharBuffStat.MATK);
             int blessing = victim.getSkillLevel(10000000 * player.getJobType() + 12);
             if (watkBuff == null) {
                 watkBuff = 0;

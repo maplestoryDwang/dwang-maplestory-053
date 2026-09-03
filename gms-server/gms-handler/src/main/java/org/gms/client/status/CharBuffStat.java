@@ -19,11 +19,9 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client;
+package org.gms.client.status;
 
-import org.gms.server.life.MobSkillType;
-
-public enum BuffStat implements LongValueHolder{
+public enum CharBuffStat implements LongValueHolder {
 
 
     // 53狀態複製
@@ -181,12 +179,12 @@ public enum BuffStat implements LongValueHolder{
     private final long i;
     private final boolean isFirst;
 
-    BuffStat(long i, boolean isFirst) {
+    CharBuffStat(long i, boolean isFirst) {
         this.i = i;
         this.isFirst = isFirst;
     }
 
-    BuffStat(long i) {
+    CharBuffStat(long i) {
         this.i = i;
         this.isFirst = false;
     }

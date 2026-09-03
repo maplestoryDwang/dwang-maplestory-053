@@ -25,7 +25,7 @@ package org.gms.client.command.commands.gm3;
 
 import org.gms.client.Character;
 import org.gms.client.Client;
-import org.gms.client.Disease;
+import org.gms.client.status.Disease;
 import org.gms.client.command.Command;
 import org.gms.server.life.MobSkill;
 import org.gms.server.life.MobSkillFactory;

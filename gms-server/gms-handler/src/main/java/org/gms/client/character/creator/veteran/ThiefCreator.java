@@ -17,12 +17,12 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client.creator.veteran;
+package org.gms.client.character.creator.veteran;
 
 import org.gms.client.Client;
 import org.gms.client.Job;
-import org.gms.client.creator.CharacterFactory;
-import org.gms.client.creator.CharacterFactoryRecipe;
+import org.gms.client.character.creator.CharacterFactory;
+import org.gms.client.character.creator.CharacterFactoryRecipe;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.constants.id.ItemId;
@@ -32,17 +32,18 @@ import org.gms.server.ItemInformationProvider;
 /**
  * @author RonanLana
  */
-public class PirateCreator extends CharacterFactory {
-    private static final int[] equips = {0, 0, 0, 0, ItemId.BROWN_PAULIE_BOOTS};
-    private static final int[] weapons = {ItemId.PRIME_HANDS, ItemId.COLD_MIND};
-    private static final int[] startingHpMp = {846, 503};
+public class ThiefCreator extends CharacterFactory {
+    private static final int[] equips = {ItemId.DARK_BROWN_STEALER, ItemId.RED_STEAL, ItemId.DARK_BROWN_STEALER_PANTS,
+            ItemId.RED_STEAL_PANTS, ItemId.BRONZE_CHAIN_BOOTS};
+    private static final int[] weapons = {ItemId.STEEL_GUARDS, ItemId.REEF_CLAW};
+    private static final int[] startingHpMp = {794, 407};
 
     private static CharacterFactoryRecipe createRecipe(Job job, int level, int map, int top, int bottom, int shoes, int weapon) {
         CharacterFactoryRecipe recipe = new CharacterFactoryRecipe(job, level, map, top, bottom, shoes, weapon);
         ItemInformationProvider ii = ItemInformationProvider.getInstance();
 
-        recipe.setDex(20);
-        recipe.setRemainingAp(138);
+        recipe.setDex(25);
+        recipe.setRemainingAp(133);
         recipe.setRemainingSp(61);
 
         recipe.setMaxHp(startingHpMp[0]);
@@ -50,13 +51,11 @@ public class PirateCreator extends CharacterFactory {
 
         recipe.setMeso(100000);
 
-        giveEquipment(recipe, ii, ItemId.BROWN_POLLARD);
-
         for (int i = 1; i < weapons.length; i++) {
             giveEquipment(recipe, ii, weapons[i]);
         }
 
-        giveItem(recipe, ItemId.BULLET, 800, InventoryType.USE);
+        giveItem(recipe, ItemId.SUBI_THROWING_STARS, 500, InventoryType.USE);
 
         giveItem(recipe, ItemId.WHITE_POTION, 100, InventoryType.USE);
         giveItem(recipe, ItemId.BLUE_POTION, 100, InventoryType.USE);
@@ -75,6 +74,6 @@ public class PirateCreator extends CharacterFactory {
     }
 
     public static int createCharacter(Client c, String name, int face, int hair, int skin, int gender, int improveSp) {
-        return createNewCharacter(c, name, face, hair, skin, gender, createRecipe(Job.PIRATE, 30, MapId.NAUTILUS_HARBOR, equips[gender], equips[2 + gender], equips[4], weapons[0]));
+        return createNewCharacter(c, name, face, hair, skin, gender, createRecipe(Job.THIEF, 30, MapId.KERNING_CITY, equips[gender], equips[2 + gender], equips[4], weapons[0]));
     }
 }

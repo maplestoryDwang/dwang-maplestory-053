@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gms.server;
+package org.gms.server.cashshop;
 
 import net.jcip.annotations.GuardedBy;
 import org.gms.client.inventory.*;
@@ -33,6 +33,7 @@ import org.gms.dao.entity.WishlistsDO;
 import org.gms.dwutil.CashShopUtils;
 import org.gms.manager.ServerManager;
 import org.gms.net.server.Server;
+import org.gms.server.CashItemFactory;
 import org.gms.service.AccountService;
 import org.gms.service.CharacterInternalService;
 import org.gms.util.DatabaseConnection;

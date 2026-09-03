@@ -19,9 +19,12 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client;
+package org.gms.client.character;
+
+import org.gms.client.Character;
 
 /**
+ * 坐骑类
  * @author PurpleMadness < Patrick :O >
  */
 public class Mount {
@@ -30,7 +33,7 @@ public class Mount {
     private int tiredness;
     private int exp;
     private int level;
-    private Character owner;
+    private org.gms.client.Character owner;
     private boolean active;
 
     public Mount(Character owner, int id, int skillid) {

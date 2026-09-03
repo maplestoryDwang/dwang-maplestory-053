@@ -12,6 +12,7 @@ import org.gms.client.character.keybind.KeyBinding;
 import org.gms.client.character.skill.Skill;
 import org.gms.client.character.skill.SkillFactory;
 import org.gms.client.character.skill.SkillMacro;
+import org.gms.client.status.Disease;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
 import org.gms.dao.entity.*;

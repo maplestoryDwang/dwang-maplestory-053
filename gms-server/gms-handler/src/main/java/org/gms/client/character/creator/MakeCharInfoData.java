@@ -1,8 +1,6 @@
-package org.gms.client.creator;
+package org.gms.client.character.creator;
 
-import org.gms.client.Character;
-import org.gms.client.Job;
-import org.gms.client.inventory.InventoryType;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.provider.Data;
@@ -11,8 +9,17 @@ import org.gms.provider.DataTool;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MakeCharInfo {
-    private static final Logger log = LoggerFactory.getLogger(MakeCharInfo.class);
+/* *
+ * 创建角色提供类
+ *
+ * @author Dwang
+ * @since 2026-09-03 12:28
+ * @param null
+ * @return
+ */
+@Getter
+public class MakeCharInfoData {
+    private static final Logger log = LoggerFactory.getLogger(MakeCharInfoData.class);
     private static final String FACE_ID = "0";
     private static final String HAIR_ID = "1";
     private static final String HAIR_COLOR_ID = "2";
@@ -31,7 +38,8 @@ public class MakeCharInfo {
     private final Set<Integer> charShoes = new HashSet<>();
     private final Set<Integer> charWeapons = new HashSet<>();
 
-    public MakeCharInfo(Data charInfoData) {
+
+    public MakeCharInfoData(Data charInfoData) {
         for (Data data : charInfoData.getChildren()) {
             switch (data.getName()) {
                 case FACE_ID -> {
@@ -79,62 +87,5 @@ public class MakeCharInfo {
         }
     }
 
-    public boolean verifyFaceId(int id) {
-        return this.charFaces.contains(id);
-    }
 
-    public boolean verifyHairId(int id) {
-        if (id % 10 != 0) {
-            return this.charHairs.contains(id - (id % 10));
-        }
-        return this.charHairs.contains(id);
-    }
-
-    public boolean verifyHairColorId(int id) {
-        return this.charHairColors.contains(id % 10);
-    }
-
-    public boolean verifySkinId(int id) {
-        return this.charSkins.contains(id);
-    }
-
-    public boolean verifyTopId(int id) {
-        return this.charTops.contains(id);
-    }
-
-    public boolean verifyBottomId(int id) {
-        return this.charBottoms.contains(id);
-    }
-
-    public boolean verifyShoeId(int id) {
-        return this.charShoes.contains(id);
-    }
-
-    public boolean verifyWeaponId(int id) {
-        return this.charWeapons.contains(id);
-    }
-
-    public boolean verifyCharacter(Character character) {
-        if (!verifyFaceId(character.getFace())) return false;
-        if (!verifyHairId(character.getHair())) return false;
-        if (!verifyHairColorId(character.getHair())) return false;
-        if (!verifySkinId(character.getSkinColor().getId())) return false;
-
-        // Here we only verify the equipment if the character that's being created is of type 'Beginner'
-        // This is because when the Maple Life A or Maple Life B items are used, the client does not send any data
-        // regarding what equipment the character should be wearing (as it's all handled server-side)
-        Job characterJob = character.getJob();
-        if (characterJob == Job.BEGINNER || characterJob == Job.NOBLESSE || characterJob == Job.LEGEND) {
-            if (!verifyTopId(character.getInventory(InventoryType.EQUIPPED).getItem((short) -5).getItemId()))
-                return false;
-            if (!verifyBottomId(character.getInventory(InventoryType.EQUIPPED).getItem((short) -6).getItemId()))
-                return false;
-            if (!verifyShoeId(character.getInventory(InventoryType.EQUIPPED).getItem((short) -7).getItemId()))
-                return false;
-            if (!verifyWeaponId(character.getInventory(InventoryType.EQUIPPED).getItem((short) -11).getItemId()))
-                return false;
-        }
-
-        return true;
-    }
 }

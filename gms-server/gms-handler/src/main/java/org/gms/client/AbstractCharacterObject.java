@@ -21,6 +21,7 @@ package org.gms.client;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.gms.client.status.MapleStat;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.server.maps.AbstractAnimatedMapObject;

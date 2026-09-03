@@ -17,8 +17,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.constants.net;
+package org.gms.net;
 
+import org.gms.constants.net.ServerConstants;
+import org.gms.net.encryption.protocol.ProtocolConstants;
 import org.gms.net.opcodes.Opcode;
 import org.gms.net.opcodes.RecvOpcode;
 import org.gms.net.opcodes.SendPacketOpcode;
@@ -35,7 +37,7 @@ public class OpcodeConstants {
 
     public static void generateOpcodeNames() {
         switch (ServerConstants.VERSION) {
-            case 53  -> init(SendPacketOpcode.values(), RecvOpcode.values());
+            case ProtocolConstants.GMS_V53  -> init(SendPacketOpcode.values(), RecvOpcode.values());
             default  -> throw new RuntimeException("不支援的版本: " + ServerConstants.VERSION);
         }
     }

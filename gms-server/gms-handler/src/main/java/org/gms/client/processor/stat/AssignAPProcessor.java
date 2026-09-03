@@ -28,7 +28,7 @@ import org.gms.client.Client;
 import org.gms.client.Job;
 import org.gms.client.character.skill.Skill;
 import org.gms.client.character.skill.SkillFactory;
-import org.gms.client.MapleStat;
+import org.gms.client.status.MapleStat;
 import org.gms.client.autoban.AutobanFactory;
 import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.equip.Equip;

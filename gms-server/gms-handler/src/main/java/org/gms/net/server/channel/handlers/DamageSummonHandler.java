@@ -21,7 +21,7 @@
 */
 package org.gms.net.server.channel.handlers;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.net.AbstractPacketHandler;
@@ -46,7 +46,7 @@ public final class DamageSummonHandler extends AbstractPacketHandler {
 
             summon.addHP(-damage);
             if (summon.getHP() <= 0) {
-                player.cancelEffectFromBuffStat(BuffStat.PUPPET);
+                player.cancelEffectFromBuffStat(CharBuffStat.PUPPET);
             }
             player.getMap().broadcastMessage(player, PacketCreator.damageSummon(player.getId(), skillID, damage, monsterIdFrom), summon.getPosition());
         }

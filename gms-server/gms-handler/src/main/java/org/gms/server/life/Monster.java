@@ -21,7 +21,7 @@
  */
 package org.gms.server.life;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.character.family.FamilyEntry;
@@ -703,7 +703,7 @@ public class Monster extends AbstractLoadedLife {
         float multiplier = 1.0f;
 
         // thanks Prophecy & Aika for finding out Holy Symbol not being applied on party bonuses
-        Integer holySymbol = attacker.getBuffedValue(BuffStat.HOLY_SYMBOL);
+        Integer holySymbol = attacker.getBuffedValue(CharBuffStat.HOLY_SYMBOL);
         if (holySymbol != null) {
             if (GameConfig.getServerBoolean("use_full_holy_symbol")) { // thanks Mordred, xinyifly, AyumiLove, andy33 for noticing HS hands out 20% of its potential on less than 3 players
                 multiplier *= (1.0 + (holySymbol.doubleValue() / 100.0));
@@ -744,12 +744,12 @@ public class Monster extends AbstractLoadedLife {
                 personalExp = 0.0f;
             }
 
-            Integer expBonus = attacker.getBuffedValue(BuffStat.EXP_INCREASE);
+            Integer expBonus = attacker.getBuffedValue(CharBuffStat.EXP_INCREASE);
             if (expBonus != null) {     // exp increase player buff found thanks to HighKey21
                 personalExp += expBonus;
             }
 
-            Integer expBuff = attacker.getBuffedValue(BuffStat.EXP_BUFF);
+            Integer expBuff = attacker.getBuffedValue(CharBuffStat.EXP_BUFF);
             if (expBuff != null) {
                 personalExp *= 2;
             }
@@ -1829,7 +1829,7 @@ public class Monster extends AbstractLoadedLife {
     }
 
     public boolean isCharacterPuppetInVicinity(Character chr) {
-        StatEffect mse = chr.getBuffEffect(BuffStat.PUPPET);
+        StatEffect mse = chr.getBuffEffect(CharBuffStat.PUPPET);
         if (mse != null) {
             Summon summon = chr.getSummonByKey(mse.getSourceId());
 
@@ -2161,7 +2161,7 @@ public class Monster extends AbstractLoadedLife {
                     return;
                 }
 
-                StatEffect puppetEffect = chrController.getBuffEffect(BuffStat.PUPPET);
+                StatEffect puppetEffect = chrController.getBuffEffect(CharBuffStat.PUPPET);
                 if (puppetEffect != null) {
                     Summon puppet = chrController.getSummonByKey(puppetEffect.getSourceId());
 

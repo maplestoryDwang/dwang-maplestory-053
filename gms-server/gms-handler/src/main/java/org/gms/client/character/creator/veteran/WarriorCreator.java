@@ -17,14 +17,14 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client.creator.veteran;
+package org.gms.client.character.creator.veteran;
 
 import org.gms.client.Client;
 import org.gms.client.Job;
 import org.gms.client.character.skill.Skill;
 import org.gms.client.character.skill.SkillFactory;
-import org.gms.client.creator.CharacterFactory;
-import org.gms.client.creator.CharacterFactoryRecipe;
+import org.gms.client.character.creator.CharacterFactory;
+import org.gms.client.character.creator.CharacterFactoryRecipe;
 import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.constants.id.ItemId;

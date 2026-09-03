@@ -41,7 +41,7 @@ import org.gms.model.pojo.NewYearCardRecord;
 import org.gms.client.processor.npc.FredrickProcessor;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.inventory.ItemConstants;
-import org.gms.constants.net.OpcodeConstants;
+import org.gms.net.OpcodeConstants;
 import org.gms.constants.net.ServerConstants;
 import org.gms.dao.entity.NxcouponsDO;
 import org.gms.manager.ServerManager;

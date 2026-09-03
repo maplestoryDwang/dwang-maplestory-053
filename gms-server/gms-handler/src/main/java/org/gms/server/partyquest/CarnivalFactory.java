@@ -1,6 +1,6 @@
 package org.gms.server.partyquest;
 
-import org.gms.client.Disease;
+import org.gms.client.status.Disease;
 import org.gms.provider.Data;
 import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;

@@ -17,12 +17,12 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client.creator.novice;
+package org.gms.client.character.creator.novice;
 
 import org.gms.client.Client;
 import org.gms.client.Job;
-import org.gms.client.creator.CharacterFactory;
-import org.gms.client.creator.CharacterFactoryRecipe;
+import org.gms.client.character.creator.CharacterFactory;
+import org.gms.client.character.creator.CharacterFactoryRecipe;
 import org.gms.client.inventory.InventoryType;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
@@ -32,6 +32,7 @@ import org.gms.constants.id.MapId;
  * @author RonanLana
  */
 public class BeginnerCreator extends CharacterFactory {
+
 
     private static CharacterFactoryRecipe createRecipe(Job job, int level, int map, int top, int bottom, int shoes, int weapon, int str, int dex, int inte, int luk) {
         CharacterFactoryRecipe recipe = new CharacterFactoryRecipe(job, level, map, top, bottom, shoes, weapon, str, dex, inte, luk);

@@ -1,11 +1,9 @@
-package org.gms.constants.game;
+package org.gms.server.cashshop;
 
 import lombok.Getter;
 import org.gms.client.inventory.Item;
 import org.gms.dwutil.CashShopUtils;
 import org.gms.net.packet.OutPacket;
-import org.gms.server.CashItemFactory;
-import org.gms.server.CashShop;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,13 +1,12 @@
 package org.gms.net.packet.logging;
 
 import org.gms.config.GameConfig;
-import org.gms.constants.net.OpcodeConstants;
+import org.gms.net.OpcodeConstants;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
 import org.gms.net.opcodes.OpcodeUtil;
-import org.gms.net.opcodes.SendPacketOpcode;
 import org.gms.net.packet.OutPacket;
 import org.gms.net.packet.Packet;
 import org.slf4j.Logger;

@@ -1,5 +1,6 @@
 package org.gms.client;
 
+import org.gms.client.status.MapleStat;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
 

@@ -21,7 +21,7 @@
 */
 package org.gms.net.server.channel.handlers;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.net.packet.InPacket;
@@ -30,7 +30,7 @@ public final class TouchMonsterDamageHandler extends AbstractDealDamageHandler {
     @Override
     public final void handlePacket(InPacket p, Client c) {
         Character chr = c.getPlayer();
-        if (chr.getEnergyBar() == 15000 || chr.getBuffedValue(BuffStat.BODY_PRESSURE) != null) {
+        if (chr.getEnergyBar() == 15000 || chr.getBuffedValue(CharBuffStat.BODY_PRESSURE) != null) {
             applyAttack(parseDamage(p, chr, false, false), c.getPlayer(), 1);
         }
     }

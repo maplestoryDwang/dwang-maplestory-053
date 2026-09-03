@@ -2,7 +2,7 @@ package org.gms.client.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.gms.client.Character;
-import org.gms.client.MapleStat;
+import org.gms.client.status.MapleStat;
 import org.gms.client.inventory.*;
 import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.client.inventory.pet.Pet;
@@ -16,7 +16,7 @@ import org.gms.exception.BizException;
 
 
 import org.gms.net.server.Server;
-import org.gms.server.CashShop;
+import org.gms.server.cashshop.CashShop;
 import org.gms.server.ItemInformationProvider;
 import org.gms.service.CharacterApiService;
 import org.gms.util.I18nUtil;

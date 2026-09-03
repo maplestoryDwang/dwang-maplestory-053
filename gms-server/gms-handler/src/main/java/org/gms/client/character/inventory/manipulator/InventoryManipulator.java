@@ -21,7 +21,7 @@
  */
 package org.gms.client.character.inventory.manipulator;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.dwutil.CharacterUtils;
 import org.gms.client.Client;
@@ -661,8 +661,8 @@ public class InventoryManipulator {
             target.setPosition(src);
             eqpInv.addItemFromDB(target);
         }
-        if (chr.getBuffedValue(BuffStat.BOOSTER) != null && ItemConstants.isWeapon(source.getItemId())) {
-            chr.cancelBuffStats(BuffStat.BOOSTER);
+        if (chr.getBuffedValue(CharBuffStat.BOOSTER) != null && ItemConstants.isWeapon(source.getItemId())) {
+            chr.cancelBuffStats(CharBuffStat.BOOSTER);
         }
 
         int petIndex = ItemConstants.PETS_NAME_TAG.indexOf(dst);

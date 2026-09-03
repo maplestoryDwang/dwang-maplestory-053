@@ -1,6 +1,6 @@
 package org.gms.constants.game;
 
-import org.gms.client.Disease;
+import org.gms.client.status.Disease;
 import org.gms.client.Job;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;

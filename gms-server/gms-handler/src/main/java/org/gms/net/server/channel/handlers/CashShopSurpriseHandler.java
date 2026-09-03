@@ -23,7 +23,7 @@ import org.gms.client.Client;
 import org.gms.client.inventory.Item;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
-import org.gms.server.CashShop;
+import org.gms.server.cashshop.CashShop;
 import org.gms.util.PacketCreator;
 
 import java.util.Optional;

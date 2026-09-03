@@ -17,7 +17,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client.creator;
+package org.gms.client.character.creator;
 
 import org.gms.client.Job;
 import org.gms.client.character.skill.Skill;
@@ -35,7 +35,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
- * @author RonanLana
  */
 public class CharacterFactoryRecipe {
     private final Job job;

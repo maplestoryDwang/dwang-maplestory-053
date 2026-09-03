@@ -21,7 +21,7 @@
 */
 package org.gms.net.server;
 
-import org.gms.client.Disease;
+import org.gms.client.status.Disease;
 import org.gms.server.life.MobSkill;
 import org.gms.util.Pair;
 

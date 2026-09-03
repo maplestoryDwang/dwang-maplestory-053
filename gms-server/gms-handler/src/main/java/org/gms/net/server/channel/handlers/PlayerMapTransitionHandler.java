@@ -20,7 +20,7 @@
 
 package org.gms.net.server.channel.handlers;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.net.AbstractPacketHandler;
@@ -45,11 +45,11 @@ public final class PlayerMapTransitionHandler extends AbstractPacketHandler {
         Character chr = c.getPlayer();
         chr.setMapTransitionComplete();
 
-        int beaconid = chr.getBuffSource(BuffStat.HOMING_BEACON);
+        int beaconid = chr.getBuffSource(CharBuffStat.HOMING_BEACON);
         if (beaconid != -1) {
-            chr.cancelBuffStats(BuffStat.HOMING_BEACON);
+            chr.cancelBuffStats(CharBuffStat.HOMING_BEACON);
 
-            final List<Pair<BuffStat, Integer>> stat = Collections.singletonList(new Pair<>(BuffStat.HOMING_BEACON, 0));
+            final List<Pair<CharBuffStat, Integer>> stat = Collections.singletonList(new Pair<>(CharBuffStat.HOMING_BEACON, 0));
             chr.sendPacket(PacketCreator.giveBuff(1, beaconid, stat));
         }
 

@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.gms.net.server.channel.handlers;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.character.skill.Skill;
@@ -70,8 +70,8 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
 
         AttackInfo attack = parseDamage(p, chr, true, false);
 
-        if (chr.getBuffEffect(BuffStat.MORPH) != null) {
-            if (chr.getBuffEffect(BuffStat.MORPH).isMorphWithoutAttack()) {
+        if (chr.getBuffEffect(CharBuffStat.MORPH) != null) {
+            if (chr.getBuffEffect(CharBuffStat.MORPH).isMorphWithoutAttack()) {
                 // How are they attacking when the client won't let them?
                 chr.getClient().disconnect(false, false);
                 return;
@@ -137,7 +137,7 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
                     }
                 }
             }
-            boolean hasShadowPartner = chr.getBuffedValue(BuffStat.SHADOWPARTNER) != null;
+            boolean hasShadowPartner = chr.getBuffedValue(CharBuffStat.SHADOWPARTNER) != null;
             if (hasShadowPartner) {
                 bulletCount *= 2;
             }
@@ -180,8 +180,8 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
                     }
                 }
             }
-            boolean soulArrow = chr.getBuffedValue(BuffStat.SOULARROW) != null;
-            boolean shadowClaw = chr.getBuffedValue(BuffStat.SHADOW_CLAW) != null;
+            boolean soulArrow = chr.getBuffedValue(CharBuffStat.SOULARROW) != null;
+            boolean shadowClaw = chr.getBuffedValue(CharBuffStat.SHADOW_CLAW) != null;
             if (projectile != 0) {
                 if (!soulArrow && !shadowClaw && attack.skill != 11101004 && attack.skill != 15111007 && attack.skill != 14101006) {
                     short bulletConsume = bulletCount;
@@ -244,12 +244,12 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
                     }
                 }
 
-                if (chr.getSkillLevel(SkillFactory.getSkill(NightWalker.VANISH)) > 0 && chr.getBuffedValue(BuffStat.DARKSIGHT) != null && attack.numAttacked > 0 && chr.getBuffSource(BuffStat.DARKSIGHT) != 9101004) {
-                    chr.cancelEffectFromBuffStat(BuffStat.DARKSIGHT);
-                    chr.cancelBuffStats(BuffStat.DARKSIGHT);
-                } else if (chr.getSkillLevel(SkillFactory.getSkill(WindArcher.WIND_WALK)) > 0 && chr.getBuffedValue(BuffStat.WIND_WALK) != null && attack.numAttacked > 0) {
-                    chr.cancelEffectFromBuffStat(BuffStat.WIND_WALK);
-                    chr.cancelBuffStats(BuffStat.WIND_WALK);
+                if (chr.getSkillLevel(SkillFactory.getSkill(NightWalker.VANISH)) > 0 && chr.getBuffedValue(CharBuffStat.DARKSIGHT) != null && attack.numAttacked > 0 && chr.getBuffSource(CharBuffStat.DARKSIGHT) != 9101004) {
+                    chr.cancelEffectFromBuffStat(CharBuffStat.DARKSIGHT);
+                    chr.cancelBuffStats(CharBuffStat.DARKSIGHT);
+                } else if (chr.getSkillLevel(SkillFactory.getSkill(WindArcher.WIND_WALK)) > 0 && chr.getBuffedValue(CharBuffStat.WIND_WALK) != null && attack.numAttacked > 0) {
+                    chr.cancelEffectFromBuffStat(CharBuffStat.WIND_WALK);
+                    chr.cancelBuffStats(CharBuffStat.WIND_WALK);
                 }
 
                 applyAttack(attack, chr, bulletCount);

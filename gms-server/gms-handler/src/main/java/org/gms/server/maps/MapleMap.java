@@ -21,7 +21,7 @@
  */
 package org.gms.server.maps;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.autoban.AutobanFactory;
@@ -737,8 +737,8 @@ public class MapleMap {
                     }
 
                     if (mesos > 0) {
-                        if (chr.getBuffedValue(BuffStat.MESOUP) != null) {
-                            mesos = NumberTool.doubleToInt(mesos * chr.getBuffedValue(BuffStat.MESOUP).doubleValue() / 100.0);
+                        if (chr.getBuffedValue(CharBuffStat.MESOUP) != null) {
+                            mesos = NumberTool.doubleToInt(mesos * chr.getBuffedValue(CharBuffStat.MESOUP).doubleValue() / 100.0);
                         }
                         mesos = NumberTool.floatToInt(mesos * chr.getMesoRate());
                         if (mesos <= 0) {
@@ -2516,7 +2516,7 @@ public class MapleMap {
         if (chr.getPlayerShop() != null) {
             addMapObject(chr.getPlayerShop());
         }
-        StatEffect summonStat = chr.getStatForBuff(BuffStat.SUMMON);
+        StatEffect summonStat = chr.getStatForBuff(CharBuffStat.SUMMON);
         if (summonStat != null) {
             Summon summon = chr.getSummons().get(summonStat.getSourceId());
             summon.setPosition(chr.getPosition());
@@ -2570,9 +2570,9 @@ public class MapleMap {
 
             msm.runMapScript(chr.getClient(), "onUserEnter/" + onUserEnter, false);
         }
-        if (FieldLimit.CANNOTUSEMOUNTS.check(fieldLimit) && chr.getBuffedValue(BuffStat.MONSTER_RIDING) != null) {
-            chr.cancelEffectFromBuffStat(BuffStat.MONSTER_RIDING);
-            chr.cancelBuffStats(BuffStat.MONSTER_RIDING);
+        if (FieldLimit.CANNOTUSEMOUNTS.check(fieldLimit) && chr.getBuffedValue(CharBuffStat.MONSTER_RIDING) != null) {
+            chr.cancelEffectFromBuffStat(CharBuffStat.MONSTER_RIDING);
+            chr.cancelBuffStats(CharBuffStat.MONSTER_RIDING);
         }
 
         if (mapid == MapId.FROM_LITH_TO_RIEN) { // To Rien
@@ -2677,7 +2677,7 @@ public class MapleMap {
             broadcastGMSpawnPlayerMapObjectMessage(chr, chr, true);
             chr.sendPacket(PacketCreator.getGMEffect(0x10, (byte) 1));
 
-            List<Pair<BuffStat, Integer>> dsstat = Collections.singletonList(new Pair<>(BuffStat.DARKSIGHT, 0));
+            List<Pair<CharBuffStat, Integer>> dsstat = Collections.singletonList(new Pair<>(CharBuffStat.DARKSIGHT, 0));
             broadcastGMMessage(chr, PacketCreator.giveForeignBuff(chr.getId(), dsstat), false);
         } else {
             broadcastSpawnPlayerMapObjectMessage(chr, chr, true);
@@ -2719,7 +2719,7 @@ public class MapleMap {
             }
         }
 
-        StatEffect summonStat = chr.getStatForBuff(BuffStat.SUMMON);
+        StatEffect summonStat = chr.getStatForBuff(CharBuffStat.SUMMON);
         if (summonStat != null) {
             Summon summon = chr.getSummonByKey(summonStat.getSourceId());
             summon.setPosition(chr.getPosition());
@@ -2881,7 +2881,7 @@ public class MapleMap {
 
         for (Summon summon : new ArrayList<>(chr.getSummonsValues())) {
             if (summon.isStationary()) {
-                chr.cancelEffectFromBuffStat(BuffStat.PUPPET);
+                chr.cancelEffectFromBuffStat(CharBuffStat.PUPPET);
             } else {
                 removeMapObject(summon);
             }

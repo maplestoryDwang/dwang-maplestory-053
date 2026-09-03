@@ -20,7 +20,7 @@
 */
 package org.gms.net.server;
 
-import org.gms.client.Disease;
+import org.gms.client.status.Disease;
 
 public class PlayerDiseaseValueHolder {//Thanks Celino
 

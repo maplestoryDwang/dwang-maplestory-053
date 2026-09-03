@@ -32,7 +32,7 @@ import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.gms.server.CashShop;
+import org.gms.server.cashshop.CashShop;
 import org.gms.server.ItemInformationProvider;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;

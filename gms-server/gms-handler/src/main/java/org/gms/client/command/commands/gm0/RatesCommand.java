@@ -23,7 +23,7 @@
 */
 package org.gms.client.command.commands.gm0;
 
-import org.gms.client.BuffStat;
+import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.command.Command;
@@ -42,7 +42,7 @@ public class RatesCommand extends Command {
         // travel rates 不在这里进行展示 因为它是全局的 与角色无关
         String noviceMsg = player.hasNoviceExpRate() ? I18nUtil.getMessage("ShowRatesCommand.message7") : "";
         String showMsg_ = "#e" + I18nUtil.getMessage("RatesCommand.message2") + "#n\r\n\r\n";
-        Integer expBuff = player.getBuffedValue(BuffStat.EXP_BUFF);
+        Integer expBuff = player.getBuffedValue(CharBuffStat.EXP_BUFF);
         if (expBuff != null) {
             exp_buff = 2;
         }

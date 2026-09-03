@@ -19,8 +19,9 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-package org.gms.client;
+package org.gms.client.character;
 
+import org.gms.client.Client;
 import org.gms.dao.entity.MonsterbookDO;
 import org.gms.manager.ServerManager;
 import org.gms.service.MonsterBookService;
@@ -36,6 +37,9 @@ import java.util.Map.Entry;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 怪物卡
+ */
 public final class MonsterBook {
     private int specialCard = 0;
     private int normalCard = 0;
