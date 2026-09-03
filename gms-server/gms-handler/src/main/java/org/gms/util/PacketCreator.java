@@ -2275,7 +2275,7 @@ public class PacketCreator {
 
         addCharLook(p, chr, false);
         p.writeInt(chr.getInventory(InventoryType.CASH).countById(ItemId.HEART_SHAPED_CHOCOLATE));
-        p.writeInt(chr.getItemEffect());
+        p.writeInt(chr.getItemIdEffect());
         p.writeInt(ItemConstants.getInventoryType(chr.getChair()) == InventoryType.SETUP ? chr.getChair() : 0);
 
         if (enteringField) {

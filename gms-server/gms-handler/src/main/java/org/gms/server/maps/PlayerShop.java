@@ -126,7 +126,7 @@ public class PlayerShop extends AbstractMapObject {
         for (int i = 0; i < 3; i++) {
             if (visitors[i] == null) {
                 visitors[i] = visitor;
-                visitor.setSlot(i);
+                visitor.setPlayerShopSlot(i);
 
                 this.broadcast(PacketCreator.getPlayerShopNewVisitor(visitor, i + 1));
                 owner.getMap().broadcastMessage(PacketCreator.updatePlayerShopBox(this));
@@ -147,7 +147,7 @@ public class PlayerShop extends AbstractMapObject {
                 if (visitors[i] != null && visitors[i].getId() == visitor.getId()) {
                     visitors[i].setPlayerShop(null);
                     visitors[i] = null;
-                    visitor.setSlot(-1);
+                    visitor.setPlayerShopSlot(-1);
 
                     this.broadcast(PacketCreator.getPlayerShopRemoveVisitor(i + 1));
                     owner.getMap().broadcastMessage(PacketCreator.updatePlayerShopBox(this));
@@ -168,7 +168,7 @@ public class PlayerShop extends AbstractMapObject {
             try {
                 for (int i = 0; i < 3; i++) {
                     if (visitors[i] != null && visitors[i].getId() == visitor.getId()) {
-                        visitor.setSlot(-1);    //absolutely cant remove player slot for late players without dc'ing them... heh
+                        visitor.setPlayerShopSlot(-1);    //absolutely cant remove player slot for late players without dc'ing them... heh
 
                         for (int j = i; j < 2; j++) {
                             if (visitors[j] != null) {
@@ -176,7 +176,7 @@ public class PlayerShop extends AbstractMapObject {
                             }
                             visitors[j] = visitors[j + 1];
                             if (visitors[j] != null) {
-                                visitors[j].setSlot(j);
+                                visitors[j].setPlayerShopSlot(j);
                             }
                         }
                         visitors[2] = null;

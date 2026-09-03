@@ -30,7 +30,7 @@ public final class UseDeathItemHandler extends AbstractPacketHandler {
     @Override
     public final void handlePacket(InPacket p, Client c) {
         int itemId = p.readInt();
-        c.getPlayer().setItemEffect(itemId);
+        c.getPlayer().setItemIdEffect(itemId);
         c.sendPacket(PacketCreator.itemEffect(c.getPlayer().getId(), itemId));
     }
 }

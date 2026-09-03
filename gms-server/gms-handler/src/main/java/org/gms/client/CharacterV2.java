@@ -19,7 +19,8 @@
 
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *//*
+
 package org.gms.client;
 
 import lombok.Getter;
@@ -149,276 +150,155 @@ import java.util.stream.Collectors;
 
 import static java.util.concurrent.TimeUnit.*;
 
-@Getter
-@Setter
 public class Character extends AbstractCharacterObject {
     private static final Logger log = LoggerFactory.getLogger(Character.class);
     public static final double MAX_VIEW_RANGE_SQ = 850 * 850;
 
-    // 2. CharacterIdentity – 身份/权限
-    private int id;
-    private int accountId;
-    private String name;
+    @Getter
+    @Setter
     private int world;
-    private int gender;
-    private SkinColor skinColor;
-    private int hair;
-    private int face;
-    private int gmLevel;
-    private boolean whiteChat;
-    private boolean hidden;
-    private boolean banned;
-
-    // 2. CharacterStats —— 角色属性与成长
+    @Getter
+    @Setter
+    private int id;
+    @Getter
+    @Setter
+    private int accountId;
+    @Getter
+    @Setter
     private int level;
-    private Job job = Job.BEGINNER;
-    private int attrStr, attrDex, attrInt, attrLuk;
-    private int hp, mp;
-    private int maxHp, maxMp;
-    private int remainingAp;
-    private int[] remainingSp = new int[10];
-    private final AtomicInteger exp = new AtomicInteger();
-    private final AtomicInteger gachaExp = new AtomicInteger();
-    private int fame;
-    private int hpMpApUsed;
-    private float expRate = 1;
-    private float mesoRate = 1;
-    private float dropRate = 1;
-    private int expCoupon = 1, mesoCoupon = 1, dropCoupon = 1;
-    private float mobExpRate = -1;
-    private long totalExpGained = 0;
-    private int energyBar;
-
-    // 排名相关
+    @Getter
+    @Setter
     private int rank;
+    @Getter
+    @Setter
     private int rankMove;
+    @Getter
+    @Setter
     private int jobRank;
+    @Getter
+    @Setter
     private int jobRankMove;
-
-    // 使用特效的Id
-    private int itemIdEffect;
-
-
-    // 本地缓存（计算用）
-    private transient int localstr, localdex, localluk, localint_, localmagic, localwatk;
-    private transient int equipmaxhp, equipmaxmp, equipstr, equipdex, equipluk, equipint_, equipmagic, equipwatk, localchairhp, localchairmp;
-    private transient float transientHp = Float.NEGATIVE_INFINITY;
-    private transient float transientMp = Float.NEGATIVE_INFINITY;
-    // 坐凳子回复概率
-    private int localchairrate;
-
-
-    // 3. CharacterInventory —— 背包与物品管理
-    private Inventory[] inventory;
-    private Storage storage = null;
-    private CashShop cashShop = null;
-    private int merchantmeso;
-    private int mesosTraded = 0;
-
-
-    // 4. CharacterSkillManager —— 技能与冷却
-    private final Map<Skill, SkillEntry> skills = new LinkedHashMap<>();
-    private final SkillMacro[] skillMacros = new SkillMacro[5];
-    private final Map<Integer, CooldownValueHolder> coolDowns = new LinkedHashMap<>();
-    private Dragon dragon;
-
-    // 定时任务
-    private ScheduledFuture<?> dragonBloodSchedule;
-    private ScheduledFuture<?> beholderHealingSchedule;
-    private ScheduledFuture<?> beholderBuffSchedule;
-    private ScheduledFuture<?> berserkSchedule;
-    private ScheduledFuture<?> skillCooldownTask;
-
-    // 5. CharacterBuffManager —— Buff与Debuff效果
-    private final EnumMap<CharBuffStat, BuffStatValueHolder> effects = new EnumMap<>(CharBuffStat.class);
-    private final Map<CharBuffStat, Byte> buffEffectsCount = new LinkedHashMap<>();
-    private final Map<Integer, Map<CharBuffStat, BuffStatValueHolder>> buffEffects = new LinkedHashMap<>();
-    private final Map<Integer, Long> buffExpires = new LinkedHashMap<>();
-    private final EnumMap<Disease, Pair<DiseaseValueHolder, MobSkill>> diseases = new EnumMap<>(Disease.class);
-    private final Map<Disease, Long> diseaseExpires = new LinkedHashMap<>();
-
-    // 定时任务
-    private ScheduledFuture<?> buffExpireTask;
-    private ScheduledFuture<?> diseaseExpireTask;
-    private ScheduledFuture<?> recoveryTask;
-    private ScheduledFuture<?> extraRecoveryTask;
-    private ScheduledFuture<?> chairRecoveryTask;
-    private ScheduledFuture<?> pendantOfSpirit;
-    private byte extraHpRec = 0, extraMpRec = 0;
-    private short extraRecInterval;
-    private byte pendantExp = 0;
-
-
-    // 6. CharacterMovement —— 地图移动与位置
-    private MapleMap map;
-    private int mapId;
-    private int initialSpawnPoint;
-    private SavedLocation[] savedLocations;
-    private final List<Integer> trockmaps = new ArrayList<>();
-    private final List<Integer> viptrockmaps = new ArrayList<>();
-    private long portaldelay = 0;
-    private int newWarpMap = -1;
-    private boolean canWarpMap = true;  //only one "warp" must be used per call, and this will define the right one.
-    private int canWarpCounter = 0;     //counts how many times "inner warps" have been called.
-    private int banishMap = -1;
-    private int banishSp = -1;
-    private long banishTime = 0;
-
-    // 传送/移动距离校验上下文
-    // 记录最近一次“瞬移类位移”发生时间（单调时钟纳秒，用于短时间内的距离检测防误判）
-    private volatile long lastTeleportLikeMoveTime = 0;
-    private Point teleportBeforePos = null; // 传送前服务端坐标（用于双坐标距离复核）
-    private Point teleportAfterPos = null; // 传送后服务端坐标（用于确认确实发生了传送位移）
-    private int teleportContextMapId = MapId.NONE; // 传送上下文所属地图，跨图后自动失效
-    private long teleportContextExpireTime = 0L; // 传送上下文过期时间戳（单调时钟纳秒）
-    private byte teleportContextRemainingChecks = 0; // 传送上下文剩余可用攻击校验次数
-    private Point movementBeforePos = null;
-    private Point movementAfterPos = null;
-    private int movementContextMapId = MapId.NONE;
-    private long movementContextExpireTime = 0L;
-    private byte movementContextRemainingChecks = 0;
-
-    // 7. CharacterParty —— 队伍管理
-    private Party party;
-    private PartyCharacter mpc;
-    private PartyQuest partyQuest = null;
-
-    // 8. CharacterGuild —— 公会与联盟
-    private int guildId;
-    private int guildRank;
-    private int allianceRank;
-    private GuildCharacter mgc = null;
-
-    // 9. CharacterFamily —— 家族系统
-    private FamilyEntry familyEntry;
-    private int familyId;
-    private boolean familyBuff = false;
-    private boolean familyParty = false;
-    private float familyExp = 1;
-    private float familyDrop = 1;
-    private ScheduledFuture<?> FamilyBuffTimer;
-
-    // 10. CharacterPetManager —— 宠物管理
-    private final Pet[] pets = new Pet[1];
-    private final Map<Integer, Set<Integer>> excluded = new LinkedHashMap<>();
-    private final Set<Integer> excludedItems = new LinkedHashSet<>();
-
-    // 11. CharacterMount —— 坐骑
-    private Mount mapleMount;
-
-    // 12. CharacterQuestManager —— 任务与进度
-    private Map<Short, QuestStatus> quests = new LinkedHashMap<>();
-    private Map<QuestV2, Long> questExpirations = new LinkedHashMap<>();
-    private final List<Pair<DelayedQuestUpdate, Object[]>> npcUpdateQuests = new LinkedList<>();
-    private final Map<Short, String> area_info = new LinkedHashMap<>();
+    @Setter
+    @Getter
+    private int gender;
+    @Setter
+    @Getter
+    private int hair;
+    @Setter
+    @Getter
+    private int face;
+    @Setter
+    @Getter
+    private int fame;
+    @Getter
+    @Setter
     private int questFame;
-
-    private ScheduledFuture<?> questExpireTask;
-
-    // 13. CharacterSocial —— 好友、聊天、迷你游戏、交易
-    private BuddyList buddylist;
-    private Messenger messenger;
-    private int messengerPosition = 4;
-    private MiniGame miniGame;
-    private RockPaperScissor rps;
-    private String chalktext;
-    private String commandtext;
-
-    // 迷你游戏胜负
-    private int omokwins, omokties, omoklosses;
-    private int matchcardwins, matchcardties, matchcardlosses;
-
-
-    // 14. CharacterShop —— 商店与交易（包括玩家商店、雇佣商店）
-    private Shop shop;
-    private Trade trade;
-    private PlayerShop playerShop;
-    private HiredMerchant hiredMerchant;
-    // player shop的位置
-    private int playerShopSlots = 0;
-
-
-    // 15. CharacterEvent —— 活动、迷你游戏事件（如CPQ、Ariant、Dojo、Fitness等）
-    private EventInstanceManager eventInstance = null;
-    private Map<String, Events> events = new LinkedHashMap<>();
-    private AriantColiseum ariantColiseum;
-    private MonsterCarnival monsterCarnival;
-    private MonsterCarnivalParty monsterCarnivalParty;
-    private Fitness fitness;
-    private Ola ola;
-
-    // 积分/等级
-    private int dojoPoints;
-    private int dojoStage;
-    private int dojoEnergy;
-    private int ariantPoints;
-    private int vanquisherStage;
-    private int vanquisherKills;
-    private boolean finishedDojoTutorial;
-
-    // CPQ
-    private byte team = 0;
-    private int cp = 0;
-    private int totCP = 0;
-    private int FestivalPoints;
-    private boolean challenged = false;
-    private long snowballattack;
-    private ScheduledFuture<?> cpqSchedule;
-
-    // 新年卡
-    private final Set<NewYearCardRecord> newyears = new LinkedHashSet<>();
-
-    // 16. CharacterPersistence —— 数据持久化（单独分离）
-
-    // 17. CharacterNetwork —— 网络消息处理（发送包）
-
-    // 18. CharacterCash ——  商城
-    private int owlSearch;
-    private long lastUsedCashItem;
-
-
-
-    // mtc 拍卖
+    @Getter
+    @Setter
+    private int initialSpawnPoint;
+    @Setter
+    private int mapId;
     @Getter
     private int currentPage;
     @Getter
     private int currentType = 0;
     @Getter
     private int currentTab = 1;
+    @Setter
+    @Getter
+    private int itemEffect;
+    @Setter
+    @Getter
+    private int guildId;
+    @Setter
+    @Getter
+    private int guildRank;
+    @Setter
+    @Getter
+    private int allianceRank;
+    @Setter
+    @Getter
+    private int messengerPosition = 4;
+    private int slots = 0;
+    @Getter
+    @Setter
+    private int energyBar;
+    private int gmLevel;
     @Getter
     private int ci = 0;
-
-
-
     @Getter
+    private FamilyEntry familyEntry;
     @Setter
-    private MonsterBook monsterBook;
+    @Getter
+    private int familyId;
     @Setter
-    private int monsterbookCover;
-
-
-    // 海盗-战船血量
+    private int bookCover;
     @Setter
     @Getter
     private int battleshipHp = 0;
-
-    // 报告，不知道是啥
+    @Getter
+    private int mesosTraded = 0;
     @Getter
     private int possibleReports = 10;
-
-
-    // 帮别人加人气
-    private List<Integer> lastmonthfameids;
+    @Getter
+    @Setter
+    private int ariantPoints;
+    @Setter
+    @Getter
+    private int dojoPoints;
+    @Getter
+    @Setter
+    private int vanquisherStage;
+    @Setter
+    @Getter
+    private int dojoStage;
+    @Getter
+    private int dojoEnergy;
+    @Getter
+    @Setter
+    private int vanquisherKills;
+    private float expRate = 1;
+    @Getter
+    private float mesoRate = 1;
+    @Getter
+    private float dropRate = 1;
+    private int expCoupon = 1, mesoCoupon = 1, dropCoupon = 1;
+    @Getter
+    @Setter
+    private int omokwins;
+    @Getter
+    @Setter
+    private int omokties;
+    @Getter
+    @Setter
+    private int omoklosses;
+    @Getter
+    @Setter
+    private int matchcardwins;
+    @Getter
+    @Setter
+    private int matchcardties;
+    @Getter
+    @Setter
+    private int matchcardlosses;
+    @Getter
+    @Setter
+    private int owlSearch;
+    @Setter
+    @Getter
     private long lastfametime;
-
-    // 表情时间
+    @Setter
+    @Getter
+    private long lastUsedCashItem;
     private long lastExpression = 0;
-
-    // 监狱时间
     @Setter
     private long jailExpiration = -1;
-
-    private boolean equipchanged = true, berserk, hasMerchant, hasSandboxItem = false;
+    private transient int localstr, localdex, localluk, localint_, localmagic, localwatk;
+    private transient int equipmaxhp, equipmaxmp, equipstr, equipdex, equipluk, equipint_, equipmagic, equipwatk, localchairhp, localchairmp;
+    private int localchairrate;
+    @Getter
+    private boolean hidden;
+    private boolean equipchanged = true, berserk, hasMerchant, hasSandboxItem = false, whiteChat = false;
     @Setter
     private boolean canRecvPartySearchInvite = true;
     private boolean usedSafetyCharm = false;
@@ -428,88 +308,184 @@ public class Character extends AbstractCharacterObject {
     @Getter
     @Setter
     private String linkedName = null;
-
+    @Getter
+    @Setter
+    private boolean finishedDojoTutorial;
     private boolean usedStorage = false;
-
+    @Getter
+    @Setter
+    private String name;
+    private String chalktext;
+    private String commandtext;
     @Setter
     private String dataString;
     @Getter
     @Setter
     private String search = null;
-//    private final AtomicBoolean mapTransitioning = new AtomicBoolean(true);  // player client is currently trying to change maps or log in the game map //玩家客户端当前正在尝试更改地图或登录游戏地图
+    //    private final AtomicBoolean mapTransitioning = new AtomicBoolean(true);  // player client is currently trying to change maps or log in the game map //玩家客户端当前正在尝试更改地图或登录游戏地图
     private final AtomicBoolean mapTransitioning = new AtomicBoolean(false);  // player client is currently trying to change maps or log in the game map //玩家客户端当前正在尝试更改地图或登录游戏地图
     private final AtomicBoolean awayFromWorld = new AtomicBoolean(true);  // player is online, but on cash shop or mts
+    private final AtomicInteger exp = new AtomicInteger();
+    private final AtomicInteger gachaExp = new AtomicInteger();
     private final AtomicInteger meso = new AtomicInteger();
     private final AtomicInteger chair = new AtomicInteger(-1);
-
-
-
+    private long totalExpGained = 0;
+    private int merchantmeso;
+    @Getter
+    @Setter
+    private BuddyList buddylist;
+    private EventInstanceManager eventInstance = null;
+    @Setter
+    @Getter
+    private HiredMerchant hiredMerchant = null;
     @Getter
     @Setter
     private Client client;
-
-
-
-
-
-
-
-
+    private GuildCharacter mgc = null;
+    private PartyCharacter mpc = null;
+    private Inventory[] inventory;
+    @Setter
+    @Getter
+    private Job job = Job.BEGINNER;
+    @Getter
+    @Setter
+    private Messenger messenger = null;
+    @Getter
+    @Setter
+    private MiniGame miniGame;
+    @Getter
+    private RockPaperScissor rps;
+    @Getter
+    @Setter
+    private Mount mapleMount;
+    private Party party;
+    private final Pet[] pets = new Pet[1];
+    @Getter
+    @Setter
+    private PlayerShop playerShop = null;
+    @Getter
+    @Setter
+    private Shop shop = null;
+    @Getter
+    @Setter
+    private SkinColor skinColor = SkinColor.NORMAL;
+    @Getter
+    @Setter
+    private Storage storage = null;
+    @Getter
+    @Setter
+    private Trade trade = null;
+    @Getter
+    @Setter
+    private MonsterBook monsterBook;
+    @Getter
+    @Setter
+    private CashShop cashShop;
+    private final Set<NewYearCardRecord> newyears = new LinkedHashSet<>();
+    @Getter
+    private final SavedLocation[] savedLocations;
+    @Getter
+    private final SkillMacro[] skillMacros = new SkillMacro[5];
+    @Setter
+    @Getter
+    private List<Integer> lastmonthfameids;
     private final List<WeakReference<MapleMap>> lastVisitedMaps = new LinkedList<>();
     private WeakReference<MapleMap> ownedMap = new WeakReference<>(null);
-
+    @Getter
+    private final Map<Short, QuestStatus> quests;
     private final Set<Monster> controlled = new LinkedHashSet<>();
     private final Map<Integer, String> entered = new LinkedHashMap<>();
     private final Set<MapObject> visibleMapObjects = Collections.newSetFromMap(new ConcurrentHashMap<>());
+    private final Map<Skill, SkillEntry> skills = new LinkedHashMap<>();
     private final Map<Integer, Integer> activeCoupons = new LinkedHashMap<>();
     private final Map<Integer, Integer> activeCouponRates = new LinkedHashMap<>();
-
+    private final EnumMap<CharBuffStat, BuffStatValueHolder> effects = new EnumMap<>(CharBuffStat.class);
+    private final Map<CharBuffStat, Byte> buffEffectsCount = new LinkedHashMap<>();
+    private final Map<Disease, Long> diseaseExpires = new LinkedHashMap<>();
+    private final Map<Integer, Map<CharBuffStat, BuffStatValueHolder>> buffEffects = new LinkedHashMap<>(); // non-overriding buffs thanks to Ronan
+    private final Map<Integer, Long> buffExpires = new LinkedHashMap<>();
     @Getter
     private final Map<Integer, KeyBinding> keymap = new LinkedHashMap<>();
     private final Map<Integer, Summon> summons = new LinkedHashMap<>();
+    private final Map<Integer, CooldownValueHolder> coolDowns = new LinkedHashMap<>();
+    private final EnumMap<Disease, Pair<DiseaseValueHolder, MobSkill>> diseases = new EnumMap<>(Disease.class);
     @Getter
     @Setter
     private byte[] quickSlotLoaded;
     @Setter
     private QuickslotBinding quickSlotKeyMapped;
     private Door pdoor = null;
+    private Map<QuestV2, Long> questExpirations = new LinkedHashMap<>();
+    private ScheduledFuture<?> dragonBloodSchedule;
     private ScheduledFuture<?> hpDecreaseTask;
+    private ScheduledFuture<?> beholderHealingSchedule, beholderBuffSchedule, berserkSchedule;
+    private ScheduledFuture<?> skillCooldownTask = null;
+    private ScheduledFuture<?> buffExpireTask = null;
     private ScheduledFuture<?> itemExpireTask = null;
+    private ScheduledFuture<?> diseaseExpireTask = null;
+    private ScheduledFuture<?> questExpireTask = null;
+    private ScheduledFuture<?> recoveryTask = null;
+    private ScheduledFuture<?> extraRecoveryTask = null;
+    private ScheduledFuture<?> chairRecoveryTask = null;
+    private ScheduledFuture<?> pendantOfSpirit = null; //1122017
+    private ScheduledFuture<?> cpqSchedule = null;
 
+    private ScheduledFuture<?> FamilyBuffTimer = null;
     private final Lock chrLock = new ReentrantLock(true);
     private final Lock evtLock = new ReentrantLock(true);
     private final Lock petLock = new ReentrantLock(true);
     private final Lock prtLock = new ReentrantLock();
     private final Lock cpnLock = new ReentrantLock();
-
-
+    private final Map<Integer, Set<Integer>> excluded = new LinkedHashMap<>();
+    private final Set<Integer> excludedItems = new LinkedHashSet<>();
     @Getter
     private final Set<Integer> disabledPartySearchInvites = new LinkedHashSet<>();
-
+    private long portaldelay = 0;
+    // 记录最近一次“瞬移类位移”发生时间（单调时钟纳秒，用于短时间内的距离检测防误判）
+    private volatile long lastTeleportLikeMoveTime = 0;
     // 传送距离误判修正上下文：用于“传送前坐标 + 当前坐标”双坐标校验
     private static final long TELEPORT_DISTANCE_CONTEXT_EXPIRE_NS = MILLISECONDS.toNanos(1200L); // 保护窗口，过长会增加可利用面
     private static final byte TELEPORT_DISTANCE_CONTEXT_MAX_ATTACK_CHECKS = 2; // 最多保护 2 次攻击包
     private static final double TELEPORT_DISTANCE_CONTEXT_MIN_SHIFT_SQ = 1600.0; // 至少 40px 位移才建立上下文
-
+    private Point teleportBeforePos = null; // 传送前服务端坐标（用于双坐标距离复核）
+    private Point teleportAfterPos = null; // 传送后服务端坐标（用于确认确实发生了传送位移）
+    private int teleportContextMapId = MapId.NONE; // 传送上下文所属地图，跨图后自动失效
+    private long teleportContextExpireTime = 0L; // 传送上下文过期时间戳（单调时钟纳秒）
+    private byte teleportContextRemainingChecks = 0; // 传送上下文剩余可用攻击校验次数
     // 普通移动距离误判修正上下文：只覆盖“移动包后紧跟攻击包”的极短时间窗
     private static final long MOVEMENT_DISTANCE_CONTEXT_EXPIRE_NS = MILLISECONDS.toNanos(350L);
     private static final byte MOVEMENT_DISTANCE_CONTEXT_MAX_ATTACK_CHECKS = 1;
     private static final double MOVEMENT_DISTANCE_CONTEXT_MIN_SHIFT_SQ = 400.0; // 至少 20px 位移才建立上下文
-
+    private Point movementBeforePos = null;
+    private Point movementAfterPos = null;
+    private int movementContextMapId = MapId.NONE;
+    private long movementContextExpireTime = 0L;
+    private byte movementContextRemainingChecks = 0;
     @Getter
     @Setter
     private long lastCombo = 0;
     private short combocounter = 0;
     @Getter
     private final List<String> blockedPortals = new ArrayList<>();
+    private final Map<Short, String> area_info = new LinkedHashMap<>();
     private AutobanManager autoBan;
-
-
+    @Getter
+    @Setter
+    private boolean banned = false;
     private boolean blockCashShop = false;
     private boolean allowExpGain = true;
-    private byte doorSlot = -1;
-
-
+    private byte pendantExp = 0, doorSlot = -1;
+    private final List<Integer> trockmaps = new ArrayList<>();
+    private final List<Integer> viptrockmaps = new ArrayList<>();
+    @Getter
+    private Map<String, Events> events = new LinkedHashMap<>();
+    @Setter
+    @Getter
+    private PartyQuest partyQuest = null;
+    private final List<Pair<DelayedQuestUpdate, Object[]>> npcUpdateQuests = new LinkedList<>();
+    @Setter
+    @Getter
+    private Dragon dragon = null;
     @Setter
     private Ring marriageRing;
     @Setter
@@ -526,6 +502,11 @@ public class Character extends AbstractCharacterObject {
     @Getter
     private boolean useCS;  //chaos scroll upon crafting item.
     private long npcCd;
+    private int newWarpMap = -1;
+    private boolean canWarpMap = true;  //only one "warp" must be used per call, and this will define the right one.
+    private int canWarpCounter = 0;     //counts how many times "inner warps" have been called.
+    private byte extraHpRec = 0, extraMpRec = 0;
+    private short extraRecInterval;
     @Setter
     @Getter
     private int targetHpBarHash = 0;
@@ -533,7 +514,9 @@ public class Character extends AbstractCharacterObject {
     @Getter
     private long targetHpBarTime = 0;
     private long nextWarningTime = 0;
-
+    private int banishMap = -1;
+    private int banishSp = -1;
+    private long banishTime = 0;
     @Setter
     private long lastExpGainTime;
     private boolean pendingNameChange; //only used to change name on logout, not to be relied upon elsewhere
@@ -543,8 +526,17 @@ public class Character extends AbstractCharacterObject {
     @Setter
     @Getter
     private boolean chasing = false;
+    private float mobExpRate = -1;
 
+    @Getter
+    private boolean familyBuff = false;
+    private boolean familyParty = false;
 
+    // 获取 FamilyExp 的值
+    @Getter
+    private float familyExp = 1;
+    @Getter
+    private float familyDrop = 1;
     private static final CharacterInternalService CHARACTER_INTERNAL_SERVICE = ServerManager.getApplicationContext().getBean(CharacterInternalService.class);
     private static final NameChangeService nameChangeService = ServerManager.getApplicationContext().getBean(NameChangeService.class);
     private static final WorldTransferService worldTransferService = ServerManager.getApplicationContext().getBean(WorldTransferService.class);
@@ -552,16 +544,20 @@ public class Character extends AbstractCharacterObject {
     private static final HpMpAlertService hpMpAlertService = ServerManager.getApplicationContext().getBean(HpMpAlertService.class);
     private static final InventoryService inventoryService = ServerManager.getApplicationContext().getBean(InventoryService.class);
 
-    /**
+    */
+/**
      * 最后攻击时间
      * 用来校验攻击速度是否过快
-     */
+     *//*
+
     private final ConcurrentHashMap<Integer, Long> lastAttackTimes = new ConcurrentHashMap<>();
 
-    /**
+    */
+/**
      * 原子更新指定技能的最后攻击时间，并返回与上次记录的时间间隔（毫秒）。
      * 若是首次记录或出现时钟回退，返回 Long.MAX_VALUE 表示本次不参与间隔判定。
-     */
+     *//*
+
     public long updateLastAttackTimeAndGetInterval(int skillId, long currentTimeMillis) {
         AtomicLong intervalMillis = new AtomicLong(Long.MAX_VALUE);
         lastAttackTimes.compute(skillId, (ignored, previousTime) -> {
@@ -946,6 +942,7 @@ public class Character extends AbstractCharacterObject {
 
     public void hide(boolean hide, boolean login) {
 
+*/
 /*
         if (isGM() && hide != this.hidden) {
             if (!hide) {
@@ -974,7 +971,8 @@ public class Character extends AbstractCharacterObject {
                 this.releaseControlledMonsters();
             }
             enableActions();
-        }*/
+        }*//*
+
     }
 
     public void hide(boolean hide) {
@@ -1232,8 +1230,9 @@ public class Character extends AbstractCharacterObject {
             addhp += Randomizer.rand(300, 350);
             addmp += Randomizer.rand(150, 200);
         }
-        
-        /*
+
+        */
+/*
         //aran perks?
         int newJobId = newJob.getId();
         if(newJobId == 2100) {          // become aran1
@@ -1245,7 +1244,8 @@ public class Character extends AbstractCharacterObject {
             addhp += 275;
             addmp += 275;
         }
-        */
+        *//*
+
 
         effLock.lock();
         statWlock.lock();
@@ -1316,12 +1316,14 @@ public class Character extends AbstractCharacterObject {
         if (guild != null) {
             guild.broadcast(packet, id);
         }
-        
-        /*
+
+        */
+/*
         if(partnerid > 0) {
             partner.sendPacket(packet); not yet implemented
         }
-        */
+        *//*
+
         sendPacket(packet);
     }
 
@@ -1427,10 +1429,12 @@ public class Character extends AbstractCharacterObject {
     }
 
 
-    /**
+    */
+/**
      * 玩家角色更改地图
      * @param map   地图ID
-     */
+     *//*
+
     public void changeMap(int map, Object pt) {
         MapleMap warpMap;
         EventInstanceManager eim = getEventInstance();
@@ -1771,12 +1775,14 @@ public class Character extends AbstractCharacterObject {
         InviteCoordinator.removePlayerIncomingInvites(id);
     }
 
-    /**
+    */
+/**
      * 玩家更改地图 内部方法
      * @param to
      * @param pos
      * @param warpPacket
-     */
+     *//*
+
     private void changeMapInternal(final MapleMap to, final Point pos, Packet warpPacket) {
         if (!canWarpMap) {
             return;
@@ -1847,17 +1853,21 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    /**
+    */
+/**
      * 玩家角色是否处于切换地图的状态
      * @return boolean
-     */
+     *//*
+
     public boolean isChangingMaps() {
         return this.mapTransitioning.get();
     }
 
-    /**
+    */
+/**
      *  设置地图转换完成
-     */
+     *//*
+
     public void setMapTransitionComplete() {
         this.mapTransitioning.set(false);
     }
@@ -1930,11 +1940,13 @@ public class Character extends AbstractCharacterObject {
             }
         }
     }
-    /**
+    */
+/**
      * Adds this monster to the controlled list. The monster must exist on the Map.
      *
      * @param monster
-     */
+     *//*
+
     public void controlMonster(Monster monster, boolean aggro) {
         monster.setController(this);
         controlled.add(monster);
@@ -1985,7 +1997,8 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    /**
+    */
+/**
      * 处理拾取后立即消耗的道具逻辑
      *
      * @param itemId 物品的唯一标识ID，应符合游戏物品ID规范（消耗品类ID以2开头）
@@ -2014,7 +2027,8 @@ public class Character extends AbstractCharacterObject {
      *   - 第1位：物品大类（2=消耗品）
      *   - 第2-4位：物品子类（238=怪物卡片）
      * - 队伍道具效果只会影响同地图的存活队友
-     */
+     *//*
+
     public boolean applyConsumeOnPickup(final int itemId) {// 判断拾取后是否立即消耗道具的方法
         if (itemId / 1000000 != 2) {// 检查物品ID是否属于消耗品类（假设ID以2开头）
             return false; // 非消耗品直接返回不处理
@@ -2327,7 +2341,8 @@ public class Character extends AbstractCharacterObject {
     }
 
     private static Pair<Integer, Pair<Integer, Integer>> getChairTaskIntervalRate(int maxhp, int maxmp) {
-        /*
+        */
+/*
         此处2个参数CHAIR_EXTRA_HEAL_MULTIPLIER和CHAIR_EXTRA_HEAL_MAX_DELAY已被我删除
         1.在倍率固定的情况下，既不希望定时任务执行太快，又不希望定时任务执行太慢
         2.在固定最大时间的情况下，既不希望恢复量太大，又不希望恢复量太小
@@ -2335,7 +2350,8 @@ public class Character extends AbstractCharacterObject {
         4.所以，这个参数需要个人进行复杂的计算才能配置，不能乱配，但他又放开让你都允许配置
         5.综上，这种属于既要又要，什么都要只会害了你，所以我把这2个参数都干掉了
         6.如果确实要放开允许配置，最多把CHAIR_EXTRA_HEAL_MAX_DELAY放开即可，这个参数还算有点意义，但也需要简单计算一下得到他合适的值
-         */
+         *//*
+
         float toHeal = Math.max(maxhp, maxmp);
         float maxDuration = SECONDS.toMillis(21);
 
@@ -2719,11 +2735,13 @@ public class Character extends AbstractCharacterObject {
         dropMessage(0, message);
     }
 
-    /**
+    */
+/**
      * 给玩家角色发送消息
      * @param type  0=聊天窗[note]蓝色消息；1=中间弹窗；2=？；3=？；4=？；5=聊天窗红色消息；6=聊天窗黄色消息
      * @param message
-     */
+     *//*
+
     public void dropMessage(int type, String message) {
         sendPacket(PacketCreator.serverNotice(type, message));
     }
@@ -3501,10 +3519,12 @@ public class Character extends AbstractCharacterObject {
 
             chrLock.lock();
             try {
-                /*
+                */
+/*
                 if (buffExpires.get(cancelEffectCancelTasks.getRight().effect.getBuffSourceId()) != null) {
                     nestedCancel = true;
-                }*/
+                }*//*
+
 
                 if (cancelEffectCancelTasks.getRight().bestApplied) {
                     fetchBestEffectFromItemEffectHolder(cancelEffectCancelTasks.getLeft());
@@ -3513,10 +3533,12 @@ public class Character extends AbstractCharacterObject {
                 chrLock.unlock();
             }
 
-            /*
+            */
+/*
             if (nestedCancel) {
                 this.cancelEffect(cancelEffectCancelTasks.getRight().effect, false, -1, false);
-            }*/
+            }*//*
+
         }
     }
 
@@ -4510,9 +4532,11 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    /**
+    */
+/**
      * 统一从数据库加载单只宠物的过滤配置，确保召唤时内存状态与数据库保持一致。
-     */
+     *//*
+
     public void loadPetExcludedItems(int petId) {
         List<Integer> excludedItemIds = inventoryService.getPetIgnoreByPetId(petId).stream()
                 .map(PetignoresDO::getItemid)
@@ -4521,9 +4545,11 @@ public class Character extends AbstractCharacterObject {
         replacePetExcludedItemsInMemory(petId, excludedItemIds);
     }
 
-    /**
+    */
+/**
      * 客户端提交过滤设置时，直接按差异增量更新数据库，避免角色保存时再做危险的全量删写。
-     */
+     *//*
+
     public void updatePetExcludedItems(int petId, Set<Integer> newExcludedItems) {
         Set<Integer> currentExcludedItems = getExcludedForPet(petId);
         Set<Integer> normalizedExcludedItems = new LinkedHashSet<>(newExcludedItems);
@@ -4539,9 +4565,11 @@ public class Character extends AbstractCharacterObject {
         replacePetExcludedItemsInMemory(petId, normalizedExcludedItems);
     }
 
-    /**
+    */
+/**
      * 宠物被永久删除时同步清理数据库和角色内存中的过滤配置，避免残留脏数据。
-     */
+     *//*
+
     public void deletePetExcludedData(int petId) {
         inventoryService.deletePetData(petId);
         removeExcluded(petId);
@@ -4871,11 +4899,13 @@ public class Character extends AbstractCharacterObject {
                 || (checkEquipped && inventory[InventoryType.EQUIPPED.ordinal()].findById(itemid) != null);
     }
 
-    /**
+    */
+/**
      * 判断是否穿某件装备
      * @param itemid
      * @return
-     */
+     *//*
+
     public boolean haveItemEquipped(int itemid) {
         return (inventory[InventoryType.EQUIPPED.ordinal()].findById(itemid) != null);
     }
@@ -5072,7 +5102,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     public int getMonsterBookCover() {
-        return monsterbookCover;
+        return bookCover;
     }
 
     public int getNoPets() {
@@ -5508,7 +5538,9 @@ public class Character extends AbstractCharacterObject {
         return skills.get(skill).expiration;
     }
 
-
+    public int getSlot() {
+        return slots;
+    }
 
     public final List<QuestStatus> getStartedQuests() {
         List<QuestStatus> ret = new LinkedList<>();
@@ -6497,7 +6529,7 @@ public class Character extends AbstractCharacterObject {
         chr.setGuildRank(charactersDO.getGuildrank());
         chr.setAllianceRank(charactersDO.getAllianceRank());
         chr.setFamilyId(charactersDO.getFamilyId());
-        chr.setMonsterbookCover(charactersDO.getMonsterbookcover());
+        chr.setBookCover(charactersDO.getMonsterbookcover());
         chr.setMonsterBook(new MonsterBook(charactersDO.getId()));
         chr.setVanquisherStage(charactersDO.getVanquisherStage());
         chr.setAriantPoints(charactersDO.getAriantPoints());
@@ -6702,10 +6734,10 @@ public class Character extends AbstractCharacterObject {
             cdo.setMountexp(chr.getMapleMount().getExp());
             cdo.setMounttiredness(chr.getMapleMount().getTiredness());
         }
-        cdo.setEquipslots((int) chr.getPlayerShopSlots(0));
-        cdo.setUseslots((int) chr.getPlayerShopSlots(1));
-        cdo.setSetupslots((int) chr.getPlayerShopSlots(2));
-        cdo.setEtcslots((int) chr.getPlayerShopSlots(3));
+        cdo.setEquipslots((int) chr.getSlots(0));
+        cdo.setUseslots((int) chr.getSlots(1));
+        cdo.setSetupslots((int) chr.getSlots(2));
+        cdo.setEtcslots((int) chr.getSlots(3));
         // todo 未完成
         return cdo;
     }
@@ -7086,7 +7118,8 @@ public class Character extends AbstractCharacterObject {
                 localmagic += matkbuff;
             }
 
-            /*
+            */
+/*
             Integer speedbuff = getBuffedValue(BuffStat.SPEED);
             if (speedbuff != null) {
                 localspeed += speedbuff.intValue();
@@ -7095,7 +7128,8 @@ public class Character extends AbstractCharacterObject {
             if (jumpbuff != null) {
                 localjump += jumpbuff.intValue();
             }
-            */
+            *//*
+
 
             int blessing = getSkillLevel(10000000 * getJobType() + 12);
             if (blessing > 0) {
@@ -7791,12 +7825,12 @@ public class Character extends AbstractCharacterObject {
                         ps.setInt(31, 0);
                     }
                     for (int i = 1; i < 5; i++) {
-                        ps.setInt(i + 31, getPlayerShopSlots(i));
+                        ps.setInt(i + 31, getSlots(i));
                     }
 
                     monsterBook.saveCards(con, id);
 
-                    ps.setInt(36, monsterbookCover);
+                    ps.setInt(36, bookCover);
                     ps.setInt(37, vanquisherStage);
                     ps.setInt(38, dojoPoints);
                     ps.setInt(39, dojoStage);
@@ -8445,7 +8479,7 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    public byte getPlayerShopSlots(int type) {
+    public byte getSlots(int type) {
         return type == InventoryType.CASH.getType() ? 96 : inventory[type].getSlotLimit();
     }
 
@@ -8621,11 +8655,13 @@ public class Character extends AbstractCharacterObject {
                 equipUpgrades.put(eq, new LinkedList<Pair<StatUpgrade, Integer>>());
             }
 
-            /*
+            */
+/*
             for (Entry<StatUpgrade, Float> es : statups.entrySet()) {
                 System.out.println(es);
             }
-            */
+            *//*
+
 
             for (Entry<StatUpgrade, Float> e : statups.entrySet()) {
                 Double ev = Math.sqrt(e.getValue());
@@ -8718,8 +8754,8 @@ public class Character extends AbstractCharacterObject {
         InventoryManipulator.removeFromSlot(c, type, (byte) slot, quantity, false);
     }
 
-    public void setPlayerShopSlot(int slotid) {
-        playerShopSlots = slotid;
+    public void setSlot(int slotid) {
+        slots = slotid;
     }
 
 
@@ -9207,18 +9243,22 @@ public class Character extends AbstractCharacterObject {
         return portaldelay;
     }
 
-    /**
+    */
+/**
      * 标记一次瞬移类位移（例如树洞/传送动作）。
-     */
+     *//*
+
     public void markTeleportLikeMove() {
         this.lastTeleportLikeMoveTime = monotonicNow();
     }
 
-    /**
+    */
+/**
      * 标记一次瞬移类位移，并记录传送前后坐标用于后续攻击距离双坐标校验。
      *
      * <p>只在位移明显时建立上下文，避免普通小步移动误入传送保护逻辑。</p>
-     */
+     *//*
+
     public synchronized void markTeleportLikeMove(Point beforePos, Point afterPos) {
         long now = monotonicNow();
         this.lastTeleportLikeMoveTime = now;
@@ -9235,9 +9275,11 @@ public class Character extends AbstractCharacterObject {
         this.teleportContextRemainingChecks = TELEPORT_DISTANCE_CONTEXT_MAX_ATTACK_CHECKS;
     }
 
-    /**
+    */
+/**
      * 记录一次普通移动前后坐标，用于极短时间窗内的攻击距离双坐标校验。
-     */
+     *//*
+
     public synchronized void markRegularMove(Point beforePos, Point afterPos) {
         long now = monotonicNow();
         if (!shouldBuildMovementDistanceContext(beforePos, afterPos)) {
@@ -9252,18 +9294,22 @@ public class Character extends AbstractCharacterObject {
         this.movementContextRemainingChecks = MOVEMENT_DISTANCE_CONTEXT_MAX_ATTACK_CHECKS;
     }
 
-    /**
+    */
+/**
      * 获取最近一次瞬移类位移时间戳（单调时钟纳秒）。
-     */
+     *//*
+
     public long getLastTeleportLikeMoveTime() {
         return lastTeleportLikeMoveTime;
     }
 
-    /**
+    */
+/**
      * 获取用于攻击距离校验的“传送前坐标”。
      *
      * <p>仅在上下文仍有效时返回，超时/跨图/次数耗尽会自动清理。</p>
-     */
+     *//*
+
     public synchronized Point getTeleportBeforePositionForDistanceCheck() {
         if (!isTeleportDistanceContextActiveLocked(monotonicNow())) {
             clearTeleportDistanceContextLocked();
@@ -9272,9 +9318,11 @@ public class Character extends AbstractCharacterObject {
         return copyPoint(teleportBeforePos);
     }
 
-    /**
+    */
+/**
      * 获取用于攻击距离校验的“普通移动前坐标”。
-     */
+     *//*
+
     public synchronized Point getMovementBeforePositionForDistanceCheck() {
         if (!isMovementDistanceContextActiveLocked(monotonicNow())) {
             clearMovementDistanceContextLocked();
@@ -9283,9 +9331,11 @@ public class Character extends AbstractCharacterObject {
         return copyPoint(movementBeforePos);
     }
 
-    /**
+    */
+/**
      * 消费一次传送距离保护校验次数（按攻击包维度消费）。
-     */
+     *//*
+
     public synchronized void consumeTeleportDistanceCheckContext() {
         if (!isTeleportDistanceContextActiveLocked(monotonicNow())) {
             clearTeleportDistanceContextLocked();
@@ -9298,9 +9348,11 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    /**
+    */
+/**
      * 消费一次普通移动距离保护校验次数。
-     */
+     *//*
+
     public synchronized void consumeMovementDistanceCheckContext() {
         if (!isMovementDistanceContextActiveLocked(monotonicNow())) {
             clearMovementDistanceContextLocked();
@@ -9313,11 +9365,13 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    /**
+    */
+/**
      * 显式清空“传送距离校验上下文”。
      *
      * <p>用于跨图切换等关键状态变更点，确保不会携带旧地图上下文参与后续判定。</p>
-     */
+     *//*
+
     public synchronized void clearTeleportDistanceContext() {
         clearTeleportDistanceContextLocked();
         clearMovementDistanceContextLocked();
@@ -9356,9 +9410,11 @@ public class Character extends AbstractCharacterObject {
         movementContextRemainingChecks = 0;
     }
 
-    /**
+    */
+/**
      * 仅当传送前后坐标有效且位移幅度足够大时，才建立距离校验上下文。
-     */
+     *//*
+
     private static boolean shouldBuildTeleportDistanceContext(Point beforePos, Point afterPos) {
         return beforePos != null
                 && afterPos != null
@@ -9668,8 +9724,10 @@ public class Character extends AbstractCharacterObject {
         extraRecoveryTask = null;
 
         // already done on unregisterChairBuff
-        /* if (chairRecoveryTask != null) { chairRecoveryTask.cancel(true); }
-        chairRecoveryTask = null; */
+        */
+/* if (chairRecoveryTask != null) { chairRecoveryTask.cancel(true); }
+        chairRecoveryTask = null; *//*
+
 
         if (pendantOfSpirit != null) {
             pendantOfSpirit.cancel(true);
@@ -9912,7 +9970,16 @@ public class Character extends AbstractCharacterObject {
         levelUp(true);
     }
 
-
+    //EVENTS
+    @Getter
+    private byte team = 0;
+    @Setter
+    @Getter
+    private Fitness fitness;
+    @Setter
+    @Getter
+    private Ola ola;
+    private long snowballattack;
 
     public void setTeam(int team) {
         this.team = (byte) team;
@@ -9925,6 +9992,27 @@ public class Character extends AbstractCharacterObject {
     public void setLastSnowballAttack(long time) {
         this.snowballattack = time;
     }
+
+    // MCPQ
+
+    @Setter
+    @Getter
+    public AriantColiseum ariantColiseum;
+    @Setter
+    @Getter
+    private MonsterCarnival monsterCarnival;
+    @Setter
+    @Getter
+    private MonsterCarnivalParty monsterCarnivalParty = null;
+
+    private int cp = 0;
+    private int totCP = 0;
+    @Setter
+    @Getter
+    private int FestivalPoints;
+    @Setter
+    @Getter
+    private boolean challenged = false;
 
     public void gainFestivalPoints(int gain) {
         this.FestivalPoints += gain;
@@ -9978,7 +10066,8 @@ public class Character extends AbstractCharacterObject {
         this.ariantPoints += points;
     }
 
-    /**
+    */
+/**
      * 发装备，除id外都可以传null，传null取装备默认属性
      *
      * @param itemId      装备id
@@ -9999,7 +10088,8 @@ public class Character extends AbstractCharacterObject {
      * @param jump        跳跃
      * @param upgradeSlot 可升级次数
      * @param expireTime  失效时间，-1为不失效 来自 @leevccc 的建议，传值则为分钟
-     */
+     *//*
+
     public void gainEquip(int itemId, Short attStr, Short attDex, Short attInt, Short attLuk, Short attHp, Short attMp,
                           Short pAtk, Short mAtk, Short pDef, Short mDef, Short acc, Short avoid, Short hands, Short speed,
                           Short jump, Byte upgradeSlot, Long expireTime) {
@@ -10085,12 +10175,14 @@ public class Character extends AbstractCharacterObject {
         getAbstractPlayerInteraction().saveOrUpdateAccountExtendValue(ExtendKey.ONLINE_TIME.getKey(), strNewOnlineTime, true);
     }
 
-    /**
+    */
+/**
      * 获取地图类
      * @param mapid 地图ID
      * @param showMsg   true = 地图不存在弹出提示，false = 不提示
      * @return
-     */
+     *//*
+
     public MapleMap getMap(int mapid, boolean showMsg) {
         MapleMap map = null;
         try {
@@ -10109,10 +10201,13 @@ public class Character extends AbstractCharacterObject {
         return map;
     }
 
-    /**
+    */
+/**
      * 通知客户端启用操作，解除假死
-     */
+     *//*
+
     public void enableActions() {
         sendPacket(PacketCreator.enableActions());
     }
 }
+*/

@@ -44,7 +44,7 @@ public final class UseItemEffectHandler extends AbstractPacketHandler {
                 return;
             }
         }
-        c.getPlayer().setItemEffect(itemId);
+        c.getPlayer().setItemIdEffect(itemId);
         c.getPlayer().getMap().broadcastMessage(c.getPlayer(), PacketCreator.itemEffect(c.getPlayer().getId(), itemId), false);
     }
 }

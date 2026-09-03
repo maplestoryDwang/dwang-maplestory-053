@@ -837,9 +837,9 @@ public class InventoryManipulator {
         }
 
         int quantityNow = chr.getItemQuantity(itemId, false);
-        if (itemId == chr.getItemEffect()) {
+        if (itemId == chr.getItemIdEffect()) {
             if (quantityNow <= 0) {
-                chr.setItemEffect(0);
+                chr.setItemIdEffect(0);
                 map.broadcastMessage(PacketCreator.itemEffect(chr.getId(), 0));
             }
         } else if (itemId == ItemId.CHALKBOARD_1 || itemId == ItemId.CHALKBOARD_2) {

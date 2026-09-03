@@ -26,14 +26,14 @@ public class CharacterListener implements AbstractCharacterListener {
             character.statUpdates.put(p.getLeft(), p.getRight());
         }
 
-        if (character.hp > character.localMaxHp) {
+        if (character.getHp() > character.localMaxHp) {
             character.setHp(character.localMaxHp);
-            character.statUpdates.put(MapleStat.HP, character.hp);
+            character.statUpdates.put(MapleStat.HP, character.getHp());
         }
 
-        if (character.mp > character.localMaxMp) {
+        if (character.getMp() > character.localMaxMp) {
             character.setMp(character.localMaxMp);
-            character.statUpdates.put(MapleStat.MP, character.mp);
+            character.statUpdates.put(MapleStat.MP, character.getMp());
         }
     }
 
