@@ -38,7 +38,7 @@ public class EnterCashShopHandler extends AbstractPacketHandler {
         try {
             Character mc = c.getPlayer();
 
-            if (mc.cannotEnterCashShop()) {
+            if (mc.isBlockCashShop()) {
                 c.sendPacket(PacketCreator.enableActions());
                 return;
             }

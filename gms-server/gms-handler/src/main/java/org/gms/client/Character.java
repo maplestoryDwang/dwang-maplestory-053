@@ -37,7 +37,6 @@ import org.gms.client.character.inventory.InventoryProof;
 import org.gms.client.character.ring.Ring;
 import org.gms.client.character.creator.CharacterFactoryRecipe;
 import org.gms.client.chr.CharacterDetection;
-import org.gms.client.chr.CharacterParty;
 import org.gms.client.inventory.*;
 import org.gms.client.inventory.equip.Equip;
 import org.gms.client.inventory.equip.Equip.StatUpgrade;
@@ -143,7 +142,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Pattern;
@@ -243,6 +241,14 @@ public class Character extends AbstractCharacterObject {
 	private int mesosTraded = 0;
 	private final AtomicInteger meso = new AtomicInteger();
 
+    // ============================================================
+    // 键盘快捷栏
+    // ============================================================
+    private final Map<Integer, KeyBinding> keymap = new LinkedHashMap<>();
+    private byte[] quickSlotLoaded;
+    private QuickslotBinding quickSlotKeyMapped;
+
+
 	// ============================================================
 	// 6. 技能与冷却（CharacterSkillManager）
 	// ============================================================
@@ -315,6 +321,18 @@ public class Character extends AbstractCharacterObject {
 	private int movementContextMapId = MapId.NONE;
 	private long movementContextExpireTime = 0L;
 	private byte movementContextRemainingChecks = 0;
+    // 地图/客户端状态
+    private final AtomicBoolean mapTransitioning = new AtomicBoolean(false);
+    private final AtomicBoolean awayFromWorld = new AtomicBoolean(true);
+    private final List<WeakReference<MapleMap>> lastVisitedMaps = new LinkedList<>();
+    private WeakReference<MapleMap> ownedMap = new WeakReference<>(null);
+    private final Set<MapObject> visibleMapObjects = Collections.newSetFromMap(new ConcurrentHashMap<>());
+    private final Map<Integer, String> entered = new LinkedHashMap<>();
+    private final List<String> blockedPortals = new ArrayList<>();
+    private AutobanManager autoBan;
+
+
+
 
 	// ============================================================
 	// 9. 队伍管理（CharacterParty）
@@ -323,6 +341,9 @@ public class Character extends AbstractCharacterObject {
 	private PartyCharacter mpc;
 	private PartyQuest partyQuest = null;
     private boolean canRecvPartySearchInvite = true;
+    // 组队邀请禁用列表
+    private final Set<Integer> disabledPartySearchInvites = new LinkedHashSet<>();
+
 
 	// ============================================================
 	// 10. 公会与联盟（CharacterGuild）
@@ -418,7 +439,7 @@ public class Character extends AbstractCharacterObject {
 	// CPQ
 	private byte team = 0;
 	private int cp = 0;
-	private int totCP = 0;
+	private int totalCP = 0;
 	private int FestivalPoints;
 	private boolean challenged = false;
 	private long snowballattack;
@@ -453,55 +474,41 @@ public class Character extends AbstractCharacterObject {
 	private int possibleReports = 10;
 	private boolean equipchanged = true;
 	private boolean hasSandboxItem = false;    // todo 未知
-	private boolean usedSafetyCharm = false;
-	private boolean usedStorage = false;
-	private int linkedLevel = 0;
-	private String linkedName = null;
+	private boolean usedSafetyCharm = false;  // 是否使用护身符
+	private boolean usedStorage = false;      // 是否正在使用仓库
+	private int linkedLevel = 0;                 // link
+	private String linkedName = null;           // link
 	private String dataString;                 // 没用。。。。
-	private boolean pendingNameChange;
-	private boolean chasing = false;
-	private boolean allowExpGain = true;
+	private boolean pendingNameChange;        // 是否正在改名
+	private boolean chasing = false;         // 是否跟随
+	private boolean allowExpGain = true;     // 是否装备获取经验
 	private boolean useCS;                     // 混沌卷
-	private long npcCd;
+	private long npcCooldown;                      // NPC cold down
 	private long jailExpiration = -1;
 	private long lastExpGainTime;
 	private long lastCombo = 0;
 	private short combocounter = 0;
 
-	// 戒指相关
+    // ============================================================
+    // 戒指相关
+    // ============================================================
 	private Ring marriageRing;
 	private int marriageItemId = -1;
 	private int partnerId = -1;
 	private final List<Ring> crushRings = new ArrayList<>();
 	private final List<Ring> friendshipRings = new ArrayList<>();
 
-	// 地图/客户端状态
-	private final AtomicBoolean mapTransitioning = new AtomicBoolean(false);
-	private final AtomicBoolean awayFromWorld = new AtomicBoolean(true);
-	private final List<WeakReference<MapleMap>> lastVisitedMaps = new LinkedList<>();
-	private WeakReference<MapleMap> ownedMap = new WeakReference<>(null);
-	private final Set<MapObject> visibleMapObjects = Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private final Map<Integer, String> entered = new LinkedHashMap<>();
-	private final List<String> blockedPortals = new ArrayList<>();
-	private AutobanManager autoBan;
-	private final Set<Monster> controlled = new LinkedHashSet<>();
-
-	// 键盘快捷栏
-	private final Map<Integer, KeyBinding> keymap = new LinkedHashMap<>();
-	private byte[] quickSlotLoaded;
-	private QuickslotBinding quickSlotKeyMapped;
-
 	// 其他定时任务
 	private ScheduledFuture<?> hpDecreaseTask;
 	private ScheduledFuture<?> itemExpireTask = null;
 
-	// 组队邀请禁用列表
-	private final Set<Integer> disabledPartySearchInvites = new LinkedHashSet<>();
-
-	// Boss血条
+    // ============================================================
+    // Monster相关
+    // ============================================================
 	private int targetHpBarHash = 0;
 	private long targetHpBarTime = 0;
 	private long nextWarningTime = 0;
+    private final Set<Monster> controlled = new LinkedHashSet<>();
 
 
 	// 静态服务引用（依赖注入）
@@ -520,7 +527,7 @@ public class Character extends AbstractCharacterObject {
 	private final Lock cpnLock = new ReentrantLock();
 
     /**
-     * 重构Bean
+     * 外挂检测
      */
     CharacterDetection characterDetection = new CharacterDetection();
 
@@ -658,17 +665,6 @@ public class Character extends AbstractCharacterObject {
         client.setCharacterOnSessionTransitionState(this.getId());
     }
 
-    public void setCS(boolean cs) {
-        useCS = cs;
-    }
-
-    public long getNpcCooldown() {
-        return npcCd;
-    }
-
-    public void setNpcCooldown(long d) {
-        npcCd = d;
-    }
 
     public void addCooldown(int skillId, long startTime, long length) {
         effLock.lock();
@@ -846,13 +842,7 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    public short getCombo() {
-        return combocounter;
-    }
 
-    public boolean cannotEnterCashShop() {
-        return blockCashShop;
-    }
 
     public void toggleBlockCashShop() {
         blockCashShop = !blockCashShop;
@@ -885,36 +875,6 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void hide(boolean hide, boolean login) {
-
-/*
-        if (isGM() && hide != this.hidden) {
-            if (!hide) {
-                this.hidden = false;
-                sendPacket(PacketCreator.getGMEffect(0x10, (byte) 0));
-                List<BuffStat> dsstat = Collections.singletonList(BuffStat.DARKSIGHT);
-                getMap().broadcastGMMessage(this, PacketCreator.cancelForeignBuff(id, dsstat), false);
-                getMap().broadcastSpawnPlayerMapObjectMessage(this, this, false);
-
-                for (Summon ms : this.getSummonsValues()) {
-                    getMap().broadcastNONGMMessage(this, PacketCreator.spawnSummon(ms, false), false);
-                }
-
-                for (MapObject mo : this.getMap().getMonsters()) {
-                    Monster m = (Monster) mo;
-                    m.aggroUpdateController();
-                }
-            } else {
-                this.hidden = true;
-                sendPacket(PacketCreator.getGMEffect(0x10, (byte) 1));
-                if (!login) {
-                    getMap().broadcastNONGMMessage(this, PacketCreator.removePlayerFromMap(getId()), false);
-                }
-                List<Pair<BuffStat, Integer>> ldsstat = Collections.singletonList(new Pair<BuffStat, Integer>(BuffStat.DARKSIGHT, 0));
-                getMap().broadcastGMMessage(this, PacketCreator.giveForeignBuff(id, ldsstat), false);
-                this.releaseControlledMonsters();
-            }
-            enableActions();
-        }*/
     }
 
     public void hide(boolean hide) {
@@ -8790,7 +8750,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void unEquipAllPets() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < pets.length; i++) {
             Pet pet = getPet(i);
             if (pet != null) {
                 unEquipPet(pet, true);
@@ -9896,21 +9856,14 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    public void setTotalCP(int a) {
-        this.totCP = a;
-    }
 
     public void setCP(int a) {
         this.cp = a;
     }
 
-    public int getTotalCP() {
-        return totCP;
-    }
-
     public void resetCP() {
         this.cp = 0;
-        this.totCP = 0;
+        this.totalCP = 0;
         this.monsterCarnival = null;
     }
 
@@ -10055,4 +10008,18 @@ public class Character extends AbstractCharacterObject {
     public void enableActions() {
         sendPacket(PacketCreator.enableActions());
     }
+
+
+    /**
+     * 计算血量,血量最少 10
+     * @param hp
+     * @return
+     */
+    public int calculateMonsterHp(int hp) {
+        double discountHp = hp * 0.8;
+        int floor = (int) Math.floor(discountHp);
+
+        return Math.max(floor, 10);
+    }
+
 }

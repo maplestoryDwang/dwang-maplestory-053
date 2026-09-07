@@ -2110,16 +2110,27 @@ public class MapleMap {
 
     // 队长的任务状态
     private void updateMonsterHp(Monster monster) {
-        monster.setStartingHp(100);
-
-        for (Character character : characters) {
-            if (character.isPartyLeader()) {
-                // todo  boss血量设置
-                if (monster.getId() ==  8800000) {
-                    monster.setStartingHp(100);
-                }
+        // 默认的HP
+        int hp = monster.getStats().getHp();
+        if (characters.size() == 1) {
+            // 设置血量
+            for (Character character : characters) {
+                int hpByChar = character.calculateMonsterHp(hp);
+                monster.setStartingHp(hpByChar);
             }
+        } else {
+            monster.setStartingHp(hp);
+
         }
+
+//        for (Character character : characters) {
+//            if (character.isPartyLeader()) {
+//                // todo  boss血量设置
+//                if (monster.getId() ==  8800000) {
+//                    monster.setStartingHp(100);
+//                }
+//            }
+//        }
     }
 
     public void spawnDojoMonster(final Monster monster) {

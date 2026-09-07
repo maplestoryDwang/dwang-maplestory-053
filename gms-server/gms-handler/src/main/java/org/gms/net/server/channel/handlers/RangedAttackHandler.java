@@ -95,13 +95,13 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
             }
         } else if (attack.skill == Aran.COMBO_SMASH || attack.skill == Aran.COMBO_FENRIR || attack.skill == Aran.COMBO_TEMPEST) {
             chr.getMap().broadcastMessage(chr, PacketCreator.rangedAttack(chr, attack.skill, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, 0, attack.allDamage, attack.speed, attack.direction, attack.display), false);
-            if (attack.skill == Aran.COMBO_SMASH && chr.getCombo() >= 30) {
+            if (attack.skill == Aran.COMBO_SMASH && chr.getCombocounter() >= 30) {
                 chr.setCombo((short) 0);
                 applyAttack(attack, chr, 1);
-            } else if (attack.skill == Aran.COMBO_FENRIR && chr.getCombo() >= 100) {
+            } else if (attack.skill == Aran.COMBO_FENRIR && chr.getCombocounter() >= 100) {
                 chr.setCombo((short) 0);
                 applyAttack(attack, chr, 2);
-            } else if (attack.skill == Aran.COMBO_TEMPEST && chr.getCombo() >= 200) {
+            } else if (attack.skill == Aran.COMBO_TEMPEST && chr.getCombocounter() >= 200) {
                 chr.setCombo((short) 0);
                 applyAttack(attack, chr, 4);
             }

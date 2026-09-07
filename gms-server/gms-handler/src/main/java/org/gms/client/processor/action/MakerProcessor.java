@@ -198,9 +198,9 @@ public class MakerProcessor {
                             }
 
                             for (Pair<Integer, Integer> pair : recipe.getGainItems()) {
-                                c.getPlayer().setCS(true);
+                                c.getPlayer().setUseCS(true);
                                 c.getAbstractPlayerInteraction().gainItem(pair.getLeft(), pair.getRight().shortValue(), false);
-                                c.getPlayer().setCS(false);
+                                c.getPlayer().setUseCS(false);
                             }
                         } else {
                             toCreate = recipe.getGainItems().get(0).getLeft();
