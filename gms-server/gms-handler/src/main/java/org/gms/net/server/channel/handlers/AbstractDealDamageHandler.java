@@ -1500,7 +1500,7 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
         int skill = ret.skill;
         //需要跳过检测的技能 比如弓箭手的暴风箭雨 火枪手的金属风暴
         if (!SKIP_SKILL_ID_SET.contains(skill)) {
-            long interval = chr.updateLastAttackTimeAndGetInterval(skill, System.currentTimeMillis());
+            long interval = chr.getCharacterDetection().updateLastAttackTimeAndGetInterval(skill, System.currentTimeMillis());
             if (interval < 250) {
                 // 检测攻击间隔 小于350mm封号
                 chr.getAutoBanManager().addPoint(AutobanFactory.ATTACK_INTERVAL, "玩家" + chr.getName() + "地图ID：" + chr.getMapId() + "攻击间隔: " + interval + "技能ID：" + skill);

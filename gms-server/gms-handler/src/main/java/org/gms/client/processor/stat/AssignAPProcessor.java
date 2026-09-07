@@ -176,7 +176,7 @@ public class AssignAPProcessor {
                 //c.getPlayer().message("SDL: s" + eqpStr + " d" + eqpDex + " l" + eqpLuk + " BASE STATS --> STR: " + chr.getStr() + " DEX: " + chr.getDex() + " INT: " + chr.getInt() + " LUK: " + chr.getLuk());
                 //c.getPlayer().message("SUM EQUIP STATS -> STR: " + str + " DEX: " + dex + " LUK: " + luk + " INT: " + int_);
 
-                Job stance = c.getPlayer().getJobStyle(opt); // 根据选项获取玩家的职业类型
+                Job stance = Job.getJobStyleInternal(c.getPlayer().getJob().getId(), opt); // 根据选项获取玩家的职业类型
                 int prStat = 0, scStat = 0, trStat = 0, temp, tempAp = remainingAp, CAP; // 初始化主属性、副属性、第三属性、临时变量和上限值
                 if (tempAp < 1) { // 检查临时AP是否小于1
                     return; // 如果不足则返回

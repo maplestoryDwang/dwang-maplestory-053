@@ -151,4 +151,10 @@ public enum Job {
 
         return BEGINNER;
     }
+
+
+    public static Job getJobStyle(int jobid, int attrStr, int attrDex) {
+        return Job.getJobStyleInternal(jobid, (byte) ((attrStr > attrDex) ? 0x80 : 0x40));
+    }
+
 }

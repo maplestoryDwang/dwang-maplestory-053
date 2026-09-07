@@ -36,6 +36,8 @@ import org.gms.client.character.inventory.Inventory;
 import org.gms.client.character.inventory.InventoryProof;
 import org.gms.client.character.ring.Ring;
 import org.gms.client.character.creator.CharacterFactoryRecipe;
+import org.gms.client.chr.CharacterDetection;
+import org.gms.client.chr.CharacterParty;
 import org.gms.client.inventory.*;
 import org.gms.client.inventory.equip.Equip;
 import org.gms.client.inventory.equip.Equip.StatUpgrade;
@@ -320,6 +322,7 @@ public class Character extends AbstractCharacterObject {
 	private Party party;
 	private PartyCharacter mpc;
 	private PartyQuest partyQuest = null;
+    private boolean canRecvPartySearchInvite = true;
 
 	// ============================================================
 	// 10. 公会与联盟（CharacterGuild）
@@ -445,12 +448,11 @@ public class Character extends AbstractCharacterObject {
 	// monsterbookCover 已放在外观组
 
 	// ============================================================
-	// 20. 杂项 / 客户端状态 / 基础设施
+	// 20. 杂项 / 客户端状态 / 基础设施  SystemContext
 	// ============================================================
 	private int possibleReports = 10;
 	private boolean equipchanged = true;
 	private boolean hasSandboxItem = false;    // todo 未知
-	private boolean canRecvPartySearchInvite = true;
 	private boolean usedSafetyCharm = false;
 	private boolean usedStorage = false;
 	private int linkedLevel = 0;
@@ -501,8 +503,6 @@ public class Character extends AbstractCharacterObject {
 	private long targetHpBarTime = 0;
 	private long nextWarningTime = 0;
 
-	// 最后攻击时间（反作弊）
-	private final ConcurrentHashMap<Integer, Long> lastAttackTimes = new ConcurrentHashMap<>();
 
 	// 静态服务引用（依赖注入）
 	private static final CharacterInternalService CHARACTER_INTERNAL_SERVICE = ServerManager.getApplicationContext().getBean(CharacterInternalService.class);
@@ -520,22 +520,9 @@ public class Character extends AbstractCharacterObject {
 	private final Lock cpnLock = new ReentrantLock();
 
     /**
-     * 原子更新指定技能的最后攻击时间，并返回与上次记录的时间间隔（毫秒）。
-     * 若是首次记录或出现时钟回退，返回 Long.MAX_VALUE 表示本次不参与间隔判定。
+     * 重构Bean
      */
-    public long updateLastAttackTimeAndGetInterval(int skillId, long currentTimeMillis) {
-        AtomicLong intervalMillis = new AtomicLong(Long.MAX_VALUE);
-        lastAttackTimes.compute(skillId, (ignored, previousTime) -> {
-            long previous = previousTime == null ? 0L : previousTime;
-            if (previous > 0L && currentTimeMillis > previous) {
-                intervalMillis.set(currentTimeMillis - previous);
-            }
-            // 保证每个技能的时间记录单调不回退，避免并发写入覆盖新值。
-            return Math.max(previous, currentTimeMillis);
-        });
-        return intervalMillis.get();
-    }
-
+    CharacterDetection characterDetection = new CharacterDetection();
 
     private Character() {
         super.setListener(new CharacterListener(this));
@@ -558,14 +545,6 @@ public class Character extends AbstractCharacterObject {
         }
         quests = new LinkedHashMap<>();
         setPosition(new Point(0, 0));
-    }
-
-    public Job getJobStyle(byte opt) {
-        return Job.getJobStyleInternal(this.getJob().getId(), opt);
-    }
-
-    public Job getJobStyle() {
-        return getJobStyle((byte) ((this.getStr() > this.getDex()) ? 0x80 : 0x40));
     }
 
     public static Character getDefault(Client c) {
@@ -3999,7 +3978,7 @@ public class Character extends AbstractCharacterObject {
             recalcMseList.add(re.getValue().getLeft());
         }
 
-        boolean mageJob = this.getJobStyle() == Job.MAGICIAN;
+        boolean mageJob = Job.getJobStyle(getJob().getId(), getStr(), getDex()) == Job.MAGICIAN;
         do {
             List<StatEffect> mseList = recalcMseList;
             recalcMseList = new LinkedList<>();
@@ -5907,7 +5886,7 @@ public class Character extends AbstractCharacterObject {
         }
 
         if (GameConfig.getServerBoolean("use_randomize_hpmp_gain")) {
-            if (getJobStyle() == Job.MAGICIAN) {
+            if (Job.getJobStyle(getJob().getId(), getStr(), getDex()) == Job.MAGICIAN) {
                 addmp += localint_ / 20;
             } else {
                 addmp += localint_ / 10;

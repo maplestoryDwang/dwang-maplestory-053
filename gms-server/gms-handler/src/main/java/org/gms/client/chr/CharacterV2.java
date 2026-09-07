@@ -27,21 +27,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class CharacterV2 extends AbstractCharacterObject {
 
     // ---------- 组件 ----------
-    private final CharacterIdentity identity;
-    private final CharacterStats stats;
-    private final CharacterInventory inventory;
-    private final CharacterSkillManager skills;
-    private final CharacterBuffManager buffs;
-    private final CharacterMovement movement;
-    private final CharacterParty party;
-    private final CharacterGuild guild;
-    private final CharacterFamily family;
-    private final CharacterPetManager pets;
-    private final CharacterMount mount;
-    private final CharacterQuestManager quests;
-    private final CharacterSocial social;
-    private final CharacterShop shop;
-    private final CharacterEvent events;
+    private CharacterIdentity identity;
+    private CharacterStats stats;
+    private CharacterInventory inventory;
+    private CharacterSkillManager skills;
+    private CharacterBuffManager buffs;
+    private CharacterMovement movement;
+    private CharacterParty party;
+    private CharacterGuild guild;
+    private CharacterFamily family;
+    private CharacterPetManager pets;
+    private CharacterMount mount;
+    private CharacterQuestManager quests;
+    private CharacterSocial social;
+    private CharacterShop shop;
+    private CharacterEvent events;
 
     // ---------- 主类自有字段 ----------
     private Client client;
@@ -59,21 +59,21 @@ public class CharacterV2 extends AbstractCharacterObject {
 
     // ---------- 构造 ----------
     public CharacterV2() {
-        this.identity = new CharacterIdentity(this);
-        this.stats = new CharacterStats(this);
-        this.inventory = new CharacterInventory(this);
-        this.skills = new CharacterSkillManager(this);
-        this.buffs = new CharacterBuffManager(this);
-        this.movement = new CharacterMovement(this);
-        this.party = new CharacterParty(this);
-        this.guild = new CharacterGuild(this);
-        this.family = new CharacterFamily(this);
-        this.pets = new CharacterPetManager(this);
-        this.mount = new CharacterMount(this);
-        this.quests = new CharacterQuestManager(this);
-        this.social = new CharacterSocial(this);
-        this.shop = new CharacterShop(this);
-        this.events = new CharacterEvent(this);
+//        this.identity = new CharacterIdentity(this);
+//        this.stats = new CharacterStats(this);
+//        this.inventory = new CharacterInventory(this);
+//        this.skills = new CharacterSkillManager(this);
+//        this.buffs = new CharacterBuffManager(this);
+//        this.movement = new CharacterMovement(this);
+//        this.party = new CharacterParty(this);
+//        this.guild = new CharacterGuild(this);
+//        this.family = new CharacterFamily(this);
+//        this.pets = new CharacterPetManager(this);
+//        this.mount = new CharacterMount(this);
+//        this.quests = new CharacterQuestManager(this);
+//        this.social = new CharacterSocial(this);
+//        this.shop = new CharacterShop(this);
+//        this.events = new CharacterEvent(this);
     }
 
     // ---------- 网络/客户端 ----------
