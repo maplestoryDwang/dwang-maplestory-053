@@ -27,9 +27,12 @@ import org.gms.client.character.skill.SkillFactory;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.dwutil.ItemUtils;
+import org.gms.manager.ServerManager;
 import org.gms.net.server.coordinator.world.EventRecallCoordinator;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.gms.util.NumberTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,7 +135,8 @@ public class EventInstanceManager {
 
     /**
      * 构造函数，初始化事件实例
-     * @param em 事件管理器
+     *
+     * @param em   事件管理器
      * @param name 事件实例名称
      */
     public EventInstanceManager(EventManager em, String name) {
@@ -186,7 +190,8 @@ public class EventInstanceManager {
 
     /**
      * 注册玩家到事件实例
-     * @param chr 要注册的玩家角色
+     *
+     * @param chr            要注册的玩家角色
      * @param runEntryScript 是否执行入口脚本
      */
     public synchronized void registerPlayer(final Character chr, boolean runEntryScript) {
@@ -542,9 +547,9 @@ public class EventInstanceManager {
     }
 
 
-
     /**
      * 定时调用脚本自带的方法
+     *
      * @param methodName
      * @param delay
      */
@@ -568,9 +573,9 @@ public class EventInstanceManager {
     }
 
 
-
     /**
      * 队伍中是否全部职业都有
+     *
      * @return
      */
     public int getEventPlayersJobs() {
@@ -745,7 +750,6 @@ public class EventInstanceManager {
     }
 
 
-
     public int getPlayerCount() {
         readLock.lock();
         try {
@@ -789,7 +793,6 @@ public class EventInstanceManager {
     }
 
 
-
     public int getKillCount(Character chr) {
         Integer kc = killCount.get(chr);
         return (kc == null) ? 0 : kc;
@@ -809,11 +812,9 @@ public class EventInstanceManager {
     }
 
 
-
     public MapManager getMapFactory() {
         return mapManager;
     }
-
 
 
     public String getName() {
@@ -1065,6 +1066,7 @@ public class EventInstanceManager {
 
     /**
      * 设置奖励
+     *
      * @param eventLevel
      * @param rwds
      * @param qtys
@@ -1120,11 +1122,14 @@ public class EventInstanceManager {
         return true;
     }
 
+    // 脚本
     public final boolean giveEventReward(Character player) {
         return giveEventReward(player, 1);
     }
 
     //gives out EXP & a random item in a similar fashion of when clearing KPQ, LPQ, etc.
+    private static final AchievementService achievementService = ServerManager.getApplicationContext().getBean(AchievementService.class);
+
     public final boolean giveEventReward(Character player, int eventLevel) {
         List<Integer> rewardsSet, rewardsQty;
         Integer rewardExp;
@@ -1166,11 +1171,11 @@ public class EventInstanceManager {
         if (rewardExp > 0) {
             player.gainExp(rewardExp);
         }
+
+        // 获取奖励再记录
+        achievementService.recordAchievement(player.getId(), AchievementCategory.PARTY_QUEST, getEm().getName(), 1);
         return true;
     }
-
-
-
 
 
     /**
@@ -1311,7 +1316,6 @@ public class EventInstanceManager {
     }
 
 
-
     /**
      * *****************************************************************************************************************
      * *****************************************  设置队长  *******************************************************
@@ -1343,7 +1347,6 @@ public class EventInstanceManager {
             writeLock.unlock();
         }
     }
-
 
 
     /**
@@ -1422,8 +1425,6 @@ public class EventInstanceManager {
     }
 
 
-
-
     /**
      * *****************************************************************************************************************
      * *****************************************  绑定传送口和脚本  *******************************************************
@@ -1444,10 +1445,11 @@ public class EventInstanceManager {
 
     /**
      * 事件，对于没有奖励的情况，只是链接event的地图
-     * @author dwang
+     *
      * @param thisStage   当前状态
      * @param eventFamily 当前事件组状态名字
      * @param thisMapId   当前地图ID
+     * @author dwang
      */
     public final void justLinkNextStageMap(int thisStage, String eventFamily, int thisMapId, String portalName) {
         thisStage--;    //stages counts from ONE, scripts from ZERO
@@ -1554,9 +1556,6 @@ public class EventInstanceManager {
     }
 
 
-
-
-
     /**
      * 开始记录伤害（仅在全局开关开启时生效）
      * 需要在副本初始化时调用（如 setup 或 playerEntry）
@@ -1620,6 +1619,7 @@ public class EventInstanceManager {
         }
         dropMessage(6, "==============================");
     }
+
     public synchronized void clearDamage() {
         recordDamage = false;
         playerDamage.clear();

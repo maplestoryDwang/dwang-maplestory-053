@@ -95,12 +95,12 @@ function action(mode, type, selection) {
                     giveOriginalReward();
                 }
             } else if (status == 3)  {
-	         if (exchangeConfirmed) {
-	            // 合成后继续发放原奖励
-                    giveOriginalReward();
-		} else {
-			cm.dispose();
-		}
+                 if (exchangeConfirmed) {
+                    // 合成后继续发放原奖励
+                        giveOriginalReward();
+                } else {
+                    cm.dispose();
+                }
             }
         }
     }

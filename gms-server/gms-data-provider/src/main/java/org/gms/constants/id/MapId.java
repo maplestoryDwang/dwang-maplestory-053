@@ -209,7 +209,7 @@ public class MapId {
         return mapId >= DOJO_PARTY_MIN && mapId <= DOJO_PARTY_MAX;
     }
 
-    // Mini dungeon  隐藏地图？
+    // Mini dungeon  不是隐藏地图
     public static final int ANT_TUNNEL_2 = 105050100;
     public static final int CAVE_OF_MUSHROOMS_BASE = 105050101;
     public static final int SLEEPY_DUNGEON_4 = 105040304;

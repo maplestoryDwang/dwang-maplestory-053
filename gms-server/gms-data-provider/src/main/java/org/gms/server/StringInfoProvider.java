@@ -50,6 +50,8 @@ public class StringInfoProvider {
     private static Map<Integer, String> npcNames = new HashMap<>();
     private static Map<Integer, String> mobNames = new HashMap<>();
     private static Map<Integer, String> mapNames = new HashMap<>();
+    private static Set<String> bgms = new HashSet<>();
+
 
     private static final Map<Integer, String> questNames = new HashMap<>();
 
@@ -114,6 +116,10 @@ public class StringInfoProvider {
                     }
 
                     String mapName = mapNames.get(mapId);
+                    Data infoNode = mapData.getChildByPath("info");
+                    String bgm = DataTool.getString(infoNode.getChildByPath("bgm"), "");
+                    bgms.add(bgm);
+
                     Data lifeNode = mapData.getChildByPath("life");
 
                     if (lifeNode != null) {
@@ -146,6 +152,7 @@ public class StringInfoProvider {
                 }
             }
         }
+        int size = bgms.size(); // 86 in GMS053
     }
 
 

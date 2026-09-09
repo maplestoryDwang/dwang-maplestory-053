@@ -24,4 +24,5 @@ public class AchievementDiscountConfigDO {
     private Double weightPercent;
     private Integer maxProgress;
     private Boolean enabled;
+    private Boolean isAccumulate;
 }

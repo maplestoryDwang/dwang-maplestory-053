@@ -16,87 +16,197 @@ import org.gms.dao.mapper.CharacterAchievementMapper;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
+import static com.mybatisflex.core.query.QueryMethods.count;
+import static com.mybatisflex.core.query.QueryMethods.sum;
 
 @Service
 public class AchievementService {
 
-    private final CharacterAchievementMapper  achievementMapper;
+    private final CharacterAchievementMapper achievementMapper;
     private final AchievementDiscountConfigMapper configMapper;
 
-    // 可以考虑缓存配置表数据
+    // 内存缓存成就配置表，规避高频打怪/切换地图时的 DB 读压力
+    private final Map<String, AchievementDiscountConfigDO> configCache = new ConcurrentHashMap<>();
+
     public AchievementService(CharacterAchievementMapper achievementMapper, AchievementDiscountConfigMapper configMapper) {
         this.achievementMapper = achievementMapper;
         this.configMapper = configMapper;
     }
 
     /**
-     * 记录或更新玩家成就数据
+     * 刷新/加载配置缓存
      */
-    public void recordAchievement(int cid, String category, String key, int addProgress) {
+    public void refreshConfigCache() {
+        List<AchievementDiscountConfigDO> configs = configMapper.selectAll();
+        configCache.clear();
+        for (AchievementDiscountConfigDO cfg : configs) {
+            configCache.put(cfg.getCategory(), cfg);
+        }
+    }
+
+    private AchievementDiscountConfigDO getConfig(String category) {
+//        if (configCache.isEmpty()) {
+            refreshConfigCache();
+//        }
+        return configCache.get(category);
+    }
+
+    /**
+     * 记录成就（由 category 配置表自动判定累加性）
+     *
+     * @param cid Role ID
+     * @param category 成就类型
+     * @param key 触发键（如 BGM名 / MapID / NPC_ID）
+     * @param addAmount 增加的数量（去重型忽略此值，固定为 1）
+     * @return boolean 是否解锁成功/记录成功 (false 表示已存在/非累加型重复触发)
+     */
+    public boolean recordAchievement(int cid, String category, String key, int addAmount) {
+        AchievementDiscountConfigDO config = getConfig(category);
+        if (config == null || !Boolean.TRUE.equals(config.getEnabled())) {
+            return false;
+        }
+
+        boolean isAccumulate = Boolean.TRUE.equals(config.getIsAccumulate());
+
         QueryWrapper qw = QueryWrapper.create()
                 .where("character_id = ?", cid)
                 .and("category = ?", category)
                 .and("achievement_key = ?", key);
 
         CharacterAchievementDO record = achievementMapper.selectOneByQuery(qw);
-        if (record == null) {
-            record = new CharacterAchievementDO();
-            record.setCharacterId(cid);
-            record.setCategory(category);
-            record.setAchievementKey(key);
-            record.setProgress(addProgress);
-            record.setCompleted(false);
-            achievementMapper.insert(record);
-        } else {
-            record.setProgress(record.getProgress() + addProgress);
+
+        if (record != null) {
+            // 去重解锁型（如听歌、隐藏地图）：存在即拒绝重复记录
+            if (!isAccumulate) {
+                return false;
+            }
+            // 累加型（如杀怪/抽奖）：更新进度递增
+            record.setProgress(record.getProgress() + addAmount);
             achievementMapper.update(record);
+            return true;
         }
+
+        // 首次解锁 / 插入新记录
+        record = new CharacterAchievementDO();
+        record.setCharacterId(cid);
+        record.setCategory(category);
+        record.setAchievementKey(key);
+        record.setProgress(isAccumulate ? addAmount : 1);
+        record.setCompleted(Boolean.FALSE);
+        achievementMapper.insert(record);
+        return true;
     }
 
     /**
-     * 获取玩家指定分类的总进度数或唯一项计数
+     * 重载简化方法（默认增加 1 次/个）
+     */
+    public boolean recordAchievement(int cid, String category, String key) {
+        return recordAchievement(cid, category, key, 1);
+    }
+
+    /**
+     * 获取玩家指定分类的总进度数（使用 SQL 聚合函数提高性能）
      */
     public int getCategoryProgress(int cid, String category) {
-        QueryWrapper qw = QueryWrapper.create()
-                .where("character_id = ?", cid)
-                .and("category = ?", category);
+        AchievementDiscountConfigDO config = getConfig(category);
+        if (config == null) {
+            return 0;
+        }
 
-        List<CharacterAchievementDO> list = achievementMapper.selectListByQuery(qw);
+        boolean isAccumulate = Boolean.TRUE.equals(config.getIsAccumulate());
 
-        // 如果是按单一键统计（如击杀数、完成任务数）求 sum；如果是触发列表（如地图/音乐）求 count
-        if (category.equals(AchievementCategory.MONSTER_KILL) || category.equals(AchievementCategory.GACHAPON_COUNT)) {
-            return list.stream().mapToInt(CharacterAchievementDO::getProgress).sum();
+        if (isAccumulate) {
+            // 累加型：直接 SQL SUM(progress)，指定返回 Integer.class
+            QueryWrapper qw = QueryWrapper.create()
+                    .select(sum("progress"))
+                    .where("character_id = ?", cid)
+                    .and("category = ?", category);
+
+            Integer total = achievementMapper.selectObjectByQueryAs(qw, Integer.class);
+            return total != null ? total : 0;
         } else {
-            return list.size(); // 解锁的数量
+            // 解锁去重型：直接 SQL COUNT(*)，指定返回 Integer.class
+            QueryWrapper qw = QueryWrapper.create()
+                    .select(count())
+                    .where("character_id = ?", cid)
+                    .and("category = ?", category);
+
+            Integer count = achievementMapper.selectObjectByQueryAs(qw, Integer.class);
+            return count != null ? count : 0;
         }
     }
 
     /**
-     * 核心逻辑：计算怪物血量折算后的值
-     *
-     * @param cid 角色ID
-     * @param originalHp 怪物原始HP
-     * @param completedQuestCount 传入角色已完成普通任务的数量 (MapleCharacter.getCompletedQuestsSize())
-     * @return 最终HP
+     * 查询指定维度的当前进度与 DTO
+     */
+    public AchievementProgressDTO getProgressByCategory(int cid, String category, int completedQuestCount) {
+        AchievementDiscountConfigDO config = getConfig(category);
+
+        if (config == null) {
+            return new AchievementProgressDTO(category, "未知分类", 0, 1, 0);
+        }
+
+        int current;
+
+        // 特殊分支：普通任务调用服务端内核原生已完成数量
+        if (AchievementCategory.QUEST_COMPLETED.equals(category)) {
+            current = completedQuestCount;
+        } else {
+            current = getCategoryProgress(cid, category);
+        }
+
+        return new AchievementProgressDTO(category, config.getName(), current, config.getMaxProgress(), config.getWeightPercent());
+    }
+
+    /**
+     * 获取玩家所有分类的成就进度列表
+     */
+    public List<AchievementProgressDTO> getAllProgress(int cid, int completedQuestCount) {
+//        if (configCache.isEmpty()) {
+            refreshConfigCache();
+//        }
+
+        List<AchievementProgressDTO> dtoList = new ArrayList<>();
+        List<AchievementDiscountConfigDO> sortedList = configCache.values().stream().sorted(new Comparator<AchievementDiscountConfigDO>() {
+            @Override
+            public int compare(AchievementDiscountConfigDO o1, AchievementDiscountConfigDO o2) {
+                return o1.getId() - o2.getId();
+            }
+        }).toList();
+        for (AchievementDiscountConfigDO config : sortedList) {
+            if (Boolean.TRUE.equals(config.getEnabled())) {
+                dtoList.add(getProgressByCategory(cid, config.getCategory(), completedQuestCount));
+            }
+        }
+        return dtoList;
+    }
+
+    /**
+     * 核心计算：怪物血量折算
      */
     public int calculateMonsterHp(int cid, int originalHp, int completedQuestCount) {
-        List<AchievementDiscountConfigDO> configs = configMapper.selectAll();
+//        if (configCache.isEmpty()) {
+            refreshConfigCache();
+//        }
+
         double totalDiscountPercent = 0.0;
+        double totalCanDiscount = 0.0;
 
-        // 动态获取最大折扣
-        double totalCanDiscount = 0;
-
-        for (AchievementDiscountConfigDO config : configs) {
+        for (AchievementDiscountConfigDO config : configCache.values()) {
             if (!Boolean.TRUE.equals(config.getEnabled())) {
                 continue;
             }
 
-            int currentProgress = 0;
+            int currentProgress;
 
-            // 特殊逻辑：如果是普通任务数，直接调用引擎本身已有的 Quest 记录
             if (AchievementCategory.QUEST_COMPLETED.equals(config.getCategory())) {
                 currentProgress = completedQuestCount;
             } else {
@@ -111,13 +221,13 @@ public class AchievementService {
             totalCanDiscount += config.getWeightPercent();
         }
 
-        // 限制最大折扣力度上限（例如最多降血 50%）
+        // 限制最大折扣力度上限
         totalDiscountPercent = Math.min(totalDiscountPercent, totalCanDiscount);
 
         // 计算最终 HP: 原血量 * (1 - 折扣比例)
         double finalHpRate = (100.0 - totalDiscountPercent) / 100.0;
         int finalHp = (int) Math.floor(originalHp * finalHpRate);
 
-        return Math.max(finalHp, 10); // 保证底线 10 点血
+        return Math.max(finalHp, 1); // 保证底线 1 点血
     }
 }

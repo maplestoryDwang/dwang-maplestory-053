@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.gms.net.server.services.task.channel.EventService;
 import org.gms.property.ServiceProperty;
+import org.gms.server.achievement.AchievementService;
 import org.gms.service.EventConfigDataService;
 import org.gms.service.GachaponService;
 import org.gms.service.NpcCraftService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
  * @since 2026/8/12 16:16
  */
 @Component
+@Getter
 public class ScriptServiceContext {
 
     // 1. 静态持有自身实例，供非 Spring Bean 直接获取
@@ -25,6 +27,7 @@ public class ScriptServiceContext {
 
     private final NpcCraftService craftService;
     private final GachaponService gachaponService;
+    private final AchievementService achievementService;
     private final ServiceProperty serviceProperty;
     @Getter
     private final EventConfigDataService eventConfigDataService;
@@ -32,11 +35,13 @@ public class ScriptServiceContext {
     // Spring 自动将依赖注入构造函数
     public ScriptServiceContext(NpcCraftService craftService,
                                 GachaponService gachaponService,
+                                AchievementService achievementService,
                                 ServiceProperty serviceProperty,
                                 EventConfigDataService eventConfigDataService
     ) {
         this.craftService = craftService;
         this.gachaponService = gachaponService;
+        this.achievementService = achievementService;
         this.serviceProperty = serviceProperty;
         this.eventConfigDataService = eventConfigDataService;
 

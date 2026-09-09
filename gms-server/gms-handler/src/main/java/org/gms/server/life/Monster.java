@@ -42,6 +42,7 @@ import org.gms.constants.skills.adv.magician.cleric.Priest;
 import org.gms.constants.skills.adv.thief.bandit.Shadower;
 import org.gms.constants.skills.adv.warrior.page.Whiteknight;
 import org.gms.dwutil.MobUtils;
+import org.gms.manager.ServerManager;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.channel.Channel;
 import org.gms.net.server.coordinator.world.MonsterAggroCoordinator;
@@ -52,6 +53,9 @@ import org.gms.net.server.services.task.channel.OverallService;
 import org.gms.net.server.services.type.ChannelServices;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
+import org.gms.service.InventoryService;
 import org.gms.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,6 +124,8 @@ public class Monster extends AbstractLoadedLife {
     private final Lock statiLock = new ReentrantLock();
     private final Lock animationLock = new ReentrantLock();
     private final Lock aggroUpdateLock = new ReentrantLock();
+
+    private static final AchievementService achievementService = ServerManager.getApplicationContext().getBean(AchievementService.class);
 
     public Monster(int id, MonsterStats stats) {
         super(id);
@@ -774,6 +780,8 @@ public class Monster extends AbstractLoadedLife {
             attacker.increaseEquipExp(_personalExp);
             attacker.raiseQuestMobCount(getId());
             VeteranHunterMedal.onMonsterKilled(attacker, this);
+            // 记录已kill的mob
+            achievementService.recordAchievement(attacker.getId(), AchievementCategory.MONSTER_KILL, AchievementCategory.MONSTER_KILL_KEY,1);
         }
     }
 
@@ -1066,8 +1074,10 @@ public class Monster extends AbstractLoadedLife {
             return;
         }
         if (fake) {
+
             client.sendPacket(PacketCreator.spawnFakeMonster(this, 0));
         } else {
+
             client.sendPacket(PacketCreator.spawnMonster(this, false));
         }
 

@@ -52,6 +52,8 @@ import org.gms.net.server.guild.GuildPackets;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.scripting.ScriptServiceContext;
+import org.gms.server.achievement.AchievementProgressDTO;
+import org.gms.server.achievement.HiddenMapAchievementManager;
 import org.gms.util.packets.WeddingPackets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,7 +114,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public NPCConversationManager(Client c, int npc, String scriptName) {
-        this(c, npc,  scriptName,  null);
+        this(c, npc, scriptName, null);
     }
 
     public NPCConversationManager(Client c, int npc, String scriptName, ScriptServiceContext context) {
@@ -256,15 +258,17 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         nextLevelContext.clear();
         getClient().sendPacket(PacketCreator.getNPCTalkText(npc, text, ""));
     }
-    public void sendGetNumber(String text, int def, int min, int max,byte speaker) {
+
+    public void sendGetNumber(String text, int def, int min, int max, byte speaker) {
         nextLevelContext.clear();
-        getClient().sendPacket(PacketCreator.getNPCTalkNum(npc, text, def, min, max,speaker));
+        getClient().sendPacket(PacketCreator.getNPCTalkNum(npc, text, def, min, max, speaker));
     }
 
-    public void sendGetText(String text,byte speaker) {
+    public void sendGetText(String text, byte speaker) {
         nextLevelContext.clear();
-        getClient().sendPacket(PacketCreator.getNPCTalkText(npc, text, "",speaker));
+        getClient().sendPacket(PacketCreator.getNPCTalkText(npc, text, "", speaker));
     }
+
     /*
      * 0 = ariant colliseum
      * 1 = Dojo
@@ -765,13 +769,14 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     /**
      * 是否可以进入嘉年华
+     *
      * @param lobby
      * @param party
      * @return
      */
     private int isCPQParty(MapleMap lobby, Party party) {
         // 单人允许进入
-        if (GameConfig.getServerBoolean("use_enable_solo_expeditions")){
+        if (GameConfig.getServerBoolean("use_enable_solo_expeditions")) {
             return 0;
         }
 
@@ -1243,7 +1248,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * 对应sendSimple
      *
      * @param nextLevel 方法前缀，如果脚本有多次要选择的地方，可以通过不同的前缀区分
-     * @param text   对话内容
+     * @param text      对话内容
      */
     public void sendNextSelectLevel(String nextLevel, String text) {
         sendSimple(text);
@@ -1372,8 +1377,8 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * 多个选项的对话，选择后自动路由到level + selection对应的方法
      * 对应sendSimple
      *
-     * @param text 对话内容
-     * @param speaker   说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
+     * @param text    对话内容
+     * @param speaker 说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
      */
     public void sendSelectLevel(String text, byte speaker) {
         sendSelectLevel("", text, speaker);
@@ -1383,9 +1388,9 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * 多个选项的对话，选择后自动路由到level + prefix + selection对应的方法
      * 对应sendSimple
      *
-     * @param prefix 方法前缀，如果脚本有多次要选择的地方，可以通过不同的前缀区分
-     * @param text   对话内容
-     * @param speaker   说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
+     * @param prefix  方法前缀，如果脚本有多次要选择的地方，可以通过不同的前缀区分
+     * @param text    对话内容
+     * @param speaker 说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
      */
     public void sendSelectLevel(String prefix, String text, byte speaker) {
         sendSimple(text, speaker);
@@ -1398,7 +1403,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * 对应sendSimple
      *
      * @param nextLevel 方法前缀，如果脚本有多次要选择的地方，可以通过不同的前缀区分
-     * @param text   对话内容
+     * @param text      对话内容
      * @param speaker   说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
      */
     public void sendNextSelectLevel(String nextLevel, String text, byte speaker) {
@@ -1419,7 +1424,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * @param speaker   说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
      */
     public void getPnpcInputNumberLevel(String nextLevel, String text, int def, int min, int max, byte speaker) {
-        sendGetNumber(text, def, min, max,speaker);
+        sendGetNumber(text, def, min, max, speaker);
         nextLevelContext.setLevelType(NextLevelType.GET_INPUT_NUMBER);
         nextLevelContext.setNextLevel(nextLevel);
     }
@@ -1445,7 +1450,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * @param decLineLevel 拒绝方法
      * @param acceptLevel  接受方法
      * @param text         对话内容
-     * @param speaker   说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
+     * @param speaker      说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
      */
     public void sendAcceptDeclineLevel(String decLineLevel, String acceptLevel, String text, byte speaker) {
         sendAcceptDecline(text, speaker);
@@ -1461,7 +1466,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * @param noLevel  否方法
      * @param yesLevel 是方法
      * @param text     对话内容
-     * @param speaker   说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
+     * @param speaker  说话者，0,1,8,9 = NPC；2,3 = 玩家；4,5,6,7 = 客户端报38错误；其它数字未测试。
      */
     public void sendYesNoLevel(String noLevel, String yesLevel, String text, byte speaker) {
         sendYesNo(text, speaker);
@@ -1476,6 +1481,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     /**
      * 获取NPC的对话列表
+     *
      * @param npcId
      * @return
      */
@@ -1485,6 +1491,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     /**
      * 获取NPC能做的菜单
+     *
      * @param npcId
      * @return
      */
@@ -1494,11 +1501,58 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     /**
      * 获取菜单对应的材料
+     *
      * @param npcId
      * @param menuIndex
      * @return
      */
     public NpcCraftCategoryDTO getCraftCategoryData(int npcId, int menuIndex) {
         return context.getCraftService().getCategoryData(npcId, menuIndex);
+    }
+
+
+    /**
+     * 记录非累加型成就（如听歌/隐藏地图/NPC彩蛋）
+     * 内部会自动判断该 key 是否已经记录过
+     */
+    public boolean recordUniqueAchievement(String category, String key) {
+        // 默认增加 1 次或解锁该 KEY
+        return context.getAchievementService().recordAchievement(getPlayer().getId(), category, key, 1);
+    }
+
+    /**
+     * 记录累加型成就（如打怪/抽奖）
+     */
+    public void recordAccumulativeAchievement(String category, String key, int amount) {
+        context.getAchievementService()
+                .recordAchievement(getPlayer().getId(), category, key, amount);
+    }
+
+    /**
+     * JS 获取单个成就类型的进度 (DTO)
+     */
+    public AchievementProgressDTO getAchievementProgress(String category) {
+        int questCount = getPlayer().getCompletedQuests().size();
+        return  context.getAchievementService()
+                .getProgressByCategory(getPlayer().getId(), category, questCount);
+    }
+
+    /**
+     * JS 获取所有成就类型的进度列表
+     */
+    public List<AchievementProgressDTO> getAllAchievementProgress() {
+        int questCount = getPlayer().getCompletedQuests().size();
+        return  context.getAchievementService()
+                .getAllProgress(getPlayer().getId(), questCount);
+    }
+
+    /**
+     * 是否是隐藏地图
+     * @param mapId
+     * @return
+     */
+    public boolean isHiddenMap(int mapId) {
+        // 默认增加 1 次或解锁该 KEY
+        return HiddenMapAchievementManager.isHiddenMap(mapId);
     }
 }

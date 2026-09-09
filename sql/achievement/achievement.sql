@@ -32,3 +32,12 @@ CREATE TABLE `character_achievements` (
   UNIQUE KEY `uk_char_category_key` (`character_id`, `category`, `achievement_key`),
   KEY `idx_char_id` (`character_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='玩家成就/统计记录表';
+
+
+ALTER TABLE `achievement_discount_config`
+ADD COLUMN `is_accumulate` TINYINT(1) NOT NULL DEFAULT '0'
+COMMENT '是否累加型: 1=累加型(如杀怪/抽奖), 0=去重解锁型(如听歌/地图)'
+AFTER `enabled`;
+
+UPDATE `achievement_discount_config` SET `is_accumulate` = 1 WHERE `category` IN ('MONSTER_KILL', 'GACHAPON_COUNT', 'PARTY_QUEST', 'QUEST_COMPLETED');
+UPDATE `achievement_discount_config` SET `is_accumulate` = 0 WHERE `category` IN ('MUSIC_DISCOVERY', 'HIDDEN_MAP', 'SPECIAL_NPC', 'SPECIAL_ITEM');

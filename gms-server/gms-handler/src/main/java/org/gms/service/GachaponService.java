@@ -7,6 +7,8 @@ import org.gms.dao.entity.GachaponRewardDO;
 import org.gms.dao.entity.GachaponRewardPoolDO;
 import org.gms.net.server.Server;
 import org.gms.server.ItemInformationProvider;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.gms.server.gachapon.Gachapon;
 import org.gms.util.I18nUtil;
 import org.gms.util.PacketCreator;
@@ -25,6 +27,9 @@ public class GachaponService {
 
     @Autowired
     private GachaponDataService  gachaponDataService;
+
+    @Autowired
+    private AchievementService achievementService;
 
 
     public List<GachaponRewardDO> getRewards(Integer poolId) {
@@ -106,6 +111,8 @@ public class GachaponService {
         String gachaponMessage = I18nUtil.getMessage("GachaMessage.message1",player.getMap().getMapName(),reward.getQuantity(),ItemInformationProvider.getInstance().getName(reward.getItemId()));
         player.dropMessage(gachaponMessage);
         Gachapon.log(player, reward.getItemId(), player.getMap().getMapName());
+        // 新增抽奖记录
+        achievementService.recordAchievement(player.getId(), AchievementCategory.GACHAPON_COUNT, AchievementCategory.GACHAPON_COUNT, 1);
 
         if (pool.getNotification()) {
             Server.getInstance().broadcastMessage(player.getWorld(), PacketCreator.gachaponMessage(itemGained, player.getMap().getMapName(), player));
