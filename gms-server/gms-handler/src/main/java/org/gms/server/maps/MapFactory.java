@@ -161,6 +161,11 @@ public class MapFactory {
         map = new MapleMap(mapid, world, channel, DataTool.getInt("returnMap", infoData), monsterRate);
         map.setEventInstance(event);
 
+
+        String bgmStr = DataTool.getString("bgm", infoData);
+        map.setBgm(bgmStr);
+
+
         String onFirstEnter = DataTool.getString(infoData.getChildByPath("onFirstUserEnter"), String.valueOf(mapid));
         map.setOnFirstUserEnter(onFirstEnter.equals("") ? String.valueOf(mapid) : onFirstEnter);
 

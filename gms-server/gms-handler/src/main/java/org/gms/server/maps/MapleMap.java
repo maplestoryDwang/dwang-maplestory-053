@@ -21,6 +21,8 @@
  */
 package org.gms.server.maps;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
@@ -107,6 +109,8 @@ import java.util.function.Predicate;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+@Setter
+@Getter
 public class MapleMap {
     private static final Logger log = LoggerFactory.getLogger(MapleMap.class);
     private static final List<MapObjectType> rangedMapobjectTypes = Arrays.asList(MapObjectType.SHOP, MapObjectType.ITEM, MapObjectType.NPC, MapObjectType.MONSTER, MapObjectType.DOOR, MapObjectType.SUMMON, MapObjectType.REACTOR);
@@ -139,6 +143,8 @@ public class MapleMap {
     private final int world;
     private int seats;
     private byte monsterRate;
+    // bgm记录
+    private String bgm;
     private boolean clock;
     private boolean boat;
     private boolean docked = false;
