@@ -4,6 +4,10 @@ const FIREWORK_ITEM = 4001128; // 火药桶
 const WORLD_NEED_MAX = 100;     // 触发烟花所需的总火药桶数量
 const WORLD_SAVE_KEY = "firework_count";     // 触发烟花所需的总火药桶数量
 const MAP_ID = 100000200;
+const AFTER_TIME_SECOND = 20; // 20s
+const Point = Java.type('java.awt.Point');
+const LifeFactory = Java.type('org.gms.server.life.LifeFactory');
+var field; // 地图
 
 var status = -1;
 
@@ -109,17 +113,15 @@ function action(mode, type, selection) {
                 // 全服广播
                 cm.playerMessage(6, "【烟花活动】哇！全服玩家已经集齐了所有火药桶！绚丽的烟花秀马上开始啦！！！");
 
-                // 可在此处触发地图效果或脚本逻辑（如：cm.getMap().startMapEffect(...)）
+                // 设置地图（供后续 action 函数使用）
+                field = cm.getMap(MAP_ID);
+                field.startMapEffect("让我们开始烟花秀吧！", 5121010, 200 * 1000);
+
+                // 开始 BOSS 召唤序列：先召唤第一个，后续每个间隔 20 秒
+                var em2 = getEventManager();
+                em2.schedule("action3", AFTER_TIME_SECOND * 1000);
 
                 cm.sendOk("哇！我们终于集齐了所有火药桶！感谢你的杰出贡献，大家准备看烟花吧！");
-
-
-
-                // em.schedule("stopSnow", SNOW_TIME_SECOND * 1000);
-                // 需要延迟放炮仗和 召唤boss
-                var field = cm.getMap(MAP_ID);
-                field.startMapEffect("Whois going crazy with the fireworks?", 5121010, 20 * 1000);
-
             } else {
                 var newPer = Math.floor((newCount / WORLD_NEED_MAX) * 100);
                 cm.sendOk("非常感谢你的贡献！当前收集进度增加到了：" + newPer + "% (" + newCount + " / " + WORLD_NEED_MAX + ")");
@@ -131,4 +133,101 @@ function action(mode, type, selection) {
     } else {
         cm.dispose();
     }
+}
+
+// ---------- BOSS 召唤序列（每个间隔 20 秒） ----------
+function action3() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500168), new Point(2100, 510));
+    // 20秒后召唤下一个
+    var em = getEventManager();
+    if (em != null) em.schedule("action4", AFTER_TIME_SECOND * 1000);
+}
+
+function action4() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500169), new Point(2605, 358));
+    var em = getEventManager();
+    if (em != null) em.schedule("action5", AFTER_TIME_SECOND * 1000);
+}
+
+function action5() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500170), new Point(1800, 560));
+    var em = getEventManager();
+    if (em != null) em.schedule("action6", AFTER_TIME_SECOND * 1000);
+}
+
+function action6() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500171), new Point(2600, 270));
+    var em = getEventManager();
+    if (em != null) em.schedule("action7", AFTER_TIME_SECOND * 1000);
+}
+
+function action7() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500172), new Point(1170, 415));
+    var em = getEventManager();
+    if (em != null) em.schedule("action8", AFTER_TIME_SECOND * 1000);
+}
+
+function action8() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500173), new Point(3120, 570));
+    var em = getEventManager();
+    if (em != null) em.schedule("action9", AFTER_TIME_SECOND * 1000);
+}
+
+function action9() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500174), new Point(2700, 570));
+    var em = getEventManager();
+    if (em != null) em.schedule("action10", AFTER_TIME_SECOND * 1000);
+}
+
+function action10() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500176), new Point(2062, 358));
+    var em = getEventManager();
+    if (em != null) em.schedule("action11", AFTER_TIME_SECOND * 1000);
+}
+
+function action11() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500168), new Point(960, 570));
+    var em = getEventManager();
+    if (em != null) em.schedule("action12", AFTER_TIME_SECOND * 1000);
+}
+
+function action12() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500169), new Point(1252, 570));
+    var em = getEventManager();
+    if (em != null) em.schedule("action13", AFTER_TIME_SECOND * 1000);
+}
+
+function action13() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500170), new Point(2800, 570));
+    var em = getEventManager();
+    if (em != null) em.schedule("action14", AFTER_TIME_SECOND * 1000);
+}
+
+function action14() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500171), new Point(3100, 570));
+    var em = getEventManager();
+    if (em != null) em.schedule("action15", AFTER_TIME_SECOND * 1000);
+}
+
+function action15() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500172), new Point(2300, 420));
+    var em = getEventManager();
+    if (em != null) em.schedule("action16", AFTER_TIME_SECOND * 1000);
+}
+
+function action16() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500173), new Point(2840, 570));
+    var em = getEventManager();
+    if (em != null) em.schedule("action17", AFTER_TIME_SECOND * 1000);
+}
+
+function action17() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500174), new Point(2700, 570));
+    var em = getEventManager();
+    if (em != null) em.schedule("action18", AFTER_TIME_SECOND * 1000);
+}
+
+function action18() {
+    field.spawnMonsterOnGroundBelow(LifeFactory.getMonster(9500176), new Point(878, 528));
+    // 最后一个不需要再调度后续
 }
