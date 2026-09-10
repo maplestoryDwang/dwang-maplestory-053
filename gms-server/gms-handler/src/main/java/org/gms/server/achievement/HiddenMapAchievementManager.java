@@ -105,7 +105,6 @@ public class HiddenMapAchievementManager {
         mapIds.add(MapIdGen.THE_HIDDEN_DRAGON_TOMB_II_240030104); // 被隐藏的龙庙2
         mapIds.add(MapIdGen.BLUE_WYVERN_S_NEST_240040210);        // 蓝飞龙之窝
         mapIds.add(MapIdGen.RED_WYVERN_S_NEST_240040310);         // 红飞龙之窝
-        mapIds.add(MapIdGen.BIG_FISH_VALLEY_230020300);           // 大海兽峡谷 (大鱼峡谷)
         mapIds.add(MapIdGen.HALL_OF_MUSHROOM_800010100);          // 天皇殿堂
         mapIds.add(MapIdGen.THE_SECRET_SPA_M_801000110);          // 神秘温泉（男）
 

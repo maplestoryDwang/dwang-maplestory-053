@@ -48,4 +48,10 @@ public class AchievementProgressDTO {
     public double getWeightPercent() { return weightPercent; }
     public double getCurrentDiscountPercent() { return currentDiscountPercent; }
     public boolean isMax() { return currentProgress >= maxProgress; }
+    /**
+     * 是否已全部完成
+     */
+    public boolean isCompleted() {
+        return currentProgress >= maxProgress;
+    }
 }

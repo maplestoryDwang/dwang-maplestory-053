@@ -4,6 +4,7 @@ package string;
 import org.gms.provider.Data;
 import org.gms.provider.DataTool;
 import org.gms.provider.wz.XMLWZFile;
+import org.gms.util.PathUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -23,32 +24,67 @@ public class IDGen {
     private static final String DEFAULT_PACKAGE = "string.gen";
 
     public static void main(String[] args) {
-        Path cnPath = Path.of("E:\\javaguide\\053\\dwang-maplestory-old\\gms-server\\gms-handler\\wz-zh-CN\\String.wz");
-        Path enPath = Path.of("E:\\javaguide\\053\\dwang-maplestory-old\\gms-server\\gms-handler\\wz\\String.wz");
-        Path outputDir = Path.of("E:\\javaguide\\053\\dwang-maplestory-old\\gms-server\\gms-handler\\src\\test\\java\\string\\gen");
+//        String root = "E:\\javaguide\\053\\dwang-maplestory-old";
+        Path root = PathUtils.getRootPath("bms");
+        Path cnPath =      Path.of(root + "\\gms-server\\gms-handler\\wz-zh-CN\\String.wz");
+        Path enPath =      Path.of(root + "\\gms-server\\gms-handler\\wz\\String.wz");
+        Path outputDir =   Path.of(root + "\\gms-server\\gms-handler\\src\\test\\java\\string\\gen");
+        Path cnQuestPath = Path.of(root + "\\gms-server\\gms-handler\\wz-zh-CN\\Quest.wz");
+        Path enQuestPath = Path.of(root + "\\gms-server\\gms-handler\\wz\\Quest.wz");
 
-        // 1. 处理通用模块 (Mob, Npc)
-        for (String subImg : Arrays.asList("Mob.img", "Npc.img")) {
-            generate(cnPath, enPath, outputDir, subImg, subImg, WzResolver.FLAT_NAME_RESOLVER);
-        }
 
-        // 2. 处理地图模块 (Map.img)
-        generate(cnPath, enPath, outputDir, "Map.img", "Map.img", WzResolver.MAP_RESOLVER);
 
-        // 3. 处理物品模块 (适配新旧版本格式差异)
-        // 新版：Direct Img (Cash.img, Consume.img, Etc.img 等)
-        // 旧版：Item.img -> SubNode (Cash, Con, Etc 等)
-        List<ItemTask> itemTasks = List.of(
-                new ItemTask("Cash.img", "Item.img", "Cash", "Cash"),
-                new ItemTask("Consume.img", "Item.img", "Con", "Con"),
-                new ItemTask("Ins.img", "Item.img", "Ins", "Ins"),
-                new ItemTask("Pet.img", "Item.img", "Pet", "Pet"),
-                new ItemTask("Etc.img", "Item.img", "Etc", "Etc")
+//        // 1. 处理通用模块 (Mob, Npc)
+//        for (String subImg : Arrays.asList("Mob.img", "Npc.img")) {
+//            generate(cnPath, enPath, outputDir, subImg, subImg, WzResolver.FLAT_NAME_RESOLVER);
+//        }
+//
+//        // 2. 处理地图模块 (Map.img)
+//        generate(cnPath, enPath, outputDir, "Map.img", "Map.img", WzResolver.MAP_RESOLVER);
+//
+//        // 3. 处理物品模块 (适配新旧版本格式差异)
+//        // 新版：Direct Img (Cash.img, Consume.img, Etc.img 等)
+//        // 旧版：Item.img -> SubNode (Cash, Con, Etc 等)
+//        List<ItemTask> itemTasks = List.of(
+//                new ItemTask("Cash.img", "Item.img", "Cash", "Cash"),
+//                new ItemTask("Consume.img", "Item.img", "Con", "Con"),
+//                new ItemTask("Ins.img", "Item.img", "Ins", "Ins"),
+//                new ItemTask("Pet.img", "Item.img", "Pet", "Pet"),
+//                new ItemTask("Etc.img", "Item.img", "Etc", "Etc")
+//        );
+//
+//        for (ItemTask task : itemTasks) {
+//            Map<Integer, String> cnNames = WzResolver.ITEM_RESOLVER.resolve(cnPath, task.cnImgFile, task.cnSubNode, "cn");
+//            Map<Integer, String> enNames = WzResolver.ITEM_RESOLVER.resolve(enPath, task.enImgFile, task.enSubNode, "en");
+//
+//            try {
+//                buildJava(cnNames, enNames, outputDir, task.outputName);
+//            } catch (IOException e) {
+//                System.err.println("生成 " + task.outputName + " 失败: " + e.getMessage());
+//            }
+//        }
+
+        // eqp 特殊处理
+        List<ItemTask> eqpTasks = List.of(
+                new ItemTask("Eqp.img", "Item.img", "Accessory", "Accessory"),
+                new ItemTask("Eqp.img", "Item.img", "Cap", "Cap"),
+                new ItemTask("Eqp.img", "Item.img", "Cape", "Cape"),
+                new ItemTask("Eqp.img", "Item.img", "Coat", "Coat"),
+                new ItemTask("Eqp.img", "Item.img", "Face", "Face"),
+                new ItemTask("Eqp.img", "Item.img", "Glove", "Glove"),
+                new ItemTask("Eqp.img", "Item.img", "Hair", "Hair"),
+                new ItemTask("Eqp.img", "Item.img", "Longcoat", "Longcoat"),
+                new ItemTask("Eqp.img", "Item.img", "Pants", "Pants"),
+                new ItemTask("Eqp.img", "Item.img", "PetEquip", "PetEquip"),
+                new ItemTask("Eqp.img", "Item.img", "Ring", "Ring"),
+                new ItemTask("Eqp.img", "Item.img", "Shield", "Shield"),
+                new ItemTask("Eqp.img", "Item.img", "Shoes", "Shoes"),
+                new ItemTask("Eqp.img", "Item.img", "Taming", "Taming"),
+                new ItemTask("Eqp.img", "Item.img", "Weapon", "Weapon")
         );
-
-        for (ItemTask task : itemTasks) {
-            Map<Integer, String> cnNames = WzResolver.ITEM_RESOLVER.resolve(cnPath, task.cnImgFile, task.cnSubNode, "cn");
-            Map<Integer, String> enNames = WzResolver.ITEM_RESOLVER.resolve(enPath, task.enImgFile, task.enSubNode, "en");
+        for (ItemTask task : eqpTasks) {
+            Map<Integer, String> cnNames = WzResolver.EQP_RESOLVER.resolve(cnPath, task.cnImgFile, task.cnSubNode, "cn");
+            Map<Integer, String> enNames = WzResolver.EQP_RESOLVER.resolve(enPath, task.enImgFile, task.enSubNode, "en");
 
             try {
                 buildJava(cnNames, enNames, outputDir, task.outputName);
@@ -57,9 +93,11 @@ public class IDGen {
             }
         }
 
-        Path cnQuestPath = Path.of("E:\\javaguide\\053\\dwang-maplestory-old\\gms-server\\gms-handler\\wz-zh-CN\\Quest.wz");
-        Path enQuestPath = Path.of("E:\\javaguide\\053\\dwang-maplestory-old\\gms-server\\gms-handler\\wz\\Quest.wz");
-        generate(cnQuestPath, enQuestPath, outputDir, "QuestInfo.img", "QuestInfo.img", WzResolver.QUEST_RESOLVER);
+
+
+
+        // 处理任务
+//        generate(cnQuestPath, enQuestPath, outputDir, "QuestInfo.img", "QuestInfo.img", WzResolver.QUEST_RESOLVER);
 
 
     }
@@ -145,7 +183,47 @@ public class IDGen {
             Map<Integer, String> result = new TreeMap<>();
             String defaultPrefix = (subNodeName != null ? subNodeName : imgFileName).replace(".img", "");
 
-            for (Data child : itemContainer.getChildren()) {
+                for (Data child : itemContainer.getChildren()) {
+                    if (!isDigit(child.getName())) continue;
+                    int id = Integer.parseInt(child.getName());
+
+                    String name = DataTool.getString(child.getChildByPath("name"), "NO_NAME");
+                    if ("en".equals(langType)) {
+                        result.put(id, formatConstantName(name, id, defaultPrefix));
+                    } else {
+                        String desc = DataTool.getString(child.getChildByPath("desc"), "NO_NAME");
+                        if (!"NO_NAME".equals(desc) && !desc.isBlank()) {
+                            name = name + " - " + desc;
+                        }
+                        result.put(id, name);
+                    }
+                }
+            return result;
+        };
+
+        /**
+         * 物品节点统一解析 (自动兼容：Img根节点包含还是内部二级子节点包含)
+         */
+        WzResolver EQP_RESOLVER = (wzPath, imgFileName, subNodeName, langType) -> {
+            Data root = loadImgData(wzPath, imgFileName);
+            if (root == null) return Collections.emptyMap();
+
+            // 归一化提取包含物品ID列表的容器节点
+            Data itemContainer = null;
+            if ("en".equals(langType)) {
+                itemContainer = locateItemContainer(root, "Eqp");
+            } else {
+                itemContainer = locateItemContainer(root, subNodeName);
+
+            }
+            if (itemContainer == null) return Collections.emptyMap();
+
+            Map<Integer, String> result = new TreeMap<>();
+            String defaultPrefix = (subNodeName != null ? subNodeName : imgFileName).replace(".img", "");
+
+            for (Data child : itemContainer.getChildByPath(subNodeName)) {
+
+
                 if (!isDigit(child.getName())) continue;
                 int id = Integer.parseInt(child.getName());
 
@@ -162,8 +240,6 @@ public class IDGen {
             }
             return result;
         };
-
-
         /**
          * 地图节点解析 (Map.img -> MapCategory -> MapId)
          */

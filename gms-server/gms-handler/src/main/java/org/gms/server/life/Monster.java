@@ -782,6 +782,7 @@ public class Monster extends AbstractLoadedLife {
             VeteranHunterMedal.onMonsterKilled(attacker, this);
             // 记录已kill的mob
             achievementService.recordAchievement(attacker.getId(), AchievementCategory.MONSTER_KILL, AchievementCategory.MONSTER_KILL_KEY,1);
+            achievementService.recordAchievement(attacker.getId(), AchievementCategory.MONSTER_KILL, String.valueOf(getId()),1);
         }
     }
 
