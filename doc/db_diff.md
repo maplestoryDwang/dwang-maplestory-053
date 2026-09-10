@@ -114,3 +114,15 @@ INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `
 INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001071, 1, 1, 0, 100000);
 INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001072, 1, 1, 0, 100000);
 INSERT INTO `kaentake`.`drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES (9300053, 4001073, 1, 1, 0, 100000);
+
+
+20260910
+## 删除抽奖
+海盗
+DELETE from gachapon_reward  where item_id >= 1482000  and item_id <= 1482046;
+DELETE from gachapon_reward  where item_id >= 1492000  and item_id <= 1492048;
+DELETE from gachapon_reward  where item_id >= 1002610  and item_id <= 1002649;
+DELETE from gachapon_reward  where item_id >= 1052095  and item_id <= 1052134;
+DELETE from gachapon_reward  where item_id >= 1072285  and item_id <= 1072321;
+DELETE from gachapon_reward where item_id >= 4007000   and item_id <= 4007007;
+

@@ -15,7 +15,8 @@ import org.gms.util.PacketCreator;
 import org.gms.util.Randomizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -119,4 +120,20 @@ public class GachaponService {
         }
     }
 
+    public List<GachaponRewardDO> getGachaponList(Character player, int npc) {
+        List<GachaponRewardPoolDO> pools = getActivePools(npc); // 已按ID排序
+
+        // 使用 TreeSet 结合属性 Comparator 实现业务去重
+        Set<GachaponRewardDO> uniqueRewards = new TreeSet<>(
+                Comparator.comparing(GachaponRewardDO::getItemId)
+                        .thenComparing(GachaponRewardDO::getQuantity)
+        );
+
+        for (GachaponRewardPoolDO pool : pools) {
+            List<GachaponRewardDO> poolRewards = gachaponDataService.getRewards(pool.getId());
+            uniqueRewards.addAll(poolRewards);
+        }
+
+        return new ArrayList<>(uniqueRewards);
+    }
 }

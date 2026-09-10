@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 import static com.mybatisflex.core.query.QueryMethods.count;
 import static com.mybatisflex.core.query.QueryMethods.sum;
@@ -39,9 +40,9 @@ public class AchievementService {
     }
 
     private AchievementDiscountConfigDO getConfig(String category) {
-        if (configCache.isEmpty()) {
+//        if (configCache.isEmpty()) {
             refreshConfigCache();
-        }
+//        }
         return configCache.get(category);
     }
 
@@ -64,9 +65,10 @@ public class AchievementService {
         CharacterAchievementDO record = achievementMapper.selectOneByQuery(qw);
 
         if (record != null) {
-            if (!isAccumulate) {
-                return false;
-            }
+            // 默认都进行更新，记录次数
+//            if (!isAccumulate) {
+//                return false;
+//            }
             record.setProgress(record.getProgress() + addAmount);
             achievementMapper.update(record);
             return true;
@@ -169,9 +171,9 @@ public class AchievementService {
      * 获取玩家所有分类的成就进度列表
      */
     public List<AchievementProgressDTO> getAllProgress(int cid, int completedQuestCount) {
-        if (configCache.isEmpty()) {
+//        if (configCache.isEmpty()) {
             refreshConfigCache();
-        }
+//        }
 
         List<AchievementProgressDTO> dtoList = new ArrayList<>();
         List<AchievementDiscountConfigDO> sortedList = configCache.values().stream()
@@ -190,9 +192,9 @@ public class AchievementService {
      * 核心计算：怪物血量折算
      */
     public int calculateMonsterHp(int cid, int originalHp, int completedQuestCount) {
-        if (configCache.isEmpty()) {
+//        if (configCache.isEmpty()) {
             refreshConfigCache();
-        }
+//        }
 
         double totalDiscountPercent = 0.0;
         double totalCanDiscount = 0.0;
@@ -219,5 +221,21 @@ public class AchievementService {
         int finalHp = (int) Math.floor(originalHp * finalHpRate);
 
         return Math.max(finalHp, 1);
+    }
+
+    public List<String> getDiscoveredMusicList(int charId) {
+
+        QueryWrapper qw = QueryWrapper.create()
+                .select()
+                .where("character_id = ?", charId)
+                .and("category = ?", "MUSIC_DISCOVERY");
+        List<CharacterAchievementDO> characterAchievementDOS = achievementMapper.selectListByQuery(qw);
+        List<String> musicList = characterAchievementDOS.stream().map(new Function<CharacterAchievementDO, String>() {
+            @Override
+            public String apply(CharacterAchievementDO characterAchievementDO) {
+                return characterAchievementDO.getAchievementKey();
+            }
+        }).toList();
+        return musicList;
     }
 }

@@ -85,7 +85,7 @@ function showCategoryDetail(dto) {
             break;
         case "PARTY_QUEST":
             text += "说明：通关月庙、废弃、天空、玩具、海盗等 " + dto.getMaxProgress() + " 个组队任务。\r\n";
-            text += "#r[全满奖励]#k：全部完成后，可通过枫叶换取自选一件枫叶系列装备。\r\n";
+            text += "#r[部分特权]#k：完成后，枫叶兑换装备可以进行打折。\r\n";
             break;
         case "MUSIC_DISCOVERY":
             text += "说明：在不同地图收集 " + dto.getMaxProgress() + " 首音乐 BGM。\r\n";
@@ -149,18 +149,13 @@ function handleCategoryAction(selection) {
             break;
 
         case "PARTY_QUEST":
-            if (!selectedDto.isCompleted()) {
-                cm.sendOk("组队任务尚未全部通关 (当前进度: " + selectedDto.getCurrentProgress() + "/" + selectedDto.getMaxProgress() + ")，无法领取枫叶装备！");
-                cm.dispose();
-            } else {
-                cm.dispose();
-                cm.openNpc(9900001, "自选枫叶");
-            }
+            cm.dispose();
+            cm.openNpc(9900001, "自选枫叶");
             break;
 
         case "MUSIC_DISCOVERY":
             cm.dispose();
-            cm.openNpc(9900001, "音乐点播");
+            cm.openNpc(9900001, "记录音乐");
             break;
 
         case "HIDDEN_MAP":

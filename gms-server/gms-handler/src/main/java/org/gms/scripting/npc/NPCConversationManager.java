@@ -37,6 +37,7 @@ import org.gms.constants.game.NextLevelType;
 import org.gms.constants.id.MapId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.LanguageConstants;
+import org.gms.dao.entity.GachaponRewardDO;
 import org.gms.model.dto.NpcCraftCategoryDTO;
 import org.gms.model.dto.NpcMenuDTO;
 import org.gms.dwutil.CharacterUtils;
@@ -460,6 +461,10 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public void doGachapon() {
         context.getGachaponService().doGachapon(getPlayer(), npc);
+    }
+
+    public List<GachaponRewardDO> getGachaponList() {
+        return context.getGachaponService().getGachaponList(getPlayer(), npc);
     }
 
     // public void doGachapon() {
@@ -1555,4 +1560,14 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         // 默认增加 1 次或解锁该 KEY
         return HiddenMapAchievementManager.isHiddenMap(mapId);
     }
+
+    /**
+     * 获取记录的音乐
+     * @return
+     */
+    public List<String> getDiscoveredMusicList() {
+        return  context.getAchievementService()
+                .getDiscoveredMusicList(getPlayer().getId());
+    }
+
 }

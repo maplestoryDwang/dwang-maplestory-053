@@ -1,6 +1,7 @@
 /**
  * @description 4周年枫叶装备兑换与进阶 NPC 脚本（带动态折扣与成就联动扩展）
  * @author Optimized Script
+ * 在这里设置的五折。
  */
 
 var status = -1;
@@ -25,7 +26,7 @@ var PRICE_UPGRADE_MID  = 1500; // 中阶进阶枫叶消耗
 // 基础装备直接兑换列表 [装备ID, 原始价格]
 var DIRECT_EXCHANGE_EQUIPS = [
     // 帽子系列
-    [1002508, PRICE_TIER_1], [1002509, PRICE_TIER_1], [1002510, PRICE_TIER_1], [1002511, PRICE_TIER_1],
+    [1002508, PRICE_TIER_1], [1002509, PRICE_TIER_2], [1002510, PRICE_TIER_3], [1002511, PRICE_SCROLL],
     [1002515, PRICE_TIER_2], [1002516, PRICE_TIER_2], [1002517, PRICE_TIER_2], [1002518, PRICE_TIER_2], [1002553, PRICE_TIER_2],
     [1002600, PRICE_TIER_3], [1002601, PRICE_TIER_3], [1002602, PRICE_TIER_3], [1002603, PRICE_TIER_3],
 
@@ -33,7 +34,7 @@ var DIRECT_EXCHANGE_EQUIPS = [
     [1032040, PRICE_TIER_1], [1032041, PRICE_TIER_2], [1032042, PRICE_TIER_3],
 
     // 盾牌系列
-    [1092030, PRICE_TIER_1], [1092045, PRICE_TIER_2], [1092046, PRICE_TIER_2], [1092047, PRICE_TIER_2],
+    [1092030, PRICE_TIER_1],
 
     // 基础武器 (仅保留初/中级)
     [1302020, PRICE_TIER_1], [1302030, PRICE_TIER_2], // 单手剑
@@ -55,6 +56,7 @@ var WEAPON_UPGRADE_DATA = [
     { reqWeapon: 1452016, baseLeaf: PRICE_UPGRADE_HIGH, targetWeapons: [1452045] },
     { reqWeapon: 1462014, baseLeaf: PRICE_UPGRADE_HIGH, targetWeapons: [1462040] },
     { reqWeapon: 1472030, baseLeaf: PRICE_UPGRADE_HIGH, targetWeapons: [1472055] },
+    { reqWeapon: 1092030, baseLeaf: PRICE_UPGRADE_MID,  targetWeapons: [1092045, 1092046, 1092047] }, // 枫叶盾
     { reqWeapon: 1302030, baseLeaf: PRICE_UPGRADE_MID,  targetWeapons: [1302064, 1402039] },
     { reqWeapon: 1332025, baseLeaf: PRICE_UPGRADE_MID,  targetWeapons: [1332055, 1332056] },
     { reqWeapon: 1382012, baseLeaf: PRICE_UPGRADE_MID,  targetWeapons: [1372034, 1382039] },
@@ -82,7 +84,12 @@ var SCROLL_LIST = [
 function getCompletedPqCount() {
     // 示例逻辑：预留读取服务端玩家变量的代码
     // var count = cm.getPlayer().getBossLog("PQ_Completed_Count");
-    return 0; // 默认 0 次（无打折），最多可到 5 次
+
+    var progress = cm.getAchievementProgress("PARTY_QUEST");
+    return progress.getCurrentProgress()
+
+
+//    return 0; // 默认 0 次（无打折），最多可到 5 次
 }
 
 /**
@@ -129,8 +136,10 @@ function action(mode, type, selection) {
 
     // 0: 主菜单入口
     if (status === 0) {
+        var inv = cm.getInventory(4);
+        var nItem = inv.countById(MAPLE_LEAF);
         var discountPercent = Math.round(getDiscountRate() * 10);
-        var text = "你好！这里提供枫叶基础装备兑换、武器进阶以及卷轴兑换服务。\r\n";
+        var text = "你好！这里提供枫叶基础装备兑换、武器进阶以及卷轴兑换服务。当前拥有枫叶数量：" + nItem + "个\r\n";
 
         if (discountPercent < 10) {
             text += "#e#r[成就特惠] 当前已为您开启 " + discountPercent + " 折优惠！#n#k\r\n\r\n";
@@ -156,7 +165,7 @@ function action(mode, type, selection) {
                     var baseCost = DIRECT_EXCHANGE_EQUIPS[i][1];
                     var realCost = getFinalPrice(baseCost);
 
-                    text += " #L" + i + "##v" + itemId + "# #t" + itemId + "# #b(" + realCost + " 个枫叶)#k#l\r\n";
+                    text += " #L" + i + "##v" + itemId + "# #z" + itemId + "# #b(" + realCost + " 个枫叶)#k#l\r\n";
                 }
                 cm.sendSimple(text);
                 break;
@@ -167,16 +176,16 @@ function action(mode, type, selection) {
                     var data = WEAPON_UPGRADE_DATA[i];
                     var realCost = getFinalPrice(data.baseLeaf);
 
-                    text += "#L" + i + "##v" + MAPLE_LEAF + "# #b" + realCost + "个#k + #v" + data.reqWeapon + "##l\r\n";
+                    text += "#L" + i + "##v" + MAPLE_LEAF + "# #b" + realCost + "个#k + #v" + data.reqWeapon + "# #b#t" + data.reqWeapon +"#" + " =  ？？？" + "#l#k\r\n";
                 }
                 cm.sendSimple(text);
                 break;
 
             case 2: // 卷轴兑换
                 var realScrollCost = getFinalPrice(PRICE_SCROLL);
-                var text = "消耗 #b" + realScrollCost + " 个 #t" + MAPLE_LEAF + "##k，可兑换以下 4 周年专用卷轴之一：\r\n";
+                var text = "消耗 #b" + realScrollCost + " 个 #v" + MAPLE_LEAF + "##k，可兑换以下 4 周年专用卷轴之一：\r\n";
                 for (var i = 0; i < SCROLL_LIST.length; i++) {
-                    text += "#L" + i + "##t" + SCROLL_LIST[i] + "##l\r\n";
+                    text += "#L" + i + "#" + "#v" + SCROLL_LIST[i] + "#" + "#t" + SCROLL_LIST[i] + "# #l\r\n";
                 }
                 cm.sendSimple(text);
                 break;
@@ -202,14 +211,9 @@ function action(mode, type, selection) {
                 var data = WEAPON_UPGRADE_DATA[selectedSubItem];
                 var realCost = getFinalPrice(data.baseLeaf);
 
-                if (data.targetWeapons.length === 1) {
-                    status = 2; // 跳过分支选择
-                    action(1, 0, 0);
-                    return;
-                }
                 var text = "请选择你要进阶的目标高阶武器：\r\n";
                 for (var i = 0; i < data.targetWeapons.length; i++) {
-                    text += "#L" + i + "##v" + MAPLE_LEAF + "# #b" + realCost + "个#k + #v" + data.reqWeapon + "# = #v" + data.targetWeapons[i] + ":##l\r\n";
+                    text += "#L" + i + "##v" + MAPLE_LEAF + "# #b" + realCost + "个#k + #v" + data.reqWeapon + "#" + "#b#z" + data.reqWeapon +"#" + " = #v" + data.targetWeapons[i] + ":#" + "#b#z" +  data.targetWeapons[i] +"#" + "#l\r\n";
                 }
                 cm.sendSimple(text);
                 break;
@@ -288,7 +292,7 @@ function action(mode, type, selection) {
                 } else {
                     cm.gainItem(MAPLE_LEAF, -tradeInfo.reqLeaf);
                     cm.gainItem(tradeInfo.reqWeapon, -1);
-                    cm.gainItem(tradeInfo.targetWeapon, 1, true); // true 生成随机属性
+                    cm.gainItem(tradeInfo.targetWeapon, 1, true, true); // true 生成随机属性 public Item gainItem(int id, short quantity, boolean randomStats, boolean showMessage) 四个才是随机 三个参数的不是随机
                     rewardExp();
                     cm.sendOk("祝贺你获得全新的 #b#t" + tradeInfo.targetWeapon + "##k！");
                 }

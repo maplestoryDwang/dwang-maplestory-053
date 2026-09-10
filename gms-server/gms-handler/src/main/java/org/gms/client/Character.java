@@ -9981,6 +9981,10 @@ public class Character extends AbstractCharacterObject {
 		}
 	}
 
+	public void setCS(boolean cs) {
+		useCS = cs;
+	}
+
 	public void setTotalCP(int a) {
 		this.totCP = a;
 	}

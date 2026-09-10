@@ -47,7 +47,7 @@ function action(mode, type, selection) {
         text += "当前信用券：" + cm.getPlayer().getCashShop().getCash(4) + "\r\n";
 		text += "当前金币：" + cm.getPlayer().getMeso() + "\r\n";
         text += " \r\n\r\n";
-		text += "#L1#显示成就#l \t #L2#记录音乐#l \t #L3#记录地图#l\r\n";
+		text += "#L1#显示成就#l \t #L2#枫叶商店#l \t #L3#记录地图#l\r\n"; // 自选枫叶
 		text += "#L4#传送自由#l \t #L69#快速转职#l \t #L70#学习技能#l\r\n";
 		text += "#L71#超级传送#l \t #L5#爆率一览#l \t #L6#在线奖励#l\r\n";
 //        text += "#L0#新人福利#l \t #L1#每日签到#l  \t #L72#转世重生#l\r\n";
@@ -92,7 +92,7 @@ function doSelect(selection) {
             openNpc("显示成就");
             break;
         case 2:
-            openNpc("记录音乐");
+            openNpc("自选枫叶");
             break;
         case 3:
             openNpc("记录隐藏地图");
