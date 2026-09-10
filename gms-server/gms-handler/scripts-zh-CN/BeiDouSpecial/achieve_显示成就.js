@@ -44,7 +44,7 @@ function action(mode, type, selection) {
  */
 function showMainPanel() {
     var list = cm.getAllAchievementProgress();
-    var text = "\t\t\t\t\t#e欢迎来到#r成就中心#k#n\t\t\t\t\r\n";
+    var text = "\t\t\t\t\t#e欢迎来到#rDWANG#k的成就中心#n\t\t\t\t\r\n";
     text += "完成成就不仅能提供#b怪物血量削减#k，还可解锁各项功能，希望您玩的开心！\r\n";
 
     var totalDiscount = 0.0;
@@ -144,18 +144,18 @@ function handleCategoryAction(selection) {
                 cm.dispose();
             } else {
                 cm.dispose();
-                cm.openNpc(9900001, "重置任务");
+                cm.openNpc(9900001, "achieve_重置任务");
             }
             break;
 
         case "PARTY_QUEST":
             cm.dispose();
-            cm.openNpc(9900001, "自选枫叶");
+            cm.openNpc(9900001, "achieve_自选枫叶");
             break;
 
         case "MUSIC_DISCOVERY":
             cm.dispose();
-            cm.openNpc(9900001, "记录音乐");
+            cm.openNpc(9900001, "achieve_记录音乐");
             break;
 
         case "HIDDEN_MAP":
@@ -164,7 +164,7 @@ function handleCategoryAction(selection) {
                 cm.dispose();
             } else {
                 cm.dispose();
-                cm.openNpc(9900001, "彩蛋消息");
+                cm.openNpc(9900001, "achieve_彩蛋消息");
             }
             break;
 
@@ -174,7 +174,7 @@ function handleCategoryAction(selection) {
                 cm.dispose();
             } else {
                 cm.dispose();
-                cm.openNpc(9900001, "自选抽奖");
+                cm.openNpc(9900001, "achieve_自选抽奖");
             }
             break;
 
@@ -184,13 +184,13 @@ function handleCategoryAction(selection) {
                 cm.dispose();
             } else {
                 cm.dispose();
-                cm.openNpc(9900001, "区域飞行");
+                cm.openNpc(9900001, "achieve_区域飞行");
             }
             break;
 
         case "SPECIAL_ITEM":
             cm.dispose();
-            cm.openNpc(9900001, "彩蛋检查");
+            cm.openNpc(9900001, "achieve_彩蛋检查");
             break;
 
         default:

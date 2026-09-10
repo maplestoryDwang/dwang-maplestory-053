@@ -55,6 +55,7 @@ import org.gms.net.server.world.PartyCharacter;
 import org.gms.scripting.ScriptServiceContext;
 import org.gms.server.achievement.AchievementProgressDTO;
 import org.gms.server.achievement.HiddenMapAchievementManager;
+import org.gms.server.gachapon.Gachapon;
 import org.gms.util.packets.WeddingPackets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -465,6 +466,16 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public List<GachaponRewardDO> getGachaponList() {
         return context.getGachaponService().getGachaponList(getPlayer(), npc);
+    }
+    public String getGachaponName() {
+        String[] lootNames = Gachapon.GachaponType.getLootNames();
+        int[] lootIds = Gachapon.GachaponType.getLootIds();
+        for (int i = 0; i < lootIds.length; i++) {
+            if (npc == lootIds[i]) {
+                return lootNames[i];
+            }
+        }
+        return "DWANG";
     }
 
     // public void doGachapon() {
@@ -1569,5 +1580,8 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         return  context.getAchievementService()
                 .getDiscoveredMusicList(getPlayer().getId());
     }
+    
+    
+    
 
 }

@@ -89,13 +89,13 @@ function doSelect(selection) {
             openNpc("新人福利");
             break;
         case 1:
-            openNpc("显示成就");
+            openNpc("achieve_显示成就");
             break;
         case 2:
-            openNpc("自选枫叶");
+            openNpc("achieve_自选枫叶");
             break;
         case 3:
-            openNpc("记录隐藏地图");
+            openNpc("achieve_记录隐藏地图");
             break;
         case 4:
             cm.getPlayer().saveLocation("FREE_MARKET");

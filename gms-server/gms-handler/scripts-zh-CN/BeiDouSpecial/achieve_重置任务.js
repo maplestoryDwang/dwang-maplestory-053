@@ -4,7 +4,7 @@
  */
 
 var DataProviderFactory = Java.type('org.gms.provider.DataProviderFactory');
-var WZFiles = Java.type('org.gms.provider.wz.WZFiles');
+var WZFiles = Java.type('org.gms.provider.wz.WzFiles');
 var DataTool = Java.type('org.gms.provider.DataTool');
 var Quest = Java.type('org.gms.server.quest.QuestV2');
 var QuestRepository = Java.type('org.gms.server.quest.QuestRepository');

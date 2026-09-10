@@ -55,7 +55,7 @@ public class StringInfoProvider {
 
     private static final Map<Integer, String> questNames = new HashMap<>();
 
-
+    @Getter
     private static final Map<Integer, List<MapStrInfo>> NPC_EXIST_MAP = new LinkedHashMap<>();
     private static final Map<Integer, List<MapStrInfo>> MOB_EXIST_MAP = new LinkedHashMap<>();
 

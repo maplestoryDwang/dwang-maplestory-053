@@ -1,15 +1,11 @@
 package org.gms.dwutil;
 
 import org.gms.client.Character;
-import org.gms.server.quest.QuestStatus;
+import org.gms.server.quest.*;
 import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.DelayedQuestUpdate;
 import org.gms.server.ItemInformationProvider;
-import org.gms.server.quest.QuestActionType;
-import org.gms.server.quest.QuestRepository;
-import org.gms.server.quest.QuestRequirementType;
-import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.v2.action.QuestActionExecutor;
 import org.gms.server.quest.actions.AbstractQuestActionData;
 import org.gms.server.quest.actions.ext.ItemActionData;
@@ -144,8 +140,15 @@ public class QuestUtils {
     }
 
     public static void reset(Character chr, QuestV2 quest) {
-        QuestStatus newStatus = new QuestStatus(quest.getId(), QuestStatus.Status.NOT_STARTED);
-        chr.updateQuestStatus(newStatus);
+        // bugfix: 如果是有parentQuest也全部改
+        String parent = quest.getParent();
+        List<QuestV2> matchedQuests = QuestRepository.getMatchedQuests(parent);
+        for (QuestV2 matchedQuest : matchedQuests) {
+            QuestStatus newStatus = new QuestStatus(matchedQuest.getId(), QuestStatus.Status.NOT_STARTED);
+            chr.updateQuestStatus(newStatus);
+        }
+
+
     }
 
     public static boolean forfeit(Character chr, QuestV2 quest) {
