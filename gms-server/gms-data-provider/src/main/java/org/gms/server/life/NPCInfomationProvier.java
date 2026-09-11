@@ -75,6 +75,11 @@ public class NPCInfomationProvier {
                 }
             }
         }
+
+    }
+
+    public static String getScriptName(int npcId) {
+        return scriptMap.get(npcId);
     }
 
 }

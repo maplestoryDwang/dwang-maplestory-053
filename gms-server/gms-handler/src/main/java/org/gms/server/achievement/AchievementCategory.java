@@ -19,5 +19,5 @@ public class AchievementCategory {
     public static final String HIDDEN_MAP = "HIDDEN_MAP";           // 脚本里面调了
     public static final String GACHAPON_COUNT = "GACHAPON_COUNT";  // 已记录
     public static final String SPECIAL_NPC = "SPECIAL_NPC";
-    public static final String SPECIAL_ITEM = "SPECIAL_ITEM";
+    public static final String SPECIAL_EGG = "SPECIAL_EGG";
 }

@@ -581,6 +581,10 @@ public class AbstractPlayerInteraction {
     public void gainItem(int id, short quantity) {
         gainItem(id, quantity, false, true);
     }
+    public void gainItemByMaker(int id, short quantity) {
+        String owner = getPlayer().getName();
+        gainItem(id, quantity, false, true, -1, null, owner);
+    }
 
     public void gainItem(int id, short quantity, boolean show) {//this will fk randomStats equip :P
         gainItem(id, quantity, false, show);
@@ -602,7 +606,12 @@ public class AbstractPlayerInteraction {
         return gainItem(id, quantity, randomStats, showMessage, expires, null);
     }
 
+
     public Item gainItem(int id, short quantity, boolean randomStats, boolean showMessage, long expires, Pet from) {
+        return gainItem(id, quantity, randomStats, showMessage, expires, from, null);
+
+    }
+    public Item gainItem(int id, short quantity, boolean randomStats, boolean showMessage, long expires, Pet from, String owner) {
         Item item = null;
         Pet evolved;
         int petId = -1;
@@ -666,12 +675,12 @@ public class AbstractPlayerInteraction {
             }
             if (ItemConstants.getInventoryType(id) == InventoryType.EQUIP) {
                 if (randomStats) {
-                    InventoryManipulator.addFromDrop(c, ii.randomizeStats((Equip) item), false, petId);
+                    InventoryManipulator.addFromDrop(c, ii.randomizeStats((Equip) item), false, petId, owner);
                 } else {
-                    InventoryManipulator.addFromDrop(c, item, false, petId);
+                    InventoryManipulator.addFromDrop(c, item, false, petId, owner);
                 }
             } else {
-                InventoryManipulator.addFromDrop(c, item, false, petId);
+                InventoryManipulator.addFromDrop(c, item, false, petId, owner);
             }
         } else {
             InventoryManipulator.removeById(c, ItemConstants.getInventoryType(id), id, -quantity, true, false);

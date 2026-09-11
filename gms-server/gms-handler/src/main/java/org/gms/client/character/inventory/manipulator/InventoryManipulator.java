@@ -182,19 +182,23 @@ public class InventoryManipulator {
     }
 
     public static boolean addFromDrop(Client c, Item item, boolean show, int petId) {
+        return addFromDrop(c, item, show, petId, null);
+    }
+
+    public static boolean addFromDrop(Client c, Item item, boolean show, int petId, String owner) {
         Character chr = c.getPlayer();
         InventoryType type = item.getInventoryType();
 
         Inventory inv = chr.getInventory(type);
         inv.lockInventory();
         try {
-            return addFromDropInternal(c, chr, type, inv, item, show, petId);
+            return addFromDropInternal(c, chr, type, inv, item, show, petId, owner);
         } finally {
             inv.unlockInventory();
         }
     }
 
-    private static boolean addFromDropInternal(Client c, Character chr, InventoryType type, Inventory inv, Item item, boolean show, int petId) {
+    private static boolean addFromDropInternal(Client c, Character chr, InventoryType type, Inventory inv, Item item, boolean show, int petId, String owner) {
         ItemInformationProvider ii = ItemInformationProvider.getInstance();
         int itemid = item.getItemId();
         if (ii.isPickupRestricted(itemid) && chr.haveItemWithId(itemid, true)) {
@@ -272,6 +276,9 @@ public class InventoryManipulator {
                 c.sendPacket(PacketCreator.getInventoryFull());
                 c.sendPacket(PacketCreator.getShowInventoryFull());
                 return false;
+            }
+            if (owner != null) {
+                item.setOwner(owner);
             }
             item.setPosition(newSlot);
             c.sendPacket(PacketCreator.modifyInventory(true, Collections.singletonList(new ModifyInventory(0, item))));

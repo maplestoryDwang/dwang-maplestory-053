@@ -83,6 +83,7 @@ function action(mode, type, selection) {
             cm.dispose();
             if (beauty == 1) {
                 if (cm.haveItem(5420003)) {
+                    cm.gainItem(5420003, -1); // 没有删除
                     cm.setHair(hairnew[selection]);
                     cm.sendOk("享受你的新发型吧！");
                 } else if (cm.haveItem(5150003)) {

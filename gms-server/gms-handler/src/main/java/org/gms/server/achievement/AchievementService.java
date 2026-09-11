@@ -228,7 +228,7 @@ public class AchievementService {
         QueryWrapper qw = QueryWrapper.create()
                 .select()
                 .where("character_id = ?", charId)
-                .and("category = ?", "MUSIC_DISCOVERY");
+                .and("category = ?", AchievementCategory.MUSIC_DISCOVERY);
         List<CharacterAchievementDO> characterAchievementDOS = achievementMapper.selectListByQuery(qw);
         List<String> musicList = characterAchievementDOS.stream().map(new Function<CharacterAchievementDO, String>() {
             @Override
@@ -237,5 +237,15 @@ public class AchievementService {
             }
         }).toList();
         return musicList;
+    }
+
+    public List<Integer> getVisitedNpcList(int charId) {
+
+        QueryWrapper qw = QueryWrapper.create()
+                .select()
+                .where("character_id = ?", charId)
+                .and("category = ?", AchievementCategory.SPECIAL_NPC);
+        List<CharacterAchievementDO> characterAchievementDOS = achievementMapper.selectListByQuery(qw);
+        return characterAchievementDOS.stream().map(characterAchievementDO -> Integer.parseInt(characterAchievementDO.getAchievementKey())).toList();
     }
 }

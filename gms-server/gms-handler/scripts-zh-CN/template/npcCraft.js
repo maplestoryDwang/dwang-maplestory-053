@@ -273,7 +273,7 @@ function action(mode, type, selection) {
             }
 
             // 发放成果
-            cm.gainItem(selectedRecipe.getItemId(), totalYield);
+            cm.gainItemByMaker(selectedRecipe.getItemId(), totalYield);
             cm.sendOk(getDialog("craft_success", "好了，完成了。你觉得怎么样，是不是一件艺术品？嗯，如果你需要其他东西，请再来找我。"));
         }
         cm.dispose();

@@ -31,7 +31,9 @@ import org.gms.constants.id.MapId;
 import org.gms.constants.id.NpcId;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementService;
+import org.gms.server.life.NPCInfomationProvier;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,7 +101,7 @@ public final class NPCTalkHandler extends AbstractPacketHandler {
                     boolean hasNpcScript = NPCScriptManager.getInstance().start(c, npc.getId(), oid, null);
                     if (!hasNpcScript) {
                         if (!npc.hasShop()) {
-                            log.warn("NPC {} ({}) is not coded", npc.getName(), npc.getId());
+                            log.warn("NPC {} ({}) is not coded， script maybe is :{}", npc.getName(), npc.getId(), NPCInfomationProvier.getScriptName(npc.getId()));
                             return;
                         } else if (c.getPlayer().getShop() != null) {
                             c.sendPacket(PacketCreator.enableActions());
@@ -109,6 +111,9 @@ public final class NPCTalkHandler extends AbstractPacketHandler {
                             log.info("打开商店：{}({}) ",  npc.getName() ,npc.getId());
                         }
                         npc.sendShop(c);
+                    } else {
+                        // 记录点击的NPC
+                        achievementService.recordAchievement(c.getPlayer().getId(), AchievementCategory.SPECIAL_NPC, String.valueOf(npc.getId()), 1);
                     }
                 }
             }

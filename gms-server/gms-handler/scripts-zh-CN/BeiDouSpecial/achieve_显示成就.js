@@ -77,31 +77,31 @@ function showCategoryDetail(dto) {
     switch (dto.getCategory()) {
         case "MONSTER_KILL":
             text += "说明：累计击杀 " + dto.getMaxProgress() + " 只任意怪物。\r\n";
-            text += "#b[全满奖励]#k：全部完成后，可开启爆率一览查看。\r\n";
+            text += "#b[完成奖励]#k：全部完成后，可开启爆率一览查看。\r\n";
             break;
         case "QUEST_COMPLETED":
             text += "说明：完成 " + dto.getMaxProgress() + " 个普通任务。\r\n";
-            text += "#r[全满奖励]#k：全部完成后，可选择重置指定任务重复领取奖励。\r\n";
+            text += "#r[完成奖励]#k：全部完成后，可选择重置指定任务重复领取奖励。\r\n";
             break;
         case "PARTY_QUEST":
             text += "说明：通关月庙、废弃、天空、玩具、海盗等 " + dto.getMaxProgress() + " 个组队任务。\r\n";
-            text += "#r[部分特权]#k：完成后，枫叶兑换装备可以进行打折。\r\n";
+            text += "#r[及时奖励]#k：枫叶兑换装备可以进行打折。\r\n";
             break;
         case "MUSIC_DISCOVERY":
             text += "说明：在不同地图收集 " + dto.getMaxProgress() + " 首音乐 BGM。\r\n";
-            text += "#b[部分特权]#k：解锁点播音乐功能。\r\n";
+            text += "#b[及时奖励]#k：解锁点播音乐功能。\r\n";
             break;
         case "HIDDEN_MAP":
             text += "说明：探索 " + dto.getMaxProgress() + " 个隐藏地图，定义：大地图上不显示，不存在光圈进入，不受任务状态影响 (如猪的海岸、坠落主义等)。\r\n";
-            text += "#r[全满奖励]#k：全部完成后，获得彩蛋提示。\r\n";
+            text += "#r[完成奖励]#k：全部完成后，获得彩蛋提示。\r\n";
             break;
         case "GACHAPON_COUNT":
             text += "说明：累计抽奖 " + dto.getMaxProgress() + " 次。\r\n";
-            text += "#r[全满奖励]#k：全部完成后，可开启自选抽奖奖池功能。\r\n";
+            text += "#r[完成奖励]#k：全部完成后，可开启自选抽奖奖池功能。\r\n";
             break;
         case "SPECIAL_NPC":
-            text += "：说明拜访 " + dto.getMaxProgress() + " 个主要城镇的代表性 NPC。\r\n";
-            text += "#b[部分特权]#k：可直接飞往同区域岛屿内的任意地图。\r\n";
+            text += "：说明拜访世界各地 " + dto.getMaxProgress() + " 个NPC。\r\n";
+            text += "#b[完成奖励]#k：可直接和拜访过的NPC进行对话。(前提是你有#v1702050#)\r\n";
             break;
         case "SPECIAL_ITEM":
             text += "说明：完成 " + dto.getMaxProgress() + " 个彩蛋 。\r\n";
@@ -180,11 +180,11 @@ function handleCategoryAction(selection) {
 
         case "SPECIAL_NPC":
             if (selectedDto.getCurrentProgress() < 1) {
-                cm.sendOk("您尚未拜访过任何城镇 NPC，无法使用同区域飞行功能！");
+                cm.sendOk("您尚未完成拜访，无法使用远程通话功能！");
                 cm.dispose();
             } else {
                 cm.dispose();
-                cm.openNpc(9900001, "achieve_区域飞行");
+                cm.openNpc(9900001, "achieve_远程通话");
             }
             break;
 

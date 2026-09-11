@@ -1588,39 +1588,79 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     /**
+     * 获取记录的NPC访问
+     * @return
+     */
+    public List<Integer> getVisitedNpcList() {
+        return  context.getAchievementService()
+                .getVisitedNpcList(getPlayer().getId());
+    }
+
+
+    /**
      * NPC自定义简单缓存
      * @param npcId
      * @param dataKey
      * @return
      */
+    /**
+     * 获取自定义数据
+     */
     public String getCustomData(Integer npcId, String dataKey) {
+        if (getPlayer() == null) {
+            return null;
+        }
+
         List<NPCCacheMap.NPCCacheData> npcCacheData = NPCCacheMap.NPC_DATA_BY_CHAR.get(getPlayer().getId());
+        if (npcCacheData == null || npcCacheData.isEmpty()) {
+            return null;
+        }
+
         for (NPCCacheMap.NPCCacheData npcCacheDatum : npcCacheData) {
             if (Objects.equals(npcId, npcCacheDatum.getNpcId())) {
                 return npcCacheDatum.getNpcCacheMap().get(dataKey);
             }
-
         }
         return null;
     }
 
+    /**
+     * 设置自定义数据
+     */
     public void setCustomData(Integer npcId, String dataKey, String dataStr) {
-        List<NPCCacheMap.NPCCacheData> npcCacheData = NPCCacheMap.NPC_DATA_BY_CHAR.get(getPlayer().getId());
-        if (npcCacheData == null) {
-            npcCacheData = new ArrayList<>();
+        if (getPlayer() == null) {
+            return;
         }
 
-        for (NPCCacheMap.NPCCacheData npcCacheDatum : npcCacheData) {
-            // 更新
-            if (Objects.equals(npcCacheDatum.getNpcId(), npcId)) {
-                npcCacheDatum.getNpcCacheMap().put(dataKey, dataStr);
-                return;
+        // 2. 使用 computeIfAbsent 优雅地处理 List 初始化与 Put 操作，彻底解决丢数据问题
+        List<NPCCacheMap.NPCCacheData> npcCacheData = NPCCacheMap.NPC_DATA_BY_CHAR.computeIfAbsent(
+                getPlayer().getId(),
+                k -> new ArrayList<>()
+        );
+
+        // 线程安全同步锁定 List
+        synchronized (npcCacheData) {
+            for (NPCCacheMap.NPCCacheData npcCacheDatum : npcCacheData) {
+                // 更新现有 NPC 数据
+                if (Objects.equals(npcCacheDatum.getNpcId(), npcId)) {
+                    npcCacheDatum.getNpcCacheMap().put(dataKey, dataStr);
+                    return;
+                }
             }
 
+            // 新增 NPC 数据
+            NPCCacheMap.NPCCacheData newNpcCacheData = new NPCCacheMap.NPCCacheData(npcId);
+            newNpcCacheData.getNpcCacheMap().put(dataKey, dataStr);
+            npcCacheData.add(newNpcCacheData);
         }
-        // 新增
-        NPCCacheMap.NPCCacheData newNpcCacheData = new NPCCacheMap.NPCCacheData(npcId);
-        newNpcCacheData.getNpcCacheMap().put(dataKey, dataStr);
-        npcCacheData.add(newNpcCacheData);
+    }
+
+    /**
+     * 获取远程通话基础接通概率（未完成成就时使用）
+     * @return 0 - 100 的概率百分比
+     */
+    public int getRemoteCallSuccessRate() {
+        // 可以写死固定值（如 60），或者读取服务端配置/频道系数
+        return 60;
     }
 }

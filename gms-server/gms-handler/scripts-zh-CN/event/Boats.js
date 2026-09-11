@@ -77,7 +77,7 @@ function takeoff() {
 
     // 随机决定是否会有蝙蝠魔船只接近
 //    if (Math.random() < 0.42) {
-    //测试一定有
+    //todo 测试一定有蝙蝠魔
     if (Math.random() < 1) {
         em.schedule("approach", invasionStartTime + Math.trunc(Math.random() * invasionDelayTime));
     }
