@@ -1572,6 +1572,12 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         return HiddenMapAchievementManager.isHiddenMap(mapId);
     }
 
+    public String getRandomHiddenMapInfo() {
+
+        return HiddenMapAchievementManager.getRandomHiddenMapInfo();
+    }
+
+
     /**
      * 获取记录的音乐
      * @return
@@ -1580,8 +1586,41 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         return  context.getAchievementService()
                 .getDiscoveredMusicList(getPlayer().getId());
     }
-    
-    
-    
 
+    /**
+     * NPC自定义简单缓存
+     * @param npcId
+     * @param dataKey
+     * @return
+     */
+    public String getCustomData(Integer npcId, String dataKey) {
+        List<NPCCacheMap.NPCCacheData> npcCacheData = NPCCacheMap.NPC_DATA_BY_CHAR.get(getPlayer().getId());
+        for (NPCCacheMap.NPCCacheData npcCacheDatum : npcCacheData) {
+            if (Objects.equals(npcId, npcCacheDatum.getNpcId())) {
+                return npcCacheDatum.getNpcCacheMap().get(dataKey);
+            }
+
+        }
+        return null;
+    }
+
+    public void setCustomData(Integer npcId, String dataKey, String dataStr) {
+        List<NPCCacheMap.NPCCacheData> npcCacheData = NPCCacheMap.NPC_DATA_BY_CHAR.get(getPlayer().getId());
+        if (npcCacheData == null) {
+            npcCacheData = new ArrayList<>();
+        }
+
+        for (NPCCacheMap.NPCCacheData npcCacheDatum : npcCacheData) {
+            // 更新
+            if (Objects.equals(npcCacheDatum.getNpcId(), npcId)) {
+                npcCacheDatum.getNpcCacheMap().put(dataKey, dataStr);
+                return;
+            }
+
+        }
+        // 新增
+        NPCCacheMap.NPCCacheData newNpcCacheData = new NPCCacheMap.NPCCacheData(npcId);
+        newNpcCacheData.getNpcCacheMap().put(dataKey, dataStr);
+        npcCacheData.add(newNpcCacheData);
+    }
 }

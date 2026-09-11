@@ -21,13 +21,17 @@
 */
 package org.gms.net.server.channel.handlers;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.gms.client.Client;
+import org.gms.client.command.CommandsExecutor;
 import org.gms.client.processor.npc.DueyProcessor;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.MapId;
 import org.gms.constants.id.NpcId;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.server.achievement.AchievementService;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +40,22 @@ import org.gms.server.life.NPC;
 import org.gms.server.life.PlayerNPC;
 import org.gms.server.maps.MapObject;
 import org.gms.util.PacketCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public final class NPCTalkHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(NPCTalkHandler.class);
+    @Getter
+    private static NPCTalkHandler instance;
+
+    @PostConstruct
+    private void init() {
+        instance = this;
+    }
+
+    @Autowired
+    AchievementService achievementService;
 
     @Override
     public void handlePacket(InPacket p, Client c) {

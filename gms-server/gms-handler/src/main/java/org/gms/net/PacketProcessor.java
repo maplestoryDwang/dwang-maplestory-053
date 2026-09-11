@@ -152,7 +152,7 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.STRANGE_DATA, LoginRequiringNoOpHandler.getInstance());
         registerHandler(RecvOpcode.GENERAL_CHAT, new GeneralChatHandler());                                 //   check
         registerHandler(RecvOpcode.WHISPER, new WhisperHandler());
-        registerHandler(RecvOpcode.NPC_TALK, new NPCTalkHandler());                                         //   check
+        registerHandler(RecvOpcode.NPC_TALK, NPCTalkHandler.getInstance());                                         //   check
         registerHandler(RecvOpcode.NPC_TALK_MORE, new NPCMoreTalkHandler());                                //   check
         registerHandler(RecvOpcode.QUEST_ACTION, new QuestActionHandler());                                 //   check
 //        registerHandler(RecvOpcode.GRENADE_EFFECT, new GrenadeEffectHandler());
