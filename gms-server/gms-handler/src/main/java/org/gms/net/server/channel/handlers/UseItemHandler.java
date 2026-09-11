@@ -21,6 +21,8 @@
 */
 package org.gms.net.server.channel.handlers;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.status.Disease;
@@ -28,6 +30,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
+import org.gms.constants.id.ConsumeId;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.dwutil.ItemUtils;
@@ -35,13 +38,30 @@ import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.StatEffect;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.gms.util.I18nUtil;
 import org.gms.util.PacketCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Matze
  */
+@Component
 public final class UseItemHandler extends AbstractPacketHandler {
+
+    @Getter
+    private static UseItemHandler instance;
+
+    @PostConstruct
+    private void init() {
+        instance = this;
+    }
+
+    @Autowired
+    AchievementService achievementService;
+
     @Override
     public final void handlePacket(InPacket p, Client c) {
         Character chr = c.getPlayer();
@@ -106,6 +126,12 @@ public final class UseItemHandler extends AbstractPacketHandler {
                     mse.applyTo(player);
                 }
             }
+
+            // 判断如何喝下的是绿豆汤和空气灵则增加
+            if (itemId == ConsumeId.RED_BEAN_PORRIDGE_2022001 || itemId == ConsumeId.AIR_BUBBLE_2022040) {
+                achievementService.recordAchievement(chr.getId(), AchievementCategory.EGG_SPECIAL_FOOD, String.valueOf(itemId));
+            }
+
         }
     }
 

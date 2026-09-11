@@ -581,10 +581,6 @@ public class AbstractPlayerInteraction {
     public void gainItem(int id, short quantity) {
         gainItem(id, quantity, false, true);
     }
-    public void gainItemByMaker(int id, short quantity) {
-        String owner = getPlayer().getName();
-        gainItem(id, quantity, false, true, -1, null, owner);
-    }
 
     public void gainItem(int id, short quantity, boolean show) {//this will fk randomStats equip :P
         gainItem(id, quantity, false, show);

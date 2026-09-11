@@ -38,8 +38,10 @@ import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.MapId;
 import org.gms.constants.id.MobId;
+import org.gms.constants.id.MobIdGen;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.dwutil.ItemUtils;
+import org.gms.manager.ServerManager;
 import org.gms.net.packet.Packet;
 import org.gms.net.server.Server;
 import org.gms.net.server.channel.Channel;
@@ -50,6 +52,8 @@ import org.gms.net.server.services.type.ChannelServices;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.World;
 import org.gms.server.StringInfoProvider;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.gms.util.NumberTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -203,6 +207,7 @@ public class MapleMap {
 
     // due to the nature of loadMapFromWz (synchronized), sole function that calls 'generateMapDropRangeCache', this lock remains optional.
     private static final Lock bndLock = new ReentrantLock(true);
+    private static final AchievementService achievementService = ServerManager.getApplicationContext().getBean(AchievementService.class);
 
     public MapleMap(int mapid, int world, int channel, int returnMapId, float monsterRate) {
         this.mapid = mapid;
@@ -1488,6 +1493,12 @@ public class MapleMap {
                     if (monster.getStats().getLevel() >= chr.getLevel() + 30 && !chr.isGM()) {
                         AutobanManager.alert(chr, AutobanFactory.GENERAL, "因击杀超过自身30级的怪物[" + monster.getName() + "]被系统警告");
                     }
+
+                    // 彩蛋3
+                    if (monster.getId() == MobIdGen.CRIMSON_BALROG_8150000) {
+                        achievementService.recordAchievement(chr.getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_SHIP_BAT_MON);
+                    }
+
 
                     /*if (chr.getQuest(QuestRepository.getInstance(29400)).getStatus().equals(QuestStatus.Status.STARTED)) {
                      if (chr.getLevel() >= 120 && monster.getStats().getLevel() >= 120) {

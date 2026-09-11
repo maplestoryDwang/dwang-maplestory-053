@@ -58,6 +58,7 @@ import org.gms.constants.game.ExpTable;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.id.MapId;
+import org.gms.constants.id.MapIdGen;
 import org.gms.constants.id.MobId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.net.ServerConstants;
@@ -109,6 +110,7 @@ import org.gms.scripting.item.ItemScriptManager;
 import org.gms.server.*;
 import org.gms.server.ExpLogger.ExpLogRecord;
 import org.gms.server.ItemInformationProvider.ScriptedItem;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementService;
 import org.gms.server.cashshop.CashShop;
 import org.gms.server.events.Events;
@@ -2421,11 +2423,21 @@ public class Character extends AbstractCharacterObject {
 
 					sendPacket(PacketCreator.showOwnRecovery(recHP));
 					getMap().broadcastMessage(Character.this, PacketCreator.showRecovery(id, recHP), false);
+
+					addMPHP(healHP, healMP);
 				} else if (Character.this.getMp() >= localMaxMp) {
-					stopChairTask();    // optimizing schedule management when player is already with full pool.
+					// todo 不允许停止，否则无法一直加
+//					stopChairTask();    // optimizing schedule management when player is already with full pool.
 				}
 
-				addMPHP(healHP, healMP);
+				// 彩蛋5 在高级桑拿房坐着+1 hp mp上限  dwang
+				if (getMap().getId() == MapIdGen.VIP_SAUNA_105040402) {
+					achievementService.recordAchievement(getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_SAUNA_AFK);
+					updateMaxHpMaxMp(getMaxHp() + 1, getMaxMp() + 1);
+				}
+
+
+
 			}, healInterval, healInterval);
 		} finally {
 			chrLock.unlock();
@@ -6890,6 +6902,10 @@ public class Character extends AbstractCharacterObject {
 
 		unsitChairInternal();
 		enableActions();
+
+		// 彩蛋六 死亡八次
+		achievementService.recordAchievement(getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_DEATH_COUNT);
+
 	}
 
 	private void unsitChairInternal() {

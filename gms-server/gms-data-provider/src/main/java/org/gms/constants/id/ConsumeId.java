@@ -1,6 +1,6 @@
-package string.gen;
+package org.gms.constants.id;
 
-public class ConId {
+public class ConsumeId {
 
     /**
      * [红色药水 - 红色药草研磨作成的药水\n恢复HP约50]

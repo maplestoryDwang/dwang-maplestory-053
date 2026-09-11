@@ -169,9 +169,9 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.TAKE_DAMAGE, new TakeDamageHandler());
         registerHandler(RecvOpcode.MOVE_PLAYER, new MovePlayerHandler());                                    //   check
         registerHandler(RecvOpcode.USE_CASH_ITEM, new UseCashItemHandler(channelDeps.noteInteralService()));
-        registerHandler(RecvOpcode.USE_ITEM, new UseItemHandler());
+        registerHandler(RecvOpcode.USE_ITEM, UseItemHandler.getInstance());
         registerHandler(RecvOpcode.CALC_Damage_Stat_Request, new DefaultUsedPacketHandler());
-        registerHandler(RecvOpcode.USE_RETURN_SCROLL, new UseItemHandler());
+        registerHandler(RecvOpcode.USE_RETURN_SCROLL, UseItemHandler.getInstance());
         registerHandler(RecvOpcode.USE_UPGRADE_SCROLL, new ScrollHandler());
 //        registerHandler(RecvOpcode.USE_SUMMON_BAG, new UseSummonBagHandler());
         registerHandler(RecvOpcode.FACE_EXPRESSION, new FaceExpressionHandler());

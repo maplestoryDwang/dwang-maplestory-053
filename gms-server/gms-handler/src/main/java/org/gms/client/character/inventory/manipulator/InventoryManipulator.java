@@ -23,6 +23,7 @@ package org.gms.client.character.inventory.manipulator;
 
 import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
+import org.gms.constants.id.ShieldId;
 import org.gms.dwutil.CharacterUtils;
 import org.gms.client.Client;
 import org.gms.client.inventory.equip.Equip;
@@ -32,10 +33,13 @@ import org.gms.client.inventory.Item;
 import org.gms.client.inventory.ModifyInventory;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.dwutil.ItemUtils;
+import org.gms.manager.ServerManager;
 import org.gms.model.pojo.NewYearCardRecord;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +59,7 @@ import java.util.List;
  */
 public class InventoryManipulator {
     private static final Logger log = LoggerFactory.getLogger(InventoryManipulator.class);
+    private static final AchievementService achievementService = ServerManager.getApplicationContext().getBean(AchievementService.class);
 
     public static boolean addById(Client c, int itemId, short quantity) {
         return addById(c, itemId, quantity, null, -1, -1);
@@ -683,6 +688,12 @@ public class InventoryManipulator {
         mods.add(new ModifyInventory(2, source, src));
         c.sendPacket(PacketCreator.modifyInventory(true, mods));
         chr.equipChanged();
+
+        // 判断穿上的是否是枫叶盾
+        if (source.getItemId() == ShieldId.MAPLE_SHIELD_1092030) {
+            achievementService.recordAchievement(chr.getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_MAPLE_SHIELD);
+        }
+
     }
 
     public static void unequip(Client c, short src, short dst) {

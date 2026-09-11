@@ -53,6 +53,7 @@ import org.gms.net.server.guild.GuildPackets;
 import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.scripting.ScriptServiceContext;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementProgressDTO;
 import org.gms.server.achievement.HiddenMapAchievementManager;
 import org.gms.server.gachapon.Gachapon;
@@ -344,22 +345,29 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         getPlayer().getMap().broadcastMessage(PacketCreator.environmentChange(effect, 3));
     }
 
+    // 彩蛋9
     public void setHair(int hair) {
         getPlayer().setHair(hair);
         getPlayer().updateSingleStat(MapleStat.HAIR, hair);
         getPlayer().equipChanged();
+        context.getAchievementService()
+                .recordAchievement(getPlayer().getId(), AchievementCategory.EGG_BEAUTY_ALL, "HAIR");
     }
 
     public void setFace(int face) {
         getPlayer().setFace(face);
         getPlayer().updateSingleStat(MapleStat.FACE, face);
         getPlayer().equipChanged();
+        context.getAchievementService()
+                .recordAchievement(getPlayer().getId(), AchievementCategory.EGG_BEAUTY_ALL, "FACE");
     }
 
     public void setSkin(int color) {
         getPlayer().setSkinColor(SkinColor.getById(color));
         getPlayer().updateSingleStat(MapleStat.SKIN, color);
         getPlayer().equipChanged();
+        context.getAchievementService()
+                .recordAchievement(getPlayer().getId(), AchievementCategory.EGG_BEAUTY_ALL, "SKIN");
     }
 
     public int itemQuantity(int itemid) {
@@ -467,6 +475,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     public List<GachaponRewardDO> getGachaponList() {
         return context.getGachaponService().getGachaponList(getPlayer(), npc);
     }
+
     public String getGachaponName() {
         String[] lootNames = Gachapon.GachaponType.getLootNames();
         int[] lootIds = Gachapon.GachaponType.getLootIds();
@@ -1549,7 +1558,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      */
     public AchievementProgressDTO getAchievementProgress(String category) {
         int questCount = getPlayer().getCompletedQuests().size();
-        return  context.getAchievementService()
+        return context.getAchievementService()
                 .getProgressByCategory(getPlayer().getId(), category, questCount);
     }
 
@@ -1558,12 +1567,13 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      */
     public List<AchievementProgressDTO> getAllAchievementProgress() {
         int questCount = getPlayer().getCompletedQuests().size();
-        return  context.getAchievementService()
+        return context.getAchievementService()
                 .getAllProgress(getPlayer().getId(), questCount);
     }
 
     /**
      * 是否是隐藏地图
+     *
      * @param mapId
      * @return
      */
@@ -1580,20 +1590,39 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     /**
      * 获取记录的音乐
+     *
      * @return
      */
     public List<String> getDiscoveredMusicList() {
-        return  context.getAchievementService()
-                .getDiscoveredMusicList(getPlayer().getId());
+        return context.getAchievementService()
+                .getAchievementKeyList(getPlayer().getId(), AchievementCategory.MUSIC_DISCOVERY);
+    }
+
+
+    /**
+     * 获取记录的地图
+     *
+     * @return
+     */
+    public List<String> getDiscoveredMapList() {
+        return context.getAchievementService()
+                .getAchievementKeyList(getPlayer().getId(), AchievementCategory.HIDDEN_MAP);
     }
 
     /**
      * 获取记录的NPC访问
+     *
      * @return
      */
     public List<Integer> getVisitedNpcList() {
-        return  context.getAchievementService()
-                .getVisitedNpcList(getPlayer().getId());
+        List<String> achievementKeyList = context.getAchievementService()
+                .getAchievementKeyList(getPlayer().getId(), AchievementCategory.SPECIAL_NPC);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (String npcId : achievementKeyList) {
+            ids.add(Integer.parseInt(npcId));
+
+        }
+        return ids;
     }
 
 
@@ -1657,10 +1686,30 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     /**
      * 获取远程通话基础接通概率（未完成成就时使用）
+     *
      * @return 0 - 100 的概率百分比
      */
     public int getRemoteCallSuccessRate() {
         // 可以写死固定值（如 60），或者读取服务端配置/频道系数
-        return 60;
+        // 进度乘以40
+        AchievementProgressDTO achievementProgress = getAchievementProgress(AchievementCategory.SPECIAL_NPC);
+        double currentDiscountPercent = achievementProgress.getCurrentDiscountPercent();
+        return 60 + (int) Math.floor(40 * currentDiscountPercent);
     }
+
+    /**
+     * 手工打造
+     *
+     * @param id
+     * @param quantity
+     */
+    public void gainItemByMaker(int id, short quantity) {
+        String owner = getPlayer().getName();
+        gainItem(id, quantity, false, true, -1, null, owner);
+        if (ItemConstants.isEquipment(id)) {
+            // 触发锻造
+            context.getAchievementService().recordAchievement(getPlayer().getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_MAKER_SIGNED);
+        }
+    }
+
 }

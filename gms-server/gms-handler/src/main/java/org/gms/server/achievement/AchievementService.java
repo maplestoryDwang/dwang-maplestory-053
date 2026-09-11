@@ -5,6 +5,7 @@ import org.gms.dao.entity.AchievementDiscountConfigDO;
 import org.gms.dao.entity.CharacterAchievementDO;
 import org.gms.dao.mapper.AchievementDiscountConfigMapper;
 import org.gms.dao.mapper.CharacterAchievementMapper;
+import org.gms.server.achievement.egg.EggChecker;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -19,13 +20,22 @@ public class AchievementService {
 
     private final CharacterAchievementMapper achievementMapper;
     private final AchievementDiscountConfigMapper configMapper;
-
+    // 内存缓存彩蛋判定策略，支持动态扩展
+    private final Map<String, EggChecker> eggCheckers = new HashMap<>();
     // 内存缓存成就配置表
     private final Map<String, AchievementDiscountConfigDO> configCache = new ConcurrentHashMap<>();
 
-    public AchievementService(CharacterAchievementMapper achievementMapper, AchievementDiscountConfigMapper configMapper) {
+    // Spring 自动注入所有实现了 EggChecker 的 Bean
+    public AchievementService(CharacterAchievementMapper achievementMapper,
+                              AchievementDiscountConfigMapper configMapper,
+                              List<EggChecker> checkers) {
         this.achievementMapper = achievementMapper;
         this.configMapper = configMapper;
+
+        // 注册所有彩蛋策略
+        for (EggChecker checker : checkers) {
+            eggCheckers.put(checker.getEggKey(), checker);
+        }
     }
 
     /**
@@ -96,6 +106,12 @@ public class AchievementService {
         if (config == null) {
             return 0;
         }
+
+        // 如果是彩蛋大类，调用策略计算引擎
+        if (AchievementCategory.SPECIAL_EGG.equals(category)) {
+            return getCompletedEggCount(cid);
+        }
+
 
         boolean isAccumulate = Boolean.TRUE.equals(config.getIsAccumulate());
 
@@ -223,20 +239,14 @@ public class AchievementService {
         return Math.max(finalHp, 1);
     }
 
-    public List<String> getDiscoveredMusicList(int charId) {
+    public List<String> getAchievementKeyList(int charId, String category) {
 
         QueryWrapper qw = QueryWrapper.create()
                 .select()
                 .where("character_id = ?", charId)
-                .and("category = ?", AchievementCategory.MUSIC_DISCOVERY);
+                .and("category = ?",category);
         List<CharacterAchievementDO> characterAchievementDOS = achievementMapper.selectListByQuery(qw);
-        List<String> musicList = characterAchievementDOS.stream().map(new Function<CharacterAchievementDO, String>() {
-            @Override
-            public String apply(CharacterAchievementDO characterAchievementDO) {
-                return characterAchievementDO.getAchievementKey();
-            }
-        }).toList();
-        return musicList;
+        return characterAchievementDOS.stream().map(CharacterAchievementDO::getAchievementKey).toList();
     }
 
     public List<Integer> getVisitedNpcList(int charId) {
@@ -248,4 +258,32 @@ public class AchievementService {
         List<CharacterAchievementDO> characterAchievementDOS = achievementMapper.selectListByQuery(qw);
         return characterAchievementDOS.stream().map(characterAchievementDO -> Integer.parseInt(characterAchievementDO.getAchievementKey())).toList();
     }
+
+
+    /**
+     * 辅助方法：查询指定 category 下的记录条数（COUNT(*)）
+     */
+    public int getCategoryCount(int cid, String category) {
+        QueryWrapper qw = QueryWrapper.create()
+                .select(count())
+                .where("character_id = ?", cid)
+                .and("category = ?", category);
+
+        Integer count = achievementMapper.selectObjectByQueryAs(qw, Integer.class);
+        return count != null ? count : 0;
+    }
+
+    /**
+     * 核心计算：获取玩家实际完成了几个 SPECIAL_EGG 彩蛋 (0 ~ 10+)
+     */
+    public int getCompletedEggCount(int cid) {
+        int completedCount = 0;
+        for (EggChecker checker : eggCheckers.values()) {
+            if (checker.isCompleted(cid, this)) {
+                completedCount++;
+            }
+        }
+        return completedCount;
+    }
+
 }

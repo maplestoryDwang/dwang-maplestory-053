@@ -1,6 +1,6 @@
-package string.gen;
+package org.gms.constants.id;
 
-public class MobId {
+public class MobIdGen {
 
     /**
      * [蜗牛]

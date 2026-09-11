@@ -1,6 +1,8 @@
 package org.gms.dwutil;
 
 import org.gms.client.Character;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.gms.server.quest.*;
 import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
@@ -15,10 +17,13 @@ import org.gms.util.PacketCreator;
 import org.gms.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -29,10 +34,17 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * @version 1.0
  * @since 2026/8/10 10:13
  */
+@Component
 public class QuestUtils {
 
     private static final Logger log = LoggerFactory.getLogger(QuestUtils.class);
 
+    private static AchievementService achievementService;
+
+    @Autowired
+    public QuestUtils(AchievementService achievementService) {
+        QuestUtils.achievementService = achievementService;
+    }
 
     public static boolean canStartQuestByStatus(Character chr, QuestV2 quest) {
         QuestStatus mqs = chr.getQuest(quest);
@@ -135,6 +147,21 @@ public class QuestUtils {
             }
             if (!quest.hasNextQuestAction()) {
                 chr.announceUpdateQuest(DelayedQuestUpdate.INFO, chr.getQuest(quest));
+            }
+
+            // 彩蛋 7.8.10
+            // 7 6904 6914 6924 6934
+            // 4. 四转任务触发 (QuestUtils#complete)
+            short questId = quest.getId();
+            if (Set.of(6904, 6914, 6924, 6934).contains(questId)) {
+                // 任意触发即可
+                achievementService.recordAchievement(chr.getId(), AchievementCategory.SPECIAL_EGG ,AchievementCategory.EGG_FOURTH_JOB);
+            } else if (Set.of(3035).contains(questId)) {
+                //
+                achievementService.recordAchievement(chr.getId(), AchievementCategory.SPECIAL_EGG ,AchievementCategory.EGG_ANCIENT_BOOK);
+
+            } else if (Set.of(2055, 2056, 2057, 2052, 2053, 2054, 2050, 2051).contains(questId)) {
+                achievementService.recordAchievement(chr.getId(), AchievementCategory.EGG_JUMP_MASTER, String.valueOf(questId));
             }
         }
     }

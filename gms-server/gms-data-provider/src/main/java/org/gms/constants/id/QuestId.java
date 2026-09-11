@@ -1,6 +1,6 @@
-package string.gen;
+package org.gms.constants.id;
 
-public class QuestinfoId {
+public class QuestId {
 
     /**
      * [莎丽的镜子 - 借莎丽的镜子]
