@@ -56,7 +56,11 @@ import org.gms.scripting.ScriptServiceContext;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementProgressDTO;
 import org.gms.server.achievement.HiddenMapAchievementManager;
+import org.gms.server.achievement.egg.EggStatusDTO;
+import org.gms.server.achievement.egg.imp.BeautyEggChecker;
+import org.gms.server.achievement.egg.imp.MakerSignedEggChecker;
 import org.gms.server.gachapon.Gachapon;
+import org.gms.util.I18nUtil;
 import org.gms.util.packets.WeddingPackets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +84,8 @@ import org.gms.server.partyquest.Pyramid.PyramidMode;
 import org.gms.util.PacketCreator;
 
 import java.awt.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.*;
@@ -351,7 +357,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         getPlayer().updateSingleStat(MapleStat.HAIR, hair);
         getPlayer().equipChanged();
         context.getAchievementService()
-                .recordAchievement(getPlayer().getId(), AchievementCategory.EGG_BEAUTY_ALL, "HAIR");
+                .recordAchievementEgg(getPlayer(), AchievementCategory.SPECIAL_EGG, BeautyEggChecker.EGG_BEAUTY_ALL, "HAIR");
     }
 
     public void setFace(int face) {
@@ -359,7 +365,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         getPlayer().updateSingleStat(MapleStat.FACE, face);
         getPlayer().equipChanged();
         context.getAchievementService()
-                .recordAchievement(getPlayer().getId(), AchievementCategory.EGG_BEAUTY_ALL, "FACE");
+                .recordAchievementEgg(getPlayer(), AchievementCategory.SPECIAL_EGG, BeautyEggChecker.EGG_BEAUTY_ALL, "FACE");
     }
 
     public void setSkin(int color) {
@@ -367,7 +373,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         getPlayer().updateSingleStat(MapleStat.SKIN, color);
         getPlayer().equipChanged();
         context.getAchievementService()
-                .recordAchievement(getPlayer().getId(), AchievementCategory.EGG_BEAUTY_ALL, "SKIN");
+                .recordAchievementEgg(getPlayer(), AchievementCategory.SPECIAL_EGG, BeautyEggChecker.EGG_BEAUTY_ALL, "SKIN");
     }
 
     public int itemQuantity(int itemid) {
@@ -1584,7 +1590,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public String getRandomHiddenMapInfo() {
 
-        return HiddenMapAchievementManager.getRandomHiddenMapInfo();
+        return AchievementCategory.getRandomHiddenMapInfo();
     }
 
 
@@ -1690,11 +1696,18 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * @return 0 - 100 的概率百分比
      */
     public int getRemoteCallSuccessRate() {
+        int callSuccessRate = 10;
         // 可以写死固定值（如 60），或者读取服务端配置/频道系数
         // 进度乘以40
         AchievementProgressDTO achievementProgress = getAchievementProgress(AchievementCategory.SPECIAL_NPC);
-        double currentDiscountPercent = achievementProgress.getCurrentDiscountPercent();
-        return 60 + (int) Math.floor(40 * currentDiscountPercent);
+        double ratio = Math.min(1.0, (double) achievementProgress.getCurrentProgress() / achievementProgress.getMaxProgress());
+
+        // 保留两位小数 (HALF_UP 四舍五入)
+        double currentDiscountPercent = BigDecimal.valueOf(ratio)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
+
+        return callSuccessRate + (int) Math.floor((100 - callSuccessRate) * currentDiscountPercent);
     }
 
     /**
@@ -1708,8 +1721,34 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         gainItem(id, quantity, false, true, -1, null, owner);
         if (ItemConstants.isEquipment(id)) {
             // 触发锻造
-            context.getAchievementService().recordAchievement(getPlayer().getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_MAKER_SIGNED);
+            context.getAchievementService().recordAchievementEgg(getPlayer(), AchievementCategory.SPECIAL_EGG, MakerSignedEggChecker.EGG_MAKER_SIGNED, null);
         }
     }
 
+    public List<EggStatusDTO> getEggStatusList() {
+        return context.getAchievementService().getEggStatusList(getPlayer().getId());
+    }
+
+    public boolean isAllAchievementsCompleted() {
+        int questCount = getPlayer().getCompletedQuests().size();
+
+        return context.getAchievementService().isAllAchievementsCompleted(getPlayer().getId(), questCount);
+    }
+
+    public void maxAllSkills() {
+        Character player = getPlayer();
+        Data skillStringData = StringInfoProvider.getSkillStringData();
+        for (Data skill_ : skillStringData.getChildren()) {
+            try {
+                Skill skill = SkillFactory.getSkill(Integer.parseInt(skill_.getName()));
+                player.changeSkillLevel(skill, (byte) skill.getMaxLevel(), skill.getMaxLevel(), -1);
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+                break;
+            } catch (NullPointerException npe) {
+            }
+        }
+
+        player.yellowMessage(I18nUtil.getMessage("MaxSkillCommand.message2"));
+    }
 }

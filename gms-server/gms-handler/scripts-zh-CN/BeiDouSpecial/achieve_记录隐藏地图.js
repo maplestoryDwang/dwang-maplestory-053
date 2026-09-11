@@ -1,17 +1,14 @@
 function start() {
-    // 获取 HIDDEN_MAP 的成就进度
     var progress = cm.getAchievementProgress("HIDDEN_MAP");
+    var isMapCompleted = progress != null
+        && progress.getCurrentProgress() >= progress.getMaxProgress();
 
-    // 判断是否已完成该分类（当前进度 >= 最大进度）
-    var isMapCompleted = progress != null && progress.getCurrentProgress() >= progress.getMaxProgress();
+    var text = "欢迎来到隐藏地图探索中心！请选择你要进行的操作：\r\n";
+    text += "#L0#1. 记录/核验当前所在的隐藏地图#l\r\n";
+    text += "#L1#2. 查看已探索的隐藏地图全集#l\r\n";
 
-    var text = "欢迎来到隐藏地图探索中心！请选择你要进行的操作：\n\r";
-    text += "#L0##b1. 记录/核验当前所在的隐藏地图#k#l\n\r";
-    text += "#L1##b2. 查看已探索的隐藏地图全集#k#l\n\r";
-
-    // 如果隐藏地图全收集完成，额外展示彩蛋入口
     if (isMapCompleted) {
-        text += "#L2##r★ 领取/查看 HIDDEN_MAP 专属彩蛋消息#k#l\n\r";
+        text += "#L2##r★ 领取/查看 HIDDEN_MAP 专属彩蛋消息#k#l\r\n";
     }
 
     cm.sendSimple(text);
@@ -69,6 +66,6 @@ function action(mode, type, selection) {
     } else if (selection == 2) {
         // === 选项 2：彩蛋消息分支（完成 HIDDEN_MAP 后触发） ===
         cm.dispose(); // 结束当前 NPC 对话面板
-        cm.openNpc("achieve_彩蛋消息"); // 打开彩蛋 NPC 脚本
+        cm.openNpc(9900001, "achieve_彩蛋消息"); // 打开彩蛋 NPC 脚本
     }
 }

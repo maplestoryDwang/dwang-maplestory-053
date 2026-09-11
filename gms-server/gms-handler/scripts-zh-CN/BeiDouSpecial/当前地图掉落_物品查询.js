@@ -9,7 +9,7 @@
 // 导入Java类
 var ItemInformationProvider = Java.type('org.gms.server.ItemInformationProvider');
 var MonsterInformationProvider = Java.type('org.gms.server.life.MonsterInformationProvider');
-var QuestInfo = Java.type('org.gms.server.quest.Quest');
+var QuestInfo = Java.type('org.gms.server.quest.QuestV2');
 var DatabaseConnection = Java.type('org.gms.util.DatabaseConnection');
 
 // 常量定义

@@ -21,6 +21,7 @@
 */
 package org.gms.net.server;
 
+import lombok.Getter;
 import org.gms.client.Character;
 import org.gms.client.Client;
 
@@ -37,6 +38,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * 管理所有登录的用户Character
  */
 public class PlayerStorage {
+    @Getter
     private final Map<Integer, Character> storage = new LinkedHashMap<>();
     private final Map<String, Character> nameStorage = new LinkedHashMap<>();
     private final Lock rlock;

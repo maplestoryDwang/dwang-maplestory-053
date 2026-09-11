@@ -112,6 +112,9 @@ import org.gms.server.ExpLogger.ExpLogRecord;
 import org.gms.server.ItemInformationProvider.ScriptedItem;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementService;
+import org.gms.server.achievement.egg.EggChecker;
+import org.gms.server.achievement.egg.imp.DeathCountEggChecker;
+import org.gms.server.achievement.egg.imp.SaunaAfkEggChecker;
 import org.gms.server.cashshop.CashShop;
 import org.gms.server.events.Events;
 import org.gms.server.events.RescueGaga;
@@ -432,6 +435,8 @@ public class Character extends AbstractCharacterObject {
 	private ScheduledFuture<?> recoveryTask = null;
 	private ScheduledFuture<?> extraRecoveryTask = null;
 	private ScheduledFuture<?> chairRecoveryTask = null;
+	// 新建 增加最大HPMP任务
+	private ScheduledFuture<?> chairAddMaxHpMPTask = null;
 	private ScheduledFuture<?> pendantOfSpirit = null; //1122017
 	private ScheduledFuture<?> cpqSchedule = null;
 
@@ -2313,6 +2318,18 @@ public class Character extends AbstractCharacterObject {
 		}
 	}
 
+	private void stopChairMaxHPMPTask() {
+		chrLock.lock();
+		try {
+			if (chairAddMaxHpMPTask != null) {
+				chairAddMaxHpMPTask.cancel(false);
+				chairAddMaxHpMPTask = null;
+			}
+		} finally {
+			chrLock.unlock();
+		}
+	}
+
 	private void stopChairTask() {
 		chrLock.lock();
 		try {
@@ -2393,6 +2410,37 @@ public class Character extends AbstractCharacterObject {
 		}
 	}
 
+	private void startChairMaxHPMPTask() {
+		if (chair.get() < 0) {
+			return;
+		}
+
+		int healInterval;
+		effLock.lock();
+		try {
+			healInterval = SaunaAfkEggChecker.EGG_SAUNA_AFK_INTERVAL; // 和回复血量时间一致
+		} finally {
+			effLock.unlock();
+		}
+
+		chrLock.lock();
+		try {
+			if (chairAddMaxHpMPTask != null) {
+				stopChairMaxHPMPTask();
+			}
+
+			chairAddMaxHpMPTask = TimerManager.getInstance().register(() -> {
+				int maxhp = getMaxHp() + SaunaAfkEggChecker.EGG_SAUNA_AFK_ADD_MAX_HPMP;
+				int maxmp = getMaxMp() + SaunaAfkEggChecker.EGG_SAUNA_AFK_ADD_MAX_HPMP;
+				updateMaxHpMaxMp(maxhp, maxmp);
+
+				dropMessage(5, "最大hp、mp已增加！ hp: " + maxmp + " mp: " + maxmp);
+			}, healInterval, healInterval);
+		} finally {
+			chrLock.unlock();
+		}
+	}
+
 	private void startChairTask() {
 		if (chair.get() < 0) {
 			return;
@@ -2423,27 +2471,16 @@ public class Character extends AbstractCharacterObject {
 
 					sendPacket(PacketCreator.showOwnRecovery(recHP));
 					getMap().broadcastMessage(Character.this, PacketCreator.showRecovery(id, recHP), false);
-
-					addMPHP(healHP, healMP);
 				} else if (Character.this.getMp() >= localMaxMp) {
-					// todo 不允许停止，否则无法一直加
-//					stopChairTask();    // optimizing schedule management when player is already with full pool.
+					stopChairTask();    // optimizing schedule management when player is already with full pool.
 				}
 
-				// 彩蛋5 在高级桑拿房坐着+1 hp mp上限  dwang
-				if (getMap().getId() == MapIdGen.VIP_SAUNA_105040402) {
-					achievementService.recordAchievement(getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_SAUNA_AFK);
-					updateMaxHpMaxMp(getMaxHp() + 1, getMaxMp() + 1);
-				}
-
-
-
+				addMPHP(healHP, healMP);
 			}, healInterval, healInterval);
 		} finally {
 			chrLock.unlock();
 		}
 	}
-
 	private void stopExtraTask() {
 		chrLock.lock();
 		try {
@@ -2719,8 +2756,9 @@ public class Character extends AbstractCharacterObject {
 
 	public void doHurtHp() {
 		if (!(this.getInventory(InventoryType.EQUIPPED).findById(getMap().getHPDecProtect()) != null || buffMapProtection())) {
-			addHP(-getMap().getHPDec());
-			sendPacket(PacketCreator.onNotifyHPDecByField(getMap().getHPDec()));
+			int hpDec = getMap().getHPDec() * 10;
+			addHP(-hpDec);
+			sendPacket(PacketCreator.onNotifyHPDecByField(hpDec));
 		}
 	}
 
@@ -6904,7 +6942,7 @@ public class Character extends AbstractCharacterObject {
 		enableActions();
 
 		// 彩蛋六 死亡八次
-		achievementService.recordAchievement(getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_DEATH_COUNT);
+		achievementService.recordAchievementEgg(this, AchievementCategory.SPECIAL_EGG, DeathCountEggChecker.EGG_DEATH_COUNT, null);
 
 	}
 
@@ -6933,6 +6971,12 @@ public class Character extends AbstractCharacterObject {
 					setChair(itemId);
 					getMap().broadcastMessage(this, PacketCreator.showChair(this.getId(), itemId), false);
 				}
+
+				// 彩蛋5 在高级桑拿房坐着+1 hp mp上限  dwang
+				if (getMap().getId() == MapIdGen.VIP_SAUNA_105040402) {
+					achievementService.recordAchievementEgg(this, AchievementCategory.SPECIAL_EGG, SaunaAfkEggChecker.EGG_SAUNA_AFK, null);
+					startChairMaxHPMPTask();
+				}
 				enableActions();
 			} else if (itemId >= 0) {    // sit on map chair
 				if (chair.get() < 0) {
@@ -6944,7 +6988,12 @@ public class Character extends AbstractCharacterObject {
 				}
 			} else {    // stand up
 				unsitChairInternal();
+				// 结束加最大HPMP的任务
+				stopChairMaxHPMPTask();
 			}
+
+
+
 		}
 	}
 

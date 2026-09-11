@@ -61,9 +61,9 @@ function action(mode, type, selection) {
         cm.setCustomData(9010001, "HIDDEN_INFO_COUNT_TODAY", (todayCount + 1).toString());
 
         // 6. 展示情报结果
-        var resultText = "#e#g[绝密彩蛋情报]#k#n\r\n\r\n";
-        resultText += "#b" + secretInfo + "#k\r\n\r\n";
-        resultText += "#g希望这条秘密能帮你在冒险之旅中发现更多乐趣！#k";
+        var resultText = "#e#r[彩蛋情报]#k#n\r\n\r\n";
+        resultText += "" + secretInfo + "#k\r\n\r\n";
+        resultText += "#g希望这条情报能帮你在冒险之旅中发现更多乐趣！#k";
 
         cm.sendOk(resultText);
         cm.dispose();

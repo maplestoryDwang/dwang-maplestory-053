@@ -50,7 +50,7 @@ function action(mode, type, selection) {
         var text = "#e#r[远程 NPC 通讯器]#k#n\r\n\r\n";
         text += "今日已通话：#b" + todayCount + "#k 次\r\n";
         text += "本次长途电话费：#r" + (currentCost / 10000) + "W#k 金币\r\n";
-        text += "当前信号接通率：#g" + rate + "%#k " + (isCompleted ? "#b(成就特权已激活)#k" : "#r(完成成就可100%接通)#k") + "\r\n\r\n";
+        text += "当前信号接通率：#b" + rate + "%#k " + (isCompleted ? "#b(成就特权已激活)#k" : "#r(完成成就可100%接通)#k") + "\r\n\r\n";
         text += "请选择你想进行远程通话的 NPC：\r\n\r\n";
 
         for (var i = 0; i < visitedNpcs.length; i++) {
@@ -101,7 +101,7 @@ function action(mode, type, selection) {
 
         if (randomValue >= successRate) {
             // 拨号失败提示
-            cm.sendOk("#e#r[通话中断]#k#n\r\n\r\n嘟——嘟——嘟……\r\n信号太弱，未能成功连接到 #b#p" + selectedNpcId + "##k！\r\n#g(本次通话费已扣除，完成【SPECIAL_NPC】成就可享受 100% 打通特权！)#k");
+            cm.sendOk("#e#r[通话中断]#k#n\r\n\r\n嘟——嘟——嘟……\r\n信号太弱，未能成功连接到 #b#p" + selectedNpcId + "##k！\r\n#b(本次通话费已扣除，完成【NPC拜访】成就可享受 100% 打通特权！)#k");
             cm.dispose();
             return;
         }

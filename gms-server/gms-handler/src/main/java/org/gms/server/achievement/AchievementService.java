@@ -1,16 +1,17 @@
 package org.gms.server.achievement;
 
 import com.mybatisflex.core.query.QueryWrapper;
+import org.gms.client.Character;
 import org.gms.dao.entity.AchievementDiscountConfigDO;
 import org.gms.dao.entity.CharacterAchievementDO;
 import org.gms.dao.mapper.AchievementDiscountConfigMapper;
 import org.gms.dao.mapper.CharacterAchievementMapper;
 import org.gms.server.achievement.egg.EggChecker;
+import org.gms.server.achievement.egg.EggStatusDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 
 import static com.mybatisflex.core.query.QueryMethods.count;
 import static com.mybatisflex.core.query.QueryMethods.sum;
@@ -57,11 +58,13 @@ public class AchievementService {
     }
 
     /**
-     * 记录成就（自动判定累加性与防重）
+     * 记录成就（自动判定累加性与防重） 所有的记录都在这里
      */
     public boolean recordAchievement(int cid, String category, String key, int addAmount) {
         AchievementDiscountConfigDO config = getConfig(category);
-        if (config == null || !Boolean.TRUE.equals(config.getEnabled())) {
+        if (config == null && category.contains("EGG")) {
+            config = getConfig(AchievementCategory.SPECIAL_EGG);
+        } else if (config == null || !Boolean.TRUE.equals(config.getEnabled())) {
             return false;
         }
 
@@ -94,7 +97,34 @@ public class AchievementService {
         return true;
     }
 
-    public boolean recordAchievement(int cid, String category, String key) {
+    /**
+     * 记录彩蛋触发情况
+     * @param cid
+     * @param category
+     * @param subCate
+     * @param value
+     * @return
+     */
+    public boolean recordAchievementEgg(Character character, String category, String subCate, String value) {
+        int cid = character.getId();
+        EggChecker eggChecker = eggCheckers.get(subCate);
+        boolean b = eggChecker.recordAchievementEgg(cid, category, subCate, value, this);
+        boolean completed = eggChecker.showNotice(cid, this);
+        if (completed) {
+            String info = AchievementCategory.EGG_NAME_MAP.get(subCate);
+            character.dropMessage(5, EggChecker.EGG_MSG + "内容是：" + info);
+        }
+        return true;
+    }
+
+    /**
+     * 内部checker调用 决定哪个
+     * @param cid
+     * @param category
+     * @param key
+     * @return
+     */
+    public boolean recordAchievementEgg(int cid, String category, String key) {
         return recordAchievement(cid, category, key, 1);
     }
 
@@ -285,5 +315,45 @@ public class AchievementService {
         }
         return completedCount;
     }
+
+    /**
+     * 1. 获取玩家所有彩蛋的完成状态列表（包含中文名与完成状态）
+     */
+    public List<EggStatusDTO> getEggStatusList(int cid) {
+        List<EggStatusDTO> list = new ArrayList<>();
+        for (Map.Entry<String, String> entry : AchievementCategory.EGG_NAME_MAP.entrySet()) {
+            String eggKey = entry.getKey();
+            String name = entry.getValue();
+            EggChecker checker = eggCheckers.get(eggKey);
+
+            boolean completed = (checker != null) && checker.isCompleted(cid, this);
+            list.add(new EggStatusDTO(eggKey, name, completed));
+        }
+        return list;
+    }
+
+    public boolean checkEggCompleted(int cid, String eggKey) {
+        EggChecker checker = eggCheckers.get(eggKey);
+        return (checker != null) && checker.isCompleted(cid, this);
+    }
+
+    /**
+     * 2. 检查玩家是否达成【全成就终极大满贯】
+     * 条件：所有启用的成就配置项进度达到 100%
+     */
+    public boolean isAllAchievementsCompleted(int cid, int questCount) {
+        refreshConfigCache();
+        for (AchievementDiscountConfigDO config : configCache.values()) {
+            if (!Boolean.TRUE.equals(config.getEnabled())) {
+                continue;
+            }
+            AchievementProgressDTO progressByCategory = getProgressByCategory(cid, config.getCategory(), questCount);
+            if (progressByCategory.getCurrentProgress() < config.getMaxProgress()) {
+                return false; // 只要有一个分类未达到 MaxProgress 即为未完成
+            }
+        }
+        return true;
+    }
+
 
 }

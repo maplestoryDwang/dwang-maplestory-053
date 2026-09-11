@@ -43,6 +43,7 @@ import org.gms.constants.inventory.ItemConstants;
 import org.gms.dwutil.ItemUtils;
 import org.gms.manager.ServerManager;
 import org.gms.net.packet.Packet;
+import org.gms.net.server.PlayerStorage;
 import org.gms.net.server.Server;
 import org.gms.net.server.channel.Channel;
 import org.gms.net.server.coordinator.world.MonsterAggroCoordinator;
@@ -54,6 +55,7 @@ import org.gms.net.server.world.World;
 import org.gms.server.StringInfoProvider;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementService;
+import org.gms.server.achievement.egg.imp.ShipBatMonEggChecker;
 import org.gms.util.NumberTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1496,7 +1498,7 @@ public class MapleMap {
 
                     // 彩蛋3
                     if (monster.getId() == MobIdGen.CRIMSON_BALROG_8150000) {
-                        achievementService.recordAchievement(chr.getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_SHIP_BAT_MON);
+                        achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG, ShipBatMonEggChecker.EGG_SHIP_BAT_MON, null);
                     }
 
 
@@ -2126,12 +2128,16 @@ public class MapleMap {
     }
 
     // 队长的任务状态
+    // 只有单人才生效
     private void updateMonsterHp(Monster monster) {
         // 默认的HP
         int hp = monster.getStats().getHp();
-        if (characters.size() == 1) {
+
+        PlayerStorage ps = Server.getInstance().getWorld(world).getPlayerStorage();
+        Collection<Character> allCharacters = ps.getAllCharacters();
+        if (allCharacters.size() == 1) {
             // 设置血量
-            for (Character character : characters) {
+            for (Character character : allCharacters) {
                 int hpByChar = character.calculateMonsterHp(hp);
                 monster.setStartingHp(hpByChar);
             }

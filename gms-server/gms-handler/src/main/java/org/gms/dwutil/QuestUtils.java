@@ -1,8 +1,12 @@
 package org.gms.dwutil;
 
 import org.gms.client.Character;
+import org.gms.constants.id.QuestId;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementService;
+import org.gms.server.achievement.egg.imp.AncientBookEggChecker;
+import org.gms.server.achievement.egg.imp.FourthJobEggChecker;
+import org.gms.server.achievement.egg.imp.JumpMasterEggChecker;
 import org.gms.server.quest.*;
 import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
@@ -148,21 +152,6 @@ public class QuestUtils {
             if (!quest.hasNextQuestAction()) {
                 chr.announceUpdateQuest(DelayedQuestUpdate.INFO, chr.getQuest(quest));
             }
-
-            // 彩蛋 7.8.10
-            // 7 6904 6914 6924 6934
-            // 4. 四转任务触发 (QuestUtils#complete)
-            short questId = quest.getId();
-            if (Set.of(6904, 6914, 6924, 6934).contains(questId)) {
-                // 任意触发即可
-                achievementService.recordAchievement(chr.getId(), AchievementCategory.SPECIAL_EGG ,AchievementCategory.EGG_FOURTH_JOB);
-            } else if (Set.of(3035).contains(questId)) {
-                //
-                achievementService.recordAchievement(chr.getId(), AchievementCategory.SPECIAL_EGG ,AchievementCategory.EGG_ANCIENT_BOOK);
-
-            } else if (Set.of(2055, 2056, 2057, 2052, 2053, 2054, 2050, 2051).contains(questId)) {
-                achievementService.recordAchievement(chr.getId(), AchievementCategory.EGG_JUMP_MASTER, String.valueOf(questId));
-            }
         }
     }
 
@@ -249,6 +238,24 @@ public class QuestUtils {
 
         chr.sendPacket(PacketCreator.showSpecialEffect(9));
         chr.getMap().broadcastMessage(chr, PacketCreator.showForeignEffect(chr.getId(), 9), false);
+
+
+        // 彩蛋 7.8.10
+        // 7 6904 6914 6924 6934
+        // 4. 四转任务触发 (QuestUtils#complete)
+        int questId = quest.getId();
+        if (Set.of(QuestId.HERO_S_QUALITY_6904, QuestId.A_HERO_S_QUALITY_6914, QuestId.HERO_S_QUALITY_6924, QuestId.HERO_S_QUALITY_6934).contains(questId)) {
+            // 任意触发即可
+            achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG , FourthJobEggChecker.EGG_FOURTH_JOB, null);
+        } else if (Set.of(QuestId.ALCASTER_AND_THE_DARK_CRYSTAL_3035).contains(questId)) {
+            //
+            achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG , AncientBookEggChecker.EGG_ANCIENT_BOOK, null);
+
+        } else if (Set.of(QuestId.SHUMI_S_LOST_COIN_2055, QuestId.SHUMI_S_LOST_BUNDLE_OF_MONEY_2056, QuestId.SHUMI_S_LOST_BUNDLE_OF_MONEY_2057
+                , QuestId.JOHN_S_PINK_FLOWER_BASKET_2052, QuestId.JOHN_S_PRESENT_2053, QuestId.JOHN_S_LAST_PRESENT_2054
+                , QuestId.SABITRAMA_AND_THE_DIET_MEDICINE_2050, QuestId.SABITRAMA_S_ANTI_AGING_MEDICINE_2051).contains(questId)) {
+            achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG, JumpMasterEggChecker.EGG_JUMP_MASTER, String.valueOf(questId));
+        }
         return true;
     }
 

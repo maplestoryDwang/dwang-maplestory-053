@@ -71,7 +71,7 @@ function showCategoryDetail(dto) {
     var text = "#e成就分类：#b" + dto.getCategoryName() + "#k#n\r\n";
     text += "当前进度：" + dto.getCurrentProgress() + " / " + dto.getMaxProgress() + "\r\n";
     text += "贡献血量削减：" + dto.getCurrentDiscountPercent().toFixed(2) + "% (上限 " + dto.getWeightPercent() + "%)\r\n\r\n";
-    text += "#e【成就说明与说明】#n\r\n";
+    text += "#e【成就与说明】#n\r\n";
 
     // 根据分类显示不同要求与特权说明
     switch (dto.getCategory()) {
@@ -92,7 +92,7 @@ function showCategoryDetail(dto) {
             text += "#b[及时奖励]#k：解锁点播音乐功能。\r\n";
             break;
         case "HIDDEN_MAP":
-            text += "说明：探索 " + dto.getMaxProgress() + " 个隐藏地图，定义：大地图上不显示，不存在光圈进入，不受任务状态影响 (如猪的海岸、坠落主义等)。\r\n";
+            text += "说明：探索" + dto.getMaxProgress() + "个隐藏地图，定义：大地图上不显示，不存在光圈进入，不受任务状态影响 (如猪的海岸、坠落主义等)。\r\n";
             text += "#r[完成奖励]#k：全部完成后，获得彩蛋提示。\r\n";
             break;
         case "GACHAPON_COUNT":
@@ -100,12 +100,12 @@ function showCategoryDetail(dto) {
             text += "#r[完成奖励]#k：全部完成后，可开启自选抽奖奖池功能。\r\n";
             break;
         case "SPECIAL_NPC":
-            text += "：说明拜访世界各地 " + dto.getMaxProgress() + " 个NPC。\r\n";
+            text += "说明：拜访世界各地 " + dto.getMaxProgress() + " 个NPC。\r\n";
             text += "#b[完成奖励]#k：可直接和拜访过的NPC进行对话。(前提是你有#v1702050#)\r\n";
             break;
-        case "SPECIAL_ITEM":
+        case "SPECIAL_EGG":
             text += "说明：完成 " + dto.getMaxProgress() + " 个彩蛋 。\r\n";
-            text += "#r[终极奖励]#k：全服所有成就完全达成后，可进行自由转职并获取满技能！\r\n";
+            text += "#r[终极奖励]#k：所有成就完全达成后，可进行自由转职并获取满技能！\r\n";
             break;
     }
 
@@ -188,7 +188,7 @@ function handleCategoryAction(selection) {
             }
             break;
 
-        case "SPECIAL_ITEM":
+        case "SPECIAL_EGG":
             cm.dispose();
             cm.openNpc(9900001, "achieve_彩蛋检查");
             break;

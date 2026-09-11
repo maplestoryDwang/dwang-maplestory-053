@@ -30,7 +30,6 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
-import org.gms.constants.id.ConsumeId;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.dwutil.ItemUtils;
@@ -40,6 +39,7 @@ import org.gms.server.ItemInformationProvider;
 import org.gms.server.StatEffect;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementService;
+import org.gms.server.achievement.egg.imp.SpecialFoodEggChecker;
 import org.gms.util.I18nUtil;
 import org.gms.util.PacketCreator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,8 +128,8 @@ public final class UseItemHandler extends AbstractPacketHandler {
             }
 
             // 判断如何喝下的是绿豆汤和空气灵则增加
-            if (itemId == ConsumeId.RED_BEAN_PORRIDGE_2022001 || itemId == ConsumeId.AIR_BUBBLE_2022040) {
-                achievementService.recordAchievement(chr.getId(), AchievementCategory.EGG_SPECIAL_FOOD, String.valueOf(itemId));
+            if (SpecialFoodEggChecker.specialFoods.contains(itemId)) {
+                achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG, SpecialFoodEggChecker.EGG_SPECIAL_FOOD, String.valueOf(itemId));
             }
 
         }

@@ -9,6 +9,7 @@ package org.gms.server.achievement;
  */
 
 
+import lombok.Getter;
 import org.gms.constants.id.MapIdGen;
 
 import java.util.*;
@@ -22,7 +23,6 @@ public class HiddenMapAchievementManager {
     // 存储所有隐藏地图MapID的集合（HashTable/HashSet 查找效率为 O(1)）
     private static final Set<Integer> HIDDEN_MAP_IDS;
     // 保存所有谜语彩蛋情报的列表
-    private static final List<String> EGG_INFOS = new ArrayList<>();
 
 
     static {
@@ -112,20 +112,6 @@ public class HiddenMapAchievementManager {
 
         // 转换为不可变Set，保障并发安全
         HIDDEN_MAP_IDS = Collections.unmodifiableSet(mapIds);
-
-
-
-        EGG_INFOS.add("听说作者的头像是一个#r枫叶盾#k，那是很久远的故事，和英勇的战士在蚂蚁洞奋战了很久");
-        EGG_INFOS.add("品味过无形无质的#r空气#k，或是温热的#r绿豆粥#k，冰雪将不再寒冷");
-        EGG_INFOS.add("横跨#r天空的巨轮#k之上，曾有勇士在呼啸的狂风中击落过天空的统治者。");
-        EGG_INFOS.add("熔炉的锤音落定，将你的真名刻印于百炼之钢，那是属于#r锻造者#k的至高荣耀。");
-        EGG_INFOS.add("置身于雾气萦绕的#r桑拿房#k静坐凝神，蒸腾的水汽将渐渐拓宽你的生命与魔力之源。");
-        EGG_INFOS.add("当沉重的#r石碑接连八次#k降临于世，灵魂在幽冥边缘徘徊，竟踏出了一条超脱生死的秘径。");
-        EGG_INFOS.add("打破肉身的极限，破茧成蝶之时，#r四转试炼#k将指引你走向终极的英雄宿命。");
-        EGG_INFOS.add("用沉甸甸的金钱叩开矿石之门，并在永恒冻土的冰霜中翻开那本沉睡百年的#r上古魔书#k。");
-        EGG_INFOS.add("镜中之影悄然蜕变，不论是千丝万缕的重塑，还是容颜肤色的焕新，皆是一场全新的#r改变#k。");
-        EGG_INFOS.add("穿梭于地铁线路、忍苦树林与沉睡森林的荆棘之间，唯有#r全部#k战胜重力者方可被称为跳跃之大师。");
-
     }
 
     /**
@@ -155,23 +141,5 @@ public class HiddenMapAchievementManager {
 //        }
     }
 
-    /**
-     * 随机获取一条彩蛋情报
-     *
-     * @return 谜语彩蛋字符串
-     */
-    public static String getRandomHiddenMapInfo() {
-        if (EGG_INFOS.isEmpty()) {
-            return "神秘的情报卷轴似乎被岁月侵蚀，内容一片空白……";
-        }
-        int randomIndex = ThreadLocalRandom.current().nextInt(EGG_INFOS.size());
-        return EGG_INFOS.get(randomIndex);
-    }
 
-    /**
-     * 获取不可变的情报列表（备用接口）
-     */
-    public static List<String> getAllEggInfos() {
-        return Collections.unmodifiableList(EGG_INFOS);
-    }
 }

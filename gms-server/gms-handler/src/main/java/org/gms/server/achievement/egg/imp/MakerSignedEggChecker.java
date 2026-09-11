@@ -1,7 +1,8 @@
 package org.gms.server.achievement.egg.imp;
 
 import org.gms.server.achievement.AchievementCategory;
-import org.gms.server.achievement.egg.AbstractSingleEggChecker;
+import org.gms.server.achievement.AchievementService;
+import org.gms.server.achievement.egg.EggChecker;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,7 +13,25 @@ import org.springframework.stereotype.Component;
  * @since 2026/9/11 16:10
  */
 @Component
-public class MakerSignedEggChecker extends AbstractSingleEggChecker {
+public class MakerSignedEggChecker implements EggChecker {
+    public static final String EGG_MAKER_SIGNED  = "EGG_MAKER_SIGNED";    // 制作带署名装备
+
     @Override
-    public String getEggKey() { return AchievementCategory.EGG_MAKER_SIGNED; }
+    public String getEggKey() { return EGG_MAKER_SIGNED; }
+
+    @Override
+    public boolean recordAchievementEgg(int cid, String category, String subCate, String value, AchievementService service) {
+        return service.recordAchievementEgg(cid, AchievementCategory.SPECIAL_EGG, getEggKey());
+    }
+
+    @Override
+    public boolean isCompleted(int cid, AchievementService service) {
+        // 直接在 SPECIAL_EGG 大类下查对应的 key 记录是否存在
+        return service.getAchievementKeyProgress(cid, AchievementCategory.SPECIAL_EGG, getEggKey()) >= 1;
+    }
+
+    @Override
+    public boolean showNotice(int cid, AchievementService service) {
+        return service.getAchievementKeyProgress(cid, AchievementCategory.SPECIAL_EGG, getEggKey()) == 1;
+    }
 }

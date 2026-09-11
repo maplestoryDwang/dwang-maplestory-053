@@ -101,6 +101,7 @@ public enum CharBuffStat implements LongValueHolder {
 
     UNKNOW_49(1L << 49),        // 未知45
 
+    MAP_PROTECTION(1L << 49), // 地图冷冻
 
 
 
@@ -153,7 +154,6 @@ public enum CharBuffStat implements LongValueHolder {
 
     // 北斗83
     EXP_INCREASE(0x2000000000000000L),
-    MAP_PROTECTION(0x8000000000000000L),
 
 
     ELEMENTAL_RESET(0x200000000L, true),

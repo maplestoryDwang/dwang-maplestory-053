@@ -1,44 +1,49 @@
 /*
-	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-		       Matthias Butz <matze@odinms.de>
-		       Jan Christian Meyer <vimes@odinms.de>
+ * NPC: 阿尔卡斯特 (Alcaster) - ID: 2020005
+ * 对应脚本: oldBook1
+ */
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
+var status = -1;
+var selectedItem = -1;
+var itemCode = 0;
+var unitPrice = 0;
+var itemDesc = "";
+var quantity = 0;
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+var items = [
+    // 基础消耗品 & 魔法石
+    { id: 2050003, price: 300, desc: "用于解除圣水/诅咒状态的道具。" },
+    { id: 2050004, price: 400, desc: "用于恢复所有异常状态的万能药。" },
+    { id: 4006000, price: 5000, desc: "高级技能所需的魔力石。" },
+    { id: 4006001, price: 5000, desc: "高级技能所需的召唤石。" },
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-/**
- -- Odin JavaScript --------------------------------------------------------------------------------
- Alcaster - El Nath Market (211000100)
- -- By ---------------------------------------------------------------------------------------------
- Unknown & Information & xQuasar
- -- Version Info -----------------------------------------------------------------------------------
- 1.3 - Fixed up completely [xQuasar]
- 1.2 - Add a missing text part [Information]
- 1.1 - Recoded to official [Information]
- 1.0 - First Version by Unknown
- ---------------------------------------------------------------------------------------------------
- **/
+    // 一般矿石母矿
+    { id: 4010000, price: 500, desc: "用来冶炼青铜的青铜母矿。" },
+    { id: 4010001, price: 300, desc: "用来冶炼钢铁的钢铁母矿。" },
+    { id: 4010003, price: 300, desc: "用来冶炼朱矿石的朱矿石母矿。" },
+    { id: 4010004, price: 300, desc: "用来冶炼银的银母矿。" },
+    { id: 4010005, price: 500, desc: "用来冶炼紫矿石的紫矿石母矿。" },
+    { id: 4010006, price: 500, desc: "用来冶炼黄金的黄金母矿。" },
+    { id: 4010002, price: 800, desc: "用来冶炼锂矿石的锂矿石母矿。" },
+    { id: 4010007, price: 1000, desc: "用来冶炼锂的锂母矿。" },
 
-var selected;
-var amount;
-var totalcost;
-var item = [2050003, 2050004, 4006000, 4006001];
-var cost = [300, 400, 5000, 5000];
-var msg = ["that cures the state of being sealed and cursed", "that cures all", ", possessing magical power, that is used for high-quality skills", ", possessing the power of summoning that is used for high-quality skills"];
-var status;
+    // 宝石类母矿
+    { id: 4020000, price: 500, desc: "用来冶炼石榴石的石榴石母矿。" },
+    { id: 4020001, price: 500, desc: "用来冶炼紫水晶的紫水晶母矿。" },
+    { id: 4020005, price: 500, desc: "用来冶炼蓝宝石的蓝宝石母矿。" },
+    { id: 4020003, price: 500, desc: "用来冶炼祖母绿的祖母绿母矿。" },
+    { id: 4020004, price: 500, desc: "用来冶炼蛋白石的蛋白石母矿。" },
+    { id: 4020006, price: 500, desc: "用来冶炼黄晶的黄晶母矿。" },
+    { id: 4020008, price: 3000, desc: "用来冶炼黑水晶的黑水晶母矿。" },
+    { id: 4020007, price: 3000, desc: "用来冶炼钻石的钻石母矿。" },
+
+    // 水晶类母矿（力量、智慧、敏捷、幸运、黑暗）
+    { id: 4004000, price: 3000, desc: "拥有力量之源的水晶母矿。" },
+    { id: 4004001, price: 3000, desc: "拥有智慧之源的水晶母矿。" },
+    { id: 4004002, price: 3000, desc: "拥有敏捷之源的水晶母矿。" },
+    { id: 4004003, price: 3000, desc: "拥有幸运之源的水晶母矿。" },
+    { id: 4004004, price: 5000, desc: "蕴藏黑暗力量的水晶母矿。" }
+];
 
 function start() {
     status = -1;
@@ -46,47 +51,56 @@ function start() {
 }
 
 function action(mode, type, selection) {
-    if (!cm.isQuestCompleted(3035)) {
-        cm.sendNext("如果你决定帮助我，那么作为回报，我会让这件物品可以出售。");
+    if (mode == -1) {
         cm.dispose();
         return;
     }
-    if (mode == 0 && status == 2) {
-        cm.sendNext("我明白了。知道我这里有很多不同的物品。随便看看吧。我只卖这些物品给你，所以不会以任何方式欺骗你。");
+    if (mode == 0 && status >= 0) {
         cm.dispose();
         return;
     }
-    if (mode < 1) {
-        cm.dispose();
-        return;
-    }
+    mode == 1 ? status++ : status--;
 
-    status++;
-    if (status == 0) {
-        var selStr = "";
-        for (var i = 0; i < item.length; i++) {
-            selStr += "\r\n#L" + i + "# #b#t" + item[i] + "# (Price: " + cost[i] + " mesos)#k#l";
-        }
-        cm.sendSimple("多亏了你，#b#t4031056##k 已经安全封印了。当然，作为结果，我用掉了我在过去大约800年中积累的一半能量...但现在我可以安心地死去了。哦，顺便问一下... 你是不是在寻找稀有物品？作为对你辛勤工作的感激，我会向你出售一些我拥有的物品，而且只有你可以购买。挑选出你想要的吧！" + selStr);
-    } else if (status == 1) {
-        selected = selection;
-        cm.sendGetNumber("Is #b#t" + item[selected] + "##k really the item that you need? It's the item " + msg[selected] + ". It may not be the easiest item to acquire, but I'll give you a good deal on it. It'll cost you #b" + cost[selected] + " mesos#k per item. How many would you like to purchase?", 0, 1, 100);
-    } else if (status == 2) {
-        amount = selection;
-        totalcost = cost[selected] * amount;
-        if (amount == 0) {
-            cm.sendOk("如果你不打算买任何东西，那我也没有东西可以卖给你。");
+    var questState = cm.getQuestStatus(3035);
+
+    if (questState == 2) { // 任务已完成
+        if (status == 0) {
+            var text = "多亏了你，#b#t4031056##k被安全地封印了。当然，我用掉了积累了800多年的半数力量……但现在我可以安息了。哦对，顺便问一句，你在寻找稀有道具吗？为了感谢你的付出，我有些东西卖给你，随便选吧！\r\n\r\n";
+            for (var i = 0; i < items.length; i++) {
+                text += "#b#L" + i + "##t" + items[i].id + "# (价格: " + items[i].price + " 金币)#l#k\r\n";
+            }
+            cm.sendSimple(text);
+        } else if (status == 1) {
+            selectedItem = selection;
+            var itemData = items[selectedItem];
+            itemCode = itemData.id;
+            unitPrice = itemData.price;
+            itemDesc = itemData.desc;
+
+            cm.sendGetNumber("#b#t" + itemCode + "##k 确实是你需要的道具吗？它是 " + itemDesc + "。虽然不太容易弄到，但我可以优惠卖给你。每个需要 #b" + unitPrice + " 金币#k。你想购买多少个？", 1, 1, 100);
+        } else if (status == 2) {
+            quantity = selection;
+            var totalPrice = unitPrice * quantity;
+            cm.sendYesNo("你确定要购买 #r" + quantity + "#k 个 #t" + itemCode + "# 吗？每个单价 " + unitPrice + " 金币，总共需要 #r" + totalPrice + "#k 金币。");
+        } else if (status == 3) {
+            var totalPrice = unitPrice * quantity;
+            if (cm.getMeso() < totalPrice || !cm.canHold(itemCode, quantity)) {
+                cm.sendNext("你确定你的金币足够吗？请检查你的背包空间是否已满，或者你的金币是否至少有 #r" + totalPrice + "#k 金币。");
+            } else {
+                cm.gainMeso(-totalPrice);
+                cm.gainItem(itemCode, quantity);
+                cm.sendNext("谢谢你！如果以后还需要什么东西，随时来找我。虽然我年纪大了，但制作魔法道具对我来说依然轻而易举。");
+            }
             cm.dispose();
         }
-        cm.sendYesNo("你确定要购买 #r" + amount + " #t" + item[selected] + "(s)##k 吗？每个 #t" + item[selected] + "# 的价格是 " + cost[selected] + " 冒险币，总共需要支付 #r" + totalcost + " 冒险币#k。");
-    } else if (status == 3) {
-        if (cm.getMeso() < totalcost || !cm.canHold(item[selected])) {
-            cm.sendNext("你确定你有足够的金币吗？请检查一下你的杂项或使用的物品栏是否已满，或者你至少有 #r" + totalcost + "#k 金币。");
+    } else { // 任务未完成
+        if (status == 0) {
+            if (cm.getPlayer().getLevel() > 54) {
+                cm.sendNext("如果你决定帮我，作为回报，我会把道具卖给你。");
+            } else {
+                cm.sendNext("我是魔法师阿尔卡斯特，在这座城镇生活了300多年，一直致力于研究各种魔法和咒语。");
+            }
             cm.dispose();
         }
-        cm.sendNext("谢谢你。如果你将来需要物品的话，记得来这里找我。虽然我年纪大了，但我仍然可以轻松制作魔法物品。");
-        cm.gainMeso(-totalcost);
-        cm.gainItem(item[selected], amount);
-        cm.dispose();
     }
 }

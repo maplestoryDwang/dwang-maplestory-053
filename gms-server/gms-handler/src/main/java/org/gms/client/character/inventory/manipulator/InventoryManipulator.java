@@ -40,6 +40,7 @@ import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementService;
+import org.gms.server.achievement.egg.imp.MapleShieldEggChecker;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -691,7 +692,7 @@ public class InventoryManipulator {
 
         // 判断穿上的是否是枫叶盾
         if (source.getItemId() == ShieldId.MAPLE_SHIELD_1092030) {
-            achievementService.recordAchievement(chr.getId(), AchievementCategory.SPECIAL_EGG, AchievementCategory.EGG_MAPLE_SHIELD);
+            achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG, MapleShieldEggChecker.EGG_MAPLE_SHIELD, null);
         }
 
     }

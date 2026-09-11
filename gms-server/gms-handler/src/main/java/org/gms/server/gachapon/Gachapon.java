@@ -55,7 +55,8 @@ public class Gachapon {
         LUDIBRIUM(NpcId.GACHAPON_LUDIBRIUM, 90, 8, 2, new Ludibrium()),
         NEW_LEAF_CITY(NpcId.GACHAPON_NLC, 90, 8, 2, new NewLeafCity()),
         EL_NATH(NpcId.GACHAPON_EL_NATH, 90, 8, 2, new ElNath()),
-        NAUTILUS_HARBOR(NpcId.GACHAPON_NAUTILUS, 90, 8, 2, new NautilusHarbor());
+        ;
+//        NAUTILUS_HARBOR(NpcId.GACHAPON_NAUTILUS, 90, 8, 2, new NautilusHarbor());
 
         private static final GachaponType[] values = GachaponType.values();
 
@@ -115,8 +116,7 @@ public class Gachapon {
                     I18nUtil.getMessage("GachaCommand.message7"),
                     I18nUtil.getMessage("GachaCommand.message8"),
                     I18nUtil.getMessage("GachaCommand.message9"),
-                    I18nUtil.getMessage("GachaCommand.message10"),
-                    I18nUtil.getMessage("GachaCommand.message11")
+                    I18nUtil.getMessage("GachaCommand.message10")
             };
         }
 
@@ -130,8 +130,7 @@ public class Gachapon {
                     NpcId.GACHAPON_MUSHROOM_SHRINE,
                     NpcId.GACHAPON_SHOWA_MALE,
                     NpcId.GACHAPON_SHOWA_FEMALE,
-                    NpcId.GACHAPON_NLC,
-                    NpcId.GACHAPON_NAUTILUS
+                    NpcId.GACHAPON_NLC
             };
         }
     }

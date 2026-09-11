@@ -14,14 +14,26 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DeathCountEggChecker implements EggChecker {
+    public static final String EGG_DEATH_COUNT   = "SPECIAL_EGG-EGG_DEATH_COUNT"; // 挂掉 8 次墓碑
+
     @Override
     public String getEggKey() {
-        return AchievementCategory.EGG_DEATH_COUNT;
+        return EGG_DEATH_COUNT;
+    }
+
+    @Override
+    public boolean recordAchievementEgg(int cid, String category, String subCate, String value, AchievementService service) {
+        return service.recordAchievementEgg(cid, AchievementCategory.SPECIAL_EGG, getEggKey());
     }
 
     @Override
     public boolean isCompleted(int cid, AchievementService service) {
         // 查 progress 累加值是否达到 8
         return service.getAchievementKeyProgress(cid, AchievementCategory.SPECIAL_EGG, getEggKey()) >= 8;
+    }
+
+    @Override
+    public boolean showNotice(int cid, AchievementService service) {
+        return service.getAchievementKeyProgress(cid, AchievementCategory.SPECIAL_EGG, getEggKey()) == 8;
     }
 }
