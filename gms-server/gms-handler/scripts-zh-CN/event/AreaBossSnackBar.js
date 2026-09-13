@@ -29,7 +29,7 @@ var channel = null;
 var isinit = false;
 
 var MapID = 105090310;
-var BossID = 8220009;
+var BossID = 9410015;
 var BossName = "小吃店";
 /**刷新时间，分钟;  Generation time in minutes*/
 var BossTime = 180;

@@ -90,10 +90,9 @@ public class HiddenMapAchievementManager {
         mapIds.add(MapIdGen.MECATEON_FIELD_221030501);            // 美卡体安的草原
         mapIds.add(MapIdGen.DEFEAT_MONSTERS_221030601);           // 怪兽地区
         mapIds.add(MapIdGen.BARNARD_FIELD_221040201);             // 巴那德草原
-        mapIds.add(MapIdGen.KULAN_FIELD_I_221040000);             // 哥雷草原 (库尔兰草原 I)
         mapIds.add(MapIdGen.DOGON_S_HQ_221040402);                // 都滚斯本部
         mapIds.add(MapIdGen.HAUNTED_HOUSE_222010401);             // 深山凶宅
-        mapIds.add(MapIdGen.TOP_OF_BLACK_MOUNTAIN_222010400);     // 鬼怪之家 (鬼怪山脊)
+//        mapIds.add(MapIdGen.TOP_OF_BLACK_MOUNTAIN_222010400);     // 鬼怪之家 (鬼怪山脊)
 
         // 4. 水下世界 / 武陵 / 百草堂 / 神木村 / 异域
         mapIds.add(MapIdGen.FISH_RESTING_SPOT_230030001);         // 鱼之平原
