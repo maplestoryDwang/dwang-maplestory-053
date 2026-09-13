@@ -239,19 +239,15 @@ public class AchievementService {
     /**
      * 查询指定维度的当前进度与 DTO
      */
-    public AchievementProgressDTO getProgressByCategory(int cid, String category, int completedQuestCount) {
+    public AchievementProgressDTO getProgressByCategory(int cid, String category) {
         AchievementDiscountConfigDO config = getConfig(category);
 
         if (config == null) {
             return new AchievementProgressDTO(category, "未知分类", 0, 1, 0);
         }
 
-        int current;
-        if (AchievementCategory.QUEST_COMPLETED.equals(category)) {
-            current = completedQuestCount;
-        } else {
-            current = getCategoryProgress(cid, category);
-        }
+        int current = getCategoryProgress(cid, category);
+
 
         return new AchievementProgressDTO(category, config.getName(), current, config.getMaxProgress(), config.getWeightPercent());
     }
@@ -271,7 +267,7 @@ public class AchievementService {
 
         for (AchievementDiscountConfigDO config : sortedList) {
             if (Boolean.TRUE.equals(config.getEnabled())) {
-                dtoList.add(getProgressByCategory(cid, config.getCategory(), completedQuestCount));
+                dtoList.add(getProgressByCategory(cid, config.getCategory()));
             }
         }
         return dtoList;
@@ -280,7 +276,7 @@ public class AchievementService {
     /**
      * 核心计算：怪物血量折算
      */
-    public int calculateMonsterHp(int cid, int originalHp, int completedQuestCount) {
+    public int calculateMonsterHp(int cid, int originalHp) {
 //        if (configCache.isEmpty()) {
             refreshConfigCache();
 //        }
@@ -293,12 +289,8 @@ public class AchievementService {
                 continue;
             }
 
-            int currentProgress;
-            if (AchievementCategory.QUEST_COMPLETED.equals(config.getCategory())) {
-                currentProgress = completedQuestCount;
-            } else {
-                currentProgress = getCategoryProgress(cid, config.getCategory());
-            }
+            int currentProgress = getCategoryProgress(cid, config.getCategory());
+
 
             double ratio = Math.min(1.0, (double) currentProgress / config.getMaxProgress());
             totalDiscountPercent += ratio * config.getWeightPercent();
@@ -409,7 +401,7 @@ public class AchievementService {
             if (!Boolean.TRUE.equals(config.getEnabled())) {
                 continue;
             }
-            AchievementProgressDTO progressByCategory = getProgressByCategory(cid, config.getCategory(), questCount);
+            AchievementProgressDTO progressByCategory = getProgressByCategory(cid, config.getCategory());
             if (progressByCategory.getCurrentProgress() < config.getMaxProgress()) {
                 return false; // 只要有一个分类未达到 MaxProgress 即为未完成
             }

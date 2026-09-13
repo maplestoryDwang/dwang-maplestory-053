@@ -228,6 +228,7 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.MONSTER_BOMB, new MonsterBombHandler());
         registerHandler(RecvOpcode.FIELD_DAMAGE_MOB, new FieldDamageMobHandler());
         registerHandler(RecvOpcode.MOB_DAMAGE_MOB_FRIENDLY, new MobDamageMobFriendlyHandler());
+        registerHandler(RecvOpcode.TROCK_ADD_MAP, new TrockAddMapHandler());
 
 //        registerHandler(RecvOpcode.CANCEL_DEBUFF, new CancelDebuffHandler());
 //        registerHandler(RecvOpcode.USE_SKILL_BOOK, new SkillBookHandler());
@@ -242,7 +243,6 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.OWL_ACTION, new UseOwlOfMinervaHandler());
 //        registerHandler(RecvOpcode.OWL_WARP, new OwlWarpHandler());
 //        registerHandler(RecvOpcode.TOUCH_MONSTER_ATTACK, new TouchMonsterDamageHandler());
-//        registerHandler(RecvOpcode.TROCK_ADD_MAP, new TrockAddMapHandler());
 //        registerHandler(RecvOpcode.HIRED_MERCHANT_REQUEST, new HiredMerchantRequest());
 //        registerHandler(RecvOpcode.MOB_BANISH_PLAYER, new MobBanishPlayerHandler());
 //        registerHandler(RecvOpcode.MOB_DAMAGE_MOB, new MobDamageMobHandler());

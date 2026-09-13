@@ -263,6 +263,10 @@ public enum RecvOpcode implements Opcode {
      */
     USE_INNER_PORTAL(0x4F),
 
+    /**
+     * 添加缩地石头
+     */
+    TROCK_ADD_MAP(0x50),
 
     /**
      * 特殊动作/技能释放   OnSkillUseRequest
@@ -577,7 +581,6 @@ public enum RecvOpcode implements Opcode {
     CANCEL_DEBUFF(0x63), // 取消减益效果
     CHANGE_MAP_SPECIAL(0x64), // 特殊更改地图
     USE_INNER_PORTAL(0x65), // 使用内部传送门
-    TROCK_ADD_MAP(0x66), // 添加传送岩地图
     REPORT(0x6A), // 报告
     QUEST_ACTION(0x6B), // 任务操作
     //USER_CALC_DAMAGE_STAT_SET_REQUEST(0x6C), // 用户计算伤害统计设置请求（未实现）

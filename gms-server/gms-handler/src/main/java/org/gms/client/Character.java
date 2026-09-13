@@ -10218,11 +10218,6 @@ public class Character extends AbstractCharacterObject {
 	 */
 
 	public int calculateMonsterHp(int originalMonsterHp) {
-
-		// 获取当前角色已完成普通任务的数量
-		List<QuestStatus> completedQuests = getCompletedQuests();
-		int completedQuestCount = completedQuests.size();
-
-		return achievementService.calculateMonsterHp(this.getId(), originalMonsterHp, completedQuestCount);
+		return achievementService.calculateMonsterHp(this.getId(), originalMonsterHp);
 	}
 }

@@ -1564,9 +1564,8 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * JS 获取单个成就类型的进度 (DTO)
      */
     public AchievementProgressDTO getAchievementProgress(String category) {
-        int questCount = getPlayer().getCompletedQuests().size();
         return context.getAchievementService()
-                .getProgressByCategory(getPlayer().getId(), category, questCount);
+                .getProgressByCategory(getPlayer().getId(), category);
     }
 
     /**

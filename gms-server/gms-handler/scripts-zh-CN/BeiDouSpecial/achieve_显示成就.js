@@ -89,11 +89,11 @@ function showCategoryDetail(dto) {
             text += "#r[及时奖励]#k：枫叶兑换装备可以进行打折。\r\n";
             break;
         case "MUSIC_DISCOVERY":
-            text += "说明：在不同地图收集 " + dto.getMaxProgress() + " 首音乐 BGM。\r\n";
+            text += "说明：在不同地图收集 " + dto.getMaxProgress() + " 首音乐 BGM。(前提是你有#v1002747#)\r\n";
             text += "#b[及时奖励]#k：解锁点播音乐功能。\r\n";
             break;
         case "HIDDEN_MAP":
-            text += "说明：探索 " + dto.getMaxProgress() + " 个隐藏地图。\r\n";
+            text += "说明：探索 " + dto.getMaxProgress() + " 个隐藏地图。(前提是你有#v5041000#)\r\n";
             text += "#r[完成奖励]#k：全部完成后，获得彩蛋提示。\r\n";
             break;
         case "GACHAPON_COUNT":
@@ -166,13 +166,9 @@ function handleCategoryAction(selection) {
             break;
 
         case "HIDDEN_MAP":
-            if (!selectedDto.isCompleted()) {
-                cm.sendOk("隐藏地图未探索完毕，无法获取彩蛋消息哦！");
-                cm.dispose();
-            } else {
-                cm.dispose();
-                cm.openNpc(9900001, "achieve_彩蛋消息");
-            }
+            cm.dispose();
+            cm.openNpc(9900001, "achieve_记录隐藏地图");
+
             break;
 
         case "GACHAPON_COUNT":

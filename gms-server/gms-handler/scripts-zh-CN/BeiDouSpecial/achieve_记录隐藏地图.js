@@ -1,5 +1,12 @@
 function start() {
     var progress = cm.getAchievementProgress("HIDDEN_MAP");
+
+    // 1. 前置条件校验：必须持有指定道具 (1702050)
+    if (!cm.haveItem(5041000, 1)) {
+        cm.sendOk("你需要拥有 #v5041000# #z5041000# 才能记录隐藏地图哦！");
+        cm.dispose();
+        return;
+    }
     var isMapCompleted = progress != null
         && progress.getCurrentProgress() >= progress.getMaxProgress();
 

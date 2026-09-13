@@ -56,6 +56,7 @@ public enum SendPacketOpcode implements Opcode {
     // check ↓
     RELOG_RESPONSE(0x15), // 重新登录回应
 
+    MAP_TRANSFER_RESULT(0x1c), // 地图转移结果
 
     /*CWvsContext::OnPacket*/
 //    MODIFY_INVENTORY_ITEM(0x18), // 更新/修改背包道具
@@ -384,7 +385,6 @@ public enum SendPacketOpcode implements Opcode {
     FORCED_STAT_RESET(-1), // 强制重置状态0x23
     SKILL_USE_RESULT(0x25), // 技能使用结果
     OPEN_FULL_CLIENT_DOWNLOAD_LINK(0x28), // 打开完整客户端下载链接
-    MAP_TRANSFER_RESULT(-1), // 地图转移结果
     WEDDING_PHOTO(-1), // 结婚照片（ANTI_MACRO_RESULT在某些版本可能是这个）
     CLAIM_RESULT(-1), // 领取结果
     CLAIM_AVAILABLE_TIME(0x2E), // 领取可用时间

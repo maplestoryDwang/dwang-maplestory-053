@@ -240,10 +240,14 @@ public class QuestUtils {
         chr.getMap().broadcastMessage(chr, PacketCreator.showForeignEffect(chr.getId(), 9), false);
 
 
+        int questId = quest.getId();
+
+        // 记录任务
+        achievementService.recordAchievement(chr.getId(), AchievementCategory.QUEST_COMPLETED, String.valueOf(questId), 1);
+
         // 彩蛋 7.8.10
         // 7 6904 6914 6924 6934
         // 4. 四转任务触发 (QuestUtils#complete)
-        int questId = quest.getId();
         if (Set.of(QuestId.HERO_S_QUALITY_6904, QuestId.A_HERO_S_QUALITY_6914, QuestId.HERO_S_QUALITY_6924, QuestId.HERO_S_QUALITY_6934).contains(questId)) {
             // 任意触发即可
             achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG , FourthJobEggChecker.EGG_FOURTH_JOB, null);
