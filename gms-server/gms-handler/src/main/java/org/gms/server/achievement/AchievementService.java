@@ -59,6 +59,7 @@ public class AchievementService {
 
     /**
      * 记录成就（自动判定累加性与防重） 所有的记录都在这里
+     * @return ture表示新增 false表示已添加
      */
     public boolean recordAchievement(int cid, String category, String key, int addAmount) {
         AchievementDiscountConfigDO config = getConfig(category);
@@ -84,7 +85,7 @@ public class AchievementService {
 //            }
             record.setProgress(record.getProgress() + addAmount);
             achievementMapper.update(record);
-            return true;
+            return false;
         }
 
         record = new CharacterAchievementDO();

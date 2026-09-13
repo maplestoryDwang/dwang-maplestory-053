@@ -44,7 +44,7 @@ function action(mode, type, selection) {
  */
 function showMainPanel() {
     var list = cm.getAllAchievementProgress();
-    var text = "\t\t\t\t\t#e欢迎来到#rDWANG#k的成就中心#n\t\t\t\t\r\n";
+    var text = "\t\t\t\t\t#e欢迎来到#r#h0##的成就中心#n\t\t\t\t\r\n";
     text += "完成成就不仅能提供#b怪物血量削减#k，还可解锁各项功能，希望您玩的开心！\r\n";
 
     var totalDiscount = 0.0;

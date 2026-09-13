@@ -23,6 +23,7 @@
 /* Guild Rank Board */
 
 function start() {
-    cm.displayGuildRanks();
+//    cm.displayGuildRanks();
     cm.dispose();
+    cm.openNpc(9040004, "achieve_显示成就");
 }
