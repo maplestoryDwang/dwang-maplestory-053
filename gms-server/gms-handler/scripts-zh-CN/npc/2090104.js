@@ -26,8 +26,8 @@
 */
 var status = 0;
 var beauty = 0;
-var mface_r = Array(20002, 20005, 20007, 20011, 20014, 20017, 20029);
-var fface_r = Array(21001, 21010, 21013, 21018, 21020, 21021, 21030);
+var mface_r = Array(20002, 20005, 20007, 20011, 20014, 20017);
+var fface_r = Array(21001, 21010, 21013, 21018, 21020, 21021);
 
 function pushIfItemExists(array, itemid) {
     if ((itemid = cm.getCosmeticItem(itemid)) != -1 && !cm.isCosmeticEquipped(itemid)) {

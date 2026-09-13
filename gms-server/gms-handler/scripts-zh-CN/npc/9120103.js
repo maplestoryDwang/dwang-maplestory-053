@@ -29,8 +29,8 @@
 var status = 0;
 var beauty = 0;
 var price = 1000000;
-var mface_r = Array(20000, 20016, 20019, 20020, 20021, 20024, 20026);
-var fface_r = Array(21000, 21002, 21009, 21016, 21022, 21025, 21027);
+var mface_r = Array(20000, 20016, 20019, 20020, 20021);
+var fface_r = Array(21000, 21002, 21009, 21016, 21022);
 var facenew = Array();
 var colors = Array();
 

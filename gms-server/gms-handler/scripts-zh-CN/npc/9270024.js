@@ -27,8 +27,8 @@
 */
 var status = 0;
 var beauty = 0;
-var mface_v = Array(20005, 20012, 20013, 20020, 20021, 20026);
-var fface_v = Array(21006, 21009, 21011, 21012, 21021, 21025);
+var mface_v = Array(20005, 20012, 20013, 20020, 20021);
+var fface_v = Array(21006, 21009, 21011, 21012, 21021);
 var facenew = Array();
 
 function pushIfItemExists(array, itemid) {

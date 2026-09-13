@@ -28,8 +28,8 @@
 */
 var status = 0;
 var beauty = 0;
-var mface_r = Array(20002, 20005, 20006, 20013, 20017, 20021, 20024);
-var fface_r = Array(21002, 21003, 21014, 21016, 21017, 21021, 21027);
+var mface_r = Array(20002, 20005, 20006, 20013, 20017, 20021);
+var fface_r = Array(21002, 21003, 21014, 21016, 21017, 21021);
 var facenew = Array();
 
 function pushIfItemExists(array, itemid) {
