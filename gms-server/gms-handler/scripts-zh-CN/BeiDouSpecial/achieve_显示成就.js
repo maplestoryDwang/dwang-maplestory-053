@@ -82,7 +82,7 @@ function showCategoryDetail(dto) {
             break;
         case "QUEST_COMPLETED":
             text += "说明：完成 " + dto.getMaxProgress() + " 个普通任务。\r\n";
-            text += "#r[完成奖励]#k：全部完成后，可选择重置指定任务重复领取奖励。\r\n";
+            text += "#r[完成奖励]#k：全部完成后，可选择重置指定任务以获得奖励。\r\n";
             break;
         case "PARTY_QUEST":
             text += "说明：通关月庙、废弃、天空、玩具、海盗等 " + dto.getMaxProgress() + " 个组队任务。\r\n";

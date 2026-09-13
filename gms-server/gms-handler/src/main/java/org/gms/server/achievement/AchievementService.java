@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 import static com.mybatisflex.core.query.QueryMethods.count;
 import static com.mybatisflex.core.query.QueryMethods.sum;
@@ -440,5 +442,35 @@ public class AchievementService {
         }
 
         return new BossDetailDTO(regionKey, regionName, completedCount, targetMobIds.size(), items);
+    }
+
+    /**
+     * 随机获取一条彩蛋情报
+     *
+     * @return 谜语彩蛋字符串
+     */
+    public String getRandomHiddenMapInfo(int id) {
+
+
+
+//        if (AchievementCategory.getEGG_INFOS().isEmpty()) {
+//            return "神秘的情报卷轴似乎被岁月侵蚀，内容一片空白……";
+//        }
+        List<EggStatusDTO> eggStatusList = getEggStatusList(id);
+        List<String> completeKey = eggStatusList.stream().filter(EggStatusDTO::isCompleted).map(EggStatusDTO::getEggKey).toList();
+
+        // 过滤出
+        Map<String, String> eggInfoMap = AchievementCategory.getEGG_INFO_MAP();
+        Set<String> eggKeys = eggInfoMap.keySet();
+        List<String> list = eggKeys.stream().filter(s -> !completeKey.contains(s)).toList();
+        // 终极彩蛋
+        if (list.isEmpty()) {
+            return AchievementCategory.EGG_FINAL_INFO;
+        }
+
+        int randomIndex = ThreadLocalRandom.current().nextInt(list.size());
+        String eggKey = list.get(randomIndex);
+        return eggInfoMap.get(eggKey);
+
     }
 }

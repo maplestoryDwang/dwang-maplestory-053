@@ -228,7 +228,7 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.MONSTER_BOMB, new MonsterBombHandler());
         registerHandler(RecvOpcode.FIELD_DAMAGE_MOB, new FieldDamageMobHandler());
         registerHandler(RecvOpcode.MOB_DAMAGE_MOB_FRIENDLY, new MobDamageMobFriendlyHandler());
-        registerHandler(RecvOpcode.TROCK_ADD_MAP, new TrockAddMapHandler());
+        registerHandler(RecvOpcode.TROCK_ADD_MAP, TrockAddMapHandler.getInstance());
 
 //        registerHandler(RecvOpcode.CANCEL_DEBUFF, new CancelDebuffHandler());
 //        registerHandler(RecvOpcode.USE_SKILL_BOOK, new SkillBookHandler());

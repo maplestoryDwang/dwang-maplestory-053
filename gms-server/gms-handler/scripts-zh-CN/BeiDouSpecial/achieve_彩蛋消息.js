@@ -33,7 +33,7 @@ function action(mode, type, selection) {
         text += "恭喜你解锁了探索专家成就！这里存储着诸多未公开的角落秘密。\r\n\r\n";
         text += "今日已获取情报次数：#b" + todayCount + "#k 次\r\n";
         text += "本次解锁情报需要支付：#r" + (currentCost / 10000) + "W#k 金币\r\n\r\n";
-        text += "是否要消耗金币随机抽取一条情报？";
+        text += "是否要消耗金币随机抽取一条彩蛋情报？当然肯定是你没听过的~";
 
         cm.sendYesNo(text);
 

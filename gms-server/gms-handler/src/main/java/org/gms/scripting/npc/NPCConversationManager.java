@@ -1590,7 +1590,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public String getRandomHiddenMapInfo() {
 
-        return AchievementCategory.getRandomHiddenMapInfo();
+        return context.getAchievementService().getRandomHiddenMapInfo(getPlayer().getId());
     }
 
 

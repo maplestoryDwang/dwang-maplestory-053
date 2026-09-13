@@ -21,17 +21,40 @@
 */
 package org.gms.net.server.channel.handlers;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
+import org.gms.server.StringInfoProvider;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
+import org.gms.server.achievement.HiddenMapAchievementManager;
 import org.gms.server.maps.FieldLimit;
 import org.gms.util.PacketCreator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author kevintjuh93
  */
+@Component
 public final class TrockAddMapHandler extends AbstractPacketHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(TrockAddMapHandler.class);
+    @Getter
+    private static TrockAddMapHandler instance;
+
+    @PostConstruct
+    private void init() {
+        instance = this;
+    }
+
+    @Autowired
+    AchievementService achievementService;
 
     @Override
     public final void handlePacket(InPacket p, Client c) {
@@ -49,7 +72,22 @@ public final class TrockAddMapHandler extends AbstractPacketHandler {
         } else if (type == 0x01) {
             if (!FieldLimit.CANNOTVIPROCK.check(chr.getMap().getFieldLimit())) {
                 if (vip) {
-                    chr.addVipTrockMap();
+                    // 校验是否是隐藏地图，隐藏地图才能加入
+                    int mapId = chr.getMapId();
+                    boolean hiddenMap = HiddenMapAchievementManager.isHiddenMap(mapId);
+                    if (hiddenMap) {
+                        chr.addVipTrockMap();
+                        String mapName = StringInfoProvider.getMapName(mapId);
+                        var key = mapName + "_" + mapId;
+                        achievementService.recordAchievement(chr.getId(), AchievementCategory.HIDDEN_MAP, key, 1);
+                        chr.dropMessage(1, "记录成功");
+                        chr.enableActions();
+                    } else {
+                        String msg = "当前地图不属于隐藏地图，无法记录成就哦！";
+                        chr.dropMessage(5, msg);
+                        chr.dropMessage(1, msg);
+                        chr.enableActions();
+                    }
                 } else {
                     chr.addTrockMap();
                 }

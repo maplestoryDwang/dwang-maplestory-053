@@ -45,18 +45,23 @@ public class AchievementCategory {
     }};
 
 
+    // 额外一个八卦新闻
+    public static final String EGG_FINAL_INFO = "恭喜你你已经找到了所有的彩蛋，但是我这边还有一条道听途说的消息：如果你收集了#b1000#k个#t4000052#，可以在冒险世界的某处兑换#r冰狼#k辅助工具哦，是不是很酷！目前还没有冒险家找到他，你可能是第一个...";
 
-    private static final List<String> EGG_INFOS = List.of(
-        "听说作者的头像是一个#r枫叶盾#k，那是很久远的故事，和英勇的战士在蚂蚁洞奋战了很久",
-        "品味过无形无质的#r空气#k，或是温热的#r绿豆粥#k，冰雪将不再寒冷",
-        "横跨#r天空的巨轮#k之上，曾有勇士在呼啸的狂风中击落过天空的统治者。",
-        "熔炉的锤音落定，将你的真名刻印于百炼之钢，那是属于#r锻造者#k的至高荣耀。",
-        "置身于雾气萦绕的#r桑拿房#k静坐凝神，蒸腾的水汽将渐渐拓宽你的生命与魔力之源。",
-        "当沉重的#r石碑接连八次#k降临于世，灵魂在幽冥边缘徘徊，竟踏出了一条超脱生死的秘径。",
-        "打破肉身的极限，破茧成蝶之时，#r四转试炼#k将指引你走向终极的英雄宿命。",
-        "用沉甸甸的金钱叩开矿石之门，并在永恒冻土的冰霜中翻开那本沉睡百年的#r上古魔书#k。",
-        "镜中之影悄然蜕变，不论是千丝万缕的重塑，还是容颜肤色的焕新，皆是一场全新的#r改变#k。",
-        "穿梭于地铁线路、忍苦树林与沉睡森林的荆棘之间，唯有#r全部#k战胜重力者方可被称为跳跃之大师。");
+    @Getter
+    public static final Map<String, String> EGG_INFO_MAP = new LinkedHashMap<>() {{
+        put(MapleShieldEggChecker.EGG_MAPLE_SHIELD, "听说作者的头像是一个#r枫叶盾#k，那是很久远的故事，和英勇的战士在蚂蚁洞奋战了很久");
+        put(SpecialFoodEggChecker.EGG_SPECIAL_FOOD, "品味过无形无质的#r空气#k，或是温热的#r绿豆粥#k，冰雪将不再寒冷");
+        put(ShipBatMonEggChecker.EGG_SHIP_BAT_MON,  "横跨#r天空的巨轮#k之上，曾有勇士在呼啸的狂风中击落过天空的统治者。");
+        put(MakerSignedEggChecker.EGG_MAKER_SIGNED, "熔炉的锤音落定，将你的真名刻印于百炼之钢，那是属于#r锻造者#k的至高荣耀。");
+        put(SaunaAfkEggChecker.EGG_SAUNA_AFK,       "置身于雾气萦绕的#r桑拿房#k静坐凝神，蒸腾的水汽将渐渐拓宽你的生命与魔力之源。");
+        put(DeathCountEggChecker.EGG_DEATH_COUNT,   "当沉重的#r石碑接连八次#k降临于世，灵魂在幽冥边缘徘徊，竟踏出了一条超脱生死的秘径。");
+        put(FourthJobEggChecker.EGG_FOURTH_JOB,     "打破肉身的极限，破茧成蝶之时，#r四转试炼#k将指引你走向终极的英雄宿命。");
+        put(AncientBookEggChecker.EGG_ANCIENT_BOOK, "用沉甸甸的金钱叩开矿石之门，并在永恒冻土的冰霜中翻开那本沉睡百年的#r上古魔书#k。");
+        put(BeautyEggChecker.EGG_BEAUTY_ALL,        "镜中之影悄然蜕变，不论是千丝万缕的重塑，还是容颜肤色的焕新，皆是一场全新的#r改变#k。");
+        put(JumpMasterEggChecker.EGG_JUMP_MASTER,   "穿梭于地铁线路、忍苦树林与沉睡森林的荆棘之间，唯有#r全部#k战胜重力者方可被称为跳跃之大师。");
+    }};
+
 
     public static final Map<String, String> BOSS_EGG_NAME_MAP = new LinkedHashMap<>() {{
         put(BossVictoriaChecker.EGG_KEY,       "金银岛区域 BOSS 征服者");
@@ -93,23 +98,4 @@ public class AchievementCategory {
             JumpMasterEggChecker.EGG_JUMP_MASTER
     );
 
-    /**
-     * 随机获取一条彩蛋情报
-     *
-     * @return 谜语彩蛋字符串
-     */
-    public static String getRandomHiddenMapInfo() {
-        if (EGG_INFOS.isEmpty()) {
-            return "神秘的情报卷轴似乎被岁月侵蚀，内容一片空白……";
-        }
-        int randomIndex = ThreadLocalRandom.current().nextInt(EGG_INFOS.size());
-        return EGG_INFOS.get(randomIndex);
-    }
-
-    /**
-     * 获取不可变的情报列表（备用接口）
-     */
-    public static List<String> getAllEggInfos() {
-        return Collections.unmodifiableList(EGG_INFOS);
-    }
 }

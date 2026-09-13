@@ -488,6 +488,8 @@ public class Character extends AbstractCharacterObject {
 	private byte pendantExp = 0, doorSlot = -1;
 	private final List<Integer> trockmaps = new ArrayList<>();
 	private final List<Integer> viptrockmaps = new ArrayList<>();
+	/** 高级瞬移石(5041000)传送记录上限：原版 10，配合客户端 Hook 扩到 100 */
+	public static final int VIP_TROCK_SIZE = 100;
 	@Getter
 	private Map<String, Events> events = new LinkedHashMap<>();
 	@Setter
@@ -652,7 +654,7 @@ public class Character extends AbstractCharacterObject {
 		for (int i = 0; i < 5; i++) {
 			ret.trockmaps.add(MapId.NONE);
 		}
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < VIP_TROCK_SIZE; i++) {
 			ret.viptrockmaps.add(MapId.NONE);
 		}
 
@@ -6611,7 +6613,7 @@ public class Character extends AbstractCharacterObject {
 		List<TrocklocationsDO> trocklocationsDOList = CHARACTER_INTERNAL_SERVICE.getTrockLocationByCharacter(charactersDO.getId());
 		int vip = 0;
 		int reg = 0;
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < VIP_TROCK_SIZE + 5; i++) {
 			if (i < trocklocationsDOList.size()) {
 				TrocklocationsDO trocklocationsDO = trocklocationsDOList.get(i);
 				if (trocklocationsDO.getVip() == 1) {
@@ -6623,7 +6625,7 @@ public class Character extends AbstractCharacterObject {
 				}
 				continue;
 			}
-			if (vip < 10) {
+			if (vip < VIP_TROCK_SIZE) {
 				chr.getVipTrockMaps().add(MapId.NONE);
 			}
 			if (reg < 5) {
@@ -9532,7 +9534,7 @@ public class Character extends AbstractCharacterObject {
 		int ret = viptrockmaps.indexOf(MapId.NONE);
 
 		if (ret == -1) {
-			ret = 10;
+			ret = VIP_TROCK_SIZE;
 		}
 
 		return ret;
@@ -9540,7 +9542,7 @@ public class Character extends AbstractCharacterObject {
 
 	public void deleteFromVipTrocks(int map) {
 		viptrockmaps.remove(Integer.valueOf(map));
-		while (viptrockmaps.size() < 10) {
+		while (viptrockmaps.size() < VIP_TROCK_SIZE) {
 			viptrockmaps.add(MapId.NONE);
 		}
 	}

@@ -12,8 +12,7 @@ public class BossElnathChecker implements EggChecker {
     public static final String EGG_KEY = "BOSS_KILL_ELNATH";
 
     public static final List<String> BOSS_LIST = List.of(
-            "8150000", // 蝙蝠魔
-            "6090000", // 黑山老妖
+  "6090000", // 黑山老妖
             "8220001", // 驮狼雪人
             "8800000", "8800001", "8800002", // 扎昆1/2/本体
             "8800003", "8800004", "8800005", "8800006", "8800007", "8800008", "8800009", "8800010" // 扎昆手臂1-8

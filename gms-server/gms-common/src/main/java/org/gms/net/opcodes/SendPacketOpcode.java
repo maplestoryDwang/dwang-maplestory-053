@@ -377,7 +377,7 @@ public enum SendPacketOpcode implements Opcode {
     CHECK_CRC_RESULT(0x19), // CRC检查结果
     LAST_CONNECTED_WORLD(0x1A), // 上次连接的世界
     RECOMMENDED_WORLD_MESSAGE(0x1B), // 推荐世界消息
-    CHECK_SPW_RESULT(0x1C), // SPW检查结果
+    CHECK_SPW_RESULT(-1), // SPW检查结果
 
     /*CWvsContext::OnPacket*/
     INVENTORY_GROW(0x1E), // 扩展物品栏

@@ -304,7 +304,7 @@ public class PacketCreator {
         for (int i = 0; i < 5; i++) {
             p.writeInt(tele.get(i));
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < Character.VIP_TROCK_SIZE; i++) {
             p.writeInt(viptele.get(i));
         }
     }
@@ -5996,7 +5996,7 @@ public class PacketCreator {
         if (vip) {
             p.writeByte(1);
             List<Integer> map = chr.getVipTrockMaps();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < Character.VIP_TROCK_SIZE; i++) {
                 p.writeInt(map.get(i));
             }
         } else {
