@@ -56,6 +56,7 @@ import org.gms.scripting.ScriptServiceContext;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementProgressDTO;
 import org.gms.server.achievement.HiddenMapAchievementManager;
+import org.gms.server.achievement.boss.BossDetailDTO;
 import org.gms.server.achievement.egg.EggStatusDTO;
 import org.gms.server.achievement.egg.imp.BeautyEggChecker;
 import org.gms.server.achievement.egg.imp.MakerSignedEggChecker;
@@ -1727,6 +1728,12 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public List<EggStatusDTO> getEggStatusList() {
         return context.getAchievementService().getEggStatusList(getPlayer().getId());
+    }
+    public List<EggStatusDTO> getBossStatusList() {
+        return context.getAchievementService().getBossStatusList(getPlayer().getId());
+    }
+    public BossDetailDTO getBossDetailByRegion(String regionKey) {
+        return context.getAchievementService().getBossDetailByRegion(getPlayer().getId(), regionKey);
     }
 
     public boolean isAllAchievementsCompleted() {

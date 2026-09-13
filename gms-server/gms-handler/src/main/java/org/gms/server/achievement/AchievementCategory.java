@@ -1,6 +1,7 @@
 package org.gms.server.achievement;
 
 import lombok.Getter;
+import org.gms.server.achievement.boss.*;
 import org.gms.server.achievement.egg.imp.*;
 
 import java.util.*;
@@ -15,6 +16,9 @@ public class AchievementCategory {
     public static final String MUSIC_DISCOVERY = "MUSIC_DISCOVERY"; // 脚本里面带了
     public static final String HIDDEN_MAP = "HIDDEN_MAP";           // 脚本里面调了
     public static final String GACHAPON_COUNT = "GACHAPON_COUNT";  // 已记录
+
+    public static final String BOSS_KILL = "BOSS_KILL";  // 已记录
+
     public static final String SPECIAL_NPC = "SPECIAL_NPC";
     public static final String SPECIAL_EGG = "SPECIAL_EGG";
 
@@ -54,6 +58,18 @@ public class AchievementCategory {
         "镜中之影悄然蜕变，不论是千丝万缕的重塑，还是容颜肤色的焕新，皆是一场全新的#r改变#k。",
         "穿梭于地铁线路、忍苦树林与沉睡森林的荆棘之间，唯有#r全部#k战胜重力者方可被称为跳跃之大师。");
 
+    public static final Map<String, String> BOSS_EGG_NAME_MAP = new LinkedHashMap<>() {{
+        put(BossVictoriaChecker.EGG_KEY,       "金银岛区域 BOSS 征服者");
+        put(BossOrbisChecker.EGG_KEY,          "天空之城区域 BOSS 征服者");
+        put(BossElnathChecker.EGG_KEY,         "冰封雪域区域 BOSS 征服者");
+        put(BossLudiChecker.EGG_KEY,           "玩具地球防御区域 BOSS 征服者");
+        put(BossAquaChecker.EGG_KEY,           "海底世界区域 BOSS 征服者");
+        put(BossFolkTownChecker.EGG_KEY,       "童话村区域 BOSS 征服者");
+        put(BossMuLungChecker.EGG_KEY,         "武陵百草堂区域 BOSS 征服者");
+        put(BossLeafreChecker.EGG_KEY,         "神木村区域 BOSS 征服者");
+        put(BossZipanguChecker.EGG_KEY,        "昭和神社区域 BOSS 征服者");
+        put(BossAmoriaChecker.EGG_KEY,         "特殊副本区域 BOSS 征服者");
+    }};
 
     /**
      * 立即完成型彩蛋集合（单次触发即完成）

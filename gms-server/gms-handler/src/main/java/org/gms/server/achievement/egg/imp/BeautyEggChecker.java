@@ -5,6 +5,8 @@ import org.gms.server.achievement.AchievementService;
 import org.gms.server.achievement.egg.EggChecker;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * 头型 发型 肤色都改变则完成
  *
@@ -48,5 +50,10 @@ public class BeautyEggChecker implements EggChecker {
 
         // 有三个说明都存在，有一个 ==1 说明就可以显示
         return hair == 1 || face == 1 || skin ==1;
+    }
+
+    @Override
+    public List<String> getNeedIds() {
+        return null;
     }
 }

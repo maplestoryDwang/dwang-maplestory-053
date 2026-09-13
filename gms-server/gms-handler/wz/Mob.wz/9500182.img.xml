@@ -19,7 +19,7 @@
         <int name="summonType" value="0"/>
         <imgdir name="ban">
             <int name="banType" value="1"/>
-            <string name="banMsg" value="호걸에게 들켜 수박밭에서 쫓겨납니다."/>
+            <string name="banMsg" value="霍古尔发现了你，你被赶出了西瓜田。"/>
             <imgdir name="banMap">
                 <imgdir name="0">
                     <int name="field" value="922210300"/>

@@ -34,7 +34,7 @@
             </imgdir>
         </imgdir>
         <imgdir name="ban">
-            <string name="banMsg" value="리치의 마법에 의해 다른 장소로 이동되었습니다."/>
+            <string name="banMsg" value="你受到黑山老妖的魔法影响，被传送到了其他地方。"/>
             <imgdir name="banMap">
                 <imgdir name="0">
                     <int name="field" value="211040200"/>

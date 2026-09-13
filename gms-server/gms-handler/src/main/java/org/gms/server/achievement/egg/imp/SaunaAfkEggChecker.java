@@ -5,6 +5,8 @@ import org.gms.server.achievement.AchievementService;
 import org.gms.server.achievement.egg.EggChecker;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  *
  *
@@ -37,5 +39,10 @@ public class SaunaAfkEggChecker implements EggChecker {
     @Override
     public boolean showNotice(int cid, AchievementService service) {
         return service.getAchievementKeyProgress(cid, AchievementCategory.SPECIAL_EGG, getEggKey()) == 1;
+    }
+
+    @Override
+    public List<String> getNeedIds() {
+        return null;
     }
 }

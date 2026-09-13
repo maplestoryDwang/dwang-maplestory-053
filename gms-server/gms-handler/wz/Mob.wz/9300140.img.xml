@@ -65,7 +65,7 @@
             </imgdir>
         </imgdir>
         <imgdir name="ban">
-            <string name="banMsg" value="프랑켄로이드의 힘에 의해 다른 장소로 쫓겨났습니다."/>
+            <string name="banMsg" value="你被黑暗魔法传送到了其他地方。请想办法回去帮助同伴！"/>
             <imgdir name="banMap">
                 <imgdir name="0">
                     <int name="field" value="926100400"/>

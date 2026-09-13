@@ -21,14 +21,20 @@
  */
 package org.gms.scripting.event;
 
+import com.mybatisflex.core.query.QueryWrapper;
+import org.gms.dao.entity.WildBossConfigDO;
+import org.gms.dao.entity.table.WildBossConfigDOTableDef;
+import org.gms.dao.mapper.WildBossConfigMapper;
 import org.gms.net.server.channel.Channel;
 import org.gms.util.DatabaseConnection;
+import org.gms.util.SpringContextUtil;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.AbstractScriptManager;
 import org.gms.scripting.SynchronizedInvocable;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -75,19 +81,77 @@ public class EventScriptManager extends AbstractScriptManager {
             }
         }
 
-        // todo 初始化事件
-//        log.info(" 当前不启动任何事件 --dwang");
-        log.info(" 当前启动的事件：");
-        for (String script : scripts) {
-            log.info("scriptName: ==========={}===========", script);
+        if (!scripts.isEmpty()) {
+
+            // 2. 动态加载数据库驱动的野外 BOSS 事件
+            loadWildBossEvents(channel);
         }
 
+//        log.info(" 当前不启动任何事件 --dwang");
+        log.info(" 当前启动的事件!：");
+        for (String script : scripts) {
+            log.debug("scriptName: ==========={}===========", script);
+        }
+        log.info("当前启动的事件总数: {}", events.size());
 
 
         init(); // 初始化所有事件
         fallback = events.remove("0_EXAMPLE"); // 移除并保留后备事件
     }
 
+
+    /**
+     * 从数据库加载所有启用的野外 BOSS，动态绑定参数并生成 EventEntry
+     */
+    private void loadWildBossEvents(Channel channel) {
+        try {
+            // 通过 SpringContextUtil 动态获取 MyBatis-Flex Mapper
+            WildBossConfigMapper mapper = SpringContextUtil.getBean(WildBossConfigMapper.class);
+
+            // 查询所有启用的野外 BOSS 配置
+            QueryWrapper query = QueryWrapper.create()
+                    .where(WildBossConfigDOTableDef.WILD_BOSS_CONFIG_D_O.ACTIVE.eq(true));
+            List<WildBossConfigDO> configs = mapper.selectListByQuery(query);
+
+            for (WildBossConfigDO config : configs) {
+                // 每个 BOSS 分配一个唯一的事件名称标识
+                String eventName = "WildBoss_" + config.getId() + "_" + config.getBossId();
+                EventEntry entry = initializeWildBossEntry(eventName, channel, config);
+
+                if (entry != null) {
+                    events.put(eventName, entry);
+                }
+            }
+            log.info("频道 {} 成功从数据库载入 {} 个野外 BOSS 事件", channel.getId(), configs.size());
+        } catch (Exception e) {
+            log.error("频道 {} 读取数据库野外 BOSS 配置失败", channel.getId(), e);
+        }
+    }
+
+    /**
+     * 初始化通用野外 BOSS 脚本并动态注入参数
+     */
+    private EventEntry initializeWildBossEntry(String eventName, Channel channel, WildBossConfigDO config) {
+        // 统一使用 WildBossTemplate.js 模板文件
+        String relativePath = "template/WildBossTemplate.js";
+
+        ScriptEngine engine = getInvocableScriptEngine(relativePath);
+        Invocable iv = SynchronizedInvocable.of((Invocable) engine);
+        EventManager eventManager = new EventManager(channel, iv, eventName);
+
+        // 注入默认的 "em"
+        engine.put(INJECTED_VARIABLE_NAME, eventManager);
+
+        // 动态注入该 BOSS 在数据库中的配置参数到 JS 全局变量中
+        engine.put("MapID", config.getMapId());
+        engine.put("BossID", config.getBossId());
+        engine.put("BossTime", config.getSpawnInterval());
+        engine.put("PosX", config.getPosX());
+        engine.put("PosY", config.getPosY());
+        engine.put("BossNotice", config.getNoticeText() == null ? "" : config.getNoticeText());
+
+        return new EventEntry(iv, eventManager);
+    }
 
 
 

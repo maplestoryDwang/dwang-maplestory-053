@@ -1,11 +1,14 @@
 package org.gms.server.achievement;
 
 import com.mybatisflex.core.query.QueryWrapper;
+import lombok.Getter;
 import org.gms.client.Character;
 import org.gms.dao.entity.AchievementDiscountConfigDO;
 import org.gms.dao.entity.CharacterAchievementDO;
 import org.gms.dao.mapper.AchievementDiscountConfigMapper;
 import org.gms.dao.mapper.CharacterAchievementMapper;
+import org.gms.server.StringInfoProvider;
+import org.gms.server.achievement.boss.BossDetailDTO;
 import org.gms.server.achievement.egg.EggChecker;
 import org.gms.server.achievement.egg.EggStatusDTO;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,8 @@ public class AchievementService {
     private final AchievementDiscountConfigMapper configMapper;
     // 内存缓存彩蛋判定策略，支持动态扩展
     private final Map<String, EggChecker> eggCheckers = new HashMap<>();
+    @Getter
+    private final Map<String, EggChecker> bossCheckers = new HashMap<>();
     // 内存缓存成就配置表
     private final Map<String, AchievementDiscountConfigDO> configCache = new ConcurrentHashMap<>();
 
@@ -35,7 +40,11 @@ public class AchievementService {
 
         // 注册所有彩蛋策略
         for (EggChecker checker : checkers) {
-            eggCheckers.put(checker.getEggKey(), checker);
+            if (checker.getEggKey().contains("EGG")) {
+                eggCheckers.put(checker.getEggKey(), checker);
+            } else {
+                bossCheckers.put(checker.getEggKey(), checker);
+            }
         }
     }
 
@@ -65,7 +74,10 @@ public class AchievementService {
         AchievementDiscountConfigDO config = getConfig(category);
         if (config == null && category.contains("EGG")) {
             config = getConfig(AchievementCategory.SPECIAL_EGG);
-        } else if (config == null || !Boolean.TRUE.equals(config.getEnabled())) {
+        }  else if (config == null && category.contains("BOSS_KILL")) {
+            config = getConfig(AchievementCategory.BOSS_KILL);
+        }
+        else if (config == null || !Boolean.TRUE.equals(config.getEnabled())) {
             return false;
         }
 
@@ -119,6 +131,34 @@ public class AchievementService {
     }
 
     /**
+     * 记录区域 BOSS 击杀
+     * @return true 表示属于 BOSS 且已处理；false 表示不属于任何 BOSS 区域
+     */
+    public boolean recordAchievementBoss(Character character, String mobIdStr) {
+        int cid = character.getId();
+
+        // 遍历所有区域 BOSS Checker，寻找归属
+        for (EggChecker checker : bossCheckers.values()) {
+            // 尝试记录，如果返回 true 说明这个 BOSS 属于当前 Checker
+            // recordAchievementEgg 内部调用的 recordAchievement 返回 true 代表“首次击杀该 BOSS”
+            boolean isNewKill = checker.recordAchievementEgg(cid, "BOSS_KILL", checker.getEggKey(), mobIdStr, this);
+
+            // 只要 progress > 0 说明该 BOSS 归属于这个 Checker 区域
+            int progress = getAchievementKeyProgress(cid, checker.getEggKey(), mobIdStr);
+            if (progress > 0) {
+                // 如果是“首次击杀该 BOSS”，去校验是否恰好集齐了该区域的所有 BOSS
+                if (isNewKill && checker.showNotice(cid, this)) {
+                    String regionName = AchievementCategory.BOSS_EGG_NAME_MAP.getOrDefault(checker.getEggKey(), "该区域");
+                    character.dropMessage(5, "恭喜达成成就：【" + regionName + "】！");
+                }
+                return true; // 匹配并处理成功，告知外部这是 BOSS
+            }
+        }
+
+        return false; // 不属于任何区域 BOSS
+    }
+
+    /**
      * 内部checker调用 决定哪个
      * @param cid
      * @param category
@@ -142,7 +182,9 @@ public class AchievementService {
         if (AchievementCategory.SPECIAL_EGG.equals(category)) {
             return getCompletedEggCount(cid);
         }
-
+        if (AchievementCategory.BOSS_KILL.equals(category)) {
+            return getCompletedBossCount(cid);
+        }
 
         boolean isAccumulate = Boolean.TRUE.equals(config.getIsAccumulate());
 
@@ -317,6 +359,16 @@ public class AchievementService {
         return completedCount;
     }
 
+    public int getCompletedBossCount(int cid) {
+        int completedCount = 0;
+        for (EggChecker checker : bossCheckers.values()) {
+            if (checker.isCompleted(cid, this)) {
+                completedCount++;
+            }
+        }
+        return completedCount;
+    }
+
     /**
      * 1. 获取玩家所有彩蛋的完成状态列表（包含中文名与完成状态）
      */
@@ -333,10 +385,19 @@ public class AchievementService {
         return list;
     }
 
-    public boolean checkEggCompleted(int cid, String eggKey) {
-        EggChecker checker = eggCheckers.get(eggKey);
-        return (checker != null) && checker.isCompleted(cid, this);
+    public List<EggStatusDTO> getBossStatusList(int cid) {
+        List<EggStatusDTO> list = new ArrayList<>();
+        for (Map.Entry<String, String> entry : AchievementCategory.BOSS_EGG_NAME_MAP.entrySet()) {
+            String eggKey = entry.getKey();
+            String name = entry.getValue();
+            EggChecker checker = bossCheckers.get(eggKey);
+
+            boolean completed = (checker != null) && checker.isCompleted(cid, this);
+            list.add(new EggStatusDTO(eggKey, name, completed));
+        }
+        return list;
     }
+
 
     /**
      * 2. 检查玩家是否达成【全成就终极大满贯】
@@ -356,5 +417,36 @@ public class AchievementService {
         return true;
     }
 
+    /**
+     * 获取指定区域 BOSS Checker 的子项详细击杀进度
+     */
+    public BossDetailDTO getBossDetailByRegion(int cid, String regionKey) {
+        EggChecker checker = bossCheckers.get(regionKey);
+        String regionName = AchievementCategory.BOSS_EGG_NAME_MAP.getOrDefault(regionKey, "未知区域");
 
+        if (checker == null) {
+            return new BossDetailDTO(regionKey, regionName, 0, 0, Collections.emptyList());
+        }
+
+        // 假设 Checker 中维护了该区域需要击杀的 mobId 列表（例如 checker.getTargetMobIds()）
+        // 此处可根据你的 Checker 实际实现获取 Mob 列表
+        List<String> targetMobIds = checker.getNeedIds();
+        List<BossDetailDTO.BossItemDTO> items = new ArrayList<>();
+
+        int completedCount = 0;
+
+        for (String mobIdStr : targetMobIds) {
+            int killCount = getAchievementKeyProgress(cid, regionKey, mobIdStr);
+            boolean isKill = killCount > 0;
+            if (isKill) {
+                completedCount++;
+            }
+
+            // 此处 mobName 可结合服务器的 MapleMonsterInformationProvider 获取，或在 Checker 中预设
+            String mobName = StringInfoProvider.getMobName(Integer.parseInt(mobIdStr));
+            items.add(new BossDetailDTO.BossItemDTO(mobIdStr, mobName, killCount, isKill));
+        }
+
+        return new BossDetailDTO(regionKey, regionName, completedCount, targetMobIds.size(), items);
+    }
 }

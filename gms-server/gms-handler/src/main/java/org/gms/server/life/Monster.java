@@ -780,9 +780,16 @@ public class Monster extends AbstractLoadedLife {
             attacker.increaseEquipExp(_personalExp);
             attacker.raiseQuestMobCount(getId());
             VeteranHunterMedal.onMonsterKilled(attacker, this);
-            // 记录已kill的mob
-            achievementService.recordAchievement(attacker.getId(), AchievementCategory.MONSTER_KILL, AchievementCategory.MONSTER_KILL_KEY,1);
-            achievementService.recordAchievement(attacker.getId(), AchievementCategory.MONSTER_KILL, String.valueOf(getId()),1);
+            String mobIdStr = String.valueOf(getId());
+
+            // 1. 先尝试提交给 BOSS 处理器
+            boolean isBoss = achievementService.recordAchievementBoss(attacker, mobIdStr);
+
+            // 2. 如果返回 false，说明不是配置的区域 BOSS，才记录为普通怪物击杀
+            if (!isBoss) {
+                achievementService.recordAchievement(attacker.getId(), AchievementCategory.MONSTER_KILL, AchievementCategory.MONSTER_KILL_KEY, 1);
+                achievementService.recordAchievement(attacker.getId(), AchievementCategory.MONSTER_KILL, mobIdStr, 1);
+            }
         }
     }
 

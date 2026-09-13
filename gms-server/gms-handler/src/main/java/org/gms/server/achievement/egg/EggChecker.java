@@ -3,6 +3,8 @@ package org.gms.server.achievement.egg;
 import org.gms.client.Character;
 import org.gms.server.achievement.AchievementService;
 
+import java.util.List;
+
 /**
  * 彩蛋校验类
  *
@@ -43,7 +45,10 @@ public interface EggChecker {
 
     boolean showNotice(int cid, AchievementService service);
 
-
-
+    /**
+     * 获取校验的id，不一定有用
+     * @return
+     */
+    List<String> getNeedIds();
 
 }

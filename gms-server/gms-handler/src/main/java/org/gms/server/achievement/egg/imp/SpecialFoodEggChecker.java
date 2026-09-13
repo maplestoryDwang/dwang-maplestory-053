@@ -57,4 +57,9 @@ public class SpecialFoodEggChecker implements EggChecker {
         }
         return false;
     }
+
+    @Override
+    public List<String> getNeedIds() {
+        return null;
+    }
 }

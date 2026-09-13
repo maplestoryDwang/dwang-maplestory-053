@@ -22,7 +22,6 @@ function action(mode, type, selection) {
     if (status === 0) {
         showMainPanel();
     } else if (status === 1) {
-        // selection 对应选中的 category 索引或字符串
         var list = cm.getAllAchievementProgress();
         if (selection >= 0 && selection < list.size()) {
             selectedDto = list.get(selection);
@@ -32,7 +31,6 @@ function action(mode, type, selection) {
             cm.dispose();
         }
     } else if (status === 2) {
-        // 处理子成就动作（部分完成奖励 / 全部完成特权）
         handleCategoryAction(selection);
     } else {
         cm.dispose();
@@ -73,11 +71,14 @@ function showCategoryDetail(dto) {
     text += "贡献血量削减：" + dto.getCurrentDiscountPercent().toFixed(2) + "% (上限 " + dto.getWeightPercent() + "%)\r\n\r\n";
     text += "#e【成就与说明】#n\r\n";
 
-    // 根据分类显示不同要求与特权说明
     switch (dto.getCategory()) {
         case "MONSTER_KILL":
-            text += "说明：累计击杀 " + dto.getMaxProgress() + " 只任意怪物。\r\n";
+            text += "说明：累计击杀 " + dto.getMaxProgress() + " 只任意普通怪物。\r\n";
             text += "#b[完成奖励]#k：全部完成后，可开启爆率一览查看。\r\n";
+            break;
+        case "BOSS_KILL":
+            text += "说明：击破世界各地各大区域的 BOSS 领主 (共 " + dto.getMaxProgress() + " 个区域)。\r\n";
+            text += "#r[完成奖励]#k：查看各区域 BOSS 征服进度与击杀统计。\r\n";
             break;
         case "QUEST_COMPLETED":
             text += "说明：完成 " + dto.getMaxProgress() + " 个普通任务。\r\n";
@@ -92,7 +93,7 @@ function showCategoryDetail(dto) {
             text += "#b[及时奖励]#k：解锁点播音乐功能。\r\n";
             break;
         case "HIDDEN_MAP":
-            text += "说明：探索" + dto.getMaxProgress() + "个隐藏地图，定义：大地图上不显示，不存在光圈进入，不受任务状态影响 (如猪的海岸、坠落主义等)。\r\n";
+            text += "说明：探索 " + dto.getMaxProgress() + " 个隐藏地图。\r\n";
             text += "#r[完成奖励]#k：全部完成后，获得彩蛋提示。\r\n";
             break;
         case "GACHAPON_COUNT":
@@ -104,7 +105,7 @@ function showCategoryDetail(dto) {
             text += "#b[完成奖励]#k：可直接和拜访过的NPC进行对话。(前提是你有#v1702050#)\r\n";
             break;
         case "SPECIAL_EGG":
-            text += "说明：完成 " + dto.getMaxProgress() + " 个彩蛋 。\r\n";
+            text += "说明：完成 " + dto.getMaxProgress() + " 个隐藏彩蛋。\r\n";
             text += "#r[终极奖励]#k：所有成就完全达成后，可进行自由转职并获取满技能！\r\n";
             break;
     }
@@ -138,6 +139,12 @@ function handleCategoryAction(selection) {
                 cm.openNpc(9900001, "当前地图掉落");
             }
             break;
+
+        case "BOSS_KILL":
+            cm.dispose();
+            cm.openNpc(9900001, "achieve_BOSS进度");
+            break;
+
         case "QUEST_COMPLETED":
             if (!selectedDto.isCompleted()) {
                 cm.sendOk("任务完成数尚未达到 " + selectedDto.getMaxProgress() + " 个，无法开启重置任务功能！");

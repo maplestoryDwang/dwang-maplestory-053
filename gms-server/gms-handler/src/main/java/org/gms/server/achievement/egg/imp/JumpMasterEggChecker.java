@@ -3,6 +3,9 @@ import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementService;
 import org.gms.server.achievement.egg.EggChecker;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+
 /**
  * 跳跳高手
  *
@@ -34,5 +37,10 @@ public class JumpMasterEggChecker implements EggChecker {
     @Override
     public boolean showNotice(int cid, AchievementService service) {
         return service.getCategoryCount(cid, getEggKey()) == 8;
+    }
+
+    @Override
+    public List<String> getNeedIds() {
+        return null;
     }
 }
