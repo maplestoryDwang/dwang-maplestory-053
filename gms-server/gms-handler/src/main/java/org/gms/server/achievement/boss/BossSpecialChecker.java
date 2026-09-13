@@ -14,14 +14,15 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BossAmoriaChecker implements EggChecker  {
+public class BossSpecialChecker implements EggChecker  {
 
-    public static final String EGG_KEY = "BOSS_KILL_AMORIA_SPECIAL";
+    public static final String EGG_KEY = "BOSS_KILL_SPECIAL";
 
     public static final List<String> BOSS_LIST = List.of(
-            "9400514", // 盖斯特巴洛 化身3
-            "9400536", // 盖斯特巴洛 化身1 (形态A)
-            "9400537"  // 盖斯特巴洛 化身1 (形态B)
+            "9400708", // 雪人
+            "9400709",
+            "9400710"
+
     );
 
     @Override

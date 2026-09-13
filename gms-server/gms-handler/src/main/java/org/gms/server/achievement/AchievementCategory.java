@@ -5,7 +5,6 @@ import org.gms.server.achievement.boss.*;
 import org.gms.server.achievement.egg.imp.*;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class AchievementCategory {
     public static final String MONSTER_KILL = "MONSTER_KILL";
@@ -73,7 +72,7 @@ public class AchievementCategory {
         put(BossMuLungChecker.EGG_KEY,         "武陵百草堂区域 BOSS 征服者");
         put(BossLeafreChecker.EGG_KEY,         "神木村区域 BOSS 征服者");
         put(BossZipanguChecker.EGG_KEY,        "昭和神社区域 BOSS 征服者");
-        put(BossAmoriaChecker.EGG_KEY,         "特殊副本区域 BOSS 征服者");
+        put(BossSpecialChecker.EGG_KEY,         "特殊副本区域 BOSS 征服者");
     }};
 
     /**
