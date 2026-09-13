@@ -275,6 +275,9 @@ public final class Channel {
 
     public void addPlayer(Character chr) {
         players.addPlayer(chr);
+    }
+
+    public void sendChannelMsg(Character chr) {
         chr.sendPacket(PacketCreator.serverMessage(serverMessage));
     }
 
