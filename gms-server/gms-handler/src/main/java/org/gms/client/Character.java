@@ -6485,7 +6485,7 @@ public class Character extends AbstractCharacterObject {
 	}
 
 	public void updateRemainingSp(int remainingSp) {
-		updateRemainingSp(remainingSp, GameConstants.getSkillBook(job.getId()));
+ 		updateRemainingSp(remainingSp, GameConstants.getSkillBook(job.getId()));
 	}
 
 	public static Character fromCharactersDO(CharactersDO charactersDO, Client client) {

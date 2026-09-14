@@ -108,7 +108,9 @@ public class AbstractPlayerInteraction {
     public int getLevel() {
         return getPlayer().getLevel();
     }
-
+    public void setRemainingSp(int sps) {
+        getPlayer().updateRemainingSp(sps);
+    }
     public MapleMap getMap() {
         return c.getPlayer().getMap();
     }

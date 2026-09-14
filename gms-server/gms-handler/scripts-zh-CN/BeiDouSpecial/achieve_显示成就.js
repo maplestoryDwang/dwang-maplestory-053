@@ -22,6 +22,12 @@ function action(mode, type, selection) {
     if (status === 0) {
         showMainPanel();
     } else if (status === 1) {
+        if (selection == 998) {
+            cm.dispose();
+            cm.openNpc(9900001, "achieve_成就完成");
+            return;
+
+        }
         var list = cm.getAllAchievementProgress();
         if (selection >= 0 && selection < list.size()) {
             selectedDto = list.get(selection);
@@ -59,7 +65,20 @@ function showMainPanel() {
 
     text += "\r\n-----------------------------------\r\n";
     text += "#e当前生效血量减免：#g" + totalDiscount.toFixed(2) + "%#k / #r" + totalMaxPossible.toFixed(2) + "%#n\r\n";
-    cm.sendSimple(text);
+    // 2. 校验全成就大满贯状态
+    var isAllCompleted = cm.isAllAchievementsCompleted();
+
+    if (!isAllCompleted) {
+        text += "#r提示：您尚未达成【全成就终极大满贯】！#k\r\n";
+        text += "请继续努力解锁剩余的所有成就与隐藏彩蛋吧！";
+        cm.sendSimple(text);
+    } else {
+        text += "#e#r★ 恭喜您达成【全成就终极大满贯】！★#k#n\r\n";
+        text += "#b#L998# 您将会搜到一份独特的礼物！#l#k";
+        cm.sendSimple(text);
+
+    }
+
 }
 
 /**
@@ -106,7 +125,7 @@ function showCategoryDetail(dto) {
             break;
         case "SPECIAL_EGG":
             text += "说明：完成 " + dto.getMaxProgress() + " 个隐藏彩蛋。\r\n";
-            text += "#r[终极奖励]#k：所有成就完全达成后，可进行自由转职并获取满技能！\r\n";
+            text += "#r[终极奖励]#k：所有成就完全达成后，可进行自由转职！\r\n";
             break;
     }
 

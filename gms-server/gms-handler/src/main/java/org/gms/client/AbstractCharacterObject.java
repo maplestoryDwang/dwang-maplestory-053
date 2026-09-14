@@ -734,7 +734,7 @@ public abstract class AbstractCharacterObject extends AbstractAnimatedMapObject 
         changeStrDexIntLukSp(str, dex, int_, luk, remainingAp, remainingSp, skillbook, false);
     }
 
-    protected void setRemainingSp(int[] sps) {
+    public void setRemainingSp(int[] sps) {
         effLock.lock();
         statWlock.lock();
         try {

@@ -39,29 +39,29 @@ function action(mode, type, selection) {
             }
         }
         text += "--------------------------------------\r\n";
-        text += "彩蛋解锁情况：#e#g " + completedEggCount + " / 10 #n#k\r\n\r\n";
+        text += "彩蛋解锁情况：#e#g " + completedEggCount + " / " + eggList.size() + " #n#k\r\n\r\n";
 
         // 2. 校验全成就大满贯状态
-        var isAllCompleted = cm.isAllAchievementsCompleted();
+        var isAllCompleted = completedEggCount >= eggList.size();
 
         if (!isAllCompleted) {
-            text += "#r提示：您尚未达成【全成就终极大满贯】！#k\r\n";
-            text += "请继续努力解锁剩余的所有成就与隐藏彩蛋吧！";
+            text += "#r提示：您尚未达成【彩蛋全收集】！#k\r\n";
+            text += "请继续努力解锁剩余的隐藏彩蛋吧！";
             cm.sendOk(text);
             cm.dispose();
             return;
         }
 
         // 3. 达成全成就时的终极对话
-        text += "#e#r★ 恭喜您达成【全成就终极大满贯】！★#k#n\r\n\r\n";
-        text += "您已解锁终极特权：#b自由转职 + 满级技能强化#k！\r\n";
-        text += "您确定要领奖并重置职业吗？";
+        text += "#e#r★ 恭喜您达成【彩蛋全收集】！★#k#n\r\n\r\n";
+        text += "您已解锁特权：#b自由转职#k！\r\n";
+        text += "请问你现在需要自由转职吗？需要一点点手续费哦";
         cm.sendYesNo(text);
 
     } else if (status === 1) {
         // 执行自由转职与全技能满级逻辑
-        cm.maxAllSkills();
-        cm.sendOk("洗礼完成！所有技能已自动填满，祝您在冒险岛所向披靡！");
         cm.dispose();
+        cm.openNpc(9900001, "achieve_自由转职");
+
     }
 }

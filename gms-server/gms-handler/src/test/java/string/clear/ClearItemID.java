@@ -41,14 +41,10 @@ public class ClearItemID {
 
     @Autowired
     private DropDataMapper dropDataMapper;
-
     @Autowired
     private ShopitemsMapper shopitemsMapper;
-
     @Autowired
     private GachaponRewardMapper gachaponRewardMapper;
-
-
     @Test
     public  void clearItem() {
         Map<Integer, String> allItems = new HashMap<>();
@@ -70,11 +66,9 @@ public class ClearItemID {
         );
 
         for (ItemTask task : itemTasks) {
-//            Map<Integer, String> cnNames = WzResolver.ITEM_RESOLVER.resolve(cnPath, task.cnImgFile, task.cnSubNode, "cn");
             Map<Integer, String> enNames = WzResolver.ITEM_RESOLVER.resolve(enPath, task.enImgFile, task.enSubNode, "en");
             allItems.putAll(enNames);
         }
-
         // eqp 特殊处理
         List<ItemTask> eqpTasks = List.of(
                 new ItemTask("Eqp.img", "Item.img", "Accessory", "Accessory"),
@@ -97,14 +91,11 @@ public class ClearItemID {
             Map<Integer, String> enNames = WzResolver.EQP_RESOLVER.resolve(enPath, task.enImgFile, task.enSubNode, "en");
             allItems.putAll(enNames);
         }
-
         System.out.println(allItems);
         // 3. 开始清理数据库中的无效 Item ID
         cleanDropData(allItems);
         cleanShopItems(allItems);
         cleanGachaponRewards(allItems);
-
-
     }
 
     /**

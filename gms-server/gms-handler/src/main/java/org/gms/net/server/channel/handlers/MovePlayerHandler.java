@@ -52,8 +52,8 @@ public final class MovePlayerHandler extends AbstractMovementPacketHandler {
         // TODO more validation of input data
         if (res != null) {
             if (slea.available() != 18) {
-                log.warn("slea.available != 18 (movement parsing error)");
-                return;
+                log.warn("slea.available != 18 (maybe movement parsing error by dwang)");
+//                return;
             }
             Character player = c.getPlayer();
             if (!player.isHidden()) {
