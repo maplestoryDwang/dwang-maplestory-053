@@ -45,6 +45,10 @@ public class ClearItemID {
     private ShopitemsMapper shopitemsMapper;
     @Autowired
     private GachaponRewardMapper gachaponRewardMapper;
+
+    /**
+     * 删除不存在的物品
+     */
     @Test
     public  void clearItem() {
         Map<Integer, String> allItems = new HashMap<>();
@@ -97,6 +101,55 @@ public class ClearItemID {
         cleanShopItems(allItems);
         cleanGachaponRewards(allItems);
     }
+
+
+    @Test
+    public void clearMob() {
+        Path root = PathUtils.getRootPath("bms");
+        Path enPath =      Path.of(root + "\\gms-server\\gms-handler\\wz\\String.wz");
+        Map<Integer, String> allItems = new HashMap<>();
+
+        // 3. 处理物品模块 (适配新旧版本格式差异)
+        // 新版：Direct Img (Cash.img, Consume.img, Etc.img 等)
+        // 旧版：Item.img -> SubNode (Cash, Con, Etc 等)
+        List<ItemTask> itemTasks = List.of(
+                new ItemTask("Mob.img", "Mob.img", "Mob", "Mob")
+        );
+
+        for (ItemTask task : itemTasks) {
+            Map<Integer, String> enNames = WzResolver.ITEM_RESOLVER.resolve(enPath, task.enImgFile, task.enSubNode, "en");
+            allItems.putAll(enNames);
+        }
+        cleanDropDataByMob(allItems);
+
+
+
+
+    }
+
+    private void cleanDropDataByMob(Map<Integer, String> allItems) {
+
+        QueryWrapper queryWrapper = QueryWrapper.create()
+                .select(DropDataDO::getDropperid)
+                .where(DropDataDO::getDropperid).ne(0);
+
+        List<Integer> droperIds = dropDataMapper.selectListByQueryAs(queryWrapper, Integer.class);
+
+        // 筛选出在 WZ 字符串 Map 中找不到的属性定义
+        Set<Integer> invalidIds = droperIds.stream()
+                .filter(id -> id != null && id > 0 && !allItems.containsKey(id))
+                .collect(Collectors.toSet());
+
+        if (!invalidIds.isEmpty()) {
+            QueryWrapper deleteWrapper = QueryWrapper.create()
+                    .where(DropDataDO::getDropperid).in(invalidIds);
+            int deleted = dropDataMapper.deleteByQuery(deleteWrapper);
+            System.out.println("【drop_data】成功清理非法 mobId 数: " + deleted + "，涉及 ID: " + invalidIds);
+        } else {
+            System.out.println("【drop_data】数据无脏数据。");
+        }
+    }
+
 
     /**
      * 清理 drop_data 表

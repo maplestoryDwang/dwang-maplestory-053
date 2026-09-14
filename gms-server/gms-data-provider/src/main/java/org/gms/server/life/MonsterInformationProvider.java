@@ -22,6 +22,8 @@ package org.gms.server.life;
 
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.provider.DataProvider;
+import org.gms.provider.DataProviderFactory;
 import org.gms.server.StringInfoProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -234,7 +236,9 @@ public class MonsterInformationProvider {
         return retMobs;
     }
 
-
+    public String getMobNameFromId(int id) {
+        return StringInfoProvider.getMobName(id);
+    }
     public final void clearDrops() {
         drops.clear();
         hasNoMultiEquipDrops.clear();
