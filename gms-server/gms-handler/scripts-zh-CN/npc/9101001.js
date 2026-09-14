@@ -38,7 +38,7 @@ function action(mode, type, selection) {
         if (status == 1) {
             cm.sendNextPrev("“但记住，一旦你离开这里，你将进入一个充满怪物的村庄。那么，再见！”");
         } else if (status == 2) {
-            cm.warp(40000, 0);
+            cm.warp(20000, 0);
             cm.gainExp(3);
             cm.dispose();
         }

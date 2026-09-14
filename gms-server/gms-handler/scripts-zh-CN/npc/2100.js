@@ -60,7 +60,7 @@ function action(mode, type, selection) {
             cm.warp(1, 0);
             cm.dispose();
         } else {
-            cm.warp(40000, 0);
+            cm.warp(20000, 0);
             cm.dispose();
         }
     } else if (status == 0) {
