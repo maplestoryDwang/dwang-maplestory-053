@@ -176,6 +176,9 @@ public class InventoryManipulator {
         } else {
             throw new RuntimeException("Trying to create equip with non-one quantity");
         }
+        // 记录获取的物品历史 无法分辨来源！除非重构
+        achievementService.recordAchievement(c.getPlayer().getId(), AchievementCategory.PLAYER_INVENTORY_ID, String.valueOf(itemId), quantity);
+
         return true;
     }
 
@@ -300,6 +303,10 @@ public class InventoryManipulator {
         if (show) {
             c.sendPacket(PacketCreator.getShowItemGain(itemid, item.getQuantity()));
         }
+
+        // 记录获取的物品历史 无法分辨来源！除非重构
+        achievementService.recordAchievement(c.getPlayer().getId(), AchievementCategory.PLAYER_INVENTORY_DROP, String.valueOf(itemid), quantity);
+
         return true;
     }
 

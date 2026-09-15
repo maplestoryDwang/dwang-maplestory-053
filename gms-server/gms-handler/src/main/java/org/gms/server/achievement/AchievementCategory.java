@@ -21,6 +21,16 @@ public class AchievementCategory {
     public static final String SPECIAL_NPC = "SPECIAL_NPC";
     public static final String SPECIAL_EGG = "SPECIAL_EGG";
 
+
+    /**
+     * 另外两个静默的成就，只记录，最后展示用
+     */
+    public static final String PLAYER_INVENTORY = "PLAYER_INVENTORY";  // 物品
+    public static final String PLAYER_INVENTORY_DROP = "PLAYER_INVENTORY_DROP";  // 物品
+    public static final String PLAYER_INVENTORY_ID = "PLAYER_INVENTORY_ID";  // 物品
+    public static final String PLAYER_WARP_MAP = "PLAYER_WARP_MAP";  // 地图进入
+
+
     // ================= 10 个彩蛋的 Key =================
 
 

@@ -38,6 +38,7 @@ import org.gms.client.character.keybind.QuickslotBinding;
 import org.gms.client.character.skill.Skill;
 import org.gms.client.character.skill.SkillMacro;
 import org.gms.client.status.*;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.cashshop.CommodityFlag;
 import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
 import org.gms.dao.entity.ModifiedCashItemDO;

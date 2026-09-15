@@ -1782,7 +1782,7 @@ public class Character extends AbstractCharacterObject {
     }
 
     /**
-     * 玩家更改地图 内部方法
+     * 玩家更改地图 内部方法,除了登录游戏都是从这里进入换图逻辑
      *
      * @param to
      * @param pos
@@ -1856,6 +1856,9 @@ public class Character extends AbstractCharacterObject {
             // if this map has obstacle components moving, make it do so for this client
             sendPacket(PacketCreator.environmentMoveList(map.getEnvironment().entrySet()));
         }
+
+        achievementService.recordAchievement(getId(), AchievementCategory.PLAYER_WARP_MAP, String.valueOf(map.getId()), 1);
+
     }
 
     /**

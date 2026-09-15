@@ -42,27 +42,30 @@ public class IDGen {
 //        // 2. 处理地图模块 (Map.img)
 //        generate(cnPath, enPath, outputDir, "Map.img", "Map.img", WzResolver.MAP_RESOLVER);
 //
-//        // 3. 处理物品模块 (适配新旧版本格式差异)
-//        // 新版：Direct Img (Cash.img, Consume.img, Etc.img 等)
-//        // 旧版：Item.img -> SubNode (Cash, Con, Etc 等)
-//        List<ItemTask> itemTasks = List.of(
-//                new ItemTask("Cash.img", "Item.img", "Cash", "Cash"),
-//                new ItemTask("Consume.img", "Item.img", "Con", "Con"),
-//                new ItemTask("Ins.img", "Item.img", "Ins", "Ins"),
-//                new ItemTask("Pet.img", "Item.img", "Pet", "Pet"),
-//                new ItemTask("Etc.img", "Item.img", "Etc", "Etc")
-//        );
-//
-//        for (ItemTask task : itemTasks) {
-//            Map<Integer, String> cnNames = WzResolver.ITEM_RESOLVER.resolve(cnPath, task.cnImgFile, task.cnSubNode, "cn");
-//            Map<Integer, String> enNames = WzResolver.ITEM_RESOLVER.resolve(enPath, task.enImgFile, task.enSubNode, "en");
-//
+        Map<Integer, String> itemALl = new HashMap<>();
+        int itemLen  = 0;
+        // 3. 处理物品模块 (适配新旧版本格式差异)
+        // 新版：Direct Img (Cash.img, Consume.img, Etc.img 等)
+        // 旧版：Item.img -> SubNode (Cash, Con, Etc 等)
+        List<ItemTask> itemTasks = List.of(
+                new ItemTask("Cash.img", "Item.img", "Cash", "Cash"),
+                new ItemTask("Consume.img", "Item.img", "Con", "Con"),
+                new ItemTask("Ins.img", "Item.img", "Ins", "Ins"),
+                new ItemTask("Pet.img", "Item.img", "Pet", "Pet"),
+                new ItemTask("Etc.img", "Item.img", "Etc", "Etc")
+        );
+
+        for (ItemTask task : itemTasks) {
+            Map<Integer, String> cnNames = WzResolver.ITEM_RESOLVER.resolve(cnPath, task.cnImgFile, task.cnSubNode, "cn");
+            Map<Integer, String> enNames = WzResolver.ITEM_RESOLVER.resolve(enPath, task.enImgFile, task.enSubNode, "en");
+            itemALl.putAll(enNames);
+            itemLen += enNames.size();
 //            try {
 //                buildJava(cnNames, enNames, outputDir, task.outputName);
 //            } catch (IOException e) {
 //                System.err.println("生成 " + task.outputName + " 失败: " + e.getMessage());
 //            }
-//        }
+        }
 
         // eqp 特殊处理
         List<ItemTask> eqpTasks = List.of(
@@ -85,12 +88,14 @@ public class IDGen {
         for (ItemTask task : eqpTasks) {
             Map<Integer, String> cnNames = WzResolver.EQP_RESOLVER.resolve(cnPath, task.cnImgFile, task.cnSubNode, "cn");
             Map<Integer, String> enNames = WzResolver.EQP_RESOLVER.resolve(enPath, task.enImgFile, task.enSubNode, "en");
+            itemALl.putAll(enNames);
+            itemLen += enNames.size();
 
-            try {
-                buildJava(cnNames, enNames, outputDir, task.outputName);
-            } catch (IOException e) {
-                System.err.println("生成 " + task.outputName + " 失败: " + e.getMessage());
-            }
+//            try {
+//                buildJava(cnNames, enNames, outputDir, task.outputName);
+//            } catch (IOException e) {
+//                System.err.println("生成 " + task.outputName + " 失败: " + e.getMessage());
+//            }
         }
 
 
