@@ -145,3 +145,15 @@ INSERT INTO `event_config` VALUES (110, 'q3239', 1, 'q3239-修理配件的下落
 INSERT INTO `event_config` VALUES (111, 's4aWorld', 1, '弓箭手四转技能-集中精力任务');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+delete from event_config where  event_name in (
+                                               "AreaBossTaeRoon",
+                                               "AreaBossStumpy",
+                                               "AreaBossSnackBar",
+                                               "AreaBossMano",
+                                               "AreaBossKingClang",
+                                               "AreaBossEliza1"
+
+    )

@@ -143,7 +143,7 @@ public class AchievementService {
         for (EggChecker checker : bossCheckers.values()) {
             // 尝试记录，如果返回 true 说明这个 BOSS 属于当前 Checker
             // recordAchievementEgg 内部调用的 recordAchievement 返回 true 代表“首次击杀该 BOSS”
-            boolean isNewKill = checker.recordAchievementEgg(cid, "BOSS_KILL", checker.getEggKey(), mobIdStr, this);
+            boolean isNewKill = checker.recordAchievementEgg(cid, AchievementCategory.BOSS_KILL, checker.getEggKey(), mobIdStr, this);
 
             // 只要 progress > 0 说明该 BOSS 归属于这个 Checker 区域
             int progress = getAchievementKeyProgress(cid, checker.getEggKey(), mobIdStr);
