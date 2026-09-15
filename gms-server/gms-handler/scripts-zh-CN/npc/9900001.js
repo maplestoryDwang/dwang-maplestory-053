@@ -31,40 +31,43 @@ function start() {
 }
 
 function action(mode, type, selection) {
-    if (mode === 1) {
-        status++;
-    } else if (mode === -1) {
-        status--;
-    } else {
-        cm.dispose();
-        return;
-    }
-
-    if (status === 0) {
-		let text = OldTitle;
-        text += "当前点券：" + cm.getPlayer().getCashShop().getCash(1) + "\r\n";
-        text += "当前抵用券：" + cm.getPlayer().getCashShop().getCash(2) + "\r\n";
-        text += "当前信用券：" + cm.getPlayer().getCashShop().getCash(4) + "\r\n";
-		text += "当前金币：" + cm.getPlayer().getMeso() + "\r\n";
-        text += " \r\n\r\n";
-		text += "#L1#显示成就#l \t #L2#枫叶商店#l \t #L3#自由转职#l\r\n"; // 自选枫叶
-		text += "#L4#传送自由#l \t #L69#快速转职#l \t #L70#学习技能#l\r\n";
-		text += "#L71#超级传送#l \t #L5#爆率一览#l \t #L6#在线奖励#l\r\n";
-//        text += "#L0#新人福利#l \t #L1#每日签到#l  \t #L72#转世重生#l\r\n";
-		// text += "#L999#测试脚本>>>未上线#l \t \r\n";
-        if (cm.getPlayer().isGM()) {
-            text += "\r\n\r\n";
-            text += "\t\t\t\t#r=====以下内容仅GM可见=====\r\n";
-            text += "#L61#超级传送#l \t #L62#超级商店#l \t #L63#整容集合#l\r\n\r\n";
-			text += "#L64#UI查询#l \t #L65#一键删除道具#l \t #L66#一键刷道具#l\r\n\r\n";
-			text += "#L67#有状态脚本示例#l \t #L68#NextLevel脚本示例#l";
-        }
-        cm.sendSimple(text);
-    } else if (status === 1) {
-        doSelect(selection);
-    } else {
-        cm.dispose();
-    }
+    cm.dispose();
+    cm.openNpc(9900001, "achieve_成就完成");
+    return;
+//    if (mode === 1) {
+//        status++;
+//    } else if (mode === -1) {
+//        status--;
+//    } else {
+//        cm.dispose();
+//        return;
+//    }
+//
+//    if (status === 0) {
+//		let text = OldTitle;
+//        text += "当前点券：" + cm.getPlayer().getCashShop().getCash(1) + "\r\n";
+//        text += "当前抵用券：" + cm.getPlayer().getCashShop().getCash(2) + "\r\n";
+//        text += "当前信用券：" + cm.getPlayer().getCashShop().getCash(4) + "\r\n";
+//		text += "当前金币：" + cm.getPlayer().getMeso() + "\r\n";
+//        text += " \r\n\r\n";
+//		text += "#L1#显示成就#l \t #L2#枫叶商店#l \t #L3#自由转职#l\r\n"; // 自选枫叶
+//		text += "#L4#传送自由#l \t #L69#快速转职#l \t #L70#学习技能#l\r\n";
+//		text += "#L71#超级传送#l \t #L5#爆率一览#l \t #L6#在线奖励#l\r\n";
+////        text += "#L0#新人福利#l \t #L1#每日签到#l  \t #L72#转世重生#l\r\n";
+//		// text += "#L999#测试脚本>>>未上线#l \t \r\n";
+//        if (cm.getPlayer().isGM()) {
+//            text += "\r\n\r\n";
+//            text += "\t\t\t\t#r=====以下内容仅GM可见=====\r\n";
+//            text += "#L61#超级传送#l \t #L62#超级商店#l \t #L63#整容集合#l\r\n\r\n";
+//			text += "#L64#UI查询#l \t #L65#一键删除道具#l \t #L66#一键刷道具#l\r\n\r\n";
+//			text += "#L67#有状态脚本示例#l \t #L68#NextLevel脚本示例#l";
+//        }
+//        cm.sendSimple(text);
+//    } else if (status === 1) {
+//        doSelect(selection);
+//    } else {
+//        cm.dispose();
+//    }
 }
 
 function doSelect(selection) {
