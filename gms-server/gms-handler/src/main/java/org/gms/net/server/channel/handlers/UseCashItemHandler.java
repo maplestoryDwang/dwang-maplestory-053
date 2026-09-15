@@ -429,21 +429,13 @@ public final class UseCashItemHandler extends AbstractPacketHandler {
             player.gainMeso(ii.getMeso(itemId), true, false, true);
             remove(c, position, itemId);
             c.enableActions();
-        } else if (itemType == 523) {//猫头鹰商店搜索器
-            int itemid = p.readInt();
-
-            if (!GameConfig.getServerBoolean("use_enforce_item_suggestion")) {
-                c.getWorldServer().addOwlItemSearch(itemid);
-            }
-            player.setOwlSearch(itemid);
-            List<Pair<PlayerShopItem, AbstractMapObject>> hmsAvailable = c.getWorldServer().getAvailableItemBundles(itemid);
-            if (!hmsAvailable.isEmpty()) {
-                remove(c, position, itemId);
-            }
-
-            c.sendPacket(PacketCreator.owlOfMinerva(c, itemid, hmsAvailable));
+        } else if (itemType == 523) {//猫头鹰商店搜索器（5230000）：直接打开脚本中心的 NPC 脚本
+            // 客户端 0x53 的包体只有 [u16 槽位][u32 道具ID]（6 字节），这里不要再 readInt()，
+            // 否则会读到包尾之后。也不回 SHOP_SCANNER_RESULT —— 客户端收到那个包才会建"道具搜索窗"
+            // 并发出 0x38，所以这里不回包，窗口和 0x38 就都不会出现。
+            // 想消耗掉搜索器就在下面加一行：remove(c, position, itemId);
+            c.getAbstractPlayerInteraction().openNpc(9900001, "当前地图掉落");
             c.enableActions();
-
         } else if (itemType == 524) {//宠物食品
             boolean isUse = false;
             for (byte i = 0; i < 1; i++) {

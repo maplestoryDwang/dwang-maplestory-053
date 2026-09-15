@@ -44,9 +44,8 @@ function showBossRegionList() {
     var completedBossRegionCount = 0;
     var totalCount = (bossList != null) ? bossList.size() : 0;
 
-    var text = "#e#d【 区域 BOSS 征服进度列表 】#n#k\r\n";
-    text += "已完全征服区域：#e#b " + completedBossRegionCount + " / " + totalCount + " #n#k。";
-    text += "点击下方区域可查看该区域子 BOSS 的详细击破状态：\r\n";
+
+    var text = "点击下方区域可查看该区域子 BOSS 的详细击破状态：\r\n";
 
     if (bossList != null && !bossList.isEmpty()) {
         for (var i = 0; i < bossList.size(); i++) {
@@ -60,7 +59,9 @@ function showBossRegionList() {
             }
         }
     }
-
+    var text1 = "#e#d【 区域 BOSS 征服进度列表 】#n#k\r\n";
+    var text2 = "已完全征服区域：#e#b " + completedBossRegionCount + " / " + totalCount + " #n#k。";
+    text = text1 + text2 + text;
     cm.sendSimple(text);
 }
 

@@ -48,7 +48,7 @@ function action(mode, type, selection) {
  */
 function showMainPanel() {
     var list = cm.getAllAchievementProgress();
-    var text = "\t\t\t\t\t#e欢迎来到#r#h0##的成就中心#n\t\t\t\t\r\n";
+    var text = "\t\t\t\t\t#e欢迎来到#r#h0##k的成就中心#n\t\t\t\t\r\n";
     text += "完成成就不仅能提供#b怪物血量削减#k，还可解锁各项功能，希望您玩的开心！\r\n";
 
     var totalDiscount = 0.0;
@@ -93,19 +93,19 @@ function showCategoryDetail(dto) {
     switch (dto.getCategory()) {
         case "MONSTER_KILL":
             text += "说明：累计击杀 " + dto.getMaxProgress() + " 只任意普通怪物。\r\n";
-            text += "#b[完成奖励]#k：全部完成后，可开启爆率一览查看。\r\n";
+            text += "#b[完成奖励]#k：全部完成后，可进行掉落查看。(前提有#v5230000#)\r\n";
             break;
         case "BOSS_KILL":
             text += "说明：击破世界各地各大区域的 BOSS 领主 (共 " + dto.getMaxProgress() + " 个区域)。\r\n";
-            text += "#r[完成奖励]#k：查看各区域 BOSS 征服进度与击杀统计。\r\n";
+            text += "#r[完成奖励]#k：这片大陆每个人都会为你的付出，那一夜，法国总统也为你振臂高呼！\r\n";
             break;
         case "QUEST_COMPLETED":
             text += "说明：完成 " + dto.getMaxProgress() + " 个普通任务。\r\n";
-            text += "#r[完成奖励]#k：全部完成后，可选择重置指定任务以获得奖励。\r\n";
+            text += "#r[完成奖励]#k：全部完成后，可选择重置指定任务以获得奖励，据说掌握时间的人在玩具城研究(特别喜欢读书)。\r\n";
             break;
         case "PARTY_QUEST":
-            text += "说明：通关月庙、废弃、天空、玩具、海盗等 " + dto.getMaxProgress() + " 个组队任务。\r\n";
-            text += "#r[及时奖励]#k：枫叶兑换装备可以进行打折。\r\n";
+            text += "说明：通关月庙、废弃、天空、玩具、海盗 " + dto.getMaxProgress() + " 个组队任务。\r\n";
+            text += "#b[及时奖励]#k：枫叶兑换装备可以进行打折。\r\n";
             break;
         case "MUSIC_DISCOVERY":
             text += "说明：在不同地图收集 " + dto.getMaxProgress() + " 首音乐 BGM。(前提是你有#v1002747#)\r\n";
@@ -113,7 +113,7 @@ function showCategoryDetail(dto) {
             break;
         case "HIDDEN_MAP":
             text += "说明：探索 " + dto.getMaxProgress() + " 个隐藏地图。(前提是你有#v5041000#)\r\n";
-            text += "#r[完成奖励]#k：全部完成后，获得彩蛋提示。\r\n";
+            text += "#r[完成奖励]#k：全部完成后，获得彩蛋提示。这位学者在研究水晶球方面特别突出！\r\n";
             break;
         case "GACHAPON_COUNT":
             text += "说明：累计抽奖 " + dto.getMaxProgress() + " 次。\r\n";
@@ -121,16 +121,16 @@ function showCategoryDetail(dto) {
             break;
         case "SPECIAL_NPC":
             text += "说明：拜访世界各地 " + dto.getMaxProgress() + " 个NPC。\r\n";
-            text += "#b[完成奖励]#k：可直接和拜访过的NPC进行对话。(前提是你有#v1702050#)\r\n";
+            text += "#b[及时奖励]#k：可直接和拜访过的NPC进行对话。(前提是你有#v1702050#)\r\n";
             break;
         case "SPECIAL_EGG":
             text += "说明：完成 " + dto.getMaxProgress() + " 个隐藏彩蛋。\r\n";
-            text += "#r[终极奖励]#k：所有成就完全达成后，可进行自由转职！\r\n";
+            text += "#r[终极奖励]#k：成就完全达成后，可进行自由转职！\r\n";
             break;
     }
 
     text += "\r\n-----------------------------------\r\n";
-    text += "#L100# #b查看/使用该成就特权#l\r\n";
+//    text += "#L100# #b查看/使用该成就特权#l\r\n";
     text += "#L999# #r返回上一页#l";
 
     cm.sendSimple(text);

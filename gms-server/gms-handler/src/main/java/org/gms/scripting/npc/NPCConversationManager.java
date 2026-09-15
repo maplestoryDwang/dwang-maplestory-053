@@ -1578,6 +1578,37 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     /**
+     * JS：某个分类下已经记录了多少条（静默统计用）。
+     * 例：PLAYER_WARP_MAP = 走过的地图数、PLAYER_INVENTORY_DROP = 掉落/捡起过的物品种类、
+     *     PLAYER_INVENTORY_ID = 获得过的物品种类、SPECIAL_NPC = 拜访过的 NPC 数。
+     */
+    public int getAchievementRecordCount(String category) {
+        return context.getAchievementService().getCategoryCount(getPlayer().getId(), category);
+    }
+
+    /**
+     * JS：某个分类最早的一条记录时间（yyyy-MM-dd HH:mm）；category 传 "" 表示全部成就。
+     * 这就是玩家在这个世界的"起点"。
+     */
+    public String getAchievementFirstTime(String category) {
+        return context.getAchievementService().getAchievementFirstTime(getPlayer().getId(), category);
+    }
+
+    /**
+     * JS：某个分类最后一条记录的更新时间（yyyy-MM-dd HH:mm）；category 传 "" 表示全部成就。
+     */
+    public String getAchievementLastTime(String category) {
+        return context.getAchievementService().getAchievementLastTime(getPlayer().getId(), category);
+    }
+
+    /**
+     * JS：打怪图鉴 —— 已经记录过的怪物种类数。
+     */
+    public int getMonsterTypeCount() {
+        return context.getAchievementService().getMonsterTypeCount(getPlayer().getId());
+    }
+
+    /**
      * 是否是隐藏地图
      *
      * @param mapId

@@ -13,6 +13,8 @@ import org.gms.server.achievement.egg.EggChecker;
 import org.gms.server.achievement.egg.EggStatusDTO;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -477,5 +479,54 @@ public class AchievementService {
         String eggKey = list.get(randomIndex);
         return eggInfoMap.get(eggKey);
 
+    }
+    /**
+     * 该分类下最早的一条记录时间（yyyy-MM-dd HH:mm）；category 传 null 或空串表示"全部成就"。
+     * 用于"致勇士的一封信"里写玩家在这个世界的起点。
+     */
+    public String getAchievementFirstTime(int cid, String category) {
+        return getAchievementTime(cid, category, true);
+    }
+
+    /**
+     * 该分类下最后一条记录的更新时间（yyyy-MM-dd HH:mm）；category 传 null 或空串表示"全部成就"。
+     */
+    public String getAchievementLastTime(int cid, String category) {
+        return getAchievementTime(cid, category, false);
+    }
+
+    private String getAchievementTime(int cid, String category, boolean first) {
+        QueryWrapper qw = QueryWrapper.create()
+                .select()
+                .where("character_id = ?", cid);
+        if (category != null && !category.isEmpty()) {
+            qw.and("category = ?", category);
+        }
+        List<CharacterAchievementDO> list = achievementMapper.selectListByQuery(qw);
+
+        LocalDateTime best = null;
+        for (CharacterAchievementDO record : list) {
+            LocalDateTime time = first ? record.getCreatedAt() : record.getUpdatedAt();
+            if (time == null) {
+                continue;
+            }
+            if (best == null || (first ? time.isBefore(best) : time.isAfter(best))) {
+                best = time;
+            }
+        }
+        return best == null ? "" : best.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    }
+
+    /**
+     * 打怪图鉴：已经记录过的怪物"种类"数（不含 TOTAL 汇总行）。
+     */
+    public int getMonsterTypeCount(int cid) {
+        QueryWrapper qw = QueryWrapper.create()
+                .select(count())
+                .where("character_id = ?", cid)
+                .and("category = ?", AchievementCategory.MONSTER_KILL)
+                .and("achievement_key <> ?", AchievementCategory.MONSTER_KILL_KEY);
+        Integer total = achievementMapper.selectObjectByQueryAs(qw, Integer.class);
+        return total != null ? total : 0;
     }
 }

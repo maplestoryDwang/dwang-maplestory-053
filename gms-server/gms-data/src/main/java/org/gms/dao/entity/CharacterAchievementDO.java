@@ -14,6 +14,8 @@ import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Table("character_achievements")
 public class CharacterAchievementDO {
@@ -24,4 +26,8 @@ public class CharacterAchievementDO {
     private String achievementKey;
     private Integer progress;
     private Boolean completed;
+    /** 首次记录时间（DB 默认 CURRENT_TIMESTAMP） */
+    private LocalDateTime createdAt;
+    /** 最后更新时间（DB 自动 ON UPDATE） */
+    private LocalDateTime updatedAt;
 }

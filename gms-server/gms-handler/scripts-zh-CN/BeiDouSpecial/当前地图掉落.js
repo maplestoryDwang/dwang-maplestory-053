@@ -48,6 +48,17 @@ function action(mode, type, selection) {
 
     if (status === 0) {
 		let text = OldTitle;
+        var progress = cm.getAchievementProgress("MONSTER_KILL");
+        if (!progress || !progress.isCompleted()) {
+            text +="很抱歉，";
+            text += "你还没有击杀足够数量的怪物。无法进行掉落数据的查阅。\r\n\r\n";
+            text += "当前完成进度：#r" + progress.getCurrentProgress() + " / " + progress.getMaxProgress() + "#k\r\n";
+
+            cm.sendOk(text);
+            cm.dispose();
+            return;
+        }
+
         text += ""+ui+"当前点券：" + cm.getPlayer().getCashShop().getCash(1) + "\r\n";
         text += ""+ui+"当前抵用券：" + cm.getPlayer().getCashShop().getCash(2) + "\r\n";
         text += ""+ui+"当前信用券：" + cm.getPlayer().getCashShop().getCash(4) + "\r\n";
