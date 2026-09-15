@@ -15,7 +15,7 @@ function start() {
     text += "#L1#2. 查看已探索的隐藏地图全集#l\r\n";
 
     if (isMapCompleted) {
-        text += "#L2##r★ 领取/查看 HIDDEN_MAP 专属彩蛋消息#k#l\r\n";
+        text += "#L2#3.#r★ 领取/查看 HIDDEN_MAP 专属彩蛋消息#k#l\r\n";
     }
 
     cm.sendSimple(text);

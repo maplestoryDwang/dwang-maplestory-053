@@ -25,9 +25,8 @@ public class AchievementCategory {
     /**
      * 另外两个静默的成就，只记录，最后展示用
      */
-    public static final String PLAYER_INVENTORY = "PLAYER_INVENTORY";  // 物品
-    public static final String PLAYER_INVENTORY_DROP = "PLAYER_INVENTORY_DROP";  // 物品
-    public static final String PLAYER_INVENTORY_ID = "PLAYER_INVENTORY_ID";  // 物品
+    public static final String PLAYER_INVENTORY_DROP = "PLAYER_INVENTORY_DROP";  // 物品—掉落
+    public static final String PLAYER_INVENTORY_ID = "PLAYER_INVENTORY_ID";  // 物品 - 玩家 任务获得
     public static final String PLAYER_WARP_MAP = "PLAYER_WARP_MAP";  // 地图进入
 
 
@@ -43,14 +42,14 @@ public class AchievementCategory {
     public static final Map<String, String> EGG_NAME_MAP = new LinkedHashMap<>() {{
         put(MapleShieldEggChecker.EGG_MAPLE_SHIELD, "装备枫叶盾");
         put(SpecialFoodEggChecker.EGG_SPECIAL_FOOD, "使用过绿豆粥和空气玲");
-        put(ShipBatMonEggChecker.EGG_SHIP_BAT_MON,  "击败了蝙蝠魔");
+        put(ShipBatMonEggChecker.EGG_SHIP_BAT_MON, "击败了蝙蝠魔");
         put(MakerSignedEggChecker.EGG_MAKER_SIGNED, "制作带署名装备");
-        put(SaunaAfkEggChecker.EGG_SAUNA_AFK,       "蒸气养生专家（提升最大HPMP）");
-        put(DeathCountEggChecker.EGG_DEATH_COUNT,   "屡败屡战的英雄");
-        put(FourthJobEggChecker.EGG_FOURTH_JOB,     "四转荣耀巅峰");
+        put(SaunaAfkEggChecker.EGG_SAUNA_AFK, "蒸气养生专家（提升最大HPMP）");
+        put(DeathCountEggChecker.EGG_DEATH_COUNT, "屡败屡战的英雄");
+        put(FourthJobEggChecker.EGG_FOURTH_JOB, "四转荣耀巅峰");
         put(AncientBookEggChecker.EGG_ANCIENT_BOOK, "上古秘闻探索");
-        put(BeautyEggChecker.EGG_BEAUTY_ALL,        "千变时尚达人");
-        put(JumpMasterEggChecker.EGG_JUMP_MASTER,   "极限跳跳高手");
+        put(BeautyEggChecker.EGG_BEAUTY_ALL, "千变时尚达人");
+        put(JumpMasterEggChecker.EGG_JUMP_MASTER, "极限跳跳高手");
     }};
 
 
@@ -61,50 +60,64 @@ public class AchievementCategory {
     public static final Map<String, String> EGG_INFO_MAP = new LinkedHashMap<>() {{
         put(MapleShieldEggChecker.EGG_MAPLE_SHIELD, "听说作者的头像是一个#r枫叶盾#k，那是很久远的故事，和英勇的战士在蚂蚁洞奋战了很久");
         put(SpecialFoodEggChecker.EGG_SPECIAL_FOOD, "品味过无形无质的#r空气#k，或是温热的#r绿豆粥#k，冰雪将不再寒冷");
-        put(ShipBatMonEggChecker.EGG_SHIP_BAT_MON,  "横跨#r天空的巨轮#k之上，曾有勇士在呼啸的狂风中击落过天空的统治者。");
+        put(ShipBatMonEggChecker.EGG_SHIP_BAT_MON, "横跨#r天空的巨轮#k之上，曾有勇士在呼啸的狂风中击落过天空的统治者。");
         put(MakerSignedEggChecker.EGG_MAKER_SIGNED, "熔炉的锤音落定，将你的真名刻印于百炼之钢，那是属于#r锻造者#k的至高荣耀。");
-        put(SaunaAfkEggChecker.EGG_SAUNA_AFK,       "置身于雾气萦绕的#r桑拿房#k静坐凝神，蒸腾的水汽将渐渐拓宽你的生命与魔力之源。");
-        put(DeathCountEggChecker.EGG_DEATH_COUNT,   "当沉重的#r石碑接连八次#k降临于世，灵魂在幽冥边缘徘徊，竟踏出了一条超脱生死的秘径。");
-        put(FourthJobEggChecker.EGG_FOURTH_JOB,     "打破肉身的极限，破茧成蝶之时，#r四转试炼#k将指引你走向终极的英雄宿命。");
+        put(SaunaAfkEggChecker.EGG_SAUNA_AFK, "置身于雾气萦绕的#r桑拿房#k静坐凝神，蒸腾的水汽将渐渐拓宽你的生命与魔力之源。");
+        put(DeathCountEggChecker.EGG_DEATH_COUNT, "当沉重的#r石碑接连八次#k降临于世，灵魂在幽冥边缘徘徊，竟踏出了一条超脱生死的秘径。");
+        put(FourthJobEggChecker.EGG_FOURTH_JOB, "打破肉身的极限，破茧成蝶之时，#r四转试炼#k将指引你走向终极的英雄宿命。");
         put(AncientBookEggChecker.EGG_ANCIENT_BOOK, "用沉甸甸的金钱叩开矿石之门，并在永恒冻土的冰霜中翻开那本沉睡百年的#r上古魔书#k。");
-        put(BeautyEggChecker.EGG_BEAUTY_ALL,        "镜中之影悄然蜕变，不论是千丝万缕的重塑，还是容颜肤色的焕新，皆是一场全新的#r改变#k。");
-        put(JumpMasterEggChecker.EGG_JUMP_MASTER,   "穿梭于地铁线路、忍苦树林与沉睡森林的荆棘之间，唯有#r全部#k战胜重力者方可被称为跳跃之大师。");
+        put(BeautyEggChecker.EGG_BEAUTY_ALL, "镜中之影悄然蜕变，不论是千丝万缕的重塑，还是容颜肤色的焕新，皆是一场全新的#r改变#k。");
+        put(JumpMasterEggChecker.EGG_JUMP_MASTER, "穿梭于地铁线路、忍苦树林与沉睡森林的荆棘之间，唯有#r全部#k战胜重力者方可被称为跳跃之大师。");
     }};
 
 
     public static final Map<String, String> BOSS_EGG_NAME_MAP = new LinkedHashMap<>() {{
-        put(BossVictoriaChecker.EGG_KEY,       "金银岛区域 BOSS 征服者");
-        put(BossOrbisChecker.EGG_KEY,          "天空之城区域 BOSS 征服者");
-        put(BossElnathChecker.EGG_KEY,         "冰封雪域区域 BOSS 征服者");
-        put(BossLudiChecker.EGG_KEY,           "玩具地球防御区域 BOSS 征服者");
-        put(BossAquaChecker.EGG_KEY,           "海底世界区域 BOSS 征服者");
-        put(BossFolkTownChecker.EGG_KEY,       "童话村区域 BOSS 征服者");
-        put(BossMuLungChecker.EGG_KEY,         "武陵百草堂区域 BOSS 征服者");
-        put(BossLeafreChecker.EGG_KEY,         "神木村区域 BOSS 征服者");
-        put(BossZipanguChecker.EGG_KEY,        "昭和神社区域 BOSS 征服者");
-        put(BossSpecialChecker.EGG_KEY,         "特殊副本区域 BOSS 征服者");
+        put(BossVictoriaChecker.EGG_KEY, "金银岛区域 BOSS 征服者");
+        put(BossOrbisChecker.EGG_KEY, "天空之城区域 BOSS 征服者");
+        put(BossElnathChecker.EGG_KEY, "冰封雪域区域 BOSS 征服者");
+        put(BossLudiChecker.EGG_KEY, "玩具地球防御区域 BOSS 征服者");
+        put(BossAquaChecker.EGG_KEY, "海底世界区域 BOSS 征服者");
+        put(BossFolkTownChecker.EGG_KEY, "童话村区域 BOSS 征服者");
+        put(BossMuLungChecker.EGG_KEY, "武陵百草堂区域 BOSS 征服者");
+        put(BossLeafreChecker.EGG_KEY, "神木村区域 BOSS 征服者");
+        put(BossZipanguChecker.EGG_KEY, "昭和神社区域 BOSS 征服者");
+        put(BossSpecialChecker.EGG_KEY, "特殊副本区域 BOSS 征服者");
     }};
 
     /**
-     * 立即完成型彩蛋集合（单次触发即完成）
+     * 立
      */
-    public static final Set<String> INSTANT_EGGS = Set.of(
+    public static final Set<String> ACHIEVEMENT_CAT = Set.of(
+
+            // 立即完成
             MapleShieldEggChecker.EGG_MAPLE_SHIELD,
             ShipBatMonEggChecker.EGG_SHIP_BAT_MON,
             MakerSignedEggChecker.EGG_MAKER_SIGNED,
             SaunaAfkEggChecker.EGG_SAUNA_AFK,
             AncientBookEggChecker.EGG_ANCIENT_BOOK,
-            FourthJobEggChecker.EGG_FOURTH_JOB
-    );
+            FourthJobEggChecker.EGG_FOURTH_JOB,
 
-    /**
-     * 延迟/复合完成型彩蛋集合（需要多次条件积累）
-     */
-    public static final Set<String> DELAYED_EGGS = Set.of(
+            // 延迟完成
             DeathCountEggChecker.EGG_DEATH_COUNT,
             SpecialFoodEggChecker.EGG_SPECIAL_FOOD,
             BeautyEggChecker.EGG_BEAUTY_ALL,
-            JumpMasterEggChecker.EGG_JUMP_MASTER
-    );
+            JumpMasterEggChecker.EGG_JUMP_MASTER,
+
+            // 除彩蛋外的
+            MONSTER_KILL,
+            MONSTER_KILL_KEY,
+            QUEST_COMPLETED,
+            PARTY_QUEST,
+            MUSIC_DISCOVERY,
+            HIDDEN_MAP,
+            GACHAPON_COUNT,
+            BOSS_KILL,
+            SPECIAL_NPC,
+            SPECIAL_EGG,
+            PLAYER_INVENTORY_DROP,
+            PLAYER_INVENTORY_ID,
+            PLAYER_WARP_MAP
+            );
+
 
 }

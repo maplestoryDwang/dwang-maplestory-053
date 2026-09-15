@@ -20,7 +20,11 @@ function action(mode, type, selection) {
         // 1. 检查成就状态
         var progress = cm.getAchievementProgress("HIDDEN_MAP");
         if (!progress || !progress.isCompleted()) {
-            cm.sendOk("#e#r[隐藏地图探索专家]#k#n\r\n\r\n你还没有完成所有隐藏地图的探索，暂时无法开启彩蛋情报！但是彩蛋还是可以触发，请放心");
+            var text = "水晶球里什么都没有发生。。。。";
+            text += "（你还没有完成所有隐藏地图的探索，暂时无法获取#b彩蛋情报#k，快拿着你的 #i5041000#去探索吧，未知的世界在等着你，彩蛋未被发现也是可以获取的哦，请放心！）\r\n\r\n";
+            text += "当前探索完成进度：#r" + progress.getCurrentProgress() + " / " + progress.getMaxProgress() + "#k\r\n";
+
+            cm.sendOk(text);
             cm.dispose();
             return;
         }
@@ -29,7 +33,7 @@ function action(mode, type, selection) {
         var todayCount = cm.getCustomData(9010001, "HIDDEN_INFO_COUNT_TODAY") || 0; // 替换为NPC ID或自定义键值
         var currentCost = BASE_PRICE * (parseInt(todayCount) + 1);
 
-        var text = "#e#r[隐藏地图探索专家]#k#n\r\n\r\n";
+        var text = "#e#r[隐藏地图探索家]#k#n\r\n\r\n";
         text += "恭喜你解锁了探索专家成就！这里存储着诸多未公开的角落秘密。\r\n\r\n";
         text += "今日已获取情报次数：#b" + todayCount + "#k 次\r\n";
         text += "本次解锁情报需要支付：#r" + (currentCost / 10000) + "W#k 金币\r\n\r\n";

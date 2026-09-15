@@ -1,72 +1,60 @@
 /*
-	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-		       Matthias Butz <matze@odinms.de>
-		       Jan Christian Meyer <vimes@odinms.de>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation version 3 as published by
-    the Free Software Foundation. You may not use, modify or distribute
-    this program under any other version of the GNU Affero General Public
-    License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-/* Spiruna
-Orbis : Old Man's House (200050001)
-
-Refining NPC:
- * Dark Crystal - Half Price compared to Vogen, but must complete quest
+ * NPC: 斯皮鲁纳 (Spiruna) - ID: 2020009
+ * 对应脚本: oldBook5
  */
 
-var status = 0;
+var status = -1;
+var branch = 0; // 0 = 未选择, 1 = 提炼水晶, 2 = 占卜消息
 
 function start() {
-    if (cm.isQuestCompleted(3034)) {
-        cm.sendYesNo("你对我帮助很大……如果你有任何黑暗水晶矿石，我可以为你精炼，每个只需#b500000金币#k。");
-    } else {
-        cm.sendOk("走开，我在冥想。");
-        cm.dispose();
-    }
+    status = -1;
+    action(1, 0, 0);
 }
 
 function action(mode, type, selection) {
-    if (mode < 1) {
+    if (mode <= 0) {
         cm.dispose();
         return;
     }
-    status++;
-    if (status == 1) {
-        cm.sendGetNumber("Okay, so how many do you want me to make?", 1, 1, 100);
-    } else if (status == 2) {
-        var complete = true;
+    mode == 1 ? status++ : status--;
 
-        if (cm.getMeso() < 500000 * selection) {
-            cm.sendOk("对不起，但我不会免费做这件事。");
-            cm.dispose();
-            return;
-        } else if (!cm.haveItem(4004004, 10 * selection)) {
-            complete = false;
-        } else if (!cm.canHold(4005004, selection)) {
-            cm.sendOk("你的库存没有空位吗？先解决这个问题！");
-            cm.dispose();
-            return;
-        }
-        if (!complete) {
-            cm.sendOk("我需要那些矿石来提炼水晶。没有例外。");
+    var val = cm.getQuestStatus(3014);
+
+    if (status == 0) {
+        // 一级目录
+        if (val == 2) {
+            // 满足条件：显示两个选项
+            cm.sendSimple("赫拉是个好孩子。不管我吩咐什么，她都毫无怨言地去完成。总有一天她会成为比我更优秀的魔女。你到底找我有什么事？？\r\n#b#L0#我想制作 #t4005004##k#l\r\n#L1#占卜消息#l");
         } else {
-            cm.gainItem(4004004, -10 * selection);
-            cm.gainMeso(-500000 * selection);
-            cm.gainItem(4005004, selection);
-            cm.sendOk("明智地使用它。");
+            // 不满足条件：只显示占卜消息一个选项
+            cm.sendSimple("赫拉是个好孩子。不管我吩咐什么，她都毫无怨言地去完成。总有一天她会成为比我更优秀的魔女。你到底找我有什么事？？\r\n#b#L1#占卜消息#l");
         }
-        cm.dispose();
+    } else if (status == 1) {
+        branch = selection;
+
+        if (branch == 0) {
+            // ===== 提炼水晶分支 =====
+            cm.sendYesNo("#b#t4005004##k？？你怎么会……是 #b#p2020005##k 告诉你的吧？是的，我知道怎么提炼，但是……这种矿石太难弄到了。要提炼 #b1个 #t4005004##k，我需要 #b10个 #t4004004##k 和 50000 金币。你需要一个吗？");
+        } else if (branch == 1) {
+            // ===== 占卜消息分支 =====
+            cm.sendYesNo("占卜消息？呵……看来你也不是个普通的冒险家。我这里确实能窥见一些命运的碎片，不过天机不可泄露太多。你真的想让我为你占卜一下吗？");
+        }
+    } else if (status == 2) {
+        if (branch == 0) {
+            // ===== 提炼水晶分支：点“是”后执行 =====
+            if (cm.getMeso() >= 50000 && cm.haveItem(4004004, 10) && cm.canHold(4005004, 1)) {
+                cm.gainMeso(-50000);
+                cm.gainItem(4004004, -10);
+                cm.gainItem(4005004, 1);
+                cm.sendNext("给，拿好 #b1个 #t4005004##k。好久没炼制了，希望效果不错……话说回来，你是怎么搞到这些晶石母矿的？你可真不简单。总之，这是个神奇的东西，请好好利用它。");
+            } else {
+                cm.sendNext("你的金币不够吗？请检查一下你是否有 #b10个 #t4004004##k、50000 金币，以及你的其它栏背包是否有足够的空间。");
+            }
+            cm.dispose();
+        } else if (branch == 1) {
+            // ===== 占卜消息分支：点“是”后打开脚本 =====
+            cm.dispose();
+            cm.openNpc(2032001, "achieve_彩蛋消息");
+        }
     }
 }

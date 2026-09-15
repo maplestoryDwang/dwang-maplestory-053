@@ -63,23 +63,26 @@ public class AchievementService {
 
     private AchievementDiscountConfigDO getConfig(String category) {
 //        if (configCache.isEmpty()) {
-            refreshConfigCache();
+        refreshConfigCache();
 //        }
         return configCache.get(category);
     }
 
     /**
      * 记录成就（自动判定累加性与防重） 所有的记录都在这里
+     *
      * @return ture表示新增 false表示已添加
      */
     public boolean recordAchievement(int cid, String category, String key, int addAmount) {
         AchievementDiscountConfigDO config = getConfig(category);
         if (config == null && category.contains("EGG")) {
             config = getConfig(AchievementCategory.SPECIAL_EGG);
-        }  else if (config == null && category.contains("BOSS_KILL")) {
+        } else if (config == null && category.contains("BOSS_KILL")) {
             config = getConfig(AchievementCategory.BOSS_KILL);
-        }
-        else if (config == null || !Boolean.TRUE.equals(config.getEnabled())) {
+        } else if (AchievementCategory.ACHIEVEMENT_CAT.contains(category)) {
+            // 随便找一个默认的把
+            config = getConfig(AchievementCategory.BOSS_KILL);
+        } else if (config == null || !Boolean.TRUE.equals(config.getEnabled())) {
             return false;
         }
 
@@ -114,6 +117,7 @@ public class AchievementService {
 
     /**
      * 记录彩蛋触发情况
+     *
      * @param cid
      * @param category
      * @param subCate
@@ -134,6 +138,7 @@ public class AchievementService {
 
     /**
      * 记录区域 BOSS 击杀
+     *
      * @return true 表示属于 BOSS 且已处理；false 表示不属于任何 BOSS 区域
      */
     public boolean recordAchievementBoss(Character character, String mobIdStr) {
@@ -162,6 +167,7 @@ public class AchievementService {
 
     /**
      * 内部checker调用 决定哪个
+     *
      * @param cid
      * @param category
      * @param key
@@ -259,7 +265,7 @@ public class AchievementService {
      */
     public List<AchievementProgressDTO> getAllProgress(int cid, int completedQuestCount) {
 //        if (configCache.isEmpty()) {
-            refreshConfigCache();
+        refreshConfigCache();
 //        }
 
         List<AchievementProgressDTO> dtoList = new ArrayList<>();
@@ -280,7 +286,7 @@ public class AchievementService {
      */
     public int calculateMonsterHp(int cid, int originalHp) {
 //        if (configCache.isEmpty()) {
-            refreshConfigCache();
+        refreshConfigCache();
 //        }
 
         double totalDiscountPercent = 0.0;
@@ -311,7 +317,7 @@ public class AchievementService {
         QueryWrapper qw = QueryWrapper.create()
                 .select()
                 .where("character_id = ?", charId)
-                .and("category = ?",category);
+                .and("category = ?", category);
         List<CharacterAchievementDO> characterAchievementDOS = achievementMapper.selectListByQuery(qw);
         return characterAchievementDOS.stream().map(CharacterAchievementDO::getAchievementKey).toList();
     }
@@ -450,7 +456,6 @@ public class AchievementService {
      * @return 谜语彩蛋字符串
      */
     public String getRandomHiddenMapInfo(int id) {
-
 
 
 //        if (AchievementCategory.getEGG_INFOS().isEmpty()) {

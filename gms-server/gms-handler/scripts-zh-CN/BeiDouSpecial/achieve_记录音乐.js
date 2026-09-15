@@ -25,8 +25,8 @@ function action(mode, type, selection) {
 
     // 0: 自动判定当前地图 BGM 收集 + 展现主菜单
     if (status === 0) {
-        // 1. 前置条件校验：必须持有指定道具 (1702050)
-        if (!cm.haveItem(1702050, 1)) {
+        // 1. 前置条件校验：必须持有指定道具 (1002747)
+        if (!cm.haveItem(1002747, 1)) {
             cm.sendOk("你需要拥有 #v1002747# #z1002747# 才能记录和播放音乐的功能哦！");
             cm.dispose();
             return;

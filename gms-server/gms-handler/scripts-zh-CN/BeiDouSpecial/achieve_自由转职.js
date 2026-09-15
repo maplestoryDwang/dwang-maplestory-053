@@ -56,6 +56,19 @@ function action(mode, type, selection) {
             return;
         }
 
+        var progress = cm.getAchievementProgress("SPECIAL_EGG");
+        if (!progress || !progress.isCompleted()) {
+            var text ="很抱歉，";
+            text += "你还没有找到所有的彩蛋，无法进行自由转职。去吧你还有很多事情可以做。。。\r\n\r\n";
+            text += "当前彩蛋完成进度：#r" + progress.getCurrentProgress() + " / " + progress.getMaxProgress() + "#k\r\n";
+
+            cm.sendOk(text);
+            cm.dispose();
+            return;
+        }
+
+
+
         var cmjob = cm.getJob();
         var currentJobId = cmjob.getId();
         var currentJobName = cmjob.getName();

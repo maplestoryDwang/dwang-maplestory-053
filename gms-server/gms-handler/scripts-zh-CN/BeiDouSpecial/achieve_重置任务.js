@@ -22,6 +22,16 @@ function start() {
         return;
     }
 
+    var progress = cm.getAchievementProgress("QUEST_COMPLETED");
+    var isCompleted = progress && progress.isCompleted();
+    if(!isCompleted) {
+        var text = "任务完成数尚未达到 #b" + progress.getMaxProgress() + "#k个，";
+        text += "当前任务完成进度：#r" + progress.getCurrentProgress() + " / " + progress.getMaxProgress() + "#k\r\n";
+        text += "了解的更多才能熟练掌握时间重置的魔法，快去完成任务吧~";
+        cm.sendOk(text);
+        cm.dispose();
+        return;
+    }
     var text = "#e#d=== 请选择需要重置的任务 ===#k#n\r\n\r\n";
     for (var i = 0; i < completedQuests.length; i++) {
         var qid = completedQuests[i];

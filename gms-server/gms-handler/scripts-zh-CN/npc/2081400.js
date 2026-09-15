@@ -1,8 +1,8 @@
 /*
-	This file is part of the OdinMS Maple Story Server
+    This file is part of the OdinMS Maple Story Server
     Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
-		       Matthias Butz <matze@odinms.de>
-		       Jan Christian Meyer <vimes@odinms.de>
+               Matthias Butz <matze@odinms.de>
+               Jan Christian Meyer <vimes@odinms.de>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -26,6 +26,7 @@
  */
 
 var status;
+var branch = 0; // 0 = 未选择, 1 = 接受四转试炼, 2 = 自由转职
 
 function start() {
     status = -1;
@@ -35,6 +36,7 @@ function start() {
 function action(mode, type, selection) {
     if (mode == -1) {
         cm.dispose();
+        return;
     } else {
         if (mode == 0 && status == 0) {
             cm.dispose();
@@ -47,55 +49,76 @@ function action(mode, type, selection) {
         }
 
         if (status == 0) {
-            if (cm.getLevel() < 120 || Math.floor(cm.getJobId() / 100) != 4) {
-                cm.sendOk("请不要现在打扰我，我正在集中精力。");
-                cm.dispose();
-            } else if (!cm.isQuestCompleted(6934)) {
-                cm.sendOk("你还没有通过我的考验。在你通过考验之前，我无法提升你的等级。");
-                cm.dispose();
-            } else if (cm.getJobId() % 100 % 10 != 2) {
-                cm.sendYesNo("你通过了我的测试，做得非常出色。你准备好晋升到第四职业了吗？");
-            } else {
-                cm.sendSimple("如果必要的话，我可以教你你职业的技能。\r\n#b#L0#教我我的职业技能。#l");
-                //cm.dispose();
-            }
+            // 一级目录：两个选项
+            cm.sendSimple("我是掌管飞侠命运的人。你想要做什么？\r\n#b#L0#接受四转试炼#l\r\n#L1#自由转职#l");
         } else if (status == 1) {
-            if (mode >= 1 && cm.getJobId() % 100 % 10 != 2) {
-                if (cm.canHold(2280003, 1)) {
-                    cm.changeJobById(cm.getJobId() + 1);
-                    if (cm.getJobId() == 412) {
-                        cm.teachSkill(4120002, 0, 10, -1);
-                        cm.teachSkill(4120005, 0, 10, -1);
-                        cm.teachSkill(4121006, 0, 10, -1);
-                    } else if (cm.getJobId() == 422) {
-                        cm.teachSkill(4220002, 0, 10, -1);
-                        cm.teachSkill(4220005, 0, 10, -1);
-                        cm.teachSkill(4221007, 0, 10, -1);
-                    }
-                    cm.gainItem(2280003, 1);
-                } else {
-                    cm.sendOk("请在#b使用#k的物品栏中留出一个空位，以便接收技能书。");
-                }
-            } else if (mode >= 1 && cm.getJobId() % 100 % 10 == 2) {
-                if (cm.getJobId() == 412) {
-                    if (cm.getPlayer().getSkillLevel(4121008) == 0) {
-                        cm.teachSkill(4121008, 0, 10, -1);
-                    }
-                    if (cm.getPlayer().getSkillLevel(4121004) == 0) {
-                        cm.teachSkill(4121004, 0, 10, -1);
-                    }
-                } else if (cm.getJobId() == 422) {
-                    if (cm.getPlayer().getSkillLevel(4221004) == 0) {
-                        cm.teachSkill(4221004, 0, 10, -1);
-                    }
-                    if (cm.getPlayer().getSkillLevel(4221001) == 0) {
-                        cm.teachSkill(4221001, 0, 10, -1);
-                    }
-                }
-                cm.sendOk("事情已经完成。现在离开我。");
-            }
+            branch = selection;
 
-            cm.dispose();
+            if (branch == 0) {
+                // ===== 接受四转试炼分支（原有逻辑）=====
+                if (cm.getLevel() < 120 || Math.floor(cm.getJobId() / 100) != 4) {
+                    cm.sendOk("请不要现在打扰我，我正在集中精力。");
+                    cm.dispose();
+                } else if (!cm.isQuestCompleted(6934)) {
+                    cm.sendOk("你还没有通过我的考验。在你通过考验之前，我无法提升你的等级。");
+                    cm.dispose();
+                } else if (cm.getJobId() % 100 % 10 != 2) {
+                    cm.sendYesNo("你通过了我的测试，做得非常出色。你准备好晋升到第四职业了吗？");
+                } else {
+                    cm.sendSimple("如果必要的话，我可以教你你职业的技能。\r\n#b#L0#教我我的职业技能。#l");
+                }
+            } else if (branch == 1) {
+                // ===== 自由转职分支 =====
+                cm.sendYesNo("自由转职可以让你重新选择自己的道路。你确定要进入自由转职吗？");
+            }
+        } else if (status == 2) {
+            if (branch == 0) {
+                // ===== 接受四转试炼分支：原有逻辑 =====
+                if (mode >= 1 && cm.getJobId() % 100 % 10 != 2) {
+                    if (cm.canHold(2280003, 1)) {
+                        cm.changeJobById(cm.getJobId() + 1);
+                        if (cm.getJobId() == 412) {
+                            cm.teachSkill(4120002, 0, 10, -1);
+                            cm.teachSkill(4120005, 0, 10, -1);
+                            cm.teachSkill(4121006, 0, 10, -1);
+                        } else if (cm.getJobId() == 422) {
+                            cm.teachSkill(4220002, 0, 10, -1);
+                            cm.teachSkill(4220005, 0, 10, -1);
+                            cm.teachSkill(4221007, 0, 10, -1);
+                        }
+                        cm.gainItem(2280003, 1);
+                    } else {
+                        cm.sendOk("请在#b使用#k的物品栏中留出一个空位，以便接收技能书。");
+                    }
+                } else if (mode >= 1 && cm.getJobId() % 100 % 10 == 2) {
+                    if (cm.getJobId() == 412) {
+                        if (cm.getPlayer().getSkillLevel(4121008) == 0) {
+                            cm.teachSkill(4121008, 0, 10, -1);
+                        }
+                        if (cm.getPlayer().getSkillLevel(4121004) == 0) {
+                            cm.teachSkill(4121004, 0, 10, -1);
+                        }
+                    } else if (cm.getJobId() == 422) {
+                        if (cm.getPlayer().getSkillLevel(4221004) == 0) {
+                            cm.teachSkill(4221004, 0, 10, -1);
+                        }
+                        if (cm.getPlayer().getSkillLevel(4221001) == 0) {
+                            cm.teachSkill(4221001, 0, 10, -1);
+                        }
+                    }
+                    cm.sendOk("事情已经完成。现在离开我。");
+                }
+
+                cm.dispose();
+            } else if (branch == 1) {
+                // ===== 自由转职分支：点“是”后跳转 =====
+                if (mode == 1) {
+                    cm.dispose();
+                    cm.openNpc(2081400, "achieve_自由转职");
+                } else {
+                    cm.dispose();
+                }
+            }
         }
     }
 }

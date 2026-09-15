@@ -24,6 +24,7 @@ package org.gms.client.character.inventory.manipulator;
 import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.constants.id.ShieldId;
+import org.gms.constants.id.item.EqpId;
 import org.gms.dwutil.CharacterUtils;
 import org.gms.client.Client;
 import org.gms.client.inventory.equip.Equip;
@@ -39,6 +40,7 @@ import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementScriptName;
 import org.gms.server.achievement.AchievementService;
 import org.gms.server.achievement.egg.imp.MapleShieldEggChecker;
 import org.gms.util.I18nUtil;
@@ -560,6 +562,19 @@ public class InventoryManipulator {
 
         Equip source = (Equip) eqpInv.getItem(src);
         int itemGender = ItemId.getGender(source.getItemId());
+
+        // 耳机特殊判断
+        if (source.getItemId() == EqpId.SUPERSTAR_HEADPHONES_1002747){
+            c.getAbstractPlayerInteraction().openNpc(9900001, AchievementScriptName.MUSIC);
+            c.sendPacket(PacketCreator.enableActions());
+            return;
+        } else if (source.getItemId() == EqpId.CELLPHONE_1702050) {
+            c.getAbstractPlayerInteraction().openNpc(9900001, AchievementScriptName.NPC_CALL);
+            c.sendPacket(PacketCreator.enableActions());
+            return;
+        }
+
+
         //控制台参数为true时进行校验判断
         if(GameConfig.getServerBoolean("use_equipment_gender_limit") && itemGender != 2 && itemGender != chr.getGender()) {  //判断装备是否要求角色性别
             c.sendPacket(PacketCreator.enableActions());
