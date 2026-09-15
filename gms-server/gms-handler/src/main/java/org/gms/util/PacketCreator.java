@@ -196,7 +196,7 @@ public class PacketCreator {
         mplew.writeShort(chr.getMp()); // mp (?)
         mplew.writeShort(chr.getMaxMp()); // maxmp
         mplew.writeShort(chr.getRemainingAp()); // remaining ap
-        mplew.writeShort(chr.getRemainingSp()); // remaining sp
+        mplew.writeShort(chr.getRemainingSpSingle()); // remaining sp
         mplew.writeInt(chr.getExp()); // current exp
         mplew.writeShort(chr.getFame()); // fame
         mplew.writeInt(chr.getMapId()); // current map id
@@ -237,7 +237,7 @@ public class PacketCreator {
         if (GameConstants.hasSPTable(chr.getJob())) {
             addRemainingSkillInfo(p, chr);
         } else {
-            p.writeShort(chr.getRemainingSp()); // remaining sp
+            p.writeShort(chr.getRemainingSpSingle()); // remaining sp
         }
         p.writeInt(chr.getExp()); // current exp
         p.writeShort(chr.getFame()); // fame

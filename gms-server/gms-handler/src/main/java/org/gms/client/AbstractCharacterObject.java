@@ -54,6 +54,7 @@ public abstract class AbstractCharacterObject extends AbstractAnimatedMapObject 
     protected int hpMpApUsed;
     @Setter
     protected int remainingAp;
+    @Getter
     protected int[] remainingSp = new int[10];
     @Getter
     protected transient int clientMaxHp;

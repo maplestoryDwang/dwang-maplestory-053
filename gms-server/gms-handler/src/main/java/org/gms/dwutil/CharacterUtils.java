@@ -2,6 +2,7 @@ package org.gms.dwutil;
 
 import org.gms.client.Character;
 import org.gms.client.Job;
+import org.gms.client.character.Mount;
 import org.gms.client.character.inventory.Inventory;
 import org.gms.client.character.skill.Skill;
 import org.gms.client.character.skill.SkillFactory;
@@ -10,17 +11,26 @@ import org.gms.client.autoban.AutobanManager;
 import org.gms.client.inventory.*;
 import org.gms.client.inventory.equip.Equip;
 import org.gms.constants.id.ItemId;
+import org.gms.constants.id.MapId;
 import org.gms.constants.inventory.EquipSlot;
+import org.gms.dao.entity.CharactersDO;
 import org.gms.net.server.Server;
+import org.gms.net.server.world.Messenger;
+import org.gms.net.server.world.Party;
 import org.gms.server.ItemInformationProvider;
+import org.gms.server.cashshop.CashShop;
+import org.gms.server.maps.MapleMap;
+import org.gms.server.maps.Portal;
 import org.gms.util.PacketCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
 
 /**
  * 暂时存放角色的一些判断，用于解耦
@@ -216,7 +226,212 @@ public class CharacterUtils {
         return skillbook;
     }
 
+    /**
+     * 索引序号 (Index)	SQL 列名 (Column Name)	对应 Java 变量 / 逻辑
+     * 1	level	level
+     * 2	fame	fame
+     * 3	str	attrStr
+     * 4	dex	attrDex
+     * 5	luk	attrLuk
+     * 6	`int`	attrInt
+     * 7	exp	Math.abs(exp.get())
+     * 8	gachaexp	Math.abs(gachaExp.get())
+     * 9	hp	hp
+     * 10	mp	mp
+     * 11	maxhp	maxHp
+     * 12	maxmp	maxMp
+     * 13	sp	拼接后的技能点字符串 sp
+     * 14	ap	remainingAp
+     * 15	gm	gmLevel
+     * 16	skincolor	skinColor.getId()
+     * 17	gender	gender
+     * 18	job	job.getId()
+     * 19	hair	hair
+     * 20	face	face
+     * 21	map	mapId / 地图退回ID
+     * 22	meso	meso.get()
+     * 23	hpMpUsed	hpMpApUsed
+     * 24	spawnpoint	对应出生点 / 传送门 ID
+     * 25	party	party.getId()（无组队则为 -1）
+     * 26	buddyCapacity	buddylist.getCapacity()
+     * 27	messengerid	messenger.getId()
+     * 28	messengerposition	messengerPosition
+     * 29	mountlevel	mapleMount.getLevel()
+     * 30	mountexp	mapleMount.getExp()
+     * 31	mounttiredness	mapleMount.getTiredness()
+     * 32	equipslots	getSlots(1) (来自 for 循环计步)
+     * 33	useslots	getSlots(2)
+     * 34	setupslots	getSlots(3)
+     * 35	etcslots	getSlots(4)
+     * 36	monsterbookcover	bookCover
+     * 37	vanquisherStage	vanquisherStage
+     * 38	dojoPoints	dojoPoints
+     * 39	lastDojoStage	dojoStage
+     * 40	finishedDojoTutorial	finishedDojoTutorial ? 1 : 0
+     * 41	vanquisherKills	vanquisherKills
+     * 42	matchcardwins	matchcardwins
+     * 43	matchcardlosses	matchcardlosses
+     * 44	matchcardties	matchcardties
+     * 45	omokwins	omokwins
+     * 46	omoklosses	omoklosses
+     * 47	omokties	omokties
+     * 48	dataString	dataString
+     * 49	fquest	questFame
+     * 50	jailexpire	jailExpiration
+     * 51	partnerId	partnerId
+     * 52	marriageItemId	marriageItemId
+     * 53	lastExpGainTime	new Timestamp(lastExpGainTime)
+     * 54	ariantPoints	ariantPoints
+     * 55	partySearch	canRecvPartySearchInvite
+     * 56	id (WHERE 条件)	id
+     */
+
+    public static CharactersDO toCharactersDO(Character character, Lock effLock, Lock statWlock, Lock prtLock) {
+        CharactersDO cdo = new CharactersDO();
+        cdo.setId(character.getId());
+        cdo.setName(character.getName());
+        cdo.setLevel(character.getLevel());
+        cdo.setFame(character.getFame());
+
+        // 加锁提取并发敏感的属性值
+        effLock.lock();
+        statWlock.lock();
+        try {
+            cdo.setAttrStr(character.getStr());
+            cdo.setAttrDex(character.getDex());
+            cdo.setAttrLuk(character.getLuk());
+            cdo.setAttrInt(character.getInt());
+            cdo.setExp(Math.abs(character.getExp()));
+            cdo.setGachaexp(Math.abs(character.getGachaExp()));
+            cdo.setHp(character.getHp());
+            cdo.setMp(character.getMp());
+            cdo.setMaxhp(character.getMaxHp());
+            cdo.setMaxmp(character.getMaxMp());
+
+            // 拼接 SP 字符串
+            StringBuilder sps = new StringBuilder();
+            for (int j : character.getRemainingSps()) {
+                sps.append(j).append(",");
+            }
+            cdo.setSp(sps.length() > 0 ? sps.substring(0, sps.length() - 1) : "");
+            cdo.setAp(character.getRemainingAp());
+        } finally {
+            statWlock.unlock();
+            effLock.unlock();
+        }
+
+        // 其他不依赖锁的常规属性赋值...
+        cdo.setGm(character.getGmLevel());
+        cdo.setSkincolor(character.getSkinColor().getId());
+        cdo.setGender(character.getGender());
+        cdo.setJob(character.getJob().getId());
+        cdo.setHair(character.getHair());
+        cdo.setFace(character.getFace());
+
+        // 地图
+        MapleMap map = character.getMap();
+        CashShop cashShop = character.getCashShop();
+        int mapId = character.getMapId();
+        if (map == null || (cashShop != null && cashShop.isOpened())) {
+            cdo.setMap(mapId);
+        } else {
+            if (map.getForcedReturnId() != MapId.NONE) {
+                cdo.setMap(map.getForcedReturnId());
+            } else {
+                cdo.setMap(character.getHp() < 1 ? map.getReturnMapId() : map.getId());
+            }
+        }
+
+        cdo.setMeso(character.getMeso());
+        cdo.setHpMpUsed(character.getHpMpApUsed());
+
+        if (map == null || map.getId() == MapId.CRIMSONWOOD_VALLEY_1 || map.getId() == MapId.CRIMSONWOOD_VALLEY_2) {  // reset to first spawnpoint on those maps
+            cdo.setSpawnpoint(0);
+        } else {
+            Portal closest = map.findClosestPlayerSpawnpoint(character.getPosition());
+            if (closest != null) {
+                cdo.setSpawnpoint(closest.getId());
+            } else {
+                cdo.setSpawnpoint(0);
+            }
+        }
+
+        prtLock.lock();
+        Party party = character.getParty();
+        try {
+            if (party != null) {
+                cdo.setParty(party.getId());
+            } else {
+                cdo.setParty(-1);
+            }
+        } finally {
+            prtLock.unlock();
+        }
+
+        cdo.setBuddyCapacity(character.getBuddylist().getCapacity());
+        Messenger messenger = character.getMessenger();
+        int messengerPosition = character.getMessengerPosition();
+        if (messenger != null) {
+            cdo.setMessengerid(messenger.getId());
+            cdo.setMessengerposition(messengerPosition);
+        } else {
+            cdo.setMessengerid(0);
+            cdo.setMessengerposition(4);
+        }
 
 
+        Mount mapleMount = character.getMapleMount();
+        if (mapleMount != null) {
+            cdo.setMountlevel(mapleMount.getLevel());
+            cdo.setMountexp(mapleMount.getExp());
+            cdo.setMounttiredness(mapleMount.getTiredness());
+        } else {
+            cdo.setMountlevel(1);
+            cdo.setMountexp(0);
+            cdo.setMounttiredness(0);
+        }
 
+        //32	equipslots	getSlots(1) (来自 for 循环计步)
+        //33	useslots	getSlots(2)
+        //34	setupslots	getSlots(3)
+        //35	etcslots	getSlots(4)
+        cdo.setEquipslots(1);
+        cdo.setUseslots(2);
+        cdo.setSetupslots(3);
+        cdo.setEtcslots(4);
+//        for (int i = 1; i < 5; i++) {
+//            ps.setInt(i + 31, character.getPlayerShopSlots(i));
+//        }
+
+        // todo 放外面更新
+//        monsterBook.saveCards(con, id);
+
+        cdo.setMonsterbookcover(character.getBookCover());
+        cdo.setVanquisherStage(character.getVanquisherStage());
+        cdo.setVanquisherKills(character.getVanquisherKills());
+
+        cdo.setDojoPoints(character.getDojoPoints());
+        cdo.setLastDojoStage( character.getDojoStage());
+
+        cdo.setFinishedDojoTutorial(character.isFinishedDojoTutorial() ? 1 : 0);
+        cdo.setMatchcardwins(character.getMatchcardwins());
+        cdo.setMatchcardlosses(character.getMatchcardlosses());
+        cdo.setMatchcardlosses(character.getMatchcardties());
+
+
+        cdo.setOmokwins(character.getOmokwins());
+        cdo.setOmoklosses(character.getOmoklosses());
+        cdo.setOmokties(character.getOmokties());
+
+
+        cdo.setDataString(character.getDataString());
+        cdo.setFquest(character.getQuestFame());
+        cdo.setJailexpire(character.getJailExpiration());
+        cdo.setPartnerId(character.getPartnerId());
+        cdo.setMarriageItemId(character.getMarriageItemId());
+        cdo.setLastExpGainTime(new Timestamp(character.getLastExpGainTime()));
+        cdo.setAriantPoints(character.getAriantPoints());
+        cdo.setPartySearch(character.isCanRecvPartySearchInvite());
+            return cdo;
+    }
 }

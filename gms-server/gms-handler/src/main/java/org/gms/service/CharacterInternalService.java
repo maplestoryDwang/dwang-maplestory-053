@@ -47,6 +47,7 @@ import java.util.Map.Entry;
 public class CharacterInternalService {
 
     private final CharacterDataService characterDataService;
+    private final PetDataService petDataService;
     private final InventoryService inventoryService;
     private final QuestUserDataService questUserDataService;
     private final MtsService mtsService;
@@ -172,9 +173,14 @@ public class CharacterInternalService {
         CharactersDO cdo = player.toCharactersDO();
         characterDataService.updateOrInsertCharacter(cdo);
 
+        // 1.1 保存乖乖卡
+//        monsterBook.saveCards(con, id);
+        characterDataService.saveUpdateMonsterCards(player.getId(), player.getMonsterBook().getCards());
+
         // 2. 保存宠物
         for (Pet pet : player.getPetListSnapshot()) {
-            pet.saveToDb();
+//            pet.saveToDb();
+            petDataService.saveToDb(pet);
         }
 
         // 3. 保存按键绑定 (Keymap)

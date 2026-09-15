@@ -18,7 +18,9 @@ import org.gms.dao.entity.*;
 import org.gms.dao.mapper.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.mybatisflex.core.query.QueryMethods.dateDiff;
 import static com.mybatisflex.core.query.QueryMethods.now;
@@ -68,6 +70,7 @@ public class CharacterDataService {
     private final TrocklocationsMapper trocklocationsMapper;
     private final EventstatsMapper eventstatsMapper;
     private final ServerQueueMapper serverQueueMapper;
+    private final MonsterbookMapper  monsterBookMapper;
 
     // ----- Characters Base Operations -----
 
@@ -338,5 +341,14 @@ public class CharacterDataService {
 
     public void batchInsertBuddies(List<BuddiesDO> list) {
         Db.executeBatch(list, 1000, BuddiesMapper.class, BuddiesMapper::insert);
+    }
+
+    public void saveUpdateMonsterCards(int cId, Map<Integer, Integer> cards) {
+        for (Map.Entry<Integer, Integer> entry : cards.entrySet()) {
+
+            MonsterbookDO monsterbookDO = new MonsterbookDO(cId, entry.getKey(), entry.getValue());
+            monsterBookMapper.insertOrUpdate(monsterbookDO);
+
+        }
     }
 }
