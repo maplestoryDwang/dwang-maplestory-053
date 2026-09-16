@@ -4,6 +4,10 @@
 var status = -1;
 var BASE_PRICE = 200000; // 基础价格：20万金币
 
+// 会话内变量缓存，避免重复读取数据库
+var todayCount = 0;
+var currentCost = 0;
+
 function start() {
     status = -1;
     action(1, 0, 0);
@@ -29,9 +33,9 @@ function action(mode, type, selection) {
             return;
         }
 
-        // 2. 获取今日获取次数并计算费用 (若今日未获取则为0次)
-        var todayCount = cm.getCustomData(9010001, "HIDDEN_INFO_COUNT_TODAY") || 0; // 替换为NPC ID或自定义键值
-        var currentCost = BASE_PRICE * (parseInt(todayCount) + 1);
+        // 2. 读取扩展数据（全流程仅读取一次）并计算本次费用
+        todayCount = parseInt(cm.getCharacterExtendValue("今日获取彩蛋情报次数", true) || 0);
+        currentCost = BASE_PRICE * (todayCount + 1);
 
         var text = "#e#r[隐藏地图探索家]#k#n\r\n\r\n";
         text += "恭喜你解锁了探索专家成就！这里存储着诸多未公开的角落秘密。\r\n\r\n";
@@ -42,17 +46,14 @@ function action(mode, type, selection) {
         cm.sendYesNo(text);
 
     } else if (status === 1) {
-        var todayCount = parseInt(cm.getCustomData(9010001, "HIDDEN_INFO_COUNT_TODAY") || 0);
-        var currentCost = BASE_PRICE * (todayCount + 1);
-
-        // 3. 校验金币
+        // 3. 校验金币 (直接复用 status 0 中计算好的 currentCost)
         if (cm.getMeso() < currentCost) {
             cm.sendOk("你的金币不足 #r" + (currentCost / 10000) + "W#k，无法购买情报。");
             cm.dispose();
             return;
         }
 
-        // 4. 从后端获取一条随机情报 (需后端实现对应方法)
+        // 4. 从后端获取一条随机情报
         var secretInfo = cm.getRandomHiddenMapInfo();
         if (!secretInfo) {
             cm.sendOk("后端情报库暂时为空或调取失败，请联系管理员。");
@@ -60,9 +61,9 @@ function action(mode, type, selection) {
             return;
         }
 
-        // 5. 扣除金币并更新今日获取次数
+        // 5. 扣除金币并更新今日获取次数（全流程仅写入一次）
         cm.gainMeso(-currentCost);
-        cm.setCustomData(9010001, "HIDDEN_INFO_COUNT_TODAY", (todayCount + 1).toString());
+        cm.saveOrUpdateCharacterExtendValue("今日获取彩蛋情报次数", (todayCount + 1).toString(), true);
 
         // 6. 展示情报结果
         var resultText = "#e#r[彩蛋情报]#k#n\r\n\r\n";

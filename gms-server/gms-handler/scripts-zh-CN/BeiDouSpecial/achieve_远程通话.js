@@ -8,6 +8,10 @@ var visitedNpcs = [];
 var BASE_PRICE = 200000; // 基础电话费：20万金币
 var selectedNpcId = -1;
 
+// 会话内变量缓存，避免多次重复读取数据库
+var todayCount = 0;
+var currentCost = 0;
+
 function start() {
     status = -1;
     action(1, 0, 0);
@@ -37,21 +41,21 @@ function action(mode, type, selection) {
             return;
         }
 
-        // 3. 计算今日已通话次数与本次费用
-        var todayCount = parseInt(cm.getCustomData(9010001, "REMOTE_CALL_COUNT_TODAY") || 0);
-        var currentCost = BASE_PRICE * (todayCount + 1);
+        // 3. 读取扩展数据（全流程仅读取这一次），并计算本次费用
+        todayCount = parseInt(cm.getCharacterExtendValue("今日远程通话次数", true) || 0);
+        currentCost = BASE_PRICE * (todayCount + 1);
 
         // 4. 获取成就完成状态与成功率
         var progress = cm.getAchievementProgress("SPECIAL_NPC");
         var isCompleted = progress && progress.isCompleted();
-        var rate = isCompleted ? 100 : cm.getRemoteCallSuccessRate(); // 成就完成则100%，否则调取Java后端概率
+        var rate = isCompleted ? 100 : cm.getRemoteCallSuccessRate();
 
         // 5. 拼接菜单
-        var text = "#e#r[远程 NPC 通讯器]#k#n\r\n\r\n";
+        var text = "#e#r[电话通讯录]#k#n\r\n\r\n";
         text += "今日已通话：#b" + todayCount + "#k 次\r\n";
         text += "本次长途电话费：#r" + (currentCost / 10000) + "W#k 金币\r\n";
-        text += "当前信号接通率：#b" + rate + "%#k " + (isCompleted ? "#b(成就特权已激活)#k" : "#r(完成成就可100%接通)#k") + "\r\n\r\n";
-        text += "请选择你想进行远程通话的 NPC：\r\n\r\n";
+        text += "当前信号接通率：#b" + rate + "%#k " + (isCompleted ? "#b(成就特权已激活)#k" : "#r(完成成就能获得满格信号)#k") + "\r\n\r\n";
+        text += "请选择你想进行通话的 NPC：\r\n\r\n";
 
         for (var i = 0; i < visitedNpcs.length; i++) {
             var npcId = visitedNpcs[i];
@@ -68,10 +72,7 @@ function action(mode, type, selection) {
             return;
         }
 
-        var todayCount = parseInt(cm.getCustomData(9010001, "REMOTE_CALL_COUNT_TODAY") || 0);
-        var currentCost = BASE_PRICE * (todayCount + 1);
-
-        // 6. 二次确认
+        // 6. 二次确认 (直接复用 status 0 中计算好的 currentCost)
         var confirmText = "#e#r[拨号确认]#k#n\r\n\r\n";
         confirmText += "即将连线：#b#p" + selectedNpcId + "##k\r\n";
         confirmText += "本次通话将扣除：#r" + (currentCost / 10000) + "W#k 金币，是否确定拨打？";
@@ -79,9 +80,6 @@ function action(mode, type, selection) {
         cm.sendYesNo(confirmText);
 
     } else if (status === 2) {
-        var todayCount = parseInt(cm.getCustomData(9010001, "REMOTE_CALL_COUNT_TODAY") || 0);
-        var currentCost = BASE_PRICE * (todayCount + 1);
-
         // 7. 金币不足拦截
         if (cm.getMeso() < currentCost) {
             cm.sendOk("你的金币不足 #r" + (currentCost / 10000) + "W#k，无法拨通长途电话！");
@@ -89,15 +87,15 @@ function action(mode, type, selection) {
             return;
         }
 
-        // 8. 扣除金币 + 累加通话次数
+        // 8. 扣除金币 + 更新存储记录（全流程仅写入这一次）
         cm.gainMeso(-currentCost);
-        cm.setCustomData(9010001, "REMOTE_CALL_COUNT_TODAY", (todayCount + 1).toString());
+        cm.saveOrUpdateCharacterExtendValue("今日远程通话次数", (todayCount + 1).toString(), true);
 
         // 9. 判定接通概率
         var progress = cm.getAchievementProgress("SPECIAL_NPC");
         var isCompleted = progress && progress.isCompleted();
-        var successRate = isCompleted ? 100 : cm.getRemoteCallSuccessRate(); // 0-100 的整数
-        var randomValue = Math.floor(Math.random() * 100); // 生成 0-99 的随机数
+        var successRate = isCompleted ? 100 : cm.getRemoteCallSuccessRate();
+        var randomValue = Math.floor(Math.random() * 100);
 
         if (randomValue >= successRate) {
             // 拨号失败提示

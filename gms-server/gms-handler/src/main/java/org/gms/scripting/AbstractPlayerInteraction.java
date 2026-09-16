@@ -1418,9 +1418,4 @@ public class AbstractPlayerInteraction {
         return WXMacData.varMaps.get(key);
     }
 
-    public void snowOn() {
-
-
-    }
-
 }
