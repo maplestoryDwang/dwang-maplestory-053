@@ -1,6 +1,6 @@
 /**
  * @author: Custom
- * @func: 远程NPC通讯器 (阶梯计费 + 概率拨通 + 成就保障)
+ * @func: 远程NPC通讯器 (阶梯计费 + 概率拨通 + 成就保障 + 分页功能)
  */
 
 var status = -1;
@@ -11,6 +11,11 @@ var selectedNpcId = -1;
 // 会话内变量缓存，避免多次重复读取数据库
 var todayCount = 0;
 var currentCost = 0;
+
+// 分页配置与变量
+var PAGE_SIZE = 10;     // 每页显示的数量
+var currentPage = 0;    // 当前页码（从 0 开始）
+var totalResults = 0;   // 数据的总条数
 
 function start() {
     status = -1;
@@ -41,30 +46,30 @@ function action(mode, type, selection) {
             return;
         }
 
+        totalResults = visitedNpcs.length;
+
         // 3. 读取扩展数据（全流程仅读取这一次），并计算本次费用
         todayCount = parseInt(cm.getCharacterExtendValue("今日远程通话次数", true) || 0);
         currentCost = BASE_PRICE * (todayCount + 1);
 
-        // 4. 获取成就完成状态与成功率
-        var progress = cm.getAchievementProgress("SPECIAL_NPC");
-        var isCompleted = progress && progress.isCompleted();
-        var rate = isCompleted ? 100 : cm.getRemoteCallSuccessRate();
-
-        // 5. 拼接菜单
-        var text = "#e#r[电话通讯录]#k#n\r\n\r\n";
-        text += "今日已通话：#b" + todayCount + "#k 次\r\n";
-        text += "本次长途电话费：#r" + (currentCost / 10000) + "W#k 金币\r\n";
-        text += "当前信号接通率：#b" + rate + "%#k " + (isCompleted ? "#b(成就特权已激活)#k" : "#r(完成成就能获得满格信号)#k") + "\r\n\r\n";
-        text += "请选择你想进行通话的 NPC：\r\n\r\n";
-
-        for (var i = 0; i < visitedNpcs.length; i++) {
-            var npcId = visitedNpcs[i];
-            text += "#L" + i + "# #b#p" + npcId + "##k (ID: " + npcId + ")#l\r\n";
-        }
-
-        cm.sendSimple(text);
+        // 4. 显示 NPC 分页列表
+        showNpcListMenu();
 
     } else if (status === 1) {
+        // 5. 翻页按钮拦截处理
+        if (selection === 9000001) {      // 上一页
+            currentPage--;
+            status = 0;
+            showNpcListMenu();
+            return;
+        } else if (selection === 9000002) { // 下一页
+            currentPage++;
+            status = 0;
+            showNpcListMenu();
+            return;
+        }
+
+        // 选中具体 NPC
         selectedNpcId = visitedNpcs[selection];
 
         if (!selectedNpcId) {
@@ -110,4 +115,46 @@ function action(mode, type, selection) {
     } else {
         cm.dispose();
     }
+}
+
+/**
+ * 渲染包含分页的 NPC 通讯录菜单
+ */
+function showNpcListMenu() {
+    var progress = cm.getAchievementProgress("SPECIAL_NPC");
+    var isCompleted = progress && progress.isCompleted();
+    var rate = isCompleted ? 100 : cm.getRemoteCallSuccessRate();
+
+    var start = currentPage * PAGE_SIZE;
+    var end = Math.min(start + PAGE_SIZE, totalResults);
+
+    var text = "#e#r[电话通讯录]#k#n\r\n\r\n";
+    text += "今日已通话：#b" + todayCount + "#k 次\r\n";
+    text += "本次长途电话费：#r" + (currentCost / 10000) + "W#k 金币\r\n";
+    text += "当前信号接通率：#b" + rate + "%#k " + (isCompleted ? "#b(成就特权已激活)#k" : "#r(完成成就能获得满格信号)#k") + "\r\n\r\n";
+    text += "请选择你想进行通话的 NPC：\r\n\r\n";
+
+    // 1. 渲染当前页的 NPC 列表
+    for (var i = start; i < end; i++) {
+        var npcId = visitedNpcs[i];
+        text += "#L" + i + "# #b#p" + npcId + "##k (ID: " + npcId + ")#l\r\n";
+    }
+
+    text += "\r\n";
+
+    // 2. 拼接上一页/下一页按钮
+    if (currentPage > 0) {
+        text += "#b#L9000001#<< 上一页#l#k\t\t\t\t";
+    }
+    if (end < totalResults) {
+        text += "#b#L9000002#下一页 >>#l#k";
+    }
+
+    // 3. 拼接页码信息
+    if (totalResults > PAGE_SIZE) {
+        var totalPages = Math.ceil(totalResults / PAGE_SIZE);
+        text += "\r\n\r\n页码：" + (currentPage + 1) + " / " + totalPages + "\r\n";
+    }
+
+    cm.sendSimple(text);
 }

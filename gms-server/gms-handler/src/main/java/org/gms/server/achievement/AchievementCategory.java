@@ -59,15 +59,15 @@ public class AchievementCategory {
     @Getter
     public static final Map<String, String> EGG_INFO_MAP = new LinkedHashMap<>() {{
         put(MapleShieldEggChecker.EGG_MAPLE_SHIELD, "听说作者的头像是一个#r枫叶盾#k，那是很久远的故事，和英勇的战士在蚂蚁洞奋战了很久");
-        put(SpecialFoodEggChecker.EGG_SPECIAL_FOOD, "品味过无形无质的#r空气#k，或是温热的#r绿豆粥#k，冰雪将不再寒冷");
+        put(SpecialFoodEggChecker.EGG_SPECIAL_FOOD, "品味过无形无质的#r空气#k，或是温热的#r绿豆粥#k，冰雪和海底将不再危险");
         put(ShipBatMonEggChecker.EGG_SHIP_BAT_MON, "横跨#r天空的巨轮#k之上，曾有勇士在呼啸的狂风中击落过天空的统治者。");
-        put(MakerSignedEggChecker.EGG_MAKER_SIGNED, "熔炉的锤音落定，将你的真名刻印于百炼之钢，那是属于#r锻造者#k的至高荣耀。");
-        put(SaunaAfkEggChecker.EGG_SAUNA_AFK, "置身于雾气萦绕的#r桑拿房#k静坐凝神，蒸腾的水汽将渐渐拓宽你的生命与魔力之源。");
+        put(MakerSignedEggChecker.EGG_MAKER_SIGNED, "熔炉的锤音落定，将你的真名刻印于百炼之钢，那是属于#r制造者#k的至高荣耀。");
+        put(SaunaAfkEggChecker.EGG_SAUNA_AFK, "置身端坐于雾气萦绕的#r桑拿房#k静坐凝神，蒸腾的水汽将渐渐拓宽你的生命与魔力之源。");
         put(DeathCountEggChecker.EGG_DEATH_COUNT, "当沉重的#r石碑接连八次#k降临于世，灵魂在幽冥边缘徘徊，竟踏出了一条超脱生死的秘径。");
         put(FourthJobEggChecker.EGG_FOURTH_JOB, "打破肉身的极限，破茧成蝶之时，#r四转试炼#k将指引你走向终极的英雄宿命。");
         put(AncientBookEggChecker.EGG_ANCIENT_BOOK, "用沉甸甸的金钱叩开矿石之门，并在永恒冻土的冰霜中翻开那本沉睡百年的#r上古魔书#k。");
         put(BeautyEggChecker.EGG_BEAUTY_ALL, "镜中之影悄然蜕变，不论是千丝万缕的重塑，还是容颜肤色的焕新，皆是一场全新的#r改变#k。");
-        put(JumpMasterEggChecker.EGG_JUMP_MASTER, "穿梭于地铁线路、忍苦树林与沉睡森林的荆棘之间，唯有#r全部#k战胜重力者方可被称为跳跃之大师。");
+        put(JumpMasterEggChecker.EGG_JUMP_MASTER, "穿梭于#r地铁线路、忍苦树林与沉睡森林#k的荆棘之间，唯有全部战胜重力者方可被称为跳跃之大师。");
     }};
 
 

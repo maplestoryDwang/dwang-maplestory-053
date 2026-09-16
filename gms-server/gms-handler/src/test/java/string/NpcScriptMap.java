@@ -29,10 +29,12 @@ public class NpcScriptMap {
        scriptMap.forEach((npcId, script) -> {
            String mapName = getNpcExistMapName(npcId);
            String npcName = StringInfoProvider.getNPCName(npcId);
-           System.out.println("脚本ID:" + npcId + " NPC: " + npcName + " map: " + mapName);
+           if ("当前版本不存在".equals(mapName)){
+
+               System.out.println("脚本ID:" + npcId + " NPC: " + npcName + " map: " + mapName);
+           }
 
        });
-       System.out.println("一共 " + scriptMap.size() + " 个");
 
 
    }
