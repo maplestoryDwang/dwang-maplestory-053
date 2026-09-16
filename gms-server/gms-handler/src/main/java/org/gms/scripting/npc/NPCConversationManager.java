@@ -60,6 +60,7 @@ import org.gms.server.achievement.boss.BossDetailDTO;
 import org.gms.server.achievement.egg.EggStatusDTO;
 import org.gms.server.achievement.egg.imp.BeautyEggChecker;
 import org.gms.server.achievement.egg.imp.MakerSignedEggChecker;
+import org.gms.server.cashshop.CashShop;
 import org.gms.server.gachapon.Gachapon;
 import org.gms.util.I18nUtil;
 import org.gms.util.packets.WeddingPackets;
@@ -337,6 +338,13 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public void gainMeso(int gain) {
         getPlayer().gainMeso(gain);
+    }
+
+    public void gainNX(int nxGain){
+        CashShop cashShop = getPlayer().getCashShop();
+        cashShop.gainCash(CashShop.NX_CREDIT, nxGain);
+        dropMessage(5, String.format("获得点卷：%d, 当前拥有点卷数量：%d", nxGain, cashShop.getNxCredit()));  // 顯示點卷信息
+
     }
 
     public void gainMeso(Double gain) {

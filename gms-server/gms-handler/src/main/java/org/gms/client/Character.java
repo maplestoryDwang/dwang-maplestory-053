@@ -2176,7 +2176,6 @@ public class Character extends AbstractCharacterObject {
                         int nxGain = (mapitem.getItemId() == ItemId.NX_CARD_100 ? 100 : 250) * mItem.getQuantity(); //使点券支持按数量相乘
                         this.getCashShop().gainCash(CashShop.NX_CREDIT, nxGain);
 //						dropMessage(5, String.format("get %d nxCredit, have %d nxCredit", nxGain, this.getCashShop().getNxCredit()));  // 顯示點卷信息
-                        dropMessage(5, String.format("获得点卷：%d, 当前拥有点卷数量：%d", nxGain, this.getCashShop().getNxCredit()));  // 顯示點卷信息
 
                         if (GameConfig.getServerBoolean("use_announce_nx_coupon_loot")) {       //捡到点券是否展示
                             showHint(I18nUtil.getMessage("Character.pickupItem.message1", nxGain, this.getCashShop().getCash(CashShop.NX_CREDIT)), 300);

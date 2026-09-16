@@ -26,16 +26,17 @@ public class NpcScriptMap {
     public void loadNpcScriptMap() {
 
        Map<Integer, String> scriptMap = NPCInfomationProvier.getScriptMap();
-       scriptMap.forEach((npcId, script) -> {
+       scriptMap.keySet().stream().sorted().forEach(npcId -> {
+
            String mapName = getNpcExistMapName(npcId);
            String npcName = StringInfoProvider.getNPCName(npcId);
            if ("当前版本不存在".equals(mapName)){
-
                System.out.println("脚本ID:" + npcId + " NPC: " + npcName + " map: " + mapName);
            }
 
-       });
 
+       });
+ 
 
    }
 

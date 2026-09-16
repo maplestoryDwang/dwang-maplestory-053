@@ -128,11 +128,11 @@ function showNpcListMenu() {
     var start = currentPage * PAGE_SIZE;
     var end = Math.min(start + PAGE_SIZE, totalResults);
 
-    var text = "#e#r[电话通讯录]#k#n\r\n\r\n";
+    var text = "\t\t\t\t\t\t\t\t#e#r[电话通讯录]#k#n\r\n\r\n";
     text += "今日已通话：#b" + todayCount + "#k 次\r\n";
     text += "本次长途电话费：#r" + (currentCost / 10000) + "W#k 金币\r\n";
     text += "当前信号接通率：#b" + rate + "%#k " + (isCompleted ? "#b(成就特权已激活)#k" : "#r(完成成就能获得满格信号)#k") + "\r\n\r\n";
-    text += "请选择你想进行通话的 NPC：\r\n\r\n";
+    text += "请选择你想进行通话的 NPC：\r\n";
 
     // 1. 渲染当前页的 NPC 列表
     for (var i = start; i < end; i++) {

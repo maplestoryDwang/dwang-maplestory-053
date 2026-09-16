@@ -41,7 +41,7 @@ public class BeginnerCreator extends CharacterFactory {
         giveItem(recipe, ItemId.BEGINNERS_HAT, 1, InventoryType.EQUIP);
         giveItem(recipe, ItemId.BEGINNERS_OVERALL, 1, InventoryType.EQUIP);
         giveItem(recipe, ItemId.BEGINNERS_WEAPON, 1, InventoryType.EQUIP);
-        giveItem(recipe, EqpId.SUPERSTAR_HEADPHONES_1002747, 1, InventoryType.CASH);  // 提供耳机
+        giveItem(recipe, EqpId.SUPERSTAR_HEADPHONES_1002747, 1, InventoryType.EQUIP);  // 提供耳机
         return recipe;
     }
 

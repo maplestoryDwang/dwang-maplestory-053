@@ -365,9 +365,9 @@ public class GameConstants {
     }
 
     public static byte getHallOfFameBranch(Job job, int mapid) {
-        if (!isHallOfFameMap(mapid)) {
-            return (byte) (26 + 4 * (mapid / 100000000));   // custom, 400 pnpcs available per continent
-        }
+//        if (!isHallOfFameMap(mapid)) {
+//            return (byte) (26 + 4 * (mapid / 100000000));   // custom, 400 pnpcs available per continent
+//        }
 
         if (job.isA(Job.WARRIOR)) {
             return 10;

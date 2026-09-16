@@ -2,6 +2,7 @@ package org.gms.service;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.AllArgsConstructor;
+import org.gms.constants.inventory.EquipType;
 import org.gms.dao.entity.PlayernpcsDO;
 import org.gms.dao.entity.PlayernpcsEquipDO;
 import org.gms.dao.entity.PlayernpcsFieldDO;
@@ -53,7 +54,11 @@ public class PlayerNpcService {
     public PlayerNPC createPlayerNPC(PlayernpcsDO playerNpcDO, List<PlayernpcsEquipDO> playerNpcEquipDOS) {
         playerNpcDO.setId(null);
         playernpcsMapper.insertSelective(playerNpcDO);
-        playerNpcEquipDOS.forEach(playerNpcEquipDO -> playerNpcEquipDO.setNpcid(playerNpcDO.getId()));
+        playerNpcEquipDOS.forEach(playerNpcEquipDO -> {
+            playerNpcEquipDO.setNpcid(playerNpcDO.getId());
+            EquipType et = EquipType.getEquipTypeById(playerNpcEquipDO.getEquipid());
+            playerNpcEquipDO.setType(et.getValue());
+        });
         playernpcsEquipMapper.insertBatch(playerNpcEquipDOS);
         List<PlayerNPC> playerNPC = getPlayerNPC(PlayernpcsDO.builder().id(playerNpcDO.getId()).build());
         return playerNPC.isEmpty() ? null : playerNPC.getFirst();
