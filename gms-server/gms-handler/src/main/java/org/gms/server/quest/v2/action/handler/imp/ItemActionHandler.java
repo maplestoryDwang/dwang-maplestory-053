@@ -7,6 +7,7 @@ import org.gms.client.inventory.Item;
 import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.server.ItemInformationProvider;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.quest.actions.ext.ItemActionData;
 import org.gms.server.quest.v2.action.handler.IQuestActionHandler;
 import org.gms.util.I18nUtil;
@@ -246,7 +247,9 @@ public class ItemActionHandler implements IQuestActionHandler<ItemActionData> {
         for (ItemActionData.ItemData iEntry : giveItem) {
             int itemid = iEntry.getId(), count = iEntry.getCount(), period = iEntry.getPeriod();    // thanks Vcoc for noticing quest milestone item not getting removed from inventory after a while
 
-            InventoryManipulator.addById(chr.getClient(), itemid, (short) count, "", -1, period > 0 ? (System.currentTimeMillis() + MINUTES.toMillis(period)) : -1);
+            InventoryManipulator.addById(chr.getClient(), itemid, (short) count, "", -1
+                    , period > 0 ? (System.currentTimeMillis() + MINUTES.toMillis(period)) : -1
+                    , AchievementCategory.PLAYER_INVENTORY_ID); // 任务
             chr.sendPacket(PacketCreator.getShowItemGain(itemid, (short) count, true));
         }
     }

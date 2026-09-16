@@ -25,8 +25,10 @@ public class AchievementCategory {
     /**
      * 另外两个静默的成就，只记录，最后展示用
      */
-    public static final String PLAYER_INVENTORY_DROP = "PLAYER_INVENTORY_DROP";  // 物品—掉落
-    public static final String PLAYER_INVENTORY_ID = "PLAYER_INVENTORY_ID";  // 物品 - 玩家 任务获得
+    public static final String PLAYER_INVENTORY_OTHER = "PLAYER_INVENTORY_OTHER";  // 其他获取途径
+    public static final String PLAYER_INVENTORY_DROP = "PLAYER_INVENTORY_DROP";    //  物品掉落 玩家拣去
+    public static final String PLAYER_INVENTORY_ID = "PLAYER_INVENTORY_ID";         // 物品 - 玩家 任务获得 、 脚本
+
     public static final String PLAYER_WARP_MAP = "PLAYER_WARP_MAP";  // 地图进入
 
 
@@ -115,6 +117,7 @@ public class AchievementCategory {
             SPECIAL_NPC,
             SPECIAL_EGG,
             PLAYER_INVENTORY_DROP,
+            PLAYER_INVENTORY_OTHER,
             PLAYER_INVENTORY_ID,
             PLAYER_WARP_MAP
             );

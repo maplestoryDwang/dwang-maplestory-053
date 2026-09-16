@@ -54,6 +54,7 @@ import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.outbound.SendNoteSuccessPacket;
 import org.gms.net.server.Server;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -171,7 +172,7 @@ public final class UseCashItemHandler extends AbstractPacketHandler {
             }
 
             if (!success) {
-                InventoryManipulator.addById(c, itemId, (short) 1);
+                InventoryManipulator.addById(c, itemId, (short) 1, AchievementCategory.PLAYER_INVENTORY_OTHER);
                 c.enableActions();
             }
         } else if (itemType == 505) { // AP/SP reset //能力、技能点重置卷轴
@@ -740,7 +741,7 @@ public final class UseCashItemHandler extends AbstractPacketHandler {
         if (c.getPlayer().getInventory(InventoryType.getByType((byte) (id / 1000000))).isFull()) {
             return false;
         }
-        InventoryManipulator.addById(c, id, (short) amount);
+        InventoryManipulator.addById(c, id, (short) amount, AchievementCategory.PLAYER_INVENTORY_OTHER);
         return true;
     }
 

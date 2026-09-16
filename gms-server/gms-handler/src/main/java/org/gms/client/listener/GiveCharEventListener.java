@@ -16,6 +16,7 @@ import org.gms.exception.BizException;
 
 
 import org.gms.net.server.Server;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.cashshop.CashShop;
 import org.gms.server.ItemInformationProvider;
 import org.gms.service.CharacterApiService;
@@ -209,10 +210,10 @@ public class GiveCharEventListener {
 
         Server.getInstance().getWorlds().forEach(world -> world.getPlayerStorage().getAllCharacters().forEach(chr -> {
             if (isPet) {
-                InventoryManipulator.addById(chr.getClient(), itemId, quantity, "WAdmin", petId, expiration);
+                InventoryManipulator.addById(chr.getClient(), itemId, quantity, "WAdmin", petId, (short)0, expiration, AchievementCategory.PLAYER_INVENTORY_OTHER);
                 chr.message(I18nUtil.getMessage("Give.Pet.All", quantity, itemName));
             } else {
-                InventoryManipulator.addById(chr.getClient(), itemId, quantity, "WAdmin", -1, (short) 0, -1);
+                InventoryManipulator.addById(chr.getClient(), itemId, quantity, "WAdmin", -1, (short) 0, -1, AchievementCategory.PLAYER_INVENTORY_OTHER);
                 chr.message(I18nUtil.getMessage("Give.Item.All", quantity, itemName));
             }
         }));
@@ -247,10 +248,10 @@ public class GiveCharEventListener {
         }
 
         if (isPet) {
-            InventoryManipulator.addById(chr.getClient(), itemId, quantity, "WAdmin", petId, expiration);
+            InventoryManipulator.addById(chr.getClient(), itemId, quantity, "WAdmin", petId, (short)-1, expiration, AchievementCategory.PLAYER_INVENTORY_OTHER);
             chr.message(I18nUtil.getMessage("Give.Pet.Chr", quantity, itemName));
         } else {
-            InventoryManipulator.addById(chr.getClient(), itemId, quantity, "WAdmin", -1, (short) 0, -1);
+            InventoryManipulator.addById(chr.getClient(), itemId, quantity, "WAdmin", -1, (short) 0, -1, AchievementCategory.PLAYER_INVENTORY_OTHER);
             chr.message(I18nUtil.getMessage("Give.Item.Chr", quantity, itemName));
         }
 

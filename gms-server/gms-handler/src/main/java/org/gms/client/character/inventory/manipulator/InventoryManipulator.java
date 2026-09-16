@@ -64,36 +64,36 @@ public class InventoryManipulator {
     private static final Logger log = LoggerFactory.getLogger(InventoryManipulator.class);
     private static final AchievementService achievementService = ServerManager.getApplicationContext().getBean(AchievementService.class);
 
-    public static boolean addById(Client c, int itemId, short quantity) {
-        return addById(c, itemId, quantity, null, -1, -1);
+    public static boolean addById(Client c, int itemId, short quantity, String dropType) {
+        return addById(c, itemId, quantity, null, -1, -1, dropType);
     }
 
     public static boolean addById(Client c, int itemId, short quantity, long expiration) {
-        return addById(c, itemId, quantity, null, -1, (byte) 0, expiration);
+        return addById(c, itemId, quantity, null, -1, (byte) 0, expiration, AchievementCategory.PLAYER_INVENTORY_OTHER);
     }
 
     public static boolean addById(Client c, int itemId, short quantity, String owner, int petid) {
-        return addById(c, itemId, quantity, owner, petid, -1);
+        return addById(c, itemId, quantity, owner, petid, -1, AchievementCategory.PLAYER_INVENTORY_OTHER);
     }
 
-    public static boolean addById(Client c, int itemId, short quantity, String owner, int petid, long expiration) {
-        return addById(c, itemId, quantity, owner, petid, (byte) 0, expiration);
+    public static boolean addById(Client c, int itemId, short quantity, String owner, int petid, long expiration, String dropType) {
+        return addById(c, itemId, quantity, owner, petid, (byte) 0, expiration, dropType);
     }
 
-    public static boolean addById(Client c, int itemId, short quantity, String owner, int petid, short flag, long expiration) {
+    public static boolean addById(Client c, int itemId, short quantity, String owner, int petid, short flag, long expiration, String dropType) {
         Character chr = c.getPlayer();
         InventoryType type = ItemConstants.getInventoryType(itemId);
 
         Inventory inv = chr.getInventory(type);
         inv.lockInventory();
         try {
-            return addByIdInternal(c, chr, type, inv, itemId, quantity, owner, petid, flag, expiration);
+            return addByIdInternal(c, chr, type, inv, itemId, quantity, owner, petid, flag, expiration, dropType);
         } finally {
             inv.unlockInventory();
         }
     }
 
-    private static boolean addByIdInternal(Client c, Character chr, InventoryType type, Inventory inv, int itemId, short quantity, String owner, int petid, short flag, long expiration) {
+    private static boolean addByIdInternal(Client c, Character chr, InventoryType type, Inventory inv, int itemId, short quantity, String owner, int petid, short flag, long expiration, String dropType) {
         ItemInformationProvider ii = ItemInformationProvider.getInstance();
         if (!type.equals(InventoryType.EQUIP)) {
             short slotMax = ItemUtils.getSlotMax(c, itemId);
@@ -179,37 +179,43 @@ public class InventoryManipulator {
             throw new RuntimeException("Trying to create equip with non-one quantity");
         }
         // 记录获取的物品历史 无法分辨来源！除非重构
-        achievementService.recordAchievement(c.getPlayer().getId(), AchievementCategory.PLAYER_INVENTORY_ID, String.valueOf(itemId), quantity);
+        achievementService.recordAchievement(c.getPlayer().getId(), dropType, String.valueOf(itemId), quantity);
 
         return true;
     }
+
 
     public static boolean addFromDrop(Client c, Item item) {
         return addFromDrop(c, item, true);
     }
 
     public static boolean addFromDrop(Client c, Item item, boolean show) {
-        return addFromDrop(c, item, show, item.getPetId());
+        return addFromDrop(c, item, show, item.getPetId(), AchievementCategory.PLAYER_INVENTORY_OTHER);
     }
 
-    public static boolean addFromDrop(Client c, Item item, boolean show, int petId) {
-        return addFromDrop(c, item, show, petId, null);
+    // pickups记录
+    public static boolean addFromDrop(Client c, Item item, boolean show, String dropFromType) {
+        return addFromDrop(c, item, show, item.getPetId(), dropFromType);
     }
 
-    public static boolean addFromDrop(Client c, Item item, boolean show, int petId, String owner) {
+    public static boolean addFromDrop(Client c, Item item, boolean show, int petId, String dropFromType) {
+        return addFromDrop(c, item, show, petId, null, dropFromType);
+    }
+
+    public static boolean addFromDrop(Client c, Item item, boolean show, int petId, String owner, String dropFromType) {
         Character chr = c.getPlayer();
         InventoryType type = item.getInventoryType();
 
         Inventory inv = chr.getInventory(type);
         inv.lockInventory();
         try {
-            return addFromDropInternal(c, chr, type, inv, item, show, petId, owner);
+            return addFromDropInternal(c, chr, type, inv, item, show, petId, owner, dropFromType);
         } finally {
             inv.unlockInventory();
         }
     }
 
-    private static boolean addFromDropInternal(Client c, Character chr, InventoryType type, Inventory inv, Item item, boolean show, int petId, String owner) {
+    private static boolean addFromDropInternal(Client c, Character chr, InventoryType type, Inventory inv, Item item, boolean show, int petId, String owner, String dropFromType) {
         ItemInformationProvider ii = ItemInformationProvider.getInstance();
         int itemid = item.getItemId();
         if (ii.isPickupRestricted(itemid) && chr.haveItemWithId(itemid, true)) {
@@ -307,7 +313,7 @@ public class InventoryManipulator {
         }
 
         // 记录获取的物品历史 无法分辨来源！除非重构
-        achievementService.recordAchievement(c.getPlayer().getId(), AchievementCategory.PLAYER_INVENTORY_DROP, String.valueOf(itemid), quantity);
+        achievementService.recordAchievement(c.getPlayer().getId(), dropFromType, String.valueOf(itemid), quantity);
 
         return true;
     }
@@ -546,7 +552,7 @@ public class InventoryManipulator {
         // 添加物品代码提示
         if (GameConfig.getServerBoolean("use_debug") && c.getPlayer().isGM()) { // 假设isGM()是检查玩家是否是管理员的方法
             int itemID = source.getItemId();
-            c.getPlayer().dropMessage(5, I18nUtil.getMessage("InventoryManipulator.handlePacket.message1")  + itemID);
+            c.getPlayer().dropMessage(5, I18nUtil.getMessage("InventoryManipulator.handlePacket.message1") + itemID);
         }
     }
 
@@ -564,7 +570,7 @@ public class InventoryManipulator {
         int itemGender = ItemId.getGender(source.getItemId());
 
         // 耳机特殊判断
-        if (source.getItemId() == EqpId.SUPERSTAR_HEADPHONES_1002747){
+        if (source.getItemId() == EqpId.SUPERSTAR_HEADPHONES_1002747) {
             c.getAbstractPlayerInteraction().openNpc(9900001, AchievementScriptName.MUSIC);
             c.sendPacket(PacketCreator.enableActions());
             return;
@@ -576,9 +582,9 @@ public class InventoryManipulator {
 
 
         //控制台参数为true时进行校验判断
-        if(GameConfig.getServerBoolean("use_equipment_gender_limit") && itemGender != 2 && itemGender != chr.getGender()) {  //判断装备是否要求角色性别
+        if (GameConfig.getServerBoolean("use_equipment_gender_limit") && itemGender != 2 && itemGender != chr.getGender()) {  //判断装备是否要求角色性别
             c.sendPacket(PacketCreator.enableActions());
-            chr.dropMessage(1,I18nUtil.getMessage("InventoryManipulator.equip.message1"));    //发送弹窗提示性别不符
+            chr.dropMessage(1, I18nUtil.getMessage("InventoryManipulator.equip.message1"));    //发送弹窗提示性别不符
             log.warn(I18nUtil.getLogMessage("InventoryManipulator.warn.equip.message1"),      //后台记录信息
                     chr.getName(),
                     chr.getGender() <= 0 ? I18nUtil.getMessage("Character.Gender0") : I18nUtil.getMessage("Character.Gender1"),
@@ -606,55 +612,55 @@ public class InventoryManipulator {
             itemChanged = true;
         }
         switch (dst) {
-        case -6: // unequip the overall
-            Item top = eqpdInv.getItem((short) -5);
-            if (top != null && ItemConstants.isOverall(top.getItemId())) {
-                if (eqpInv.isFull()) {
-                    c.sendPacket(PacketCreator.getInventoryFull());
-                    c.sendPacket(PacketCreator.getShowInventoryFull());
-                    return;
+            case -6: // unequip the overall
+                Item top = eqpdInv.getItem((short) -5);
+                if (top != null && ItemConstants.isOverall(top.getItemId())) {
+                    if (eqpInv.isFull()) {
+                        c.sendPacket(PacketCreator.getInventoryFull());
+                        c.sendPacket(PacketCreator.getShowInventoryFull());
+                        return;
+                    }
+                    unequip(c, (byte) -5, eqpInv.getNextFreeSlot());
                 }
-                unequip(c, (byte) -5, eqpInv.getNextFreeSlot());
-            }
-            break;
-        case -5:
-            final Item bottom = eqpdInv.getItem((short) -6);
-            if (bottom != null && ItemConstants.isOverall(source.getItemId())) {
-                if (eqpInv.isFull()) {
-                    c.sendPacket(PacketCreator.getInventoryFull());
-                    c.sendPacket(PacketCreator.getShowInventoryFull());
-                    return;
+                break;
+            case -5:
+                final Item bottom = eqpdInv.getItem((short) -6);
+                if (bottom != null && ItemConstants.isOverall(source.getItemId())) {
+                    if (eqpInv.isFull()) {
+                        c.sendPacket(PacketCreator.getInventoryFull());
+                        c.sendPacket(PacketCreator.getShowInventoryFull());
+                        return;
+                    }
+                    unequip(c, (byte) -6, eqpInv.getNextFreeSlot());
                 }
-                unequip(c, (byte) -6, eqpInv.getNextFreeSlot());
-            }
-            break;
-        case -10: // check if weapon is two-handed
-            Item weapon = eqpdInv.getItem((short) -11);
-            if (weapon != null && ii.isTwoHanded(weapon.getItemId())) {
-                if (eqpInv.isFull()) {
-                    c.sendPacket(PacketCreator.getInventoryFull());
-                    c.sendPacket(PacketCreator.getShowInventoryFull());
-                    return;
+                break;
+            case -10: // check if weapon is two-handed
+                Item weapon = eqpdInv.getItem((short) -11);
+                if (weapon != null && ii.isTwoHanded(weapon.getItemId())) {
+                    if (eqpInv.isFull()) {
+                        c.sendPacket(PacketCreator.getInventoryFull());
+                        c.sendPacket(PacketCreator.getShowInventoryFull());
+                        return;
+                    }
+                    unequip(c, (byte) -11, eqpInv.getNextFreeSlot());
                 }
-                unequip(c, (byte) -11, eqpInv.getNextFreeSlot());
-            }
-            break;
-        case -11:
-            Item shield = eqpdInv.getItem((short) -10);
-            if (shield != null && ii.isTwoHanded(source.getItemId())) {
-                if (eqpInv.isFull()) {
-                    c.sendPacket(PacketCreator.getInventoryFull());
-                    c.sendPacket(PacketCreator.getShowInventoryFull());
-                    return;
+                break;
+            case -11:
+                Item shield = eqpdInv.getItem((short) -10);
+                if (shield != null && ii.isTwoHanded(source.getItemId())) {
+                    if (eqpInv.isFull()) {
+                        c.sendPacket(PacketCreator.getInventoryFull());
+                        c.sendPacket(PacketCreator.getShowInventoryFull());
+                        return;
+                    }
+                    unequip(c, (byte) -10, eqpInv.getNextFreeSlot());
                 }
-                unequip(c, (byte) -10, eqpInv.getNextFreeSlot());
-            }
-            break;
-        case -18:
-            if (chr.getMapleMount() != null) {
-                chr.getMapleMount().setItemId(source.getItemId());
-            }
-            break;
+                break;
+            case -18:
+                if (chr.getMapleMount() != null) {
+                    chr.getMapleMount().setItemId(source.getItemId());
+                }
+                break;
         }
 
         //1112413, 1112414, 1112405 (Lilin's Ring)
@@ -704,7 +710,7 @@ public class InventoryManipulator {
         if (petIndex != -1) {
             Pet pet = chr.getPet(petIndex);
             if (pet != null) {
-                chr.getMap().broadcastMessage(chr, PacketCreator.changePetName(chr, pet.getName(), (byte)petIndex), false);
+                chr.getMap().broadcastMessage(chr, PacketCreator.changePetName(chr, pet.getName(), (byte) petIndex), false);
             }
         }
 
@@ -763,10 +769,10 @@ public class InventoryManipulator {
         if (petIndex != -1) {
             Pet pet = chr.getPet(petIndex);
             if (pet != null) {
-                chr.getMap().broadcastMessage(chr, PacketCreator.changePetName(chr, pet.getName(), (byte)petIndex), false);
+                chr.getMap().broadcastMessage(chr, PacketCreator.changePetName(chr, pet.getName(), (byte) petIndex), false);
             }
         }
-        
+
         c.sendPacket(PacketCreator.modifyInventory(true, Collections.singletonList(new ModifyInventory(2, source, src))));
         chr.equipChanged();
     }

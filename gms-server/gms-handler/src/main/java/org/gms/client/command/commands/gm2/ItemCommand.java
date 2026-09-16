@@ -31,6 +31,7 @@ import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.server.ItemInformationProvider;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.util.I18nUtil;
 
 import static java.util.concurrent.TimeUnit.DAYS;
@@ -74,7 +75,7 @@ public class ItemCommand extends Command {
                 long expiration = System.currentTimeMillis() + DAYS.toMillis(days);
                 int petid = Pet.createPet(itemId);
 
-                InventoryManipulator.addById(c, itemId, quantity, player.getName(), petid, expiration);
+                InventoryManipulator.addById(c, itemId, quantity, player.getName(), petid, expiration, AchievementCategory.PLAYER_INVENTORY_OTHER);
                 return;
             } else {
                 player.yellowMessage(I18nUtil.getMessage("ItemCommand.message5"));
@@ -88,6 +89,6 @@ public class ItemCommand extends Command {
             flag |= ItemConstants.UNTRADEABLE;
         }
 
-        InventoryManipulator.addById(c, itemId, quantity, player.getName(), -1, flag, -1);
+        InventoryManipulator.addById(c, itemId, quantity, player.getName(), -1, flag, -1, AchievementCategory.PLAYER_INVENTORY_OTHER);
     }
 }

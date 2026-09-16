@@ -35,6 +35,7 @@ import org.gms.net.packet.Packet;
 import org.gms.net.server.Server;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.Trade;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
@@ -438,7 +439,9 @@ public class HiredMerchant extends AbstractMapObject {
                         if (mpsi.getItem().getInventoryType().equals(InventoryType.EQUIP)) {
                             InventoryManipulator.addFromDrop(c, mpsi.getItem(), false);
                         } else {
-                            InventoryManipulator.addById(c, mpsi.getItem().getItemId(), (short) (mpsi.getBundles() * mpsi.getItem().getQuantity()), mpsi.getItem().getOwner(), -1, mpsi.getItem().getFlag(), mpsi.getItem().getExpiration());
+                            InventoryManipulator.addById(c, mpsi.getItem().getItemId(), (short) (mpsi.getBundles() * mpsi.getItem().getQuantity()),
+                                    mpsi.getItem().getOwner(), -1, mpsi.getItem().getFlag(), mpsi.getItem().getExpiration(),
+                                    AchievementCategory.PLAYER_INVENTORY_OTHER);
                         }
                     }
                 }

@@ -2129,7 +2129,7 @@ public class Character extends AbstractCharacterObject {
                                 }
 
                                 this.getMap().pickItemDrop(pickupPacket, mapitem);
-                            } else if (InventoryManipulator.addFromDrop(client, mItem, true)) {
+                            } else if (InventoryManipulator.addFromDrop(client, mItem, true, AchievementCategory.PLAYER_INVENTORY_DROP)) {
                                 this.getMap().pickItemDrop(pickupPacket, mapitem);
                             } else {
                                 enableActions();
@@ -2166,7 +2166,7 @@ public class Character extends AbstractCharacterObject {
                         if (info != null && info.runOnPickup()) {
                             itemScript = info;
                         } else {
-                            if (!InventoryManipulator.addFromDrop(client, mItem, true)) {
+                            if (!InventoryManipulator.addFromDrop(client, mItem, true, AchievementCategory.PLAYER_INVENTORY_DROP)) {
                                 enableActions();
                                 return;
                             }
@@ -2183,7 +2183,7 @@ public class Character extends AbstractCharacterObject {
                             //showHint("捡到 #e#b" + nxGain + " NX#k#n (" + this.getCashShop().getCash(CashShop.NX_CREDIT) + " NX)", 300);
                         }
                     } else if (applyConsumeOnPickup(mItem.getItemId())) {//此段判断为处理捡取治疗道具和怪物卡加入图鉴
-                    } else if (InventoryManipulator.addFromDrop(client, mItem, true)) {
+                    } else if (InventoryManipulator.addFromDrop(client, mItem, true, AchievementCategory.PLAYER_INVENTORY_DROP)) {
                         if (mItem.getItemId() == ItemId.ARPQ_SPIRIT_JEWEL) {
                             updateAriantScore();
                         }
@@ -2978,7 +2978,7 @@ public class Character extends AbstractCharacterObject {
                                 }
                             }
                             for (Integer itemid : toadd) {
-                                InventoryManipulator.addById(client, itemid, (short) 1);
+                                InventoryManipulator.addById(client, itemid, (short) 1, AchievementCategory.PLAYER_INVENTORY_OTHER);
                             }
                         }
 

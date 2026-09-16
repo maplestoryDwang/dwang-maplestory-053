@@ -30,6 +30,7 @@ import org.gms.provider.DataProvider;
 import org.gms.provider.DataProviderFactory;
 import org.gms.provider.DataTool;
 import org.gms.provider.wz.WzFiles;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.util.PacketCreator;
 
 import java.awt.*;
@@ -63,7 +64,7 @@ public class SpawnPetProcessor {
                         }
                         long expiration = chr.getInventory(InventoryType.CASH).getItem(slot).getExpiration();
                         InventoryManipulator.removeById(c, InventoryType.CASH, petid, (short) 1, false, false);
-                        InventoryManipulator.addById(c, evolveid, (short) 1, null, petId, expiration);
+                        InventoryManipulator.addById(c, evolveid, (short) 1, null, petId, expiration, AchievementCategory.PLAYER_INVENTORY_OTHER);
 
                         c.sendPacket(PacketCreator.enableActions());
                         return;

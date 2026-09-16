@@ -31,6 +31,7 @@ import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.dwutil.ItemUtils;
 import org.gms.net.packet.InPacket;
+import org.gms.server.achievement.AchievementCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.ItemInformationProvider;
@@ -448,7 +449,7 @@ public class MakerProcessor {
             eqp = ii.randomizeUpgradeStats(eqp);
         }
 
-        InventoryManipulator.addFromDrop(c, item, false, -1);
+        InventoryManipulator.addFromDrop(c, item, false, -1, null, AchievementCategory.PLAYER_INVENTORY_OTHER);
         return true;
     }
 }

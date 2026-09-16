@@ -34,6 +34,7 @@ import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.channel.Channel;
 import org.gms.net.server.world.World;
+import org.gms.server.achievement.AchievementCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.scripting.event.EventInstanceManager;
@@ -291,7 +292,7 @@ public final class RingActionHandler extends AbstractPacketHandler {
         }
     }
 
-    public static void giveMarriageRings(Character player, Character partner, int marriageRingId) {
+/*    public static void giveMarriageRings(Character player, Character partner, int marriageRingId) {
         Pair<Integer, Integer> rings = Ring.createRing(marriageRingId, player, partner);
         ItemInformationProvider ii = ItemInformationProvider.getInstance();
 
@@ -308,7 +309,7 @@ public final class RingActionHandler extends AbstractPacketHandler {
         partner.setMarriageRing(Ring.loadFromDb(rings.getRight()));
         InventoryManipulator.addFromDrop(partner.getClient(), ringEqp, false, -1);
         partner.broadcastMarriageMessage();
-    }
+    }*/
 
     @Override
     public final void handlePacket(InPacket p, Client c) {
@@ -362,8 +363,8 @@ public final class RingActionHandler extends AbstractPacketHandler {
                         source.setMarriageItemId(newItemId);
                         target.setMarriageItemId(newItemId + 1);
 
-                        InventoryManipulator.addById(source.getClient(), newItemId, (short) 1);
-                        InventoryManipulator.addById(c, (newItemId + 1), (short) 1);
+                        InventoryManipulator.addById(source.getClient(), newItemId, (short) 1, AchievementCategory.PLAYER_INVENTORY_OTHER);
+                        InventoryManipulator.addById(c, (newItemId + 1), (short) 1, AchievementCategory.PLAYER_INVENTORY_OTHER);
 
                         source.sendPacket(WeddingPackets.OnMarriageResult(marriageId, source, false));
                         target.sendPacket(WeddingPackets.OnMarriageResult(marriageId, source, false));

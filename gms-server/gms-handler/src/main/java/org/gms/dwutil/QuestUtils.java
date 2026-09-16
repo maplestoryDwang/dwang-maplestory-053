@@ -288,7 +288,7 @@ public class QuestUtils {
                         return false;
                     }
 
-                    InventoryManipulator.addById(chr.getClient(), item.getId(), (short) missingQty);
+                    InventoryManipulator.addById(chr.getClient(), item.getId(), (short) missingQty, AchievementCategory.PLAYER_INVENTORY_OTHER);
                     log.debug("Chr {} obtained {}x {} from questId {}", chr, itemid, missingQty, itemAct);
                 }
                 return true;

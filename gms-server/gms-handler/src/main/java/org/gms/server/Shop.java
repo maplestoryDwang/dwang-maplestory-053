@@ -31,6 +31,7 @@ import org.gms.client.character.inventory.manipulator.InventoryManipulator;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.dwutil.ItemUtils;
+import org.gms.server.achievement.AchievementCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.util.DatabaseConnection;
@@ -152,9 +153,9 @@ public class Shop {
                     if (InventoryManipulator.checkSpace(c, itemId, quantity, "")) {
                         if (ItemConstants.isPet(itemId)) {
                             int petid = Pet.createPet(itemId);
-                            InventoryManipulator.addById(c, itemId, quantity, "", petid, -1);
+                            InventoryManipulator.addById(c, itemId, quantity, "", petid, -1, AchievementCategory.PLAYER_INVENTORY_OTHER);
                         } else {
-                            InventoryManipulator.addById(c, itemId, quantity, "", -1, -1);
+                            InventoryManipulator.addById(c, itemId, quantity, "", -1, -1 , AchievementCategory.PLAYER_INVENTORY_OTHER);
                         }
                         c.getPlayer().gainMeso(diff, false);
                     } else {

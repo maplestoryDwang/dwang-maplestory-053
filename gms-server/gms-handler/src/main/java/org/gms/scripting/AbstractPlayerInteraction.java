@@ -42,6 +42,7 @@ import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;
 import org.gms.dwutil.ItemUtils;
 import org.gms.dwutil.QuestUtils;
+import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.events.wxmas.WXMacData;
 import org.gms.model.pojo.SkillEntry;
 import org.gms.net.server.Server;
@@ -108,9 +109,11 @@ public class AbstractPlayerInteraction {
     public int getLevel() {
         return getPlayer().getLevel();
     }
+
     public void setRemainingSp(int sps) {
         getPlayer().updateRemainingSp(sps);
     }
+
     public MapleMap getMap() {
         return c.getPlayer().getMap();
     }
@@ -609,6 +612,7 @@ public class AbstractPlayerInteraction {
         return gainItem(id, quantity, randomStats, showMessage, expires, from, null);
 
     }
+
     public Item gainItem(int id, short quantity, boolean randomStats, boolean showMessage, long expires, Pet from, String owner) {
         Item item = null;
         Pet evolved;
@@ -673,12 +677,12 @@ public class AbstractPlayerInteraction {
             }
             if (ItemConstants.getInventoryType(id) == InventoryType.EQUIP) {
                 if (randomStats) {
-                    InventoryManipulator.addFromDrop(c, ii.randomizeStats((Equip) item), false, petId, owner);
+                    InventoryManipulator.addFromDrop(c, ii.randomizeStats((Equip) item), false, petId, owner, AchievementCategory.PLAYER_INVENTORY_ID);
                 } else {
-                    InventoryManipulator.addFromDrop(c, item, false, petId, owner);
+                    InventoryManipulator.addFromDrop(c, item, false, petId, owner, AchievementCategory.PLAYER_INVENTORY_ID);
                 }
             } else {
-                InventoryManipulator.addFromDrop(c, item, false, petId, owner);
+                InventoryManipulator.addFromDrop(c, item, false, petId, owner, AchievementCategory.PLAYER_INVENTORY_ID);
             }
         } else {
             InventoryManipulator.removeById(c, ItemConstants.getInventoryType(id), id, -quantity, true, false);
@@ -790,7 +794,7 @@ public class AbstractPlayerInteraction {
         for (Character chr : party) {
             Client cl = chr.getClient();
             if (quantity >= 0) {
-                InventoryManipulator.addById(cl, id, quantity);
+                InventoryManipulator.addById(cl, id, quantity, AchievementCategory.PLAYER_INVENTORY_OTHER);
             } else {
                 InventoryManipulator.removeById(cl, ItemConstants.getInventoryType(id), id, -quantity, true, false);
             }
@@ -1010,6 +1014,7 @@ public class AbstractPlayerInteraction {
 
     /**
      * 一些特殊的传送口可能需要
+     *
      * @param npcId
      * @param x
      * @param y
@@ -1061,6 +1066,7 @@ public class AbstractPlayerInteraction {
 
     /**
      * 传送门
+     *
      * @param exclRequest
      * @param portalId
      */
@@ -1132,6 +1138,7 @@ public class AbstractPlayerInteraction {
 
     /**
      * 实际上播放的是field的
+     *
      * @param sound
      */
     public void playSound(String sound) {
@@ -1386,7 +1393,7 @@ public class AbstractPlayerInteraction {
         if (!InventoryManipulator.checkSpace(getClient(), equip.getItemId(), 1, equip.getOwner())) {
             message(I18nUtil.getMessage("AbstractPlayerInteraction.gainEquip.message2", InventoryType.EQUIP.getName()));
         }
-        InventoryManipulator.addFromDrop(getClient(), equip, false);
+        InventoryManipulator.addFromDrop(getClient(), equip, false, AchievementCategory.PLAYER_INVENTORY_ID);
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1394,15 +1401,14 @@ public class AbstractPlayerInteraction {
      * 获取账户在线时间
      * @return 返回当前账户角色在线时间，单位分钟
      */
-    public int getOnlineTime()
-    {
+    public int getOnlineTime() {
         return getPlayer().getCurrentOnlineTime();
     }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // 简单实现先跑通
-    public Object getFieldSet(String key){
+    public Object getFieldSet(String key) {
         Object o = WXMacData.fileSet.get(key);
         if (o == null) {
             WXMacData.fileSet.put(key, new Object());
@@ -1410,11 +1416,11 @@ public class AbstractPlayerInteraction {
         return o;
     }
 
-    public Integer setVar(String key, Integer value){
+    public Integer setVar(String key, Integer value) {
         return WXMacData.varMaps.put(key, value);
     }
 
-    public Integer getVar(String key){
+    public Integer getVar(String key) {
         return WXMacData.varMaps.get(key);
     }
 
