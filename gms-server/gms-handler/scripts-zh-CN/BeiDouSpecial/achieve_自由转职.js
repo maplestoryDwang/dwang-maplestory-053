@@ -128,6 +128,9 @@ function action(mode, type, selection) {
         // 这样会自动增加属性 MaxHP/MaxMP、更新组队/公会、并向客户端发送包含属性与 SP 的完整 UpdateStats 数据包
         var newJobObj = Job.getById(selectedJobId);
         player.changeJob(newJobObj);
+
+
+        resetAndReturnAp(player);
 //        player.equipChanged();
 
 
@@ -140,6 +143,46 @@ function action(mode, type, selection) {
         cm.dropMessage(5, "【自由转职】成功转职为 " + selectedJobName + "！");
         cm.sendOk("恭喜你！自由转职成功，你现在是一名 #b" + selectedJobName + "#k！\r\n职业状态与 SP 已经全部更新，请打开技能面板分配点数。");
         cm.dispose();
+    }
+}
+
+
+/**
+ * 重置属性点并返还 AP
+ * 逻辑：计算总投入在四维属性中的点数，将其重置为 4，并全部转入 RemainingAp
+ */
+function resetAndReturnAp(player) {
+    try {
+        var baseStat = 4; // 基础初始属性点
+
+        var curStr = player.getStr();
+        var curDex = player.getDex();
+        var curInt = player.getInt();
+        var curLuk = player.getLuk();
+        var curAp = player.getRemainingAp();
+
+        // 计算需要返还的总 AP 差值（防止因装备增益或异常导致小于 0）
+        var returnAp = Math.max(0, curStr - baseStat) +
+                       Math.max(0, curDex - baseStat) +
+                       Math.max(0, curInt - baseStat) +
+                       Math.max(0, curLuk - baseStat);
+
+        var totalAp = curAp + returnAp;
+
+        // 设置四维基础属性为 4 设置新的可分配 AP
+        player.changeStrDexIntLuk(baseStat, baseStat, baseStat, baseStat ,totalAp, false);
+
+
+    } catch (e) {
+        // 兼容性捕获：如果服务端采用直接 API 处理
+        try {
+            player.changeRemainingAp(player.getRemainingAp() + (player.getStr() + player.getDex() + player.getInt() + player.getLuk() - 16), false);
+            player.setStr(4);
+            player.setDex(4);
+            player.setInt(4);
+            player.setLuk(4);
+            player.equipChanged();
+        } catch (err) {}
     }
 }
 

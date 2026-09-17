@@ -29,6 +29,7 @@ import org.gms.client.inventory.ItemFactory;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.client.character.skill.Skill;
 import org.gms.client.character.skill.SkillFactory;
+import org.gms.client.processor.stat.AssignAPProcessor;
 import org.gms.client.status.MapleStat;
 import org.gms.client.status.SkinColor;
 import org.gms.config.GameConfig;
@@ -454,6 +455,14 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public void resetStats() {
         getPlayer().resetStats();
+    }
+
+    /**
+     * 自动分配 ap
+     */
+    public void autoAssignAp() {
+        Job job = getPlayer().getJob();
+        AssignAPProcessor.runServerAutoAssigner(getPlayer(), job);
     }
 
     public void openShopNPC(int id) {
