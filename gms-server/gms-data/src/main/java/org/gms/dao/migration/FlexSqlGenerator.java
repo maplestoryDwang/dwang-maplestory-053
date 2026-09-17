@@ -11,6 +11,14 @@ import java.util.*;
 
 public class FlexSqlGenerator {
 
+    /**
+     *
+     * @param entityList
+     * @param idFieldName do的参数名字
+     * @param mysqlVarName
+     * @return
+     * @param <T>
+     */
     public static <T> String convertToSql(List<T> entityList, String idFieldName, String mysqlVarName) {
         if (entityList == null || entityList.isEmpty()) {
             return "";

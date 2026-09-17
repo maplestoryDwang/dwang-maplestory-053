@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.gms.dao.entity.*;
 import org.gms.dao.entity.table.AccountsDOTableDef;
+import org.gms.dao.entity.table.CharacterAchievementDOTableDef;
 import org.gms.dao.entity.table.PetignoresDOTableDef;
 import org.gms.dao.mapper.*;
 import org.gms.dao.migration.FlexSqlGenerator;
@@ -15,6 +16,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
+import static org.gms.dao.entity.table.CharacterAchievementDOTableDef.CHARACTER_ACHIEVEMENT_D_O;
 import static org.gms.dao.entity.table.StoragesDOTableDef.STORAGES_D_O;
 import static org.gms.dao.entity.table.AreaInfoDOTableDef.AREA_INFO_D_O;
 import static org.gms.dao.entity.table.CharactersDOTableDef.CHARACTERS_D_O;
@@ -53,6 +55,7 @@ public class MigrationSqlService {
     private final BbsThreadsMapper bbsThreadsMapper;
     private final BbsRepliesMapper bbsRepliesMapper;
     private final WishlistsMapper wishlistsMapper;
+    private final CharacterAchievementMapper characterAchievementMapper;
     private final CooldownsMapper cooldownsMapper;
     private final PlayerdiseasesMapper playerdiseasesMapper;
     private final AreaInfoMapper areaInfoMapper;
@@ -112,6 +115,7 @@ public class MigrationSqlService {
         this.trocklocationsMapper = FlexDbContext.getMapper(TrocklocationsMapper.class);
         this.eventstatsMapper = FlexDbContext.getMapper(EventstatsMapper.class);
         this.serverQueueMapper = FlexDbContext.getMapper(ServerQueueMapper.class);
+        this.characterAchievementMapper = FlexDbContext.getMapper(CharacterAchievementMapper.class);
 
         // quest
         this.medalmapsMapper = FlexDbContext.getMapper(MedalmapsMapper.class);
@@ -201,6 +205,11 @@ public class MigrationSqlService {
     }
 
     private void recordCharFromDB(int accountid, int cid, StringBuilder sql) {
+
+        // 获取成就
+        List<CharacterAchievementDO> characterAchievementDOS = characterAchievementMapper.selectListByQuery(QueryWrapper.create().where(CHARACTER_ACHIEVEMENT_D_O.CHARACTER_ID.eq(cid)));
+        sql.append(FlexSqlGenerator.convertToSql(characterAchievementDOS, "characterId", "@current_char_id"));
+
 
         // 获取wishlists ── 自动转换
         List<WishlistsDO> wishlistsDOS = wishlistsMapper.selectListByQuery(QueryWrapper.create().where(WISHLISTS_D_O.CHARID.eq(cid)));

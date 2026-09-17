@@ -3,6 +3,8 @@ package org.gms.dao.migration;
 import com.mybatisflex.core.MybatisFlexBootstrap;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.gms.dao.mapper.CharacterAchievementMapper;
+
 import javax.sql.DataSource;
 import java.io.File;
 import java.io.FileInputStream;
@@ -111,6 +113,7 @@ public class FlexDbContext {
                     .addMapper(org.gms.dao.mapper.NpcCraftCatMapper.class)
                     .addMapper(org.gms.dao.mapper.NpcCraftItemMapper.class)
                     .addMapper(org.gms.dao.mapper.NpcCraftMatMapper.class)
+                    .addMapper(CharacterAchievementMapper.class)
 
 
                     .addMapper(org.gms.dao.mapper.WishlistsMapper.class);
