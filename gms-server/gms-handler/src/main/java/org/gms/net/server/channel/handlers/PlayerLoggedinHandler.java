@@ -21,6 +21,8 @@
  */
 package org.gms.net.server.channel.handlers;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.gms.client.*;
 import org.gms.client.Character;
 import org.gms.client.character.CharacterNameAndId;
@@ -38,6 +40,7 @@ import org.gms.constants.game.GameConstants;
 import org.gms.dwutil.ClientDBUtils;
 import org.gms.manager.ServerManager;
 import org.gms.net.AbstractPacketHandler;
+import org.gms.net.PacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.PlayerBuffValueHolder;
 import org.gms.net.server.Server;
@@ -52,7 +55,9 @@ import org.gms.net.server.guild.GuildPackets;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.net.server.world.PartyOperation;
 import org.gms.net.server.world.World;
+import org.gms.server.life.PlayerNPC;
 import org.gms.service.HpMpAlertService;
+import org.gms.service.PlayerNpcService;
 import org.gms.util.I18nUtil;
 import org.gms.util.packets.WeddingPackets;
 import org.slf4j.Logger;
@@ -63,6 +68,8 @@ import org.gms.service.NoteInteralService;
 import org.gms.util.DatabaseConnection;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -71,17 +78,37 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.Map.Entry;
 
+@Component
 public final class PlayerLoggedinHandler extends AbstractPacketHandler {
     private static final Logger log = LoggerFactory.getLogger(PlayerLoggedinHandler.class);
-    private static final Set<Integer> attemptingLoginAccounts = new HashSet<>();
 
+
+    private static PlayerLoggedinHandler instance;
     private final NoteInteralService noteInteralService;
 
-    private static final HpMpAlertService hpMpAlertService = ServerManager.getApplicationContext().getBean(HpMpAlertService.class);
+    @Autowired
+    private PlayerNpcService playerNpcService;
 
+
+    // todo 看这个到底有问题有问题
+    public static PacketHandler getInstance(NoteInteralService noteInteralService) {
+        return instance;
+    }
+
+    @PostConstruct
+    private void init() {
+        instance = this;
+    }
     public PlayerLoggedinHandler(NoteInteralService noteInteralService) {
         this.noteInteralService = noteInteralService;
     }
+
+    private static final Set<Integer> attemptingLoginAccounts = new HashSet<>();
+
+
+    private static final HpMpAlertService hpMpAlertService = ServerManager.getApplicationContext().getBean(HpMpAlertService.class);
+
+
 
     private boolean tryAcquireAccount(int accId) {
         synchronized (attemptingLoginAccounts) {
@@ -261,6 +288,11 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
 //
 //            KeyBinding autompPot = player.getKeymap().get(92);
 //            player.sendPacket(PacketCreator.sendAutoMpPot(autompPot != null ? autompPot.getAction() : 0));
+
+
+            // todo 刷新人物NPC outfit
+            PlayerNPC.updatePlayerOutfit(player);
+
 
             // 进入地图 NPC添加等等
             player.getMap().addPlayer(player);

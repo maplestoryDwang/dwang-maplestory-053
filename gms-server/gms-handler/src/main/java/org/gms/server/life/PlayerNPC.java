@@ -70,6 +70,9 @@ public class PlayerNPC extends AbstractMapObject {
     private static final Map<Pair<Integer, Integer>, AtomicInteger> runningWorldJobRank = new HashMap<>();
     private static final PlayerNpcService PLAYER_NPC_SERVICE = ServerManager.getApplicationContext().getBean(PlayerNpcService.class);
 
+    public static final int DEFAULT_PLAYER_NPC_MAP = 102000000;
+    public static final Point DEFAULT_PLAYER_NPC_POINT = new Point(1267, 1796);
+
     @Getter
     private Map<Short, Integer> equips = new HashMap<>();
     @Getter
@@ -163,6 +166,7 @@ public class PlayerNPC extends AbstractMapObject {
         });
     }
 
+
     public int getWorldRank() {
         return worldRank;
     }
@@ -186,8 +190,10 @@ public class PlayerNPC extends AbstractMapObject {
 
     @Override
     public void sendSpawnData(Client client) {
-        client.sendPacket(PacketCreator.spawnPlayerNPC(this));
-        client.sendPacket(PacketCreator.getPlayerNPC(this));
+        if (Objects.equals(client.getPlayer().getName(), this.getName())) {
+            client.sendPacket(PacketCreator.spawnPlayerNPC(this));
+            client.sendPacket(PacketCreator.getPlayerNPC(this));
+        }
     }
 
     @Override
@@ -285,9 +291,116 @@ public class PlayerNPC extends AbstractMapObject {
         return availablesBranch.removeLast();
     }
 
+    private static PlayerNPC createPlayerNPCInternal053(MapleMap map, Point pos, Character chr) {
+        int mapId = map.getId();
+
+        // 一个地图只能建一个相同名字的
+        if (!canSpawnPlayerNpc(chr.getName(), mapId)) {
+            return null;
+        }
+
+        // 直接去读可用npcId就行了
+        int scriptId = getNextScriptId053();
+        if (scriptId == -1) {
+            return null;
+        }
+
+        if (pos == null) {
+            if (GameConstants.isPodiumHallOfFameMap(map.getId())) {
+                pos = PlayerNPCPodium.getNextPlayerNpcPosition(map);
+            } else {
+                pos = PlayerNPCPositioner.getNextPlayerNpcPosition(map);
+            }
+
+            if (pos == null) {
+                return null;
+            }
+        }
+
+        if (GameConfig.getServerBoolean("use_debug")) {
+            log.info("GOT SID {}, POS {}", scriptId, pos);
+        }
+
+
+
+        List<PlayernpcsDO> playerNpcDOs = PLAYER_NPC_SERVICE.getPlayerNpcDOs(PlayernpcsDO.builder().scriptid(scriptId).build());
+        if (!playerNpcDOs.isEmpty()) {
+            return null;
+        }
+        PlayernpcsDO playerNpcDO =  buildPlayerNpc(chr, map, pos, scriptId);
+
+        List<PlayernpcsEquipDO> playerNpcEquipDOS = chr.getInventory(InventoryType.EQUIPPED).list().stream()
+                .map(equip -> PlayernpcsEquipDO.builder()
+                        .equipid(equip.getItemId())
+                        .equippos(equip.getPosition())
+                        .build())
+                .toList();
+        return PLAYER_NPC_SERVICE.createPlayerNPC(playerNpcDO, playerNpcEquipDOS);
+    }
+
+    private static PlayernpcsDO buildPlayerNpc(Character chr, MapleMap map, Point pos, int scriptId) {
+        int mapId = map.getId();
+        int worldId = chr.getWorld();
+        int jobId = (chr.getJob().getId() / 100) * 100;
+        PlayernpcsDO playerNpcDO = PlayernpcsDO.builder()
+                .name(chr.getName())
+                .hair(chr.getHair())
+                .face(chr.getFace())
+                .skin(chr.getSkinColor().getId())
+                .gender(chr.getGender())
+                .x(pos.x)
+                .cy(pos.y)
+                .world(worldId)
+                .map(mapId)
+                .scriptid(scriptId)
+                .dir(1)
+                .fh(map.getFootholds().findBelow(pos).getId())
+                .rx0(pos.x + 50)
+                .rx1(pos.x - 50)
+                .worldrank(runningWorldRank.get(worldId).getAndIncrement())
+                .overallrank(runningOverallRank.getAndIncrement())
+                .worldjobrank(getAndIncrementRunningWorldJobRanks(worldId, jobId))
+                .job(jobId)
+                .build();
+        return playerNpcDO;
+    }
+
+    /**
+     * 获取下一个npcId ,只要数据库没有就能用。
+     * 9901000 9901319
+     * @return
+     */
+    private static int getNextScriptId053() {
+        int branchSid  = 9901000;
+        int nextBranchSid  = 9901319;
+        try {
+            try (Connection con = DatabaseConnection.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT scriptid FROM playernpcs")) {
+                Set<Integer> usedScriptIds = new HashSet<>();
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        usedScriptIds.add(rs.getInt(1));
+                    }
+                }
+
+                for (int i = branchSid; i < nextBranchSid; i++) {
+                    if (!usedScriptIds.contains(i)) {
+                        if (PlayerNPCFactory.isExistentScriptid(i)) {
+                            return i;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return -1;
+    }
+
     private static PlayerNPC createPlayerNPCInternal(MapleMap map, Point pos, Character chr) {
         int mapId = map.getId();
 
+        // 一个地图只能建一个相同名字的
         if (!canSpawnPlayerNpc(chr.getName(), mapId)) {
             return null;
         }
@@ -322,26 +435,8 @@ public class PlayerNPC extends AbstractMapObject {
         if (!playerNpcDOs.isEmpty()) {
             return null;
         }
-        PlayernpcsDO playerNpcDO = PlayernpcsDO.builder()
-                .name(chr.getName())
-                .hair(chr.getHair())
-                .face(chr.getFace())
-                .skin(chr.getSkinColor().getId())
-                .gender(chr.getGender())
-                .x(pos.x)
-                .cy(pos.y)
-                .world(worldId)
-                .map(mapId)
-                .scriptid(scriptId)
-                .dir(1)
-                .fh(map.getFootholds().findBelow(pos).getId())
-                .rx0(pos.x + 50)
-                .rx1(pos.x - 50)
-                .worldrank(runningWorldRank.get(worldId).getAndIncrement())
-                .overallrank(runningOverallRank.getAndIncrement())
-                .worldjobrank(getAndIncrementRunningWorldJobRanks(worldId, jobId))
-                .job(jobId)
-                .build();
+        PlayernpcsDO playerNpcDO =  buildPlayerNpc(chr, map, pos, scriptId);
+
         List<PlayernpcsEquipDO> playerNpcEquipDOS = chr.getInventory(InventoryType.EQUIPPED).list().stream()
                 .map(equip -> PlayernpcsEquipDO.builder()
                         .equipid(equip.getItemId())
@@ -391,7 +486,7 @@ public class PlayerNPC extends AbstractMapObject {
 
     private static synchronized Pair<PlayerNPC, List<Integer>> processPlayerNPCInternal(MapleMap map, Point pos, Character chr, boolean create) {
         if (create) {
-            return new Pair<>(createPlayerNPCInternal(map, pos, chr), null);
+            return new Pair<>(createPlayerNPCInternal053(map, pos, chr), null);
         } else {
             return new Pair<>(null, removePlayerNPCInternal(map, chr));
         }
@@ -520,5 +615,31 @@ public class PlayerNPC extends AbstractMapObject {
     public static void addPlayerNPCMapObject(MapleMap map) {
         List<PlayerNPC> playerNPCList = PLAYER_NPC_SERVICE.getPlayerNPC(PlayernpcsDO.builder().map(map.getId()).world(map.getWorld()).build());
         playerNPCList.forEach(map::addPlayerNPCMapObject);
+    }
+
+    /**
+     * 更新信息
+     * @param player
+     */
+    public static void updatePlayerOutfit(Character chr) {
+        int worldId = chr.getWorld();
+        int jobId = (chr.getJob().getId() / 100) * 100;
+        List<PlayernpcsDO> playerNpcDOs = PLAYER_NPC_SERVICE.getPlayerNpcDOs(PlayernpcsDO.builder().name(chr.getName()).build());
+        List<PlayernpcsEquipDO> playerNpcEquipDOS = chr.getInventory(InventoryType.EQUIPPED).list().stream()
+                .map(equip -> PlayernpcsEquipDO.builder()
+                        .equipid(equip.getItemId())
+                        .equippos(equip.getPosition())
+                        .build())
+                .toList();
+
+        for (PlayernpcsDO playerNpcDO : playerNpcDOs) {
+            playerNpcDO.setHair(chr.getHair());
+            playerNpcDO.setFace(chr.getFace());
+            playerNpcDO.setSkin(chr.getSkinColor().getId());
+            playerNpcDO.setWorld(worldId);
+            playerNpcDO.setJob(jobId);
+
+            PLAYER_NPC_SERVICE.updatePlayerNPC(playerNpcDO, playerNpcEquipDOS);
+        }
     }
 }

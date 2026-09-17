@@ -27,6 +27,7 @@ import org.gms.client.inventory.InventoryType;
 import org.gms.client.inventory.Item;
 import org.gms.config.GameConfig;
 import org.gms.net.server.Server;
+import org.gms.server.life.PlayerNPC;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,6 +99,12 @@ public abstract class CharacterFactory {
             return -2;
         }
         c.sendPacket(PacketCreator.addNewCharEntry(newCharacter));
+
+        // 玩家NPC
+        boolean b = PlayerNPC.spawnPlayerNPC(PlayerNPC.DEFAULT_PLAYER_NPC_MAP, PlayerNPC.DEFAULT_PLAYER_NPC_POINT, newCharacter);
+        if (!b) {
+            log.error("spawnPlayerNPC 创建失败");
+        }
 
         Server.getInstance().createCharacterEntry(newCharacter);
         Server.getInstance().broadcastGMMessage(c.getWorld(), PacketCreator.sendYellowTip("[New Char]: " + c.getAccountName() + I18nUtil.getMessage("CharacterFactory.message1") + name));

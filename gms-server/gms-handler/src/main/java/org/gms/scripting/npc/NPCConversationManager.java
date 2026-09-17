@@ -461,8 +461,8 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      * 自动分配 ap
      */
     public void autoAssignAp() {
-        Job job = getPlayer().getJob();
-        AssignAPProcessor.runServerAutoAssigner(getPlayer(), job);
+        Job stance = Job.getJobStyleInternal(getPlayer().getJob().getId(), (byte)0); // 根据选项获取玩家的职业类型
+        AssignAPProcessor.runServerAutoAssigner(getPlayer(), stance);
     }
 
     public void openShopNPC(int id) {

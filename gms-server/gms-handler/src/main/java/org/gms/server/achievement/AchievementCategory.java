@@ -87,35 +87,36 @@ public class AchievementCategory {
     }};
 
     /**
-     * 立
+     * 静默记录的类型
      */
     public static final Set<String> ACHIEVEMENT_CAT = Set.of(
 
-            // 立即完成
-            MapleShieldEggChecker.EGG_MAPLE_SHIELD,
-            ShipBatMonEggChecker.EGG_SHIP_BAT_MON,
-            MakerSignedEggChecker.EGG_MAKER_SIGNED,
-            SaunaAfkEggChecker.EGG_SAUNA_AFK,
-            AncientBookEggChecker.EGG_ANCIENT_BOOK,
-            FourthJobEggChecker.EGG_FOURTH_JOB,
+//            // 立即完成
+//            MapleShieldEggChecker.EGG_MAPLE_SHIELD,
+//            ShipBatMonEggChecker.EGG_SHIP_BAT_MON,
+//            MakerSignedEggChecker.EGG_MAKER_SIGNED,
+//            SaunaAfkEggChecker.EGG_SAUNA_AFK,
+//            AncientBookEggChecker.EGG_ANCIENT_BOOK,
+//            FourthJobEggChecker.EGG_FOURTH_JOB,
+//
+//            // 延迟完成
+//            DeathCountEggChecker.EGG_DEATH_COUNT,
+//            SpecialFoodEggChecker.EGG_SPECIAL_FOOD,
+//            BeautyEggChecker.EGG_BEAUTY_ALL,
+//            JumpMasterEggChecker.EGG_JUMP_MASTER,
+//
+//            // 除彩蛋外的
+//            MONSTER_KILL,
+//            MONSTER_KILL_KEY,
+//            QUEST_COMPLETED,
+//            PARTY_QUEST,
+//            MUSIC_DISCOVERY,
+//            HIDDEN_MAP,
+//            GACHAPON_COUNT,
+//            BOSS_KILL,
+//            SPECIAL_NPC,
+//            SPECIAL_EGG,
 
-            // 延迟完成
-            DeathCountEggChecker.EGG_DEATH_COUNT,
-            SpecialFoodEggChecker.EGG_SPECIAL_FOOD,
-            BeautyEggChecker.EGG_BEAUTY_ALL,
-            JumpMasterEggChecker.EGG_JUMP_MASTER,
-
-            // 除彩蛋外的
-            MONSTER_KILL,
-            MONSTER_KILL_KEY,
-            QUEST_COMPLETED,
-            PARTY_QUEST,
-            MUSIC_DISCOVERY,
-            HIDDEN_MAP,
-            GACHAPON_COUNT,
-            BOSS_KILL,
-            SPECIAL_NPC,
-            SPECIAL_EGG,
             PLAYER_INVENTORY_DROP,
             PLAYER_INVENTORY_OTHER,
             PLAYER_INVENTORY_ID,

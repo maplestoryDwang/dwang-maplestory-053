@@ -160,7 +160,8 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.ITEM_SORT, new InventoryMergeHandler());
         registerHandler(RecvOpcode.ITEM_MOVE, new ItemMoveHandler());                                        //   check
         registerHandler(RecvOpcode.MESO_DROP, new MesoDropHandler());
-        registerHandler(RecvOpcode.PLAYER_LOGGEDIN, new PlayerLoggedinHandler(channelDeps.noteInteralService()));
+//        registerHandler(RecvOpcode.PLAYER_LOGGEDIN, new PlayerLoggedinHandler(channelDeps.noteInteralService()));
+        registerHandler(RecvOpcode.PLAYER_LOGGEDIN, PlayerLoggedinHandler.getInstance(channelDeps.noteInteralService()));
         registerHandler(RecvOpcode.CHANGE_MAP, new ChangeMapHandler());                                        //   check
         registerHandler(RecvOpcode.MOVE_LIFE, new MoveLifeHandler());                                          //   check
         registerHandler(RecvOpcode.CLOSE_RANGE_ATTACK, new CloseRangeDamageHandler());                       //   check
