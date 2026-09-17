@@ -1,9 +1,25 @@
 server:
   port: 8686
 
+spring:
+  profiles:
+    # 默认激活本地环境，生产启动时用 --spring.profiles.active=prod 覆盖
+    active: prod
+  flyway:
+    # 禁用版本验证
+    validate-on-migrate: false
+  servlet:
+    # 默认文件大小就是这里设置的，按需修改
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 10MB
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+
 app:
   vue: http://localhost:8787
-  
+
 jwt:
   # secret 生产环境请自行生成 UUID
   secret: "81a5cd39-c4a1-f8a2-1832-a32e5d85c470"
@@ -11,13 +27,6 @@ jwt:
   duration: 1800000
 
 mybatis-flex:
-  datasource:
-    mysql:
-      type: com.alibaba.druid.pool.DruidDataSource
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/dwang053?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-      username: root
-      password: 123456
   global-config:
     print-banner: false
 
@@ -30,19 +39,6 @@ springdoc:
   swagger-ui:
     # 是否开启SwaggerUI，依赖OpenApi的开启
     enabled: false
-
-spring:
-  flyway:
-    # 禁用版本验证
-    validate-on-migrate: false
-  servlet:
-    # 默认文件大小就是这里设置的，按需修改
-    multipart:
-      max-file-size: 1MB
-      max-request-size: 10MB
-  jackson:
-    time-zone: Asia/Shanghai
-    date-format: yyyy-MM-dd HH:mm:ss
 
 gms:
   service:
