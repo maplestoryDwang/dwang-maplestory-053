@@ -1,16 +1,15 @@
 package string;
 
 import org.gms.ServerApplication;
-import org.gms.provider.DataProvider;
 import org.gms.server.MapStrInfo;
 import org.gms.server.StringInfoProvider;
 import org.gms.server.life.NPCInfomationProvier;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * TODO
@@ -26,17 +25,17 @@ public class NpcScriptMap {
     public void loadNpcScriptMap() {
 
        Map<Integer, String> scriptMap = NPCInfomationProvier.getScriptMap();
+       AtomicInteger canClick = new AtomicInteger();
        scriptMap.keySet().stream().sorted().forEach(npcId -> {
-
            String mapName = getNpcExistMapName(npcId);
            String npcName = StringInfoProvider.getNPCName(npcId);
            if ("当前版本不存在".equals(mapName)){
                System.out.println("脚本ID:" + npcId + " NPC: " + npcName + " map: " + mapName);
+           } else {
+               canClick.getAndIncrement();
            }
-
-
        });
- 
+       System.out.println("可点击数量:  " + canClick.get());
 
    }
 

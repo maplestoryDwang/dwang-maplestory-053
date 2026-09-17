@@ -117,7 +117,9 @@ public class AchievementService {
 
 
             // 完成某个
-            if (config.getMaxProgress() > 0 && Objects.equals(record.getProgress(), config.getMaxProgress())) {
+            if (config.getMaxProgress()  == null || record.getProgress() == null) {
+
+            } else if (config.getMaxProgress() > 0 && Objects.equals(record.getProgress(), config.getMaxProgress())) {
                 String msg = EggChecker.ACHIEVEMENT_MSG + "内容是：" + config.getName();
                 eventPublisher.publishEvent(new DropMessageEvent(this, cid, ServerMsgType.Pink_Text.getType(), msg ));
 

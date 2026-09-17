@@ -153,7 +153,12 @@ public class StringInfoProvider {
                 }
             }
         }
-        int size = bgms.size(); // 86 in GMS053
+//        int size = bgms.size(); // 86 in GMS053
+//        System.out.println("音乐有");
+//        for (String bgm : bgms) {
+//            System.out.println(bgm);
+//        }
+
     }
 
 

@@ -55,6 +55,7 @@ public class AchievementCategory {
     }};
 
 
+
     // 额外一个八卦新闻
     public static final String EGG_FINAL_INFO = "恭喜你你已经找到了所有的彩蛋，但是我这边还有一条道听途说的消息：如果你收集了#b1000#k个#t4000052#，可以在冒险世界的某处兑换#r冰狼#k辅助工具哦，是不是很酷！目前还没有冒险家找到他，你可能是第一个...";
 
@@ -122,6 +123,97 @@ public class AchievementCategory {
             PLAYER_INVENTORY_ID,
             PLAYER_WARP_MAP
             );
-
+    /**
+     * 音乐中文名
+     */
+    public static final Map<String, String> BGM_NAME_ZH = Collections.unmodifiableMap(
+            new LinkedHashMap<>() {{
+                put("Bgm09/FairyTale", "童话世界");
+                put("Bgm11/DownTown", "闹市区");
+                put("BgmGL/NLChunt", "新叶城·狩猎");
+                put("Bgm15/Pirate", "海盗");
+                put("Bgm01/AncientMove", "远古的律动");
+                put("BgmJp/FirstStepMaster", "第一步·大师");
+                put("Bgm06/WelcomeToTheHell", "欢迎来到地狱");
+                put("Bgm09/DarkShadow", "暗影");
+                put("Bgm08/ForTheGlory", "为了荣耀");
+                put("BgmGL/HauntedHouse", "鬼屋");
+                put("Bgm13/Minar'sDream", "米纳尔的梦");
+                put("Bgm01/CavaBien", "卡瓦比恩");
+                put("Bgm02/EvilEyes", "邪恶之眼");
+                put("Bgm03/Beachway", "海滩之路");
+                put("Bgm02/JungleBook", "丛林之书");
+                put("Bgm11/DarkMountain", "暗黑山脉");
+                put("Bgm06/FlyingInABlueDream", "蓝色梦境中飞翔");
+                put("Bgm00/RestNPeace", "安息与宁静");
+                put("Bgm06/ComeWithMe", "跟我来");
+                put("Bgm08/FindingForest", "寻找森林");
+                put("Bgm08/LetsMarch", "进军");
+                put("Bgm01/HighlandStar", "高原之星");
+                put("Bgm15/WhiteHerb", "白色药草");
+                put("Bgm01/MoonlightShadow", "月影");
+                put("Bgm13/Leafre", "神木村");
+                put("Bgm12/AquaCave", "水下洞穴");
+                put("BgmEvent/FunnyRabbit", "搞笑兔子");
+                put("Bgm00/Nightmare", "梦魇");
+                put("Bgm09/TheyMenacingYou", "他们的威胁");
+                put("BgmGL/NLCtown", "新叶城·城镇");
+                put("Bgm04/UponTheSky", "天空之上");
+                put("Bgm09/FairyTalediffvers", "童话世界·变奏");
+                put("Bgm11/ShiningSea", "闪耀之海");
+                put("Bgm11/Aquarium", "水族馆");
+                put("Bgm11/BlueWorld", "蓝色世界");
+                put("Bgm06/FantasticThinking", "奇妙思绪");
+                put("BgmGL/amoria", "阿莫利亚");
+                put("Bgm07/FunnyTimeMaker", "欢乐时光制造者");
+                put("Bgm10/TheWayGrotesque", "怪诞之路");
+                put("Bgm03/BlueSky", "蓝天");
+                put("Bgm02/MissingYou", "想念你");
+                put("Bgm12/DeepSee", "深海");
+                put("Bgm07/WhereverYouAre", "无论你在何方");
+                put("Bgm00/SleepyWood", "沉睡森林");
+                put("Bgm15/MureungHill", "武陵丘陵");
+                put("Bgm14/CaveOfHontale", "火焰龙洞穴");
+                put("BgmJp/Bathroom", "浴室");
+                put("Bgm12/WaterWay", "水道");
+                put("BgmJp/BattleField", "战场");
+                put("Bgm10/BizarreTales", "奇异故事");
+                put("Bgm15/MureungForest", "武陵森林");
+                put("Bgm05/HellGate", "地狱之门");
+                put("Bgm05/MineQuest", "矿洞任务");
+                put("Bgm04/WarmRegard", "温暖关怀");
+                put("Bgm02/AboveTheTreetops", "树梢之上");
+                put("Bgm07/HighEnough", "足够高");
+                put("Bgm13/AcientForest", "远古森林");
+                put("Bgm02/WhenTheMorningComes", "当清晨来临");
+                put("Bgm08/PlotOfPixie", "小精灵的阴谋");
+                put("Bgm07/Fantasia", "幻想曲");
+                put("Bgm13/TowerOfGoddess", "女神之塔");
+                put("Bgm09/TimeAttack", "限时挑战");
+                put("BgmGL/NLCupbeat", "新叶城·轻快");
+                put("Bgm04/WhiteChristmas", "白色圣诞");
+                put("Bgm12/AcientRemain", "远古遗迹");
+                put("BgmJp/Feeling", "感受");
+                put("Bgm12/RuinCastle", "废墟城堡");
+                put("Bgm14/DragonNest", "龙之巢穴");
+                put("Bgm00/GoPicnic", "去野餐");
+                put("BgmGL/Amorianchallenge", "阿莫利亚挑战");
+                put("Bgm00/FloralLife", "花之生活");
+                put("BgmJp/BizarreForest", "奇异森林");
+                put("BgmJp/Yume", "梦");
+                put("Bgm08/LetsHuntAliens", "去猎杀外星人");
+                put("Bgm10/TimelessB", "永恒 B");
+                put("Bgm04/Shinin'Harbor", "闪耀港湾");
+                put("Bgm03/SnowyVillage", "雪之村庄");
+                put("Bgm07/WaltzForWork", "工作圆舞曲");
+                put("Bgm10/Timeless", "永恒");
+                put("Bgm14/DragonLoad", "龙之之路");
+                put("Bgm05/WolfWood", "狼之森林");
+                put("Bgm01/BadGuys", "坏家伙们");
+                put("Bgm05/AbandonedMine", "废弃矿洞");
+                put("BgmEvent/FunnyRabbitFaster", "搞笑兔子·加速版");
+                put("Bgm03/Subway", "地铁");
+            }}
+    );
 
 }

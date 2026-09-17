@@ -33,6 +33,11 @@ public class HiddenMapAchievementManager {
         mapIds.add(MapIdGen.BEACH_HUNTING_GROUND_104010002);          // 海岸打猎场
         mapIds.add(MapIdGen.THE_RESTING_SPOT_PIG_PARK_100000006);     // 猪猪公园休息地方
         mapIds.add(MapIdGen.THE_BREATHING_ROCK_106010101);            // 石人寺院门外
+        mapIds.add(MapIdGen.THE_ENTRANCE_OF_GOLEM_S_TEMPLE_106010102);            // 石人寺院门外
+        mapIds.add(MapIdGen.GOLEM_S_TEMPLE_I_106010103);            // 石人寺院门外
+        mapIds.add(MapIdGen.GOLEM_S_TEMPLE_II_106010104);            // 石人寺院门外
+        mapIds.add(MapIdGen.GOLEM_S_TEMPLE_III_106010105);            // 石人寺院门外
+        mapIds.add(MapIdGen.GOLEM_S_TEMPLE_IV_106010106);            // 石人寺院门外
         mapIds.add(MapIdGen.THE_BLUE_MUSHROOM_FOREST_100030001);      // 青蘑菇树林
 
         // 南部森林训练场 I - IV
@@ -43,10 +48,21 @@ public class HiddenMapAchievementManager {
 
         mapIds.add(MapIdGen.DOWNSTAIRS_AT_THE_FOREST_100040110);      // 树林的底层
         mapIds.add(MapIdGen.TREE_DUNGEON_MONKEY_FOREST_I_100040102);  // 猴林迷宫I
-        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_I_101020002);// 北部森林训练场I
+        mapIds.add(MapIdGen.TREE_DUNGEON_MONKEY_FOREST_II_100040104);  // 猴林迷宫II
+        mapIds.add(MapIdGen.THE_TREE_TUNNEL_AT_THE_FOREST_UP_NORTH_101020001);  //
+        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_I_101020002);// 北部森林训练场I - VIIII
+        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_II_101020003);// 北部森林训练场I - VIIII
+        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_III_101020004);// 北部森林训练场I - VIIII
+        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_IV_101020005);// 北部森林训练场I - VIIII
+        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_V_101020006);// 北部森林训练场I - VIIII
+        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_VI_101020007);// 北部森林训练场I - VIIII
+        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_VII_101020008);// 北部森林训练场I - VIIII
+        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_101020009);// 北部森林训练场I - VIIII
+        mapIds.add(MapIdGen.TREE_DUNGEON_FOREST_UP_NORTH_IX_101020010);// 北部森林训练场I - VIIII
+
+        // 勇士
         mapIds.add(MapIdGen.LAND_OF_WILD_BOAR_101040001);             // 野猪的领土I
         mapIds.add(MapIdGen.THE_LAND_OF_WILD_BOAR_II_101030001);      // 野猪的领土II
-
         // 第1, 2, 3军营
         mapIds.add(MapIdGen.CAMP_1_101030110);
         mapIds.add(MapIdGen.CAMP_2_101030111);
@@ -56,19 +72,24 @@ public class HiddenMapAchievementManager {
         mapIds.add(MapIdGen.OVER_THE_WALL_101040002);                 // 墙后
         mapIds.add(MapIdGen.DANGEROUS_VALLEY_106000001);              // 危险的峡谷 I
         mapIds.add(MapIdGen.DANGEROUS_VALLEY_II_106000002);           // 危险的峡谷 II
+
+        // 废弃
         mapIds.add(MapIdGen.NORTHERN_TOP_OF_CONSTRUCTION_SITE_102040001); // 北方工地顶部
         mapIds.add(MapIdGen.CAUTION_FALLING_DOWN_103010001);          // 坠落主义
         mapIds.add(MapIdGen.SWAMP_OF_JUIOR_NECKI_107000001);          // 青蛇沼泽地
-        mapIds.add(MapIdGen.SWAMPY_LAND_IN_A_DEEP_FOREST_105040000);  // 沼泽地带的棚屋/黑森林通道
-
         // 猴子沼泽地 I - III
         mapIds.add(MapIdGen.MONKEY_SWAMP_I_107000401);
         mapIds.add(MapIdGen.MONKEY_SWAMP_II_107000402);
         mapIds.add(MapIdGen.MONKEY_SWAMP_III_107000403);
 
+
+        // 林中
         mapIds.add(MapIdGen.DAMP_FOREST_107000501);                   // 黑森林沼泽
         mapIds.add(MapIdGen.THE_FOREST_OF_GOLEM_105040306);           // 巨人之林
         mapIds.add(MapIdGen.THE_GRAVE_OF_MUSHMOM_105070002);          // 蘑菇王之墓
+
+
+        // 海滩
         mapIds.add(MapIdGen.LORANG_LORANG_LORANG_110020001);          // 红螃蟹海滩II
         mapIds.add(MapIdGen.CLANG_AND_LORANG_110030001);              // 青螃蟹海滩II
 
@@ -78,7 +99,6 @@ public class HiddenMapAchievementManager {
         mapIds.add(MapIdGen.VALLEY_OF_SNOWMAN_211040101);             // 雪人谷
         mapIds.add(MapIdGen.HOLY_GROUND_AT_THE_SNOWFIELD_211040401);  // 雪原圣地
         mapIds.add(MapIdGen.CAVE_WITHIN_THE_CAVE_211042101);          // 连环洞穴
-        mapIds.add(MapIdGen.PENGUIN_S_PLAYGROUND_230010001);          // 企鹅公园
 
 
         // 3. 玩具城 & 地球防御本部 & 童话村
@@ -95,8 +115,11 @@ public class HiddenMapAchievementManager {
 //        mapIds.add(MapIdGen.TOP_OF_BLACK_MOUNTAIN_222010400);     // 鬼怪之家 (鬼怪山脊)
 
         // 4. 水下世界 / 武陵 / 百草堂 / 神木村 / 异域
-        mapIds.add(MapIdGen.FISH_RESTING_SPOT_230030001);         // 鱼之平原
-        mapIds.add(MapIdGen.THE_AREA_OF_WILD_HOG_922200000);      // 野生猪的领域
+        mapIds.add(MapIdGen.FISH_RESTING_SPOT_230030001);            // 鱼之平原
+        mapIds.add(MapIdGen.PENGUIN_S_PLAYGROUND_230010001);          // 企鹅公园
+
+
+        mapIds.add(MapIdGen.THE_AREA_OF_WILD_HOG_922200000);        // 野生猪的领域
         mapIds.add(MapIdGen.MAP_80_YEAR_OLD_HERB_GARDEN_251010102); // 八十年药草地
         mapIds.add(MapIdGen.MAP_60_YEAR_OLD_HERB_GARDEN_251010101); // 六十年药草地
         mapIds.add(MapIdGen.BEETLE_FOREST_240010901);             // 战火森林
@@ -122,23 +145,4 @@ public class HiddenMapAchievementManager {
     public static boolean isHiddenMap(int mapId) {
         return HIDDEN_MAP_IDS.contains(mapId);
     }
-
-    /**
-     * 玩家切换地图或击杀怪物触发成就的检查方法示例
-     *
-     * @param currentMapId 当前地图ID
-     */
-    public static boolean checkAndRecordAchievement( int currentMapId) {
-        return isHiddenMap(currentMapId);
-//        if (isHiddenMap(currentMapId)) {
-//            // 执行成就记录逻辑，例如：
-//            // player.getAchievementManager().grantAchievement("EXPLORE_HIDDEN_MAP", currentMapId);
-//            System.out.println("玩家处于隐藏地图 [MapID: " + currentMapId + "]，允许记录成就！");
-//            re
-//        } else {
-//            System.out.println("当前地图 [MapID: " + currentMapId + "] 不是隐藏地图，忽略成就记录。");
-//        }
-    }
-
-
 }

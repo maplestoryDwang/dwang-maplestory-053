@@ -632,14 +632,21 @@ public class PlayerNPC extends AbstractMapObject {
                         .build())
                 .toList();
 
-        for (PlayernpcsDO playerNpcDO : playerNpcDOs) {
-            playerNpcDO.setHair(chr.getHair());
-            playerNpcDO.setFace(chr.getFace());
-            playerNpcDO.setSkin(chr.getSkinColor().getId());
-            playerNpcDO.setWorld(worldId);
-            playerNpcDO.setJob(jobId);
+        if (playerNpcDOs.isEmpty()) {
+            boolean b = PlayerNPC.spawnPlayerNPC(PlayerNPC.DEFAULT_PLAYER_NPC_MAP, PlayerNPC.DEFAULT_PLAYER_NPC_POINT, chr);
 
-            PLAYER_NPC_SERVICE.updatePlayerNPC(playerNpcDO, playerNpcEquipDOS);
+
+        } else {
+            for (PlayernpcsDO playerNpcDO : playerNpcDOs) {
+                playerNpcDO.setHair(chr.getHair());
+                playerNpcDO.setFace(chr.getFace());
+                playerNpcDO.setSkin(chr.getSkinColor().getId());
+                playerNpcDO.setWorld(worldId);
+                playerNpcDO.setJob(jobId);
+
+                PLAYER_NPC_SERVICE.updatePlayerNPC(playerNpcDO, playerNpcEquipDOS);
+            }
         }
+
     }
 }
