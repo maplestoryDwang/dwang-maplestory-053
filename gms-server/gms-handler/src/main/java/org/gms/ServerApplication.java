@@ -16,6 +16,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 @SpringBootApplication
 @MapperScan("org.gms.dao.mapper")
@@ -38,45 +39,76 @@ public class ServerApplication {
      * 无法解决在获取MybatisFlexProperties之后，在以上自动配置之前执行，进而手动解析yml来自动创建库
      */
     private static void initDb(String[] args) throws Exception {
-        InputStream resource = null;
 
+        // 1) 确定 active profile：启动参数 > 系统属性 > 环境变量
+        String activeProfile = getStartParam(args, "spring.profiles.active");
+        if (activeProfile == null) activeProfile = System.getProperty("spring.profiles.active");
+        if (activeProfile == null) activeProfile = System.getenv("SPRING_PROFILES_ACTIVE");
+
+        // 2) 加载公共配置 application.yml（用于兜底 & 从里面读 profiles.active）
+        LinkedHashMap<String, Object> baseProperty = null;
         String location = getStartParam(args, "spring.config.location");
         if (location != null) {
             Path path = Path.of(location);
-            if (!Files.exists(path)) {
-                return;
+            if (!Files.exists(path)) return;
+            try (InputStream in = Files.newInputStream(path)) {
+                baseProperty = new Yaml().load(in);
             }
-            resource = Files.newInputStream(path);
         }
-        if (resource == null) {
-            // 解析jar包自带的yml
-            resource = ServerApplication.class.getClassLoader().getResourceAsStream("application.yml");
+        if (baseProperty == null) {
+            baseProperty = loadYamlFromClasspath("application.yml");
         }
 
-        Yaml yaml = new Yaml();
-        LinkedHashMap<String, Object> property = yaml.load(resource);
-        JSONObject mybatisFlex = JSONObject.parse(JSONObject.toJSONString(property.get("mybatis-flex")));
-        JSONObject datasource = mybatisFlex.getJSONObject("datasource").getJSONObject("mysql");
+        // 3) 如果还没确定 profile，从 application.yml 的 spring.profiles.active 里取
+        if (activeProfile == null) {
+            activeProfile = getProfileFromProperty(baseProperty);
+        }
+
+        // 4) 加载 profile 专属文件（支持 prod,local 逗号分隔），取其中的 mybatis-flex.datasource.mysql
+        Map<String, Object> ds = null;
+        if (activeProfile != null && !activeProfile.isBlank()) {
+            for (String p : activeProfile.split(",")) {
+                LinkedHashMap<String, Object> profileProperty =
+                        loadYamlFromClasspath("application-" + p.trim() + ".yml");
+                Map<String, Object> profileDs = getDatasource(profileProperty);
+                if (profileDs != null) {
+                    ds = profileDs; // 后面的覆盖前面的
+                }
+            }
+        }
+        // 5) profile 里没写数据源，退回 application.yml
+        if (ds == null) {
+            ds = getDatasource(baseProperty);
+        }
+        if (ds == null) {
+            throw new IllegalStateException("未找到 mybatis-flex.datasource.mysql 配置，请检查 profile=" + activeProfile);
+        }
+
+        // 6) 命令行参数优先级最高
         String driver = getStartParam(args, "mybatis-flex.datasource.mysql.driver-class-name");
-        if (driver == null) driver = datasource.getString("driver-class-name");
+        if (driver == null) driver = str(ds.get("driver-class-name"));
         String dbUrl = getStartParam(args, "mybatis-flex.datasource.mysql.url");
-        if (dbUrl == null) dbUrl = datasource.getString("url");
+        if (dbUrl == null) dbUrl = str(ds.get("url"));
         String username = getStartParam(args, "mybatis-flex.datasource.mysql.username");
-        if (username == null) username = datasource.getString("username");
+        if (username == null) username = str(ds.get("username"));
         String password = getStartParam(args, "mybatis-flex.datasource.mysql.password");
-        if (password == null) password = datasource.getString("password");
+        if (password == null) password = str(ds.get("password"));
+
+        // 7) 创建库（逻辑和原来一致）
         String urlPrefix = dbUrl.split("\\?")[0];
         String[] dbSplit = urlPrefix.split("/");
         String dbName = dbSplit[dbSplit.length - 1];
         String dbPrefix = urlPrefix.substring(0, urlPrefix.length() - dbName.length());
         try (Connection connection = getConnection(driver, dbPrefix + "mysql", username, password)) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SHOW DATABASES LIKE '" + dbName + "'");
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("SHOW DATABASES LIKE '" + dbName + "'");
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return;
             }
             resultSet.close();
-            preparedStatement = connection.prepareStatement("CREATE DATABASE " + dbName + " DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
+            preparedStatement = connection.prepareStatement(
+                    "CREATE DATABASE " + dbName + " DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
             preparedStatement.executeUpdate();
             preparedStatement.close();
         }
@@ -101,5 +133,41 @@ public class ServerApplication {
         }
         // 第三优先级 环境变量
         return System.getenv(paramName.replaceAll("\\.", "_"));
+    }
+
+    @SuppressWarnings("unchecked")
+    private static LinkedHashMap<String, Object> loadYamlFromClasspath(String name) {
+        try (InputStream in = ServerApplication.class.getClassLoader().getResourceAsStream(name)) {
+            if (in == null) return null;
+            return new Yaml().load(in);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static String getProfileFromProperty(Map<String, Object> property) {
+        if (property == null) return null;
+        Object spring = property.get("spring");
+        if (!(spring instanceof Map)) return null;
+        Object profiles = ((Map<String, Object>) spring).get("profiles");
+        if (!(profiles instanceof Map)) return null;
+        Object active = ((Map<String, Object>) profiles).get("active");
+        return active == null ? null : active.toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> getDatasource(Map<String, Object> property) {
+        if (property == null) return null;
+        Object mf = property.get("mybatis-flex");
+        if (!(mf instanceof Map)) return null;
+        Object ds = ((Map<String, Object>) mf).get("datasource");
+        if (!(ds instanceof Map)) return null;
+        Object mysql = ((Map<String, Object>) ds).get("mysql");
+        return mysql instanceof Map ? (Map<String, Object>) mysql : null;
+    }
+
+    private static String str(Object o) {
+        return o == null ? null : o.toString();
     }
 }
