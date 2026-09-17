@@ -720,7 +720,7 @@ public class InventoryManipulator {
 
         // 判断穿上的是否是枫叶盾
         if (source.getItemId() == ShieldId.MAPLE_SHIELD_1092030) {
-            achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG, MapleShieldEggChecker.EGG_MAPLE_SHIELD, null);
+            achievementService.recordAchievementEgg(chr.getId(), AchievementCategory.SPECIAL_EGG, MapleShieldEggChecker.EGG_MAPLE_SHIELD, null);
         }
 
     }

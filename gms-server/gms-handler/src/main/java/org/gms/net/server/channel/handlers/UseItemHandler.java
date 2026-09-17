@@ -129,7 +129,7 @@ public final class UseItemHandler extends AbstractPacketHandler {
 
             // 判断如何喝下的是绿豆汤和空气灵则增加
             if (SpecialFoodEggChecker.specialFoods.contains(itemId)) {
-                achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG, SpecialFoodEggChecker.EGG_SPECIAL_FOOD, String.valueOf(itemId));
+                achievementService.recordAchievementEgg(chr.getId(), AchievementCategory.SPECIAL_EGG, SpecialFoodEggChecker.EGG_SPECIAL_FOOD, String.valueOf(itemId));
             }
 
         }

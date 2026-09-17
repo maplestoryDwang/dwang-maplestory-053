@@ -14,6 +14,7 @@ import java.util.List;
  */
 
 public interface EggChecker {
+    public static final String ACHIEVEMENT_MSG = "你完成了一个成就！";
     public static final String EGG_MSG = "你触发了一个彩蛋！";
 
 

@@ -250,15 +250,15 @@ public class QuestUtils {
         // 4. 四转任务触发 (QuestUtils#complete)
         if (Set.of(QuestId.HERO_S_QUALITY_6904, QuestId.A_HERO_S_QUALITY_6914, QuestId.HERO_S_QUALITY_6924, QuestId.HERO_S_QUALITY_6934).contains(questId)) {
             // 任意触发即可
-            achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG , FourthJobEggChecker.EGG_FOURTH_JOB, null);
+            achievementService.recordAchievementEgg(chr.getId(), AchievementCategory.SPECIAL_EGG , FourthJobEggChecker.EGG_FOURTH_JOB, null);
         } else if (Set.of(QuestId.ALCASTER_AND_THE_DARK_CRYSTAL_3035).contains(questId)) {
             //
-            achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG , AncientBookEggChecker.EGG_ANCIENT_BOOK, null);
+            achievementService.recordAchievementEgg(chr.getId(), AchievementCategory.SPECIAL_EGG , AncientBookEggChecker.EGG_ANCIENT_BOOK, null);
 
         } else if (Set.of(QuestId.SHUMI_S_LOST_COIN_2055, QuestId.SHUMI_S_LOST_BUNDLE_OF_MONEY_2056, QuestId.SHUMI_S_LOST_BUNDLE_OF_MONEY_2057
                 , QuestId.JOHN_S_PINK_FLOWER_BASKET_2052, QuestId.JOHN_S_PRESENT_2053, QuestId.JOHN_S_LAST_PRESENT_2054
                 , QuestId.SABITRAMA_AND_THE_DIET_MEDICINE_2050, QuestId.SABITRAMA_S_ANTI_AGING_MEDICINE_2051).contains(questId)) {
-            achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG, JumpMasterEggChecker.EGG_JUMP_MASTER, String.valueOf(questId));
+            achievementService.recordAchievementEgg(chr.getId(), AchievementCategory.SPECIAL_EGG, JumpMasterEggChecker.EGG_JUMP_MASTER, String.valueOf(questId));
         }
         return true;
     }

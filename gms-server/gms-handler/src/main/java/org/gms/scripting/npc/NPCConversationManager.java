@@ -366,7 +366,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         getPlayer().updateSingleStat(MapleStat.HAIR, hair);
         getPlayer().equipChanged();
         context.getAchievementService()
-                .recordAchievementEgg(getPlayer(), AchievementCategory.SPECIAL_EGG, BeautyEggChecker.EGG_BEAUTY_ALL, "HAIR");
+                .recordAchievementEgg(getPlayer().getId(), AchievementCategory.SPECIAL_EGG, BeautyEggChecker.EGG_BEAUTY_ALL, "HAIR");
     }
 
     public void setFace(int face) {
@@ -374,7 +374,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         getPlayer().updateSingleStat(MapleStat.FACE, face);
         getPlayer().equipChanged();
         context.getAchievementService()
-                .recordAchievementEgg(getPlayer(), AchievementCategory.SPECIAL_EGG, BeautyEggChecker.EGG_BEAUTY_ALL, "FACE");
+                .recordAchievementEgg(getPlayer().getId(), AchievementCategory.SPECIAL_EGG, BeautyEggChecker.EGG_BEAUTY_ALL, "FACE");
     }
 
     public void setSkin(int color) {
@@ -382,7 +382,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         getPlayer().updateSingleStat(MapleStat.SKIN, color);
         getPlayer().equipChanged();
         context.getAchievementService()
-                .recordAchievementEgg(getPlayer(), AchievementCategory.SPECIAL_EGG, BeautyEggChecker.EGG_BEAUTY_ALL, "SKIN");
+                .recordAchievementEgg(getPlayer().getId(), AchievementCategory.SPECIAL_EGG, BeautyEggChecker.EGG_BEAUTY_ALL, "SKIN");
     }
 
     public int itemQuantity(int itemid) {
@@ -1760,7 +1760,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         gainItem(id, quantity, false, true, -1, null, owner);
         if (ItemConstants.isEquipment(id)) {
             // 触发锻造
-            context.getAchievementService().recordAchievementEgg(getPlayer(), AchievementCategory.SPECIAL_EGG, MakerSignedEggChecker.EGG_MAKER_SIGNED, null);
+            context.getAchievementService().recordAchievementEgg(getPlayer().getId(), AchievementCategory.SPECIAL_EGG, MakerSignedEggChecker.EGG_MAKER_SIGNED, null);
         }
     }
 

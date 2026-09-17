@@ -2,15 +2,18 @@ package org.gms.server.achievement;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.Getter;
-import org.gms.client.Character;
+import org.gms.client.ServerMsgType;
 import org.gms.dao.entity.AchievementDiscountConfigDO;
 import org.gms.dao.entity.CharacterAchievementDO;
 import org.gms.dao.mapper.AchievementDiscountConfigMapper;
 import org.gms.dao.mapper.CharacterAchievementMapper;
+import org.gms.event.DropMessageEvent;
 import org.gms.server.StringInfoProvider;
 import org.gms.server.achievement.boss.BossDetailDTO;
 import org.gms.server.achievement.egg.EggChecker;
 import org.gms.server.achievement.egg.EggStatusDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,6 +37,11 @@ public class AchievementService {
     private final Map<String, EggChecker> bossCheckers = new HashMap<>();
     // 内存缓存成就配置表
     private final Map<String, AchievementDiscountConfigDO> configCache = new ConcurrentHashMap<>();
+
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
+
+
 
     // Spring 自动注入所有实现了 EggChecker 的 Bean
     public AchievementService(CharacterAchievementMapper achievementMapper,
@@ -82,13 +90,15 @@ public class AchievementService {
         } else if (config == null && category.contains("BOSS_KILL")) {
             config = getConfig(AchievementCategory.BOSS_KILL);
         } else if (AchievementCategory.ACHIEVEMENT_CAT.contains(category)) {
-            // 随便找一个默认的把
-            config = getConfig(AchievementCategory.BOSS_KILL);
+            // 静默的设置
+            config = new AchievementDiscountConfigDO();
+            config.setIsAccumulate(false);
         } else if (config == null || !Boolean.TRUE.equals(config.getEnabled())) {
             return false;
         }
-
+        // 是否是可叠加的
         boolean isAccumulate = Boolean.TRUE.equals(config.getIsAccumulate());
+
 
         QueryWrapper qw = QueryWrapper.create()
                 .where("character_id = ?", cid)
@@ -104,6 +114,15 @@ public class AchievementService {
 //            }
             record.setProgress(record.getProgress() + addAmount);
             achievementMapper.update(record);
+
+
+            // 完成某个
+            if (config.getMaxProgress() > 0 && Objects.equals(record.getProgress(), config.getMaxProgress())) {
+                String msg = EggChecker.ACHIEVEMENT_MSG + "内容是：" + config.getName();
+                eventPublisher.publishEvent(new DropMessageEvent(this, cid, ServerMsgType.Pink_Text.getType(), msg ));
+
+            }
+
             return false;
         }
 
@@ -126,14 +145,15 @@ public class AchievementService {
      * @param value
      * @return
      */
-    public boolean recordAchievementEgg(Character character, String category, String subCate, String value) {
-        int cid = character.getId();
+    public boolean recordAchievementEgg(int cid , String category, String subCate, String value) {
         EggChecker eggChecker = eggCheckers.get(subCate);
         boolean b = eggChecker.recordAchievementEgg(cid, category, subCate, value, this);
         boolean completed = eggChecker.showNotice(cid, this);
         if (completed) {
             String info = AchievementCategory.EGG_NAME_MAP.get(subCate);
-            character.dropMessage(5, EggChecker.EGG_MSG + "内容是：" + info);
+            String msg = EggChecker.EGG_MSG + "内容是：" + info;
+            eventPublisher.publishEvent(new DropMessageEvent(this, cid, ServerMsgType.Pink_Text.getType(), msg ));
+
         }
         return true;
     }
@@ -143,8 +163,7 @@ public class AchievementService {
      *
      * @return true 表示属于 BOSS 且已处理；false 表示不属于任何 BOSS 区域
      */
-    public boolean recordAchievementBoss(Character character, String mobIdStr) {
-        int cid = character.getId();
+    public boolean recordAchievementBoss(int cid, String mobIdStr) {
 
         // 遍历所有区域 BOSS Checker，寻找归属
         for (EggChecker checker : bossCheckers.values()) {
@@ -158,7 +177,9 @@ public class AchievementService {
                 // 如果是“首次击杀该 BOSS”，去校验是否恰好集齐了该区域的所有 BOSS
                 if (isNewKill && checker.showNotice(cid, this)) {
                     String regionName = AchievementCategory.BOSS_EGG_NAME_MAP.getOrDefault(checker.getEggKey(), "该区域");
-                    character.dropMessage(5, "恭喜达成成就：【" + regionName + "】！");
+                    String msg = "恭喜达成成就：【" + regionName + "】！";
+                    eventPublisher.publishEvent(new DropMessageEvent(this, cid, ServerMsgType.Pink_Text.getType(), msg ));
+
                 }
                 return true; // 匹配并处理成功，告知外部这是 BOSS
             }

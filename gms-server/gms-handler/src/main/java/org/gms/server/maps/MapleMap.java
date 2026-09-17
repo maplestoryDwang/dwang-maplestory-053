@@ -1498,7 +1498,7 @@ public class MapleMap {
 
                     // 彩蛋3
                     if (monster.getId() == MobIdGen.CRIMSON_BALROG_8150000) {
-                        achievementService.recordAchievementEgg(chr, AchievementCategory.SPECIAL_EGG, ShipBatMonEggChecker.EGG_SHIP_BAT_MON, null);
+                        achievementService.recordAchievementEgg(chr.getId(), AchievementCategory.SPECIAL_EGG, ShipBatMonEggChecker.EGG_SHIP_BAT_MON, null);
                     }
 
 

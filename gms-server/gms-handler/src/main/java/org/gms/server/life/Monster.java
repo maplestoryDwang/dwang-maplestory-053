@@ -783,7 +783,7 @@ public class Monster extends AbstractLoadedLife {
             String mobIdStr = String.valueOf(getId());
 
             // 1. 先尝试提交给 BOSS 处理器
-            boolean isBoss = achievementService.recordAchievementBoss(attacker, mobIdStr);
+            boolean isBoss = achievementService.recordAchievementBoss(attacker.getId(), mobIdStr);
 
             // 2. 如果返回 false，说明不是配置的区域 BOSS，才记录为普通怪物击杀
             if (!isBoss) {

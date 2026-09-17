@@ -6953,7 +6953,7 @@ public class Character extends AbstractCharacterObject {
         enableActions();
 
         // 彩蛋六 死亡八次
-        achievementService.recordAchievementEgg(this, AchievementCategory.SPECIAL_EGG, DeathCountEggChecker.EGG_DEATH_COUNT, null);
+        achievementService.recordAchievementEgg(getId(), AchievementCategory.SPECIAL_EGG, DeathCountEggChecker.EGG_DEATH_COUNT, null);
 
     }
 
@@ -6985,7 +6985,7 @@ public class Character extends AbstractCharacterObject {
 
                 // 彩蛋5 在高级桑拿房坐着+1 hp mp上限  dwang
                 if (getMap().getId() == MapIdGen.VIP_SAUNA_105040402) {
-                    achievementService.recordAchievementEgg(this, AchievementCategory.SPECIAL_EGG, SaunaAfkEggChecker.EGG_SAUNA_AFK, null);
+                    achievementService.recordAchievementEgg(getId(), AchievementCategory.SPECIAL_EGG, SaunaAfkEggChecker.EGG_SAUNA_AFK, null);
                     startChairMaxHPMPTask();
                 }
                 enableActions();
