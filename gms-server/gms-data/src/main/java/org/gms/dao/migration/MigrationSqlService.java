@@ -2,26 +2,20 @@ package org.gms.dao.migration;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.row.Db;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.gms.dao.entity.*;
-import org.gms.dao.entity.table.AccountsDOTableDef;
-import org.gms.dao.entity.table.CharacterAchievementDOTableDef;
 import org.gms.dao.entity.table.PetignoresDOTableDef;
 import org.gms.dao.mapper.*;
-import org.gms.dao.migration.FlexSqlGenerator;
-import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 import static org.gms.dao.entity.table.CharacterAchievementDOTableDef.CHARACTER_ACHIEVEMENT_D_O;
 import static org.gms.dao.entity.table.StoragesDOTableDef.STORAGES_D_O;
 import static org.gms.dao.entity.table.AreaInfoDOTableDef.AREA_INFO_D_O;
-import static org.gms.dao.entity.table.CharactersDOTableDef.CHARACTERS_D_O;
 import static org.gms.dao.entity.table.CooldownsDOTableDef.COOLDOWNS_D_O;
 import static org.gms.dao.entity.table.EventstatsDOTableDef.EVENTSTATS_D_O;
 import static org.gms.dao.entity.table.FredstorageDOTableDef.FREDSTORAGE_D_O;
@@ -30,7 +24,6 @@ import static org.gms.dao.entity.table.InventoryitemsDOTableDef.INVENTORYITEMS_D
 import static org.gms.dao.entity.table.KeymapDOTableDef.KEYMAP_D_O;
 import static org.gms.dao.entity.table.MedalmapsDOTableDef.MEDALMAPS_D_O;
 import static org.gms.dao.entity.table.MonsterbookDOTableDef.MONSTERBOOK_D_O;
-import static org.gms.dao.entity.table.PetsDOTableDef.PETS_D_O;
 import static org.gms.dao.entity.table.PlayerdiseasesDOTableDef.PLAYERDISEASES_D_O;
 import static org.gms.dao.entity.table.QuestprogressDOTableDef.QUESTPROGRESS_D_O;
 import static org.gms.dao.entity.table.QueststatusDOTableDef.QUESTSTATUS_D_O;
@@ -195,8 +188,9 @@ public class MigrationSqlService {
         List<CharactersDO> charactersDOS = charactersMapper.selectBeidouSource(
                 accountid // 修正为你表里的外键字段
         );
-
-        for (CharactersDO charactersDO : charactersDOS) {
+        boolean loadedAccItem = false;
+        for (int i = 0; i < charactersDOS.size(); i++) {
+            CharactersDO charactersDO = charactersDOS.get(i);
             sql.append("-- --------------------------------------------------------\n");
             sql.append("-- 2. 迁移角色: ").append(charactersDO.getName()).append("\n");
             sql.append("-- --------------------------------------------------------\n");
@@ -208,11 +202,20 @@ public class MigrationSqlService {
             sql.append("SET @current_char_id = LAST_INSERT_ID();\n\n");
 
             // 进入角色附属子表数据的全自动拼接
-            recordCharFromDB(accountid, charactersDO.getId(), sql);
+
+            if (i == 0) {
+                loadedAccItem = false;
+            } else {
+                loadedAccItem = true;
+            }
+            recordCharFromDB(accountid, charactersDO.getId(), sql, loadedAccItem);
+
+
         }
+
     }
 
-    private void recordCharFromDB(int accountid, int cid, StringBuilder sql) {
+    private void recordCharFromDB(int accountid, int cid, StringBuilder sql, boolean loadedAccItem) {
 
         // 获取成就
         boolean tableExistsInMySQL = isTableExistsInMySQL("character_achievements");
@@ -288,11 +291,17 @@ public class MigrationSqlService {
         // ========================================================
         // 1. 准备阶段：一次性查出该角色所有的物品和装备，转为内存缓存
         // ========================================================
+
+        // ACC装备加载没加载过，加载一次
+        if (!loadedAccItem) {
+            addAccItemSql(accountid, sql);
+        }
+
         // 查出该角色背包里所有的物品
         QueryWrapper itemQueryWrapper = QueryWrapper.create().where(INVENTORYITEMS_D_O.CHARACTERID.eq(cid));
         List<InventoryitemsDO> inventoryItemsDOS = inventoryitemsMapper.selectListByQuery(itemQueryWrapper);
 
-        // 一次性查出该角色名下所有装备属性（不带戒指的）
+        // 一次性查出该角色名下所有装备属性（不带戒指的）, 但是里面有点装仓库的信息
         List<Long> inventoryItemIds = inventoryItemsDOS.stream().map(InventoryitemsDO::getInventoryitemid).toList();
         List<InventoryequipmentDO> allEquipmentDOS = java.util.Collections.emptyList();
 
@@ -307,13 +316,6 @@ public class MigrationSqlService {
         // 【核心优化】：将装备列表转为 Map<inventoryitemid, InventoryequipmentDO> 方便一对一极速匹配
         java.util.Map<Long, InventoryequipmentDO> equipmentMap = allEquipmentDOS.stream()
                 .collect(java.util.stream.Collectors.toMap(InventoryequipmentDO::getInventoryitemid, eq -> eq, (k1, k2) -> k1));
-
-
-        // type != 1的数据，包含仓库、商城仓库
-        QueryWrapper itemQueryByAcc = QueryWrapper.create().where(INVENTORYITEMS_D_O.ACCOUNTID.eq(accountid));
-        List<InventoryitemsDO> itemQueryByAccDOS = inventoryitemsMapper.selectListByQuery(itemQueryByAcc);
-        sql.append(FlexSqlGenerator.convertToSql(itemQueryByAccDOS, "accountid", "@current_account_id"));
-
 
         // ========================================================
         // 2. 循环阶段：互斥判断（宠物 vs 装备 vs 其他普通道具）
@@ -375,6 +377,92 @@ public class MigrationSqlService {
                 sql.append(FlexSqlGenerator.convertToSql(item, "characterid", "@current_char_id"));
             }
         }
+    }
+
+    private void addAccItemSql(int accountid, StringBuilder sql) {
+        // ItemFactory type != 1的数据，包含仓库、商城仓库
+        QueryWrapper itemQueryByAcc = QueryWrapper.create().where(INVENTORYITEMS_D_O.ACCOUNTID.eq(accountid));
+        List<InventoryitemsDO> itemQueryByAccDOS = inventoryitemsMapper.selectListByQuery(itemQueryByAcc);
+//            sql.append(FlexSqlGenerator.convertToSql(itemQueryByAccDOS, "accountid", "@current_account_id"));
+
+        List<Long> inventoryACCItemIds = itemQueryByAccDOS.stream().map(InventoryitemsDO::getInventoryitemid).toList();
+        List<InventoryequipmentDO> allACCEquipmentDOS = java.util.Collections.emptyList();
+
+        if (!inventoryACCItemIds.isEmpty()) {
+            allACCEquipmentDOS = inventoryequipmentMapper.selectListByQuery(
+                    QueryWrapper.create()
+                            .where(INVENTORYEQUIPMENT_D_O.INVENTORYITEMID.in(inventoryACCItemIds))
+                            .and(INVENTORYEQUIPMENT_D_O.RINGID.isNull().or(INVENTORYEQUIPMENT_D_O.RINGID.eq(-1))) // 过滤戒指(支持null或-1)
+            );
+        }
+
+        // 【核心优化】：将装备列表转为 Map<inventoryitemid, InventoryequipmentDO> 方便一对一极速匹配
+        java.util.Map<Long, InventoryequipmentDO> accEquipmentMap = allACCEquipmentDOS.stream()
+                .collect(java.util.stream.Collectors.toMap(InventoryequipmentDO::getInventoryitemid, eq -> eq, (k1, k2) -> k1));
+
+
+        // 处理acc item
+        for (InventoryitemsDO item : itemQueryByAccDOS) {
+            sql.append("\n-- ----------------------------------------\n");
+
+            // 【情况 A】：它是一个宠物
+            if (item.getPetid() > 0) {
+                sql.append("-- [ACC宠物类型] 分流处理\n");
+
+                // 去 A 系统查出这个宠物的详细信息 DO
+                PetsDO petsDO = petsMapper.selectOneById(item.getPetid());
+                // 宠物无视拣去
+
+                if (petsDO != null) {
+                    List<PetignoresDO> petignoresDOS = petignoresMapper.selectListByQuery(QueryWrapper.create().where(PetignoresDOTableDef.PETIGNORES_D_O.PETID.eq(item.getPetid())));
+
+                    // ① 先插宠物表，生成新的宠物自增主键
+                    sql.append(FlexSqlGenerator.convertToSql(petsDO, null, null));
+                    sql.append("SET @current_pet_id = LAST_INSERT_ID();\n");
+
+                    sql.append(FlexSqlGenerator.convertToSql(petignoresDOS, "petid", "@current_pet_id"));
+
+
+                } else {
+                    sql.append("SET @current_pet_id = NULL;\n");
+                }
+
+                // ② 插入物品主体（带上外键 @current_account_id）
+                sql.append(FlexSqlGenerator.convertToSql(item, "accountid", "@current_account_id"));
+                sql.append("SET @current_item_id = LAST_INSERT_ID();\n");
+
+                // ③ 修正把 B 系统刚生成的宠物 ID 绑定回物品上
+                sql.append("UPDATE `inventoryitems` SET `petid` = @current_pet_id WHERE `inventoryitemid` = @current_item_id;\n");
+            }
+
+            // 【情况 B】：它是一件装备（通过一对一 Map 进行匹配判断）
+            else if (accEquipmentMap.containsKey(item.getInventoryitemid())) {
+                sql.append("-- [ACC装备道具] 分流处理\n");
+
+                // ① 先插入物品主体，获取最新的物品自增主键
+                sql.append(FlexSqlGenerator.convertToSql(item, "accountid", "@current_account_id"));
+                sql.append("SET @current_item_id = LAST_INSERT_ID();\n");
+
+                // ② 从内存 Map 拿到跟它一对一对应的装备属性
+                InventoryequipmentDO eq = accEquipmentMap.get(item.getInventoryitemid());
+
+                // ③ 插入装备表，由于 inventoryequipment 表本身有自增主键 inventoryequipmentid（我们会过滤掉），
+                // 它的外键 inventoryitemid 必须通过参数完美替换为刚刚生成的物品变量 @current_item_id
+                sql.append(FlexSqlGenerator.convertToSql(eq, "inventoryitemid", "@current_item_id"));
+            }
+
+            // 【情况 C】：其他普通道具（消耗品/材料/etc.）
+            else {
+                sql.append("-- [ACC普通道具] 分流处理\n");
+
+                // 没有任何附属关联表，无脑插完物品主体即可，干净利落
+                sql.append(FlexSqlGenerator.convertToSql(item, "accountid", "@current_account_id"));
+            }
+        }
+
+
+
+
     }
 
     private boolean isTableExistsInMySQL(String tableName) {
