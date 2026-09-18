@@ -93,6 +93,9 @@ function action(mode, type, selection) {
         cm.sendYesNo(confirmText);
 
     } else if (status === 3) {
+        String callText = "嘟——嘟——嘟……";
+        cm.sendNext(callText);
+    } else if (status === 4) {
         // 7. 金币不足拦截
         if (cm.getMeso() < currentCost) {
             cm.sendOk("口袋里的金币不够付 #b" + (currentCost / 10000) + "W#k 金币的话费啦，无法拨通这次长途电话！");

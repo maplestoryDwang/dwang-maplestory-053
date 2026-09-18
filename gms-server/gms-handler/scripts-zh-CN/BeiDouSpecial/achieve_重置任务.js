@@ -1,6 +1,6 @@
 /**
- * @description 已完成任务重置手册 - [威兹风格]
- * @action 第一页展示威兹的对话与引导，status 2 正式展示重置列表
+ * @description 已完成任务重置手册 - [威兹风格] (支持分页显示)
+ * @action 第一页展示威兹的对话与引导，status 1/2 支持分页展示重置列表及业务处理
  */
 
 var DataProviderFactory = Java.type('org.gms.provider.DataProviderFactory');
@@ -10,12 +10,18 @@ var Quest = Java.type('org.gms.server.quest.QuestV2');
 var QuestRepository = Java.type('org.gms.server.quest.QuestRepository');
 var QuestUtils = Java.type('org.gms.dwutil.QuestUtils');
 
+// 分页配置与变量
+var PAGE_SIZE = 10;     // 每页显示的数量
+var currentPage = 0;    // 当前页码（从 0 开始）
+var totalResults = 0;   // 数据的总条数
+
 var questProvider = DataProviderFactory.getDataProvider(WZFiles.QUEST);
 var completedQuests = [];
 var status = -1;
 
 function start() {
     status = -1;
+    currentPage = 0;
     action(1, 0, 0);
 }
 
@@ -35,42 +41,46 @@ function action(mode, type, selection) {
         cm.sendNext(text);
 
     } else if (status === 1) {
-        // 步骤 1：校验成就与完成任务数
-        loadCompletedQuests();
+        // 首次到达 status === 1 时加载数据
+        if (completedQuests.length === 0) {
+            loadCompletedQuests();
+            totalResults = completedQuests.length;
 
-        if (completedQuests.length == 0) {
-            cm.sendOk("哎呀~ 翻了翻记录，你现在似乎还没有任何已完成的冒险故事呢！等有了丰富的经历后再来找我吧！");
-            cm.dispose();
-            return;
+            if (totalResults === 0) {
+                cm.sendOk("哎呀~ 翻了翻记录，你现在似乎还没有任何已完成的冒险故事呢！等有了丰富的经历后再来找我吧！");
+                cm.dispose();
+                return;
+            }
+
+            var progress = cm.getAchievementProgress("QUEST_COMPLETED");
+            var isCompleted = progress && progress.isCompleted();
+            if (!isCompleted) {
+                var text = "虽然我很想帮你，但想要熟练掌握重置记录的魔法，需要阅读和积累足够多的故事才行！\r\n\r\n";
+                text += "重置魔法要求任务完成数达到：#b" + progress.getMaxProgress() + "#k 个\r\n";
+                text += "你目前阅读记录的进度为：#r" + progress.getCurrentProgress() + " / " + progress.getMaxProgress() + "#k\r\n\r\n";
+                text += "别担心~快去外面经历更多有趣的故事，等积累足够了再来找我吧！";
+                cm.sendOk(text);
+                cm.dispose();
+                return;
+            }
         }
 
-        var progress = cm.getAchievementProgress("QUEST_COMPLETED");
-        var isCompleted = progress && progress.isCompleted();
-        if (!isCompleted) {
-            var text = "虽然我很想帮你，但想要熟练掌握重置记录的魔法，需要阅读和积累足够多的故事才行！\r\n\r\n";
-            text += "重置魔法要求任务完成数达到：#b" + progress.getMaxProgress() + "#k 个\r\n";
-            text += "你目前阅读记录的进度为：#r" + progress.getCurrentProgress() + " / " + progress.getMaxProgress() + "#k\r\n\r\n";
-            text += "别担心~快去外面经历更多有趣的故事，等积累足够了再来找我吧！";
-            cm.sendOk(text);
-            cm.dispose();
-            return;
+        // 拦截翻页操作
+        if (selection === 9000001) {      // 点击上一页
+            currentPage--;
+            status--;                     // 抵消 mode===1 导致的 status++，维持在 status 1
+            showListMenu();
+        } else if (selection === 9000002) { // 点击下一页
+            currentPage++;
+            status--;                     // 抵消 mode===1 导致的 status++，维持在 status 1
+            showListMenu();
+        } else {
+            // 第一次进入 status 1 时渲染列表
+            showListMenu();
         }
-
-        // 步骤 2：校验通过，在 status 1 推进下渲染重置列表，等待玩家选择 (selection 将在 status 2 接收)
-        var text = "太不可思议了！你居然已经阅读了这么多精彩的故事！\r\n";
-        text += "来，快看看这本神奇的记录册，你想重新体验哪一个冒险故事呢？\r\n\r\n";
-        text += "#e#d=== 请选择需要重置的任务 ===#k#n\r\n";
-
-        for (var i = 0; i < completedQuests.length; i++) {
-            var qid = completedQuests[i];
-            var qname = getQuestName(qid);
-            text += "#L" + qid + "##b[" + qid + "]#k #r" + qname + "#l\r\n";
-        }
-
-        cm.sendSimple(text);
 
     } else if (status === 2) {
-        // 步骤 3：玩家选中某个任务，执行重置逻辑
+        // 步骤 3：玩家选中某个具体任务，执行重置逻辑
         var questId = selection;
         var quest = QuestRepository.getInstance(questId);
 
@@ -84,6 +94,45 @@ function action(mode, type, selection) {
     } else {
         cm.dispose();
     }
+}
+
+/**
+ * 分页渲染已完成任务列表
+ */
+function showListMenu() {
+    var text = "太不可思议了！你居然已经阅读了这么多精彩的故事！\r\n";
+    text += "来，快看看这本神奇的记录册，你想重新体验哪一个冒险故事呢？\r\n\r\n";
+    text += "#e#d=== 请选择需要重置的任务 ===#k#n\r\n\r\n";
+
+    var start = currentPage * PAGE_SIZE;
+    var end = Math.min(start + PAGE_SIZE, totalResults);
+
+    // 循环渲染当前页的数据
+    for (var i = start; i < end; i++) {
+        var qid = completedQuests[i];
+        var qname = getQuestName(qid);
+        text += "#L" + qid + "##b[" + qid + "]#k #r" + qname + "#l\r\n";
+    }
+
+    text += "\r\n";
+
+    // 1. 如果不是第一页，渲染“上一页”按钮
+    if (currentPage > 0) {
+        text += "#b#L9000001#<< 上一页#l#k\t\t\t\t";
+    }
+
+    // 2. 如果还有下一页，渲染“下一页”按钮
+    if (end < totalResults) {
+        text += "#b#L9000002#下一页 >>#l#k";
+    }
+
+    // 3. 渲染当前页码进度
+    if (totalResults > PAGE_SIZE) {
+        var totalPages = Math.ceil(totalResults / PAGE_SIZE);
+        text += "\r\n\r\n页码：" + (currentPage + 1) + " / " + totalPages + "\r\n";
+    }
+
+    cm.sendSimple(text);
 }
 
 /**

@@ -25,6 +25,7 @@ import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.constants.id.ShieldId;
 import org.gms.constants.id.item.EqpId;
+import org.gms.dao.mapper.WildBossConfigMapper;
 import org.gms.dwutil.CharacterUtils;
 import org.gms.client.Client;
 import org.gms.client.inventory.equip.Equip;
@@ -39,11 +40,13 @@ import org.gms.model.pojo.NewYearCardRecord;
 import org.gms.config.GameConfig;
 import org.gms.constants.id.ItemId;
 import org.gms.constants.inventory.ItemConstants;
+import org.gms.scripting.event.IceWolfService;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.achievement.AchievementScriptName;
 import org.gms.server.achievement.AchievementService;
 import org.gms.server.achievement.egg.imp.MapleShieldEggChecker;
 import org.gms.util.I18nUtil;
+import org.gms.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.ItemInformationProvider;
@@ -62,7 +65,9 @@ import java.util.List;
  */
 public class InventoryManipulator {
     private static final Logger log = LoggerFactory.getLogger(InventoryManipulator.class);
-    private static final AchievementService achievementService = ServerManager.getApplicationContext().getBean(AchievementService.class);
+    private static final AchievementService achievementService = SpringContextUtil.getBean(AchievementService.class);
+    private static final IceWolfService iceWolfService = SpringContextUtil.getBean(IceWolfService.class);
+
 
     public static boolean addById(Client c, int itemId, short quantity, String dropType) {
         return addById(c, itemId, quantity, null, -1, -1, dropType);
@@ -579,6 +584,17 @@ public class InventoryManipulator {
             c.sendPacket(PacketCreator.enableActions());
             return;
         }
+        // 吸怪和吸物品
+         else if (source.getItemId() == EqpId.ZENUMIST_S_CAPE_1102139) {
+            iceWolfService.specialHandle(source.getItemId(), c);
+            c.sendPacket(PacketCreator.enableActions());
+            return;
+        } else if (source.getItemId() == EqpId.ALCADNO_S_CAPE_1102140) {
+            iceWolfService.specialHandle(source.getItemId(), c);
+            c.sendPacket(PacketCreator.enableActions());
+            return;
+        }
+
 
 
         //控制台参数为true时进行校验判断
