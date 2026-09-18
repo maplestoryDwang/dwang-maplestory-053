@@ -1,6 +1,7 @@
 package org.gms;
 
 import org.apache.ibatis.logging.LogFactory;
+import org.gms.dao.entity.AccountsDO;
 import org.gms.dao.migration.MigrationSqlService;
 import org.springframework.util.StringUtils;
 
@@ -8,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -44,7 +46,13 @@ public class MigrationApplication {
         Scanner scanner = new Scanner(System.in);
 
         // 3. 获取账号名
-        System.out.println("请输入你要转移的账号名，例如:admin, 输入`-1`则为全部， 按下回车确认:");
+        System.out.println("请输入你要转移的账号名，例如:dwang, 输入`-1`则为全部， 按下回车确认:");
+        List<AccountsDO> allAccounts = migrationSqlService.getAllAccounts();
+        System.out.println("当前所有账户:");
+        for (AccountsDO allAccount : allAccounts) {
+            System.out.println(allAccount.getName());
+        }
+
         // 【核心修改】：改用 nextLine()，回车后立刻往下走
         String next = scanner.nextLine().trim();
         if (!StringUtils.hasLength(next)) {

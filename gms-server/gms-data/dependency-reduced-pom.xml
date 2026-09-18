@@ -80,7 +80,6 @@
               <mainClass>org.gms.MigrationApplication</mainClass>
               <buildArgs>
                 <buildArg>--no-fallback</buildArg>
-                <buildArg>-Dsun.misc.URLClassPath.disableJarChecking=true</buildArg>
               </buildArgs>
             </configuration>
           </plugin>

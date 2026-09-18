@@ -1,6 +1,7 @@
 package org.gms.dao.migration;
 
 import com.mybatisflex.core.query.QueryWrapper;
+import com.mybatisflex.core.row.Db;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.gms.dao.entity.*;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.util.List;
 
 import static org.gms.dao.entity.table.CharacterAchievementDOTableDef.CHARACTER_ACHIEVEMENT_D_O;
@@ -130,6 +132,12 @@ public class MigrationSqlService {
         this.petignoresMapper = FlexDbContext.getMapper(PetignoresMapper.class);
     }
 
+    public List<AccountsDO> getAllAccounts() {
+
+        return accountsMapper.selectAll();
+    }
+
+
     // 外部调用入口：传入要迁移的账号ID，和最终导出的.sql路径
     public void exportAccountToSqlFile(String accountName, String outputPath) {
 
@@ -146,7 +154,7 @@ public class MigrationSqlService {
         } else {
             // 导入全部
             List<AccountsDO> accountsDOS = accountsMapper.selectAll();
-
+//            accountsDOS.removeIf(accountsDO -> accountsDO.getName().equals("admin"));
             for (AccountsDO accountsDO : accountsDOS) {
                 recordAccFromDB(accountsDO, sql);
             }
@@ -184,8 +192,8 @@ public class MigrationSqlService {
 
 
         // 查出该账号下的所有角色
-        List<CharactersDO> charactersDOS = charactersMapper.selectListByQuery(
-                QueryWrapper.create().where(CHARACTERS_D_O.ACCOUNTID.eq(accountid)) // 修正为你表里的外键字段
+        List<CharactersDO> charactersDOS = charactersMapper.selectBeidouSource(
+                accountid // 修正为你表里的外键字段
         );
 
         for (CharactersDO charactersDO : charactersDOS) {
@@ -207,8 +215,12 @@ public class MigrationSqlService {
     private void recordCharFromDB(int accountid, int cid, StringBuilder sql) {
 
         // 获取成就
-        List<CharacterAchievementDO> characterAchievementDOS = characterAchievementMapper.selectListByQuery(QueryWrapper.create().where(CHARACTER_ACHIEVEMENT_D_O.CHARACTER_ID.eq(cid)));
-        sql.append(FlexSqlGenerator.convertToSql(characterAchievementDOS, "characterId", "@current_char_id"));
+        boolean tableExistsInMySQL = isTableExistsInMySQL("character_achievements");
+        if (tableExistsInMySQL) {
+
+            List<CharacterAchievementDO> characterAchievementDOS = characterAchievementMapper.selectListByQuery(QueryWrapper.create().where(CHARACTER_ACHIEVEMENT_D_O.CHARACTER_ID.eq(cid)));
+            sql.append(FlexSqlGenerator.convertToSql(characterAchievementDOS, "characterId", "@current_char_id"));
+        }
 
 
         // 获取wishlists ── 自动转换
@@ -303,8 +315,6 @@ public class MigrationSqlService {
         sql.append(FlexSqlGenerator.convertToSql(itemQueryByAccDOS, "accountid", "@current_account_id"));
 
 
-
-
         // ========================================================
         // 2. 循环阶段：互斥判断（宠物 vs 装备 vs 其他普通道具）
         // ========================================================
@@ -365,6 +375,12 @@ public class MigrationSqlService {
                 sql.append(FlexSqlGenerator.convertToSql(item, "characterid", "@current_char_id"));
             }
         }
+    }
+
+    private boolean isTableExistsInMySQL(String tableName) {
+        String checkSql = "SELECT COUNT(1) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?";
+        Long count = (Long) Db.selectObject(checkSql, tableName);
+        return count != null && count > 0;
     }
 
 }
