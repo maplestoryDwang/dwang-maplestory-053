@@ -10,4 +10,5 @@ package org.gms.server.achievement;
 public class AchievementScriptName {
     public static final String MUSIC = "achieve_记录音乐";
     public static final String NPC_CALL = "achieve_远程通话";
+    public static final String NOW_DROP = "achieve_当前地图掉落";
 }

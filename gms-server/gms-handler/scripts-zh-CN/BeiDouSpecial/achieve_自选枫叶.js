@@ -1,7 +1,6 @@
 /**
  * @description 4周年枫叶装备兑换与进阶 NPC 脚本（带动态折扣与成就联动扩展）
  * @author Optimized Script
- * 在这里设置的五折。
  */
 
 var status = -1;
@@ -78,37 +77,26 @@ var SCROLL_LIST = [
 // ============================ 3. 折扣逻辑计算方法 ============================
 
 /**
- * 获取玩家当前的成就/组队任务完成数量 (示例范围: 0 ~ 5)
- * TODO: 替换为您服务端的成就记录获取接口，如 cm.getQuestRecord() 或变量存储
+ * 获取玩家当前的组队任务完成数量
  */
 function getCompletedPqCount() {
-    // 示例逻辑：预留读取服务端玩家变量的代码
-    // var count = cm.getPlayer().getBossLog("PQ_Completed_Count");
-
     var progress = cm.getAchievementProgress("PARTY_QUEST");
-    return progress.getCurrentProgress()
-
-
-//    return 0; // 默认 0 次（无打折），最多可到 5 次
+    return progress ? progress.getCurrentProgress() : 0;
 }
 
 /**
  * 根据组队任务成就计算当前折扣率 (最高 5 折)
- * @returns {number} 折扣率系数 (如 1.0 代表原价, 0.5 代表5折)
  */
 function getDiscountRate() {
     var completedCount = getCompletedPqCount();
     if (completedCount > 5) completedCount = 5;
     if (completedCount < 0) completedCount = 0;
 
-    // 每完成 1 个组队任务优惠 10%（0.1），完成 5 个时享受 5 折（0.5）
     return 1.0 - (completedCount * 0.1);
 }
 
 /**
  * 计算打折后的最终枫叶消耗量
- * @param {number} basePrice 原始价格
- * @returns {number} 折扣后需要的枫叶数量 (向下取整)
  */
 function getFinalPrice(basePrice) {
     return Math.floor(basePrice * getDiscountRate());
@@ -134,58 +122,77 @@ function action(mode, type, selection) {
         status--;
     }
 
-    // 0: 主菜单入口
+    // 0: 4周年庆典剧情开场
     if (status === 0) {
+        var introText = "#e【 4周年庆典 - 枫叶的誓约 】#n\r\n\r\n";
+        introText += "飘落的枫叶构筑成了冒险岛4周年的宏大庆典，每一片枫叶都凝结着冒险者的记忆与汗水。\r\n\r\n";
+
+        var pqCount = getCompletedPqCount();
+        if (pqCount > 0) {
+            introText += "看样子你完成了一些组队任务。枫叶的精神将被你延续！我这里可以换枫叶的装备，看看是否有你喜欢的。";
+        } else {
+            introText += "收集漂泊在世界各地的 #v" + MAPLE_LEAF + "# #t" + MAPLE_LEAF + "#，可以在我这里换取珍贵的周年纪念装备！";
+        }
+
+        cm.sendNext(introText);
+    }
+
+    // 1: 主菜单入口与优惠提示
+    else if (status === 1) {
         var inv = cm.getInventory(4);
         var nItem = inv.countById(MAPLE_LEAF);
         var discountPercent = Math.round(getDiscountRate() * 10);
-        var text = "你好！这里提供枫叶基础装备兑换、武器进阶以及卷轴兑换服务。当前拥有枫叶数量：" + nItem + "个\r\n";
+
+        var text = "#e【 枫叶装备与兑换中心 】#n\r\n\r\n";
+        text += "当前拥有枫叶数量：#b" + nItem + "#k 个\r\n";
 
         if (discountPercent < 10) {
-            text += "#e#r[成就特惠] 当前已为您开启 " + discountPercent + " 折优惠！#n#k\r\n\r\n";
+            text += "#e【成就特惠】当前组队成就已为您开启 #b" + discountPercent + "#k 折优惠！#n\r\n";
         }
+        text += "\r\n请选择你需要办理的业务：\r\n\r\n";
 
-        text += "#b#L0#兑换枫叶基础装备/耳环/帽子/盾牌#l\r\n";
-        text += "#L1#使用基础武器进阶升级为高阶4周年武器#l\r\n";
-        text += "#L2#兑换4周年专用卷轴#l#k";
+        text += "#L0# #b兑换枫叶基础装备/耳环/帽子/盾牌#k#l\r\n";
+        text += "#L1# #b使用基础武器进阶升级为高阶4周年武器#k#l\r\n";
+        text += "#L2# #b兑换4周年专用卷轴#k#l";
+
         cm.sendSimple(text);
     }
 
-    // 1: 一级选择分支
-    else if (status === 1) {
+    // 2: 一级选择分支
+    else if (status === 2) {
         if (selectedCategory === -1) {
             selectedCategory = selection;
         }
 
         switch (selectedCategory) {
             case 0: // 基础装备直接兑换
-                var text = "选择你要兑换的枫叶装备（括号内为折扣后的实付枫叶数）：\r\n";
+                var text = "选择你要兑换的枫叶装备（括号内为折扣后的实付枫叶数）：\r\n\r\n";
                 for (var i = 0; i < DIRECT_EXCHANGE_EQUIPS.length; i++) {
                     var itemId = DIRECT_EXCHANGE_EQUIPS[i][0];
                     var baseCost = DIRECT_EXCHANGE_EQUIPS[i][1];
                     var realCost = getFinalPrice(baseCost);
 
-                    text += " #L" + i + "##v" + itemId + "# #z" + itemId + "# #b(" + realCost + " 个枫叶)#k#l\r\n";
+                    text += "#L" + i + "##v" + itemId + "# #z" + itemId + "# #b(" + realCost + " 个枫叶)#k#l\r\n";
                 }
                 cm.sendSimple(text);
                 break;
 
             case 1: // 武器进阶升级
-                var text = "使用旧枫叶武器 + 枫叶可以进阶为高阶4周年武器：\r\n";
+                var text = "使用旧枫叶武器 + 枫叶可以进阶为高阶4周年武器：\r\n\r\n";
                 for (var i = 0; i < WEAPON_UPGRADE_DATA.length; i++) {
                     var data = WEAPON_UPGRADE_DATA[i];
                     var realCost = getFinalPrice(data.baseLeaf);
 
-                    text += "#L" + i + "##v" + MAPLE_LEAF + "# #b" + realCost + "个#k + #v" + data.reqWeapon + "# #b#t" + data.reqWeapon +"#" + " =  ？？？" + "#l#k\r\n";
+                    text += "#L" + i + "##v" + MAPLE_LEAF + "# #b" + realCost + "个#k + #v" + data.reqWeapon + "# #b#t" + data.reqWeapon + "##k = ？？？#l\r\n";
                 }
                 cm.sendSimple(text);
                 break;
 
             case 2: // 卷轴兑换
                 var realScrollCost = getFinalPrice(PRICE_SCROLL);
-                var text = "消耗 #b" + realScrollCost + " 个 #v" + MAPLE_LEAF + "##k，可兑换以下 4 周年专用卷轴之一：\r\n";
+                var text = "消耗 #b" + realScrollCost + "#k 个 #v" + MAPLE_LEAF + "##t" + MAPLE_LEAF + "#，可兑换以下 4 周年专用卷轴之一：\r\n\r\n";
                 for (var i = 0; i < SCROLL_LIST.length; i++) {
-                    text += "#L" + i + "#" + "#v" + SCROLL_LIST[i] + "#" + "#t" + SCROLL_LIST[i] + "# #l\r\n";
+                    text += "#L" + i + "# #v" + SCROLL_LIST[i] + "# #t" + SCROLL_LIST[i] + "# #l\r\n";
                 }
                 cm.sendSimple(text);
                 break;
@@ -196,24 +203,24 @@ function action(mode, type, selection) {
         }
     }
 
-    // 2: 二级选择及确认
-    else if (status === 2) {
+    // 3: 二级选择及确认
+    else if (status === 3) {
         selectedSubItem = selection;
 
         switch (selectedCategory) {
             case 0: // 基础装备直接兑换确认
                 var targetId = DIRECT_EXCHANGE_EQUIPS[selectedSubItem][0];
                 var realCost = getFinalPrice(DIRECT_EXCHANGE_EQUIPS[selectedSubItem][1]);
-                cm.sendYesNo("你想用 #b" + realCost + " 个 #t" + MAPLE_LEAF + "##k 换 #b#t" + targetId + "##k 对吧？确认交易吗？");
+                cm.sendYesNo("你想用 #b" + realCost + "#k 个 #t" + MAPLE_LEAF + "# 换 #b#t" + targetId + "##k 对吧？确认交易吗？");
                 break;
 
             case 1: // 武器进阶：选择目标高阶武器
                 var data = WEAPON_UPGRADE_DATA[selectedSubItem];
                 var realCost = getFinalPrice(data.baseLeaf);
 
-                var text = "请选择你要进阶的目标高阶武器：\r\n";
+                var text = "请选择你要进阶的目标高阶武器：\r\n\r\n";
                 for (var i = 0; i < data.targetWeapons.length; i++) {
-                    text += "#L" + i + "##v" + MAPLE_LEAF + "# #b" + realCost + "个#k + #v" + data.reqWeapon + "#" + "#b#z" + data.reqWeapon +"#" + " = #v" + data.targetWeapons[i] + ":#" + "#b#z" +  data.targetWeapons[i] +"#" + "#l\r\n";
+                    text += "#L" + i + "##v" + MAPLE_LEAF + "# #b" + realCost + "个#k + #v" + data.reqWeapon + "# #b#z" + data.reqWeapon + "##k = #v" + data.targetWeapons[i] + "# #b#z" + data.targetWeapons[i] + "##k#l\r\n";
                 }
                 cm.sendSimple(text);
                 break;
@@ -221,7 +228,7 @@ function action(mode, type, selection) {
             case 2: // 卷轴确认
                 var scrollId = SCROLL_LIST[selectedSubItem];
                 var realScrollCost = getFinalPrice(PRICE_SCROLL);
-                cm.sendYesNo("要把 #b" + realScrollCost + " 个#k #t" + MAPLE_LEAF + "# 换成 #b#t" + scrollId + "##k 吗？");
+                cm.sendYesNo("要把 #b" + realScrollCost + "#k 个 #t" + MAPLE_LEAF + "# 换成 #b#t" + scrollId + "##k 吗？");
                 break;
 
             default:
@@ -230,22 +237,22 @@ function action(mode, type, selection) {
         }
     }
 
-    // 3: 执行结算 / 进阶二次确认
-    else if (status === 3) {
+    // 4: 执行结算 / 进阶二次确认
+    else if (status === 4) {
         switch (selectedCategory) {
             case 0: // 执行基础装备兑换
                 var targetId = DIRECT_EXCHANGE_EQUIPS[selectedSubItem][0];
                 var realCost = getFinalPrice(DIRECT_EXCHANGE_EQUIPS[selectedSubItem][1]);
 
                 if (!cm.haveItem(MAPLE_LEAF, realCost)) {
-                    cm.sendOk("你确定你有 #b" + realCost + " 个 #t" + MAPLE_LEAF + "##k 吗？请收集够了再来吧。");
+                    cm.sendOk("你确定你有 #b" + realCost + "#k 个 #t" + MAPLE_LEAF + "# 吗？请收集够了再来吧。");
                 } else if (!cm.canHold(targetId, 1)) {
                     cm.sendOk("你的背包空间不足，请腾出空位后再来交易。");
                 } else {
                     cm.gainItem(MAPLE_LEAF, -realCost);
                     cm.gainItem(targetId, 1);
                     rewardExp();
-                    cm.sendOk("交易完成！这是你的 #b#t" + targetId + "##k，收好了。");
+                    cm.sendOk("完成！这是你的 #b#t" + targetId + "##k，收好了。");
                 }
                 cm.dispose();
                 break;
@@ -264,7 +271,7 @@ function action(mode, type, selection) {
                 var realScrollCost = getFinalPrice(PRICE_SCROLL);
 
                 if (!cm.haveItem(MAPLE_LEAF, realScrollCost)) {
-                    cm.sendOk("#t" + MAPLE_LEAF + "# 数量不够哦，需要 " + realScrollCost + " 个。");
+                    cm.sendOk("#t" + MAPLE_LEAF + "# 数量不够哦，需要 #b" + realScrollCost + "#k 个。");
                 } else if (!cm.canHold(scrollId, 1)) {
                     cm.sendOk("请确认你的消耗栏是否有空位。");
                 } else {
@@ -282,8 +289,8 @@ function action(mode, type, selection) {
         }
     }
 
-    // 4: 执行武器进阶扣除与发放
-    else if (status === 4) {
+    // 5: 执行武器进阶扣除与发放
+    else if (status === 5) {
         if (selectedCategory === 1) {
             var tradeInfo = selectedSubItem;
             if (cm.haveItem(MAPLE_LEAF, tradeInfo.reqLeaf) && cm.haveItem(tradeInfo.reqWeapon, 1)) {
@@ -292,7 +299,7 @@ function action(mode, type, selection) {
                 } else {
                     cm.gainItem(MAPLE_LEAF, -tradeInfo.reqLeaf);
                     cm.gainItem(tradeInfo.reqWeapon, -1);
-                    cm.gainItem(tradeInfo.targetWeapon, 1, true, true); // true 生成随机属性 public Item gainItem(int id, short quantity, boolean randomStats, boolean showMessage) 四个才是随机 三个参数的不是随机
+                    cm.gainItem(tradeInfo.targetWeapon, 1, true, true);
                     rewardExp();
                     cm.sendOk("祝贺你获得全新的 #b#t" + tradeInfo.targetWeapon + "##k！");
                 }

@@ -1,18 +1,17 @@
 /**
  * 名称：高级自由转职系统
- * 限制：等级 >= 120 级，金币 >= 100万
+ * 限制：等级 >= 120 级，金币 >= 100万，彩蛋全解锁
  * 范围：仅限老四职业（战士、法师、弓箭手、飞侠）的 4 转分支，排除自身当前职业
- * 说明：使用 Java 原生 Character.changeJob(Job) 正确触发底层变职业、发包及 SP 分配
+ * 说明：根据玩家当前职业系动态展示四大职业四转导师的对话风格
  */
 
 var status = -1;
 var selectedJobId = -1;
 var selectedJobName = "";
 
-// 导入 Java 类
-var Job = Java.type('org.gms.client.Job'); // 如果你的包名是 org.gms.client.Job，若报错请根据服务端调整
+var Job = Java.type('org.gms.client.Job');
 
-// 定义老四职业四转列表 (排除海盗 5xx、骑士团 1xxx、战神 21xx)
+// 老四职业四转列表
 var FOURTH_JOBS = [
     { id: 112, name: "英雄 (战士)" },
     { id: 122, name: "圣骑士 (战士)" },
@@ -31,11 +30,15 @@ function start() {
 }
 
 function action(mode, type, selection) {
+    var cmjob = cm.getJob();
+    var currentJobId = cmjob.getId();
+    var jobCategory = getJobCategory(currentJobId);
+
     if (mode <= 0) {
         if (status === 2) {
-            cm.sendOk("您取消了转职确认，当前职业保持不变。");
+            cm.sendOk(getCancelDialog(jobCategory, true));
         } else {
-            cm.sendOk("如果你改变主意，随时可以再来找我。");
+            cm.sendOk(getCancelDialog(jobCategory, false));
         }
         cm.dispose();
         return;
@@ -46,42 +49,34 @@ function action(mode, type, selection) {
     if (status === 0) {
         // 1. 基础门槛校验
         if (cm.getPlayer().getLevel() < 120) {
-            cm.sendOk("自由转职需要角色等级达到 #r120 级#k 以上！");
+            cm.sendOk(getRequirementDialog(jobCategory, "level"));
             cm.dispose();
             return;
         }
         if (cm.getMeso() < 1000000) {
-            cm.sendOk("自由转职需要支付手续费 #r100 万金币#k！");
+            cm.sendOk(getRequirementDialog(jobCategory, "meso"));
             cm.dispose();
             return;
         }
 
         var progress = cm.getAchievementProgress("SPECIAL_EGG");
         if (!progress || !progress.isCompleted()) {
-            var text ="很抱歉，";
-            text += "你还没有找到所有的彩蛋，无法进行自由转职。去吧你还有很多事情可以做。。。\r\n\r\n";
-            text += "当前彩蛋完成进度：#r" + progress.getCurrentProgress() + " / " + progress.getMaxProgress() + "#k\r\n";
-
+            var text = getRequirementDialog(jobCategory, "egg") + "\r\n\r\n";
+            text += "彩蛋探索进度：#r" + progress.getCurrentProgress() + " / " + progress.getMaxProgress() + "#k";
             cm.sendOk(text);
             cm.dispose();
             return;
         }
 
-
-
-        var cmjob = cm.getJob();
-        var currentJobId = cmjob.getId();
-        var currentJobName = cmjob.getName();
-
-        var text = "嗨！我是自由转职导师。我可以帮助你转换为其他四转职业。\r\n";
-        text += "当前职业：#b" + currentJobName + "#k\r\n";
-        text += "#r注意：转职后将清空旧职业技能并重新分配该职业的技能点(SP)！#k\r\n\r\n";
-        text += "请选择你想要转职的目标职业：\r\n#b";
+        // 构建符合导师人设的前言
+        var text = getMentorGreeting(jobCategory);
+        text += "当前职业状态：#b" + cmjob.getName() + "#k\r\n";
+        text += "#r⚠️ 异道修行警告：转换职业将清空旧有技能，并重新归还全额SP点数和AP点数！#k\r\n\r\n";
+        text += "请选择你心之所向的新力量：\r\n#b";
 
         var count = 0;
         for (var i = 0; i < FOURTH_JOBS.length; i++) {
             var job = FOURTH_JOBS[i];
-            // 过滤掉玩家当前的职业
             if (job.id !== currentJobId) {
                 text += "#L" + job.id + "# " + job.name + "#l\r\n";
                 count++;
@@ -89,26 +84,26 @@ function action(mode, type, selection) {
         }
 
         if (count === 0) {
-            text = "暂无可转职的选项。";
+            text = "暂无可重塑的职业方向。";
         }
         cm.sendSimple(text);
 
     } else if (status === 1) {
-        // 2. 选择目标职业
+        // 2. 选择目标职业二次确认
         selectedJobId = selection;
         selectedJobName = getJobNameById(selectedJobId);
 
-        var text = "#e#r【二次确认】#k#n\r\n";
-        text += "你确定要消耗 #b100万金币#k 转职为 #r" + selectedJobName + "#k 吗？\r\n\r\n";
-        text += "#d- 你的旧职业技能将被清空重置\r\n";
-        text += "- 系统将为你变更职业并按等级自动生成 SP#k";
+        var text = "#e#r【 命运的重塑与决意 】#k#n\r\n";
+        text += "你确定要支付 #b100万金币#k 的仪式费用，踏上通往 #r" + selectedJobName + "#k 的道路吗？\r\n\r\n";
+        text += "#d- 旧职业的技能将被彻底洗洗洗去\r\n";
+        text += "- 你的属性与 SP 将根据新职业洗牌并全额重算#k";
 
         cm.sendYesNo(text);
 
     } else if (status === 2) {
-        // 3. 再次校验金币
+        // 3. 执行转职流程
         if (cm.getMeso() < 1000000) {
-            cm.sendOk("转职失败：你的金币不足 100 万！");
+            cm.sendOk(getRequirementDialog(jobCategory, "meso"));
             cm.dispose();
             return;
         }
@@ -118,63 +113,130 @@ function action(mode, type, selection) {
         // 扣除金币
         cm.gainMeso(-1000000);
 
-        // A. 清空玩家已有的所有技能 (避免留存旧职业技能)
+        // A. 清空技能
         clearPlayerSkills(player);
 
-        // D. 根据等级重置并重新计算全额 SP 给玩家（覆盖一至四转 SP 数组）
+        // B. 重置并重新计算全额 SP
         recalculateAndSetSp(player);
 
-        // B. 调用核心底层 changeJob 触发真正的转职流程 (与 JobCommand 逻辑一致)
-        // 这样会自动增加属性 MaxHP/MaxMP、更新组队/公会、并向客户端发送包含属性与 SP 的完整 UpdateStats 数据包
+        // C. 核心底层的 changeJob 变身
         var newJobObj = Job.getById(selectedJobId);
         player.changeJob(newJobObj);
 
-
+        // D. 属性重置返还
         resetAndReturnAp(player);
-//        player.equipChanged();
 
-
-
-        // C. 给新职业初始化四转技能基础（0级可加点状态）
+        // E. 初始化新职业四转技能
         initializeFourthJobSkills(selectedJobId);
 
-
-
-        cm.dropMessage(5, "【自由转职】成功转职为 " + selectedJobName + "！");
-        cm.sendOk("恭喜你！自由转职成功，你现在是一名 #b" + selectedJobName + "#k！\r\n职业状态与 SP 已经全部更新，请打开技能面板分配点数。");
+        cm.dropMessage(5, "【自由转职】道路已然重塑，成功转职为 " + selectedJobName + "！");
+        cm.sendOk(getSuccessDialog(selectedJobId));
+        cm.dispose();
+    } else {
         cm.dispose();
     }
 }
 
+/**
+ * 判断玩家主职业分类 (1: 战士, 2: 法师, 3: 弓箭手, 4: 飞侠)
+ */
+function getJobCategory(jobId) {
+    var cat = Math.floor(jobId / 100);
+    if (cat >= 1 && cat <= 4) return cat;
+    return 1;
+}
+
+/**
+ * 获取对应导师的招牌开场白
+ */
+function getMentorGreeting(category) {
+    switch (category) {
+        case 1: // 哈尔模尼亚 (战士)
+            return "已经准备好成为真正的强者了吗？我能从你身上感觉得到特别的力量…但在巅峰之上，也有其他道路。你想变得更强吗？\r\n\r\n";
+        case 2: // 格里特 (法师)
+            return "修行结束了吗？想要成为真正的智者，需要经历无数修行。若你想改寻其他真理，修行之路虽艰难，但最终你会得到无限的荣誉…\r\n\r\n";
+        case 3: // 列高罗 (弓箭手)
+            return "对自由的存在好奇么？不是谁都可以自由地存在哦…我能从你身上感受到非凡的气质，看来你已做好了探索新风向的准备。\r\n\r\n";
+        case 4: // 哈林 (飞侠)
+            return "吞没黑暗的深渊的存在…你正渴望着新的力量是吧？真正的黑暗是与光共存的，告诉我，你准备好拥抱另一份潜伏的力量了吗？\r\n\r\n";
+        default:
+            return "我已经感受到了你身上潜藏的无限可能性…\r\n\r\n";
+    }
+}
+
+/**
+ * 校验失败时的导师语调
+ */
+function getRequirementDialog(category, type) {
+    if (type === "level") {
+        return "想要重新选择道路，你需要掌握更深邃的力量。当你的等级达到 #r120 级#k 之后再来找我吧！";
+    }
+    if (type === "meso") {
+        return "重塑职业的仪式需要大量的消耗，准备好 #r100 万金币#k 后再来找我。";
+    }
+    if (type === "egg") {
+        switch (category) {
+            case 1: return "这片大陆上还有许多你未曾挑战过的奥秘与彩蛋！去吧，当你磨砺完心智找到所有彩蛋，才有资格跨入新的领域！";
+            case 2: return "智慧的眼界不应受限。你尚未收集齐大陆的所有秘密彩蛋，去探索未知的世界吧，修行可不仅限于眼前！";
+            case 3: return "自由的前路容不得束缚，你还没有找齐所有隐秘的彩蛋呢！去各处风吹过的角落看看吧！";
+            case 4: return "深渊之中还潜藏着你未发现的彩蛋秘密。连这些都没找到，可无法掌握重塑黑暗的法则…";
+        }
+    }
+    return "条件未满足，无法进行自由转职。";
+}
+
+/**
+ * 中途取消时的对话
+ */
+function getCancelDialog(category, isConfirmPage) {
+    if (isConfirmPage) {
+        return "你决定维持当下的道路么？这也未尝不可，继续贯彻你当下的信念吧！";
+    }
+    switch (category) {
+        case 1: return "如果你改变主意，随时可以再来找我接受强者的试炼。";
+        case 2: return "修行随时可以继续，愿你的智慧给世界带来光辉…";
+        case 3: return "去吧，自由的存在…什么时候想换个方向，随时来找我。";
+        case 4: return "无妨，请铭记，无论何时真正的黑暗都与你同在…";
+    }
+    return "随时欢迎你再次光临。";
+}
+
+/**
+ * 转职成功后的导师寄语
+ */
+function getSuccessDialog(targetJobId) {
+    var targetCat = getJobCategory(targetJobId);
+    var baseText = "恭喜你！自由转职成功，你现在是一名 #b" + selectedJobName + "#k！\r\n属性与 SP 已经全部重置并同步，请打开面板分配你的点数。\r\n\r\n";
+
+    switch (targetCat) {
+        case 1: return baseText + "去吧！用这股崭新的钢铁力量去贯彻你的正义！";
+        case 2: return baseText + "愿你新获得的智慧，能给这片世界带来灿烂的光辉…";
+        case 3: return baseText + "很好，展翅高飞吧！去成为这片天空下最自由的存在！";
+        case 4: return baseText + "铭记在心，真正的黑暗是与光共存的…去支配这股新力量吧。";
+    }
+    return baseText;
+}
 
 /**
  * 重置属性点并返还 AP
- * 逻辑：计算总投入在四维属性中的点数，将其重置为 4，并全部转入 RemainingAp
  */
 function resetAndReturnAp(player) {
     try {
-        var baseStat = 4; // 基础初始属性点
-
+        var baseStat = 4;
         var curStr = player.getStr();
         var curDex = player.getDex();
         var curInt = player.getInt();
         var curLuk = player.getLuk();
         var curAp = player.getRemainingAp();
 
-        // 计算需要返还的总 AP 差值（防止因装备增益或异常导致小于 0）
         var returnAp = Math.max(0, curStr - baseStat) +
                        Math.max(0, curDex - baseStat) +
                        Math.max(0, curInt - baseStat) +
                        Math.max(0, curLuk - baseStat);
 
         var totalAp = curAp + returnAp;
-
-        // 设置四维基础属性为 4 设置新的可分配 AP
-        player.changeStrDexIntLuk(baseStat, baseStat, baseStat, baseStat ,totalAp, false);
-
-
+        player.changeStrDexIntLuk(baseStat, baseStat, baseStat, baseStat, totalAp, false);
     } catch (e) {
-        // 兼容性捕获：如果服务端采用直接 API 处理
         try {
             player.changeRemainingAp(player.getRemainingAp() + (player.getStr() + player.getDex() + player.getInt() + player.getLuk() - 16), false);
             player.setStr(4);
@@ -197,33 +259,24 @@ function clearPlayerSkills(player) {
             var skill = skillKeys[i];
             player.changeSkillLevel(skill, 0, 0, -1);
         }
-    } catch (e) {
-        // 清理技能异常捕获
-    }
+    } catch (e) {}
 }
 
 /**
- * 重新计算全额 SP 并通过 setRemainingSp 发送给客户端
+ * 重新计算全额 SP 并分配
  */
 function recalculateAndSetSp(player) {
     var level = cm.getLevel();
-
-    // 120级及以上的标准全额 SP 划分
-    var sp1st = 61;   // 一转 SP (10~30级)
-    var sp2nd = 121;  // 二转 SP (30~70级)
-    var sp3rd = 151;  // 三转 SP (70~120级)
-//    var sp4th = (level - 120) * 3 + 3; // 四转 SP (120级基础3点，每升一级加3点)
-    var sp4th = (level - 120) * 3 ;// 四转 SP (120级基础3点，每升一级加3点) 转职自动送3点
+    var sp1st = 61;
+    var sp2nd = 121;
+    var sp3rd = 151;
+    var sp4th = (level - 120) * 3;
     if (sp4th < 3) sp4th = 3;
 
     try {
-        // 构建 4 个元素的 SP 数组传给底层
         cm.setRemainingSp(sp1st + sp2nd + sp3rd + sp4th);
-
-        // 强制重新生成/同步一次属性包以刷新客户端技能面板 SP 界面
         player.equipChanged();
     } catch (e) {
-        // 如果 setRemainingSp 接收单个 int（兼容性后备）
         try {
             cm.setRemainingSp(sp1st + sp2nd + sp3rd + sp4th);
         } catch (err) {}
@@ -243,41 +296,21 @@ function getJobNameById(jobId) {
 }
 
 /**
- * 初始化四转职业基础技能（0级 / 上限10级）
+ * 初始化四转职业基础技能
  */
 function initializeFourthJobSkills(jobId) {
     var skills = [];
     switch (jobId) {
-        case 112: // 英雄
-            skills = [1121000, 1121001, 1121002, 1121003, 1121004, 1121005, 1121006, 1121008, 1121010];
-            break;
-        case 122: // 圣骑士
-            skills = [1221000, 1221001, 1221002, 1221003, 1221004, 1221005, 1221006, 1221007, 1221009, 1221011];
-            break;
-        case 132: // 黑骑士
-            skills = [1321000, 1321001, 1321002, 1321003, 1321004, 1321005, 1321006, 1321007, 1321009];
-            break;
-        case 212: // 火毒魔导师
-            skills = [2121000, 2121001, 2121002, 2121003, 2121004, 2121005, 2121006, 2121007, 2121008];
-            break;
-        case 222: // 冰雷魔导师
-            skills = [2221000, 2221001, 2221002, 2221003, 2221004, 2221005, 2221006, 2221007, 2221008];
-            break;
-        case 232: // 主教
-            skills = [2321000, 2321001, 2321002, 2321003, 2321004, 2321005, 2321006, 2321007, 2321008, 2321009];
-            break;
-        case 312: // 神射手
-            skills = [3121000, 3121002, 3121003, 3121004, 3121005, 3121006, 3121007, 3121008];
-            break;
-        case 322: // 箭神
-            skills = [3221000, 3221001, 3221002, 3221003, 3221004, 3221005, 3221006, 3221007];
-            break;
-        case 412: // 隐士
-            skills = [4121000, 4121001, 4121002, 4121003, 4121004, 4121005, 4121006, 4121007, 4121008, 4121009];
-            break;
-        case 422: // 侠盗
-            skills = [4221000, 4221001, 4221002, 4221003, 4221004, 4221005, 4221006, 4221007, 4221008];
-            break;
+        case 112: skills = [1121000, 1121001, 1121002, 1121003, 1121004, 1121005, 1121006, 1121008, 1121010]; break;
+        case 122: skills = [1221000, 1221001, 1221002, 1221003, 1221004, 1221005, 1221006, 1221007, 1221009, 1221011]; break;
+        case 132: skills = [1321000, 1321001, 1321002, 1321003, 1321004, 1321005, 1321006, 1321007, 1321009]; break;
+        case 212: skills = [2121000, 2121001, 2121002, 2121003, 2121004, 2121005, 2121006, 2121007, 2121008]; break;
+        case 222: skills = [2221000, 2221001, 2221002, 2221003, 2221004, 2221005, 2221006, 2221007, 22221008]; break;
+        case 232: skills = [2321000, 2321001, 2321002, 2321003, 2321004, 2321005, 2321006, 2321007, 2321008, 2321009]; break;
+        case 312: skills = [3121000, 3121002, 3121003, 3121004, 3121005, 3121006, 3121007, 3121008]; break;
+        case 322: skills = [3221000, 3221001, 3221002, 3221003, 3221004, 3221005, 3221006, 3221007]; break;
+        case 412: skills = [4121000, 4121001, 4121002, 4121003, 4121004, 4121005, 4121006, 4121007, 4121008, 4121009]; break;
+        case 422: skills = [4221000, 4221001, 4221002, 4221003, 4221004, 4221005, 4221006, 4221007, 4221008]; break;
     }
 
     try {
@@ -290,7 +323,5 @@ function initializeFourthJobSkills(jobId) {
                 player.changeSkillLevel(skill, 0, 10, -1);
             }
         }
-    } catch (e) {
-        // 忽略初始化技能异常
-    }
+    } catch (e) {}
 }

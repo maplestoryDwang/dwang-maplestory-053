@@ -290,7 +290,7 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
 //            player.sendPacket(PacketCreator.sendAutoMpPot(autompPot != null ? autompPot.getAction() : 0));
 
 
-            // todo 刷新人物NPC outfit
+            // 刷新人物NPC outfit
             PlayerNPC.updatePlayerOutfit(player);
 
 

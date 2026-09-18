@@ -55,6 +55,7 @@ import org.gms.net.packet.InPacket;
 import org.gms.net.packet.outbound.SendNoteSuccessPacket;
 import org.gms.net.server.Server;
 import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementScriptName;
 import org.gms.util.I18nUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -435,7 +436,7 @@ public final class UseCashItemHandler extends AbstractPacketHandler {
             // 否则会读到包尾之后。也不回 SHOP_SCANNER_RESULT —— 客户端收到那个包才会建"道具搜索窗"
             // 并发出 0x38，所以这里不回包，窗口和 0x38 就都不会出现。
             // 想消耗掉搜索器就在下面加一行：remove(c, position, itemId);
-            c.getAbstractPlayerInteraction().openNpc(9900001, "当前地图掉落");
+            c.getAbstractPlayerInteraction().openNpc(9900001, AchievementScriptName.NOW_DROP);
             c.enableActions();
         } else if (itemType == 524) {//宠物食品
             boolean isUse = false;

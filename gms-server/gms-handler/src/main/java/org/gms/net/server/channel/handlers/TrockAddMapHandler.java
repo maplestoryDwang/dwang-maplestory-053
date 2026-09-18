@@ -81,9 +81,10 @@ public final class TrockAddMapHandler extends AbstractPacketHandler {
                         var key = mapName + "_" + mapId;
                         achievementService.recordAchievement(chr.getId(), AchievementCategory.HIDDEN_MAP, key, 1);
                         chr.dropMessage(1, "记录成功");
+                        chr.dropMessage(5, "周围发出了一道亮光，地图的信息开始流入这块石头中。。。。");
                         chr.enableActions();
                     } else {
-                        String msg = "当前地图不属于隐藏地图，无法记录成就哦！";
+                        String msg = "当前地图不属于隐藏地图，\n无法记录成就哦！";
                         chr.dropMessage(5, msg);
                         chr.dropMessage(1, msg);
                         chr.enableActions();
