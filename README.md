@@ -1,4 +1,14 @@
-# v1.0.0 — Vanilla MapleStory · Achievement System
+# GMS v053 (Base v083) Server Emulator
+
+Language / 语言: [English](README.md) | [中文](README-CN.md)
+
+> *"MapleStory is not merely a game; it is a cherished memory."*
+
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
+[![Java](https://img.shields.io/badge/Java-21%2B-orange.svg)]()
+[![Base](https://img.shields.io/badge/Base-BeiDou--v083-blue.svg)](https://github.com/BeiDouMS/BeiDou-Server)
+[![License](https://img.shields.io/badge/License-AGPL--3.0-green.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 
 > *"MapleStory is not merely a game; it is a cherished memory."*
 
