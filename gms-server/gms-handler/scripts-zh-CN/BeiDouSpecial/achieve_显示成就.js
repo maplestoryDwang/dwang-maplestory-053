@@ -79,7 +79,7 @@ function showMainPanel() {
     }
 
     text += "\r\n-----------------------------------\r\n";
-    text += "#e当前生效血量减免：#b" + totalDiscount.toFixed(2) + "%#k / #b" + totalMaxPossible.toFixed(2) + "%#n\r\n";
+    text += "#e当前生效血量减免：#b" + totalDiscount.toFixed(2) + "%#k / #b" + totalMaxPossible.toFixed(2) + "%#n#k\r\n";
 
     var isAllCompleted = cm.isAllAchievementsCompleted();
 
@@ -138,7 +138,7 @@ function showCategoryDetail(dto) {
             break;
         case "SPECIAL_EGG":
             text += "说明：完成 " + dto.getMaxProgress() + " 个隐藏彩蛋。\r\n";
-            text += "#b[完成奖励]#k：成就完全达成后，可进行自由转职！\r\n";
+            text += "#b[完成奖励]#k：成就完全达成后，可进行自由转职！并解锁终极彩蛋噢。\r\n";
             break;
     }
 

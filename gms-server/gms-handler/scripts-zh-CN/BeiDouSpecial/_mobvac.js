@@ -7,7 +7,7 @@ var ItemRewardHandler = Java.type('org.gms.net.server.channel.handlers.ItemRewar
 var MobSkillFactory = Java.type('org.gms.server.life.MobSkillFactory');
 var MobSkillType = Java.type('org.gms.server.life.MobSkillType');
 var MonsterStatus = Java.type('org.gms.client.status.MonsterStatus');
-var mobSkill = MobSkillFactory.getMobSkill(MobSkillType.STUN, 20).get();
+var mobSkill = MobSkillFactory.getMobSkill(MobSkillType.STUN, 7).get();
 var ms = new Map([[MonsterStatus.STUN, 1]]);
 var pos;
 

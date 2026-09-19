@@ -486,7 +486,7 @@ public enum SendPacketOpcode implements Opcode {
     // CField_ContiMove::OnPacket
 
     SET_QUEST_CLEAR(-1), // 设置任务完成   ===========================    0x96
-    SET_QUEST_TIME(0x97), // 设置任务时间
+    SET_QUEST_TIME(-1), // 设置任务时间
     ARIANT_RESULT(-1),    // thanks lrenex // ARIANT结果
     SET_OBJECT_STATE(0x99), // 设置物体状态
     STOP_CLOCK(-1), // 停止时钟

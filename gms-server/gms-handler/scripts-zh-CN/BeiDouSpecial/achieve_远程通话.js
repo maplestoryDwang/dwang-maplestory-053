@@ -93,7 +93,7 @@ function action(mode, type, selection) {
         cm.sendYesNo(confirmText);
 
     } else if (status === 3) {
-        String callText = "嘟——嘟——嘟……";
+        var callText = "嘟——嘟——嘟……";
         cm.sendNext(callText);
     } else if (status === 4) {
         // 7. 金币不足拦截
