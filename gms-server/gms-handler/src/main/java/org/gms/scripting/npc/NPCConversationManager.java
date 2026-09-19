@@ -55,6 +55,8 @@ import org.gms.net.server.world.Party;
 import org.gms.net.server.world.PartyCharacter;
 import org.gms.scripting.ScriptServiceContext;
 import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementCategoryDetailDTO;
+import org.gms.server.achievement.AchievementNameResolver;
 import org.gms.server.achievement.AchievementProgressDTO;
 import org.gms.server.achievement.HiddenMapAchievementManager;
 import org.gms.server.achievement.boss.BossDetailDTO;
@@ -1787,6 +1789,58 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         int questCount = getPlayer().getCompletedQuests().size();
 
         return context.getAchievementService().isAllAchievementsCompleted(getPlayer().getId(), questCount);
+    }
+
+    // ==================== 成就明细（展示脚本专用，一次取数） ====================
+
+    /**
+     * JS：一次性拿到该角色所有分类的完整明细。
+     * 每条明细都带中文名（地图名 / 物品名 / 技能名 / 怪物名 / 彩蛋名）与记录日期，
+     * 累加型按次数倒序、解锁型按时间倒序，另外还带该分类的种数、累计次数、首次/最后记录时间。
+     *
+     * @param limitPerCategory 每个分类最多返回多少条（建议 100~300）
+     */
+    public List<AchievementCategoryDetailDTO> getAllAchievementCategoryDetails(int limitPerCategory) {
+        return context.getAchievementService().getAllCategoryDetails(getPlayer().getId(), limitPerCategory);
+    }
+
+    /**
+     * JS：单个分类的明细（复用同一套聚合逻辑，别的脚本也能用）。
+     */
+    public AchievementCategoryDetailDTO getAchievementCategoryDetail(String category, int limitPerCategory) {
+        return context.getAchievementService().getCategoryDetail(getPlayer().getId(), category, limitPerCategory);
+    }
+
+    /**
+     * JS：把记录 key 翻译成中文名（地图名、物品名、技能名、彩蛋名 ...），解析不了会返回带 ID 的兜底名。
+     */
+    public String getAchievementRecordName(String category, String key) {
+        return AchievementNameResolver.resolve(category, key);
+    }
+
+    /**
+     * JS：一次拿到所有区域 BOSS 的明细（区域里每个 BOSS 的名字与击杀次数）。
+     */
+    public List<BossDetailDTO> getAllBossDetailList() {
+        List<BossDetailDTO> details = new ArrayList<>();
+        for (EggStatusDTO status : getBossStatusList()) {
+            details.add(getBossDetailByRegion(status.getEggKey()));
+        }
+        return details;
+    }
+
+    /**
+     * JS：所有彩蛋都找到之后，那条"道听途说"的消息。
+     */
+    public String getFinalEggInfo() {
+        return AchievementCategory.EGG_FINAL_INFO;
+    }
+
+    /**
+     * JS：从第一条成就记录到最后一条记录一共跨了多少天（当天算 1 天，没有任何记录返回 0）。
+     */
+    public int getAchievementDaySpan() {
+        return context.getAchievementService().getDaySpan(getPlayer().getId());
     }
 
     public void maxAllSkills() {

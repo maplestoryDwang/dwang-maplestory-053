@@ -6918,7 +6918,8 @@ public class Character extends AbstractCharacterObject {
             message(I18nUtil.getMessage("Character.useItem.message1"));  //使用安全护符，不扣经验
             InventoryManipulator.removeById(client, ItemConstants.getInventoryType(charmID[i]), charmID[i], 1, true, false);
             usedSafetyCharm = true;
-        } else if (getJob() != Job.BEGINNER) { //Hmm...
+//        } else if (getJob() != Job.BEGINNER) { //Hmm...
+        } else { //Hmm...
             if (!FieldLimit.NO_EXP_DECREASE.check(getMap().getFieldLimit())) {  // thanks Conrad for noticing missing FieldLimit check
                 int XPdummy = ExpTable.getExpNeededForLevel(getLevel());
 

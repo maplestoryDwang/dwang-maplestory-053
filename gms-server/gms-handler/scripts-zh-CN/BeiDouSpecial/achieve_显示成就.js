@@ -30,7 +30,7 @@ function action(mode, type, selection) {
         // 第三页：处理列表点击与详情页面展示
         if (selection == 998) {
             cm.dispose();
-            cm.openNpc(9900001, "achieve_成就完成");
+            cm.openNpc(9040004, "achieve_成就完成");
             return;
         }
         var list = cm.getAllAchievementProgress();

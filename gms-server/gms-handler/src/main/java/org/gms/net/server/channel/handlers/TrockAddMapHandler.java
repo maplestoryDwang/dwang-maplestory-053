@@ -77,7 +77,7 @@ public final class TrockAddMapHandler extends AbstractPacketHandler {
                     boolean hiddenMap = HiddenMapAchievementManager.isHiddenMap(mapId);
                     if (hiddenMap) {
                         chr.addVipTrockMap();
-                        String mapName = StringInfoProvider.getMapName(mapId);
+                        String mapName = StringInfoProvider.getMapNameById(mapId);
                         var key = mapName + "_" + mapId;
                         achievementService.recordAchievement(chr.getId(), AchievementCategory.HIDDEN_MAP, key, 1);
                         chr.dropMessage(1, "记录成功");

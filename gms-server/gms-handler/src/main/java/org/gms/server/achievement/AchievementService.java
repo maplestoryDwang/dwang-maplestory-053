@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -405,7 +406,7 @@ public class AchievementService {
             EggChecker checker = eggCheckers.get(eggKey);
 
             boolean completed = (checker != null) && checker.isCompleted(cid, this);
-            list.add(new EggStatusDTO(eggKey, name, completed));
+            list.add(new EggStatusDTO(eggKey, name, completed, AchievementCategory.EGG_INFO_MAP.get(eggKey)));
         }
         return list;
     }
@@ -551,5 +552,180 @@ public class AchievementService {
                 .and("achievement_key <> ?", AchievementCategory.MONSTER_KILL_KEY);
         Integer total = achievementMapper.selectObjectByQueryAs(qw, Integer.class);
         return total != null ? total : 0;
+    }
+
+    // ==================== 明细聚合（给"致勇士的一封信"这类展示脚本用） ====================
+
+    /** 累加型：次数多的排前面 */
+    private static final Comparator<CharacterAchievementDO> BY_PROGRESS_DESC =
+            Comparator.comparingInt((CharacterAchievementDO record) -> record.getProgress() == null ? 0 : record.getProgress())
+                    .reversed()
+                    .thenComparing(record -> record.getAchievementKey() == null ? "" : record.getAchievementKey());
+
+    /** 解锁型：最近发生的排前面 */
+    private static final Comparator<CharacterAchievementDO> BY_TIME_DESC =
+            Comparator.nullsLast(Comparator.comparing(
+                            (CharacterAchievementDO record) -> record.getUpdatedAt() != null ? record.getUpdatedAt() : record.getCreatedAt())
+                    .reversed())
+                    .thenComparing(record -> record.getAchievementKey() == null ? "" : record.getAchievementKey());
+
+    /**
+     * 一次性把该角色的所有成就记录聚合成"完整明细"，脚本一次取走即可。
+     * 顺序：先按折扣配置表（也就是成就面板的顺序），再补上静默统计分类，
+     * 最后补上数据库里存在但上面没列到的分类（区域 BOSS、彩蛋子分类等）。
+     *
+     * @param limitPerCategory 每个分类最多返回多少条明细（<= 0 表示不限制）
+     */
+    public List<AchievementCategoryDetailDTO> getAllCategoryDetails(int cid, int limitPerCategory) {
+        refreshConfigCache();
+        Map<String, AchievementDiscountConfigDO> configs = new HashMap<>(configCache);
+
+        Map<String, List<CharacterAchievementDO>> grouped = new LinkedHashMap<>();
+        for (CharacterAchievementDO record : selectAllRecords(cid)) {
+            grouped.computeIfAbsent(record.getCategory(), k -> new ArrayList<>()).add(record);
+        }
+
+        List<String> categories = new ArrayList<>();
+        configs.values().stream()
+                .sorted(Comparator.comparingInt(AchievementDiscountConfigDO::getId))
+                .forEach(config -> categories.add(config.getCategory()));
+        for (String category : AchievementCategory.ACHIEVEMENT_CAT) {
+            if (!categories.contains(category)) {
+                categories.add(category);
+            }
+        }
+        for (String category : grouped.keySet()) {
+            if (!categories.contains(category)) {
+                categories.add(category);
+            }
+        }
+
+        List<AchievementCategoryDetailDTO> details = new ArrayList<>(categories.size());
+        for (String category : categories) {
+            details.add(buildCategoryDetail(category, configs.get(category),
+                    grouped.getOrDefault(category, Collections.emptyList()), limitPerCategory));
+        }
+        return details;
+    }
+
+    /**
+     * 单个分类的明细（和 {@link #getAllCategoryDetails} 共用同一套聚合逻辑）。
+     * 注意：区域 BOSS / 彩蛋的记录是按 BOSS_KILL_XXX、SPECIAL_EGG-XXX 分开存的，
+     * 想拿全量请用 getAllCategoryDetails。
+     */
+    public AchievementCategoryDetailDTO getCategoryDetail(int cid, String category, int limitPerCategory) {
+        refreshConfigCache();
+        QueryWrapper qw = QueryWrapper.create()
+                .select()
+                .where("character_id = ?", cid)
+                .and("category = ?", category);
+        List<CharacterAchievementDO> rows = achievementMapper.selectListByQuery(qw);
+        return buildCategoryDetail(category, configCache.get(category),
+                rows == null ? Collections.emptyList() : rows, limitPerCategory);
+    }
+
+    private List<CharacterAchievementDO> selectAllRecords(int cid) {
+        QueryWrapper qw = QueryWrapper.create()
+                .select()
+                .where("character_id = ?", cid);
+        List<CharacterAchievementDO> list = achievementMapper.selectListByQuery(qw);
+        return list == null ? new ArrayList<>() : list;
+    }
+
+    private AchievementCategoryDetailDTO buildCategoryDetail(String category,
+                                                             AchievementDiscountConfigDO config,
+                                                             List<CharacterAchievementDO> rows,
+                                                             int limitPerCategory) {
+        List<CharacterAchievementDO> valid = new ArrayList<>();
+        int totalCount = 0;
+        LocalDateTime first = null;
+        LocalDateTime last = null;
+
+        for (CharacterAchievementDO row : rows) {
+            // MONSTER_KILL 下的 TOTAL 是汇总行，不是一条明细
+            if (isSummaryRow(category, row.getAchievementKey())) {
+                continue; //totalCount = row.getProgress();
+            }
+            valid.add(row);
+            totalCount += row.getProgress() == null ? 0 : row.getProgress();
+
+            LocalDateTime created = row.getCreatedAt();
+            LocalDateTime updated = row.getUpdatedAt() != null ? row.getUpdatedAt() : created;
+            if (created != null && (first == null || created.isBefore(first))) {
+                first = created;
+            }
+            if (updated != null && (last == null || updated.isAfter(last))) {
+                last = updated;
+            }
+        }
+
+        int distinctCount = valid.size();
+
+        // 累加型按次数排序；静默统计分类没有配置表记录，但存的全是计数，同样按次数排序
+//        boolean accumulate = config == null || Boolean.TRUE.equals(config.getIsAccumulate());
+        boolean byProcess = orderByCategory(category);
+        valid.sort(byProcess ? BY_PROGRESS_DESC : BY_TIME_DESC);
+
+
+        if (limitPerCategory > 0 && valid.size() > limitPerCategory) {
+            valid = new ArrayList<>(valid.subList(0, limitPerCategory));
+        }
+
+        // 名称翻译放在截断之后，避免为几千条用不上的记录白查 WZ
+        List<AchievementRecordDTO> records = new ArrayList<>(valid.size());
+        for (CharacterAchievementDO row : valid) {
+            records.add(new AchievementRecordDTO(category, row.getAchievementKey(),
+                    AchievementNameResolver.resolve(category, row.getAchievementKey()),
+                    row.getProgress() == null ? 0 : row.getProgress(),
+                    formatDate(row.getUpdatedAt() != null ? row.getUpdatedAt() : row.getCreatedAt())));
+        }
+
+        return new AchievementCategoryDetailDTO(category,
+                config == null ? null : config.getName(),
+                distinctCount, totalCount,
+                formatDate(first), formatDate(last), records);
+    }
+
+    /**
+     * 自定义控制用哪种排序
+     * @param category
+     * @return
+     */
+    private boolean orderByCategory(String category) {
+        switch (category) {
+            case "QUEST_COMPLETED":
+                return false;
+            default:
+                return true;
+        }
+    }
+
+    private static boolean isSummaryRow(String category, String key) {
+        return AchievementCategory.MONSTER_KILL.equals(category)
+                && AchievementCategory.MONSTER_KILL_KEY.equals(key);
+    }
+
+    private static String formatDate(LocalDateTime time) {
+        return time == null ? "" : time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    /**
+     * 从第一条成就记录到最后一条记录，一共跨了多少天（当天算 1 天；没有任何记录返回 0）。
+     * 脚本里算"陪伴了你多久"，不用再在 JS 里解析时间字符串。
+     */
+    public int getDaySpan(int cid) {
+        String first = getAchievementFirstTime(cid, null);
+        String last = getAchievementLastTime(cid, null);
+        if (first == null || first.isEmpty() || last == null || last.isEmpty()) {
+            return 0;
+        }
+        try {
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime start = LocalDateTime.parse(first, fmt);
+            LocalDateTime end = LocalDateTime.parse(last, fmt);
+            return (int) ChronoUnit.DAYS.between(start.toLocalDate(), end.toLocalDate()) + 1;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

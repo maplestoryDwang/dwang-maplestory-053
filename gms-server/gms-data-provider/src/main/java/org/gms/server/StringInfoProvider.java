@@ -50,7 +50,8 @@ public class StringInfoProvider {
     private static Map<Integer, String> npcNames = new HashMap<>();
     private static Map<Integer, String> mobNames = new HashMap<>();
     private static Map<Integer, String> mapNames = new HashMap<>();
-    private static Set<String> bgms = new HashSet<>();
+    @Getter
+    private static Map<String, String> bgmsNameAndMapName = new HashMap<>();
 
 
     private static final Map<Integer, String> questNames = new HashMap<>();
@@ -119,7 +120,7 @@ public class StringInfoProvider {
                     String mapName = mapNames.get(mapId);
                     Data infoNode = mapData.getChildByPath("info");
                     String bgm = DataTool.getString(infoNode.getChildByPath("bgm"), "");
-                    bgms.add(bgm);
+                    bgmsNameAndMapName.putIfAbsent(bgm, mapName);
 
                     Data lifeNode = mapData.getChildByPath("life");
 
@@ -185,7 +186,18 @@ public class StringInfoProvider {
         return mobNames.get(mid);
     }
     public static String getMapName(int mapId) {
-        return mobNames.get(mapId);
+        return mapNames.get(mapId);
+    }
+
+    /**
+     * 按地图 ID 取 String.wz/Map.img 里的地图名，取不到返回 null。
+     */
+    public static String getMapNameById(int mapId) {
+        String name = mapNames.get(mapId);
+        if (RequireUtil.isEmpty(name) || "NO_NAME".equals(name)) {
+            return null;
+        }
+        return name;
     }
 
 

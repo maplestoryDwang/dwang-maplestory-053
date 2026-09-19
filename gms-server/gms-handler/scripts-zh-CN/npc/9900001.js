@@ -31,10 +31,10 @@ function start() {
 }
 
 function action(mode, type, selection) {
-//    cm.dispose();
-//    cm.openNpc(9900001, "achieve_成就完成");
-//    return;
-
+    cm.dispose();
+    cm.openNpc(9900001, "achieve_成就完成");
+    return;
+/*
     if (mode === 1) {
         status++;
     } else if (mode === -1) {
@@ -68,7 +68,7 @@ function action(mode, type, selection) {
         doSelect(selection);
     } else {
         cm.dispose();
-    }
+    }*/
 }
 
 function doSelect(selection) {

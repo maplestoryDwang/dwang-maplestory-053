@@ -31,7 +31,8 @@ function action(mode, type, selection) {
         var field = cm.getMap();
         var mapName = field.getMapName();
         var bgm = field.getBgm(); // 获取当前地图 BGM 名称
-        var saveKey = bgm + " (" + mapName + ")";
+        var saveKey = bgm ; // 不要带会重复
+//        var saveKey = bgm + " (" + mapName + ")";
 
         // recordUniqueAchievement 返回 true 代表首次解锁
         var isNewUnlock = cm.recordUniqueAchievement("MUSIC_DISCOVERY", saveKey);
