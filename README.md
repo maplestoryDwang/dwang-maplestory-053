@@ -1,97 +1,113 @@
-# GMS v053 (Base v083) Server Emulator
-
-Language / 语言: [English](README.md) | [中文](README-CN.md)
+# v1.0.0 — Vanilla MapleStory · Achievement System
 
 > *"MapleStory is not merely a game; it is a cherished memory."*
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-[![Java](https://img.shields.io/badge/Java-21%2B-orange.svg)]()
-[![Base](https://img.shields.io/badge/Base-BeiDou--v083-blue.svg)](https://github.com/BeiDouMS/BeiDou-Server)
-[![License](https://img.shields.io/badge/License-AGPL--3.0-green.svg)](https://www.gnu.org/licenses/agpl-3.0)
+---
+
+## 📌 What is This Project?
+
+**GMS v053 Server**: A Global MapleStory (GMS) v053 server developed based on the **BeiDou (v083) architecture**. The goal is to **faithfully restore the pure, authentic, and nostalgia-filled early-era MapleStory experience**—rolling stat dice, classic original classes, 4th job advancement skill trees, and vanilla quest/drop mechanics, left completely untouched.
+
+- **Language / Framework**: Java 21 · Spring Boot · MyBatis-Flex · Netty · GraalVM JS Script Engine
+- **Database**: Compatible with BeiDou MySQL schema, included with migration scripts
+- **Scripting System**: NPCs, quests, and events are completely handled in the script layer, supporting bilingual directories (`scripts` / `scripts-zh-CN`)
 
 ---
 
-## 📌 Overview
+## 🎯 Design Philosophy: Pure Restoration, Zero Custom Gimmicks
 
-**GMS v053** is a MapleStory Global server emulator based on the **BeiDou (v083)** architecture.
+The original intention behind this version was simple: **To rediscover forgotten memories, rather than building another overloaded "custom fun server."**
 
-The primary goal of this project is to recreate the authentic, nostalgic feeling of early Global MapleStory—featuring classic character stats rolling, the original 4 Explorer job branches (*Warrior, Magician, Thief, Bowman*), 4th job advancement skills, and vanilla game mechanics—while maintaining a clean codebase for packet analysis and reverse engineering.
+- ❌ **No Skill Overhauls**: No damage cap increases, no stat inflation, no auto-botting or auto-pathfinding.
+- ❌ **Cleaned-Up Custom Content**: Removed upstream non-vanilla bloat (BeiDou-specific items, custom scrolls, reset scrolls, etc.).
+- ✅ **Preserved Vanilla Friction**: Rolling stat dice, EXP loss on death, upgrade failure rates, and equipment boom chances remain intact.
+- ✅ **Fully Translated Quests**: Quests are translated into Chinese with expiration timers removed for a complete solo play experience.
+- ✅ **Packet & Skill Fixes**: Resolved upstream packet deserialization bugs and broken skill handlers (see `doc/skill_log.md` for details).
+- ✅ **QoL Enhancements**: Added minor utility adjustments tailored for solo progression—strictly non-combat QoL that never touches combat balance.
 
----
-
-## 🎯 Project Objectives
-
-1. **Vanilla Memory Restoration**: Faithfully restore the classic childhood MapleStory experience. Compared to standard custom v083 sources, this project strips away modern bloat and restores the pure v053 atmosphere.
-2. **Protocol & Packet Analysis**: Deepen understanding of low-level client handling, packet structures, and state masks to lay a solid foundation for fixing client/packet bugs in higher version emulators.
-
----
-
-## 🖼️ Screenshots
-
-<p align="center">
-  <img src="./asset/Snipaste_2026-07-16_22-29-02.png" alt="In-game Screenshot 1" width="48%" />
-  <img src="./asset/Snipaste_2026-07-16_22-33-15.png" alt="In-game Screenshot 2" width="48%" />
-</p>
+In short: **If you are looking for heavily modded custom content, this server is not for you; but if you are looking for the MapleStory from your memories, you've found it.**
 
 ---
 
-## 🚀 Quick Start & Setup Guide
+## 🏆 Highlight: Achievement System
 
-### Prerequisites & Downloads
-* **Database**: Compatible with BeiDou MySQL Schema
-* **Server Source**: This repository
-* **Client**: [GMS v053 Client Downloads](https://msdl.xyz/pages/gms/Clients)
-* **Client Launcher / Bypass**: Local clean client launcher (No-blast / Bypass):
-  * 🔗 [Download Launcher via MEGA](https://mega.nz/file/Oc0RXBSL#1S-IvbFKs_7eZ2NzEtQhaC_lKrhpaksN59IiID-XFoc)
+This is the core feature of v1.0.0. The system serves two primary purposes: **To give you a compelling reason for long-term progression, and to log every step of your journey.**
+
+### Stone of Honor (Achievement Panel)
+- **Nine Achievement Categories**: Monster Kills, Quest Completion, Party Quests, Music Collection, Hidden Map Exploration, Gachapon, NPC Visits, Regional Boss Conquest, and Easter Eggs.
+- **Dynamic Stats & Perks**: Each category displays real-time progress, targets, completion percentage, and a **Monster HP Reduction Perk** calculated from your overall progress (higher achievements grant lower mob HP—a pure PvE quality-of-life feature that does not alter class stats/damage).
+- **Regional Boss Tracking**: Regional BOSSes are tracked independently by area, allowing you to view conquest records for every single boss in each region.
+- **Subtle Notifications**: Unlocking achievements triggers a clean pink notification banner in-game without cluttering the chat or interrupting gameplay.
+
+### Unlocking Convenience, Not Combat Stats
+- `#i5230000#` **Drop Query**: Search drop tables for your current map on demand.
+- `#i1702050#` **Remote Call**: Directly contact NPCs you have previously visited.
+- `#i1002747#` **Jukebox**: Play any collected BGM anywhere, anytime.
+- `#i5041000#` **Map Storage**: Store extra map destinations for convenient Teleport Rock travel.
+- **Quest & Event Rewards**: Milestone achievements allow quest resets, Maple Leaf exchange discounts, custom reward pools for Party Quests/Gachapon, and more.
+
+### Silent Journey Logger
+The server silently tracks various **non-achievement, balance-neutral gameplay data** in the background: maps visited, skills cast, consumables used, items picked up, and quest rewards received. They award no stats or rewards—they simply keep record of your adventure.
+
+### Grand Completion
+Completing all nine achievement categories unlocks a **unique ultimate reward**. To keep the surprise intact, no spoilers here! 😉
+
+### Hidden Easter Eggs
+Scattered across the world are several **hidden easter eggs**—unlisted in quest logs with no hints provided. Finding them is up to your own curiosity. The achievement panel offers subtle clues if you look closely.
 
 ---
 
-## ⚖️ Design Mechanics & Vanilla Constraints
+## ⚖️ Vanilla Mechanics & Constraints (Read Before Playing)
 
-1. **100% Pure Vanilla Gameplay**: Zero custom items, custom NPCs, or overpowered game modifications.
-2. **Map Scope**: CMS-exclusive maps (such as Shanghai) are excluded for now (may be considered later).
-3. **NPC Interaction**: Triggered strictly via double-clicking (spacebar interaction is disabled/unsupported in this version).
-4. **Pet System**: Standard single pet equipment rules (multi-pet equipping disabled).
-5. **Drop Rates**: Quest item field drop rates are fine-tuned dynamically as needed.
-6. **Movement**: Down-jump (`Down + Jump`) is not implemented natively (potential client/plugin adjustments evaluated for future updates).
-7. **Character Creation**: Standard character creation slots default to **3**.
-8. **Skill Workarounds**: Addressed client-side rendering bugs for unrenderable skills by substituting similar skill implementations to achieve the intended skill mechanics and descriptions.
+1. **NPC Interactions**: NPC dialogues require double-clicking the NPC; pressing `Spacebar` to interact is not supported in this version.
+2. **Map Availability**: CMS-exclusive maps (such as Shanghai) are currently not included.
+3. **Pet System**: Strictly follows vanilla single-pet equipment rules; multiple pets cannot be equipped simultaneously.
+4. **Character Movement**: Down-jump (`Down + Jump`) is not supported by the vanilla client protocol.
+5. **Character Slots**: Retains the default 3 character slots.
+6. **Drop Rates**: Quest item drop rates in the wild are dynamically tuned for a balanced solo experience.
+7. **Skill Workarounds**: For skills affected by client-side render bugs, alternative logic matching the original description and mechanics has been implemented as a proxy solution.
 
 ---
 
-## 🐛 Known Issues & Roadmap
+## 🐛 Known Issues
 
-### Known Issues
-- [ ] **Pet Item Filter**: Currently unverified or unimplemented in v053 protocol.
-- [ ] **Stat Mask Flags**: Several `MapleBuffStat` bitmask values are still being analyzed.
-- [ ] **Script Events**: All world script events are currently disabled pending complete overhaul and refactoring.
-
-### Differences from Upstream (BeiDou)
-* **Stripped Custom Content**: Removed custom items, BeiDou-specific scrolls, and rollback scrolls.
-* **Map & Script Cleanup**: Removed invalid map transitions and script events associated with non-standard jobs.
-* **Packet Parsing Fixes**: Corrected invalid packet deserialization present in upstream source.
-* **Skill Logic Overhaul**: Resolved execution errors and calculations across multiple skill handlers.
-* **Fame Reward System**: Retained `quest_point_per_quest_complete` to grant Fame upon quest completion.
+- [ ] **Pet Filter**: Not yet verified/fixed (relevant logic appears missing in this protocol version).
+- [ ] **Status Mask**: Select `MapleBuffStat` bitmask values are undergoing further testing and verification.
+- [ ] **Script Events**: All dungeon and map script events are temporarily disabled pending a unified refactor.
 
 ---
 
 ## 📜 Documentation
 
-* 📖 [Skill Fix Logs](doc/skill_log.md)
-* 🛠️ [Update & Patch Logs](doc/update_log.md)
-* 🗄️ [Database Schema Differences](doc/db_diff.md)
+- 📖 [Skill Fix Log](doc/skill_log.md)
+- 🛠️ [Update & Fix Log](doc/update_log.md)
+- 🗄️ [Database Schema Differences](doc/db_diff.md)
 
 ---
 
-## 🔮 Future Vision
+## 🙏 Acknowledgments
 
-- [ ] **Code Refactoring**: Remove redundant logic checks and optimize server runtime performance.
-- [ ] **Localization & Resolution**: Full Chinese client translation and modern high-resolution client porting.
-- [ ] **Lobby-based Co-op Concept**: Explore a hybrid multiplayer model—players enjoy offline/single-player progression for solo exploration, with a shared online lobby for Party Quests (PQ) and Boss Raids.
+- Upstream Open-Source Project: [BeiDou-Server](https://github.com/BeiDouMS/BeiDou-Server)
+- Special thanks to all developer friends who generously shared their knowledge and codebase, especially **Zhyon** and **BaiNiu**.
+- To every Mapler who still returns to wander these lands: **Thank you for loving this game.**
 
 ---
 
-## 🙏 Acknowledgements
+## 🔮 Roadmap
 
-* Upstream Project: [BeiDou-Server](https://github.com/BeiDouMS/BeiDou-Server)
-* Special thanks to all community members who generously share their knowledge. Special shoutout to: **Zhyon**
+- [ ] Header/Packet ID refactoring
+- [ ] Codebase optimization and performance tuning
+- [ ] Lobby-Style Party Mode: Enjoy solo exploration during daily play, and assemble in party lobbies to tackle PQs and Bosses together.
+
+## Game Screenshots
+
+<p align="center">
+  <img src="./asset/Snipaste_2026-07-16_22-29-02.png" alt="游戏内截图 1" width="48%" />
+  <img src="./asset/Snipaste_2026-07-16_22-33-15.png" alt="游戏内截图 2" width="48%" />
+  <img src="./asset/Snipaste_2026-09-16_02-41-47.png" alt="游戏内截图 3" width="48%" />
+  <img src="./asset/Snipaste_2026-09-16_02-42-51.png" alt="游戏内截图 4" width="48%" />
+  <img src="./asset/Snipaste_2026-09-16_02-43-15.png" alt="游戏内截图 5" width="48%" />
+  <img src="./asset/Snipaste_2026-09-16_02-44-46.png" alt="游戏内截图 6" width="48%" />
+  <img src="./asset/Snipaste_2026-09-19_11-33-23.png" alt="游戏内截图 7" width="48%" />
+  <img src="./asset/Snipaste_2026-09-19_21-26-19.png" alt="游戏内截图 8" width="48%" />
+</p>
