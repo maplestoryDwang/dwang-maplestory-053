@@ -21,6 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.gms.net.server.channel.handlers;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
@@ -45,18 +47,33 @@ import org.gms.constants.skills.other.WindArcher;
 import org.gms.dwutil.ItemUtils;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.Packet;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.StatEffect;
 import org.gms.util.PacketCreator;
 import org.gms.util.Randomizer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-
+@Component
 public final class RangedAttackHandler extends AbstractDealDamageHandler {
     private static final Logger log = LoggerFactory.getLogger(RangedAttackHandler.class);
+
+    @Getter
+    private static RangedAttackHandler instance;
+
+    @PostConstruct
+    private void init() {
+        instance = this;
+    }
+
+    @Autowired
+    AchievementService achievementService;
 
     @Override
     public void handlePacket(InPacket p, Client c) {
@@ -83,25 +100,26 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
             c.sendPacket(PacketCreator.getEnergy("energy", chr.getDojoEnergy()));
         }
 
-        if (attack.skill == Buccaneer.ENERGY_ORB || attack.skill == ThunderBreaker.SPARK || attack.skill == Shadower.TAUNT || attack.skill == Nightlord.TAUNT) {
-            chr.getMap().broadcastMessage(chr, PacketCreator.rangedAttack(chr, attack.skill, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, 0, attack.allDamage, attack.speed, attack.direction, attack.display), false);
+        int skillId = attack.skill;
+        if (skillId == Buccaneer.ENERGY_ORB || skillId == ThunderBreaker.SPARK || skillId == Shadower.TAUNT || skillId == Nightlord.TAUNT) {
+            chr.getMap().broadcastMessage(chr, PacketCreator.rangedAttack(chr, skillId, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, 0, attack.allDamage, attack.speed, attack.direction, attack.display), false);
             applyAttack(attack, chr, 1);
-        } else if (attack.skill == ThunderBreaker.SHARK_WAVE && chr.getSkillLevel(ThunderBreaker.SHARK_WAVE) > 0) {
-            chr.getMap().broadcastMessage(chr, PacketCreator.rangedAttack(chr, attack.skill, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, 0, attack.allDamage, attack.speed, attack.direction, attack.display), false);
+        } else if (skillId == ThunderBreaker.SHARK_WAVE && chr.getSkillLevel(ThunderBreaker.SHARK_WAVE) > 0) {
+            chr.getMap().broadcastMessage(chr, PacketCreator.rangedAttack(chr, skillId, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, 0, attack.allDamage, attack.speed, attack.direction, attack.display), false);
             applyAttack(attack, chr, 1);
 
             for (int i = 0; i < attack.numAttacked; i++) {
                 chr.handleEnergyChargeGain();
             }
-        } else if (attack.skill == Aran.COMBO_SMASH || attack.skill == Aran.COMBO_FENRIR || attack.skill == Aran.COMBO_TEMPEST) {
-            chr.getMap().broadcastMessage(chr, PacketCreator.rangedAttack(chr, attack.skill, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, 0, attack.allDamage, attack.speed, attack.direction, attack.display), false);
-            if (attack.skill == Aran.COMBO_SMASH && chr.getCombocounter() >= 30) {
+        } else if (skillId == Aran.COMBO_SMASH || skillId == Aran.COMBO_FENRIR || skillId == Aran.COMBO_TEMPEST) {
+            chr.getMap().broadcastMessage(chr, PacketCreator.rangedAttack(chr, skillId, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, 0, attack.allDamage, attack.speed, attack.direction, attack.display), false);
+            if (skillId == Aran.COMBO_SMASH && chr.getCombocounter() >= 30) {
                 chr.setCombo((short) 0);
                 applyAttack(attack, chr, 1);
-            } else if (attack.skill == Aran.COMBO_FENRIR && chr.getCombocounter() >= 100) {
+            } else if (skillId == Aran.COMBO_FENRIR && chr.getCombocounter() >= 100) {
                 chr.setCombo((short) 0);
                 applyAttack(attack, chr, 2);
-            } else if (attack.skill == Aran.COMBO_TEMPEST && chr.getCombocounter() >= 200) {
+            } else if (skillId == Aran.COMBO_TEMPEST && chr.getCombocounter() >= 200) {
                 chr.setCombo((short) 0);
                 applyAttack(attack, chr, 4);
             }
@@ -116,14 +134,14 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
             short bulletCount = 1;
             short supplement = 0;   //用于补充平衡之怒的变量
             StatEffect effect = null;
-            if (attack.skill != 0) {
+            if (skillId != 0) {
                 effect = attack.getAttackEffect(chr, null);
                 bulletCount = effect.getBulletCount();
                 if (effect.getCooldown() > 0) {
-                    c.sendPacket(PacketCreator.skillCooldown(attack.skill, effect.getCooldown()));
+                    c.sendPacket(PacketCreator.skillCooldown(skillId, effect.getCooldown()));
                 }
 
-                if (attack.skill == 4111004) {   // shadow meso
+                if (skillId == 4111004) {   // shadow meso
                     bulletCount = 0;
 
                     int money = effect.getMoneyCon();
@@ -183,7 +201,7 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
             boolean soulArrow = chr.getBuffedValue(CharBuffStat.SOULARROW) != null;
             boolean shadowClaw = chr.getBuffedValue(CharBuffStat.SHADOW_CLAW) != null;
             if (projectile != 0) {
-                if (!soulArrow && !shadowClaw && attack.skill != 11101004 && attack.skill != 15111007 && attack.skill != 14101006) {
+                if (!soulArrow && !shadowClaw && skillId != 11101004 && skillId != 15111007 && skillId != 14101006) {
                     short bulletConsume = bulletCount;
 
                     if (effect != null && effect.getBulletConsume() != 0) {
@@ -200,7 +218,7 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
                 }
             }
 
-            if (projectile != 0 || soulArrow || attack.skill == 11101004 || attack.skill == 15111007 || attack.skill == 14101006 || attack.skill == 4111004 || attack.skill == 13101005) {
+            if (projectile != 0 || soulArrow || skillId == 11101004 || skillId == 15111007 || skillId == 14101006 || skillId == 4111004 || skillId == 13101005) {
                 int visProjectile = projectile; //visible projectile sent to players
                 if (ItemConstants.isThrowingStar(projectile)) {
                     Inventory cash = chr.getInventory(InventoryType.CASH);
@@ -213,33 +231,33 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
                             }
                         }
                     }
-                } else if (soulArrow || attack.skill == 3111004 || attack.skill == 3211004 || attack.skill == 11101004 || attack.skill == 15111007 || attack.skill == 14101006 || attack.skill == 13101005) {
+                } else if (soulArrow || skillId == 3111004 || skillId == 3211004 || skillId == 11101004 || skillId == 15111007 || skillId == 14101006 || skillId == 13101005) {
                     visProjectile = 0;
                 }
 
                 final Packet packet;
-                switch (attack.skill) {
+                switch (skillId) {
                     case 3121004: // Hurricane
                     case 3221001: // Pierce
                     case 5221004: // Rapid Fire
                     case 13111002: // KoC Hurricane
-                        packet = PacketCreator.rangedAttack(chr, attack.skill, attack.skilllevel, attack.rangedirection, attack.numAttackedAndDamage, visProjectile, attack.allDamage, attack.speed, attack.direction, attack.display);
+                        packet = PacketCreator.rangedAttack(chr, skillId, attack.skilllevel, attack.rangedirection, attack.numAttackedAndDamage, visProjectile, attack.allDamage, attack.speed, attack.direction, attack.display);
                         break;
                     default:
-                        packet = PacketCreator.rangedAttack(chr, attack.skill, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, visProjectile, attack.allDamage, attack.speed, attack.direction, attack.display);
+                        packet = PacketCreator.rangedAttack(chr, skillId, attack.skilllevel, attack.stance, attack.numAttackedAndDamage, visProjectile, attack.allDamage, attack.speed, attack.direction, attack.display);
                         break;
                 }
                 chr.getMap().broadcastMessage(chr, packet, false, true);
 
-                if (attack.skill != 0) {
-                    Skill skill = SkillFactory.getSkill(attack.skill);
+                if (skillId != 0) {
+                    Skill skill = SkillFactory.getSkill(skillId);
                     StatEffect effect_ = skill.getEffect(chr.getSkillLevel(skill));
                     if (effect_.getCooldown() > 0) {
-                        if (chr.skillIsCooling(attack.skill)) {
+                        if (chr.skillIsCooling(skillId)) {
                             return;
                         } else {
-                            c.sendPacket(PacketCreator.skillCooldown(attack.skill, effect_.getCooldown()));
-                            chr.addCooldown(attack.skill, currentServerTime(), SECONDS.toMillis(effect_.getCooldown()));
+                            c.sendPacket(PacketCreator.skillCooldown(skillId, effect_.getCooldown()));
+                            chr.addCooldown(skillId, currentServerTime(), SECONDS.toMillis(effect_.getCooldown()));
                         }
                     }
                 }
@@ -255,5 +273,9 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
                 applyAttack(attack, chr, bulletCount);
             }
         }
+        if (attack.skill > 0) {
+            achievementService.recordAchievement(c.getPlayer().getId(), AchievementCategory.PLAYER_SKILL_USE, String.valueOf(attack.skill), 1);
+        }
+
     }
 }

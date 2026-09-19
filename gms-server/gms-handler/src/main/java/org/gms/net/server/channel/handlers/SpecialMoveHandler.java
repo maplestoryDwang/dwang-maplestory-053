@@ -21,6 +21,8 @@
 */
 package org.gms.net.server.channel.handlers;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.client.character.skill.Skill;
@@ -37,13 +39,30 @@ import org.gms.net.AbstractPacketHandler;
 import org.gms.net.packet.InPacket;
 import org.gms.net.server.Server;
 import org.gms.server.StatEffect;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.gms.util.PacketCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.awt.*;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+@Component
 public final class SpecialMoveHandler extends AbstractPacketHandler {
+
+    @Getter
+    private static SpecialMoveHandler instance;
+
+    @PostConstruct
+    private void init() {
+        instance = this;
+    }
+
+    @Autowired
+    AchievementService achievementService;
+
 
     @Override
     public final void handlePacket(InPacket p, Client c) {
@@ -153,5 +172,10 @@ public final class SpecialMoveHandler extends AbstractPacketHandler {
         } else {
             c.sendPacket(PacketCreator.enableActions());
         }
+
+
+        // 记录使用过的BUFF
+        achievementService.recordAchievement(c.getPlayer().getId(), AchievementCategory.PLAYER_SKILL_USE, String.valueOf(skillid), 1);
+
     }
 }

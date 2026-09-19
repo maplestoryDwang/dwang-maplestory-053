@@ -7,6 +7,7 @@ var ItemRewardHandler = Java.type('org.gms.net.server.channel.handlers.ItemRewar
 var MobSkillFactory = Java.type('org.gms.server.life.MobSkillFactory');
 var MobSkillType = Java.type('org.gms.server.life.MobSkillType');
 var MonsterStatus = Java.type('org.gms.client.status.MonsterStatus');
+var IceWolfService = Java.type('org.gms.scripting.event.IceWolfService');
 var mobSkill = MobSkillFactory.getMobSkill(MobSkillType.STUN, 7).get();
 var ms = new Map([[MonsterStatus.STUN, 1]]);
 var pos;
@@ -33,8 +34,10 @@ function process(p, pos) {
 			count = count + 1;
 			continue;
 		}
+        var mobvicLimitNum = IceWolfService.getMobvicLimitNum();
+
 		//if (Math.abs(pos.getX() - mobPos.getX()) <= 1000 && Math.abs(pos.getY() - mobPos.getY()) <= 1000) {
-			if (count > 20) // 限制吸怪数量
+			if (count > mobvicLimitNum) // 限制吸怪数量
 				return;
 			// 定身buff
 			mos[i].applyMonsterBuff(ms, 0, 60 * 1000, mobSkill, null);

@@ -163,10 +163,12 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.PLAYER_LOGGEDIN, new PlayerLoggedinHandler(channelDeps.noteInteralService()));
         registerHandler(RecvOpcode.PLAYER_LOGGEDIN, PlayerLoggedinHandler.getInstance(channelDeps.noteInteralService()));
         registerHandler(RecvOpcode.CHANGE_MAP, new ChangeMapHandler());                                        //   check
-        registerHandler(RecvOpcode.MOVE_LIFE, new MoveLifeHandler());                                          //   check
-        registerHandler(RecvOpcode.CLOSE_RANGE_ATTACK, new CloseRangeDamageHandler());                       //   check
-        registerHandler(RecvOpcode.RANGED_ATTACK, new RangedAttackHandler());
-        registerHandler(RecvOpcode.MAGIC_ATTACK, new MagicDamageHandler());
+        registerHandler(RecvOpcode.MOVE_LIFE, new MoveLifeHandler());
+        //   check
+        registerHandler(RecvOpcode.CLOSE_RANGE_ATTACK, CloseRangeDamageHandler.getInstance());                       //   check
+        registerHandler(RecvOpcode.RANGED_ATTACK, RangedAttackHandler.getInstance());
+        registerHandler(RecvOpcode.MAGIC_ATTACK, MagicDamageHandler.getInstance());
+
         registerHandler(RecvOpcode.TAKE_DAMAGE, new TakeDamageHandler());
         registerHandler(RecvOpcode.MOVE_PLAYER, new MovePlayerHandler());                                    //   check
         registerHandler(RecvOpcode.USE_CASH_ITEM, new UseCashItemHandler(channelDeps.noteInteralService()));
@@ -179,7 +181,7 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.HEAL_OVER_TIME, new HealOvertimeHandler());
         registerHandler(RecvOpcode.ITEM_PICKUP, new ItemPickupHandler());
         registerHandler(RecvOpcode.CHAR_INFO_REQUEST, new CharInfoRequestHandler());
-        registerHandler(RecvOpcode.SPECIAL_MOVE, new SpecialMoveHandler());
+        registerHandler(RecvOpcode.SPECIAL_MOVE, SpecialMoveHandler.getInstance());
         registerHandler(RecvOpcode.USE_INNER_PORTAL, new InnerPortalHandler());
         registerHandler(RecvOpcode.CANCEL_BUFF, new CancelBuffHandler());
         registerHandler(RecvOpcode.CANCEL_ITEM_EFFECT, new CancelItemEffectHandler());

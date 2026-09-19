@@ -134,7 +134,7 @@ public class AchievementService {
         record.setAchievementKey(key);
         record.setProgress(isAccumulate ? addAmount : 1);
         record.setCompleted(Boolean.FALSE);
-        achievementMapper.insert(record);
+        achievementMapper.insertSelective(record);
         return true;
     }
 

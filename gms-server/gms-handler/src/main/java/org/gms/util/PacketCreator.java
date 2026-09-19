@@ -38,6 +38,7 @@ import org.gms.client.character.keybind.QuickslotBinding;
 import org.gms.client.character.skill.Skill;
 import org.gms.client.character.skill.SkillMacro;
 import org.gms.client.status.*;
+import org.gms.scripting.event.IceWolfService;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.cashshop.CommodityFlag;
 import org.gms.constants.skills.adv.warrior.spearman.Darkknight;
@@ -2709,28 +2710,44 @@ public class PacketCreator {
         return mplew;
     }
 
+    /**
+     * 移动怪物同步包 (SMSG 0x97 MOVE_MONSTER) —— v053 客户端线格式。
+     * <p>
+     * 注意：这里<b>不能</b>照抄 v083 的写法。v083 客户端 CMob::OnMove 在 oid 之后先读 1 个字节
+     * (v083 服务端恒写 0)，再读 nSkillPossible、nMoveAction，然后是一个 int；v053 客户端
+     * CMob::OnMove (GMSv53.exe:0x585CD5) 只有 2 次 Decode1，没有那个前导字节：
+     * <pre>
+     * oid(4) | nSkillPossible(1) | nMoveAction(1) | nSkillData(4) | x(2) | y(2) | 移动数据(CMovePath::Decode)
+     * </pre>
+     * {@code nSkillData = skillId | (skillLevel << 8) | (pOption << 16)}，由 v053 的
+     * CMob::OnMove 取其最低字节作技能 ID、次低字节作技能等级。
+     * <p>
+     * 之前多写了一个字节，导致客户端从 y 的高字节处读取移动指令条数(比如 y=-387 时读到 254 条)，
+     * 解析越界整包后立刻掉线。
+     */
     public static Packet moveMonster(int oid, boolean skillPossible, int skill, int skillId, int skillLevel, int pOption,
                                      Point startPos, InPacket movementPacket, long movementDataLength) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_MONSTER);
         p.writeInt(oid);
-        p.writeByte(0);
-        p.writeBool(skillPossible);
-        p.writeByte(skill);
-        p.writeByte(skillId);
-        p.writeByte(skillLevel);
-        p.writeShort(pOption);
+        p.writeBool(skillPossible); // v053 紧跟 oid；v083 此处前面还有一个恒为 0 的字节
+        p.writeByte(skill);         // nMoveAction，-1(0xFF) 表示保持当前动作
+        p.writeByte(skillId);       // nSkillData 低字节
+        p.writeByte(skillLevel);    // nSkillData 次低字节
+        p.writeShort(pOption);      // nSkillData 高 16 位
         p.writePos(startPos);
         rebroadcastMovementList(p, movementPacket, movementDataLength);
         return p;
     }
 
 
+    /**
+     * 移动怪物同步包 (SMSG 0x97 MOVE_MONSTER) —— v053 客户端线格式，字段同上面的重载。
+     */
     public static Packet moveMonster(int oid, boolean skillPossible, int skill, int skillId, int skillLevel, int pOption,
                                      Point startPos, List<LifeMovementFragment> moves) {
         final OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_MONSTER);
         p.writeInt(oid);
-        p.writeByte(0);
-        p.writeBool(skillPossible);
+        p.writeBool(skillPossible); // v053 紧跟 oid；v083 此处前面还有一个恒为 0 的字节
         p.writeByte(skill);
         p.writeByte(skillId);
         p.writeByte(skillLevel);

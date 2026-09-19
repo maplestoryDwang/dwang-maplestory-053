@@ -584,18 +584,6 @@ public class InventoryManipulator {
             c.sendPacket(PacketCreator.enableActions());
             return;
         }
-        // 吸怪和吸物品
-         else if (source.getItemId() == EqpId.ZENUMIST_S_CAPE_1102139) {
-            iceWolfService.specialHandle(source.getItemId(), c);
-            c.sendPacket(PacketCreator.enableActions());
-            return;
-        } else if (source.getItemId() == EqpId.ALCADNO_S_CAPE_1102140) {
-            iceWolfService.specialHandle(source.getItemId(), c);
-            c.sendPacket(PacketCreator.enableActions());
-            return;
-        }
-
-
 
         //控制台参数为true时进行校验判断
         if (GameConfig.getServerBoolean("use_equipment_gender_limit") && itemGender != 2 && itemGender != chr.getGender()) {  //判断装备是否要求角色性别
@@ -738,6 +726,24 @@ public class InventoryManipulator {
         if (source.getItemId() == ShieldId.MAPLE_SHIELD_1092030) {
             achievementService.recordAchievementEgg(chr.getId(), AchievementCategory.SPECIAL_EGG, MapleShieldEggChecker.EGG_MAPLE_SHIELD, null);
         }
+       // 判断脱下的是哪个
+        if (target != null && target.getItemId() == EqpId.ZENUMIST_S_CAPE_1102139) {
+            iceWolfService.specialHandle(target.getItemId(), c, false);
+        } else if (target != null && target.getItemId() == EqpId.ALCADNO_S_CAPE_1102140) {
+            iceWolfService.specialHandle(target.getItemId(), c, false);
+        }
+
+        // 穿上装备：吸怪和吸物品
+        if (source.getItemId() == EqpId.ZENUMIST_S_CAPE_1102139) {
+            iceWolfService.specialHandle(source.getItemId(), c, true);
+            c.sendPacket(PacketCreator.enableActions());
+            return;
+        } else if (source.getItemId() == EqpId.ALCADNO_S_CAPE_1102140) {
+            iceWolfService.specialHandle(source.getItemId(), c,  true);
+            c.sendPacket(PacketCreator.enableActions());
+            return;
+        }
+
 
     }
 
@@ -791,6 +797,18 @@ public class InventoryManipulator {
 
         c.sendPacket(PacketCreator.modifyInventory(true, Collections.singletonList(new ModifyInventory(2, source, src))));
         chr.equipChanged();
+
+        // 穿上装备：吸怪和吸物品
+        if (source.getItemId() == EqpId.ZENUMIST_S_CAPE_1102139) {
+            iceWolfService.specialHandle(source.getItemId(), c, false);
+            c.sendPacket(PacketCreator.enableActions());
+            return;
+        } else if (source.getItemId() == EqpId.ALCADNO_S_CAPE_1102140) {
+            iceWolfService.specialHandle(source.getItemId(), c,  false);
+            c.sendPacket(PacketCreator.enableActions());
+            return;
+        }
+
     }
 
     private static boolean isDisappearingItemDrop(Item it) {

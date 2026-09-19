@@ -31,6 +31,9 @@ public class AchievementCategory {
 
     public static final String PLAYER_WARP_MAP = "PLAYER_WARP_MAP";  // 地图进入
 
+    public static final String PLAYER_SKILL_USE = "PLAYER_SKILL_USE";  // 使用技能记录
+    public static final String PLAYER_CONSUME_USE = "PLAYER_CONSUME_USE";  // 使用药水记录
+
 
     // ================= 10 个彩蛋的 Key =================
 
@@ -121,7 +124,9 @@ public class AchievementCategory {
             PLAYER_INVENTORY_DROP,
             PLAYER_INVENTORY_OTHER,
             PLAYER_INVENTORY_ID,
-            PLAYER_WARP_MAP
+            PLAYER_WARP_MAP,
+            PLAYER_SKILL_USE,
+            PLAYER_CONSUME_USE
             );
     /**
      * 音乐中文名

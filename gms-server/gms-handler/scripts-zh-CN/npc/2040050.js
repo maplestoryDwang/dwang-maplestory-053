@@ -38,6 +38,10 @@ var access = true;
 var reqitem = [];
 var cost = 4000;
 
+// 配置项：每天吸怪科技的使用限制时长（分钟）
+var magnetDailyLimitMinutes = IceWolfService.getMobvicLimitNum();
+var IceWolfService = Java.type('org.gms.scripting.event.IceWolfService');
+
 var makeditem = [4006000, 4006001, 1102139, 1102140];
 var reqset = [
     // 0: 魔法石
@@ -57,7 +61,7 @@ var reqset = [
     // 2: 冰狼科技 - 吸怪 (兑换 1102139，需要 4000052 x 1000)
     [[[4000052, 1000]]],
 
-    // 3: 冰狼科技 - 吸物品 (兑换 1102140，需要 4000122 x 100)
+    // 3: 冰狼科技 - 吸物品 (兑换 1102140，需要 4000122 x 1000)
     [[[4000122, 1000]]]
 ];
 
@@ -72,7 +76,7 @@ function action(mode, type, selection) {
         return;
     }
     if (mode == 0) {
-        cm.sendNext("材料不够，是吗？别担心。收集到必要的物品后，来找我就行了。无论是打猎还是从他人那里购买，都有很多方法可以获取这些物品，所以继续努力吧。");
+        cm.sendNext("嗯？材料还不够吗？别急别急，炼金术是需要耐心的。去野外猎杀怪物或者找其他冒险者交易都能凑齐，准备好了再来找我吧！");
         cm.dispose();
         return;
     }
@@ -81,17 +85,17 @@ function action(mode, type, selection) {
     }
 
     if (status == 1) {
-        cm.sendNext("好的，把青蛙的舌头和松鼠的牙齿混合在一起，哦对了！忘了放闪闪发光的白色粉末！！天哪，那本来可能会很糟糕……哇！！你站在那里多久了？我可能有点沉迷于我的工作……嘿嘿。");
+        cm.sendNext("把青蛙的舌头和松鼠的牙齿加进去……哎呀！糟糕，差一点忘了放闪闪发光的白色粉末！要是炸锅可就糟了……诶哇！？你、你什么时候站在那里的？咳咳……不好意思，我搞炼金实验太投入了，嘿嘿。");
     } else if (status == 2) {
-        var text = "正如你所看到的，我只是一个旅行的炼金术士。我可能还在训练中，但我仍然可以制作一些你可能需要的东西。你想看看吗？\r\n\r\n";
-        text += "#L0##b制作魔法石#k#l\r\n";
-        text += "#L1##b制作召唤石#k#l\r\n";
+        var text = "如你所见，我只是个在各地流浪的炼金术士。虽说还在修行中，但我手里的古老配方可不少，应该能制作你需要的宝贝。你要来看看吗？\r\n\r\n";
+        text += "#L0##b炼制【魔法石】#k#l\r\n";
+        text += "#L1##b炼制【召唤石】#k#l\r\n";
 
-        // 检测成就成就记录
+        // 检测成就记录
         var progress = cm.getAchievementProgress("SPECIAL_EGG");
         if (progress && progress.isCompleted()) {
-            text += "#L2##r[彩蛋解锁] 制作冰狼科技 - 吸怪#k#l\r\n";
-            text += "#L3##r[彩蛋解锁] 制作冰狼科技 - 吸物品#k#l\r\n";
+            text += "#L2##b[彩蛋秘方] 冰狼科技 - 磁场吸怪装备#k#l\r\n";
+            text += "#L3##b[彩蛋秘方] 冰狼科技 - 自动拾取装备#k#l\r\n";
         }
 
         cm.sendSimple(text);
@@ -100,23 +104,38 @@ function action(mode, type, selection) {
         makeitem = makeditem[set];
         menu = "";
 
-        // 如果选择的是普通魔法石 / 召唤石 (拥有 5 种制作配方)
+        // 普通魔法石 / 召唤石
         if (set === 0 || set === 1) {
             for (var i = 0; i < reqset[set].length; i++) {
-                menu += "\r\n#L" + i + "##bMake it using #t" + reqset[set][i][0][0] + "# and #t" + reqset[set][i][1][0] + "##k#l";
+                menu += "\r\n#L" + i + "##b使用 #t" + reqset[set][i][0][0] + "# 与 #t" + reqset[set][i][1][0] + "# 炼制#k#l";
             }
-            cm.sendSimple("哈哈... #b#t" + makeitem + "##k 是一种神秘的岩石，只有我才能制造。许多旅行者似乎需要它来获得比魔法值和生命值更强大的技能。有5种方法可以制作 #t" + makeitem + "#。你想用哪种方法制作？" + menu);
+            cm.sendSimple("哈哈！#b#t" + makeitem + "##k 可是蕴含着神秘能量的石头，只有我的炼金术才能把它提炼出来！听说许多强大的技能都需要它。我有5种不同的配方可以提炼出它，你想用哪一种？" + menu);
         } else {
-            // 彩蛋分支：单配方直接确认
+            // 彩蛋分支
             reqitem = [];
             reqitem[0] = [reqset[set][0][0][0], reqset[set][0][0][1]];
 
+            var detailText = "";
+            if (set === 2) {
+                detailText = "【冰狼科技 - 磁场吸怪】\r\n" +
+                             "效果：装备后，每隔一段时间会自动将全地图的怪物吸引到你当前的坐标！\r\n" +
+                             "限制：开启磁场吸怪功能每天最多累计使用 #r" + magnetDailyLimitMinutes + " 分钟#k。";
+            } else if (set === 3) {
+                detailText = "【冰狼科技 - 自动拾取】\r\n" +
+                             "效果：装备后，人物将获得自动拾取周围掉落物品的神奇能力。\r\n" +
+                             "限制：无使用时间限制。";
+            }
+
+            var noteText = "\r\n\r\n#r【特别注意事项】#k\r\n" +
+                           "两种冰狼科技装备你可以全部兑换，但#r同时只能生效其中一种科技#k！请根据需求合理使用。\r\n\r\n" +
+                           "为了提炼 #b#t" + makeitem + "##k，我需要以下材料：";
+
             menu = "\r\n#v" + reqitem[0][0] + "# #b" + reqitem[0][1] + " 个 #t" + reqitem[0][0] + "##k";
-            cm.sendYesNo("不愧是解开了彩蛋的冒险者！为了制作 #b#t" + makeitem + "##k，我需要以下材料。你确定要兑换吗？\r\n" + menu);
-            status = 3; // 保持 status 走向步骤 4 (结算逻辑)
+
+            cm.sendYesNo("哦哦！不愧是解开了传说彩蛋的冒险者，你竟然知晓这个失传的配方！\r\n\r\n" + detailText + noteText + menu + "\r\n\r\n你确定要进行炼制吗？");
+            status = 3;
         }
     } else if (status == 4) {
-        // 如果是普通分类 (set 0/1)，此处 selection 代表选中的配方编号
         if (set === 0 || set === 1) {
             var recipe = reqset[set][selection];
             reqitem = [];
@@ -126,16 +145,16 @@ function action(mode, type, selection) {
 
             menu = "";
             for (var i = 0; i < reqitem.length; i++) {
-                menu += "\r\n#v" + reqitem[i][0] + "# #b" + reqitem[i][1] + " #t" + reqitem[i][0] + "#s#k";
+                menu += "\r\n#v" + reqitem[i][0] + "# #b" + reqitem[i][1] + " 个 #t" + reqitem[i][0] + "##k";
             }
-            menu += "\r\n#i4031138# #b" + cost + " mesos#k";
-            cm.sendYesNo("为了制作#b5 #t" + makeitem + "##k，我需要以下物品。其中大部分可以通过打猎获得，所以对你来说并不是非常困难。你觉得怎么样？你想要一些吗？\r\n" + menu);
+            menu += "\r\n#i4031138# #b" + cost + " 金币#k";
+            cm.sendYesNo("想要炼制 #b5个 #t" + makeitem + "##k 对吧？我需要下面这些材料和一点点微不足道的加工费。这些材料在怪物身上经常能看到，对你来说应该不难拿到。准备好现在制作了吗？\r\n" + menu);
         } else {
-            // 彩蛋分支：执行扣除与发放
+            // 彩蛋结算
             executeTrade(1);
         }
     } else if (status == 5) {
-        // 普通分支：执行扣除与发放
+        // 普通结算
         executeTrade(5);
     }
 }
@@ -153,13 +172,16 @@ function executeTrade(giveCount) {
         }
     }
 
-    // 普通配方校验金币，彩蛋配方不校验金币
     var hasMeso = (set === 0 || set === 1) ? (cm.getMeso() >= cost) : true;
 
-    if (!access || !cm.canHold(makeitem) || !hasMeso) {
-        cm.sendNext("请检查并查看您是否拥有所有所需的物品，或者您的背包栏位已满。");
+    if (!access) {
+        cm.sendNext("嗯……材料好像不太够呢？请仔细检查一下背包里的材料数量吧。");
+    } else if (!cm.canHold(makeitem)) {
+        cm.sendNext("哎呀，你的背包空间似乎不够了。整理一下背包腾出空位再来找我吧！");
+    } else if (!hasMeso) {
+        cm.sendNext("那个……炼金也是需要一点小成本的，你身上的金币好像不太够付款呢。");
     } else {
-        cm.sendOk("拿着这个 #b#t" + makeitem + "##k。即使是我也得承认，这是一件杰作。好吧，如果你需要我的帮助，尽管回来找我谈谈！");
+        cm.sendOk("拿去吧！这就是炼制出来的 #b#t" + makeitem + "##k！连我自己都忍不住要夸赞这精湛的品质了，哈哈！以后如果还需要炼金术的帮助，随时欢迎再来找我！");
         for (var i = 0; i < reqitem.length; i++) {
             cm.gainItem(reqitem[i][0], -reqitem[i][1]);
         }

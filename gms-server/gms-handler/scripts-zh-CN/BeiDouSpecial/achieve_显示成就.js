@@ -74,7 +74,7 @@ function showMainPanel() {
         totalDiscount += dto.getCurrentDiscountPercent();
         totalMaxPossible += dto.getWeightPercent();
 
-        var statusTag = dto.isCompleted() ? "#b[已完成]#k" : "#b[" + dto.getCurrentProgress() + "/" + dto.getMaxProgress() + "]#k";
+        var statusTag = dto.isCompleted() ? "#r[已完成]#k" : "#b[" + dto.getCurrentProgress() + "/" + dto.getMaxProgress() + "]#k";
         text += "#L" + i + "# " + dto.getCategoryName() + " " + statusTag + " (减伤: #b" + dto.getCurrentDiscountPercent().toFixed(2) + "%#k)#l\r\n";
     }
 

@@ -21,6 +21,8 @@
  */
 package org.gms.net.server.channel.handlers;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
@@ -35,11 +37,28 @@ import org.gms.constants.skills.adv.magician.il_wizard.IlArchmage;
 import org.gms.net.packet.InPacket;
 import org.gms.net.packet.Packet;
 import org.gms.server.StatEffect;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.gms.util.PacketCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-
+@Component
 public final class MagicDamageHandler extends AbstractDealDamageHandler {
+
+
+    @Getter
+    private static MagicDamageHandler instance;
+
+    @PostConstruct
+    private void init() {
+        instance = this;
+    }
+
+    @Autowired
+    AchievementService achievementService;
+
     @Override
     public final void handlePacket(InPacket p, Client c) {
         Character chr = c.getPlayer();
@@ -88,5 +107,10 @@ public final class MagicDamageHandler extends AbstractDealDamageHandler {
                 eaterSkill.getEffect(eaterLevel).applyPassive(chr, chr.getMap().getMapObject(singleDamage), 0);
             }
         }
+
+        if (skill.getId() >0) {
+            achievementService.recordAchievement(c.getPlayer().getId(), AchievementCategory.PLAYER_SKILL_USE, String.valueOf(skill.getId()), 1);
+        }
+
     }
 }

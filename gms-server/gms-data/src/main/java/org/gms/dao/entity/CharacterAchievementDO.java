@@ -8,6 +8,7 @@ package org.gms.dao.entity;
  * @since 2026/9/9 16:56
  */
 
+import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 
 import com.mybatisflex.annotation.KeyType;
@@ -27,7 +28,9 @@ public class CharacterAchievementDO {
     private Integer progress;
     private Boolean completed;
     /** 首次记录时间（DB 默认 CURRENT_TIMESTAMP） */
+    @Column(onInsertValue = "now()")
     private LocalDateTime createdAt;
     /** 最后更新时间（DB 自动 ON UPDATE） */
+    @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updatedAt;
 }

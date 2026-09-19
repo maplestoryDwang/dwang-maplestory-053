@@ -8,7 +8,6 @@ import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;
 import org.gms.net.server.channel.handlers.ItemRewardHandler;
 import org.gms.scripting.AbstractScriptManager;
-import org.gms.scripting.npc.NPCScriptManager;
 import org.gms.server.ItemInformationProvider;
 import org.gms.server.TimerManager;
 import org.gms.server.maps.MapleMap;
@@ -40,17 +39,18 @@ public class IceWolfService {
     private static long timeStart;
     private static long timeEnd;
     private static long mvTime;
-    private static int MOBVIC_LIMIT = 30;
+    private static int MOBVIC_LIMIT_TIME = 30;
+    private static int MOBVIC_LIMIT_NUM = 20;
 
-    public void specialHandle(int itemId, Client c) {
+    public void specialHandle(int itemId, Client c, boolean start) {
         switch (itemId) {
             case EqpId.ZENUMIST_S_CAPE_1102139:
                 position = position == null ? c.getPlayer().getPosition() : position;
                 vacmap = c.getPlayer().getMap();
-                mobvacTask = this.runScript(mobvacTask, itemId, "BeiDouSpecial/_mobvac.js", c, 510L, "全屏吸怪");
+                mobvacTask = this.runScript(mobvacTask, itemId, "BeiDouSpecial/achieve_mobvac.js", c, 510L, "全屏吸怪", start);
                 break;
             case EqpId.ALCADNO_S_CAPE_1102140:
-                itemvacTask = this.runScript(itemvacTask, itemId, "BeiDouSpecial/_itemvac.js", c, 500L, "全屏捡物");
+                itemvacTask = this.runScript(itemvacTask, itemId, "BeiDouSpecial/achieve_itemvac.js", c, 500L, "全屏捡物",start);
                 break;
 //            case 2022552:
 //                NPCScriptManager.getInstance().start(c, 9900001, (Character)null);
@@ -62,18 +62,22 @@ public class IceWolfService {
         c.getAbstractPlayerInteraction().enableActions();
     }
 
-    private ScheduledFuture runScript(ScheduledFuture sf, int itemId, String path, Client c, long time, String msg) {
-        if (sf != null) {
+    private ScheduledFuture runScript(ScheduledFuture sf, int itemId, String path, Client c, long time, String msg, boolean start) {
+        if (!start) {
+            this.dispose(itemId, c, c.getPlayer().getId());
+            c.getPlayer().dropMessage(0, "[" + msg + "]功能已关闭");
+            return null;
+        } else if (sf != null) {
             this.dispose(itemId, c, c.getPlayer().getId());
             c.getPlayer().dropMessage(0, "[" + msg + "]功能已关闭");
             return null;
         } else {
             Character player = c.getPlayer();
-            c.getPlayer().dropMessage(0, "[" + msg + "]功能已开启");
             if (itemId == EqpId.ZENUMIST_S_CAPE_1102139) {
+                c.getPlayer().dropMessage(0, "[" + msg + "]功能已开启，限制数量为：" + MOBVIC_LIMIT_NUM);
                 timeStart = System.currentTimeMillis();
                 if (!this.checkTime(c, player.getId())) {
-                    c.getPlayer().dropMessage(1, MOBVIC_LIMIT + "分钟吸怪时限已过, 请明天再使用该功能~");
+                    c.getPlayer().dropMessage(1, MOBVIC_LIMIT_TIME + "分钟吸怪时限已过, 请明天再使用该功能~");
                     return null;
                 } else {
                     return TimerManager.getInstance().register(() -> {
@@ -99,6 +103,7 @@ public class IceWolfService {
                     }, time);
                 }
             } else {
+                c.getPlayer().dropMessage(0, "[" + msg + "]功能已开启");
                 return TimerManager.getInstance().register(() -> {
                     try {
                         Invocable invocable = this.getScriptEngine(path);
@@ -127,15 +132,20 @@ public class IceWolfService {
     private void dispose(int itemId, Client c, Integer playerId) {
         switch (itemId) {
             case EqpId.ZENUMIST_S_CAPE_1102139:
-                this.checkTime(c, playerId);
-                mobvacTask.cancel(true);
-                position = null;
-                vacmap = null;
-                mobvacTask = null;
+                if (mobvacTask != null) {
+
+                    this.checkTime(c, playerId);
+                    mobvacTask.cancel(true);
+                    position = null;
+                    vacmap = null;
+                    mobvacTask = null;
+                }
                 break;
             case EqpId.ALCADNO_S_CAPE_1102140:
-                itemvacTask.cancel(true);
-                itemvacTask = null;
+                if (itemvacTask!=null) {
+                    itemvacTask.cancel(true);
+                    itemvacTask = null;
+                }
                 break;
             case 2022615:
                 bagTask.cancel(true);
@@ -151,16 +161,24 @@ public class IceWolfService {
         long diff = timeEnd - timeStart;
         mvTime = StringUtils.isBlank(time) ? diff : Long.parseLong(time) + diff;
         ExtendDataService.saveOrUpdateExtendValue(String.valueOf(playerId), ExtendType.CHARACTER_EXTEND_DAILY.getType(), "mobvacLimit", String.valueOf(mvTime));
-        if (mvTime > (long)(MOBVIC_LIMIT * 60 * 1000)) {
+        if (mvTime > (long)(MOBVIC_LIMIT_TIME * 60 * 1000)) {
             return false;
         } else {
             if (c.getPlayer() != null) {
                 Character var10000 = c.getPlayer();
                 long var10002 = mvTime / 1000L / 60L;
-                var10000.dropMessage(0, "当前已吸怪" + var10002 + "分钟, 当天剩余可用时间为" + ((long)MOBVIC_LIMIT - mvTime / 1000L / 60L) + "分钟");
+                var10000.dropMessage(0, "当前已吸怪" + var10002 + "分钟, 当天剩余可用时间为" + ((long) MOBVIC_LIMIT_TIME - mvTime / 1000L / 60L) + "分钟");
             }
 
             return true;
         }
+    }
+
+    public static int getMobvicLimitTime() {
+        return MOBVIC_LIMIT_TIME;
+    }
+
+    public static int getMobvicLimitNum() {
+        return MOBVIC_LIMIT_NUM;
     }
 }

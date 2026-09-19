@@ -1,192 +1,138 @@
 /**
- * @description OdinMS 全屏吸物 (纯脚本实现，无需 Java 定时器)
- * @author hzh (改版适配 OdinMS)
+ * @description 全屏吸物
+ * @author hzh
  */
 
-// OdinMS 包路径引入
-var ItemInformationProvider = Java.type('net.sf.odinms.server.MapleItemInformationProvider');
-var InventoryManipulator = Java.type('net.sf.odinms.server.MapleInventoryManipulator');
-var MapleInventoryType = Java.type('net.sf.odinms.client.MapleInventoryType');
+var ItemId = Java.type('org.gms.constants.id.ItemId');
+var iip;
+var itemGender;
+var jobId;
+// exEquip : 是否完全不捡装备(false: 否, true : 是), 假如这里配置为true, 下述配置直接失效
+var exEquip = false;
+// exJob : 是否排除非当前职业的装备(false: 否, true : 是)
+var exJob = false;
+// exLev : 比角色等级小多少级的装备不捡
+var exLev = 20;
+// exLevlimit: 低于多少级的装备不捡
+var exLevlimit = 50;
+// exGender: 是否排除非当前性别的装备(false: 否, true : 是)
+var exGender = false; 
+// only : 是否捡取背包中已有的相同的装备(false: 否, true : 是)
+var only = true;
 
-var iip = ItemInformationProvider.getInstance();
-var jobId = 0;
-
-// ==================== 过滤配置 ====================
-var exEquip = false;    // 是否完全不捡装备
-var exJob = false;      // 是否排除非当前职业的装备
-var exLev = 20;         // 比角色等级小多少级的装备不捡
-var exLevlimit = 50;    // 低于多少级的装备不捡
-var exGender = false;   // 是否排除非当前性别的装备
-var only = true;        // 是否不捡背包中已有的相同装备
-
-// 黑名单物品 ID
-var exIds = [
-    2060000, 2060001, 2060002, 2060003, // 弓矢
-    2061000, 2061001, 2061002, 2061003, // 弩矢
-    4030012, 2330000, 2050001, 2070001, 2050002, 2070009, 2330001, 2070003, 2070002, 2070000
+var exIds = new Set([ // 排除的物品不捡
+	2060000, 2060001, 2060002, 2060003, // 弓矢
+	2061000, 2061001, 2061002, 2061003, // 弩矢
+	/*怪物卡*//*子弹*//*眼药*//*回旋镖*//*补药*//*木陀螺*//*手枪弹*//*雪花镖*/
+	4030012, 2330000, 2050001, 2070001, 2050002, 2070009, 2330001, 2070003, 
+	/*黑色利刃*/
+	2070002, 2070000
+]);
+var exNames = [ // 按关键字批量排除
+	"促进剂", "辅助剂", "命中率卷轴", "防御卷轴", "体力卷轴", "制作卷轴", "魔防卷轴"
 ];
-
-// 黑名单关键字
-var exNames = ["促进剂", "辅助剂", "命中率卷轴", "防御卷轴", "体力卷轴", "制作卷轴", "魔防卷轴"];
-
-// 职业分支判定
 var jobData = {
-    1: [100,110,111,112,120,121,122,130,131,132,1100,1110,1111,2100,2110,2111,2112], // 战士
-    2: [200,210,211,212,220,221,222,230,231,232,1200,1210,1211],                    // 法师
-    4: [300,310,311,312,320,321,322,1300,1310,1311],                                // 弓箭手
-    8: [400,410,411,412,420,421,422,1400,1410,1411],                                // 飞侠
-    16: [500,510,511,512,520,521,522,1500,1510,1511]                                // 海盗
+	1: new Set([100,110,111,112,120,121,122,130,131,132,1100,1110,1111,2100,2110,2111,2112]), // 战
+	2: new Set([200,210,211,212,220,221,222,230,231,232,1200,1210,1211]), // 法
+	4: new Set([300,310,311,312,320,321,322,1300,1310,1311]), // 弓
+	8: new Set([400,410,411,412,420,421,422,1400,1410,1411]), // 飞
+	16: new Set([500,510,511,512,520,521,522,1500,1510,1511]) // 海
 };
 
-function start() {
-    action(1, 0, 0);
+function start(chr, itemInformationProvider) {
+	iip = itemInformationProvider;
+	initExNames(chr);
+	process(chr);
 }
 
-function action(mode, type, selection) {
-    if (mode <= 0) {
-        cm.dispose();
-        return;
-    }
-
-    var chr = cm.getPlayer();
-    if (chr == null || cm.getMap() == null) {
-        cm.dispose();
-        return;
-    }
-
-    // 1. 初始化职业黑名单关键字
-    initExNames(chr);
-
-    // 2. 执行吸物核心逻辑
-    var pickedCount = processPickup(chr);
-
-    // 3. 提示结果
-    cm.sendOk("#e#r[全屏吸物]#k#n\r\n\r\n已成功捡取/清理地图上的 #b" + pickedCount + "#k 堆掉落物！");
-    cm.dispose();
-}
-
-/**
- * 根据职业过滤专属卷轴
- */
+// 根据职业排除完全用不上的物品, 比如法师根本用不到力量以及攻击之类的卷轴, 所以就不捡这类物品
+// 这个逻辑不加在_organize.js中, 主要是考虑到了转生系统的存在, 否则一转生后突然把东西全丢了也不太好
 function initExNames(p) {
-    jobId = p.getJob().getId();
-    if (contains(jobData[1], jobId) || contains(jobData[4], jobId) || contains(jobData[16], jobId)) {
-        exNames.push("智力卷轴", "运气卷轴", "魔力卷轴");
-    } else if (contains(jobData[2], jobId)) {
-        exNames.push("力量卷轴", "敏捷卷轴", "攻击卷轴");
-    } else if (contains(jobData[8], jobId)) {
-        exNames.push("智力卷轴", "力量卷轴", "魔力卷轴");
-    }
+	jobId = p.getJob().getId();
+	if (jobData[1].has(jobId)) {
+		exNames.push("智力卷轴", "运气卷轴", "魔力卷轴");
+	} else if (jobData[2].has(jobId)) {
+		exNames.push("力量卷轴", "敏捷卷轴", "攻击卷轴");
+	} else if (jobData[4].has(jobId)) {
+		exNames.push("智力卷轴", "运气卷轴", "魔力卷轴");
+	} else if (jobData[8].has(jobId)) {
+		exNames.push("智力卷轴", "力量卷轴", "魔力卷轴");
+	} else if (jobData[16].has(jobId)) {
+		exNames.push("智力卷轴", "运气卷轴", "魔力卷轴");
+	}
 }
 
-/**
- * 遍历全地图物品并捡取
- */
-function processPickup(p) {
-    var mapleMap = p.getMap();
-    var count = 0;
-
-    // 获取地图上的所有掉落物对象
-    var mapObjects = mapleMap.getMapObjects();
-    if (mapObjects == null) return 0;
-
-    var iter = mapObjects.iterator();
-    while (iter.hasNext()) {
-        var obj = iter.next();
-
-        // 判定对象是否为地图物品对象 (MapleMapItem)
-        if (obj == null || obj.getClass().getSimpleName() !== "MapleMapItem") {
-            continue;
-        }
-
-        // 1. 过滤不合规装备（返回 true 则跳过）
-        if (exclude_equip(obj, p)) {
-            continue;
-        }
-
-        // 2. 过滤黑名单/无用物品（返回 false 则直接抹除该掉落物，不捡取）
-        if (!exclude_check2(obj, p)) {
-            mapleMap.removeMapObject(obj);
-            mapleMap.broadcastMessage(Java.type('net.sf.odinms.tools.MaplePacketCreator').removeItemFromMap(obj.getObjectId(), 1, p.getId()));
-            continue;
-        }
-
-        // 3. 执行物理捡取
-        try {
-            // 如果玩家本身内置了 pickupItem(MapleMapItem)
-            if (typeof p.pickupItem === "function") {
-                p.pickupItem(obj);
-            } else {
-                // OdinMS 标准原生替代方案：金币直接给，物品进背包，然后移除地图实体
-                if (obj.getMeso() > 0) {
-                    p.gainMeso(obj.getMeso(), true);
-                } else if (obj.getItem() != null) {
-                    InventoryManipulator.addFromDrop(p.getClient(), obj.getItem(), true);
-                }
-                mapleMap.removeMapObject(obj);
-                mapleMap.broadcastMessage(Java.type('net.sf.odinms.tools.MaplePacketCreator').removeItemFromMap(obj.getObjectId(), 1, p.getId()));
-            }
-            count++;
-        } catch (e) {
-            // 背包满或拾取异常处理
-        }
-    }
-    return count;
+function process(p) {
+	if (p == null || p.getMap() == null)
+		return;
+	
+	var mos = p.getMap().getMapObjects();
+	for (var i = 0; i < mos.length; i++) {
+		if((mos[i].toString()).indexOf("MapItem") > 0) {
+			if (exclude_equip(mos[i], p)) 
+				continue;
+			if (!exclude_check2(mos[i], p)) {
+				mos[i].sendDestroyData(p.getClient());
+				continue;
+			}
+			if (Date.now() - mos[i].getDropTime() >= 1400) {
+				p.pickupItem(mos[i]);
+			}
+		}
+	}
 }
 
-/**
- * 针对装备过滤 (返回 true 则跳过)
- */
-function exclude_equip(mo, p) {
-    if (mo.getMeso() > 0) return false;
-    if (mo.isPlayerDrop && mo.isPlayerDrop()) return true;
-
-    var item = mo.getItem();
-    if (item == null) return true;
-
-    var itemId = item.getItemId();
-
-    // 判断是否为装备分类 (1000000 - 1999999)
-    if (Math.floor(itemId / 1000000) === 1) {
-        if (exEquip) return true;
-        if (!only && p.haveItem(itemId)) return true;
-
-        var reqLevel = iip.getReqLevel(itemId);
-        if (reqLevel < exLevlimit) return true;
-        if (exLev > 0 && (p.getLevel() - reqLevel) > exLev) return true;
-    }
-    return false;
+function exclude_equip(mo, p) { // 针对装备进行过滤, 返回true, 则不捡, 且不消除装备
+	if (mo.getMeso() > 0) 
+		return false;
+	if (mo.isPlayerDrop())
+		return true;
+	var itemId = mo.getItem().getItemId();
+	if (iip.getEquipById(itemId).getInventoryType().name() == "EQUIP") {
+		if (exEquip)
+			return true;
+		if (!only && p.haveItem(itemId))
+			return true;
+		if (iip.getEquipLevelReq(itemId) < exLevlimit)
+			return true;
+		if (exLev > 0 && p.getLevel() - iip.getEquipLevelReq(itemId) > exLev)
+			return true;
+		if (exGender && (itemGender = ItemId.getGender(itemId)) != 2) 
+			if (p.getGender() != itemGender)
+				return true;
+		if (exJob) {
+			var reqJob = iip.getEquipStats(itemId).get("reqJob");
+			if (reqJob == 0) 
+				return true; // 是否捡全职业可穿戴的装备, 不想捡则改成true
+			for (j in jobData) { // 判断此装备是不是当前角色可佩戴的装备
+				if (jobData[j].has(jobId)) {
+					return reqJob != j
+				}
+			}
+		}
+		
+	}
+	return false;
 }
 
-/**
- * 黑名单及任务物品过滤 (返回 false 则直接从地图抹除)
- */
-function exclude_check2(mo, p) {
-    if (mo.getMeso() > 0) return true;
-    var itemId = mo.getItemId();
-
-    if (contains(exIds, itemId)) return false;
-    if (mo.isPickedUp && mo.isPickedUp()) return false;
-
-    // 名称关键字黑名单过滤
-    var itemName = iip.getName(itemId);
-    if (itemName != null) {
-        for (var i = 0; i < exNames.length; i++) {
-            if (itemName.indexOf(exNames[i]) >= 0) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-/**
- * 辅助函数：数组包含判断 (替代 ES6 Set)
- */
-function contains(arr, val) {
-    if (!arr) return false;
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] === val) return true;
-    }
-    return false;
+function exclude_check2(mo, p) { // 返回false, 则不捡, 且消除物品
+	if (mo.getMeso() > 0) 
+		return true;
+    if (exIds.has(mo.getItemId()))
+		return false;
+	if (mo.isPickedUp()) 
+		return false;
+	if (mo.getQuest() > 0) {
+		if (p.getQuestStatus(mo.getQuest()) != 1) 
+			return false; // 不捡非当前任务道具
+		var quest = p.getQuest(mo.getQuest()).getQuest();
+		var npcId = quest.getNpcRequirement(true);
+		if (npcId != -1 && quest.canComplete(p, npcId))
+			return false; // 不捡可完成任务道具
+	}	
+	for (var i = 0; i < exNames.length; i++) {
+		if(iip.getName(mo.getItemId()).toString().indexOf(exNames[i]) > 0)
+			return false;
+	}
+	return true;
 }

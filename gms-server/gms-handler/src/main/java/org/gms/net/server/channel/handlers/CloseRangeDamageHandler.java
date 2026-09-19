@@ -21,6 +21,8 @@
 */
 package org.gms.net.server.channel.handlers;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
@@ -39,8 +41,12 @@ import org.gms.constants.skills.adv.thief.Thief;
 import org.gms.constants.skills.other.WindArcher;
 import org.gms.net.packet.InPacket;
 import org.gms.server.StatEffect;
+import org.gms.server.achievement.AchievementCategory;
+import org.gms.server.achievement.AchievementService;
 import org.gms.util.PacketCreator;
 import org.gms.util.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -48,7 +54,20 @@ import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+@Component
 public final class CloseRangeDamageHandler extends AbstractDealDamageHandler {
+
+
+    @Getter
+    private static CloseRangeDamageHandler instance;
+
+    @PostConstruct
+    private void init() {
+        instance = this;
+    }
+
+    @Autowired
+    AchievementService achievementService;
 
     @Override
     public final void handlePacket(InPacket p, Client c) {
@@ -192,5 +211,9 @@ public final class CloseRangeDamageHandler extends AbstractDealDamageHandler {
         }
 
         applyAttack(attack, chr, attackCount);
+        if (attack.skill > 0) {
+            achievementService.recordAchievement(c.getPlayer().getId(), AchievementCategory.PLAYER_SKILL_USE, String.valueOf(attack.skill), 1);
+        }
+
     }
 }

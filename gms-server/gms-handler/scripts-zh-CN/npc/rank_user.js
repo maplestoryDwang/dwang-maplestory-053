@@ -7,10 +7,10 @@ var status = -1;
 var key = "每日荣耀奖励";
 
 // ====== 基础奖励配置 (单区域基准) ======
-var baseMeso    = 100000;  // 基础金币数量 (每个区域 10 万)
+var baseMeso    = 10000;  // 基础金币数量 (每个区域 10 万)
 var baseNX      = 5000;     // 基础点券数量 (每个区域 5000 点)
 var MAPLE_LEAF  = 4001126;  // 枫叶道具 ID
-var baseLeafNum = 500;      // 基础枫叶数量 (每个区域 500 个)
+var baseLeafNum = 100;      // 基础枫叶数量 (每个区域 500 个)
 
 function start() {
     status = -1;
