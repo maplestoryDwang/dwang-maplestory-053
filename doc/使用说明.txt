@@ -1,0 +1,152 @@
+﻿============================================================
+ GMS053 服务端  一键编译启动  使用说明
+============================================================
+
+一、怎么用
+------------------------------------------------------------
+1. 先运行 step1db，把 MySQL 装好、数据库导进去
+   （库名 dwang053，账号 root，密码 root）。
+2. 再进 step2，双击 start.cmd，等着就行。
+
+第一次运行会自动做三件事：
+   (1) 从 GitHub 把代码拉下来，放在 step2\source
+   (2) 用包里自带的 JDK 21 加 mvnw 编译出服务端 jar
+   (3) 启动服务端
+
+以后要更新，再双击一次 start.cmd 就行：它会重新拉最新代码、重新编译、再启动。
+
+
+二、文件都是干什么的
+------------------------------------------------------------
+start.cmd             唯一的入口。双击 = 拉代码 + 编译 + 启动
+config.cmd            所有配置都写在这里（仓库地址、分支、数据库、内存……）
+source\               自动拉下来的代码。不要手动改，更新时会被覆盖
+jdk-21.0.2\           包里自带的 JDK 21，客户不需要自己装 Java
+PortableGit\          包里自带的 Git，客户不需要自己装 Git
+application.yml       客户要改数据库相关的设置，改这个文件
+application-prod.yml  数据库连接（默认 dwang053 / root / root）
+launch.bat            旧脚本，直接跑自带的 Maplestory053.jar，不编译，留着备用
+
+
+三、start.cmd 的几种用法
+------------------------------------------------------------
+在 step2 目录的地址栏里输入 cmd 回车，然后：
+
+   start.cmd            拉代码 + 编译 + 启动     （最常用，也是双击的效果）
+   start.cmd update     只拉取 / 更新代码
+   start.cmd build      只编译（不碰 git）
+   start.cmd run        只启动（不编译）
+
+
+四、要改配置怎么办
+------------------------------------------------------------
+用记事本打开 config.cmd，改完保存即可。常用的几项：
+
+   GIT_URL            仓库地址（默认 GitHub）
+   GIT_URL_BACKUP     备用地址：GitHub 拉不动时自动改用它，填 Gitee 地址即可
+   GIT_BRANCH         分支，默认 master
+   GIT_DEPTH          1 = 只拉最新一版，下载量最小；0 = 拉完整历史（2GB 以上，很慢）
+   GIT_PROXY          git 用的代理，例如 http://127.0.0.1:7890，不用就留空
+   UPDATE_MODE        reset = 强制和远程一致（推荐）；pull = 只做快进合并
+   JDK_DIR            用哪个 JDK，默认包里自带的
+   MAVEN_CLEAN        1 = 每次先清理再编译（干净）；0 = 增量编译（快）
+   SPRING_PROFILE     默认 prod
+   USE_EXTERNAL_YML   1 = 启动时读外面的 application.yml
+   SAVE_LOG           1 = 运行日志同时写文件；0 = 只在窗口里显示
+   CONSOLE_CHARSET    控制台字符集，中文 Windows 保持 GBK
+   LOG_CHARSET        server.log 的字符集，默认 UTF-8（改 GBK 则老记事本可直接打开）
+   JAVA_RUN_OPTS      启动内存，例如 -Xms512m -Xmx2g，留空则用 JVM 默认值（推荐）
+
+
+五、为什么 jar 不从 target 里拷出来（重要）
+------------------------------------------------------------
+服务端启动时，wz、wz-zh-CN、scripts、scripts-zh-CN 这些资源都是按
+「当前工作目录」去找的，不是按 jar 所在位置找。
+
+所以脚本的做法是：不复制 jar，而是先把工作目录切到
+
+   source\gms-server\gms-handler
+
+然后直接运行同目录下 target\Maplestory053.jar。
+
+好处是每次重新编译出来的新 jar 都能立刻用上，不会出现
+「jar 更新了、资源目录还是旧的」这类问题。源包里的 wz 和脚本也是同一份。
+
+
+六、启动成功后长什么样
+------------------------------------------------------------
+看到下面这几行就说明起来了（时间是编译时间，不是启动时间）：
+   正在加载WZ文件
+   WZ文件加载完成
+   正在加载数据库信息
+   数据库信息加载完成
+   已开启登录端口 8484
+   事件脚本加载完成
+   Dwang053 启动完成，耗时：xx s
+
+端口：
+   8686  = 后台管理 / 接口端口
+   8484  = 客户端登录端口
+   17575 = 频道端口
+
+
+七、日志和排错
+------------------------------------------------------------
+运行日志：
+   窗口里会实时打印；
+   同时还会写一份到 source\gms-server\gms-handler\logs\server.log
+   （不想让它写文件，就把 config.cmd 里的 SAVE_LOG 改成 0）
+
+关于中文显示（乱码就是这里的问题）：
+   中文 Windows 的控制台代码页是 936(GBK)，脚本启动时会把它固定成 936。
+   而 Spring Boot 3 的控制台日志默认按 file.encoding(UTF-8) 输出，
+   两边对不上，中文日志就会变成「姝ｅ湪鍚姩」这种乱码。
+   脚本里已经用 CONSOLE_CHARSET=GBK 把日志也按 GBK 输出，所以窗口里是正常的。
+   server.log 仍然是 UTF-8，用 VS Code / Notepad++ / 新版记事本打开都正常；
+   想用老记事本直接双击打开，就把 LOG_CHARSET 改成 GBK。
+
+常见问题：
+
+1) 卡在拉代码 / 报网络错误
+   → GitHub 在国内经常连不上。把仓库同步一份到 Gitee，然后在 config.cmd 里填
+     GIT_URL_BACKUP=https://gitee.com/你的用户名/dwang-maplestory-053.git
+     如果你本机有代理，也可以填 GIT_PROXY=http://127.0.0.1:7890
+
+2) 报数据库连不上
+   → 先确认 step1db 已经执行过，MySQL 正在运行。
+     默认连的是 localhost:3306/dwang053，账号 root，密码 root。
+     要改就改 step2\application-prod.yml。
+
+3) 编译失败
+   → 先看日志里第一处 error。内存不够时先执行：
+        set MAVEN_OPTS=-Xmx1024m
+     再跑 start.cmd build。
+   → 第一次编译要下载 Maven 和几百 MB 依赖，慢是正常的。
+
+4) 提示端口被占用
+   → 说明已经有一个服务端在跑了，先把它关掉，或者改配置里的端口。
+
+5) 想停止服务端
+   → 在运行窗口里按 Ctrl+C，或者直接关掉那个窗口。
+
+6) 控制台中文是乱码
+   → 说明控制台代码页和日志输出的字符集不一致。
+     脚本默认已经处理好了；如果你手动改了 chcp 或 CONSOLE_CHARSET，把两者对齐即可
+     （控制台 936 就配 GBK，控制台 65001 就配 UTF-8）。
+
+7) 报 detected dubious ownership
+   → 一般不会遇到，脚本里已经加了 safe.directory 处理。
+     如果你手动敲 git 命令遇到了，可以把 source 目录加到 git 信任列表：
+        git config --global --add safe.directory <source 的完整路径>
+     （把包放在 exFAT / FAT32 格式的移动硬盘上时，最容易出这个问题）
+
+
+八、给维护者：要换仓库 / 换分支
+------------------------------------------------------------
+只改 config.cmd 两个变量就行：
+   GIT_URL       换成新仓库
+   GIT_BRANCH    换成新分支
+source 目录里已经有旧仓库时，脚本走的是
+   git fetch <地址> <分支>  然后 reset --hard
+所以换了地址也能直接更新过去，不需要把 source 删掉重拉。
+（注意 reset 会丢弃 source 里的本地改动，这是故意的：客户机要保证和远程一致。）
