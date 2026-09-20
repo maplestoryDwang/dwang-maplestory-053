@@ -12628,7 +12628,7 @@ INSERT INTO `drop_data_global` VALUES (2, -1, 4031866, 1, 1, 0, 20000, 'NX Card 
 INSERT INTO `drop_data_global` VALUES (3, -1, 4001126, 1, 2, 0, 8000, 'Maple Leaves');
 INSERT INTO `drop_data_global` VALUES (5, -1, 2340000, 1, 1, 0, 1200, 'White Scroll');
 INSERT INTO `drop_data_global` VALUES (6, -1, 4001006, 1, 1, 0, 1000, 'Flaming Feather');
-INSERT INTO `drop_data_global` VALUES (6, -1, 4031875, 1, 1, 0, 1000, 'Nevermelting Snow');
+INSERT INTO `drop_data_global` VALUES (7, -1, 4031875, 1, 1, 0, 1000, 'Nevermelting Snow');
 
 SET FOREIGN_KEY_CHECKS = 1;
 
