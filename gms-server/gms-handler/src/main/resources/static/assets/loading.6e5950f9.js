@@ -1,0 +1,1 @@
+import{j as a}from"./arco.9b89391c.js";import{g as s,r as c,s as g,c as i}from"./index.326e5612.js";function k(n=!1){const e=a(n),r=async o=>{if(!o)try{if(s()==null)return;const t=await c();g(t.data.token)}catch(t){throw i(),t}};return{loading:e,setLoading:o=>{r(o),e.value=o},toggle:()=>{e.value=!e.value}}}export{k as u};

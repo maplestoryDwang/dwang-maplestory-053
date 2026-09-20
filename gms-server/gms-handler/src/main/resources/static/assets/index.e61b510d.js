@@ -1,0 +1,1 @@
+import{_ as o}from"./index.326e5612.js";/* empty css              */import{C as a,aE as _,aL as s,aQ as r,aR as c,bd as n}from"./arco.9b89391c.js";const f={};function i(e,p){const t=n;return a(),_(t,{class:"footer"},{default:s(()=>[r(c(e.$t("title")),1)]),_:1})}const u=o(f,[["render",i],["__scopeId","data-v-f372ee87"]]);export{u as F};
