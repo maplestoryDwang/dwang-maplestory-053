@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css';
 
@@ -9,7 +9,9 @@ import createRouteGuard from './guard';
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
 const router = createRouter({
-  history: createWebHistory(),
+  // 打包进 jar 由后端提供时用 hash 路由：深链接/刷新不会打到后端，
+  // 不需要后端为 SPA 做路由回退；开发环境保持原来的 history 路由。
+  history: import.meta.env.PROD ? createWebHashHistory() : createWebHistory(),
   routes: [
     {
       path: '/login',

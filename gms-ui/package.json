@@ -7,9 +7,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --config ./config/vite.config.dev.ts",
-    "build": "vue-tsc --noEmit && vite build --config ./config/vite.config.prod.ts",
-    "report": "cross-env REPORT=true npm run build",
-    "preview": "npm run build && vite preview --host",
+    "build": "vite build --config ./config/vite.config.prod.ts --outDir ../gms-server/gms-handler/src/main/resources/static --emptyOutDir",
+    "build:dist": "vite build --config ./config/vite.config.prod.ts",
+    "build:typed": "vue-tsc --noEmit && vite build --config ./config/vite.config.prod.ts --outDir ../gms-server/gms-handler/src/main/resources/static --emptyOutDir",
+    "report": "cross-env REPORT=true npm run build:dist",
+    "preview": "npm run build:dist && vite preview --host",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "lint-staged": "npx lint-staged",
     "lint": "eslint --ext .js,.ts,.vue --fix src"
