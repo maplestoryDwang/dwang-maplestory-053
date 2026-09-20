@@ -27,7 +27,14 @@ function start() {
         cm.dispose();
         return;
     }
-    cm.sendYesNo("你的训练完成了吗？如果你愿意的话，我会让你离开这个训练营。");
+    var status = cm.getQuestStatus(1001);
+    if(status != 2) {
+        cm.sendNext("你还没问莎丽借到镜子哦！我记错了她不在山丘上，应该在你走过来的路上哦~");
+        cm.dispose();
+        return;
+    } else{
+        cm.sendYesNo("你的训练完成了吗？如果你愿意的话，我会让你离开这个训练营。");
+    }
 }
 
 function action(mode, type, selection) {
@@ -43,7 +50,7 @@ function action(mode, type, selection) {
         cm.sendNext("接下来，我会把你从这里送出去，祝您一路顺风。");
     } else {
         // cm.warp(40000, 0);
-        cm.warp(0,2);
+        cm.warp(3, "st00"); // 传送至地图 3 的 st00 传送点
         cm.dispose();
     }
 }
