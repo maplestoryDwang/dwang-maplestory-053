@@ -125,7 +125,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
+ <!--           <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
                 <version>0.11.3</version>
@@ -143,10 +143,10 @@
                     <imageName>BeiDouMigration</imageName>
                     <mainClass>org.gms.MigrationApplication</mainClass>
                     <buildArgs>
-                        <buildArg>--no-fallback</buildArg>
+                        <buildArg>&#45;&#45;no-fallback</buildArg>
                     </buildArgs>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 

@@ -47,7 +47,7 @@
 
 
     <build>
-        <finalName>BeiDou</finalName>
+        <finalName>Maplestory053</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
