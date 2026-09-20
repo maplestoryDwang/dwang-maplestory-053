@@ -106,8 +106,8 @@ public final class PlayerLoggedinHandler extends AbstractPacketHandler {
     private static final Set<Integer> attemptingLoginAccounts = new HashSet<>();
 
 
-    private static final HpMpAlertService hpMpAlertService = ServerManager.getApplicationContext().getBean(HpMpAlertService.class);
-
+    @Autowired
+    private HpMpAlertService hpMpAlertService;
 
 
     private boolean tryAcquireAccount(int accId) {
