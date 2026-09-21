@@ -33,3 +33,6 @@ database/docker-pg-db-data
 main/resources/static/
 src/main/resources/static/
 .claude/settings.local.json
+
+# client-dist 里脚本自动记住的客户端目录（每台机器不一样，不进仓库）
+/client-dist/client-dir.txt

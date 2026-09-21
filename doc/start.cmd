@@ -7,10 +7,11 @@ rem ============================================================
 rem  GMS053 服务端 一键脚本
 rem
 rem  用法（在本目录打开 cmd 后执行，或者直接双击 = 全部执行）：
-rem     start.cmd           拉取代码 + 编译 + 启动   （最常用）
+rem     start.cmd           拉取代码 + 编译 + 更新客户端插件 + 启动   （最常用）
 rem     start.cmd update    只拉取/更新代码
 rem     start.cmd build     只编译（不动 git）
-rem     start.cmd run       只启动（不编译）
+rem     start.cmd client    只用最新代码里的 client-dist 更新客户端插件 / 汉化数据
+rem     start.cmd run       只启动（不编译、不更新客户端）
 rem
 rem  所有设置都在 config.cmd 里改，本文件不用动。
 rem ============================================================
@@ -35,14 +36,17 @@ set "STEP=%~1"
 if "%STEP%"=="" set "STEP=all"
 set "DO_SYNC=0"
 set "DO_BUILD=0"
+set "DO_CLIENT=0"
 set "DO_RUN=0"
 if /i "%STEP%"=="all" (
     set "DO_SYNC=1"
     set "DO_BUILD=1"
+    set "DO_CLIENT=1"
     set "DO_RUN=1"
 )
 if /i "%STEP%"=="update" set "DO_SYNC=1"
 if /i "%STEP%"=="build" set "DO_BUILD=1"
+if /i "%STEP%"=="client" set "DO_CLIENT=1"
 if /i "%STEP%"=="run" set "DO_RUN=1"
 
 echo ============================================================
@@ -54,9 +58,9 @@ echo   本次动作 : %STEP%
 echo ============================================================
 echo.
 
-if "%DO_SYNC%%DO_BUILD%%DO_RUN%"=="000" (
+if "%DO_SYNC%%DO_BUILD%%DO_CLIENT%%DO_RUN%"=="0000" (
     echo [错误] 不认识的参数："%STEP%"
-    echo        可用参数：update / build / run，不带参数则全部执行。
+    echo        可用参数：update / build / client / run，不带参数则全部执行。
     goto :FAIL_PAUSE
 )
 
@@ -74,6 +78,18 @@ if "%DO_SYNC%"=="1" (
 if "%DO_BUILD%"=="1" (
     call :BUILD
     if errorlevel 1 goto :FAIL_PAUSE
+)
+
+if "%DO_CLIENT%"=="1" (
+    call :SYNC_CLIENT
+    if errorlevel 1 (
+        if not defined SYNC_CLIENT_STRICT set "SYNC_CLIENT_STRICT=0"
+        if "%SYNC_CLIENT_STRICT%"=="1" goto :FAIL_PAUSE
+        echo.
+        echo [警告] 客户端插件没更新成功，服务端继续启动。下次运行会再试一次。
+        echo        想先解决它：看上面的提示，或手动跑一次
+        echo        %SOURCE_DIR%\client-dist\tools\更新客户端.bat
+    )
 )
 
 if "%DO_RUN%"=="1" (
@@ -157,7 +173,7 @@ rem ============================================================
 
 if exist "%SOURCE_DIR%\.git" goto :SYNC_UPDATE
 
-echo [1/3] 首次拉取代码（要下 400MB 以上，慢慢等）...
+echo [1/4] 首次拉取代码（要下 400MB 以上，慢慢等）...
 echo       仓库 : %GIT_URL%
 echo       分支 : %GIT_BRANCH%
 echo       深度 : %GIT_DEPTH%
@@ -192,7 +208,7 @@ goto :SYNC_FAIL
 
 
 :SYNC_UPDATE
-echo [1/3] 更新代码...
+echo [1/4] 更新代码...
 pushd "%SOURCE_DIR%"
 set "FETCH_OPTS="
 if not "%GIT_DEPTH%"=="0" set "FETCH_OPTS=--depth=%GIT_DEPTH%"
@@ -235,6 +251,86 @@ exit /b 0
 
 :SYNC_DONE
 echo [OK] 代码已就绪：%SOURCE_DIR%
+call :CHECK_SCRIPT_UPDATE
+echo.
+exit /b 0
+
+
+rem ============================================================
+rem  脚本自更新检查（仓库里的 doc\*.cmd 是母版）
+rem    start.cmd  有新版 -> 本次结束前换成新版（下次运行生效）
+rem    config.cmd 有新版 -> 只在旁边放 config.cmd.new，绝不覆盖你的配置
+rem ============================================================
+:CHECK_SCRIPT_UPDATE
+if not defined SYNC_SELF_UPDATE set "SYNC_SELF_UPDATE=1"
+if not "%SYNC_SELF_UPDATE%"=="1" exit /b 0
+if not exist "%SOURCE_DIR%\doc\start.cmd" exit /b 0
+
+fc /b "%SOURCE_DIR%\doc\start.cmd" "%ROOT%\start.cmd" >nul 2>&1
+if not errorlevel 1 goto :CHECK_CONFIG_UPDATE
+copy /y "%SOURCE_DIR%\doc\start.cmd" "%ROOT%\start.cmd.new" >nul 2>&1
+if exist "%ROOT%\start.cmd.new" (
+    set "SCRIPT_UPDATED=1"
+    echo [提示] start.cmd 有新版本（本次结束前自动替换，下次运行生效）。
+)
+
+:CHECK_CONFIG_UPDATE
+if not exist "%SOURCE_DIR%\doc\config.cmd" exit /b 0
+fc /b "%SOURCE_DIR%\doc\config.cmd" "%ROOT%\config.cmd" >nul 2>&1
+if not errorlevel 1 exit /b 0
+copy /y "%SOURCE_DIR%\doc\config.cmd" "%ROOT%\config.cmd.new" >nul 2>&1
+if exist "%ROOT%\config.cmd.new" (
+    echo [提示] config.cmd 也有新版本：你的配置没动，新选项都写在 %ROOT%\config.cmd.new 里。
+)
+exit /b 0
+
+
+rem ============================================================
+rem  3. 更新客户端插件 / 汉化数据
+rem     载荷在 source\client-dist\（plugin\ 是插件，data\ 是汉化 wz/img）
+rem     同步逻辑：client-dist\tools\sync-client.ps1（自动找客户端目录 / 只补不覆盖 config.ini）
+rem ============================================================
+:SYNC_CLIENT
+echo [3/4] 更新客户端插件 / 汉化数据...
+
+if not defined SYNC_CLIENT set "SYNC_CLIENT=1"
+if "%SYNC_CLIENT%"=="0" (
+    echo       已在 config.cmd 里关闭（SYNC_CLIENT=0），跳过。
+    echo.
+    exit /b 0
+)
+if not defined CLIENT_DIR set "CLIENT_DIR="
+if not defined CLIENT_SYNC_DATA set "CLIENT_SYNC_DATA=1"
+
+set "CLIENT_TOOLS=%SOURCE_DIR%\client-dist\tools"
+if not exist "%CLIENT_TOOLS%\sync-client.ps1" (
+    echo       [跳过] 代码里还没有 client-dist\tools\sync-client.ps1
+    echo              说明拉到的代码还没带这个功能，等下一次更新就有了。
+    echo.
+    exit /b 0
+)
+
+set "CLIENT_ARGS="
+if not "%CLIENT_DIR%"=="" set "CLIENT_ARGS=-ClientDir "%CLIENT_DIR%""
+if "%CLIENT_SYNC_DATA%"=="0" set "CLIENT_ARGS=%CLIENT_ARGS% -NoData"
+
+powershell -NoProfile -ExecutionPolicy Bypass -File "%CLIENT_TOOLS%\sync-client.ps1" %CLIENT_ARGS%
+set "CLIENT_RC=%ERRORLEVEL%"
+if "%CLIENT_RC%"=="0" goto :SYNC_CLIENT_OK
+if "%CLIENT_RC%"=="2" (
+    echo.
+    echo [提示] 没找到客户端目录。两种办法：
+    echo        1) 在 %ROOT%\config.cmd 里写死：
+    echo           set "CLIENT_DIR=D:\你的\origin-client"
+    echo        2) 手动跑一次（把客户端目录当参数）：
+    echo           "%CLIENT_TOOLS%\更新客户端.bat" "D:\你的\origin-client"
+    exit /b 1
+)
+echo [错误] 更新客户端失败，返回码 %CLIENT_RC%
+exit /b 1
+
+:SYNC_CLIENT_OK
+echo [OK] 客户端插件 / 汉化数据已是最新。
 echo.
 exit /b 0
 
@@ -247,7 +343,7 @@ rem ============================================================
 rem  2. 编译
 rem ============================================================
 :BUILD
-echo [2/3] 开始编译（第一次会下载 Maven 和依赖，比较慢）...
+echo [2/4] 开始编译（第一次会下载 Maven 和依赖，比较慢）...
 
 if not exist "%SOURCE_DIR%\mvnw.cmd" (
     echo [错误] 在 %SOURCE_DIR% 下找不到 mvnw.cmd，代码可能没拉完整。
@@ -292,7 +388,7 @@ rem  注意：wz 和 scripts 都是按「当前工作目录」去找的，
 rem        所以必须把工作目录切到 gms-handler 这一层，否则读不到资源。
 rem ============================================================
 :RUN_SERVER
-echo [3/3] 启动服务端...
+echo [4/4] 启动服务端...
 
 set "JAR=%SOURCE_DIR%\%JAR_REL%"
 set "RUNDIR=%SOURCE_DIR%\%RUN_SUBDIR%"
@@ -367,7 +463,20 @@ endlocal
 exit /b 1
 
 :DONE_PAUSE
+call :APPLY_SCRIPT_UPDATE
 if defined OLDCP chcp %OLDCP% >nul 2>&1
 pause
 endlocal
+exit /b 0
+
+
+rem ============================================================
+rem  真正替换 start.cmd（cmd 还读着它，所以交给一个延迟的小窗去做）
+rem ============================================================
+:APPLY_SCRIPT_UPDATE
+if not exist "%ROOT%\start.cmd.new" exit /b 0
+pushd "%ROOT%"
+start "" /min cmd /c "ping -n 2 127.0.0.1 >nul & move /y start.cmd.new start.cmd >nul"
+popd
+echo [提示] start.cmd 已更新为新版，下次运行就是新版脚本了。
 exit /b 0

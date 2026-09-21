@@ -8,12 +8,15 @@
    （库名 dwang053，账号 root，密码 root）。
 2. 再进 step2，双击 start.cmd，等着就行。
 
-第一次运行会自动做三件事：
+第一次运行会自动做四件事：
    (1) 从 GitHub 把代码拉下来，放在 step2\source
    (2) 用包里自带的 JDK 21 加 mvnw 编译出服务端 jar
-   (3) 启动服务端
+   (3) 把客户端插件和汉化数据同步到 step3client\origin-client
+       （插件 = Hook.dll / Launcher.exe / 中文文本表；数据 = 汉化过的 wz / img）
+   (4) 启动服务端
 
-以后要更新，再双击一次 start.cmd 就行：它会重新拉最新代码、重新编译、再启动。
+以后要更新，再双击一次 start.cmd 就行：它会重新拉最新代码、重新编译、
+顺手把客户端插件 / 汉化数据更新到最新，再启动。
 
 
 二、文件都是干什么的
@@ -21,6 +24,8 @@
 start.cmd             唯一的入口。双击 = 拉代码 + 编译 + 启动
 config.cmd            所有配置都写在这里（仓库地址、分支、数据库、内存……）
 source\               自动拉下来的代码。不要手动改，更新时会被覆盖
+source\client-dist\   客户端插件 + 汉化数据的发布载荷（plugin\ 是插件，data\ 是汉化 wz/img）
+                      脚本会把它同步到 step3client\origin-client，见第五节
 jdk-21.0.2\           包里自带的 JDK 21，客户不需要自己装 Java
 PortableGit\          包里自带的 Git，客户不需要自己装 Git
 application.yml       客户要改数据库相关的设置，改这个文件
@@ -32,10 +37,11 @@ launch.bat            旧脚本，直接跑自带的 Maplestory053.jar，不编�
 ------------------------------------------------------------
 在 step2 目录的地址栏里输入 cmd 回车，然后：
 
-   start.cmd            拉代码 + 编译 + 启动     （最常用，也是双击的效果）
+   start.cmd            拉代码 + 编译 + 更新客户端 + 启动   （最常用，也是双击的效果）
    start.cmd update     只拉取 / 更新代码
    start.cmd build      只编译（不碰 git）
-   start.cmd run        只启动（不编译）
+   start.cmd client     只更新客户端插件 / 汉化数据
+   start.cmd run        只启动（不编译、不更新客户端）
 
 
 四、要改配置怎么办
@@ -56,9 +62,53 @@ launch.bat            旧脚本，直接跑自带的 Maplestory053.jar，不编�
    CONSOLE_CHARSET    控制台字符集，中文 Windows 保持 GBK
    LOG_CHARSET        server.log 的字符集，默认 UTF-8（改 GBK 则老记事本可直接打开）
    JAVA_RUN_OPTS      启动内存，例如 -Xms512m -Xmx2g，留空则用 JVM 默认值（推荐）
+   SYNC_CLIENT        1 = 拉代码后顺手更新客户端插件 / 汉化数据（默认 1）
+   CLIENT_DIR         客户端目录；留空自动找 step3client\origin-client，放别处就写绝对路径
+   CLIENT_SYNC_DATA   1 = 连汉化 wz / img 一起更新（默认）；0 = 只更新插件
+   SYNC_CLIENT_STRICT 1 = 找不到客户端目录就停下来；0 = 只警告，服务端继续启动（默认）
 
 
-五、为什么 jar 不从 target 里拷出来（重要）
+五、客户端插件 / 汉化数据怎么更新（重要）
+------------------------------------------------------------
+插件和汉化数据不用手动拷：它们跟着服务端代码一起发布，位置是
+
+   source\client-dist\
+      plugin\   插件本体（Hook.dll、Launcher.exe、中文文本表…）
+      data\     汉化数据（wz\String.wz、Data\Quest\Say.img …）
+      tools\    同步脚本（更新客户端.bat / sync-client.ps1）
+
+每次跑 start.cmd（或者 start.cmd client）时脚本会：
+   1. 自动找客户端目录——默认找 <包根>\step3client\origin-client，
+      找不到才问你（这个包的结构就是这样，一般不用管）；
+   2. 按文件指纹对比，只覆盖变化的那几个（插件只有几百 KB，几秒钟）；
+   3. 覆盖前把旧文件备份到 客户端目录\_backup_client\<时间>\，只留最近 5 份；
+   4. 更新完在客户端目录写一个 .gms053-client.txt，记录当前装的是哪一版。
+
+不会动的东西：
+   * config.ini（你在里面写了服务器地址）——默认"只补不覆盖"：客户端已有就不动，
+     新版本的默认值会写成 config.ini.new，窗口里还会列出新版本多出来的配置项；
+   * 客户端目录里其它文件（插件只认 client-dist 清单里列的那些）。
+
+客户端放在别的地方怎么办：
+   方法一：在 config.cmd 里写死
+             set "CLIENT_DIR=D:\games\origin-client"
+   方法二：手动跑一次，把路径当参数
+             source\client-dist\tools\更新客户端.bat "D:\games\origin-client"
+           脚本会把找到的路径记在 source\client-dist\client-dir.txt，以后自动用。
+
+只想看会改哪些文件、不动文件：
+   source\client-dist\tools\更新客户端.bat -DryRun
+   （还有 -Verify 只校验、-NoData 只更新插件不动 wz）
+
+这一条失败不影响服务端：脚本警告一句就继续启动，下次运行再试一次。
+常见失败原因：
+   * 游戏/启动器正开着——文件被占用，先关掉游戏；
+   * 客户端主程序和发布版本不一致——会警告（插件是针对特定客户端版本逆向的），
+     想让它直接拒绝更新，把 source\client-dist\client-dist.txt 里的 client_exe_strict 改成 1；
+   * 找不到客户端目录——见上面"客户端放在别的地方怎么办"。
+
+
+六、为什么 jar 不从 target 里拷出来（重要）
 ------------------------------------------------------------
 服务端启动时，wz、wz-zh-CN、scripts、scripts-zh-CN 这些资源都是按
 「当前工作目录」去找的，不是按 jar 所在位置找。
@@ -73,7 +123,7 @@ launch.bat            旧脚本，直接跑自带的 Maplestory053.jar，不编�
 「jar 更新了、资源目录还是旧的」这类问题。源包里的 wz 和脚本也是同一份。
 
 
-六、启动成功后长什么样
+七、启动成功后长什么样
 ------------------------------------------------------------
 看到下面这几行就说明起来了（时间是编译时间，不是启动时间）：
    正在加载WZ文件
@@ -90,7 +140,7 @@ launch.bat            旧脚本，直接跑自带的 Maplestory053.jar，不编�
    17575 = 频道端口
 
 
-七、日志和排错
+八、日志和排错
 ------------------------------------------------------------
 运行日志：
    窗口里会实时打印；
@@ -134,14 +184,19 @@ launch.bat            旧脚本，直接跑自带的 Maplestory053.jar，不编�
      脚本默认已经处理好了；如果你手动改了 chcp 或 CONSOLE_CHARSET，把两者对齐即可
      （控制台 936 就配 GBK，控制台 65001 就配 UTF-8）。
 
-7) 报 detected dubious ownership
+7) 更新客户端失败 / 提示找不到客户端目录
+   → 看第五节的"客户端放在别的地方怎么办"：手动跑一次带路径的
+     更新客户端.bat，或者在 config.cmd 里写 CLIENT_DIR。
+     游戏开着时文件会被占用，先关游戏。想看细节就加 -DryRun 先空跑一遍。
+
+8) 报 detected dubious ownership
    → 一般不会遇到，脚本里已经加了 safe.directory 处理。
      如果你手动敲 git 命令遇到了，可以把 source 目录加到 git 信任列表：
         git config --global --add safe.directory <source 的完整路径>
      （把包放在 exFAT / FAT32 格式的移动硬盘上时，最容易出这个问题）
 
 
-八、给维护者：要换仓库 / 换分支
+九、给维护者：要换仓库 / 换分支
 ------------------------------------------------------------
 只改 config.cmd 两个变量就行：
    GIT_URL       换成新仓库

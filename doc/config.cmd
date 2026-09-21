@@ -97,3 +97,30 @@ set "LOG_CHARSET=UTF-8"
 
 rem 额外的启动参数，比如 --server.port=8686
 set "EXTRA_ARGS="
+
+rem ------------------------------------------------------------
+rem  5. 客户端插件 / 汉化数据（step3client\origin-client）
+rem ------------------------------------------------------------
+
+rem 1 = 拉完代码顺手把客户端插件和汉化数据也更新了（推荐）。
+rem     载荷在 source\client-dist\，同步脚本是 source\client-dist\tools\sync-client.ps1
+set "SYNC_CLIENT=1"
+
+rem 客户端目录。留空 = 自动找（默认找 <包根>\step3client\origin-client）。
+rem 客户端放在别处就写绝对路径，例如：
+rem   set "CLIENT_DIR=D:\games\origin-client"
+rem （脚本找到后会自己记在 source\client-dist\client-dir.txt，下次不用再找）
+set "CLIENT_DIR="
+
+rem 1 = 连汉化 wz / img 一起更新（推荐）
+rem 0 = 只更新插件（Hook.dll / Launcher.exe / 文本表），不动 wz
+set "CLIENT_SYNC_DATA=1"
+
+rem 找不到客户端目录时：
+rem   0 = 只警告，服务端照常启动（推荐，玩家不会卡住）
+rem   1 = 直接停下来（你确定每个客户都必须有客户端目录时才用）
+set "SYNC_CLIENT_STRICT=0"
+
+rem 1 = 拉代码后如果仓库里的 doc\start.cmd / doc\config.cmd 更新了，就提示并自动换新版
+rem     start.cmd 下次运行生效；config.cmd 只在旁边放 config.cmd.new，你的配置不会丢
+set "SYNC_SELF_UPDATE=1"
