@@ -1,0 +1,96 @@
+GMS v053 汉化插件 发布说明
+
+一、放到哪里
+把本目录里的这些文件复制到【客户端主目录】（和 GMSv053.exe 同一个文件夹）：
+
+  Launcher.exe          —— 启动器（必须和客户端 exe 放在一起运行）
+  Hook.dll              —— 插件本体（必须和 Launcher.exe 放在一起）
+  stringpool053_zh.txt  —— 中文文本表（必须放，缺了界面就是英文/乱码）
+  garbled053_zh.txt     —— 服务端乱码替换表（可选，现在是空表，留着备用）
+  config.ini            —— 运行时配置（可选，但建议放。见下面第七节）
+
+客户端自己的文件（GMSv053.exe、Data 目录、ijl15.dll 等）保持原样，不要动。
+
+二、运行
+双击 Launcher.exe 即可（它会自动找到同目录的客户端 exe 并注入 Hook.dll）。
+支持这些客户端 exe 名：MapleStory.exe / GMSv053.exe / GMS053.exe / MapleStoryV053.exe。
+
+三、运行库（重要）
+Hook.dll 用 VS2022 编译、使用动态 VC++ 运行库，所以目标机器需要 VC++ 2015-2022 x86 运行库：
+  - 简单做法：安装本目录的 vc_redist.x86.exe（官方安装包，一次即可）。
+  - 零安装做法：把【运行库-可选】目录里的 dll 全部复制到客户端主目录（和 exe 同目录）。
+    Windows 7/8 需要 ucrt 那批（已经一起放进去了）；Windows 10/11 只需要 vcruntime/msvcp 那几个。
+  - 如果启动时提示缺 VCRUNTIME140.dll / MSVCP140.dll，就是这一步没做。
+
+四、兼容性
+本插件的所有地址都是针对 GMSv053.exe 这一个版本的客户端逆向出来的，
+换客户端版本（哪怕只是重新加壳/换构建）会导致补丁点校验失败或崩溃。
+
+五、出问题怎么回退
+删掉 Hook.dll 直接用客户端原 exe 启动即可（插件不修改客户端文件，只做内存补丁）。
+
+六、已知限制（详见仓库 GMS053_HOOK_CHANGES_CN.md）
+1. 提示/警告框(CUtilDlg/CUtilDlgEx)仍按 800x600 设计坐标显示，未居中；
+2. 极少数走 BSTR 取用口的文本不会翻译；字体名（池 index 9/11 → "宋体"）也走这条口，
+   所以那条字体设置实际没生效（中文字形靠 GDI 字体链接，显示正常，只是没换成宋体）；
+3. 光标锁定功能未生效（AOB 匹配地址不对），不影响游戏；
+4. 道具说明换行未修（技能说明已修）。
+
+七、config.ini（运行时配置，改完不用重新编译）
+config.ini 放在客户端主目录。它没有也能跑：没有这个文件、或者文件里没写的项，
+都用 Hook.dll 内置的默认值；写了的项就覆盖默认值，存盘后重启客户端生效。
+
+里面能改的只有 30 个开关（文件里每一项都有中文注释），常用的有：
+  ServerAddr             服务器地址
+  ScreenResolutionIndex  分辨率档位：0 = 800x600，1 = 1366x768，2 = 1600x900
+  TranslateText          中文翻译总开关（关掉就是英文）
+  ImeDefaultEnglish      默认英文输入法（true；要打中文自己按 Ctrl+Space）
+  ClampCameraToMap       镜头贴地图边缘（true，人物到墙边画面不再跟着走）
+  CameraBottomSlack      镜头下沿按百分比收（50 = 收掉余量的一半，0 = 原版，100 = 收到地图实体底）
+  WideBackFill           地图背景补边（宽屏下把最靠后的几层背景铺满，去掉四周黑边）
+  WideBackFillBackmost   补到第几层（默认 3；看到远景景物被复制就往回退到 0）
+  TrockListMax           VIP 传送石保存地点上限（改了必须同时改服务端）
+  ScriptEquipItems       点装"脚本装备"ID 列表，留空 = 关闭
+  DebugTranslation       逐条翻译日志（★ 必须 false，开着非常卡）
+
+语法：键=值；分号(;)或井号(#)开头是注释；[小节名] 只是分组标题，程序不解析。
+布尔值写 true/false（也认 1/0、yes/no、on/off）。文件存 UTF-8 或 ANSI 都能读。
+键名写错、值写错都不会让客户端崩，只会在 DebugView 里打一行日志然后忽略这一项。
+
+想看有没有读到：用 DebugView 挂上，启动客户端时会打印 [Config] 开头的行，
+最后一行是 "[Config] config.ini: XX of 26 keys set from ..."。
+
+八、v1.0.0 的内容（历史）
+  1. 汉化：界面 / 任务 / 道具文本中文（StringPool 表 + 客户端任务文本 Quest.wz）；
+  2. 分辨率：1366x768 / 1600x900（登录界面仍是 800x600，进地图后切换）；
+  3. 镜头：人物走到地图边缘时画面停住，不再渲染地图外面的素材；
+  4. 输入法：默认英文（要打中文按 Ctrl+Space），修掉组字串与中文换行；
+  5. 点装脚本装备：双击配置里的点装（默认 1702050）不做穿戴判定，直接发换位包给服务端；
+  6. 搜索器（5230000）：去掉"只能在自由市场使用"，双击直接发使用包给服务端，
+     不会再弹出那个道具搜索窗；
+  7. config.ini：28 个开关可以直接在客户端目录改，不用重新编译 Hook.dll；
+  8. 提示 / 警示框居中；Quest/Check.img 的 start/end 已清理。
+  改动细节见仓库里的 GMS053_HOOK_CHANGES_CN.md。
+
+九、v1.1.0 的内容（2026-09-19）
+  1. 【修复】登录后选人页面"排名"那行（世界排名 / 职业排名）中文乱码、数字不见了 ——
+     插件往宽取用口写中文时用错了编码（把 UTF-16 当多字节串），现在显示"排名第 1 位"。
+     细节见 GMS053_HOOK_CHANGES_CN.md §25；
+  2. 【修复】包里的 stringpool053_zh.txt 换成线上那份（少了下标 15 的"消耗"），
+     以前包里带的是旧表，装上会让技能 / buff 音效静音（§13）；
+  3. 【新增】buff 图标挪到角落后，鼠标悬停能看提示、右键能取消（§21）；
+  4. 【新增】镜头下沿按百分比收（CameraBottomSlack，默认 50），"河下面露一截地面"能自己调（§24）；
+  5. 【调整】地图背景补边只补最靠后的几层（WideBackFillBackmost，默认 3），景物不再被复制（§22-23）；
+  6. 【删除】PlayerNPC 的三个 hook 与开关：v053 客户端原生支持（服务端把
+     IMITATED_NPC_DATA 发成 0x4C 即可），插件这边不需要了（§12）；
+  7. config.ini 现在能改 30 个开关（多了 CameraBottomSlack / WideBackFill / WideBackFillBackmost）。
+  说明：本包里的 Hook.dll 与 Launcher.exe 都是本版新编的（Launcher 换上了新的图标）。
+
+十、v1.1.1 的内容（2026-09-21）
+  1. 【修复·重要】商城左下角"扩充栏位"按钮，鼠标一悬停就闪退：池里那批文本是 printf 格式串
+     （如 551 "Add %d slots for %s inventory. ..."），翻译时把 %d / %s 的顺序写反了，第一个 %s
+     拿到的整数 4 被当指针解引用（访问 0x00000004）→ 立刻崩溃。已修正 6 条表项
+     （551 / 552 / 399 / 2474 / 3121 / 3298），并把修好的表同步进本包；
+  2. 【防复发】插件加了"占位符不一致就不替换"的保护：以后表里再写错占位符，最多那一条显示英文
+     （DebugView 会打一行 placeholders differ (pool "dsddd" vs table "sdddd")），不会再闪退；
+  3. 本包 Hook.dll 是这一版新编的；其余文件与 v1.1.0 相同。细节见仓库 GMS053_HOOK_CHANGES_CN.md §26。

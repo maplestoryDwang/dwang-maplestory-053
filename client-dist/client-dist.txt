@@ -1,0 +1,24 @@
+﻿# client-dist.txt —— 客户端插件 + 汉化数据 的更新清单（给 tools\sync-client.ps1 读）
+# 放完/改完文件后记得跑 tools\make-manifest.ps1（它会重算 client-dist.sha256 和下面的统计键）
+#
+# version / tag / notes  : 只用于显示和记录
+# client_exe             : 客户端主程序可能的名字（找到哪个用哪个）
+# client_exe_sha256/size : 受支持的客户端版本；对不上会警告（插件的补丁地址是逆特定版本的）
+# client_exe_strict      : 1 = 校验不一致就直接拒绝（除非 -Force）；0 = 只警告
+# keep_existing          : 这些文件如果客户端已有，就"只补不覆盖"（用户自己会改），新默认值写成 <名字>.new
+# backup_keep            : 客户端目录 _backup_client 里保留几份历史备份
+version=1.1.2
+tag=client-v1.1.2
+built=2026-09-21
+notes=插件：选人页排名乱码 + 商城扩充栏位闪退修复；数据：5 个汉化 wz + Quest/UI 的 img
+client_exe=GMSv53.exe,MapleStory.exe,GMS053.exe,MapleStoryV053.exe,MapleStory-sorce.exe
+client_exe_strict=0
+keep_existing=config.ini
+backup_keep=5
+client_exe_size=5439488
+client_exe_sha256=f4ac21ac18b6bd6a8ef16077aec2e9727468f578998e917f6679b5fe26ce23d8
+manifest_built=2026-09-21 12:43:39
+file_count=15
+plugin_count=6
+data_count=9
+data_bytes=44148878
