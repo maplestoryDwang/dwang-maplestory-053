@@ -252,6 +252,83 @@ if ($exeHash -ne '') {
 }
 
 # ---------------------------------------------------------------- 算目标 + 比对
+# ini 合并：用新模板的结构/注释/新增项，但保留用户改过的值（config.ini 走这条路）
+#   * 键值一样、或用户没这项 -> 用模板的行
+#   * 用户的值和模板不同    -> 用模板那行的写法、值换成用户的，并在上面加一行 ; 注释
+#   * 用户自己加的键        -> 追加到末尾
+#   * 有变化才写，写前备份成 <名字>.bak-<时间戳>
+# 返回：0 = 没变化，1 = 已合并，2 = 出错
+function Merge-IniFile {
+    param([string]$Old, [string]$New, [string]$LogLabel = '')
+
+    function IniKey([string]$l) {
+        if ($l -match '^\s*([A-Za-z_][\w\.]*)\s*=') { return $Matches[1] }
+        return $null
+    }
+    function IniVal([string]$l) {
+        if ($l -match '^\s*[A-Za-z_][\w\.]*\s*=\s*(.*?)\s*$') { return $Matches[1] }
+        return $null
+    }
+
+    if (-not (Test-Path -LiteralPath $Old) -or -not (Test-Path -LiteralPath $New)) { return 2 }
+
+    # 编码：老文件带 UTF-8 BOM 就是 UTF-8；否则先按严格 UTF-8 试，失败当 GBK（老玩家手改过的）；
+    # 写回时用老文件的编码，免得把中文值/注释搞坏
+    $oldBytes = [System.IO.File]::ReadAllBytes($Old)
+    $hasBom = ($oldBytes.Length -ge 3 -and $oldBytes[0] -eq 0xEF -and $oldBytes[1] -eq 0xBB -and $oldBytes[2] -eq 0xBF)
+    $oldEnc = New-Object System.Text.UTF8Encoding($hasBom)
+    if (-not $hasBom) {
+        try { [void](New-Object System.Text.UTF8Encoding($false, $true)).GetString($oldBytes) }
+        catch { $oldEnc = [System.Text.Encoding]::GetEncoding(936) }
+    }
+    $oldLines = @([System.IO.File]::ReadAllLines($Old, $oldEnc))
+    $newLines = @([System.IO.File]::ReadAllLines($New, [System.Text.Encoding]::UTF8))
+
+    $oldMap = New-Object 'System.Collections.Hashtable' ([System.StringComparer]::OrdinalIgnoreCase)
+    foreach ($l in $oldLines) { $k = IniKey $l; if ($k) { $oldMap[$k] = (IniVal $l) } }
+    $newMap = New-Object 'System.Collections.Hashtable' ([System.StringComparer]::OrdinalIgnoreCase)
+    foreach ($l in $newLines) { $k = IniKey $l; if ($k) { $newMap[$k] = (IniVal $l) } }
+
+    $out = New-Object System.Collections.Generic.List[string]
+    $kept = New-Object System.Collections.Generic.List[string]
+    foreach ($l in $newLines) {
+        $k = IniKey $l
+        if ($k -and $oldMap.ContainsKey($k)) {
+            $ov = [string]$oldMap[$k]; $nv = [string](IniVal $l)
+            if ($ov -ne $nv) {
+                if ($l -match '^(\s*[A-Za-z_][\w\.]*\s*=\s*).*$') { $out.Add($Matches[1] + $ov) } else { $out.Add($l) }
+                $out.Add(';   ^ 这项保留了你原来的值（新版默认：' + $nv + '）')
+                $kept.Add($k)
+                continue
+            }
+        }
+        $out.Add($l)
+    }
+    $extra = New-Object System.Collections.Generic.List[string]
+    foreach ($l in $oldLines) {
+        $k = IniKey $l
+        if ($k) { if (-not $newMap.ContainsKey($k)) { $extra.Add($l) } }
+    }
+    if ($extra.Count -gt 0) {
+        $out.Add('')
+        $out.Add('; ------------------------------------------------------------')
+        $out.Add(';  下面是你自己加过的项（新版里没有），原样保留')
+        $out.Add('; ------------------------------------------------------------')
+        foreach ($e in $extra) { $out.Add($e) }
+    }
+
+    if ((($oldLines -join "`n").TrimEnd()) -eq (($out.ToArray() -join "`n").TrimEnd())) { return 0 }
+
+    $bak = $Old + '.bak-' + (Get-Date -Format 'yyyyMMdd_HHmmss')
+    Copy-Item -LiteralPath $Old -Destination $bak -Force
+    [System.IO.File]::WriteAllLines($Old, $out.ToArray(), $oldEnc)
+    $msg = ''
+    if ($kept.Count -gt 0) { $msg = '，保留了你改过的：' + ($kept -join ', ') }
+    Say ('  [合并] ' + $LogLabel + ' 已合并成新版' + $msg) 'Green'
+    Say ('         旧文件备份：' + (Split-Path $bak -Leaf)) 'DarkGray'
+    return 1
+}
+
 function Get-Target {
     param([string]$Root, [string]$Rel)
     $mirror = Join-Path $Root ($Rel -replace '/', '\')
@@ -311,7 +388,7 @@ if ($toAdd.Count -eq 0 -and $toUpdate.Count -eq 0) {
     }
     if ($list.Count -gt $maxShow) { Say ('    ... 还有 ' + ($list.Count - $maxShow) + ' 个（太多就不一条条列了）') 'DarkGray' }
     if ($toKeep.Count -gt 0) {
-        foreach ($p in $toKeep) { Say ('    [保留] ' + $p.Show + '（你自己改过的，不会被动）') 'DarkGray' }
+        foreach ($p in $toKeep) { Say ('    [合并] ' + $p.Show + '（会自动合并，保你改过的值）') 'DarkGray' }
     }
 }
 
@@ -362,21 +439,10 @@ foreach ($p in $toAdd) {
 if ($done -gt $maxLine) { Say ('  ... 一共 ' + $done + ' 个文件，都写进日志了') 'DarkGray' }
 foreach ($p in $toKeep) {
     try {
-        $newPath = $p.Target + '.new'
-        Copy-Item -LiteralPath $p.Src -Destination $newPath -Force
-        Log ('keep   ' + $p.Show + ' -> ' + (Split-Path -Leaf $newPath))
-        Say ('  [保留] ' + $p.Show + ' 没动；新默认值放在 ' + (Split-Path -Leaf $newPath)) 'Yellow'
-        # 顺便告诉用户新版本多了哪些配置项
-        try {
-            $old = @(Get-Content -LiteralPath $p.Target -Encoding UTF8)
-            $new = @(Get-Content -LiteralPath $p.Src -Encoding UTF8)
-            $oldKeys = @{}
-            foreach ($l in $old) { if ($l -match '^\s*([A-Za-z_][\w]*)\s*=') { $oldKeys[$Matches[1]] = $true } }
-            $added = @()
-            foreach ($l in $new) { if ($l -match '^\s*([A-Za-z_][\w]*)\s*=') { if (-not $oldKeys.ContainsKey($Matches[1])) { $added += $Matches[1] } } }
-            if ($added.Count -gt 0) { Say ('         新版本多了这些配置项（可以手动抄进你的 config.ini）：' + ($added -join ', ')) 'Yellow' }
-        } catch { }
-    } catch { Warn ('保留处理失败：' + $p.Rel + '  ' + $_.Exception.Message) }
+        $rc = Merge-IniFile -Old $p.Target -New $p.Src -LogLabel $p.Show
+        if ($rc -eq 1) { $changed++; Log ('merge  ' + $p.Show) }
+        elseif ($rc -eq 2) { Warn ('配置合并失败：' + $p.Show) }
+    } catch { Warn ('配置合并失败：' + $p.Show + '  ' + $_.Exception.Message) }
 }
 
 # ---------------------------------------------------------------- 版本标记

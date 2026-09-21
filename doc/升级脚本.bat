@@ -42,10 +42,18 @@ if errorlevel 1 (
 )
 echo [完成] step2\start.cmd 已升级为新版。
 
-if exist "%~dp0config.cmd" (
+rem 配置也一起升级：自动合并（你自己改过的值会保留，旧文件留备份）
+set "MERGE=%~dp0..\client-dist\tools\merge-config.ps1"
+if not exist "%MERGE%" set "MERGE=%~dp0merge-config.ps1"
+if exist "%MERGE%" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%MERGE%" -Old "%STEP2%\config.cmd" -New "%~dp0config.cmd"
+    if errorlevel 2 (
+        echo [警告] 配置自动合并没成功，新版模板放在 step2\config.cmd.new。
+        copy /y "%~dp0config.cmd" "%STEP2%\config.cmd.new" >nul 2>&1
+    )
+) else (
     copy /y "%~dp0config.cmd" "%STEP2%\config.cmd.new" >nul 2>&1
-    echo [参考] 新版配置模板放在 step2\config.cmd.new
-    echo        你自己的 config.cmd 没有被改；要加新选项就照着它抄。
+    echo [参考] 新版配置模板放在 step2\config.cmd.new（你自己的 config.cmd 没动）。
 )
 if exist "%~dp0使用说明.txt" (
     copy /y "%~dp0使用说明.txt" "%STEP2%\使用说明.txt" >nul 2>&1

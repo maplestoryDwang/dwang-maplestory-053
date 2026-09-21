@@ -259,7 +259,7 @@ exit /b 0
 rem ============================================================
 rem  脚本自更新检查（仓库里的 doc\*.cmd 是母版）
 rem    start.cmd  有新版 -> 本次结束前换成新版（下次运行生效）
-rem    config.cmd 有新版 -> 只在旁边放 config.cmd.new，绝不覆盖你的配置
+rem    config.cmd 有新版 -> 自动合并进你的 config.cmd（保留你改过的值，旧的留备份）
 rem ============================================================
 :CHECK_SCRIPT_UPDATE
 if not defined SYNC_SELF_UPDATE set "SYNC_SELF_UPDATE=1"
@@ -278,9 +278,21 @@ if exist "%ROOT%\start.cmd.new" (
 if not exist "%SOURCE_DIR%\doc\config.cmd" exit /b 0
 fc /b "%SOURCE_DIR%\doc\config.cmd" "%ROOT%\config.cmd" >nul 2>&1
 if not errorlevel 1 exit /b 0
+
+rem 有新版：自动合并进你的 config.cmd —— 新版的结构和新增项照抄，
+rem 你自己改过的值原样保留，旧的备份成 config.cmd.bak-<时间戳>。
+rem （什么都没改过的话，结果就等于直接用新模板）
+if exist "%SOURCE_DIR%\client-dist\tools\merge-config.ps1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%SOURCE_DIR%\client-dist\tools\merge-config.ps1" -Old "%ROOT%\config.cmd" -New "%SOURCE_DIR%\doc\config.cmd"
+    if errorlevel 2 goto :CONFIG_UPDATE_FALLBACK
+    if errorlevel 1 echo [提示] config.cmd 已升级为新版（你自己改过的值都保留了，旧文件有备份）。
+    exit /b 0
+)
+
+:CONFIG_UPDATE_FALLBACK
 copy /y "%SOURCE_DIR%\doc\config.cmd" "%ROOT%\config.cmd.new" >nul 2>&1
 if exist "%ROOT%\config.cmd.new" (
-    echo [提示] config.cmd 也有新版本：你的配置没动，新选项都写在 %ROOT%\config.cmd.new 里。
+    echo [提示] config.cmd 有新版本：你的配置没动，新版模板放在 %ROOT%\config.cmd.new 里。
 )
 exit /b 0
 
