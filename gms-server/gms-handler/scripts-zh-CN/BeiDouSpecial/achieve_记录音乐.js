@@ -91,6 +91,7 @@ function action(mode, type, selection) {
 
             // 切歌 API
             cm.changeMusic(bgmPath);
+            cm.recordAccumulativeAchievement("MUSIC_DISCOVERY", bgmPath, 1)
 
             var bgmName = (typeof bgmItem === 'object') ? bgmItem.getMusicName() : bgmItem;
 

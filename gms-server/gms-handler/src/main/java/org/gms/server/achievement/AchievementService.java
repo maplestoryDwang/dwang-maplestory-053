@@ -84,6 +84,44 @@ public class AchievementService {
      *
      * @return ture表示新增 false表示已添加
      */
+    public boolean recordUniqueAchievement(int cid, String category, String key, int addAmount) {
+        AchievementDiscountConfigDO config = getConfig(category);
+        if (config == null && category.contains("EGG")) {
+            config = getConfig(AchievementCategory.SPECIAL_EGG);
+        } else if (config == null && category.contains("BOSS_KILL")) {
+            config = getConfig(AchievementCategory.BOSS_KILL);
+        } else if (AchievementCategory.ACHIEVEMENT_CAT.contains(category)) {
+            // 静默的设置
+            config = new AchievementDiscountConfigDO();
+            config.setIsAccumulate(false);
+        } else if (config == null || !Boolean.TRUE.equals(config.getEnabled())) {
+            return false;
+        }
+        // 是否是可叠加的
+        boolean isAccumulate = Boolean.TRUE.equals(config.getIsAccumulate());
+
+
+        QueryWrapper qw = QueryWrapper.create()
+                .where("character_id = ?", cid)
+                .and("category = ?", category)
+                .and("achievement_key = ?", key);
+
+        CharacterAchievementDO record = achievementMapper.selectOneByQuery(qw);
+
+        if (record != null) {
+            return false;
+        }
+
+        record = new CharacterAchievementDO();
+        record.setCharacterId(cid);
+        record.setCategory(category);
+        record.setAchievementKey(key);
+        record.setProgress(isAccumulate ? addAmount : 1);
+        record.setCompleted(Boolean.FALSE);
+        achievementMapper.insertSelective(record);
+        return true;
+
+    }
     public boolean recordAchievement(int cid, String category, String key, int addAmount) {
         AchievementDiscountConfigDO config = getConfig(category);
         if (config == null && category.contains("EGG")) {

@@ -1568,7 +1568,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
      */
     public boolean recordUniqueAchievement(String category, String key) {
         // 默认增加 1 次或解锁该 KEY
-        return context.getAchievementService().recordAchievement(getPlayer().getId(), category, key, 1);
+        return context.getAchievementService().recordUniqueAchievement(getPlayer().getId(), category, key, 1);
     }
 
     /**
