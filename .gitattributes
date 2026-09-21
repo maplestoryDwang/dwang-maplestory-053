@@ -1,0 +1,3 @@
+# client-dist 是"按 sha256 比对"的发布载荷：换行一旦被 git 转换，
+# 客户端那边就会永远认为文件要更新（而且和 client-dist.sha256 对不上）。
+/client-dist/** -text
