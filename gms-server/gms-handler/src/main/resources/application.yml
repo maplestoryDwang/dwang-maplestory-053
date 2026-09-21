@@ -4,7 +4,7 @@ server:
 spring:
   profiles:
     # 默认激活本地环境，生产启动时用 --spring.profiles.active=prod 覆盖
-    active: local
+    active: prod
   flyway:
     # 禁用版本验证
     validate-on-migrate: false
