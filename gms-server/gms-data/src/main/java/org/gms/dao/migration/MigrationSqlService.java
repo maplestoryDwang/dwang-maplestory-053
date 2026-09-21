@@ -5,13 +5,12 @@ import com.mybatisflex.core.row.Db;
 import org.gms.dao.entity.*;
 import org.gms.dao.entity.table.PetignoresDOTableDef;
 import org.gms.dao.mapper.*;
+import org.gms.tool.ItemXmlResolver;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static org.gms.dao.entity.table.CharacterAchievementDOTableDef.CHARACTER_ACHIEVEMENT_D_O;
 import static org.gms.dao.entity.table.StoragesDOTableDef.STORAGES_D_O;
@@ -208,14 +207,16 @@ public class MigrationSqlService {
             } else {
                 loadedAccItem = true;
             }
-            recordCharFromDB(accountid, charactersDO.getId(), sql, loadedAccItem);
+            List<String> item053AllId = ItemXmlResolver.getStrings();
+
+            recordCharFromDB(accountid, charactersDO.getId(), sql, loadedAccItem, item053AllId);
 
 
         }
 
     }
 
-    private void recordCharFromDB(int accountid, int cid, StringBuilder sql, boolean loadedAccItem) {
+    private void recordCharFromDB(int accountid, int cid, StringBuilder sql, boolean loadedAccItem, List<String> item053AllId) {
 
         // 获取成就
         boolean tableExistsInMySQL = isTableExistsInMySQL("character_achievements");
@@ -294,12 +295,32 @@ public class MigrationSqlService {
 
         // ACC装备加载没加载过，加载一次
         if (!loadedAccItem) {
-            addAccItemSql(accountid, sql);
+            addAccItemSql(accountid, sql, item053AllId);
         }
 
+        // 每个角色的同步
+        addCharItemSql(cid, sql, item053AllId);
+
+
+    }
+
+    private void addCharItemSql(int cid, StringBuilder sql, List<String> item053AllId) {
         // 查出该角色背包里所有的物品
         QueryWrapper itemQueryWrapper = QueryWrapper.create().where(INVENTORYITEMS_D_O.CHARACTERID.eq(cid));
         List<InventoryitemsDO> inventoryItemsDOS = inventoryitemsMapper.selectListByQuery(itemQueryWrapper);
+
+        // 需要过滤出053存在的才迁移
+        inventoryItemsDOS.removeIf(inventoryitemsDO -> {
+            // 返回true删除
+            if (item053AllId.contains(inventoryitemsDO.getItemid().toString())){
+                return false;
+            } else {
+                System.out.println("053版本不存在如下物品，不迁移.Id为： " + inventoryitemsDO.getItemid());
+                return true;
+            }
+        });
+
+
 
         // 一次性查出该角色名下所有装备属性（不带戒指的）, 但是里面有点装仓库的信息
         List<Long> inventoryItemIds = inventoryItemsDOS.stream().map(InventoryitemsDO::getInventoryitemid).toList();
@@ -379,11 +400,23 @@ public class MigrationSqlService {
         }
     }
 
-    private void addAccItemSql(int accountid, StringBuilder sql) {
+    private void addAccItemSql(int accountid, StringBuilder sql, List<String> item053AllId) {
         // ItemFactory type != 1的数据，包含仓库、商城仓库
         QueryWrapper itemQueryByAcc = QueryWrapper.create().where(INVENTORYITEMS_D_O.ACCOUNTID.eq(accountid));
         List<InventoryitemsDO> itemQueryByAccDOS = inventoryitemsMapper.selectListByQuery(itemQueryByAcc);
 //            sql.append(FlexSqlGenerator.convertToSql(itemQueryByAccDOS, "accountid", "@current_account_id"));
+
+        // 需要过滤出053存在的才迁移
+        itemQueryByAccDOS.removeIf(inventoryitemsDO -> {
+            // 返回true删除
+            if (item053AllId.contains(inventoryitemsDO.getItemid().toString())){
+                return false;
+            } else {
+                System.out.println("053版本不存在如下物品，不迁移.Id为： " + inventoryitemsDO.getItemid());
+                return true;
+            }
+        });
+
 
         List<Long> inventoryACCItemIds = itemQueryByAccDOS.stream().map(InventoryitemsDO::getInventoryitemid).toList();
         List<InventoryequipmentDO> allACCEquipmentDOS = java.util.Collections.emptyList();
