@@ -302,10 +302,14 @@ if ($toAdd.Count -eq 0 -and $toUpdate.Count -eq 0) {
     Say ('  客户端已经是最新的（' + $sameCnt + ' 个文件全部一致' + $(if ($toKeep.Count -gt 0) { '，' + $toKeep.Count + ' 个你自己改过的已保留' } else { '' }) + '）。') 'Green'
 } else {
     Say ('  需要新增 ' + $toAdd.Count + ' 个，更新 ' + $toUpdate.Count + ' 个，未变 ' + $sameCnt + ' 个。')
-    foreach ($p in ($toUpdate + $toAdd)) {
+    $list = @($toUpdate + $toAdd)
+    $maxShow = 20
+    for ($i = 0; $i -lt $list.Count -and $i -lt $maxShow; $i++) {
+        $p = $list[$i]
         $mark = $(if ($p.State -eq 'update') { '更新' } else { '新增' })
         Say ('    [' + $mark + '] ' + $p.Show)
     }
+    if ($list.Count -gt $maxShow) { Say ('    ... 还有 ' + ($list.Count - $maxShow) + ' 个（太多就不一条条列了）') 'DarkGray' }
     if ($toKeep.Count -gt 0) {
         foreach ($p in $toKeep) { Say ('    [保留] ' + $p.Show + '（你自己改过的，不会被动）') 'DarkGray' }
     }
@@ -341,14 +345,21 @@ function Copy-One {
 }
 
 Say ''
+$done = 0
+$maxLine = 20
 foreach ($p in $toUpdate) {
-    try { Copy-One $p; $changed++; Log ('update ' + $p.Show); Say ('  [更新] ' + $p.Show) 'Green' }
-    catch { Fail ('替换失败：' + $p.Show + '  ' + $_.Exception.Message); Log ('FAIL ' + $p.Show + ' ' + $_.Exception.Message) }
+    try {
+        Copy-One $p; $changed++; $done++; Log ('update ' + $p.Show)
+        if ($done -le $maxLine) { Say ('  [更新] ' + $p.Show) 'Green' }
+    } catch { Fail ('替换失败：' + $p.Show + '  ' + $_.Exception.Message); Log ('FAIL ' + $p.Show + ' ' + $_.Exception.Message) }
 }
 foreach ($p in $toAdd) {
-    try { Copy-One $p; $changed++; Log ('add    ' + $p.Show); Say ('  [新增] ' + $p.Show) 'Green' }
-    catch { Fail ('复制失败：' + $p.Show + '  ' + $_.Exception.Message); Log ('FAIL ' + $p.Show + ' ' + $_.Exception.Message) }
+    try {
+        Copy-One $p; $changed++; $done++; Log ('add    ' + $p.Show)
+        if ($done -le $maxLine) { Say ('  [新增] ' + $p.Show) 'Green' }
+    } catch { Fail ('复制失败：' + $p.Show + '  ' + $_.Exception.Message); Log ('FAIL ' + $p.Show + ' ' + $_.Exception.Message) }
 }
+if ($done -gt $maxLine) { Say ('  ... 一共 ' + $done + ' 个文件，都写进日志了') 'DarkGray' }
 foreach ($p in $toKeep) {
     try {
         $newPath = $p.Target + '.new'
