@@ -266,9 +266,17 @@ if not defined SYNC_SELF_UPDATE set "SYNC_SELF_UPDATE=1"
 if not "%SYNC_SELF_UPDATE%"=="1" exit /b 0
 if not exist "%SOURCE_DIR%\doc\start.cmd" exit /b 0
 
+rem 拉下来的脚本可能是 LF 结尾（git 归一化过），cmd 跑 LF 的 .cmd/.bat 会解析错乱，
+rem 所以先字节级修成 CRLF 再比/再拷（fix-crlf.ps1 不动编码，只补 0D）。
+if exist "%SOURCE_DIR%\client-dist\tools\fix-crlf.ps1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%SOURCE_DIR%\client-dist\tools\fix-crlf.ps1" -Path "%SOURCE_DIR%\doc" -Quiet
+)
 fc /b "%SOURCE_DIR%\doc\start.cmd" "%ROOT%\start.cmd" >nul 2>&1
 if not errorlevel 1 goto :CHECK_CONFIG_UPDATE
 copy /y "%SOURCE_DIR%\doc\start.cmd" "%ROOT%\start.cmd.new" >nul 2>&1
+if exist "%ROOT%\start.cmd.new" if exist "%SOURCE_DIR%\client-dist\tools\fix-crlf.ps1" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%SOURCE_DIR%\client-dist\tools\fix-crlf.ps1" -Path "%ROOT%\start.cmd.new" -Quiet
+)
 if exist "%ROOT%\start.cmd.new" (
     set "SCRIPT_UPDATED=1"
     echo [提示] start.cmd 有新版本（本次结束前自动替换，下次运行生效）。

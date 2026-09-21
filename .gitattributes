@@ -1,3 +1,12 @@
+# ------------------------------------------------------------
+# Windows 脚本必须逐字节 CRLF 入库！
+# 原因：本包的 start.cmd 拉代码时用 `git -c core.autocrlf=false`（原样检出，为了不动 Java 源码），
+# 如果 blob 里是 LF，玩家机器上的 .cmd/.bat 就是纯 LF，cmd 会解析错乱
+# （报 'et' / 'ient' / 'JAVA_HOME' 不是内部或外部命令 那种乱码；PowerShell 不受影响）。
+*.cmd -text
+*.bat -text
+*.ps1 -text
+
 # client-dist 是"按 sha256 比对"的发布载荷：换行一旦被 git 转换，
 # 客户端那边就会永远认为文件要更新（而且和 client-dist.sha256 对不上）。
 /client-dist/** -text
