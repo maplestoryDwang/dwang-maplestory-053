@@ -935,7 +935,7 @@ public class PacketCreator {
         mplew.write(new byte[]{0, 0, 0, 0,
                 0, 0,
                 (byte) 0xFF, 0x6A, 1, 0,
-                0,
+                c.getGender(),
                 0,
                 0x4E});
         mplew.writeString(c.getAccountName());

@@ -41,6 +41,12 @@ public enum RecvOpcode implements Opcode {
      * 检查角色名
      */
     CHECK_CHAR_NAME(0x09),
+
+    /**
+     * 客户端启动错误
+     */
+    CLIENT_START_ERROR(0x10),
+
     /**
      * 心跳回应
      */
@@ -86,6 +92,11 @@ public enum RecvOpcode implements Opcode {
     CHAR_SELECT(0x16),
 
     // 0x17 未使用
+    /**
+     * 设置性别
+     */
+    SET_GENDER(0x17), //
+
 
     /**
      * 请求服务器列表
@@ -499,7 +510,6 @@ public enum RecvOpcode implements Opcode {
     SERVERLIST_REREQUEST(0x04), // 重新请求服务器列表
     CHARLIST_REQUEST(0x05), // 请求角色列表
     SERVERSTATUS_REQUEST(0x06), // 请求服务器状态
-    SET_GENDER(0x08), // 设置性别
     AFTER_LOGIN(0x09), // 登录后操作
     REGISTER_PIN(0x0A), // 注册PIN码
     SERVERLIST_REQUEST(0x0B), // 请求服务器列表
@@ -514,7 +524,6 @@ public enum RecvOpcode implements Opcode {
     CREATE_CHAR(0x16), // 创建角色
     DELETE_CHAR(0x17), // 删除角色
     PONG(0x18), // 心跳响应
-    CLIENT_START_ERROR(0x19), // 客户端启动错误
     CLIENT_ERROR(0x1A), // 客户端错误
     STRANGE_DATA(0x1B), // 奇怪的数据
     RELOG(0x1C), // 重新登录

@@ -139,7 +139,7 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.GUEST_LOGIN, new GuestLoginHandler());
 //        registerHandler(RecvOpcode.REGISTER_PIC, new RegisterPicHandler());
 //        registerHandler(RecvOpcode.CHAR_SELECT_WITH_PIC, new CharSelectedWithPicHandler());
-//        registerHandler(RecvOpcode.SET_GENDER, new SetGenderHandler());
+        registerHandler(RecvOpcode.SET_GENDER, new SetGenderHandler());
 //        registerHandler(RecvOpcode.VIEW_ALL_WITH_PIC, new ViewAllCharSelectedWithPicHandler());
 //        registerHandler(RecvOpcode.VIEW_ALL_PIC_REGISTER, new ViewAllCharRegisterPicHandler());
     }

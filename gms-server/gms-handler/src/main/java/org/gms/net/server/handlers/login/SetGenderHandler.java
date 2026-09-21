@@ -40,7 +40,7 @@ public class SetGenderHandler extends AbstractPacketHandler {
             byte confirmed = p.readByte();
             if (confirmed == 0x01) {
                 c.setGender(p.readByte());
-                c.sendPacket(PacketCreator.getAuthSuccess(c));
+                c.sendPacket(PacketCreator.getAuthSuccessRequestPin(c));
 
                 Server.getInstance().registerLoginState(c);
             } else {
