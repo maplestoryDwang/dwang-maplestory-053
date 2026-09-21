@@ -891,60 +891,53 @@ public class PacketCreator {
         return p;
     }
 
-    /**
-     * Gets a successful authentication packet.
-     *
-     * @param c
-     * @return the successful authentication packet
-     */
-    public static Packet getAuthSuccess(Client c) {
-        Server.getInstance().loadAccountCharacters(c);    // locks the login session until data is recovered from the cache or the DB.
-        Server.getInstance().loadAccountStorages(c);
-
-        final OutPacket p = OutPacket.create(SendPacketOpcode.LOGIN_STATUS);
-        p.writeInt(0);
-        p.writeShort(0);
-        p.writeInt(c.getAccID());
-        p.writeByte(c.getGender());
-
-        boolean canFly = Server.getInstance().canFly(c.getAccID());
-        p.writeBool((GameConfig.getServerBoolean("use_enforce_admin_account") || canFly) && c.getGMLevel() > 1);    // thanks Steve(kaito1410) for pointing the GM account boolean here
-        p.writeByte(((GameConfig.getServerBoolean("use_enforce_admin_account") || canFly) && c.getGMLevel() > 1) ? 0x80 : 0);  // Admin Byte. 0x80,0x40,0x20.. Rubbish.
-        p.writeByte(0); // Country Code.
-
-        p.writeString(c.getAccountName());
-        p.writeByte(0);
-
-        p.writeByte(0); // IsQuietBan
-        p.writeLong(0);//IsQuietBanTimeStamp
-        p.writeLong(0); //CreationTimeStamp
-
-        p.writeInt(1); // 1: Remove the "Select the world you want to play in"
-
-        p.writeByte(GameConfig.getServerBoolean("enable_pin") && !c.canBypassPin() ? 0 : 1); // 0 = Pin-System Enabled, 1 = Disabled
-        p.writeByte(GameConfig.getServerBoolean("enable_pic") && !c.canBypassPic() ? (c.getPic() == null || c.getPic().equals("") ? 0 : 1) : 2); // 0 = Register PIC, 1 = Ask for PIC, 2 = Disabled
-
-        return p;
-    }
-
     public static Packet getAuthSuccessRequestPin(Client c) {
         Server.getInstance().loadAccountCharacters(c);    // locks the login session until data is recovered from the cache or the DB.
         Server.getInstance().loadAccountStorages(c);
 
-        final OutPacket mplew = OutPacket.create(SendPacketOpcode.LOGIN_STATUS);
-        mplew.write(new byte[]{0, 0, 0, 0,
-                0, 0,
-                (byte) 0xFF, 0x6A, 1, 0,
-                c.getGender(),
-                0,
-                0x4E});
-        mplew.writeString(c.getAccountName());
-        mplew
-                .write(new byte[]{
-                        3, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0,
-                        0, (byte) 0xDC, 0x3D, 0x0B, 0x28, 0x64, (byte) 0xC5, 1});
-        return mplew;
+//        final OutPacket mplew = OutPacket.create(SendPacketOpcode.LOGIN_STATUS);
+//        mplew.write(new byte[]{0, 0, 0, 0,
+//                0, 0,
+//                (byte) 0xFF, 0x6A, 1, 0,
+//                c.getGender(),
+//                0,
+//                0x4E});
+//        mplew.writeString(c.getAccountName());
+//        mplew
+//                .write(new byte[]{
+//                        3, 0,
+//                        0, 0, 0, 0, 0, 0, 0, 0,
+//                        0, (byte) 0xDC, 0x3D, 0x0B, 0x28, 0x64, (byte) 0xC5, 1});
+        /**
+         * byte  nResult        0=成功 / 2=临时封禁 / 23=未同意条款 / 12 / 其它=错误码
+         * byte  bGrade         0..1 继续；2..3 弹窗+开官网；>3 → Error(15)
+         * int   reserved       Decode4 读了直接丢，但必须占位
+         * int   nAccountID     ← c.getAccID()
+         * byte  nGender        ← 10 时客户端弹"选择性别"窗口，回 SET_GENDER(0x17)
+         * byte  nAdminLevel    存进 CWvsContext+0x2030（GetAdminLevel 读它）
+         * byte  reserved2      客户端只存不读
+         * str   sAccountName   ← c.getAccountName()（2字节长度 + ASCII）
+         * byte  b1
+         * byte  bQuietBan
+         * long  ftBanEnd       8 字节 FILETIME
+         * long  ftCreate       8 字节 FILETIME   ← 包到此结束，后面不能再补字节
+         */
+        final OutPacket p = OutPacket.create(SendPacketOpcode.LOGIN_STATUS);
+        p.writeByte(0);                     // nResult = 成功
+        p.writeByte(0);                     // bGrade
+        p.writeInt(0);                      // reserved（读了丢弃，不可省）
+        p.writeInt(c.getAccID());           // nAccountID ← 原来是写死的 92831
+        p.writeByte(c.getGender());         // nGender
+        boolean admin = (GameConfig.getServerBoolean("use_enforce_admin_account")
+                || Server.getInstance().canFly(c.getAccID())) && c.getGMLevel() > 1;
+        p.writeByte(admin ? 1 : 0);         // nAdminLevel
+        p.writeByte(admin ? 0x80 : 0);      // reserved2
+        p.writeString(c.getAccountName());
+        p.writeByte(0);
+        p.writeByte(0);
+        p.writeLong(0);                     // ftBanEnd
+        p.writeLong(0);                     // ftCreate
+        return p;
     }
 
 

@@ -10,7 +10,6 @@ import org.gms.tool.ItemXmlResolver;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.function.Predicate;
 
 import static org.gms.dao.entity.table.CharacterAchievementDOTableDef.CHARACTER_ACHIEVEMENT_D_O;
 import static org.gms.dao.entity.table.StoragesDOTableDef.STORAGES_D_O;
@@ -194,6 +193,11 @@ public class MigrationSqlService {
             sql.append("-- 2. 迁移角色: ").append(charactersDO.getName()).append("\n");
             sql.append("-- --------------------------------------------------------\n");
 
+            // 某些数据需要给初始化，否则进游戏会闪退
+            updateCharToDefault(charactersDO);
+
+
+
             // 【全自动】生成角色插入语句，自动把 Java 属性中的 accountId 替换为 MySQL 变量
             sql.append(FlexSqlGenerator.convertToSql(charactersDO, "accountid", "@current_account_id"));
 
@@ -213,6 +217,20 @@ public class MigrationSqlService {
 
 
         }
+
+    }
+
+    private void updateCharToDefault(CharactersDO charactersDO) {
+        Integer gender = charactersDO.getGender();
+        if (gender == 0) { // male
+            charactersDO.setFace(20000);
+            charactersDO.setHair(30030);
+        } else if (gender == 1) {
+            charactersDO.setFace(21001);
+            charactersDO.setHair(31002);
+        }
+        charactersDO.setSkincolor(0);
+        charactersDO.setMap(102000000);
 
     }
 
@@ -262,8 +280,8 @@ public class MigrationSqlService {
         sql.append(FlexSqlGenerator.convertToSql(fredstorageDOS, "cid", "@current_char_id"));
 
         // 获取keymap ── 自动转换
-        List<KeymapDO> keymapDOS = keymapMapper.selectListByQuery(QueryWrapper.create().where(KEYMAP_D_O.CHARACTERID.eq(cid)));
-        sql.append(FlexSqlGenerator.convertToSql(keymapDOS, "characterid", "@current_char_id"));
+//        List<KeymapDO> keymapDOS = keymapMapper.selectListByQuery(QueryWrapper.create().where(KEYMAP_D_O.CHARACTERID.eq(cid)));
+//        sql.append(FlexSqlGenerator.convertToSql(keymapDOS, "characterid", "@current_char_id"));
 
         // 获取savedlocations ── 自动转换
         List<SavedlocationsDO> savedlocationsDOS = savedlocationsMapper.selectListByQuery(QueryWrapper.create().where(SAVEDLOCATIONS_D_O.CHARACTERID.eq(cid)));
