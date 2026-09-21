@@ -66,4 +66,26 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <!--
+            默认行为：把前端 gms-ui 编译出来的产物（src/main/resources/static）一起打进 jar，
+            启动后 http://ip:8686/ 就是管理后台。
+
+            如果只想打一个纯后端的 jar（例如平时前后端分离开发、不想被前端产物干扰），
+                mvnw clean package -Dmaven.test.skip=true -Pno-frontend
+        -->
+        <profile>
+            <id>no-frontend</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>static/**</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
 </project>
