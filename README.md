@@ -89,9 +89,9 @@ Scattered across the world are several **hidden easter eggs**—unlisted in ques
 
 ## 📜 Documentation
 
-- 📖 [Skill Fix Log](doc/skill_log.md)
-- 🛠️ [Update & Fix Log](doc/update_log.md)
-- 🗄️ [Database Schema Differences](doc/db_diff.md)
+- 📖 [Skill Fix Log](doc/log/skill_log.md)
+- 🛠️ [Update & Fix Log](doc/log/update_log.md)
+- 🗄️ [Database Schema Differences](doc/log/db_diff.md)
 
 ---
 
