@@ -58,14 +58,16 @@ function start() {
         map.spawnMonsterOnGroundBelow(bossObj, point);
 
         if (isinit) {
-            log.info(`[野外BOSS] \({em.getName()} 在频道\){channel} 地图:\({map.getMapName()}(\){MapID}) (\({point.x},\){point.y}) 成功生成 \({bossName}(\){BossID})，下次检测间隔：${timerMs / 60000} 分钟`);
+            // 修正后的日志字符串模板
+//            log.info(`[野外BOSS] \({em.getName()} 在频道\){channel} 地图: \({map.getMapName()} (\){MapID}) (\({point.x},\){point.y}) 成功生成 \({bossName} (\){BossID})，下次检测间隔：${timerMs / 60000} 分钟`);
+            log.info(`[事件脚本-野外BOSS] ${em.getName()} 已在频道 ${channel} 的 ${map.getMapName()}(${MapID}) ${point.x} , ${point.y}) 生成 ${BossName}(${BossID})，检测间隔：${timerMs / 60 / 1000} 分钟`);
         } else {
             isinit = true;
         }
 
-        // 广播刷新提示
+        // 修正后的广播提示
         if (BossNotice && BossNotice.length > 0) {
-            map.broadcastMessage(PacketCreator.serverNotice(6, `[野外BOSS] \({bossName}\){BossNotice}`));
+            map.broadcastMessage(PacketCreator.serverNotice(6, `[野外BOSS] ${BossName}  ${BossNotice}`));
         }
 
     } catch (e) {
