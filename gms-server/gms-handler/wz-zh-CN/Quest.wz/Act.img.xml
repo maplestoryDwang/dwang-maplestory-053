@@ -3797,6 +3797,81 @@
       </imgdir>
     </imgdir>
   </imgdir>
+  <imgdir name="2122">
+    <imgdir name="0">
+      <string name="0" value="곤란하군... 자꾸 신경이 쓰이는 걸...?\r\n#L0# #b무슨 일인가요?#l"/>
+      <string name="1" value="얼마 전, 수상한 사람들이 날 찾아왔었어. 멀리서 찾아왔다면서 자신들을 도와 달라고 하더군. 의로운 일이라면 당연히 도와줘야 했지만, 그들은 자신들이 누구인지, 어떤 일을 하려고 하는지에 대해서 일절 밝히지도 않았지.\r\n#L0# #b나쁜 사람들이었을까요?#l"/>
+      <string name="2" value="글쎄...그건 알 수 없지만, 악인들처럼 보이지는 않았어. 그들의 눈빛에서 강한 의지를 느낄 수 있었거든. 하지만 난 이곳에서 해야할 일이 있기 때문에 그들의 부탁을 거절했지. 하지만 계속 마음에 걸리는군. 어떤가? 자네가 나 대신 그들을 도와 주는 것은?"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="exp" value="1400"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="2123">
+    <imgdir name="0">
+      <string name="0" value="그렇지 않아도 자네를 기다리고 있었네. 수상한 자가 자네에게 전해달라면서 쪽지를 전해 주고 갔어. 그런데 그만 내 부주의로 쪽지가 불에 타버리고 말았네. 하지만 내용은 확실하게 기억하고 있네. 관심있나?"/>
+      <imgdir name="yes">
+        <string name="0" value="쪽지엔 이렇게 적혀 있었지. #b&apos;#m200000000#에 있는 #p2012019#를 찾아가시오.&apos;#k 그게 다 였네."/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="관심이 없다면 굳이 내용을 알 필요가 없겠지."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="nextQuest" value="2124"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="2124">
+    <imgdir name="1"/>
+    <imgdir name="0">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031619"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="2125">
+    <imgdir name="0">
+      <string name="0" value="그렇지 않아도 자네를 기다리고 있었네. 수상한 자가 자네에게 전해달라면서 쪽지를 전해 주고 갔어. 그런데 그만 내 부주의로 쪽지가 불에 타버리고 말았네. 하지만 내용은 확실하게 기억하고 있네. 관심있나?"/>
+      <imgdir name="yes">
+        <string name="0" value="쪽지엔 이렇게 적혀 있었지. #b&apos;#m200000000#에 있는 #p2012019#를 찾아가시오.&apos;#k 그게 다 였네."/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="관심이 없다면 굳이 내용을 알 필요가 없겠지."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="nextQuest" value="2126"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="2126">
+    <imgdir name="1"/>
+    <imgdir name="0">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031624"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="2127">
+    <imgdir name="0"/>
+    <imgdir name="1"/>
+  </imgdir>
   <imgdir name="2128">
     <imgdir name="0">
       <string name="0" value="어린 전사 형제여. 전사가 되었다고 자네의 강함이 완성된 것은 아니라네. 아직 자네는 스스로의 힘으로 전투에 임하기에 부족하군... 자네에겐 이 주먹펴고 일어서의 수련이 필요할 것 같은데... 어떤가? 수련을 해보겠나?\r\n#L0# #b수련을 하겠습니다.#l  \n\n#L1# 스스로의 힘으로 할 수 있습니다. #I"/>
@@ -6547,6 +6622,142 @@
       </imgdir>
     </imgdir>
   </imgdir>
+  <imgdir name="3100">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="exp" value="7500"/>
+      <int name="money" value="4000"/>
+      <int name="pop" value="1"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="2010002"/>
+          <int name="count" value="-20"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="2010000"/>
+          <int name="count" value="-20"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="2010003"/>
+          <int name="count" value="-20"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="3101">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="exp" value="28290"/>
+      <int name="pop" value="3"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000158"/>
+          <int name="count" value="-100"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000159"/>
+          <int name="count" value="-100"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="3102">
+    <imgdir name="0">
+      <int name="npc" value="2020003"/>
+      <int name="lvmin" value="30"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="exp" value="14500"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="2010000"/>
+          <int name="count" value="-10"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="2010002"/>
+          <int name="count" value="-10"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="2022001"/>
+          <int name="count" value="-10"/>
+        </imgdir>
+        <imgdir name="3">
+          <int name="id" value="4000088"/>
+          <int name="count" value="-40"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="3103">
+    <imgdir name="0">
+      <string name="0" value="300년을 했지만 아직도 마법의 연구는 끝이 없구나… 응? 자네는 누군가? #p2020003#의 망토를 아냐고? #p2020003#… #p2020003#라… 아, 예전에 #m211000000# 앞에서 추위로 꼼짝도 못하던 그 청년 말이로군. 온화한 망토라면 준 게 맞네."/>
+      <string name="1" value="#m211000000#에 마법 연구를 하러 왔는데 너무 추워서 견딜 수가 있어야지. 그래서 만들었는데, 300년이나 지내다 보니 이제는 추위를 견딜 수가 있게 되어서 그 청년에게 주었지. 응? 자네에게도 달라고? 이런… 망토는 그거 하나밖에 없었는데 어떻게 한다? 다시 만들려면 재료가 있어야 하는데 구할 수 있겠는가?"/>
+      <imgdir name="yes">
+        <string name="0" value="그렇다면 망토를 만들 수 있도록 #t4021000# 4개와 #t4006000# 2개, #t4000087# 50개, #t4000051# 20개를 구해 오게. 그것만 있다면 망토를 만드는 것은 어렵지 않으니, 얼마든지 만들어 주도록 하지."/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="재료를 구하기 어려운 모양이군. 그렇다면 하는 수 없겠지. 재료를 구할 수 있게 되거든 다시 오게. 그 때 필요한 재료를 알려 주도록 하지."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="exp" value="14500"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4021000"/>
+          <int name="count" value="-4"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4006000"/>
+          <int name="count" value="-2"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="1102109"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+        <imgdir name="3">
+          <int name="id" value="4000051"/>
+          <int name="count" value="-2"/>
+        </imgdir>
+        <imgdir name="4">
+          <int name="id" value="4000087"/>
+          <int name="count" value="-40"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="3104">
+    <imgdir name="0">
+      <string name="0" value="안녕하세요? #p2012019#와 대화는 잘 하셨어요? 네? 어머... #t4031190#를 잃어버리셨다고요? 저런... #p2012019#하고 꼭 대화하고 싶으시다면 #t4031190# 를 다시 만들어 드릴게요. 다만 재료는 당신께서 구해 오셔야 하는데... 괜찮으시겠어요?"/>
+      <imgdir name="yes">
+        <string name="0" value="한 번 만들어 본 것이니 아까보다 익숙해져서, 재료를 덜 들일 수 있어요. #t4000073# 50개와 #t4003004# 10개, #t4000021# 10개를 가져와 주세요. 그 정도면 #t4031190#를 만들어 드릴 수 있을 것 같아요."/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="어려우시다면 어쩔 수 없죠... #t4031190#를 못 찾으시겠다면 다시 만들어 드릴 테니, 다시 이 곳으로 오세요."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000073"/>
+          <int name="count" value="-50"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4003004"/>
+          <int name="count" value="-10"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4000021"/>
+          <int name="count" value="-10"/>
+        </imgdir>
+        <imgdir name="3">
+          <int name="id" value="4031190"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
   <imgdir name="3200">
     <imgdir name="0"/>
     <imgdir name="1">
@@ -8918,6 +9129,10 @@
       </imgdir>
     </imgdir>
   </imgdir>
+  <imgdir name="3452">
+    <imgdir name="0"/>
+    <imgdir name="1"/>
+  </imgdir>
   <imgdir name="3600">
     <imgdir name="1">
       <int name="exp" value="6000"/>
@@ -9955,6 +10170,26 @@
       <int name="exp" value="20000"/>
     </imgdir>
     <imgdir name="0"/>
+  </imgdir>
+  <imgdir name="3706">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="exp" value="90000"/>
+      <int name="buffItemID" value="2022109"/>
+      <string name="message" value="听到小九灵龙的叫声，满身充满了神奇的力量。"/>
+      <imgdir name="map">
+        <int name="0" value="240000000"/>
+        <int name="1" value="240040611"/>
+        <int name="2" value="0"/>
+      </imgdir>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="2041200"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
   </imgdir>
   <imgdir name="3707">
     <imgdir name="1">
@@ -12853,14 +13088,6 @@
     </imgdir>
     <imgdir name="0"/>
   </imgdir>
-  <imgdir name="4995">
-    <imgdir name="0"/>
-    <imgdir name="1"/>
-  </imgdir>
-  <imgdir name="4996">
-    <imgdir name="0"/>
-    <imgdir name="1"/>
-  </imgdir>
   <imgdir name="4994">
     <imgdir name="0"/>
     <imgdir name="1">
@@ -12873,6 +13100,14 @@
         </imgdir>
       </imgdir>
     </imgdir>
+  </imgdir>
+  <imgdir name="4995">
+    <imgdir name="0"/>
+    <imgdir name="1"/>
+  </imgdir>
+  <imgdir name="4996">
+    <imgdir name="0"/>
+    <imgdir name="1"/>
   </imgdir>
   <imgdir name="4997">
     <imgdir name="0"/>
@@ -14639,6 +14874,98 @@
       <imgdir name="item">
         <imgdir name="0">
           <int name="id" value="4031509"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="6008">
+    <imgdir name="0">
+      <string name="0" value="나는 그대를 알고 있지. 아주 오래 전 고원의 마을에서 전사로 태어났고 설원의 땅에서 그 강함을 인정받았으며... 메이플 월드 모든 전사들의 사제인 나에게서 새로운 이름을 지음받은 그대... &apos;만렙&apos;"/>
+      <string name="1" value="이제는 더 이상 오를 곳이 없는 지고의 경지에 이른 그대에게 새로운 동반자를 소개하겠다. 정신과 육체를 극한까지 단련한 수많은 전사들이 원했지만, 누구도 소유도 된 적이 없는 존재. 드래크로니안을... 어떤가. 그를 원하는가?"/>
+      <imgdir name="yes">
+        <string name="0" value="인간이 아니되, 인간보다 더 높은 자존심을 가진 드래크로니안이지만... 초월의 경지에 이른 그대라면 그의 주인이 될 자격이 충분하지. 미지의 존재와 우정을 나눌 준비가 되었거든, 다시 나를 찾아오라."/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="아직 마음의 준비가 되지 않은 모양이군... 이미 메이플 월드의 누구도 그대를 이길 수 없는데, 무엇을 두려워 하는가."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="1902002"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="1902001"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="6009">
+    <imgdir name="0">
+      <string name="0" value="나는 그대를 알고 있어요. 아주 오래 전 마력이 충만한 숲에서 마법사로 태어났고, 설원의 땅에서 그 강함을 인정받았으며... 메이플 월드 모든 마법사들의 사제인 나에게서 새로운 이름을 지음받은 그대여... "/>
+      <string name="1" value="이제는 더 이상 오를 곳이 없는 지고의 경지에 이른 그대에게 새로운 동반자를 소개할까 해요. 궁극의 마력을 지닌 수많은 마법사들이 원했지만, 누구도 소유도 된 적이 없는 존재. 바하뮤트를... 어떤가요. 그를 원하나요?"/>
+      <imgdir name="yes">
+        <string name="0" value="인간이 아니되, 인간보다 더 높은 자존심을 가진 바하뮤트지만... 초월의 경지에 이른 그대라면 그의 주인이 될 자격이 충분할 것 같군요. "/>
+        <string name="1" value="미지의 존재와 우정을 나눌 준비가 되었거든, 다시 나를 찾아오세요."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="1902001"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="1902002"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="6010">
+    <imgdir name="0">
+      <string name="0" value="나는 그대를 알고 있지. 아주 오래 전 요정이 지키는 마을에서 궁수로 태어났고, 설원의 땅에서 그 강함을 인정받았으며... 메이플 월드 모든 궁수들의 사제인 나에게서 새로운 이름을 지음받은 그대여... "/>
+      <string name="1" value="이제는 더 이상 오를 곳이 없는 지고의 경지에 이른 그대에게 새로운 동반자를 소개하지. 극을 꿰뚫는 활을 가진 수많은 궁수들이 원했지만, 누구도 소유도 된 적이 없는 존재. 바하뮤트를... 어떤가. 그를 원하는가?"/>
+      <imgdir name="yes">
+        <string name="0" value="인간이 아니되, 인간보다 더 높은 자존심을 가진 바하뮤트지만... 초월의 경지에 이른 그대라면 그의 주인이 될 자격이 충분할 듯 보이는군. "/>
+        <string name="1" value="미지의 존재와 우정을 나눌 준비가 되었거든, 다시 나를 찾아오라."/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="아직 마음의 준비가 되지 않은 모양이군요... 이미 메이플 월드의 누구도 그대를 이길 수 없는데, 무엇을 두려워 하는 건가요."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="1902001"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="1902002"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="6011">
+    <imgdir name="0">
+      <int name="lvmin" value="200"/>
+    </imgdir>
+    <imgdir name="1">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="1902001"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="1902002"/>
           <int name="count" value="1"/>
           <int name="gender" value="2"/>
         </imgdir>
@@ -16833,6 +17160,139 @@
       </imgdir>
     </imgdir>
   </imgdir>
+  <imgdir name="7100">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="exp" value="2700"/>
+      <int name="money" value="3270"/>
+      <int name="nextQuest" value="7101"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031170"/>
+          <int name="count" value="-10"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="7101">
+    <imgdir name="1">
+      <int name="exp" value="27600"/>
+      <int name="money" value="76600"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031171"/>
+          <int name="count" value="-100"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4031175"/>
+          <int name="count" value="-300"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0"/>
+  </imgdir>
+  <imgdir name="7102">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="exp" value="5600"/>
+      <int name="money" value="15000"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031179"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="7103">
+    <imgdir name="0">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031179"/>
+          <int name="count" value="1"/>
+          <int name="job" value="30"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="exp" value="78000"/>
+      <int name="money" value="150000"/>
+      <int name="pop" value="30"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="1102057"/>
+          <int name="count" value="1"/>
+          <int name="job" value="30"/>
+          <int name="gender" value="2"/>
+          <int name="var" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="7104">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="exp" value="13400"/>
+      <int name="money" value="41000"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031176"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4031177"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4031178"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="3">
+          <int name="id" value="4031179"/>
+          <int name="count" value="1"/>
+          <int name="job" value="30"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="7105">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031179"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="7106">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031172"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="7107">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031179"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
   <imgdir name="7109">
     <imgdir name="0">
       <string name="0" value="안녕하세요, 강하고 현명하고 용감한 모험가님~! 당신 덕분에 새로운 시간의 구를 만들어 시계탑의 힘을 유지시킬 수 있었습니다! 정말 감사했어요! 그런데... 당신께서 도와주신게 다 소용없게 되어 버리는 것 같아 걱정이네요. 무슨 일이냐고요?"/>
@@ -16989,137 +17449,67 @@
       </imgdir>
     </imgdir>
   </imgdir>
-  <imgdir name="7100">
+  <imgdir name="8007">
     <imgdir name="0"/>
     <imgdir name="1">
-      <int name="exp" value="2700"/>
-      <int name="money" value="3270"/>
-      <int name="nextQuest" value="7101"/>
+      <int name="nextQuest" value="8018"/>
       <imgdir name="item">
         <imgdir name="0">
-          <int name="id" value="4031170"/>
-          <int name="count" value="-10"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="7101">
-    <imgdir name="1">
-      <int name="exp" value="27600"/>
-      <int name="money" value="76600"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031171"/>
-          <int name="count" value="-100"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="4031175"/>
-          <int name="count" value="-300"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-    <imgdir name="0"/>
-  </imgdir>
-  <imgdir name="7102">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="exp" value="5600"/>
-      <int name="money" value="15000"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031179"/>
+          <int name="id" value="2120000"/>
           <int name="count" value="-1"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
-  <imgdir name="7103">
-    <imgdir name="0">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031179"/>
-          <int name="count" value="1"/>
-          <int name="job" value="30"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-    <imgdir name="1">
-      <int name="exp" value="78000"/>
-      <int name="money" value="150000"/>
-      <int name="pop" value="30"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="1102057"/>
-          <int name="count" value="1"/>
-          <int name="job" value="30"/>
-          <int name="gender" value="2"/>
-          <int name="var" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="7104">
+  <imgdir name="8008">
     <imgdir name="0"/>
     <imgdir name="1">
-      <int name="exp" value="13400"/>
-      <int name="money" value="41000"/>
+      <int name="nextQuest" value="8009"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="8009">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="nextQuest" value="8019"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="8010">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="nextQuest" value="8012"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="8012">
+    <imgdir name="0"/>
+    <imgdir name="1">
       <imgdir name="item">
         <imgdir name="0">
-          <int name="id" value="4031176"/>
+          <int name="id" value="4031064"/>
           <int name="count" value="-1"/>
         </imgdir>
         <imgdir name="1">
-          <int name="id" value="4031177"/>
-          <int name="count" value="-1"/>
+          <int name="id" value="2040715"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
         </imgdir>
         <imgdir name="2">
-          <int name="id" value="4031178"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="3">
-          <int name="id" value="4031179"/>
-          <int name="count" value="1"/>
-          <int name="job" value="30"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="7105">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031179"/>
+          <int name="id" value="2040011"/>
           <int name="count" value="1"/>
           <int name="gender" value="2"/>
         </imgdir>
       </imgdir>
     </imgdir>
   </imgdir>
-  <imgdir name="7106">
+  <imgdir name="8018">
     <imgdir name="0"/>
     <imgdir name="1">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031172"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
+      <int name="nextQuest" value="8008"/>
     </imgdir>
   </imgdir>
-  <imgdir name="7107">
+  <imgdir name="8019">
     <imgdir name="0"/>
     <imgdir name="1">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031179"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
+      <int name="nextQuest" value="8010"/>
     </imgdir>
   </imgdir>
   <imgdir name="8142">
@@ -17162,6 +17552,85 @@
     <imgdir name="1"/>
   </imgdir>
   <imgdir name="8189">
+    <imgdir name="0"/>
+    <imgdir name="1"/>
+  </imgdir>
+  <imgdir name="8206">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="exp" value="800"/>
+      <int name="money" value="-1000"/>
+      <int name="pop" value="1"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4031110"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4031109"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4031111"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="3">
+          <int name="id" value="4031112"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="4">
+          <int name="id" value="4140100"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+          <int name="period" value="4320"/>
+          <int name="name" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="8207">
+    <imgdir name="0"/>
+    <imgdir name="1">
+      <int name="exp" value="3600"/>
+      <int name="money" value="-2500"/>
+      <int name="pop" value="3"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4140100"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4031110"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4031109"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="3">
+          <int name="id" value="4031113"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="4">
+          <int name="id" value="4031114"/>
+          <int name="count" value="-1"/>
+        </imgdir>
+        <imgdir name="5">
+          <int name="id" value="4140200"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+          <int name="period" value="7200"/>
+          <int name="name" value="1"/>
+        </imgdir>
+        <imgdir name="6">
+          <int name="id" value="2020028"/>
+          <int name="count" value="3"/>
+          <int name="gender" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="8213">
     <imgdir name="0"/>
     <imgdir name="1"/>
   </imgdir>
@@ -19765,426 +20234,6 @@
       </imgdir>
     </imgdir>
   </imgdir>
-  <imgdir name="8206">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="exp" value="800"/>
-      <int name="money" value="-1000"/>
-      <int name="pop" value="1"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031110"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="4031109"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="2">
-          <int name="id" value="4031111"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="3">
-          <int name="id" value="4031112"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="4">
-          <int name="id" value="4140100"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-          <int name="period" value="4320"/>
-          <int name="name" value="1"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="8207">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="exp" value="3600"/>
-      <int name="money" value="-2500"/>
-      <int name="pop" value="3"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4140100"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="4031110"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="2">
-          <int name="id" value="4031109"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="3">
-          <int name="id" value="4031113"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="4">
-          <int name="id" value="4031114"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="5">
-          <int name="id" value="4140200"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-          <int name="period" value="7200"/>
-          <int name="name" value="1"/>
-        </imgdir>
-        <imgdir name="6">
-          <int name="id" value="2020028"/>
-          <int name="count" value="3"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="9670">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="exp" value="1500"/>
-      <int name="pop" value="1"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4140100"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="2020028"/>
-          <int name="count" value="5"/>
-          <int name="gender" value="2"/>
-          <int name="prop" value="1"/>
-        </imgdir>
-        <imgdir name="2">
-          <int name="id" value="2020022"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-          <int name="prop" value="1"/>
-        </imgdir>
-        <imgdir name="3">
-          <int name="id" value="2020023"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-          <int name="prop" value="1"/>
-        </imgdir>
-        <imgdir name="4">
-          <int name="id" value="4140200"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-          <int name="period" value="4320"/>
-          <int name="prop" value="1000"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="2122">
-    <imgdir name="0">
-      <string name="0" value="곤란하군... 자꾸 신경이 쓰이는 걸...?\r\n#L0# #b무슨 일인가요?#l"/>
-      <string name="1" value="얼마 전, 수상한 사람들이 날 찾아왔었어. 멀리서 찾아왔다면서 자신들을 도와 달라고 하더군. 의로운 일이라면 당연히 도와줘야 했지만, 그들은 자신들이 누구인지, 어떤 일을 하려고 하는지에 대해서 일절 밝히지도 않았지.\r\n#L0# #b나쁜 사람들이었을까요?#l"/>
-      <string name="2" value="글쎄...그건 알 수 없지만, 악인들처럼 보이지는 않았어. 그들의 눈빛에서 강한 의지를 느낄 수 있었거든. 하지만 난 이곳에서 해야할 일이 있기 때문에 그들의 부탁을 거절했지. 하지만 계속 마음에 걸리는군. 어떤가? 자네가 나 대신 그들을 도와 주는 것은?"/>
-      <int name="ask" value="1"/>
-      <imgdir name="stop">
-        <imgdir name="0">
-          <int name="answer" value="1"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="answer" value="1"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-    <imgdir name="1">
-      <int name="exp" value="1400"/>
-    </imgdir>
-  </imgdir>
-  <imgdir name="2123">
-    <imgdir name="0">
-      <string name="0" value="그렇지 않아도 자네를 기다리고 있었네. 수상한 자가 자네에게 전해달라면서 쪽지를 전해 주고 갔어. 그런데 그만 내 부주의로 쪽지가 불에 타버리고 말았네. 하지만 내용은 확실하게 기억하고 있네. 관심있나?"/>
-      <imgdir name="yes">
-        <string name="0" value="쪽지엔 이렇게 적혀 있었지. #b&apos;#m200000000#에 있는 #p2012019#를 찾아가시오.&apos;#k 그게 다 였네."/>
-      </imgdir>
-      <imgdir name="no">
-        <string name="0" value="관심이 없다면 굳이 내용을 알 필요가 없겠지."/>
-      </imgdir>
-    </imgdir>
-    <imgdir name="1">
-      <int name="nextQuest" value="2124"/>
-    </imgdir>
-  </imgdir>
-  <imgdir name="2124">
-    <imgdir name="1"/>
-    <imgdir name="0">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031619"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="2125">
-    <imgdir name="0">
-      <string name="0" value="그렇지 않아도 자네를 기다리고 있었네. 수상한 자가 자네에게 전해달라면서 쪽지를 전해 주고 갔어. 그런데 그만 내 부주의로 쪽지가 불에 타버리고 말았네. 하지만 내용은 확실하게 기억하고 있네. 관심있나?"/>
-      <imgdir name="yes">
-        <string name="0" value="쪽지엔 이렇게 적혀 있었지. #b&apos;#m200000000#에 있는 #p2012019#를 찾아가시오.&apos;#k 그게 다 였네."/>
-      </imgdir>
-      <imgdir name="no">
-        <string name="0" value="관심이 없다면 굳이 내용을 알 필요가 없겠지."/>
-      </imgdir>
-    </imgdir>
-    <imgdir name="1">
-      <int name="nextQuest" value="2126"/>
-    </imgdir>
-  </imgdir>
-  <imgdir name="2126">
-    <imgdir name="1"/>
-    <imgdir name="0">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031624"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="2127">
-    <imgdir name="0"/>
-    <imgdir name="1"/>
-  </imgdir>
-  <imgdir name="3100">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="exp" value="7500"/>
-      <int name="money" value="4000"/>
-      <int name="pop" value="1"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="2010002"/>
-          <int name="count" value="-20"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="2010000"/>
-          <int name="count" value="-20"/>
-        </imgdir>
-        <imgdir name="2">
-          <int name="id" value="2010003"/>
-          <int name="count" value="-20"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="3101">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="exp" value="28290"/>
-      <int name="pop" value="3"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4000158"/>
-          <int name="count" value="-100"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="4000159"/>
-          <int name="count" value="-100"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="3102">
-    <imgdir name="0">
-      <int name="npc" value="2020003"/>
-      <int name="lvmin" value="30"/>
-    </imgdir>
-    <imgdir name="1">
-      <int name="exp" value="14500"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="2010000"/>
-          <int name="count" value="-10"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="2010002"/>
-          <int name="count" value="-10"/>
-        </imgdir>
-        <imgdir name="2">
-          <int name="id" value="2022001"/>
-          <int name="count" value="-10"/>
-        </imgdir>
-        <imgdir name="3">
-          <int name="id" value="4000088"/>
-          <int name="count" value="-40"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="3103">
-    <imgdir name="0">
-      <string name="0" value="300년을 했지만 아직도 마법의 연구는 끝이 없구나… 응? 자네는 누군가? #p2020003#의 망토를 아냐고? #p2020003#… #p2020003#라… 아, 예전에 #m211000000# 앞에서 추위로 꼼짝도 못하던 그 청년 말이로군. 온화한 망토라면 준 게 맞네."/>
-      <string name="1" value="#m211000000#에 마법 연구를 하러 왔는데 너무 추워서 견딜 수가 있어야지. 그래서 만들었는데, 300년이나 지내다 보니 이제는 추위를 견딜 수가 있게 되어서 그 청년에게 주었지. 응? 자네에게도 달라고? 이런… 망토는 그거 하나밖에 없었는데 어떻게 한다? 다시 만들려면 재료가 있어야 하는데 구할 수 있겠는가?"/>
-      <imgdir name="yes">
-        <string name="0" value="그렇다면 망토를 만들 수 있도록 #t4021000# 4개와 #t4006000# 2개, #t4000087# 50개, #t4000051# 20개를 구해 오게. 그것만 있다면 망토를 만드는 것은 어렵지 않으니, 얼마든지 만들어 주도록 하지."/>
-      </imgdir>
-      <imgdir name="no">
-        <string name="0" value="재료를 구하기 어려운 모양이군. 그렇다면 하는 수 없겠지. 재료를 구할 수 있게 되거든 다시 오게. 그 때 필요한 재료를 알려 주도록 하지."/>
-      </imgdir>
-    </imgdir>
-    <imgdir name="1">
-      <int name="exp" value="14500"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4021000"/>
-          <int name="count" value="-4"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="4006000"/>
-          <int name="count" value="-2"/>
-        </imgdir>
-        <imgdir name="2">
-          <int name="id" value="1102109"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-        <imgdir name="3">
-          <int name="id" value="4000051"/>
-          <int name="count" value="-2"/>
-        </imgdir>
-        <imgdir name="4">
-          <int name="id" value="4000087"/>
-          <int name="count" value="-40"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="3104">
-    <imgdir name="0">
-      <string name="0" value="안녕하세요? #p2012019#와 대화는 잘 하셨어요? 네? 어머... #t4031190#를 잃어버리셨다고요? 저런... #p2012019#하고 꼭 대화하고 싶으시다면 #t4031190# 를 다시 만들어 드릴게요. 다만 재료는 당신께서 구해 오셔야 하는데... 괜찮으시겠어요?"/>
-      <imgdir name="yes">
-        <string name="0" value="한 번 만들어 본 것이니 아까보다 익숙해져서, 재료를 덜 들일 수 있어요. #t4000073# 50개와 #t4003004# 10개, #t4000021# 10개를 가져와 주세요. 그 정도면 #t4031190#를 만들어 드릴 수 있을 것 같아요."/>
-      </imgdir>
-      <imgdir name="no">
-        <string name="0" value="어려우시다면 어쩔 수 없죠... #t4031190#를 못 찾으시겠다면 다시 만들어 드릴 테니, 다시 이 곳으로 오세요."/>
-      </imgdir>
-    </imgdir>
-    <imgdir name="1">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4000073"/>
-          <int name="count" value="-50"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="4003004"/>
-          <int name="count" value="-10"/>
-        </imgdir>
-        <imgdir name="2">
-          <int name="id" value="4000021"/>
-          <int name="count" value="-10"/>
-        </imgdir>
-        <imgdir name="3">
-          <int name="id" value="4031190"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="3452">
-    <imgdir name="0"/>
-    <imgdir name="1"/>
-  </imgdir>
-  <imgdir name="6008">
-    <imgdir name="0">
-      <string name="0" value="나는 그대를 알고 있지. 아주 오래 전 고원의 마을에서 전사로 태어났고 설원의 땅에서 그 강함을 인정받았으며... 메이플 월드 모든 전사들의 사제인 나에게서 새로운 이름을 지음받은 그대... &apos;만렙&apos;"/>
-      <string name="1" value="이제는 더 이상 오를 곳이 없는 지고의 경지에 이른 그대에게 새로운 동반자를 소개하겠다. 정신과 육체를 극한까지 단련한 수많은 전사들이 원했지만, 누구도 소유도 된 적이 없는 존재. 드래크로니안을... 어떤가. 그를 원하는가?"/>
-      <imgdir name="yes">
-        <string name="0" value="인간이 아니되, 인간보다 더 높은 자존심을 가진 드래크로니안이지만... 초월의 경지에 이른 그대라면 그의 주인이 될 자격이 충분하지. 미지의 존재와 우정을 나눌 준비가 되었거든, 다시 나를 찾아오라."/>
-      </imgdir>
-      <imgdir name="no">
-        <string name="0" value="아직 마음의 준비가 되지 않은 모양이군... 이미 메이플 월드의 누구도 그대를 이길 수 없는데, 무엇을 두려워 하는가."/>
-      </imgdir>
-    </imgdir>
-    <imgdir name="1">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="1902002"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="1902001"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="6009">
-    <imgdir name="0">
-      <string name="0" value="나는 그대를 알고 있어요. 아주 오래 전 마력이 충만한 숲에서 마법사로 태어났고, 설원의 땅에서 그 강함을 인정받았으며... 메이플 월드 모든 마법사들의 사제인 나에게서 새로운 이름을 지음받은 그대여... "/>
-      <string name="1" value="이제는 더 이상 오를 곳이 없는 지고의 경지에 이른 그대에게 새로운 동반자를 소개할까 해요. 궁극의 마력을 지닌 수많은 마법사들이 원했지만, 누구도 소유도 된 적이 없는 존재. 바하뮤트를... 어떤가요. 그를 원하나요?"/>
-      <imgdir name="yes">
-        <string name="0" value="인간이 아니되, 인간보다 더 높은 자존심을 가진 바하뮤트지만... 초월의 경지에 이른 그대라면 그의 주인이 될 자격이 충분할 것 같군요. "/>
-        <string name="1" value="미지의 존재와 우정을 나눌 준비가 되었거든, 다시 나를 찾아오세요."/>
-      </imgdir>
-    </imgdir>
-    <imgdir name="1">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="1902001"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="1902002"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="6010">
-    <imgdir name="0">
-      <string name="0" value="나는 그대를 알고 있지. 아주 오래 전 요정이 지키는 마을에서 궁수로 태어났고, 설원의 땅에서 그 강함을 인정받았으며... 메이플 월드 모든 궁수들의 사제인 나에게서 새로운 이름을 지음받은 그대여... "/>
-      <string name="1" value="이제는 더 이상 오를 곳이 없는 지고의 경지에 이른 그대에게 새로운 동반자를 소개하지. 극을 꿰뚫는 활을 가진 수많은 궁수들이 원했지만, 누구도 소유도 된 적이 없는 존재. 바하뮤트를... 어떤가. 그를 원하는가?"/>
-      <imgdir name="yes">
-        <string name="0" value="인간이 아니되, 인간보다 더 높은 자존심을 가진 바하뮤트지만... 초월의 경지에 이른 그대라면 그의 주인이 될 자격이 충분할 듯 보이는군. "/>
-        <string name="1" value="미지의 존재와 우정을 나눌 준비가 되었거든, 다시 나를 찾아오라."/>
-      </imgdir>
-      <imgdir name="no">
-        <string name="0" value="아직 마음의 준비가 되지 않은 모양이군요... 이미 메이플 월드의 누구도 그대를 이길 수 없는데, 무엇을 두려워 하는 건가요."/>
-      </imgdir>
-    </imgdir>
-    <imgdir name="1">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="1902001"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="1902002"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="6011">
-    <imgdir name="0">
-      <int name="lvmin" value="200"/>
-    </imgdir>
-    <imgdir name="1">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="1902001"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-        <imgdir name="1">
-          <int name="id" value="1902002"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
   <imgdir name="9412">
     <imgdir name="0"/>
     <imgdir name="1">
@@ -20352,91 +20401,42 @@
       </imgdir>
     </imgdir>
   </imgdir>
-  <imgdir name="8213">
-    <imgdir name="0"/>
-    <imgdir name="1"/>
-  </imgdir>
-  <imgdir name="3706">
+  <imgdir name="9670">
     <imgdir name="0"/>
     <imgdir name="1">
-      <int name="exp" value="90000"/>
-      <int name="buffItemID" value="2022109"/>
-      <string name="message" value="听到小九灵龙的叫声，满身充满了神奇的力量。"/>
-      <imgdir name="map">
-        <int name="0" value="240000000"/>
-        <int name="1" value="240040611"/>
-        <int name="2" value="0"/>
-      </imgdir>
+      <int name="exp" value="1500"/>
+      <int name="pop" value="1"/>
       <imgdir name="item">
         <imgdir name="0">
-          <int name="id" value="2041200"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="8007">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="nextQuest" value="8018"/>
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="2120000"/>
-          <int name="count" value="-1"/>
-        </imgdir>
-      </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="8008">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="nextQuest" value="8009"/>
-    </imgdir>
-  </imgdir>
-  <imgdir name="8009">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="nextQuest" value="8019"/>
-    </imgdir>
-  </imgdir>
-  <imgdir name="8010">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="nextQuest" value="8012"/>
-    </imgdir>
-  </imgdir>
-  <imgdir name="8012">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <imgdir name="item">
-        <imgdir name="0">
-          <int name="id" value="4031064"/>
+          <int name="id" value="4140100"/>
           <int name="count" value="-1"/>
         </imgdir>
         <imgdir name="1">
-          <int name="id" value="2040715"/>
-          <int name="count" value="1"/>
+          <int name="id" value="2020028"/>
+          <int name="count" value="5"/>
           <int name="gender" value="2"/>
+          <int name="prop" value="1"/>
         </imgdir>
         <imgdir name="2">
-          <int name="id" value="2040011"/>
+          <int name="id" value="2020022"/>
           <int name="count" value="1"/>
           <int name="gender" value="2"/>
+          <int name="prop" value="1"/>
+        </imgdir>
+        <imgdir name="3">
+          <int name="id" value="2020023"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+          <int name="prop" value="1"/>
+        </imgdir>
+        <imgdir name="4">
+          <int name="id" value="4140200"/>
+          <int name="count" value="1"/>
+          <int name="gender" value="2"/>
+          <int name="period" value="4320"/>
+          <int name="prop" value="1000"/>
         </imgdir>
       </imgdir>
-    </imgdir>
-  </imgdir>
-  <imgdir name="8018">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="nextQuest" value="8008"/>
-    </imgdir>
-  </imgdir>
-  <imgdir name="8019">
-    <imgdir name="0"/>
-    <imgdir name="1">
-      <int name="nextQuest" value="8010"/>
     </imgdir>
   </imgdir>
 </imgdir>

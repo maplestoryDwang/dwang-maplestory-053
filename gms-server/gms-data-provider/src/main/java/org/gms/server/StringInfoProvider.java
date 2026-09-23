@@ -47,8 +47,13 @@ public class StringInfoProvider {
     private final static DataProvider questDataWZ = DataProviderFactory.getDataProvider(WzFiles.QUEST);
     private static final Data questInfoData = questDataWZ.getData("QuestInfo.img");
 
+    @Getter
     private static Map<Integer, String> npcNames = new HashMap<>();
+    @Getter
+    private static Map<Integer, String> skillNames = new HashMap<>();
+    @Getter
     private static Map<Integer, String> mobNames = new HashMap<>();
+    @Getter
     private static Map<Integer, String> mapNames = new HashMap<>();
     @Getter
     private static Map<String, String> bgmsNameAndMapName = new HashMap<>();
@@ -79,6 +84,10 @@ public class StringInfoProvider {
         mobNames = buildParamName(mobStringData);
         npcNames = buildParamName(npcStringData);
         mapNames = buildMapName(mapStringData);
+
+        // 技能名额外加载
+        skillNames = buildParamName(skillStringData);
+
 
         DataProvider mapSource = DataProviderFactory.getDataProvider(WzFiles.MAP);
         DataDirectoryEntry root = mapSource.getRoot();
