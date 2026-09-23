@@ -64,6 +64,10 @@ public enum SendPacketOpcode implements Opcode {
      * 物品栏操作
      */
     INVENTORY_OPERATION(0x18), // check
+    /**
+     * 任务完成 显示红框右下角
+     */
+    QUEST_CLEAR(0x1F), //
 
 
 //    UPDATE_STATS(0x23), // 更新角色属性(HP/MP/EXP等)
@@ -388,7 +392,7 @@ public enum SendPacketOpcode implements Opcode {
     WEDDING_PHOTO(-1), // 结婚照片（ANTI_MACRO_RESULT在某些版本可能是这个）
     CLAIM_RESULT(-1), // 领取结果
     CLAIM_AVAILABLE_TIME(0x2E), // 领取可用时间
-    QUEST_CLEAR(0x31), // 任务完成
+
     ENTRUSTED_SHOP_CHECK_RESULT(-1), // 委托商店检查结果 0x32
     SKILL_LEARN_ITEM_RESULT(0x33), // 学习技能物品结果
     GATHER_ITEM_RESULT(0x34), // 收集物品结果

@@ -87,6 +87,7 @@ import org.gms.dao.entity.*;
 import org.gms.dwutil.CharacterUtils;
 import org.gms.dwutil.ItemUtils;
 import org.gms.dwutil.QuestUtils;
+import org.gms.event.QuestMessageEvent;
 import org.gms.exception.NotEnabledException;
 import org.gms.manager.ServerManager;
 import org.gms.model.dto.InventorySearchReqDTO;
@@ -6869,6 +6870,16 @@ public class Character extends AbstractCharacterObject {
                             infoUpdate = true;
                             announceUpdateQuest(DelayedQuestUpdate.UPDATE, qs, infoUpdate);
                         }
+                    }
+
+                    QuestV2 quest = QuestRepository.getInstance(lastQuestProcessed);
+                    NpcRequirementData abstractQuestRequirementData = (NpcRequirementData) quest.getCompleteReqs().get(QuestRequirementType.NPC);
+                    Integer npcId = abstractQuestRequirementData != null ? abstractQuestRequirementData.getReqNPC() : null;
+
+                    boolean canComplete = QuestUtils.canComplete(this, npcId, quest);
+                    if (canComplete) {
+                        SpringContextUtil.publishEvent(new QuestMessageEvent(this, getId(), qs.getQuestID()));
+//                        sendPacket(PacketCreator.getShowQuestCompletion(lastQuestProcessed)); // ← 右下角红框
                     }
                 }
             }
