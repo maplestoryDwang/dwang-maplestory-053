@@ -942,7 +942,9 @@ public class AbstractPlayerInteraction {
     }
 
     public void showInstruction(String msg, int width, int height) {
-        c.sendPacket(PacketCreator.sendHint(msg, width, height));
+//        c.sendPacket(PacketCreator.sendHint(msg, width, height));
+        c.sendPacket(PacketCreator.serverNotice(ServerMsgType.Pink_Text.getType(), msg));
+
         c.sendPacket(PacketCreator.enableActions());
     }
 

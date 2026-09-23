@@ -1414,7 +1414,10 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
     }
 
     public void announceHint(String msg, int length) {
-        sendPacket(PacketCreator.sendHint(msg, length, 10));
+//        sendPacket(PacketCreator.sendHint(msg, length, 10));
+        // hook 显示server msg
+        sendPacket(PacketCreator.serverNotice(ServerMsgType.Pink_Text.getType(), msg));
+
         enableActions();
     }
 

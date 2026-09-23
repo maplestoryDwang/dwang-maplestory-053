@@ -129,9 +129,12 @@ import org.gms.server.partyquest.AriantColiseum;
 import org.gms.server.partyquest.MonsterCarnival;
 import org.gms.server.partyquest.MonsterCarnivalParty;
 import org.gms.server.partyquest.PartyQuest;
+import org.gms.server.quest.QuestRequirementType;
 import org.gms.server.quest.QuestStatus;
 import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
+import org.gms.server.quest.requirements.AbstractQuestRequirementData;
+import org.gms.server.quest.requirements.imp.NpcRequirementData;
 import org.gms.service.*;
 import org.gms.util.*;
 import org.gms.util.packets.WeddingPackets;
@@ -2127,6 +2130,7 @@ public class Character extends AbstractCharacterObject {
                                     showHint(I18nUtil.getMessage("Character.pickupItem.message1", nxGain, this.getCashShop().getCash(CashShop.NX_CREDIT)), 300);
                                     //showHint("捡到 #e#b" + nxGain + " NX#k#n (" + this.getCashShop().getCash(CashShop.NX_CREDIT) + " NX)", 300);
                                 }
+                                dropMessage(ServerMsgType.Pink_Text.getType(), String.format("获得点卷：%d, 当前拥有点卷数量：%d", nxGain, cashShop.getNxCredit()));  // 顯示點卷信息
 
                                 this.getMap().pickItemDrop(pickupPacket, mapitem);
                             } else if (InventoryManipulator.addFromDrop(client, mItem, true, AchievementCategory.PLAYER_INVENTORY_DROP)) {
@@ -2181,6 +2185,9 @@ public class Character extends AbstractCharacterObject {
                             showHint(I18nUtil.getMessage("Character.pickupItem.message1", nxGain, this.getCashShop().getCash(CashShop.NX_CREDIT)), 300);
                             //showHint("捡到 #e#b" + nxGain + " NX#k#n (" + this.getCashShop().getCash(CashShop.NX_CREDIT) + " NX)", 300);
                         }
+                        // 053没有
+                        dropMessage(ServerMsgType.Pink_Text.getType(), String.format("获得点卷：%d, 当前拥有点卷数量：%d", nxGain, cashShop.getNxCredit()));  // 顯示點卷信息
+
                     } else if (applyConsumeOnPickup(mItem.getItemId())) {//此段判断为处理捡取治疗道具和怪物卡加入图鉴
                     } else if (InventoryManipulator.addFromDrop(client, mItem, true, AchievementCategory.PLAYER_INVENTORY_DROP)) {
                         if (mItem.getItemId() == ItemId.ARPQ_SPIRIT_JEWEL) {
