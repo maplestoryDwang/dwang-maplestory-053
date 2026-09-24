@@ -211,6 +211,11 @@ public class MapleMap {
     private static final Lock bndLock = new ReentrantLock(true);
     private static final AchievementService achievementService = ServerManager.getApplicationContext().getBean(AchievementService.class);
 
+    /**
+     * 禁止召唤绿波普和黄波普
+     */
+    private static final List<Integer> FORBID_MOB_ID = List.of(MobIdGen.GREEN_EGGY_POPP_9400510, MobIdGen.YELLOW_EGGY_POPP_9400511);
+
     public MapleMap(int mapid, int world, int channel, int returnMapId, float monsterRate) {
         this.mapid = mapid;
         this.channel = channel;
@@ -3459,6 +3464,9 @@ public class MapleMap {
      * @param mobTime
      */
     public void addMonsterSpawn(Monster monster, int mobTime, int team) {
+        if (FORBID_MOB_ID.contains(monster.getId())) {
+            return;
+        }
         Point newpos = calcPointBelowV83(monster.getPosition());
         newpos.y -= 1;
         SpawnPoint sp = new SpawnPoint(monster, newpos, !monster.isMobile(), mobTime, mobInterval, team);
@@ -3469,6 +3477,9 @@ public class MapleMap {
     }
 
     public void addAllMonsterSpawn(Monster monster, int mobTime, int team) {
+        if (FORBID_MOB_ID.contains(monster.getId())) {
+            return;
+        }
         Point newpos = calcPointBelowV83(monster.getPosition());
         newpos.y -= 1;
         SpawnPoint sp = new SpawnPoint(monster, newpos, !monster.isMobile(), mobTime, mobInterval, team);

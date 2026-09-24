@@ -216,7 +216,7 @@ public class ItemActionHandler implements IQuestActionHandler<ItemActionData> {
                 }
             }
 
-            if (iEntry.getCount() < 0) { // Remove Item
+            if (iEntry.getCount() <= 0) { // Remove Item
                 takeItem.add(iEntry);
             } else {                    // Give Item
                 giveItem.add(iEntry);
@@ -226,7 +226,12 @@ public class ItemActionHandler implements IQuestActionHandler<ItemActionData> {
         // must take all needed items before giving others
 
         for (ItemActionData.ItemData iEntry : takeItem) {
-            int itemid = iEntry.getId(), count = iEntry.getCount();
+            int itemid = iEntry.getId();
+            int count = iEntry.getCount();
+            // 兼容任务，如果action的<int name="count" value="0"/> 则表示也要被清除
+            if (count == 0) {
+                count = -1;
+            }
 
             InventoryType type = ItemConstants.getInventoryType(itemid);
             int quantity = count * -1; // Invert
