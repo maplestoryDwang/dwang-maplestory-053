@@ -20721,7 +20721,7 @@
       <int name="lvmin" value="8"/>
     </imgdir>
     <imgdir name="1">
-      <int name="npc" value="1012101"/>
+      <int name="npc" value="1002006"/>
       <imgdir name="item">
         <imgdir name="0">
           <int name="id" value="4140100"/>
