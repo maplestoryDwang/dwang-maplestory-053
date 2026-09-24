@@ -6878,8 +6878,10 @@ public class Character extends AbstractCharacterObject {
                     Integer npcId = abstractQuestRequirementData != null ? abstractQuestRequirementData.getReqNPC() : null;
 
                     boolean canComplete = QuestUtils.canComplete(this, npcId, quest);
-                    if (canComplete) {
+                    List<Short> questIds = QuestUtils.getCharQuestCompleteSendCache().get(id);
+                    if (canComplete && !questIds.contains(quest.getId())) {
                         SpringContextUtil.publishEvent(new QuestMessageEvent(this, getId(), qs.getQuestID()));
+                        questIds.add(quest.getId());
 //                        sendPacket(PacketCreator.getShowQuestCompletion(lastQuestProcessed)); // ← 右下角红框
                     }
                 }

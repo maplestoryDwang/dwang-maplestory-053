@@ -1,5 +1,6 @@
 package org.gms.dwutil;
 
+import lombok.Getter;
 import org.gms.client.Character;
 import org.gms.constants.id.QuestId;
 import org.gms.server.achievement.AchievementCategory;
@@ -24,10 +25,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -44,6 +43,8 @@ public class QuestUtils {
     private static final Logger log = LoggerFactory.getLogger(QuestUtils.class);
 
     private static AchievementService achievementService;
+    @Getter
+    private static Map<Integer, List<Short>> charQuestCompleteSendCache = new ConcurrentHashMap<>();
 
     @Autowired
     public QuestUtils(AchievementService achievementService) {
