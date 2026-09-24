@@ -47,21 +47,31 @@ set "STEP=%~1"
 if "%STEP%"=="" set "STEP=all"
 set "DO_SYNC=0"
 set "DO_CHECK=0"
+set "DO_ASK=0"
 set "DO_BUILD=0"
 set "DO_CLIENT=0"
 set "DO_RUN=0"
 if /i "%STEP%"=="all" (
-    set "DO_BUILD=1"
-    set "DO_CLIENT=1"
     set "DO_RUN=1"
-    rem 默认先查远端有没有新版本、再问要不要更新；关掉检查就退回"每次直接拉最新"
-    if "%CHECK_UPDATE%"=="1" ( set "DO_CHECK=1" ) else ( set "DO_SYNC=1" )
+    rem 先查远端有没有新版本，再问要不要更新；关掉检查就退回"每次直接拉最新"
+    if "%CHECK_UPDATE%"=="1" (
+        set "DO_CHECK=1"
+        set "DO_ASK=1"
+    ) else (
+        set "DO_SYNC=1"
+        set "DO_BUILD=1"
+        set "DO_CLIENT=1"
+    )
 )
 if /i "%STEP%"=="check"  set "DO_CHECK=1"
 if /i "%STEP%"=="update" set "DO_SYNC=1"
 if /i "%STEP%"=="build"  set "DO_BUILD=1"
 if /i "%STEP%"=="client" set "DO_CLIENT=1"
-if /i "%STEP%"=="run"    set "DO_RUN=1"
+if /i "%STEP%"=="run" (
+    set "DO_RUN=1"
+    rem 直接启动也要检查一下，但只提示不动手（DO_ASK 保持 0）
+    if "%CHECK_UPDATE%"=="1" set "DO_CHECK=1"
+)
 
 echo ============================================================
 echo   GMS053 服务端 一键编译启动
@@ -92,6 +102,12 @@ if "%DO_CHECK%"=="1" (
 if "%DO_SYNC%"=="1" (
     call :SYNC_SOURCE
     if errorlevel 1 goto :FAIL_PAUSE
+)
+
+rem 跳过了编译，但连 jar 都不存在（上次编译失败 / 被删了），那就必须先编译一次
+if "%DO_RUN%"=="1" if "%DO_BUILD%"=="0" if not exist "%SOURCE_DIR%\%JAR_REL%" (
+    echo [提示] 没有现成的 jar，先编译一次。
+    set "DO_BUILD=1"
 )
 
 if "%DO_BUILD%"=="1" (
@@ -195,6 +211,8 @@ echo [1/4] 检查远端是否有更新...
 if not exist "%SOURCE_DIR%\.git" (
     echo       本地还没有代码，跳过检查，直接拉取。
     set "DO_SYNC=1"
+    set "DO_BUILD=1"
+    set "DO_CLIENT=1"
     exit /b 0
 )
 
@@ -214,7 +232,10 @@ if not defined LOCAL_FULL goto :CHECK_FAIL_LOCAL
 if /i "%REMOTE_HASH%"=="%LOCAL_FULL%" (
     rem 块内要用 !VAR!（延迟展开）：%VAR% 里的 ")" 会在解析阶段把 if 块截断
     echo       已经是最新版本：!LOCAL_VER!
+    echo       （代码没变化，直接用现有的 jar 启动，不重新编译）
     set "DO_SYNC=0"
+    set "DO_BUILD=0"
+    set "DO_CLIENT=0"
     call :WRITE_VERSION current
     echo.
     exit /b 0
@@ -225,6 +246,9 @@ echo         本地 : %LOCAL_VER%
 echo         远端 : %REMOTE_VER%    来源：%CHECK_SRC%
 call :WRITE_VERSION behind
 
+rem "直接启动"那个入口（不拉代码直接启动.bat）只提示、不打断、不动手
+if not "%DO_ASK%"=="1" goto :CHECK_NOASK
+
 echo.
 echo ============================================================
 echo   远端有新版本，要不要现在更新？
@@ -234,8 +258,8 @@ echo   远端版本 : %REMOTE_VER%
 echo   版本来源 : %CHECK_SRC%
 echo   更新内容 : 看同目录的 %CHANGELOG_FILE%（更新之后才会刷成最新）
 echo ------------------------------------------------------------
-echo   [Y] 更新      重新拉代码 + 编译，大概 1~5 分钟
-echo   [N] 不更新    直接用本地这个版本启动（先玩，下次再说）
+echo   [Y] 更新      拉最新代码 + 重新编译，大概 1~5 分钟
+echo   [N] 不更新    用现在这个版本直接启动，不重新编译
 echo                 %UPDATE_WAIT% 秒内没有按键，自动按 N 处理
 echo ============================================================
 rem 无人值守想自动更新，就把 config.cmd 里的 UPDATE_ANSWER 改成 Y
@@ -248,9 +272,25 @@ if "%CHOICE_RC%"=="1" goto :CHECK_DO
 
 :CHECK_SKIP
 echo.
-echo [提示] 这次不更新，用本地版本 %LOCAL_VER% 启动。
+echo [提示] 这次不更新，用本地版本 %LOCAL_VER% 直接启动（不重新编译）。
 echo        想更新的时候重新双击 start.cmd 就行。
 set "DO_SYNC=0"
+set "DO_BUILD=0"
+set "DO_CLIENT=0"
+echo.
+exit /b 0
+
+:CHECK_NOASK
+echo.
+if "%DO_RUN%"=="1" (
+    echo [提示] 这次是"直接启动"，不自动更新、也不重新编译。
+    echo        想更新的话，双击 拉最新代码启动.bat（或者跑 start.cmd update）。
+) else (
+    echo [提示] 只做了检查，没有更新。想更新请跑 start.cmd update。
+)
+set "DO_SYNC=0"
+set "DO_BUILD=0"
+set "DO_CLIENT=0"
 echo.
 exit /b 0
 
@@ -258,13 +298,17 @@ exit /b 0
 echo.
 echo [提示] 开始更新到 %REMOTE_VER% ...
 set "DO_SYNC=1"
+set "DO_BUILD=1"
+set "DO_CLIENT=1"
 echo.
 exit /b 0
 
 :CHECK_FAIL_NET
 echo       [警告] 连不上远端（主地址和备用地址都不通），这次跳过检查更新。
-echo              不影响启动，直接用本地现有版本。
+echo              不影响启动，直接用本地现有版本启动，不重新编译。
 set "DO_SYNC=0"
+set "DO_BUILD=0"
+set "DO_CLIENT=0"
 set "CHECK_SRC=连不上远端"
 call :WRITE_VERSION unknown
 echo.
@@ -273,6 +317,8 @@ exit /b 0
 :CHECK_FAIL_PARSE
 echo       [警告] 拿到了远端数据但没解析出版本号（ls-remote 格式变了？），跳过检查。
 set "DO_SYNC=0"
+set "DO_BUILD=0"
+set "DO_CLIENT=0"
 set "CHECK_SRC=解析失败"
 call :WRITE_VERSION unknown
 echo.
@@ -282,6 +328,8 @@ exit /b 0
 echo       [警告] 读不出本地版本信息，跳过检查。
 echo              [诊断] SOURCE_DIR=%SOURCE_DIR%
 set "DO_SYNC=0"
+set "DO_BUILD=0"
+set "DO_CLIENT=0"
 set "CHECK_SRC=本地版本读取失败"
 call :WRITE_VERSION unknown
 echo.

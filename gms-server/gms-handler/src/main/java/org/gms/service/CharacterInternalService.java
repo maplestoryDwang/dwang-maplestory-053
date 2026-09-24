@@ -142,7 +142,7 @@ public class CharacterInternalService {
 
         // 删除服务层业务关联数据
         inventoryService.deleteInventoryByCharacterId(cid);
-        questUserDataService.deleteQuestProgressByCharacter(cid);
+        questUserDataService.deleteQuestProgressWhereCharacterId(cid);
         mtsService.deleteMtsByCharacterId(cid);
 
         // 补充取消改名/跨区事务
