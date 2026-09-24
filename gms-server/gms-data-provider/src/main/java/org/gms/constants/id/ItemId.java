@@ -223,10 +223,6 @@ public class ItemId {
     // NPC weather (PQ)
     public static final int NPC_WEATHER_GROWLIE = 5120016; // Henesys PQ
 
-    // Safety charm
-    public static final int SAFETY_CHARM = 5130000;
-    public static final int EASTER_BASKET = 4031283;
-    public static final int EASTER_CHARM = 4140903;
 
     // Engagement box
     public static final int ENGAGEMENT_BOX_MOONSTONE = 2240000;

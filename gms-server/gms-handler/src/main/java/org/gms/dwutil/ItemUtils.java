@@ -11,7 +11,9 @@ import org.gms.client.inventory.pet.Pet;
 import org.gms.client.character.inventory.manipulator.KarmaManipulator;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.ExpTable;
+import org.gms.constants.id.CashId;
 import org.gms.constants.id.ItemId;
+import org.gms.constants.id.item.EtcId;
 import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.skills.adv.thief.assassin.Assassin;
 import org.gms.constants.skills.other.Gunslinger;
@@ -51,6 +53,19 @@ public class ItemUtils {
     public static boolean isUntradeable(Item item) {
         return ((item.getFlag() & ItemConstants.UNTRADEABLE) == ItemConstants.UNTRADEABLE) || (ItemInformationProvider.getInstance().isDropRestricted(item.getItemId()) && !KarmaManipulator.hasKarmaFlag(item));
     }
+
+
+    /**
+     * 护身符系列，有就不掉经验
+     */
+    public static int[] charm = {
+            CashId.SAFETY_CHARM_5130000, EtcId.EASTER_BASKET_4031283, EtcId.EASTER_CHARM_4140903,
+            // 巧克力系列
+            EtcId.HEART_CHOCOLATE_4140100, EtcId.CHOCOLATE_STICK_4140000, EtcId.PINEAPPLE_CANDY_FOR_WHITE_DAY_4140101 , EtcId.STRAWBERRY_CANDY_FOR_WHITE_DAY_4140102,
+            EtcId.CERTIFICATE_OF_ASSISTANT_4140103, EtcId.CHOCOLATE_BASKET_4140200, EtcId.CANDY_BASKET_FOR_WHITE_DAY_4140201, EtcId.POWER_OF_MOON_4140300, EtcId.POWER_OF_STAR_4140301,
+            EtcId.DEFENSE_CHARM_4140302
+
+    };
 
 
     /**
@@ -356,5 +371,7 @@ public class ItemUtils {
             owner.forceUpdateItem(petz);
         }
     }
+
+
 
 }

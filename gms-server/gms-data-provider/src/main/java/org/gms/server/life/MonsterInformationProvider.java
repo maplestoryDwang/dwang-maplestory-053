@@ -58,7 +58,7 @@ public class MonsterInformationProvider {
 
     private final Map<Integer, List<MonsterDropEntry>> drops = new HashMap<>();
     private final List<MonsterGlobalDropEntry> globaldrops = new ArrayList<>();
-    private final Map<Integer, List<MonsterGlobalDropEntry>> continentdrops = new HashMap<>();
+    private final Map<Integer, List<MonsterDropEntry>> continentdrops = new HashMap<>();
 
     private final Map<Integer, List<Integer>> dropsChancePool = new HashMap<>();    // thanks to ronan
     private final Set<Integer> hasNoMultiEquipDrops = new HashSet<>();
@@ -72,10 +72,10 @@ public class MonsterInformationProvider {
         retrieveGlobal();
     }
 
-    public final List<MonsterGlobalDropEntry> getRelevantGlobalDrops(int mapid) {
+    public final List<MonsterDropEntry> getRelevantGlobalDrops(int mapid) {
         int continentid = mapid / 100000000;
 
-        List<MonsterGlobalDropEntry> contiItems = continentdrops.get(continentid);
+        List<MonsterDropEntry> contiItems = continentdrops.get(continentid);
         if (contiItems == null) {   // continent separated global drops found thanks to marcuswoon
             contiItems = new ArrayList<>();
 

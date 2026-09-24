@@ -6922,7 +6922,7 @@ public class Character extends AbstractCharacterObject {
         if (eim != null) {
             eim.playerKilled(this);
         }
-        int[] charmID = {ItemId.SAFETY_CHARM, ItemId.EASTER_BASKET, ItemId.EASTER_CHARM};
+        int[] charmID = ItemUtils.charm;
         int possesed = 0;
         int i;
         for (i = 0; i < charmID.length; i++) {
@@ -6934,8 +6934,12 @@ public class Character extends AbstractCharacterObject {
         }
         usedSafetyCharm = false;
         if (possesed > 0 && !MapId.isDojo(getMapId())) {
-            message(I18nUtil.getMessage("Character.useItem.message1"));  //使用安全护符，不扣经验
-            InventoryManipulator.removeById(client, ItemConstants.getInventoryType(charmID[i]), charmID[i], 1, true, false);
+            String charmMsg = I18nUtil.getMessage("Character.useItem.message1");
+//            message(I18nUtil.getMessage("Character.useItem.message1"));  //使用安全护符，不扣经验
+            int itemId = charmID[i];
+            String itemName = ItemInformationProvider.getInstance().getName(itemId);
+            message(String.format(charmMsg, itemName));
+            InventoryManipulator.removeById(client, ItemConstants.getInventoryType(itemId), itemId, 1, true, false);
             usedSafetyCharm = true;
 //        } else if (getJob() != Job.BEGINNER) { //Hmm...
         } else { //Hmm...

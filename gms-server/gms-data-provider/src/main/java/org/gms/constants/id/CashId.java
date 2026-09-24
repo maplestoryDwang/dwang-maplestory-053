@@ -1,4 +1,4 @@
-package string.gen;
+package org.gms.constants.id;
 
 public class CashId {
 

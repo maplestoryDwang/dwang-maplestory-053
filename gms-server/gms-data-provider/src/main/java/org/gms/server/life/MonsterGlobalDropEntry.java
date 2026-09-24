@@ -22,17 +22,12 @@ package org.gms.server.life;
 
 /**
  * @author LightPepsi
+ * @update 谁允许你参数大写的FUCK! dwang
  */
-public class MonsterGlobalDropEntry {
-    public MonsterGlobalDropEntry(int itemId, int chance, int continent, int Minimum, int Maximum, short questid) {
-        this.itemId = itemId;
-        this.chance = chance;
-        this.questid = questid;
+public class MonsterGlobalDropEntry extends MonsterDropEntry{
+    public MonsterGlobalDropEntry(int itemId, int chance, int continent, int minimum, int maximum, short questid) {
+        super(itemId, chance, maximum, minimum, questid);
         this.continentid = continent;
-        this.Minimum = Minimum;
-        this.Maximum = Maximum;
     }
-
-    public int itemId, chance, Minimum, Maximum, continentid;
-    public short questid;
+    public int  continentid;
 }

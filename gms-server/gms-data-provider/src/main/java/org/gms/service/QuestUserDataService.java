@@ -88,7 +88,8 @@ public class QuestUserDataService {
             queststatusDO.setExpires(qs.getExpirationTime());
             queststatusDO.setForfeited(qs.getForfeited());
             queststatusDO.setCompleted(qs.getCompleted());
-            queststatusDO.setCustomData(qs.getCustomData());
+            queststatusDO.setInfo(0);
+            queststatusDO.setCustomData(qs.getCustomData() == null ? "" : qs.getCustomData());
 
             // 插入主表（自增主键会自动回填到 queststatusDO.getQueststatusid()）
             queststatusMapper.insert(queststatusDO);
