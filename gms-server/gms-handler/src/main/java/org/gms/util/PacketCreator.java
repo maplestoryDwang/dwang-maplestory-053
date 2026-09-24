@@ -7800,44 +7800,54 @@ public class PacketCreator {
         return p;
     }
 
+    /**
+     * 写一个「被数据库覆盖过」的商品。
+     * <p>
+     * 客户端侧对应：CWvsContext::SetSaleInfo 里先 CInPacket::Decode4(SN)，
+     * 再 CS_COMMODITY::DecodeModifiedData(掩码 + 掩码置位的字段)。
+     * 掩码取值、字段顺序、各字段长度必须和客户端一致（053 见 CommodityFlag 的注释）。
+     */
     private static void writeModifiedCashItem(OutPacket p, ModifiedCashItemDO item) {
+        long flags = 0;
         List<Pair<CommodityFlag, Number>> writeList = new ArrayList<>();
-        for (CommodityFlag commodityFlag : CommodityFlag.getAvailableSortedValues()) {
-            for (Field field : item.getClass().getDeclaredFields()) {
-                // 获取有没有@Column注解，有的话以@Column为准，没有则驼峰转下划线
-                Column column = field.getAnnotation(Column.class);
-                String columnName;
-                if (column == null || RequireUtil.isEmpty(column.value())) {
-                    columnName = com.mybatisflex.core.util.StringUtil.camelToUnderline(field.getName());
-                } else {
-                    columnName = column.value();
-                }
+        for (CommodityFlag commodityFlag : CommodityFlag.getDataFieldsInPacketOrder()) {
+            Number fieldVal = getFieldValueByColumnName(item, commodityFlag.name());
+            if (fieldVal == null) {
+                continue;
+            }
+            flags |= commodityFlag.getFlag();
+            writeList.add(new Pair<>(commodityFlag, fieldVal));
+        }
 
-                if (!Objects.equals(commodityFlag.name(), columnName.toUpperCase())) {
-                    continue;
-                }
-                Number fieldVal = null;
-                try {
-                    field.setAccessible(true);
-                    fieldVal = (Number) field.get(item);
-                } catch (IllegalAccessException ignore) {
+        // SN 和掩码无论如何都要写（没有字段时掩码就写 0），少写一个 int 整包就错位了
+        p.writeInt(item.getSn());
+        p.writeInt((int) flags);
 
-                }
-                if (fieldVal != null) {
-                    writeList.add(new Pair<>(commodityFlag, fieldVal));
-                }
-                break;
+        // 字段按客户端的读取顺序写
+        writeList.forEach(w -> w.getLeft().getWriteMapper().accept(p, w.getRight()));
+    }
+
+    /**
+     * 按 {@code @Column} 注解名（没有注解则驼峰转下划线）取 DB 字段值，用来和 CommodityFlag 的名字对应。
+     */
+    private static Number getFieldValueByColumnName(ModifiedCashItemDO item, String columnName) {
+        for (Field field : item.getClass().getDeclaredFields()) {
+            // 获取有没有@Column注解，有的话以@Column为准，没有则驼峰转下划线
+            Column column = field.getAnnotation(Column.class);
+            String name = (column == null || RequireUtil.isEmpty(column.value()))
+                    ? com.mybatisflex.core.util.StringUtil.camelToUnderline(field.getName())
+                    : column.value();
+            if (!Objects.equals(columnName, name.toUpperCase())) {
+                continue;
+            }
+            try {
+                field.setAccessible(true);
+                return (Number) field.get(item);
+            } catch (IllegalAccessException ignore) {
+                return null;
             }
         }
-        if (writeList.isEmpty()) {
-            return;
-        }
-        writeList.add(CommodityFlag.FLAG.getSort(), new Pair<>(CommodityFlag.FLAG, writeList.stream().mapToLong(pair -> pair.getLeft().getFlag()).sum()));
-        writeList.forEach(w -> {
-            CommodityFlag commodityFlag = w.getLeft();
-            Number fieldVal = w.getRight();
-            commodityFlag.getWriteMapper().accept(p, fieldVal);
-        });
+        return null;
     }
 
     public static Packet sendVegaScroll(int op) {

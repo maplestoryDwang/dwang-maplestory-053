@@ -87,7 +87,10 @@ public class CashItemFactory {
                     .price(price)
                     .bonus(bonus)
                     .priority(priority)
-                    .period(period == 0 ? 90 : period)
+                    // Period=0 在客户端 Commodity.img 里表示「不限时」，这里原样保留：
+                    // 原来写成 (period == 0 ? 90 : period) 会把永久道具变成 90 天，
+                    // 和客户端商城里显示的（不限期）对不上。过期时间的计算见 CashShopUtils#toItem。
+                    .period(period)
                     .maplePoint(maplePoint)
                     .meso(meso)
                     .forPremiumUser(forPremiumUser)
@@ -125,7 +128,9 @@ public class CashItemFactory {
     }
 
     private static void loadCashCategories() {
-        modifiedCashItems.clear();
+        // 这里要清的是分类列表；原来写成了 modifiedCashItems.clear()（那是 DB 覆盖表，由 loadAllModifiedCashItems 负责），
+        // 而且 cashCategories 没有 clear，导致每次重载分类都会在旧数据后面再追加一份。
+        cashCategories.clear();
         List<CashCategoryWZDO> allCategoryList = cashShopService.getAllCategoryList();
 
         List<CashCategoryDTO> cashCategoryDTOS = new ArrayList<>();

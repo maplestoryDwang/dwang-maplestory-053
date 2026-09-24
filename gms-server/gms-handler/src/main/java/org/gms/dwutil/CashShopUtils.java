@@ -48,7 +48,7 @@ public class CashShopUtils {
      */
     public static Item toItem(ModifiedCashItemDO modifiedCashItemDO) {
         Integer itemId = modifiedCashItemDO.getItemId();
-        Long period = modifiedCashItemDO.getPeriod();
+        Long periodBoxed = modifiedCashItemDO.getPeriod();
         Short count = modifiedCashItemDO.getCount();
         Integer sn = modifiedCashItemDO.getSn();
 
@@ -65,6 +65,7 @@ public class CashShopUtils {
             item = new Item(itemId, (byte) 0, count, petid);
         }
 
+        long period = periodBoxed == null ? -1 : periodBoxed;
         if (period == 1) {
             switch (itemId) {
                 case ItemId.DROP_COUPON_2X_4H,
@@ -82,7 +83,9 @@ public class CashShopUtils {
                     item.setExpiration(Server.getInstance().getCurrentTime() + DAYS.toMillis(1));
                     break;
             }
-        } else if (period == -1) {
+        } else if (period <= 0) {
+            // -1 / 0 都表示不限时。客户端 Commodity.img 里 Period=0 就是不限期，
+            // 原来只处理了 -1，Period=0 会算成「now + 0 天」→ 买到手就是过期道具。
             item.setExpiration(-1);
         } else {
             item.setExpiration(Server.getInstance().getCurrentTime() + DAYS.toMillis(period));

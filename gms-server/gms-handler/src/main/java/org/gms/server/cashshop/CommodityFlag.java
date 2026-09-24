@@ -11,32 +11,60 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
+ * CS_COMMODITY 的字段掩码表（决定进入商城时 SetSaleInfo 里每个商品发哪些字段、按什么顺序发）。
+ * <p>
+ * ★★ 这套 flag / 长度 / 顺序是【GMS v0.53 客户端】的表，必须和客户端
+ * {@code CS_COMMODITY::DecodeModifiedData}（GMSv53.exe:0x45FB8F）逐位一致，
+ * 否则进商城时从第 2 个商品开始整包错位，客户端会抛 CTerminateException 掉线。
+ * <p>
+ * 053 客户端读取顺序（掩码 Decode4 之后）：
+ * <pre>
+ * 0x1 ItemId(4)   0x2 Count(2)      0x8 Priority(1)  0x4 Price(4)    0x10 Period(2)
+ * 0x20 MaplePoint(4) 0x40 Meso(4)   0x80 Premium(1)  0x800 reqLev(2) 0x100 Gender(1)
+ * 0x200 OnSale(1) 0x400 Class(1)    0x10000 Limit(1) 0x1000 PbCash(2) 0x2000 PbPoint(2)
+ * 0x4000 PbGift(2) 0x8000 PackageSN(1 + n*4)
+ * </pre>
+ * 字段名来自 053 客户端 WZ 读取器 sub_45E89E（字符串池 2487~2497 / 2819~2823），
+ * 偏移量与掩码的对应关系来自 DecodeModifiedData 的反汇编，两边完全吻合。
+ * <p>
+ * 对照：v0.83 客户端（Angel.exe:0x481699）是另一张表 —— 多一个 Bonus(0x8)，
+ * 于是 Priority 起到 PackageSN 为止整体“后移一位”，Limit 被挪到 PackageSN 前面：
+ * <pre>
+ * 0x1(4) 0x2(2) 0x10 Priority(1) 0x4(4) 0x8 Bonus(1) 0x20 Period(2) 0x40(4) 0x80(4)
+ * 0x100(1) 0x200(1) 0x400(1) 0x800 Class(1) 0x1000 Limit(1) 0x2000(2) 0x4000(2)
+ * 0x8000 PBGift(2) 0x10000 PackageSN(1 + n*4)
+ * </pre>
+ * 本服务端只服务 053 客户端，所以下面用 053 的表。
+ * <p>
  * 这个枚举类无需多语言，字段名就是英文的，desc只是作为参考
  */
 @Getter
 public enum CommodityFlag {
-    // 固有部分
-    SN(0, 0, "SN", (p, n)-> p.writeInt(n.intValue())),
-    FLAG(0, 1, "FLAG", (p, n)-> p.writeInt(n.intValue())),
+    // ===== 包头（不属于掩码位）=====
+    /** 商品 SN：客户端在 DecodeModifiedData 之前先 Decode4 读走 */
+    SN(0, 0, "SN", (p, n) -> p.writeInt(n.intValue())),
+    /** 掩码本身：所有置位的 flag 之和 */
+    FLAG(0, 1, "FLAG", (p, n) -> p.writeInt(n.intValue())),
 
-    // 自定义部分
-    ITEM_ID(1, 2, "物品ID", (p, n)-> p.writeInt(n.intValue())),
-    COUNT(1 << 1, 3, "数量", (p, n)-> p.writeShort(n.intValue())),
-    PRICE(1 << 2, 5, "价格", (p, n)-> p.writeInt(n.intValue())),
-    BONUS(1 << 3, 6, "属性奖励", (p, n)-> p.writeByte(n.intValue())),
-    PRIORITY(1 << 4, 4, "优先级", (p, n)-> p.writeByte(n.intValue())),
-    PERIOD(1 << 5, 7, "有效期", (p, n)-> p.writeShort(n.intValue())),
-    MAPLE_POINT(1 << 6, 8, "抵用券", (p, n)-> p.writeInt(n.intValue())),
-    MESO(1 << 7, 9, "金币", (p, n)-> p.writeInt(n.intValue())),
-    FOR_PREMIUM_USER(1 << 8, 10, "高级用户", (p, n)-> p.writeByte(n.intValue())),
-    COMMODITY_GENDER(1 << 9, 11, "性别", (p, n)-> p.writeByte(n.intValue())),
-    ON_SALE(1 << 10, 12, "是否销售", (p, n)-> p.writeByte(n.intValue())),
-    CLASS(1 << 11, 13, "标签", (p, n)-> p.writeByte(n.intValue())),
-    LIMIT(1 << 12, 14, "限时特卖", (p, n)-> p.writeByte(n.intValue())),
-    PB_CASH(1 << 13, 15, "Unknown", (p, n)-> p.writeShort(n.intValue())),
-    PB_POINT(1 << 14, 16, "Unknown", (p, n)-> p.writeShort(n.intValue())),
-    PB_GIFT(1 << 15, 17, "Unknown", (p, n)-> p.writeShort(n.intValue())),
-    PACKAGE_SN(1 << 16, 18, "礼包SN", (p, n)-> {
+    // ===== 以下顺序 = 053 客户端读取顺序，不能调整 =====
+    ITEM_ID(0x1, 2, "物品ID", (p, n) -> p.writeInt(n.intValue())),
+    COUNT(0x2, 3, "数量", (p, n) -> p.writeShort(n.intValue())),
+    PRIORITY(0x8, 4, "优先级", (p, n) -> p.writeByte(n.intValue())),
+    PRICE(0x4, 5, "价格", (p, n) -> p.writeInt(n.intValue())),
+    PERIOD(0x10, 6, "有效期(天)", (p, n) -> p.writeShort(n.intValue())),
+    MAPLE_POINT(0x20, 7, "抵用券", (p, n) -> p.writeInt(n.intValue())),
+    MESO(0x40, 8, "金币", (p, n) -> p.writeInt(n.intValue())),
+    FOR_PREMIUM_USER(0x80, 9, "高级用户", (p, n) -> p.writeByte(n.intValue())),
+    // 注意：0x800 在 053 是 reqLev(2)。DB 的 modified_cash_item 没有这个列，所以不参与发送。
+    //       0x800 在 083 才是 Class(1)，别混。
+    COMMODITY_GENDER(0x100, 10, "性别", (p, n) -> p.writeByte(n.intValue())),
+    ON_SALE(0x200, 11, "是否销售", (p, n) -> p.writeByte(n.intValue())),
+    CLASS(0x400, 12, "标签", (p, n) -> p.writeByte(n.intValue())),
+    LIMIT(0x10000, 13, "限时特卖", (p, n) -> p.writeByte(n.intValue())),
+    PB_CASH(0x1000, 14, "Unknown", (p, n) -> p.writeShort(n.intValue())),
+    PB_POINT(0x2000, 15, "Unknown", (p, n) -> p.writeShort(n.intValue())),
+    PB_GIFT(0x4000, 16, "Unknown", (p, n) -> p.writeShort(n.intValue())),
+    PACKAGE_SN(0x8000, 17, "礼包SN", (p, n) -> {
         List<Item> itemList = CashShopUtils.getPackage(n.intValue());
         if (itemList.isEmpty()) {
             p.writeByte(0);
@@ -44,25 +72,7 @@ public enum CommodityFlag {
             p.writeByte(itemList.size());
             itemList.forEach(item -> p.writeInt(item.getSN()));
         }
-    }),
-
-    // 以下83不支持
-    REQ_POP(1 << 17, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    REQ_LEVEL(1 << 18, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    TERM_START(1 << 19, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    TERM_END(1 << 20, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    REFUNDABLE(1 << 21, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    BOMB_SALE(1 << 22, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    FORCED_CATEGORY(1 << 23, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    GAME_WORLD(1 << 24, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    TOKEN(1 << 25, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    LIMIT_MAX(1 << 26, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    LIMIT_QUEST_ID(1 << 27, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    ORIGINAL_PRICE(1 << 28, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    DISCOUNT(1 << 29, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    DISCOUNT_RATE(1 << 30, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    MILEAGE_RATE(1 << 31, -1, "Unknown83", (p, n)-> p.writeByte(0)),
-    ALL(-1, -1, "Unknown83", (p, n)-> p.writeByte(0));
+    });
 
     private final long flag;
     private final int sort;
@@ -76,10 +86,13 @@ public enum CommodityFlag {
         this.writeMapper = writeMapper;
     }
 
-    public static List<CommodityFlag> getAvailableSortedValues() {
+    /**
+     * 需要写进包的字段（不含 SN / FLAG 这两个包头），按 053 客户端读取顺序排列。
+     */
+    public static List<CommodityFlag> getDataFieldsInPacketOrder() {
         List<CommodityFlag> result = new ArrayList<>();
         for (CommodityFlag value : values()) {
-            if (value.sort == -1 || "Unknown83".equals(value.desc)) {
+            if (value.sort < 2) {
                 continue;
             }
             result.add(value);

@@ -391,7 +391,8 @@ public final class CashOperationHandler extends AbstractPacketHandler {
                     }
 
                     c.sendPacket(PacketCreator.showCash(c.getPlayer()));
-                } else if (action == 0x20) {
+//                } else if (action == 0x20) {
+                } else if (action == 0x1C) {  // buy 8开头的随机物品
                     int serialNumber = p.readInt();  // thanks GabrielSin for detecting a potential exploit with 1 meso cash items.
                     if (serialNumber / 10000000 != 8) {
                         c.sendPacket(PacketCreator.showCashShopMessage((byte) 0xC0));

@@ -149,6 +149,7 @@ import java.util.List;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -6878,7 +6879,9 @@ public class Character extends AbstractCharacterObject {
                     Integer npcId = abstractQuestRequirementData != null ? abstractQuestRequirementData.getReqNPC() : null;
 
                     boolean canComplete = QuestUtils.canComplete(this, npcId, quest);
-                    List<Short> questIds = QuestUtils.getCharQuestCompleteSendCache().get(id);
+                    List<Short> questIds = QuestUtils.getCharQuestCompleteSendCache()
+                            .computeIfAbsent(id, k -> new CopyOnWriteArrayList<>());
+
                     if (canComplete && !questIds.contains(quest.getId())) {
                         SpringContextUtil.publishEvent(new QuestMessageEvent(this, getId(), qs.getQuestID()));
                         questIds.add(quest.getId());

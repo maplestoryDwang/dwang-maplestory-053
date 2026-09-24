@@ -89,6 +89,9 @@ public class PetUtils {
 
 
     public static void updatePosition(Pet pet, List<LifeMovementFragment> movement) {
+        if (pet == null) {
+            return;
+        }
         for (LifeMovementFragment move : movement) {
             if (move instanceof LifeMovement) {
                 if (move instanceof AbsoluteLifeMovement) {
