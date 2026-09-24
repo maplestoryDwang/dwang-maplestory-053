@@ -39,4 +39,18 @@ public class SpringContextUtil implements ApplicationContextAware {
         }
         return context.getBean(name, clazz);
     }
+
+    /**
+     * 发布 Spring 事件（供未被 Spring 管理的类使用）
+     * ApplicationContext 本身就继承并实现了 ApplicationEventPublisher 接口，因此有两种最直接的使用方式：
+     * 直接利用 Context 发送（最推荐，零修改）
+     * 在工具类中封装快捷方法（更优雅）
+     *
+     */
+    public static void publishEvent(Object event) {
+        if (context == null) {
+            throw new IllegalStateException("ApplicationContext 未初始化");
+        }
+        context.publishEvent(event);
+    }
 }

@@ -56,16 +56,16 @@ function start() {
 
     try {
         map.spawnMonsterOnGroundBelow(bossObj, point);
-
+        log.info("召唤野外boss: {}, ID:{}", bossObj.getName(), BossID);
         if (isinit) {
-            log.info(`[野外BOSS] \({em.getName()} 在频道\){channel} 地图:\({map.getMapName()}(\){MapID}) (\({point.x},\){point.y}) 成功生成 \({bossName}(\){BossID})，下次检测间隔：${timerMs / 60000} 分钟`);
+            log.info(`[野外BOSS] ({em.getName()} 在频道){channel} 地图:({map.getMapName()}(){MapID}) (({point.x},){point.y}) 成功生成 ({bossName}(){BossID})，下次检测间隔：${timerMs / 60000} 分钟`);
         } else {
             isinit = true;
         }
 
         // 广播刷新提示
         if (BossNotice && BossNotice.length > 0) {
-            map.broadcastMessage(PacketCreator.serverNotice(6, `[野外BOSS] \({bossName}\){BossNotice}`));
+            map.broadcastMessage(PacketCreator.serverNotice(6, `[野外BOSS] ({bossName}){BossNotice}`));
         }
 
     } catch (e) {

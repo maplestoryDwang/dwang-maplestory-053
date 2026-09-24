@@ -1,6 +1,6 @@
 ## 20260831
 1. 修复完整的圣诞节雪球活动
-![](../asset/Snipaste_2026-08-27_23-28-46.png)
+![](../../asset/Snipaste_2026-08-27_23-28-46.png)
 2. 修复九灵龙蛋任务因版本差异无法兑换黑龙项链使用的卷轴问题
 3. 从BMS的掉落文件同步掉落。详情查看：``` origin.DropServiceTest```
 ```sql
@@ -21,7 +21,7 @@ CREATE INDEX idx_dropper_item ON drop_data (dropperid, itemid);
 1. 修复Quest.wz相关的解析缺失。
 2. 重构Quest相关的处理
 3. 新增任务管理后台显示
-![](../asset/Snipaste_2026-08-24_10-57-46.png)
+![](../../asset/Snipaste_2026-08-24_10-57-46.png)
 
 ### 事件相关
 1. 检查053可以开启的的事件
@@ -29,8 +29,8 @@ CREATE INDEX idx_dropper_item ON drop_data (dropperid, itemid);
 3. 组队任务重大BUG！部分Portal可以直接通过，被处理像普通过图一样，代码逻辑错误。当前解决方式也有问题```org.gms.server.maps.GenericPortal.checkEventCantEnter```
 4. 新增任务管理器管理。（后续功能，添加奖励和经验配置等）
 5. Boss测试，都可以攻略。建议画质调节到最低，打BOSS前重启客户端，否则容易炸
-![](../asset/event-config.png)
-![](../asset/Snipaste_2026-08-23_16-30-57.png)
+![](../../asset/event-config.png)
+![](../../asset/Snipaste_2026-08-23_16-30-57.png)
 
 ### 其他
 1. 修复账号自动创建。默认的生日```2005-05-11```, 在文件：```org.gms.property.DefaultDates```修改
@@ -68,7 +68,7 @@ CREATE INDEX idx_dropper_item ON drop_data (dropperid, itemid);
 3. 修复怪物释放技能给玩家Debuff失效的问题
 ### 修复召唤物
 1. 修复召唤物相关包、召唤、移动攻击
-![](../asset/Snipaste_2026-07-21_14-39-56.png)
+![](../../asset/Snipaste_2026-07-21_14-39-56.png)
 
 
 
