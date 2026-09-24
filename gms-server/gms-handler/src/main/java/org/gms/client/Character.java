@@ -567,6 +567,7 @@ public class Character extends AbstractCharacterObject {
     private static final HpMpAlertService hpMpAlertService = ServerManager.getApplicationContext().getBean(HpMpAlertService.class);
     private static final InventoryService inventoryService = ServerManager.getApplicationContext().getBean(InventoryService.class);
     private static final AchievementService achievementService = ServerManager.getApplicationContext().getBean(AchievementService.class);
+    private static final QuestUserDataService questUserDataService = SpringContextUtil.getBean(QuestUserDataService.class);
 
 
     CharacterDetection characterDetection = new CharacterDetection();
@@ -8050,9 +8051,11 @@ public class Character extends AbstractCharacterObject {
                     psEvent.executeBatch();
                 }
 
-                deleteQuestProgressWhereCharacterId(con, id);
-
                 // Quests and medals
+                questUserDataService.deleteQuestProgressWhereCharacterId(id);
+
+                questUserDataService.saveQuestStatus(id, getQuestValues());
+/*
                 try (PreparedStatement psStatus = con.prepareStatement("INSERT INTO queststatus (`queststatusid`, `characterid`, `quest`, `status`, `time`, `expires`, `forfeited`, `completed`) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
                      PreparedStatement psProgress = con.prepareStatement("INSERT INTO questprogress VALUES (DEFAULT, ?, ?, ?, ?)");
                      PreparedStatement psMedal = con.prepareStatement("INSERT INTO medalmaps VALUES (DEFAULT, ?, ?, ?)")) {
@@ -8088,6 +8091,7 @@ public class Character extends AbstractCharacterObject {
                         }
                     }
                 }
+*/
 
                 FamilyEntry familyEntry = getFamilyEntry(); //save family rep
                 if (familyEntry != null) {

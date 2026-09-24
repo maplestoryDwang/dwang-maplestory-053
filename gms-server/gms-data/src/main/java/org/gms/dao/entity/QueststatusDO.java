@@ -46,4 +46,6 @@ public class QueststatusDO implements Serializable {
 
     private Integer info;
 
+    private String customData;
+
 }

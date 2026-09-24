@@ -21,6 +21,7 @@
 */
 package org.gms.server.quest;
 
+import lombok.Getter;
 import org.gms.util.StringUtil;
 
 import java.util.Collections;
@@ -36,6 +37,7 @@ import java.util.Map;
  * @desc 把Quest拆出来
  *
  */
+@Getter
 public class QuestStatus {
     public enum Status {
         UNDEFINED(-1),
