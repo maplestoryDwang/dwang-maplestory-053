@@ -81,7 +81,7 @@
 ## 📜 相关文档
 
 - 📖 [技能修复日志](doc/log/skill_log.md)
-- 🛠️ [更新与修复日志](doc/log/update_log.md)
+- 🛠️ [更新与修复日志](doc/update_log.md)
 - 🗄️ [数据库结构差异](doc/log/db_diff.md)
 
 ---
