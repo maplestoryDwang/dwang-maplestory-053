@@ -283,8 +283,11 @@ exit /b 0
 :CHECK_NOASK
 echo.
 if "%DO_RUN%"=="1" (
+    echo ==============================================================
     echo [提示] 这次是"直接启动"，不自动更新、也不重新编译。
     echo        想更新的话，双击 拉最新代码启动.bat（或者跑 start.cmd update）。
+    echo        (页面停留 5 秒后继续启动...)
+    timeout /t 5 >nul 2>&1
 ) else (
     echo [提示] 只做了检查，没有更新。想更新请跑 start.cmd update。
 )
