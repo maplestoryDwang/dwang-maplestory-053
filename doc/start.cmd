@@ -11,6 +11,7 @@ rem     start.cmd           拉取代码 + 编译 + 更新客户端插件 + 启动   （最常用）
 rem     start.cmd update    只拉取/更新代码
 rem     start.cmd build     只编译（不动 git）
 rem     start.cmd client    只用最新代码里的 client-dist 更新客户端插件 / 汉化数据
+rem     start.cmd check     只检查远端有没有新版本（不拉代码、不编译）
 rem     start.cmd run       只启动（不编译、不更新客户端）
 rem
 rem  所有设置都在 config.cmd 里改，本文件不用动。
@@ -31,23 +32,36 @@ if not exist "%ROOT%\config.cmd" (
 
 call "%ROOT%\config.cmd"
 
+rem ---- 老版 config.cmd 没有这些项时，给个默认值 ----
+if not defined CHECK_UPDATE set "CHECK_UPDATE=1"
+if not defined UPDATE_WAIT set "UPDATE_WAIT=20"
+if not defined VERSION_FILE set "VERSION_FILE=版本信息.txt"
+if not defined CHANGELOG_FILE set "CHANGELOG_FILE=更新日志.md"
+if not defined GIT_TRY_NO_PROXY set "GIT_TRY_NO_PROXY=1"
+if not defined UPDATE_ANSWER set "UPDATE_ANSWER=ask"
+set "LS_TMP=%TEMP%\gms-lsremote.txt"
+set "LV_TMP=%TEMP%\gms-localver.txt"
+
 rem ---- 解析要执行哪几步 ----
 set "STEP=%~1"
 if "%STEP%"=="" set "STEP=all"
 set "DO_SYNC=0"
+set "DO_CHECK=0"
 set "DO_BUILD=0"
 set "DO_CLIENT=0"
 set "DO_RUN=0"
 if /i "%STEP%"=="all" (
-    set "DO_SYNC=1"
     set "DO_BUILD=1"
     set "DO_CLIENT=1"
     set "DO_RUN=1"
+    rem 默认先查远端有没有新版本、再问要不要更新；关掉检查就退回"每次直接拉最新"
+    if "%CHECK_UPDATE%"=="1" ( set "DO_CHECK=1" ) else ( set "DO_SYNC=1" )
 )
+if /i "%STEP%"=="check"  set "DO_CHECK=1"
 if /i "%STEP%"=="update" set "DO_SYNC=1"
-if /i "%STEP%"=="build" set "DO_BUILD=1"
+if /i "%STEP%"=="build"  set "DO_BUILD=1"
 if /i "%STEP%"=="client" set "DO_CLIENT=1"
-if /i "%STEP%"=="run" set "DO_RUN=1"
+if /i "%STEP%"=="run"    set "DO_RUN=1"
 
 echo ============================================================
 echo   GMS053 服务端 一键编译启动
@@ -58,9 +72,9 @@ echo   本次动作 : %STEP%
 echo ============================================================
 echo.
 
-if "%DO_SYNC%%DO_BUILD%%DO_CLIENT%%DO_RUN%"=="0000" (
+if "%DO_SYNC%%DO_CHECK%%DO_BUILD%%DO_CLIENT%%DO_RUN%"=="00000" (
     echo [错误] 不认识的参数："%STEP%"
-    echo        可用参数：update / build / client / run，不带参数则全部执行。
+    echo        可用参数：check / update / build / client / run，不带参数则全部执行。
     goto :FAIL_PAUSE
 )
 
@@ -69,6 +83,11 @@ if errorlevel 1 goto :FAIL_PAUSE
 
 call :FIND_JAVA
 if errorlevel 1 goto :FAIL_PAUSE
+
+if "%DO_CHECK%"=="1" (
+    call :CHECK_UPDATE
+    if errorlevel 1 goto :FAIL_PAUSE
+)
 
 if "%DO_SYNC%"=="1" (
     call :SYNC_SOURCE
@@ -167,6 +186,277 @@ exit /b 0
 
 
 rem ============================================================
+rem  0. 检查远端有没有新版本
+rem     只用 git ls-remote：一次往返、几 KB，不下载代码
+rem ============================================================
+:CHECK_UPDATE
+echo [1/4] 检查远端是否有更新...
+
+if not exist "%SOURCE_DIR%\.git" (
+    echo       本地还没有代码，跳过检查，直接拉取。
+    set "DO_SYNC=1"
+    exit /b 0
+)
+
+set "REMOTE_HASH="
+set "REMOTE_TAG="
+set "REMOTE_VER="
+set "CHECK_SRC="
+
+call :NET_PICK lsremote
+if errorlevel 1 goto :CHECK_FAIL_NET
+call :PARSE_LSREMOTE
+if not defined REMOTE_HASH goto :CHECK_FAIL_PARSE
+
+call :READ_LOCAL_VERSION
+if not defined LOCAL_FULL goto :CHECK_FAIL_LOCAL
+
+if /i "%REMOTE_HASH%"=="%LOCAL_FULL%" (
+    rem 块内要用 !VAR!（延迟展开）：%VAR% 里的 ")" 会在解析阶段把 if 块截断
+    echo       已经是最新版本：!LOCAL_VER!
+    set "DO_SYNC=0"
+    call :WRITE_VERSION current
+    echo.
+    exit /b 0
+)
+
+echo       远端有新版本！
+echo         本地 : %LOCAL_VER%
+echo         远端 : %REMOTE_VER%    来源：%CHECK_SRC%
+call :WRITE_VERSION behind
+
+echo.
+echo ============================================================
+echo   远端有新版本，要不要现在更新？
+echo ------------------------------------------------------------
+echo   本地版本 : %LOCAL_VER%
+echo   远端版本 : %REMOTE_VER%
+echo   版本来源 : %CHECK_SRC%
+echo   更新内容 : 看同目录的 %CHANGELOG_FILE%（更新之后才会刷成最新）
+echo ------------------------------------------------------------
+echo   [Y] 更新      重新拉代码 + 编译，大概 1~5 分钟
+echo   [N] 不更新    直接用本地这个版本启动（先玩，下次再说）
+echo                 %UPDATE_WAIT% 秒内没有按键，自动按 N 处理
+echo ============================================================
+rem 无人值守想自动更新，就把 config.cmd 里的 UPDATE_ANSWER 改成 Y
+if /i "%UPDATE_ANSWER%"=="Y" goto :CHECK_DO
+if /i "%UPDATE_ANSWER%"=="N" goto :CHECK_SKIP
+
+choice /c YN /t %UPDATE_WAIT% /d N /n >nul 2>&1
+set "CHOICE_RC=%ERRORLEVEL%"
+if "%CHOICE_RC%"=="1" goto :CHECK_DO
+
+:CHECK_SKIP
+echo.
+echo [提示] 这次不更新，用本地版本 %LOCAL_VER% 启动。
+echo        想更新的时候重新双击 start.cmd 就行。
+set "DO_SYNC=0"
+echo.
+exit /b 0
+
+:CHECK_DO
+echo.
+echo [提示] 开始更新到 %REMOTE_VER% ...
+set "DO_SYNC=1"
+echo.
+exit /b 0
+
+:CHECK_FAIL_NET
+echo       [警告] 连不上远端（主地址和备用地址都不通），这次跳过检查更新。
+echo              不影响启动，直接用本地现有版本。
+set "DO_SYNC=0"
+set "CHECK_SRC=连不上远端"
+call :WRITE_VERSION unknown
+echo.
+exit /b 0
+
+:CHECK_FAIL_PARSE
+echo       [警告] 拿到了远端数据但没解析出版本号（ls-remote 格式变了？），跳过检查。
+set "DO_SYNC=0"
+set "CHECK_SRC=解析失败"
+call :WRITE_VERSION unknown
+echo.
+exit /b 0
+
+:CHECK_FAIL_LOCAL
+echo       [警告] 读不出本地版本信息，跳过检查。
+echo              [诊断] SOURCE_DIR=%SOURCE_DIR%
+set "DO_SYNC=0"
+set "CHECK_SRC=本地版本读取失败"
+call :WRITE_VERSION unknown
+echo.
+exit /b 0
+
+
+rem ============================================================
+rem  git 网络操作统一重试
+rem    顺序：主地址 -> 备用地址 -> 去掉全局代理后 主地址 -> 备用地址
+rem    成功时 NET_URL / CHECK_SRC 有值
+rem    （机器上留着一个已经不通的代理配置，是很常见的情况）
+rem ============================================================
+:NET_PICK
+set "NET_URL="
+call :NET_ONE %1 "%GIT_URL%" "主地址"
+if not errorlevel 1 exit /b 0
+if not "%GIT_URL_BACKUP%"=="" (
+    call :NET_ONE %1 "%GIT_URL_BACKUP%" "备用地址"
+    if not errorlevel 1 exit /b 0
+)
+if not "%GIT_TRY_NO_PROXY%"=="1" exit /b 1
+
+set "SAVE_GCG=%GIT_CONFIG_GLOBAL%"
+set "SAVE_GCN=%GIT_CONFIG_NOSYSTEM%"
+set "GIT_CONFIG_GLOBAL=%TEMP%\gms-no-such-gitconfig"
+set "GIT_CONFIG_NOSYSTEM=1"
+call :NET_ONE %1 "%GIT_URL%" "主地址(不走代理)"
+if not errorlevel 1 goto :NET_PICK_END
+if not "%GIT_URL_BACKUP%"=="" call :NET_ONE %1 "%GIT_URL_BACKUP%" "备用地址(不走代理)"
+:NET_PICK_END
+set "GIT_CONFIG_GLOBAL=%SAVE_GCG%"
+set "GIT_CONFIG_NOSYSTEM=%SAVE_GCN%"
+if defined NET_URL exit /b 0
+exit /b 1
+
+:NET_ONE
+set "NET_URL="
+if /i "%~1"=="lsremote" goto :NET_ONE_LS
+if /i "%~1"=="clone"    goto :NET_ONE_CLONE
+goto :NET_ONE_FETCH
+:NET_ONE_LS
+"%GIT_EXE%" %GIT_COMMON% ls-remote "%~2" >"%LS_TMP%" 2>nul
+goto :NET_ONE_RC
+:NET_ONE_CLONE
+if exist "%SOURCE_DIR%" rmdir /s /q "%SOURCE_DIR%" >nul 2>&1
+mkdir "%SOURCE_DIR%" >nul 2>&1
+"%GIT_EXE%" %GIT_COMMON% clone %CLONE_OPTS% --tags --branch "%GIT_BRANCH%" "%~2" "%SOURCE_DIR%" >nul 2>&1
+goto :NET_ONE_RC
+:NET_ONE_FETCH
+"%GIT_EXE%" %GIT_COMMON% fetch %FETCH_OPTS% --tags "%~2" "%GIT_BRANCH%" >nul 2>&1
+:NET_ONE_RC
+if errorlevel 1 exit /b 1
+set "NET_URL=%~2"
+set "CHECK_SRC=%~3"
+exit /b 0
+
+
+rem ============================================================
+rem  解析 ls-remote 的结果 -> REMOTE_HASH / REMOTE_TAG / REMOTE_VER
+rem  注意：annotated tag 会有两行，只有 xxx^{} 那行才是它指向的 commit
+rem ============================================================
+:PARSE_LSREMOTE
+set "REMOTE_HASH="
+set "REMOTE_TAG="
+rem 注意：git ls-remote 的输出是 LF 行尾，findstr 的 /e 在 LF 文件上不生效，
+rem       所以这里用 for /f 直接读文件再精确比较（也不受 tag 名里怪字符影响）
+for /f "usebackq tokens=1,2" %%A in ("%LS_TMP%") do (
+    if /i "%%B"=="refs/heads/%GIT_BRANCH%" set "REMOTE_HASH=%%A"
+)
+if not defined REMOTE_HASH exit /b 1
+set "REMOTE_VER=%REMOTE_HASH:~0,7%"
+rem 找指向这个 commit 的 tag：annotated tag 只有 xxx^{} 那行的 hash 才是 commit
+for /f "usebackq tokens=1,2" %%A in ("%LS_TMP%") do (
+    if /i "%%A"=="%REMOTE_HASH%" (
+        set "TG=%%B"
+        if "!TG:~0,10!"=="refs/tags/" (
+            set "TG=!TG:^{}=!"
+            set "TG=!TG:refs/tags/=!"
+            call :SANITIZE_TAG TG
+            if defined TG set "REMOTE_TAG=!TG!"
+        )
+    )
+)
+if defined REMOTE_TAG set "REMOTE_VER=!REMOTE_TAG!"
+exit /b 0
+
+
+rem ============================================================
+rem  读本地当前版本 -> LOCAL_FULL / LOCAL_VER
+rem ============================================================
+:READ_LOCAL_VERSION
+set "LOCAL_HASH="
+set "LOCAL_DATE="
+set "LOCAL_FULL="
+set "LOCAL_TAG="
+set "LOCAL_VER="
+if not exist "%SOURCE_DIR%\.git" exit /b 1
+rem 注意：不能在 for /f 里直接跑 git —— cmd 处理命令串开头的引号会报
+rem       "文件名、目录名或卷标语法不正确"，所以先落临时文件再读
+"%GIT_EXE%" %GIT_COMMON% -C "%SOURCE_DIR%" rev-parse HEAD >"%LV_TMP%" 2>nul
+for /f "usebackq delims=" %%H in ("%LV_TMP%") do set "LOCAL_FULL=%%H"
+if not defined LOCAL_FULL exit /b 1
+
+"%GIT_EXE%" %GIT_COMMON% -C "%SOURCE_DIR%" log -1 --date=short --format="%%h %%ad" >"%LV_TMP%" 2>nul
+for /f "usebackq tokens=1,2" %%A in ("%LV_TMP%") do (
+    set "LOCAL_HASH=%%A"
+    set "LOCAL_DATE=%%B"
+)
+
+"%GIT_EXE%" %GIT_COMMON% -C "%SOURCE_DIR%" describe --tags --exact-match HEAD >"%LV_TMP%" 2>nul
+for /f "usebackq delims=" %%T in ("%LV_TMP%") do set "LOCAL_TAG=%%T"
+if defined LOCAL_TAG call :SANITIZE_TAG LOCAL_TAG
+set "LOCAL_VER=%LOCAL_HASH%"
+if defined LOCAL_TAG set "LOCAL_VER=%LOCAL_TAG%"
+if defined LOCAL_DATE set "LOCAL_VER=%LOCAL_VER% (%LOCAL_DATE%)"
+exit /b 0
+
+
+rem ============================================================
+rem  tag 名清洗：去掉批处理里有特殊含义的字符，免得 echo 时把脚本搞坏
+rem ============================================================
+:SANITIZE_TAG
+set "_v=!%~1!"
+if defined _v (
+    set "_v=!_v:&=!"
+    set "_v=!_v:|=!"
+    set "_v=!_v:<=!"
+    set "_v=!_v:>=!"
+)
+set "%~1=!_v!"
+exit /b 0
+
+
+rem ============================================================
+rem  写 版本信息.txt（GBK，记事本直接打开正常） + 复制 更新日志
+rem  入参 %1 = current / behind / updated / unknown
+rem ============================================================
+:WRITE_VERSION
+set "VSTATUS=%~1"
+call :READ_LOCAL_VERSION
+set "VF=%ROOT%\%VERSION_FILE%"
+set "VTEXT="
+if "%VSTATUS%"=="current" set "VTEXT=已经是最新版本"
+if "%VSTATUS%"=="behind"  set "VTEXT=远端有新版本，本次没有更新（还在用本地这个版本）"
+if "%VSTATUS%"=="updated" set "VTEXT=刚刚更新到最新版本"
+if "%VSTATUS%"=="unknown" set "VTEXT=没能连上远端，本次没有检查（用的还是本地这个版本）"
+if not defined VTEXT set "VTEXT=%VSTATUS%"
+
+>"%VF%" echo ============================================================
+>>"%VF%" echo  GMS053 服务端 版本信息
+>>"%VF%" echo ============================================================
+>>"%VF%" echo  生成时间 : %DATE% %TIME%
+>>"%VF%" echo  本地版本 : %LOCAL_VER%
+>>"%VF%" echo  本地提交 : %LOCAL_FULL%
+if defined REMOTE_VER  >>"%VF%" echo  远端版本 : %REMOTE_VER%
+if defined REMOTE_HASH >>"%VF%" echo  远端提交 : %REMOTE_HASH%
+if defined CHECK_SRC   >>"%VF%" echo  版本来源 : %CHECK_SRC%
+>>"%VF%" echo  当前状态 : %VTEXT%
+>>"%VF%" echo.
+>>"%VF%" echo  更新内容请打开同目录的 %CHANGELOG_FILE%
+>>"%VF%" echo  （它是仓库里 doc\update_log.md 的副本，更新代码后会自动刷新）
+>>"%VF%" echo.
+>>"%VF%" echo  想更新到最新版本 ：双击 start.cmd
+>>"%VF%" echo  只想直接启动不更新：双击 不拉代码直接启动.bat
+>>"%VF%" echo ============================================================
+
+call :WRITE_CHANGELOG
+exit /b 0
+
+
+:WRITE_CHANGELOG
+if not exist "%SOURCE_DIR%\doc\update_log.md" exit /b 0
+copy /y "%SOURCE_DIR%\doc\update_log.md" "%ROOT%\%CHANGELOG_FILE%" >nul 2>&1
+exit /b 0
+rem ============================================================
 rem  1. 拉取 / 更新代码
 rem ============================================================
 :SYNC_SOURCE
@@ -191,19 +481,10 @@ if not exist "%SOURCE_DIR%" (
 set "CLONE_OPTS="
 if not "%GIT_DEPTH%"=="0" set "CLONE_OPTS=--depth=%GIT_DEPTH% --single-branch"
 
-call :TRY_CLONE "%GIT_URL%"
+call :NET_PICK clone
 if not errorlevel 1 goto :SYNC_DONE
 
-echo.
-echo [警告] 主地址拉取失败。
-if "%GIT_URL_BACKUP%"=="" goto :SYNC_FAIL
-echo [提示] 改用备用地址：%GIT_URL_BACKUP%
-if exist "%SOURCE_DIR%" rmdir /s /q "%SOURCE_DIR%" >nul 2>&1
-mkdir "%SOURCE_DIR%" >nul 2>&1
-call :TRY_CLONE "%GIT_URL_BACKUP%"
-if not errorlevel 1 goto :SYNC_DONE
-
-echo [错误] 备用地址也拉取失败，请检查网络 / 代理 / 地址。
+echo [错误] 主地址和备用地址都拉取失败，请检查网络 / 代理 / 地址。
 goto :SYNC_FAIL
 
 
@@ -213,14 +494,9 @@ pushd "%SOURCE_DIR%"
 set "FETCH_OPTS="
 if not "%GIT_DEPTH%"=="0" set "FETCH_OPTS=--depth=%GIT_DEPTH%"
 
-"%GIT_EXE%" %GIT_COMMON% fetch %FETCH_OPTS% "%GIT_URL%" "%GIT_BRANCH%"
-if not errorlevel 1 goto :SYNC_MERGE
-
-echo [警告] 主地址更新失败：%GIT_URL%
-if "%GIT_URL_BACKUP%"=="" goto :SYNC_UPDATE_FAIL
-echo [提示] 改用备用地址：%GIT_URL_BACKUP%
-"%GIT_EXE%" %GIT_COMMON% fetch %FETCH_OPTS% "%GIT_URL_BACKUP%" "%GIT_BRANCH%"
+call :NET_PICK fetch
 if errorlevel 1 goto :SYNC_UPDATE_FAIL
+echo       版本来源: %CHECK_SRC%
 
 :SYNC_MERGE
 if /i "%UPDATE_MODE%"=="pull" (
@@ -243,15 +519,17 @@ echo [错误] 代码更新失败，无法继续。
 goto :SYNC_FAIL
 
 
-:TRY_CLONE
-"%GIT_EXE%" %GIT_COMMON% clone %CLONE_OPTS% --branch "%GIT_BRANCH%" "%~1" "%SOURCE_DIR%"
-if errorlevel 1 exit /b 1
-exit /b 0
+
 
 
 :SYNC_DONE
 echo [OK] 代码已就绪：%SOURCE_DIR%
 call :CHECK_SCRIPT_UPDATE
+rem 更新完了：远端那两行清掉（现在本地就是远端），状态记成"刚刚更新"
+set "REMOTE_HASH="
+set "REMOTE_TAG="
+set "REMOTE_VER="
+call :WRITE_VERSION updated
 echo.
 exit /b 0
 
@@ -264,13 +542,15 @@ rem ============================================================
 :CHECK_SCRIPT_UPDATE
 if not defined SYNC_SELF_UPDATE set "SYNC_SELF_UPDATE=1"
 if not "%SYNC_SELF_UPDATE%"=="1" exit /b 0
-if not exist "%SOURCE_DIR%\doc\start.cmd" exit /b 0
-
 rem 拉下来的脚本可能是 LF 结尾（git 归一化过），cmd 跑 LF 的 .cmd/.bat 会解析错乱，
 rem 所以先字节级修成 CRLF 再比/再拷（fix-crlf.ps1 不动编码，只补 0D）。
 if exist "%SOURCE_DIR%\client-dist\tools\fix-crlf.ps1" (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%SOURCE_DIR%\client-dist\tools\fix-crlf.ps1" -Path "%SOURCE_DIR%\doc" -Quiet
 )
+rem 懒人说明.txt 是纯文本，直接覆盖（放在 CRLF 修正之后，免得拷到 LF 的版本）
+call :SYNC_LAZY_GUIDE
+
+if not exist "%SOURCE_DIR%\doc\start.cmd" exit /b 0
 fc /b "%SOURCE_DIR%\doc\start.cmd" "%ROOT%\start.cmd" >nul 2>&1
 if not errorlevel 1 goto :CHECK_CONFIG_UPDATE
 copy /y "%SOURCE_DIR%\doc\start.cmd" "%ROOT%\start.cmd.new" >nul 2>&1
@@ -358,6 +638,32 @@ exit /b 0
 echo.
 exit /b 1
 
+
+rem ============================================================
+rem  把仓库里的 doc\懒人说明.txt 复制到用户那边
+rem    目标优先【包根目录】（和 step1db / step3client 同级，也就是用户第一眼看到的那份），
+rem    认不出包根目录就放到 step2（和 start.cmd 一起）。
+rem    txt 不像 start.cmd 那样正在被占用，直接覆盖即可。
+rem ============================================================
+:SYNC_LAZY_GUIDE
+if not exist "%SOURCE_DIR%\doc\懒人说明.txt" exit /b 0
+
+set "LAZY_DST=%ROOT%"
+for %%I in ("%ROOT%\..") do set "LAZY_PARENT=%%~fI"
+if exist "%LAZY_PARENT%\step1db" set "LAZY_DST=%LAZY_PARENT%"
+if exist "%LAZY_PARENT%\step3client" set "LAZY_DST=%LAZY_PARENT%"
+if not exist "%LAZY_DST%\" set "LAZY_DST=%ROOT%"
+
+fc /b "%SOURCE_DIR%\doc\懒人说明.txt" "%LAZY_DST%\懒人说明.txt" >nul 2>&1
+if not errorlevel 1 exit /b 0
+
+copy /y "%SOURCE_DIR%\doc\懒人说明.txt" "%LAZY_DST%\懒人说明.txt" >nul 2>&1
+if errorlevel 1 (
+    echo [警告] 懒人说明.txt 复制失败（目标：%LAZY_DST%），跳过。
+    exit /b 0
+)
+echo [提示] 懒人说明.txt 已更新（%LAZY_DST%）
+exit /b 0
 
 rem ============================================================
 rem  2. 编译

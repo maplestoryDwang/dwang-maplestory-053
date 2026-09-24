@@ -124,3 +124,33 @@ set "SYNC_CLIENT_STRICT=0"
 rem 1 = 拉代码后如果仓库里的 doc\start.cmd / doc\config.cmd 更新了，就提示并自动换新版
 rem     start.cmd 下次运行生效；config.cmd 只在旁边放 config.cmd.new，你的配置不会丢
 set "SYNC_SELF_UPDATE=1"
+
+
+rem ------------------------------------------------------------
+rem  6. 更新检查 / 版本信息
+rem ------------------------------------------------------------
+
+rem 1 = 启动前先查一下远端有没有新版本；有的话问你一句要不要更新（推荐）
+rem 0 = 不检查，每次启动都直接拉最新（老行为）
+set "CHECK_UPDATE=1"
+
+rem 发现新版本时，等你按键的秒数。超时按「不更新」处理，
+rem 直接用本地现有版本启动（避免无人值守时卡在这里）。
+set "UPDATE_WAIT=20"
+
+rem 发现新版本时怎么处理：
+rem   ask = 弹窗问你（默认）
+rem   Y   = 不问了，有更新就自动更新（适合无人值守的机器；
+rem         它比 CHECK_UPDATE=0 更好：没有更新时不会白下载一次）
+rem   N   = 不问了，永远不自动更新
+set "UPDATE_ANSWER=ask"
+
+rem 版本信息文件名（写在 start.cmd 同目录，GBK 编码，记事本直接打开就正常）
+set "VERSION_FILE=版本信息.txt"
+
+rem 更新日志文件名（把仓库里的 doc\update_log.md 复制过来，UTF-8）
+set "CHANGELOG_FILE=更新日志.md"
+
+rem 1 = 主地址 / 备用地址都连不上时，去掉 git 的全局代理再试一遍（推荐）
+rem     机器上留着一个已经不通的代理配置是很常见的情况，加了这层就不会整个卡死
+set "GIT_TRY_NO_PROXY=1"

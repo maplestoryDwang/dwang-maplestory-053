@@ -1,0 +1,23 @@
+1. 进入step1db\3.26.0611\NapMysqlTool 点击 NapMysqlTool.exe  启动数据库 mysql8.0
+2. 进入step2 点击 不拉代码直接启动.bat
+3. 进入step3 解压origin-client.zip 点击 launcher.exe启动游戏
+
+
+
+其他文件夹说明
+1. N11数据库管理工具 负责数据库查询工具 账号密码：root root
+2. jdk-21.0.2  服务端运行JDK
+3. PortableGit 拉取最新代码工具
+4. source存放代码
+5..窗口缩放工具-需要管理员启动Magpie-v0.12.1-x64 4K显示器使用的缩放工具  ---dwang
+
+
+关于更新
+1. 双击 step2\start.cmd 会先查一下远端有没有新版本：
+   - 已经是最新：直接启动，不会再白下载一遍代码
+   - 有更新：会停下来问你，选 Y 就更新，选 N 就用当前版本直接启动
+     （20 秒不按键自动按 N，不会卡住）
+   - 连不上网络：只提示一句，照常用当前版本启动
+2. 想知道自己现在是什么版本：看 step2\版本信息.txt
+3. 想看更新内容：看 step2\更新日志.md
+4. 不想每次被问、有更新就自动更新：把 step2\config.cmd 里的 UPDATE_ANSWER 改成 Y
