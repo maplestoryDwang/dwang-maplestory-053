@@ -291,7 +291,14 @@ public enum RecvOpcode implements Opcode {
      */
     USE_CASH_ITEM(0x53),
 
-    // 0x54 - 0x57 未使用
+    // 0x54
+
+    /**
+     * 使用技能书
+     */
+    USE_SKILL_BOOK(0x55),
+
+    //  0x56- 0x57 未使用
 
     /**
      * 密聊
@@ -572,7 +579,6 @@ public enum RecvOpcode implements Opcode {
     USE_CASH_ITEM(0x4F), // 使用现金物品
     //USE_OWL_ITEM(0x50), ... no idea // 使用 Owl 物品（不清楚）
     USE_CATCH_ITEM(0x51), // 使用捕捉物品
-    USE_SKILL_BOOK(0x52), // 使用技能书
     USE_TELEPORT_ROCK(0x54), // 使用传送石
     USE_RETURN_SCROLL(0x55), // 使用返回卷轴
     USE_UPGRADE_SCROLL(0x56), // 使用升级卷轴
