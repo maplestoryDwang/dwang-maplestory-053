@@ -80,6 +80,13 @@ public class CashItemFactory {
             Integer pbPoint = DataTool.getInteger("PbPoint", item);
             Integer pbGift = DataTool.getInteger("PbGift", item);
             Integer packageSN = DataTool.getInteger("PackageSN", item);
+
+            // 优化，除了宠物全部永久
+            boolean pet = ItemId.isPet(itemId);
+            if (pet) {
+                period = 90;
+            }
+
             loadedItems.put(sn, ModifiedCashItemDO.builder()
                     .sn(sn)
                     .itemId(itemId)
@@ -91,6 +98,7 @@ public class CashItemFactory {
                     // 原来写成 (period == 0 ? 90 : period) 会把永久道具变成 90 天，
                     // 和客户端商城里显示的（不限期）对不上。过期时间的计算见 CashShopUtils#toItem。
                     .period(period)
+//                    .period(period == 0 ? 90 : period)
                     .maplePoint(maplePoint)
                     .meso(meso)
                     .forPremiumUser(forPremiumUser)
