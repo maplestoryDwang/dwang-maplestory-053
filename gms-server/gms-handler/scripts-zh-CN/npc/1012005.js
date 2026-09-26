@@ -21,7 +21,7 @@
  */
 /* Author: Xterminator
 	NPC Name: 		Cloy
-	Map(s): 		Victoria Road : Henesys Park (100000200)
+	Map(s): 		Victoria Road : 射手村 Park (100000200)
 	Description: 		Pet Master
  */
 var status = -2;
@@ -111,8 +111,8 @@ function action(mode, type, selection) {
             } else if (selection == 26) {
                 cm.sendNext("这些是#r臭鼬#k的指令。指令旁边提到的等级显示了宠物需要的等级才能响应。\r\n#bsit#k (等级 1 ~ 30)\r\n#bbad/no/badgirl/badboy#k (等级 1 ~ 30)\r\n#brestandrelax, poop#k (等级 1 ~ 30)\r\n#btalk/chat/say, iloveyou#k (等级 1 ~ 30)\r\n#bsnuggle/hug, sleep, goodboy#k (等级 1 ~ 30)\r\n#bfatty, blind, badbreath#k (等级 10 ~ 30)\r\n#bsuitup, bringthefunk#k (等级 20 ~ 30)");
             } else if (selection == 27) {
-                status = 14;
-                cm.sendNext("为了转移宠物的能力点、亲密度和等级，需要使用宠物能力点重置卷轴。如果你把这个卷轴带到艾琳尼亚的仙女玛尔那里，她会把宠物的等级和亲密度转移到另一个宠物身上。我特别给你这个是因为我能感受到你对宠物的情感。不过，我不能白白地把它给你。我可以以25万金币的价格把这本书卖给你。哦，我差点忘了！即使你有了这本书，如果没有新的宠物来转移能力点的话，它也没用。");
+//                status = 14;
+                cm.sendNext("为了转移宠物的能力点、亲密度和等级，需要使用宠物能力点重置卷轴。如果你把这个卷轴带到魔法密林的精灵那里，她会把宠物的等级和亲密度转移到另一个宠物身上。我特别给你这个是因为我能感受到你对宠物的情感。不过，我不能白白地把它给你。我可以以25万金币的价格把这本书卖给你。哦，我差点忘了！即使你有了这本书，如果没有新的宠物来转移能力点的话，它也没用。");
             }
             if (selection > 2 && selection < 27) {
                 cm.dispose();
@@ -148,7 +148,7 @@ function action(mode, type, selection) {
             if (sel != 1) {
                 cm.dispose();
             }
-            cm.sendNextPrev("哦，是的！宠物不能吃普通的人类食物。相反，我的弟子#bDoofus#k在Henesys市场上出售#b宠物食品#k，所以如果你需要给你的宠物喂食，就去Henesys找他吧。最好提前买好食物，等宠物真的饿了再喂食。");
+            cm.sendNextPrev("哦，是的！宠物不能吃普通的人类食物。相反，我的弟子#b科尔#k在射手村市场上出售#b宠物食品#k，所以如果你需要给你的宠物喂食，就去射手村找他吧。最好提前买好食物，等宠物真的饿了再喂食。");
         } else if (status == 5) {
             cm.sendNextPrev("哦，如果你长时间不给宠物喂食，它会自己回家。你可以把它从家里带出来喂食，但这对宠物的健康不太好，所以尽量定期喂养它，这样它就不会降到那个程度了，好吗？我觉得这样就可以了。");
         } else {

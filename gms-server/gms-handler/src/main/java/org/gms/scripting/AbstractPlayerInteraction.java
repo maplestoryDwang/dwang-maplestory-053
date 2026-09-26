@@ -1206,12 +1206,32 @@ public class AbstractPlayerInteraction {
         return getPlayer().getJailExpirationTimeLeft();
     }
 
+    /**
+     * 获取死亡的pet
+     * @return
+     */
     public List<Pet> getDriedPets() {
         List<Pet> list = new LinkedList<>();
 
         long curTime = System.currentTimeMillis();
         for (Item it : getPlayer().getInventory(InventoryType.CASH).list()) {
             if (ItemConstants.isPet(it.getItemId()) && it.getExpiration() < curTime) {
+                Pet pet = it.getPet();
+                if (pet != null) {
+                    list.add(pet);
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public List<Pet> getLivePets() {
+        List<Pet> list = new LinkedList<>();
+
+        long curTime = System.currentTimeMillis();
+        for (Item it : getPlayer().getInventory(InventoryType.CASH).list()) {
+            if (ItemConstants.isPet(it.getItemId()) && it.getExpiration() > curTime) {
                 Pet pet = it.getPet();
                 if (pet != null) {
                     list.add(pet);
