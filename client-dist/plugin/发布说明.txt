@@ -94,3 +94,13 @@ config.ini 放在客户端主目录。它没有也能跑：没有这个文件、
   2. 【防复发】插件加了"占位符不一致就不替换"的保护：以后表里再写错占位符，最多那一条显示英文
      （DebugView 会打一行 placeholders differ (pool "dsddd" vs table "sdddd")），不会再闪退；
   3. 本包 Hook.dll 是这一版新编的；其余文件与 v1.1.0 相同。细节见仓库 GMS053_HOOK_CHANGES_CN.md §26。
+
+十一、v1.1.2 – v1.1.4 的内容（2026-09-21 → 2026-09-26）
+  1. v1.1.2 / v1.1.3：更新客户端 Data 目录下的汉化 img；插件内置默认值改成 UseImgMode=true，
+     统一读 Data\ 里的 img（wz\ 目录不再使用）。这两版只换了汉化数据和默认配置，没动插件逻辑；
+  2. 【修复·v1.1.4】"永久"道具的时限提示：服务端给永久道具传的天数是 -1，客户端原版只认 0，
+     所以提示会显示"可使用 -1 天。"。现在插件认出 -1，显示改成"可永久使用"；其它天数
+     （1 / 7 / 30 天…）仍然是原样的"可使用 %d 天。"；
+  3. 这个替换是直接编译进 Hook.dll 的（不改数据文件、也不改 StringPool 表），所以本版只更新
+     Hook.dll；它是编译期选项（源码 Config.h 里的 PermanentDaysFix / PermanentDaysIndex /
+     PermanentDaysValue），不在 config.ini 里。

@@ -7,17 +7,17 @@
 # client_exe_strict      : 1 = 校验不一致就直接拒绝（除非 -Force）；0 = 只警告
 # keep_existing          : 这些文件客户端已有时【自动合并】而不是覆盖（新版结构 + 保留用户改过的值，旧的留 .bak 备份）
 # backup_keep            : 客户端目录 _backup_client 里保留几份历史备份
-version=1.1.3
-tag=client-v1.1.3
-built=2026-09-21
-notes=插件：UseImgMode 默认 true（统一用 Data\ 的 img）；数据：客户端 Data 下的汉化 img
+version=1.1.4
+tag=client-v1.1.4
+built=2026-09-26
+notes=插件：永久道具（服务端传 -1 天）提示改成“可永久使用”
 client_exe=GMSv53.exe,MapleStory.exe,GMS053.exe,MapleStoryV053.exe,MapleStory-sorce.exe
 client_exe_strict=0
 keep_existing=config.ini
 backup_keep=5
 client_exe_size=5439488
 client_exe_sha256=f4ac21ac18b6bd6a8ef16077aec2e9727468f578998e917f6679b5fe26ce23d8
-manifest_built=2026-09-25 01:21:14
+manifest_built=2026-09-26 10:09:23
 file_count=1056
 plugin_count=6
 data_count=1050
