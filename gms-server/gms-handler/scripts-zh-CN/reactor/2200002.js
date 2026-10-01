@@ -26,5 +26,10 @@
 
 function act() {
     rm.mapMessage(5, "未知力量将你卷入致命陷阱！");
-    rm.warpMap(922010201);
+    // 有问题没控制状态
+    var eim = rm.getPlayer().getEventInstance();
+    var curMap = 922010201;
+    var stage = 1;
+    eim.justLinkNextStageMap(stage, "lpq", curMap, "out00");
+    rm.warp(curMap, "st00");
 }
