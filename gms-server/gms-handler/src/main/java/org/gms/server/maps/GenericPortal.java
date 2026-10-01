@@ -147,7 +147,7 @@ public class GenericPortal implements Portal {
             Character chr = c.getPlayer();
             if (!(chr.getChalkboard() != null && GameConstants.isFreeMarketRoom(getTargetMapId()))) {
                 if (checkEventCantEnter(chr.getEventInstance())) {
-                    chr.dropMessage(5, "你还不能进入下一个地图，当前地图事件未完成。");
+                    chr.dropMessage(5, "某种封印阻挡着这扇门，暂时无法进入。");
 
                 } else {
                     MapleMap to = c.getChannelServer().getMapFactory().getMap(getTargetMapId());
@@ -159,7 +159,7 @@ public class GenericPortal implements Portal {
                     changed = true;
                 }
             } else {
-                chr.dropMessage(5, "You cannot enter this map with the chalkboard opened.");
+                chr.dropMessage(5, "某种封印阻挡着这扇门，暂时无法进入。");
             }
         }
         if (!changed) {
@@ -178,7 +178,8 @@ public class GenericPortal implements Portal {
         // 天空组队可以自由进入
         // 原因： 因为有一些地图可以去到多个地图,有多个传送口，无法只绑定一个脚本名，除非去重构绑定传送口的脚本改成数组
         // 修改判断方式，Kerning0后面那个0表示的是房间数，之前没了解 0 0.
-        List<String> forbidEnter = Arrays.asList("Kerning", "Ludi");
+//        List<String> forbidEnter = Arrays.asList("Kerning", "Ludi");
+        List<String> forbidEnter = Arrays.asList("Kerning");
         if (eventInstance != null) {
             String eimName = eventInstance.getName();
             for (String name : forbidEnter) {
