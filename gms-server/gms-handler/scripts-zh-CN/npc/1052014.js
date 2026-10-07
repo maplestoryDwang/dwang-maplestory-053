@@ -8,6 +8,7 @@ var status = -1;
 var questPointsId = 1001300;
 var questTimeId = 1001301;
 var mouseItemId = 4000047;
+var dailyPoint = 500;
 
 var mainMenuChoice = -1;
 var exchangeOption = -1;
@@ -73,11 +74,12 @@ function action(mode, type, selection) {
     }
 
     if (isDailyReward) {
-        points += 50;
+        points += dailyPoint;
         cm.getQuestRecord(questPointsId).setCustomData("" + points);
         cm.getQuestRecord(questTimeId).setCustomData("" + currentTime);
         // 弹出打卡提示，点击后自动进入主菜单对话
-        cm.sendNext("非常感谢你光临我们的网吧！为此，我们将额外奖励 #b50 点积分#k 到你的网吧累计积分中。\r\n玩家 #b" + cm.getPlayer().getName() + "#k 当前拥有 #r" + points + " 点积分#k。");
+        cm.sendNext("非常感谢你光临我们的网吧！为此，我们将额外奖励 #b" + dailyPoint + " 点积分#k 到你的网吧累计积分中。\r\n玩家 #b" + cm.getPlayer().getName() + "#k 当前拥有 #r" + points + " 点积分#k。");
+        cm.dispose();
         return;
     }
 

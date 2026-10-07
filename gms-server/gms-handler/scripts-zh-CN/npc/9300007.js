@@ -33,7 +33,7 @@ function action(mode, type, selection) {
             if (savedMap <= 0) {
                 savedMap = 100000000;
             }
-            cm.sendNext("好的，我这就送你回之前的地方。以后要结婚的时候随时再来吧。。。呵呵。");
+//            cm.sendNext("好的，我这就送你回之前的地方。以后要结婚的时候随时再来吧。。。呵呵。");
             cm.warp(savedMap, 0);
             cm.dispose();
         }

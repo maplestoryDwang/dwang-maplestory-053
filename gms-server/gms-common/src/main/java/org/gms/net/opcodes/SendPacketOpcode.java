@@ -100,6 +100,8 @@ public enum SendPacketOpcode implements Opcode {
     WHISPER(0x5E), // 密聊回应/寻找玩家
     CLOCK(0x61), // 显示时钟倒计时
 
+    IMITATED_NPC_DATA(0x4C), // 仿冒NPC数据(PlayerNPC) —— v053 客户端 CWvsContext::OnPacket case 0x4C -> CNpcPool::OnPacket(0x4C) -> CNpcPool::OnNpcImitateData；0x51 是 v083 的编号，v053 里 0x51 会被 CField 当"系统提示"包丢弃，导致仿冒外形不显示
+
     /**
      * 连续移动
      */
@@ -431,7 +433,6 @@ public enum SendPacketOpcode implements Opcode {
 
     BRIDLE_MOB_CATCH_FAIL(0x4F), // 鞍具捕捉怪物失败
     IMITATED_NPC_RESULT(0x50), // 仿冒NPC结果
-    IMITATED_NPC_DATA(0x4C), // 仿冒NPC数据(PlayerNPC) —— v053 客户端 CWvsContext::OnPacket case 0x4C -> CNpcPool::OnPacket(0x4C) -> CNpcPool::OnNpcImitateData；0x51 是 v083 的编号，v053 里 0x51 会被 CField 当"系统提示"包丢弃，导致仿冒外形不显示
     LIMITED_NPC_DISABLE_INFO(0x52), // 限时NPC禁用信息
     MONSTER_BOOK_SET_CARD(-1), // 怪物图鉴设置卡片
     MONSTER_BOOK_SET_COVER(0x54), // 怪物图鉴设置封面
