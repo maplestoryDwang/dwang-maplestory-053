@@ -11846,11 +11846,6 @@
       <int name="pop" value="1"/>
       <imgdir name="item">
         <imgdir name="0">
-          <int name="id" value="4031447"/>
-          <int name="count" value="1"/>
-          <int name="gender" value="2"/>
-        </imgdir>
-        <imgdir name="1">
           <int name="id" value="4031805"/>
           <int name="count" value="1"/>
           <int name="gender" value="2"/>
