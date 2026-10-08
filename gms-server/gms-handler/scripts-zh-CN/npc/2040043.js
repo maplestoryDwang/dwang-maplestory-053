@@ -32,6 +32,7 @@
 @	Description: Used to find the combo to unlock the next door. Players stand on 5 different crates to guess the combo.
 */
 
+const GameConfig = Java.type('org.gms.config.GameConfig');
 function generateCombo() {
     var countPicked = 0;
     var positions = Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -124,8 +125,7 @@ function action(mode, type, selection) {
                             }
                         }
                     }
-
-                    if (playersOnCombo == 5 || cm.getPlayer().gmLevel() > 1) {
+                    if (playersOnCombo == 5 || (GameConfig.getServerBoolean("use_enable_stage_skip") && eim.getPlayerCount() == 1)) {
                         var comboStr = eim.getProperty("stage" + stage + "combo");
                         if (comboStr == null) {
                             comboStr = generateCombo();

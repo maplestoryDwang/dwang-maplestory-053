@@ -32,6 +32,7 @@
 
 var status = 0;
 var curMap, stage;
+const GameConfig = Java.type('org.gms.config.GameConfig');
 
 function start() {
     curMap = cm.getMapId();
@@ -78,7 +79,12 @@ function action(mode, type, selection) {
 
                         eim.setProperty("statusStg" + stage, 1);
                         clearStage(stage, eim, curMap);
-                    } else {
+                    } else if(GameConfig.getServerBoolean("use_enable_stage_skip") && eim.getPlayerCount() == 1) {
+                        cm.sendOk("干得好，你可以过关了。");
+                        eim.setProperty("statusStg" + stage, 1);
+                        clearStage(stage, eim, curMap);
+                    }
+                    else {
                         cm.sendNext("抱歉，你没有24个#b#t4001022#。#k");
                     }
                 }
