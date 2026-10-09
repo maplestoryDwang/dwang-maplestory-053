@@ -6491,4 +6491,12 @@
     <string name="2" value="On behalf of Cody, I gave Maya the #b#t04140100##k. She seemed very much ecstatic. Hopefully this is the start of something good..."/>
     <int name="area" value="50"/>
   </imgdir>
+<imgdir name="3844">
+    <string name="name" value="消灭妖怪禅师"/>
+    <string name="parent" value="消灭妖怪禅师"/>
+    <int name="order" value="5"/>
+    <string name="1" value="我把和妖怪禅师那段不愉快的对话告诉了道公，他说这也在预料之中。看来靠谈判是拿不到解毒珠子了……现在只剩一条路：打倒 #r妖怪禅师#k，把 #b解毒珠子#k 抢回来！\n\n#o7220002# #r#a38441##k  \n#i4031789# #t4031789# #b#c4031789##k/1。"/>
+    <string name="2" value="打倒妖怪禅师之后，我拿到了解毒珠子，交给了道公。幸好珠子是真的，道公的毒也解了。看来以后还是别轻易相信那些来路不明的人。"/>
+    <int name="area" value="44"/>
+  </imgdir>
 </imgdir>

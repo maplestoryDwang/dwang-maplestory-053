@@ -1,0 +1,53 @@
+-- 妖怪禅师爆率
+delete from `drop_data` where dropperid = 7220002;
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1302018, 1, 1, 0, 7000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1312011, 1, 1, 0, 7000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1322028, 1, 1, 0, 7000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1332023, 1, 1, 0, 5000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1372016, 1, 1, 0, 7000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1382008, 1, 1, 0, 7000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1402004, 1, 1, 0, 7000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1412009, 1, 1, 0, 7000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1422012, 1, 1, 0, 7000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1432010, 1, 1, 0, 5000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1442019, 1, 1, 0, 7000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1452015, 1, 1, 0, 5000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1462013, 1, 1, 0, 5000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 1472031, 1, 1, 0, 5000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2000002, 1, 1, 0, 200000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2000003, 1, 1, 0, 200000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2002002, 1, 1, 0, 200000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2002003, 1, 1, 0, 200000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2022149, 1, 1, 0, 200000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040004, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040402, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040504, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040514, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040601, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040619, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040621, 1, 4, 0, 10000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040701, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040702, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040707, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2040801, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2041005, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2041010, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2041046, 1, 4, 0, 10000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2043101, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2044001, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2044302, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2044414, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2044601, 1, 1, 0, 3000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2060001, 70, 87, 0, 300000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 2061001, 70, 87, 0, 300000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 4000289, 1, 1, 0, 600000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 4000298, 1, 1, 0, 600000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 4003005, 1, 1, 0, 200000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 4004004, 1, 1, 0, 100000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 4010005, 1, 1, 0, 90000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 4020008, 1, 1, 0, 90000);
+INSERT INTO `drop_data` (`dropperid`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`) VALUES  (7220002, 4031789, 1, 1, 3844, 999999);
+
+
+-- 事件召唤妖怪禅师
+UPDATE `event_config` SET  `enabled` = 1, `remark` = '妖怪禅师（更新了）' WHERE `event_name` = 'AreaBossKingSageCat';

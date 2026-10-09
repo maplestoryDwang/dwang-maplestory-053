@@ -20230,4 +20230,23 @@
       </imgdir>
     </imgdir>
   </imgdir>
+<imgdir name="3844">
+    <imgdir name="0">
+      <string name="0" value="呼……解毒药……找到了吗……？你说妖怪禅师不肯给你……？这不是明摆着的吗？他要是肯那么轻易地给你解药，当初又何必下毒……咳咳！"/>
+      <string name="1" value="现在没有别的办法了。你得打倒 #r妖怪禅师#k，拿到 #b解毒珠子#k！我相信你……"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="哼……（喘着粗气）……哦，你、你回来了……拿到了吗……哦，这就是……解毒珠子……"/>
+      <imgdir name="yes">
+        <string name="0" value="咳咳咳！"/>
+        <string name="1" value="……呼……幸好，解毒珠子是真的。我总觉得妖怪禅师拿这珠子当诱饵，背后还有更阴险的打算。还好他的计划落空了……嗯？你怎么这副表情？"/>
+        <string name="2" value="不用觉得抱歉。我虽然中了毒，但现在全好了。你还把妖怪禅师彻底解决掉了！这不正是我们盼望的吗？他在武陵横行这么久，这下总算能安静一阵子了。太感谢你了！"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="唔……没能拿到解毒珠子吗？只要打倒 #r妖怪禅师#k，就能拿到 #b解毒珠子#k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
 </imgdir>

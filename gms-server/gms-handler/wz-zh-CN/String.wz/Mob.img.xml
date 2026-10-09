@@ -2496,4 +2496,7 @@
     <imgdir name="9619999">
         <string name="name" value="gasangmob"/>
     </imgdir>
+    <imgdir name="7220002">
+        <string name="name" value="妖怪禅师"/>
+    </imgdir>
 </imgdir>
