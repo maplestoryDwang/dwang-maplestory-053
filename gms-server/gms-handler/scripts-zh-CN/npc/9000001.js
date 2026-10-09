@@ -31,8 +31,9 @@ function start() {
 }
 
 function action(mode, type, selection) {
-    if (mode == -1) {
+    if (mode <= 0) {
         cm.dispose();
+        return;
     } else {
         if (status >= 2 && mode == 0) {
             cm.dispose();
