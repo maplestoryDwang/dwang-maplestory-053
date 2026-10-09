@@ -49,6 +49,8 @@ config.ini 放在客户端主目录。它没有也能跑：没有这个文件、
   CameraBottomSlack      镜头下沿按百分比收（50 = 收掉余量的一半，0 = 原版，100 = 收到地图实体底）
   WideBackFill           地图背景补边（宽屏下把最靠后的几层背景铺满，去掉四周黑边）
   WideBackFillBackmost   补到第几层（默认 3；看到远景景物被复制就往回退到 0）
+  SideBlackBars          窄地图两边的黑边（要按地图开：SideBlackBars.<地图>=true，
+                         宽度用 SideBlackBarsWidth.<地图>=892，不写就按地图实体范围自动算）
   TrockListMax           VIP 传送石保存地点上限（改了必须同时改服务端）
   ScriptEquipItems       点装"脚本装备"ID 列表，留空 = 关闭
   DebugTranslation       逐条翻译日志（★ 必须 false，开着非常卡）
@@ -126,3 +128,29 @@ config.ini 放在客户端主目录。它没有也能跑：没有这个文件、
   5. 【诊断】每次进图会打一行日志（DebugView 可见），写明地图 ID 是从哪读到的、上下沿用了多少、
      命中了哪条规则，方便核对 config.ini 里的表：
        camera slack: map 240040700 (field+0xDC, ...) -> bottom 50% top 0% crop 0px (defaults 50% / 0% / 0%)
+
+十二、v1.1.6 的内容（2026-10-10）
+
+  1.【新增】窄地图两边的黑边（083 那种效果）。地图比屏幕窄的时候（211040800/900/1000：地图 892 宽、
+     窗口 1366），地图外面那一圈本来是"没有任何背景层画到"的地方；但有些图的远景贴图比地图本身还宽
+     （1200 > 892），一画就伸出地图，看着像"悬空的素材"。打开后就把地图视口以外那两条竖带涂黑：
+       SideBlackBars = false              ; 默认关；按地图/通配打开
+       SideBlackBars.2110408* = true
+       SideBlackBarsWidth.2110408* = 892  ; 要保留的宽度（= 地图 info/VRRight-VRLeft）；不写就自动用
+                                          ; "地图实体范围 + 2 x SideBlackBarsMargin（默认 21）"
+       SideBlackBarsBottom = 0            ; 底部留多少像素不涂（0 = 一路到屏幕底；只有当某块 HUD 正好
+                                          ; 压在这两条竖带里、被涂掉了，才把它调成那块 HUD 的高度）
+       SideBlackBarsShiftUi = false       ; true = 连 UI 一起右移进可见区。实测这套布局下会把状态栏
+                                          ; 一起带走、而且客户端会把移动后的坐标写回存档（窗口位置
+                                          ; 会漂），所以默认 false = UI 一个像素都不动。
+     地图比屏幕宽的图自动不受影响；日志写在客户端目录 backdrop_fill.log 里（前缀 [SideBars]）。
+  2.【修复】按地图写的布尔键以前根本没生效：<键名>.<地图ID|前缀*> 的值统一用 ParseInt 解析，而文档一直
+     写的是 `WideBackFillVertical.240040600 = false` —— strtol("false") 失败，整条被当成"值不可用"丢掉，
+     也不会再回退去当普通键处理。现在 ParseInt 失败会再试 true/false、yes/no、on/off，两种写法都能用。
+  3.【新增】WideBackFillBackmost.<地图> = 0 多了第二层含义：连"把平铺宽度撑到屏幕大小"这一步也不做，
+     于是这张图的背景只铺到客户端算给它的宽度，多出来的地方保持黑边（= 083 的样子）。
+  4.【新增·默认不启用】WideBackFillType0.<地图> = false —— v053 原版整个跳过 WZ 里 type 0 的背景层
+     （我们那 6 个 NOP 才让它们画出来）。个别图远景全是 type 0 又比地图宽时，可以按图把它们关掉
+     （代价是那张图的远景会消失）。默认 true，等于什么都不变。
+  5. 默认行为：SideBlackBars = false、SideBlackBarsShiftUi = false、WideBackFillType0 = true；
+     上面这些不写进 config.ini 就不会有任何变化。

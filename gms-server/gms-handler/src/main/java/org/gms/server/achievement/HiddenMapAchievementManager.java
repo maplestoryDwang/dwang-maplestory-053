@@ -117,6 +117,7 @@ public class HiddenMapAchievementManager {
         // 4. 水下世界 / 武陵 / 百草堂 / 神木村 / 异域
         mapIds.add(MapIdGen.FISH_RESTING_SPOT_230030001);            // 鱼之平原
         mapIds.add(MapIdGen.PENGUIN_S_PLAYGROUND_230010001);          // 企鹅公园
+        mapIds.add(MapIdGen.GOBLIN_FOREST_2_250010504);          // 妖怪森林2
 
 
         mapIds.add(MapIdGen.THE_AREA_OF_WILD_HOG_922200000);        // 野生猪的领域

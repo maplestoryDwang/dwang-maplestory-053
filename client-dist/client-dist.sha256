@@ -1,11 +1,11 @@
 ﻿# client-dist.sha256 —— 由 tools\make-manifest.ps1 生成，不要手改
 # 格式： <sha256>  <相对 client-dist 的路径>（正斜杠）
-f356243abc1932a8f4ff695f53f8d33d59927a8396c7d266b4fe3c1c0ac4338a  plugin/config.ini
+8d98085eaa276e928122801cbbcf00c1c7706f3ec8aa611516baaa7a28271c8e  plugin/config.ini
 6cb2f42023e78108d3fc9f5fb814b54277fffe119a96c70bbc15c2b73553608a  plugin/garbled053_zh.txt
-f78ae085323eafb942661e116818d89febeec6bb704b56a595245ae2e8fbf724  plugin/Hook.dll
+a3f35407b35ab84f3d64b7068e06c0e5f24b2fa5bf0c1adb75bea8efdfe7d274  plugin/Hook.dll
 ffa4c6aeaead9c4806cb5f0c8cae46484333cf8d2fe79e8894673dd44d6d9a3b  plugin/Launcher.exe
 bf1144db3814545372452cfaf5ea83d6e1eeb742410c31ce93e034a48c9f4baa  plugin/stringpool053_zh.txt
-f12d23ec232511c69c902affdc46f6ab08fc69a834a6fb42f7b7fd05e2ba4a1e  plugin/发布说明.txt
+9cb299285867d0bc89d0ec9917ec40ef2a298888a86a953a8a419ce7eb737d97  plugin/发布说明.txt
 bbff973395ee3afcef7f0f196f21a16cf2ddd05d9a0d085605ecedbb6f779d2f  data/Data/Character/Accessory/01032035.img
 825d46159fc57b059e5147a6f1c784594e9870f177cf9fec37c8b4e46df9e793  data/Data/Character/Cap/01000024.img
 613290da00bd8af234d4dea8118dca6d63993e7fbd38baa5632fc32dce1668a1  data/Data/Character/Cap/01000028.img
@@ -1180,7 +1180,7 @@ a91b654af458733739f8668bc0279d004d2dbbb1b85d8ac90582dd98e31f2dc6  data/Data/Npc/
 5e5424400814caddd0ca8936eaacfbd73d24d8ecd46b8d35957c332a2882cb11  data/Data/Npc/9901319.img
 b6de8f0b898b3327e09dd26cf2ac1fca598974e053e501ef10666e3f247ee4fe  data/Data/Quest/Act.img
 b9fc66fac67da03ece670e8819b7adb3e815447a56d7feba73f35191351bcffc  data/Data/Quest/Check.img
-0d16748c4b6dbb9237f077dfff1d13d8c9d8939d4796edf1d8e9921cf379f2e2  data/Data/Quest/QuestInfo.img
+80dd9509e399575d30a213f4e82351e8be0b9212aee2727331765bd0db0b747e  data/Data/Quest/QuestInfo.img
 78e0101ac1ef1feb500d636e987351fb95ce944bdb6ad1355762d828293af6f2  data/Data/Quest/Say.img
 4308140f29de0609f0b7c2ff503a42bc0c552723158c15228ce1efa76c617b14  data/Data/Reactor/2502002.img
 3a3d78f0ab9c45f79473719fed80c9904bab34fd6fd64318989fb20710f605cd  data/Data/Sound/BgmCN.img
