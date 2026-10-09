@@ -1335,8 +1335,8 @@
   <imgdir name="2135">
     <string name="name" value="新手法师的最后阶段的修炼"/>
     <string name="0" value="你成长得很快，#b #p1032001##k说将要给你最后一次考验..."/>
-    <string name="1" value="#p1032001#要你去捕捉 #r#o1110100#6只#k. #o1110100#比起 #o0210100#更为凶狠，请一定要小心. \n\n#o1110100# #r#a21351##k"/>
-    <string name="2" value="打倒#o1110100# 6只. 虽然还有很多不足之处，但总算是具有一名法师的素质了."/>
+    <string name="1" value="#p1032001#要你去捕捉 #r#o1110101#10只#k. #o1110101#比起 #o0210100#更为凶狠，请一定要小心. \n\n#o1110101# #r#a21351##k"/>
+    <string name="2" value="打倒#o1110101# 10只. 虽然还有很多不足之处，但总算是具有一名法师的素质了."/>
     <int name="area" value="10"/>
     <int name="autoStart" value="1"/>
   </imgdir>
