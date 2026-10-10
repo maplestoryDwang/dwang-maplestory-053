@@ -1,6 +1,6 @@
 /*
 	This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc> 
+    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
                        Matthias Butz <matze@odinms.de>
                        Jan Christian Meyer <vimes@odinms.de>
 
@@ -65,7 +65,7 @@ function action(mode, type, selection) {
             status--;
         }
         if (status == 0) {
-            cm.sendSimple("嗯嗯嗯，欢迎来到昭和整形外科！您想将您的脸变成全新的样子吗？通过使用#b#t5152009##k或者#b#t5152045##k，您可以让我们来照顾剩下的事情，拥有您一直想要的脸~！\r\n#L1#整形手术：#i5152009##t5152009##l\r\n#L2#美瞳：#i5152045##t5152045##l\r\n#L3#一次性美瞳：#i5152102#（任何颜色）#l");
+            cm.sendSimple("嗯嗯嗯，欢迎来到昭和整形外科！您想将您的脸变成全新的样子吗？通过使用#b#t5152009##k或者#b#t5152045##k，您可以让我们来照顾剩下的事情，拥有您一直想要的脸~！\r\n#L1#整形手术：#i5152009##t5152009##l\r\n#L3#一次性美瞳：#i5152102#（任何颜色）#l");
         } else if (status == 1) {
             if (selection == 1) {
                 beauty = 0;

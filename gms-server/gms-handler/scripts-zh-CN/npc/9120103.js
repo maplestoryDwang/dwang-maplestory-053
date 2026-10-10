@@ -51,7 +51,7 @@ function pushIfItemsExists(array, itemidList) {
 }
 
 function start() {
-    cm.sendSimple("嗨，我其实不应该这样做，但是用#b#t5152008##k或者#b#t5152046##k，我还是会为你做。但别忘了，这将是随机的！\r\n#L1#整形手术：#i5152008##t5152008##l\r\n#L2#美容镜片：#i5152046##t5152046##l");
+    cm.sendSimple("嗨，我其实不应该这样做，但是用#b#t5152008##k或者#b#t5152046##k，我还是会为你做。但别忘了，这将是随机的！\r\n#L1#整形手术：#i5152008##t5152008##l");
 }
 
 function action(mode, type, selection) {
