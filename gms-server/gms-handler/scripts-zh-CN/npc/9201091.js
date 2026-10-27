@@ -510,6 +510,7 @@ function doExchange(sel) {
     setRecord(QID_DAILY_COUNT, "" + (doneCount + needCount));
     if (sel == 6) {
         setRecord(QID_CACTUS_TAKEN, "end");
+        setRecord(QID_DROP_SWITCH, "end");
     }
 
     cm.sendOk(SUCCESS_MSG[sel]);
