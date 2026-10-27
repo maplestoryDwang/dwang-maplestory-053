@@ -53,7 +53,9 @@ function action(mode, type, selection) {
                     cm.dispose();
                 }
             } else {
-                cm.getEventInstance().clearPQ();
+                var eim = cm.getEventInstance();
+                eim.giveEventReward(cm.getPlayer())
+                eim.clearPQ();
                 cm.dispose();
             }
         } else {
@@ -69,6 +71,7 @@ function action(mode, type, selection) {
                     cm.gainItem(4001118, 1);
                     cm.gainExp(80000);
                     cm.warp(251010404, 0);
+
                 } else {
                     if (cm.haveItem(1002574, 1)) {
                         cm.sendOk("你有最好的帽子。");

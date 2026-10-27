@@ -10,8 +10,14 @@ function enter(pi) {
             const LifeFactory = Java.type('org.gms.server.life.LifeFactory');
             if (chests == 0) {
                 boss = LifeFactory.getMonster(9300119); // 普海盗船长 (Lord Pirate)
+            } else if (chests == 1) {
+                 boss = LifeFactory.getMonster(9300105); // 生气盗船长
+
+            } else if (chests == 2) {
+                 boss = LifeFactory.getMonster(9300106); // 愤怒盗船长
+
             } else {
-                // 随机在 9300105, 9300106, 9300107 里面选一个
+//                // 随机在 9300105, 9300106, 9300107 里面选一个
                 var bossIds = [9300105, 9300106, 9300107];
                 var randomBossId = bossIds[Math.floor(Math.random() * bossIds.length)];
                 boss = LifeFactory.getMonster(randomBossId);

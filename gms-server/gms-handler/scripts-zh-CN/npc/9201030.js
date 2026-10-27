@@ -55,7 +55,8 @@ var BATCH = [10, 20, 30, 40, 60, 90, 100];
 var MENU_MAIN =
     "我的礼物啊！你找回来了！至少找回了一部分！\r\n\r\n" +
     "#b#L0#关于这些丢失的礼物，我能帮上什么忙吗？#l#k\r\n" +
-    "#b#L1#我捡到了一大堆这样的礼物，想把它们还给你！#l#k";
+    "#b#L1#我捡到了一大堆这样的礼物，想把它们还给你！#l#k\r\n" +
+    "#b#L2#我暂时不想帮你找礼物了！#l#k" ;
 
 var INTRO_PAGES = [
     "我并没有丢过东西……它们是从我的仓库里被偷走的！其实，我必须在枫叶节结束之前尽可能多地把它们找回来。否则，恐怕今年会有很多好孩子收不到礼物……我们不能让这种事发生！为了帮我，请去收集你能找到的所有礼物，然后把它们带回给我！\r\n#b#L0#没问题，梅普克劳斯。#l#k",
@@ -175,7 +176,12 @@ function action(mode, type, selection) {
                 cm.sendSimple(INTRO_PAGES[0]);
             } else if (selection == 1) {
                 openExchangeMenu();
-            } else {
+            } else if (selection == 2) {
+                cm.updateQuestCustomData(QID_DROP_SWITCH, "end");
+                cm.sendOk("没关系，下次你还想继续收集礼物，来找我就行。");
+                cm.dispose();
+            }
+            else {
                 cm.dispose();
             }
         }
@@ -370,7 +376,6 @@ function doExchange(sel) {
     setRecord(QID_DAILY_COUNT, "" + (doneCount + needCount));
     if (sel == 6) {
         setRecord(QID_TREE_TAKEN, "end");
-        setRecord(QID_DROP_SWITCH, "end");
     }
 
     cm.sendOk(SUCCESS_MSG[sel]);

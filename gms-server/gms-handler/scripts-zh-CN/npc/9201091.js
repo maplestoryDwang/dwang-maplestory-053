@@ -57,7 +57,9 @@ var MENU_MAIN =
     "我就是人称奥蓬戈的维萨尔节老鼠！有什么能为你效劳的吗？\r\n" +
     "#b#L0#你能多给我讲讲维萨尔节吗？维萨尔节是什么样的？#l#k\r\n" +
     "#b#L1#奥蓬戈，你觉得这些礼物怎么样？我可是从可怕的怪物身上找到不少。#l#k\r\n" +
-    "#b#L2#奥蓬戈，我有一大堆礼物要给你，准备好被维萨尔化吧！#l#k";
+    "#b#L2#奥蓬戈，我有一大堆礼物要给你，准备好被维萨尔化吧！#l#k\r\n" +
+    "#b#L3#奥蓬戈，我暂时不想帮你找礼物了！#l#k\r\n"
+    ;
 
 // ---- 选项 0：维萨尔传说（simple = askMenu，next = say，顺序与原型一致）----
 var STORY_PAGES = [
@@ -224,7 +226,7 @@ var FAIL_MSG =
 // 注：原型这段文案沿用了梅普克劳斯的说法（提到"枫叶圣诞树"），
 //     而奥蓬戈 100 档实际给的是维萨尔仙人掌 #t1442061#。此处保留原样不改。
 var CACTUS_ALREADY_MSG =
-    "哇，你又为我找回了 100 个礼物！太厉害了，但很遗憾，就像我说的，" +
+    "很遗憾，就像我说的，" +
     "每位冒险家只能得到一棵枫叶圣诞树作为奖励，只能来一轮！" +
     "如果你还想要一棵树，可以试试再找回 90 个礼物碰碰运气！祝你好运！";
 
@@ -298,7 +300,12 @@ function action(mode, type, selection) {
                 enterStory(GIFT_PAGES);
             } else if (selection == 2) {
                 openExchangeMenu();
-            } else {
+            } else if (selection == 3) {
+                cm.updateQuestCustomData(QID_DROP_SWITCH, "end");
+                cm.sendOk("没关系，下次你还想继续收集礼物，来找我就行。");
+                cm.dispose();
+            }
+            else {
                 cm.dispose();
             }
         }
@@ -510,7 +517,6 @@ function doExchange(sel) {
     setRecord(QID_DAILY_COUNT, "" + (doneCount + needCount));
     if (sel == 6) {
         setRecord(QID_CACTUS_TAKEN, "end");
-        setRecord(QID_DROP_SWITCH, "end");
     }
 
     cm.sendOk(SUCCESS_MSG[sel]);

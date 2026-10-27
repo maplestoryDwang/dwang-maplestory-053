@@ -85,6 +85,11 @@ function setEventExclusives(eim) {
 
 function setEventRewards(eim) {}
 
+function giveRandomEventReward(eim, player) {
+    eim.giveEventReward(player);
+}
+
+
 function getEligibleParty(party) {      //selects, from the given party, the team that is allowed to attempt this event
     var eligible = [];
     var hasLeader = false;
@@ -352,6 +357,7 @@ function clearPQ(eim) {
     eim.giveEventPlayersExp(expGain);
 
     eim.warpEventTeam(925100600);
+
 }
 
 function isLordPirate(mob) {
