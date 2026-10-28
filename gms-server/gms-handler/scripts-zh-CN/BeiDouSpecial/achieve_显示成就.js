@@ -110,7 +110,7 @@ function showCategoryDetail(dto) {
             break;
         case "BOSS_KILL":
             text += "说明：击破世界各地各大区域的 BOSS 领主 (共 " + dto.getMaxProgress() + " 个区域)。\r\n";
-            text += "#b[完成奖励]#k：这片大陆每个人都记得你的付出，那一夜，法国总统也为你振臂高呼！\r\n";
+            text += "#b[完成奖励]#k：这片大陆每个人都记得你的付出，为你树立起了个人的雕像！\r\n";
             break;
         case "QUEST_COMPLETED":
             text += "说明：完成 " + dto.getMaxProgress() + " 个普通任务。\r\n";
