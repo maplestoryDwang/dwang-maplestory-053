@@ -23,6 +23,7 @@ package org.gms.server.maps;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.gms.client.ServerMsgType;
 import org.gms.client.status.CharBuffStat;
 import org.gms.client.Character;
 import org.gms.client.Client;
@@ -79,6 +80,9 @@ import org.gms.server.life.MonsterListener;
 import org.gms.server.life.NPC;
 import org.gms.server.life.PlayerNPC;
 import org.gms.server.life.SpawnPoint;
+import org.gms.server.loot.MobDropPityInfo;
+import org.gms.server.loot.MobDropPityManager;
+import org.gms.server.loot.MobDropPityResult;
 import org.gms.server.partyquest.CarnivalFactory;
 import org.gms.server.partyquest.CarnivalFactory.MCSkill;
 import org.gms.server.partyquest.GuardianSpawnPoint;
@@ -114,6 +118,8 @@ import java.util.function.Predicate;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.gms.server.loot.MobDropPityManager.FORMAT_DROP_LUCKY;
+import static org.gms.server.loot.MobDropPityManager.FORMAT_DROP_PITY;
 
 @Setter
 @Getter
@@ -732,7 +738,7 @@ public class MapleMap {
      * @param mob
      * @return
      */
-    private byte dropItemsFromMonsterOnMap(List<MonsterDropEntry> dropEntry, Point pos, byte d, float chRate, byte droptype, int mobpos, Character chr, Monster mob) {
+    private byte dropItemsFromMonsterOnMap(List<MonsterDropEntry> dropEntry, Point pos, byte d, float chRate, byte droptype, int mobpos, Character chr, Monster mob, Set<Integer> droppedItems) {
         if (dropEntry.isEmpty()) {
             return d;
         }
@@ -777,6 +783,9 @@ public class MapleMap {
                         idrop = new Item(de.itemId, (short) 0, (short) (de.Maximum != 1 ? Randomizer.nextInt(addNum) + de.Minimum : 1));
                     }
                     spawnDrop(idrop, calcDropPos(pos, mob.getPosition()), mob, chr, droptype, de.questid);
+                    if (droppedItems != null) {
+                        droppedItems.add(de.itemId);
+                    }
                 }
                 d++;
             }
@@ -785,7 +794,7 @@ public class MapleMap {
         return d;
     }
 
-    private byte dropGlobalItemsFromMonsterOnMap(List<MonsterDropEntry> globalEntry, Point pos, byte d, byte droptype, int mobpos, Character chr, Monster mob) {
+    private byte dropGlobalItemsFromMonsterOnMap(List<MonsterDropEntry> globalEntry, Point pos, byte d, byte droptype, int mobpos, Character chr, Monster mob, Set<Integer> droppedItems) {
         Collections.shuffle(globalEntry);
 
         Item idrop;
@@ -805,12 +814,79 @@ public class MapleMap {
                         idrop = new Item(de.itemId, (short) 0, (short) (de.Maximum != 1 ? Randomizer.nextInt(de.Maximum - de.Minimum) + de.Minimum : 1));
                     }
                     spawnDrop(idrop, calcDropPos(pos, mob.getPosition()), mob, chr, droptype, de.questid);
+                    if (droppedItems != null) {
+                        droppedItems.add(de.itemId);
+                    }
                     d++;
                 }
             }
         }
 
         return d;
+    }
+
+    /**
+     * 处理掉落保底：累计击杀数，达到保底次数后强制掉落绑定的物品；
+     * 若本次自然掉落了绑定物品，则清零计数并提示幸运掉落。
+     */
+    private void handleMobDropPity(Character chr, Monster mob, byte droptype, int mobpos, Point pos, byte d, Set<Integer> droppedItems) {
+        MobDropPityResult result = MobDropPityManager.recordKill(chr.getId(), mob.getId(), droppedItems);
+        if (result.isEmpty()) {
+            return;
+        }
+
+        ItemInformationProvider ii = ItemInformationProvider.getInstance();
+        String mobName = mob.getName();
+
+        for (MobDropPityInfo pity : result.getTriggered()) {
+            int itemId = pity.getItemId();
+            MonsterDropEntry de = findMobDropEntry(mob.getId(), itemId);
+
+            int minimum = 1;
+            int maximum = 1;
+            short questid = 0;
+            if (de != null) {
+                minimum = Math.max(1, de.Minimum);
+                maximum = Math.max(minimum, de.Maximum);
+                questid = de.questid;
+            }
+
+            if (droptype == 3) {
+                pos.x = mobpos + ((d % 2 == 0) ? (40 * ((d + 1) / 2)) : -(40 * (d / 2)));
+            } else {
+                pos.x = mobpos + ((d % 2 == 0) ? (25 * ((d + 1) / 2)) : -(25 * (d / 2)));
+            }
+
+            Item idrop;
+            if (ItemConstants.getInventoryType(itemId) == InventoryType.EQUIP) {
+                idrop = ii.randomizeStats((Equip) ii.getEquipById(itemId));
+            } else {
+                short quantity = (short) (maximum > minimum ? Randomizer.nextInt(maximum - minimum) + minimum : minimum);
+                idrop = new Item(itemId, (short) 0, quantity);
+            }
+
+            spawnDrop(idrop, calcDropPos(pos, mob.getPosition()), mob, chr, droptype, questid);
+            d++;
+
+            // 保底掉落发送消息
+            String itemName = ii.getName(itemId);
+            chr.dropMessage(ServerMsgType.Pink_Text.getType(), String.format(FORMAT_DROP_PITY, mobName, itemName));
+        }
+
+        // 绑定物品自然掉落（未到保底次数）：计数已清零，发送幸运掉落提示
+        for (MobDropPityInfo pity : result.getLuckyDrops()) {
+            String itemName = ii.getName(pity.getItemId());
+            chr.dropMessage(ServerMsgType.Pink_Text.getType(), String.format(FORMAT_DROP_LUCKY, mobName, itemName));
+        }
+    }
+
+    private MonsterDropEntry findMobDropEntry(int mobId, int itemId) {
+        for (MonsterDropEntry de : MonsterInformationProvider.getInstance().retrieveDrop(mobId)) {
+            if (de.itemId == itemId && de.chance > 0) {
+                return de;
+            }
+        }
+        return null;
     }
 
     private void dropFromMonster(final Character chr, final Monster mob, final boolean useBaseRate) {
@@ -891,7 +967,7 @@ public class MapleMap {
         byte d = 1;
         Point pos = new Point(0, mob.getPosition().y);
 
-        dropItemsFromMonsterOnMap(list, pos, d, chRate, droptype, mobpos, chr, mob);
+        dropItemsFromMonsterOnMap(list, pos, d, chRate, droptype, mobpos, chr, mob, null);
     }
 
     public void dropFromFriendlyMonster(final Character chr, final Monster mob) {
@@ -3835,15 +3911,21 @@ public class MapleMap {
         public void run() {
             byte d = 1;
 
+            // 本次击杀实际掉落的物品，用于掉落保底计数
+            Set<Integer> droppedItems = MobDropPityManager.hasBindings(chr.getId(), mob.getId()) ? new HashSet<>() : null;
+
             // Normal Drops
-            d = dropItemsFromMonsterOnMap(dropEntry, pos, d, chRate, droptype, mobpos, chr, mob);
+            d = dropItemsFromMonsterOnMap(dropEntry, pos, d, chRate, droptype, mobpos, chr, mob, droppedItems);
 
             // Global Drops
-            d = dropGlobalItemsFromMonsterOnMap(globalEntry, pos, d, droptype, mobpos, chr, mob);
+            d = dropGlobalItemsFromMonsterOnMap(globalEntry, pos, d, droptype, mobpos, chr, mob, droppedItems);
 
             // Quest Drops
-            d = dropItemsFromMonsterOnMap(visibleQuestEntry, pos, d, chRate, droptype, mobpos, chr, mob);
-            dropItemsFromMonsterOnMap(otherQuestEntry, pos, d, chRate, droptype, mobpos, chr, mob);
+            d = dropItemsFromMonsterOnMap(visibleQuestEntry, pos, d, chRate, droptype, mobpos, chr, mob, droppedItems);
+            d = dropItemsFromMonsterOnMap(otherQuestEntry, pos, d, chRate, droptype, mobpos, chr, mob, droppedItems);
+
+            // 掉落保底：达到绑定次数后强制掉落
+            handleMobDropPity(chr, mob, droptype, mobpos, pos, d, droppedItems);
         }
     }
 

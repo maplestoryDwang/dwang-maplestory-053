@@ -41,6 +41,7 @@ import org.gms.constants.inventory.ItemConstants;
 import org.gms.constants.string.ExtendType;
 import org.gms.dao.entity.ExtendValueDO;
 import org.gms.dwutil.ItemUtils;
+import org.gms.dwutil.MobUtils;
 import org.gms.dwutil.QuestUtils;
 import org.gms.server.achievement.AchievementCategory;
 import org.gms.server.events.wxmas.WXMacData;
@@ -58,6 +59,8 @@ import org.gms.server.expeditions.Expedition;
 import org.gms.server.expeditions.ExpeditionBossLog;
 import org.gms.server.expeditions.ExpeditionType;
 import org.gms.server.life.*;
+import org.gms.server.loot.MobDropPityInfo;
+import org.gms.server.loot.MobDropPityManager;
 import org.gms.server.maps.MapObject;
 import org.gms.server.maps.MapObjectType;
 import org.gms.server.maps.MapleMap;
@@ -1461,6 +1464,69 @@ public class AbstractPlayerInteraction {
      */
     public int getOnlineTime() {
         return getPlayer().getCurrentOnlineTime();
+    }
+
+    /**
+     * 查询角色对指定怪物掉落指定物品的保底进度。
+     *
+     * @return 未开启保底时返回 null
+     */
+    public MobDropPityInfo getMobDropPity(int mobId, int itemId) {
+        return MobDropPityManager.getInfo(getPlayer().getId(), mobId, itemId);
+    }
+
+    /**
+     * 查询角色已开启的全部掉落保底。
+     */
+    public List<MobDropPityInfo> getAllMobDropPity() {
+        return MobDropPityManager.getAllInfo(getPlayer().getId());
+    }
+
+    /**
+     * 开启或关闭角色对指定怪物掉落指定物品的保底。
+     * 开启时按当前个人爆率重新计算保底击杀数，并覆盖之前的绑定记录。
+     * 保底数据仅保存在内存中，服务器重启后清空。
+     *
+     * @return true 表示操作成功
+     */
+    public boolean setMobDropPity(int mobId, int itemId, boolean enable) {
+        Character chr = getPlayer();
+        if (mobId <= 0 || itemId <= 0) {
+            return false;
+        }
+
+        if (!enable) {
+            return MobDropPityManager.disable(chr.getId(), mobId, itemId);
+        }
+
+        MonsterDropEntry dropEntry = null;
+        for (MonsterDropEntry de : MonsterInformationProvider.getInstance().retrieveDrop(mobId)) {
+            if (de.itemId == itemId && de.chance > 0) {
+                dropEntry = de;
+                break;
+            }
+        }
+        if (dropEntry == null) {
+            return false;
+        }
+
+        if (dropEntry.questid > 0 && !chr.needQuestItem(dropEntry.questid, itemId)) {
+            // 任务道具当前没有任务需求，保底掉出来也看不到
+            return false;
+        }
+
+        double dropRate = MobUtils.isBoss(mobId) ? chr.getBossDropRate() : chr.getDropRate();
+        if (chr.isFamilyBuff()) {
+            dropRate *= chr.getFamilyDrop();
+        }
+
+        double percent = dropEntry.chance * dropRate / 10000.0;
+        if (percent <= 0) {
+            return false;
+        }
+
+        int targetKills = percent >= 100.0 ? 1 : (int) Math.ceil(100.0 / percent);
+        return MobDropPityManager.enable(chr.getId(), mobId, itemId, percent, Math.max(1, targetKills));
     }
 
     /// ////////////////////////////////////////////////////////////////////////////////////////////////////

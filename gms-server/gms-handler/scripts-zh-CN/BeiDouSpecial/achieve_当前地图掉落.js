@@ -66,7 +66,8 @@ function action(mode, type, selection) {
         var text = "#e【 睿智猫头鹰 - 探索全知 】#n\r\n\r\n";
         text += "你想通过猫头鹰的眼睛寻找些什么呢？\r\n\r\n";
         text += "#L1# #b查看当前地图怪物爆率#k#l\r\n";
-        text += "#L2# #b查询系统特定物品掉落来源#k#l";
+        text += "#L2# #b查询系统特定物品掉落来源#k#l\r\n";
+        text += "#L3# #b查看 / 管理已开启的掉落保底#k#l";
 
         cm.sendSimple(text);
     }
@@ -85,6 +86,9 @@ function doSelect(selection) {
             break;
         case 2:
             openNpc("当前地图掉落_物品查询");
+            break;
+        case 3:
+            openNpc("当前地图掉落_保底查询");
             break;
         default:
             cm.sendOk("该功能暂未开放，敬请期待！");
