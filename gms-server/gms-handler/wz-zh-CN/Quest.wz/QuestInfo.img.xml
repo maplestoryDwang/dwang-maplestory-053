@@ -6452,7 +6452,7 @@
     <string name="0" value="要去上海外滩的小摊。"/>
     <string name="1" value="小摊老板吕，他最近生意不太好。所以他想更换一下销售的食品。他说如果我收集#b50个鸡爪和50个鸭蛋#k给他，他就交换给我#r30个玉米和30个糖葫芦#k。这对我来说也不算吃亏。\n\n#t4000187# #b#c4000187##k / 50 \n#t4000188# #b#c4000188##k / 50"/>
     <string name="2" value="我收集鸡爪和鸭蛋给他后收到了玉米和糖葫芦。这些东西看起来非常好吃。我以后也要常常利用这个交易吧。"/>
-    <int name="area" value="42"/>
+    <int name="area" value="45"/>
     <string name="name" value="食品交换"/>
   </imgdir>
   <imgdir name="8516">
@@ -6462,7 +6462,7 @@
     <string name="0" value="听说最近明珠港的财神有点事情。。。"/>
     <string name="1" value="收到了财神的信件，要我去找他的朋友。听说他在魔法密林的附近，但是。。。财神的朋友到底是谁? 神的朋友应该也不是凡人吧. 他怎么在冒险岛世界呢?"/>
     <string name="2" value="我终于找到了他的朋友, 他朋友就是屈原，见面后把财神的信件交给了他。"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8517">
     <string name="name" value="屈原的回复"/>
@@ -6471,7 +6471,7 @@
     <string name="0" value="找到屈原后把财神的信件交给了他。"/>
     <string name="1" value="屈原让我替他去问候财神。一来一去这么长的路，怎么一点小礼物也没有啊。。。"/>
     <string name="2" value="财神给了我很多经验值。我太高兴了！"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8518">
     <string name="name" value="财神的委托2"/>
@@ -6480,7 +6480,7 @@
     <string name="0" value="听说最近明珠港的财神有点事情。。。"/>
     <string name="1" value="收到了财神的信件，要我去找他的朋友。听说他在上海滩附近，但是。。。财神的朋友到底是谁? 神的朋友应该也不是凡人吧. 他怎么在冒险岛世界呢?"/>
     <string name="2" value="我终于找到了他的朋友, 他朋友就是管仲，见面后把财神的信件交给了他。"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8519">
     <string name="name" value="管仲的回复"/>
@@ -6489,7 +6489,7 @@
     <string name="0" value="找到管仲后把财神的信件交给了他。"/>
     <string name="1" value="管仲让我替他去问候财神。一来一去这么长的路，怎么一点小礼物也没有啊。。。"/>
     <string name="2" value="财神给了我很多经验值。我太高兴了！"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8520">
     <string name="name" value="财神的委托3"/>
@@ -6498,7 +6498,7 @@
     <string name="0" value="听说最近明珠港的财神有点事情。。。"/>
     <string name="1" value="收到了财神的信件，要我去找他的朋友。听说他在童话村的附近，但是。。。财神的朋友到底是谁? 神的朋友应该也不是凡人吧. 他怎么在冒险岛世界呢?"/>
     <string name="2" value="我终于找到了他的朋友, 他朋友就是司马迁，见面后把财神的信件交给了他。"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8521">
     <string name="name" value="司马迁的回复"/>
@@ -6507,7 +6507,7 @@
     <string name="0" value="找到司马迁后把财神的信件交给了他。"/>
     <string name="1" value="司马迁让我替他去问候财神。一来一去这么长的路，怎么一点小礼物也没有啊。。。"/>
     <string name="2" value="财神给了我很多经验值。我太高兴了！"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8522">
     <string name="name" value="财神的委托4"/>
@@ -6516,7 +6516,7 @@
     <string name="0" value="听说最近明珠港的财神有点事情。。。"/>
     <string name="1" value="收到了财神的信件，要我去找他的朋友。听说他在玩具城的附近，但是。。。财神的朋友到底是谁? 神的朋友应该也不是凡人吧. 他怎么在冒险岛世界呢?"/>
     <string name="2" value="我终于找到了他的朋友, 他朋友就是张良，见面后把财神的信件交给了他。"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8523">
     <string name="name" value="张良的回复"/>
@@ -6525,35 +6525,35 @@
     <string name="0" value="找到张良后把财神的信件交给了他。"/>
     <string name="1" value="张良让我替他去问候财神。一来一去这么长的路，怎么一点小礼物也没有啊。。。"/>
     <string name="2" value="财神给了我很多经验值。我太高兴了！"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8524">
     <string name="name" value="屈原的委托"/>
     <string name="0" value="听说最近魔法密林的屈原有点事情。。。"/>
     <string name="1" value="收到了屈原的信件，要我去明珠港找他的朋友财神。"/>
     <string name="2" value="我终于找到了他的朋友财神。见面后把屈原的信件交给了他。"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8525">
     <string name="name" value="管仲的委托"/>
     <string name="0" value="听说最近上海附近的管仲有点事情。。。"/>
     <string name="1" value="收到了管仲的信件，要我去明珠港找他的朋友财神。"/>
     <string name="2" value="我终于找到了他的朋友财神。见面后把管仲的信件交给了他。"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8526">
     <string name="name" value="司马迁的委托"/>
     <string name="0" value="听说最近童话村附近的司马迁有点事情。。。"/>
     <string name="1" value="收到了司马迁的信件，要我去明珠港找他的朋友财神。"/>
     <string name="2" value="我终于找到了他的朋友财神。见面后把司马迁的信件交给了他。"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8527">
     <string name="name" value="张良的委托"/>
     <string name="0" value="听说最近玩具城迷宫的张良有点事情。。。"/>
     <string name="1" value="收到了张良的信件，要我去明珠港找他的朋友财神。"/>
     <string name="2" value="我终于找到了他的朋友财神。见面后把张良的信件交给了他。"/>
-    <int name="area" value="1"/>
+    <int name="area" value="50"/>
   </imgdir>
   <imgdir name="8700">
     <string name="name" value="复活节：复活节篮子"/>
