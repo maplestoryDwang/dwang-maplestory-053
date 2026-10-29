@@ -7210,4 +7210,1068 @@
     <string name="2" value="终于在那些怪物身上找到的失落的佛珠，#b#p9310041##k还真是亲切啊。"/>
     <int name="area" value="45"/>
   </imgdir>
+  <imgdir name="9100">
+    <string name="name" value="中秋节活动：MapleStory"/>
+    <string name="0" value="收集饼干做成的字母，来拼出 MapleStory（冒险岛）这个词吧？"/>
+    <string name="1" value="收集饼干做成的字母，拼出了 MapleStory（冒险岛）这个词。 \n#i3994012##i3994000##i3994006##i3994003##i3994001#\n#i3994013##i3994008##i3994005##i3994007##i3994010#"/>
+    <string name="2" value="收集饼干做成的字母，拼出了 MapleStory（冒险岛）这个词。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9101">
+    <string name="name" value="中秋节活动：MapleStory"/>
+    <string name="0" value="收集饼干做成的字母，来拼出 MapleStory（冒险岛）这个词吧？"/>
+    <string name="1" value="收集饼干做成的字母，拼出了 MapleStory（冒险岛）这个词。 \n#i3994012##i3994000##i3994006##i3994003##i3994001#\n#i3994013##i3994008##i3994005##i3994007##i3994010#"/>
+    <string name="2" value="收集饼干做成的字母，拼出了 MapleStory（冒险岛）这个词。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9110">
+    <string name="name" value="中秋节活动：Wizet"/>
+    <string name="0" value="收集饼干做成的字母，来拼出 Wizet（维泽特）这个词吧？"/>
+    <string name="1" value="收集饼干做成的字母，拼出了 Wizet（维泽特）这个词。\n#i3994014##i3994002##i3994011##i3994001##i3994008#"/>
+    <string name="2" value="收集饼干做成的字母，拼出了 Wizet（维泽特）这个词。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9111">
+    <string name="name" value="中秋节活动：Wizet"/>
+    <string name="0" value="收集饼干做成的字母，拼出了 Wizet（维泽特）这个词。"/>
+    <string name="1" value="收集饼干做成的字母，拼出了 Wizet（维泽特）这个词。\n#i3994014##i3994002##i3994011##i3994001##i3994008#"/>
+    <string name="2" value="收集饼干做成的字母，拼出了 Wizet（维泽特）这个词。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9120">
+    <string name="name" value="中秋节活动：Nexon"/>
+    <string name="0" value="收集饼干做成的字母，来拼出 Nexon（纳克森）这个词吧？"/>
+    <string name="1" value="收集饼干做成的字母，拼出了 Nexon（纳克森）这个词。 \n#i3994004##i3994001##i3994009##i3994005##i3994004#"/>
+    <string name="2" value="收集饼干做成的字母，拼出了 Nexon（纳克森）这个词。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9121">
+    <string name="name" value="中秋节活动：Nexon"/>
+    <string name="0" value="收集饼干做成的字母，来拼出 Nexon（纳克森）这个词吧？"/>
+    <string name="1" value="收集饼干做成的字母，拼出了 Nexon（纳克森）这个词。 \n#i3994004##i3994001##i3994009##i3994005##i3994004#"/>
+    <string name="2" value="收集饼干做成的字母，拼出了 Nexon（纳克森）这个词。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9130">
+    <string name="name" value="惊喜活动：特别字母？"/>
+    <string name="0" value="听说中秋节当天冒险岛运营者会送饼干字母中的特别字母作为礼物？只有中秋这一天，要不要去看看？"/>
+    <string name="1" value="据说中秋当天限定惊喜活动，会从特别字母中送出你想要的1种。"/>
+    <string name="2" value="中秋节当天，作为惊喜活动收到了特殊字母。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9140">
+    <string name="name" value="中秋节做松饼"/>
+    <string name="parent" value="中秋节做松饼"/>
+    <int name="order" value="1"/>
+    <string name="0" value="据说把米粉、蜂蜜和松针收集起来交给冒险岛管理员，他就会帮你做中秋节的食物——松饼。"/>
+    <string name="1" value="去收集松饼的材料——米粉、蜂蜜和松针吧。\n\n#t4031181:# #b#c4031181#/1#k\n#t4031182:# #b#c4031182#/1#k\n#t4031183:# #b#c4031183#/1#k"/>
+    <string name="2" value="收集了松饼的材料米粉、蜂蜜和松针，做成了粉色松饼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9141">
+    <string name="name" value="中秋节做金松饼"/>
+    <string name="parent" value="中秋节做松饼"/>
+    <int name="order" value="2"/>
+    <string name="0" value="听说用中秋食物做成的粉色松饼10个可以换1个金松饼？金松饼啊……这东西好像能派上大用场呢……"/>
+    <string name="1" value="带着10个用中秋食物做成的粉色松饼过去，对方说可以帮我换成金松饼。\n\n#t2022037:# #b#c2022037#/10#k"/>
+    <string name="2" value="收集了10个粉色松饼，换成了金松饼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9142">
+    <string name="name" value="丰饶的中秋节"/>
+    <string name="parent" value="中秋节做松饼"/>
+    <int name="order" value="3"/>
+    <string name="0" value="要不要把金松饼当作礼物，送给射手村的长辈斯坦长老呢？"/>
+    <string name="1" value="要不要把金松饼献给射手村的长辈斯坦长老，顺便送上中秋问候呢？"/>
+    <string name="2" value="向射手村的长辈斯坦长老问候了一番，真是个充实的中秋节。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9150">
+    <string name="name" value="中秋节做饼干(油果)"/>
+    <string name="parent" value="中秋节做饼干"/>
+    <int name="order" value="1"/>
+    <string name="0" value="据说把糯米粉、蜂蜜罐和油瓶收集起来交给冒险岛管理员，他就会帮你做中秋节的食物——油果。"/>
+    <string name="1" value="他说让我去收集油果的材料：糯米粉、装着新鲜食用油的油瓶，还有装着香甜蜂蜜的蜂蜜罐。\n\n#t4031184:# #b#c4031184#/1\n#k#t4031185:# #b#c4031185#/1\n#k#t4031186:# #b#c4031186#/1#k"/>
+    <string name="2" value="收集好材料，做成了油果。油果是饼干的一种，把糯米粉和成面团油炸，再涂上香甜的蜂蜜，最后裹上米花。油果散发出甜甜的香气。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9151">
+    <string name="name" value="中秋节做饼干礼盒"/>
+    <string name="parent" value="中秋节做饼干"/>
+    <int name="order" value="2"/>
+    <string name="0" value="收集20个油果，做成饼干礼盒怎么样？拿来当礼物简直再合适不过了吧？"/>
+    <string name="1" value="收集20个油果送过去，据说就能做成满满心意的饼干礼盒…… \n\n#k#t2022038:# #b#c2022038#/20#k"/>
+    <string name="2" value="收集了20个油果，做成了满满心意的饼干礼盒。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9152">
+    <string name="name" value="丰饶的中秋"/>
+    <string name="parent" value="中秋节做饼干"/>
+    <int name="order" value="3"/>
+    <string name="0" value="要不要带着准备好的饼干礼盒，去玩具城找厂长卡胡送上中秋问候呢……"/>
+    <string name="1" value="要不要去玩具城向厂长卡胡送上中秋问候呢？"/>
+    <string name="2" value="把饼干礼盒送给玩具城的厂长卡胡，祝愿他中秋丰足。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9160">
+    <string name="name" value="中秋节常识1. 中国的节日中秋"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="1"/>
+    <string name="0" value="听说冒险岛为了迎接中秋，准备了与中秋相关的常识问答？去各个村庄找冒险岛管理员NPC吧。"/>
+    <string name="1" value="这是关于中秋节代表食物的问题。"/>
+    <string name="2" value="松饼、芋头汤和花阳炙可以说是中秋节的代表食物。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9161">
+    <string name="name" value="中秋节常识2. 中秋节日食品松饼"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="2"/>
+    <string name="1" value="这是关于中秋节节日食物——松饼的问题。"/>
+    <string name="2" value="蒸松饼时一起放入松针，不仅香气怡人，还能起到防腐的作用，让食物不容易变质。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9162">
+    <string name="name" value="中秋节常识3. 中秋的名称"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="3"/>
+    <string name="1" value="这是关于中秋节名称的问题。"/>
+    <string name="2" value="中秋节也被称为加位日、秋夕、仲秋节。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9163">
+    <string name="name" value="中秋节常识4. 中国的节日"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="4"/>
+    <string name="1" value="这是关于中国传统节日的问题。"/>
+    <string name="2" value="节日蕴含着季节与自然的情怀，以及祭祀和民俗元素，是中华民族传统上庆祝的节日。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9164">
+    <string name="name" value="中秋节常识5. 农历中秋"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="5"/>
+    <string name="1" value="农历里中秋节是哪一天呢？"/>
+    <string name="2" value="中秋节是农历8月15日。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9165">
+    <string name="name" value="中秋节常识6. 中秋的汉字写法"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="6"/>
+    <string name="1" value="中秋节的汉字怎么写呢？"/>
+    <string name="2" value="中秋节写作“秋夕”，取秋天之“秋”与傍晚、西斜之“夕”二字。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9166">
+    <string name="name" value="中秋节常识7. 中秋节的民俗游戏"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="7"/>
+    <string name="1" value="中秋节最具代表性的节日游戏是什么呢？"/>
+    <string name="2" value="每年农历8月的加位日夜晚，打扮得漂漂亮亮的妇女们几十人一群聚在固定的地方，手拉着手围成圆圈，唱着带有“强羌水越来”副歌的歌谣，一边转圈一边跳着玩闹的游戏。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9167">
+    <string name="name" value="中秋节常识8. 红东白西"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="8"/>
+    <string name="1" value="祭祀桌摆放法中的“红东白西”是什么意思？"/>
+    <string name="2" value="“红东白西”指的是红色的食物摆在东边，白色的食物摆在西边。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9168">
+    <string name="name" value="中秋节常识9. 祖先的坟墓"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="9"/>
+    <string name="1" value="清除祖先坟墓上的杂草并加以打理，这叫什么？"/>
+    <string name="2" value="到祖先坟前割除杂草，叫做“伐草”。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9169">
+    <string name="name" value="中秋节常识10. 祭桌"/>
+    <string name="parent" value="中国的节日中秋"/>
+    <int name="order" value="10"/>
+    <string name="1" value="祭祀结束后吃掉祭祀食物，这叫什么？"/>
+    <string name="2" value="中秋相关的常识问答全部答完了。也了解到了许多与中秋有关的常识。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9170">
+    <string name="name" value="内拉的中秋节"/>
+    <string name="parent" value="内拉的中秋节"/>
+    <int name="order" value="1"/>
+    <string name="0" value="冒险岛管理员似乎有事要拜托废弃都市的内拉。"/>
+    <string name="1" value="冒险岛管理员说，等我准备好接受他的委托时，再来找他说话。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9171">
+    <string name="name" value="内拉的汉服"/>
+    <string name="parent" value="内拉的中秋节"/>
+    <int name="order" value="2"/>
+    <string name="0" value="决定把一套能让内拉感受到中秋气氛的汉服送给她。"/>
+    <string name="1" value="要去内拉那里，不如试试用之前拿到的废弃都市回城卷轴？"/>
+    <string name="2" value="把汉服交给了废弃都市的内拉。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9172">
+    <string name="name" value="帮内拉做事"/>
+    <string name="parent" value="内拉的中秋节"/>
+    <int name="order" value="3"/>
+    <string name="0" value="内拉说，要想悠闲地度过中秋连假，就需要有人替她做自己负责的工作。要不要帮帮这个忙呢？"/>
+    <string name="1" value="决定帮内拉消灭橙色蘑菇。她说自己已经差不多凑够数量了，我只要再打20只左右就行……我能打到吗？\n\n#o1210102# #r#a91721##k"/>
+    <string name="2" value="为了内拉的中秋节，消灭了20只橙色蘑菇。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9173">
+    <string name="name" value="内拉的满月"/>
+    <string name="parent" value="内拉的中秋节"/>
+    <int name="order" value="4"/>
+    <string name="0" value="内拉说她到现在为止还从没这么开心地度过连假呢……"/>
+    <string name="1" value="内拉问我中秋连假有没有对着月亮许愿，然后说要把一个装着能许愿的月亮的包袱送给我。是什么呢？要打开包袱看看吗？ \n\n#o9500000# #r#a91731##k"/>
+    <string name="2" value="包袱里装着一轮圆圆的满月。我对着那轮满月许下了心愿。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9180">
+    <string name="name" value="伊安的中秋节"/>
+    <string name="parent" value="伊安的中秋节"/>
+    <int name="order" value="1"/>
+    <string name="0" value="NPC冒险岛管理员是不是有什么事要拜托我呢？还是去见见他比较好。"/>
+    <string name="1" value="管理员问我要不要去看看伊安的中秋连假过得怎么样……"/>
+    <string name="2" value="管理员似乎希望伊安能开心地度过中秋连假。再去跟管理员说说话，打听更详细的信息吧。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9181">
+    <string name="name" value="向伊安问候中秋.."/>
+    <string name="parent" value="伊安的中秋节"/>
+    <int name="order" value="2"/>
+    <string name="1" value="去勇士部落见见&apos;伊安&apos;吧。"/>
+    <string name="2" value="见到了勇士部落的伊安，看看他中秋过得怎么样。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9182">
+    <string name="name" value="帮伊安做事"/>
+    <string name="parent" value="伊安的中秋节"/>
+    <int name="order" value="3"/>
+    <string name="1" value="伊安拜托我消灭30只在勇士部落附近出没、骚扰人们的野猪。 \n\n#o2230102# #r#a91821##k"/>
+    <string name="2" value="帮伊安的忙，解决了在勇士部落附近出没的野猪。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9183">
+    <string name="name" value="伊安的满月"/>
+    <string name="parent" value="伊安的中秋节"/>
+    <int name="order" value="4"/>
+    <string name="1" value="伊安说为了我的愿望，要让我看看满月……这……是幻觉吗？ \n\n#o9500001# #r#a91831##k"/>
+    <string name="2" value="望着冒险岛的满月许下了心愿。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9190">
+    <string name="name" value="艾尔玛的中秋节"/>
+    <string name="parent" value="艾尔玛的中秋节"/>
+    <int name="order" value="1"/>
+    <string name="0" value="NPC冒险岛管理员是不是有什么事要拜托我呢？还是去见见他比较好。"/>
+    <string name="1" value="要不要去看看艾尔玛是怎么过中秋的？不过在那之前，先来解答冒险岛管理员出的问题吧。"/>
+    <string name="2" value="冒险岛管理员说他很好奇艾尔玛会怎么过中秋。再去跟冒险岛管理员说说话，打听更详细的信息吧。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9191">
+    <string name="name" value="艾尔玛的刁难"/>
+    <string name="parent" value="艾尔玛的中秋节"/>
+    <int name="order" value="2"/>
+    <string name="1" value="为了看看艾尔玛是怎么过中秋的，我去了天空之城。可是……她好像……想试探一下我的实力……"/>
+    <string name="2" value="击败了食人花，让艾尔玛见识到了我的实力。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9192">
+    <string name="name" value="帮艾尔玛做事"/>
+    <string name="parent" value="艾尔玛的中秋节"/>
+    <int name="order" value="3"/>
+    <string name="1" value="决定帮艾尔玛收集20个月光精灵的月之碎片。 \n\n#k#t4000060:# #b#c4000060#/20#k"/>
+    <string name="2" value="帮艾尔玛收集了20个月光精灵的月之碎片。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9193">
+    <string name="name" value="艾尔玛的满月"/>
+    <string name="parent" value="艾尔玛的中秋节"/>
+    <int name="order" value="4"/>
+    <string name="1" value="艾尔玛把一个神奇的包袱送给了帮了她的我，让我对着满月许愿。 \n\n#o9500002# #r#a91931##k"/>
+    <string name="2" value="望着冒险岛的满月许下了心愿。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9210">
+    <string name="name" value="爱之巧克力棒"/>
+    <string name="0" value="去明珠港、射手村、天空之城和玩具城里找找#r#p2041017##k吧。他说要帮我做爱之巧克力棒……"/>
+    <string name="1" value="带着#t4031220# 1个和#t2020028# 1个去找糕点师库克斯，就能做出#t4140000#。好像#t2020028#可以在4个地方的杂货店买到……而#t4031220#似乎是怪物偶尔会掉落的…… \n\n#t4031220# #b#c4031220##k/1\n#t2020028# #b#c2020028##k/1"/>
+    <string name="2" value="按照#p2041017#的秘法，做成了具有护身符功效的爱之巧克力棒。把我名字刻在上面的爱之巧克力棒，送给心爱的人吧。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9220">
+    <string name="name" value="高考结束！幸福开始！"/>
+    <string name="0" value="听说高考一结束，就会分发祈祷祝福的曲奇。去见见管理员NPC吧。"/>
+    <string name="1" value="听说魔法密林的精灵温正在分发曲奇……要去见见他吗？"/>
+    <string name="2" value="收到了魔法密林的精灵温分发的曲奇。这小小的曲奇会有什么效果呢？？"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9230">
+    <string name="name" value="高考结束！幸福开始！！"/>
+    <string name="0" value="听说高考一结束，就会分发祈祷祝福的曲奇。去见见管理员NPC吧。"/>
+    <string name="1" value="管理员NPC说，玩具城的马塞尔正在分发满载祝福心愿的曲奇。玩具城啊……在魔法密林车站坐上开往天空之城的船……然后再在那里换乘开往玩具城的船就行了吧？"/>
+    <string name="2" value="见到了玩具城的马塞尔，拿到了曲奇。真好奇这小小曲奇的效果。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9240">
+    <string name="name" value="高考结束！幸福开始！！！"/>
+    <string name="0" value="听说高考一结束，就会分发祈祷祝福的曲奇。去见见管理员NPC吧。"/>
+    <string name="1" value="听说天空之城的冰峰雪域村里，杰德准备了一大堆曲奇正在分发。从魔法密林坐上开往天空之城的船，去冰峰雪域村看看好吗？"/>
+    <string name="2" value="坐在冰峰雪域长椅上的杰德君分给了我曲奇。这曲奇会带来什么样的祝福呢？"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9250">
+    <string name="name" value="冒险岛会员商店"/>
+    <string name="0" value="去见见出关于冒险岛会员商店问题的佩蒂特吧。"/>
+    <string name="1" value="佩蒂特正在出与冒险岛会员商店相关的问题……那家伙会出什么题呢？"/>
+    <string name="2" value="解答了冒险岛会员商店的佩蒂特出的问题。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9270">
+    <string name="name" value="新年活动：HappyNewYear"/>
+    <string name="0" value="把字母收集起来，拼出Happy New Year（新年快乐）这个词怎么样？"/>
+    <string name="1" value="把字母收集起来，拼出Happy New Year（新年快乐）这个词。"/>
+    <string name="2" value="把字母收集起来，拼出了Happy New Year（新年快乐）这个词。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9280">
+    <string name="name" value="冒险岛常识1. 水下城市"/>
+    <string name="parent" value="快乐新年"/>
+    <int name="order" value="1"/>
+    <string name="0" value="愉快的新年早晨到来了。去见见冒险岛管理员吧。"/>
+    <string name="1" value="这是关于冒险岛新追加村庄的问题。"/>
+    <string name="2" value="新追加的水下世界中，村庄的名字叫水族馆。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9281">
+    <string name="name" value="冒险岛常识2. 官方网站"/>
+    <string name="parent" value="快乐新年"/>
+    <int name="order" value="2"/>
+    <string name="0" value="愉快的新年早晨到来了。去见见冒险岛管理员吧。"/>
+    <string name="1" value="这是关于冒险岛官网上能看到的菜单的问题。"/>
+    <string name="2" value="在冒险岛官网上可以查看排名的菜单是冒险岛排行。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9282">
+    <string name="name" value="冒险岛常识3. 创建公会"/>
+    <string name="parent" value="快乐新年"/>
+    <int name="order" value="3"/>
+    <string name="0" value="愉快的新年早晨到来了。去见见冒险岛管理员吧。"/>
+    <string name="1" value="这是关于帮助创建公会的NPC的问题。"/>
+    <string name="2" value="要创建或解散公会，必须得到天空之城公会事务所里赫拉克勒斯的帮助。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9283">
+    <string name="name" value="冒险岛常识4. 钟楼的BOSS"/>
+    <string name="parent" value="快乐新年"/>
+    <int name="order" value="4"/>
+    <string name="0" value="愉快的新年早晨到来了。去见见冒险岛管理员吧。"/>
+    <string name="1" value="这是关于出现在玩具城钟楼动力室的BOSS怪物的问题。"/>
+    <string name="2" value="出现在玩具城钟楼动力室的BOSS怪物是帕普拉图斯。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9284">
+    <string name="name" value="冒险岛常识5. 飞艇运行时间"/>
+    <string name="parent" value="快乐新年"/>
+    <int name="order" value="5"/>
+    <string name="0" value="愉快的新年早晨到来了。去见见冒险岛管理员吧。"/>
+    <string name="1" value="这是关于往返于维多利亚岛和奥西利亚大陆之间的飞艇的问题。"/>
+    <string name="2" value="往返于维多利亚岛和奥西利亚大陆的飞艇每15分钟出发一次。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9290">
+    <string name="name" value="太公对妻子的爱"/>
+    <string name="0" value="去水下世界找找把船停在水上钓鱼的太公吧。"/>
+    <string name="1" value="在小船上悠闲钓鱼的太公说没能找到要带给妻子的#t4000166#，正满心忧愁。于是我决定替太公收集#b#t4000166# 20个#k，送给住在林中之城的太公妻子#b燕子奶奶#k。\n\n#t4000166# #b#c4000166##k/20"/>
+    <string name="2" value="按照在小船上钓鱼的太公的嘱托，收集了#t4000166# 20个，送给了他的妻子燕子奶奶。燕子奶奶说让我白辛苦一场很抱歉，又道了谢。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9291">
+    <string name="name" value="猎虎"/>
+    <string name="0" value="听说住在林中之城的朴大爷正在召集能消灭老虎的人……"/>
+    <string name="1" value="住在林中之城的朴大爷说，黑山附近经常出没的虎杰吓到了人们，让我抓10只虎杰，再带10张虎皮作为证据回来。\n\n#t4000171# #b#c4000171##k/10\n#o5100005# #r#a92911#"/>
+    <string name="2" value="受朴大爷之托，抓了10只住在黑山、吓唬林中之城居民的虎杰，并带回10张虎皮作为证据。朴大爷对我的勇猛赞叹不已。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9292">
+    <string name="name" value="燕子奶奶的坛子"/>
+    <string name="0" value="听说住在林中之城的燕子奶奶手很巧，很会做陶罐。"/>
+    <string name="1" value="因为需要新陶罐，就去水车磨坊前找了燕子奶奶。奶奶说感谢我之前帮她丈夫跑腿，特地便宜卖给我一个陶罐。#b5千金币#k……这真的算便宜吗？"/>
+    <string name="2" value="花了5千金币买下了燕子奶奶的陶罐。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9300">
+    <string name="name" value="向“武术教练”问好"/>
+    <string name="parent" value="新年问候"/>
+    <int name="order" value="1"/>
+    <string name="0" value="为了迎接新年，#p9010000#准备了活动，去某处找找#p9010000#吧。"/>
+    <string name="1" value="#p9010000#拜托我去向维多利亚岛各村庄的#b4位贤者#k送上新年问候，并带回最后他们给的#b某样东西#k。#p9010000#让我先去拜访#b勇士部落#k的#b#p1022000##k，向他问安。"/>
+    <string name="2" value="受#p9010000#之托，向勇士部落的#p1022000#问了安。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9301">
+    <string name="name" value="向“汉斯”问好"/>
+    <string name="parent" value="新年问候"/>
+    <int name="order" value="2"/>
+    <string name="1" value="#p9010000#拜托我去向维多利亚岛各村庄的#b4位贤者#k送上新年问候，并带回最后他们给的#b某样东西#k。按照#p9010000#的指示，拜访了勇士部落的#p1022000#并问安后，他给了我一张#b贺年卡#k，让我去拜访#b魔法密林#k的#b#p1032001##k问安。"/>
+    <string name="2" value="受#p1022000#之托，向魔法密林的#p1032001#问了安。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9302">
+    <string name="name" value="向“赫丽娜”问好"/>
+    <string name="parent" value="新年问候"/>
+    <int name="order" value="3"/>
+    <string name="1" value="#p9010000#拜托我去向维多利亚岛各村庄的#b4位贤者#k送上新年问候，并带回最后他们给的#b某样东西#k。按照#p9010000#的指示，拜访了勇士部落的#p1022000#和魔法密林的#p1032001#并问安后，他给了我一张#b贺年卡#k，让我去拜访#b射手村#k的#b#p1012100##k问安。"/>
+    <string name="2" value="受#p1032001#之托，向射手村的#p1012100#问了安。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9303">
+    <string name="name" value="向“达克鲁”问好"/>
+    <string name="parent" value="新年问候"/>
+    <int name="order" value="4"/>
+    <string name="1" value="#p9010000#拜托我去向维多利亚岛各村庄的#b4位贤者#k送上新年问候，并带回最后他们给的#b某样东西#k。按照#p9010000#的指示，拜访了勇士部落的#p1022000#、魔法密林的#p1032001#和射手村的#p1012100#并问安后，他给了我一张#b贺年卡#k，让我去拜访#b废弃都市#k的#b#p1052001##k问安。"/>
+    <string name="2" value="受#p1012100#之托，向废弃都市的#p1052001#问了安。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9304">
+    <string name="name" value="送福袋"/>
+    <string name="parent" value="新年问候"/>
+    <int name="order" value="5"/>
+    <string name="1" value="按照#p9010000#的嘱托，向维多利亚岛的#b4位贤者#k都问过安之后，废弃都市的#p1052001#送了我#b#t3993003##k。得带着这个回去找#b#p9010000##k。"/>
+    <string name="2" value="把从#p1052001#那里收到的#b#t3993003##k交给了冒险岛管理员。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9305">
+    <string name="name" value="竹福笊篱与福袋"/>
+    <string name="parent" value="新年问候"/>
+    <int name="order" value="6"/>
+    <string name="1" value="向#p9010000#交出#p1052001#给的#t3993003#后，他说只要带来#b#t3993000# 5个#k，就会送我礼物。他想送什么礼物呢？\n\n#t3993000# #b#c3993000##k/5"/>
+    <string name="2" value="受#p9010000#之托，去向维多利亚岛各村庄的#b4位贤者#k送上新年问候，一路问安回来。把问安时收到的#t3993003#和从怪物身上得到的#t3993000#交给#p9010000#后，他给了我#t2022006# 100个。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9320">
+    <string name="name" value="随风而来的故事"/>
+    <string name="parent" value="冒险岛1000日纪念活动"/>
+    <int name="order" value="1"/>
+    <string name="0" value="随着怪物开始出现，和平的冒险岛世界开始动摇。为了冒险岛的和平，旅行者们迈开脚步，从那之后1000天过去了。为了拯救冒险岛而最先鼓起勇气来到这里的那个英雄，如今身在何方？？去见见据说在明珠港第一个遇见他的#b约翰#k吧。"/>
+    <string name="1" value="我向看起来沉默寡言的约翰搭话，他用一句&quot;你听到传闻了吗？&quot;开始讲起自己遇见那位英雄的故事。他说很想知道那位给自己勇气的英雄如今在哪里。我也一样啊？约翰说他曾把曼吉介绍给那位英雄……要不要去战士的村庄看看？"/>
+    <string name="2" value="似乎稍微找到了一点明珠港的约翰所说的那位英雄的踪迹。从曼吉那里听说了冒险岛陷入混乱的经过，还说那位英雄至今一直在旅行，消灭怪物……"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9321">
+    <string name="name" value="他的背包"/>
+    <string name="parent" value="冒险岛1000日纪念活动"/>
+    <int name="order" value="2"/>
+    <string name="0" value="对于一千天前出现的那位英雄的下落，他只说杳无音讯……曼吉还有没有记得更清楚的事情呢？"/>
+    <string name="1" value="他说大约500天前，那位英雄浑身伤痕地出现，讲了自己弄丢背包的事。据说那背包里写着那位旅行者今后的计划……在途经野猪地区时，被突然袭击的野猪抢走了背包…… "/>
+    <string name="2" value="从野猪那里夺回来的背包里，装着各种药水、冒险岛旗帜……还有他的日记本。曼吉把日记本交给我，让我照着日记里写的线索出发去找他。  "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9322">
+    <string name="name" value="英雄的下落"/>
+    <string name="parent" value="冒险岛1000日纪念活动"/>
+    <int name="order" value="3"/>
+    <string name="0" value="来看看从背包里拿出的日记本吧。"/>
+    <string name="1" value="翻开从背包里拿出的日记本吧，里面写着来到这里后记下的旅行记录。似乎也能知道他今后的计划……翻翻日记本，找找他去了哪里吧。"/>
+    <string name="2" value="在副本的另一扇门前遇见了葛温。为了他的理想，竟然能做出那样的牺牲……我决定帮助葛温，直到冒险岛迎来和平的那一天……冒险不能停下。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9323">
+    <string name="name" value="冒险岛1000日纪念旗帜"/>
+    <string name="parent" value="冒险岛1000日纪念活动"/>
+    <int name="order" value="4"/>
+    <string name="0" value="葛温似乎想表达一下谢意。"/>
+    <string name="1" value="葛温说作为谢礼，要把我持有的冒险岛1000天纪念旗帜的移动速度属性提升到15……"/>
+    <string name="2" value="葛温作为谢礼，把我持有的冒险岛1000天纪念旗帜的移动速度属性提升到了15。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9324">
+    <string name="name" value="约翰的英雄葛温"/>
+    <string name="parent" value="冒险岛1000日纪念活动"/>
+    <int name="order" value="5"/>
+    <string name="0" value="约翰所说的那位英雄的名字是……"/>
+    <string name="1" value="告诉他约翰所说的那位英雄的名字吧。"/>
+    <string name="2" value="冒险岛世界陷入混乱，为了拯救这个世界而最先踏上这片土地的他，名字叫葛温。2006年1月22日，正是迎来1000天的喜庆日子。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9325">
+    <string name="name" value="葛温丢失的日记本"/>
+    <string name="0" value="把葛温的日记本弄丢了……要不要跟曼吉实话实说呢？"/>
+    <string name="1" value="关于弄丢的日记本，我如实告诉了曼吉。"/>
+    <string name="2" value="原来弄丢的日记本在曼吉手里。他一脸大失所望……却又像没办法似的，把日记本给了我。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9330">
+    <string name="name" value="明明女士的祭桌"/>
+    <string name="0" value="听说为了迎接春节，管理员有事要拜托。"/>
+    <string name="1" value="据说在维多利亚岛，由#b#p1012106##k带头，大家为了欢度春节正在准备摆放祭桌。可是有几样水果不够，#p1012106#正为此发愁……#b#p9010000##k拜托我凑齐缺少的水果给她送去，这可不能不管吧？\n\n#t2022053# #b#c2022053##k/13\n#t2022054# #b#c2022054##k/5\n#t2022055# #b#c2022055##k/7\n#t2022056# #b#c2022056##k/9\n#t2010000# #b#c2010000##k/5"/>
+    <string name="2" value="把#t2022053# 13个、#t2022054# 5个、#t2022055# 7个、#t2022056# 9个、#t2010000# 5个交给了明明女士，得到了一盘#t2022058#。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9331">
+    <string name="name" value="送饺子到勇士部落"/>
+    <string name="0" value="端着#t2022058#去找#p9010000#吧。"/>
+    <string name="1" value="#b#p9010000##k建议我带着帮忙摆祭桌得到的#b#t2022058# 3个#k，去#b#m102000000##k找#b#p1020000##k拜年。"/>
+    <string name="2" value="听从#p9010000#的建议，带着#t2022058# 3个去#m102000000#找#p1020000#拜了年。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9332">
+    <string name="name" value="朴大爷的祭桌"/>
+    <string name="0" value="听说为了迎接春节，管理员有事要拜托。"/>
+    <string name="1" value="据说在奥西利亚大陆，由#b#p2071000##k带头，大家为了欢度春节正在准备摆放祭桌。可是有几样材料不够，#p2071000#正为此发愁……#b#p9010000##k拜托我凑齐缺少的材料给他送去，这可不能不管吧？\n\n#t2022057# #b#c2022057##k/10\n#t2010002# #b#c2010002##k/10\n#t4000088# #b#c4000088##k/10"/>
+    <string name="2" value="把#t2022057# 10个、#t2010002# 10个、#t4000088# 10个交给了朴大爷，得到了一盘#t2022058#。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9333">
+    <string name="name" value="送饺子到地球防御本部"/>
+    <string name="0" value="端着#t2022058#去找#p9010000#吧。"/>
+    <string name="1" value="#b#p9010000##k建议我带着帮忙摆祭桌得到的#b#t2022058# 3个#k，去#b#m221000000##k找#b#p2050008##k拜年。"/>
+    <string name="2" value="听从#p9010000#的建议，带着#t2022058# 3个去#m221000000#找#p2050008#拜了年。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9340">
+    <string name="name" value="白色情人节：草莓糖"/>
+    <string name="0" value="可以把亲手准备材料做成的糖果送给心爱的人。去村里找糕点师库克斯，就能做出蕴含爱之力量的白色情人节糖果。"/>
+    <string name="1" value="#b#p2041017##k说，只要把糖果材料收集来，就会帮我做草莓糖果，并给糖果注入神秘的力量。#t04031124#和#t04031122#可以通过狩猎怪物获得，#t04031125#则可以从#b可可#k那里购买。 \n\n#t04031124# #b#c04031124##k / 3\n#t04031122# #b#c04031122##k / 1\n#t04031125# #b#c04031125##k / 1"/>
+    <string name="2" value="通过糕点师库克，做成了饱含爱之力量的#t4140102#。 \n\n&quot;爱的力量会守护着你……&quot;"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9341">
+    <string name="name" value="白色情人节：糖果篮"/>
+    <string name="0" value="据说收集#t4140102#，就能帮我做一个爱之力量持续更久的糖果篮…… "/>
+    <string name="1" value="#b#p2041017##k说，只要带着#t4140102#再多收集一些其他材料，就帮我做有效期更长的#b#t4140201##k。据说它的有效期比之前的糖果更长，有#r3天#k…… \n\n#t4140102# #b#c4140102##k / 1\n\n#t4031113# #b#c4031113##k / 1\n#t4031114# #b#c4031114##k / 1"/>
+    <string name="2" value="通过#p2041017#，为纪念白色情人节，做成了要送给心爱之人的糖果篮。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9350">
+    <string name="name" value="新心新出发"/>
+    <string name="0" value="听说为了迎接毕业和入学，管理员准备了一份小小的礼物……"/>
+    <string name="1" value="去特奥那里领香水吧。去之前一定要带上香水瓶哦~ \n\n#t4031257# #b#c4031257##k/3"/>
+    <string name="2" value="从特奥那里拿到的香水还挺好用的吧？"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9351">
+    <string name="name" value="新心新出发！"/>
+    <string name="0" value="听说为了迎接毕业和入学，管理员准备了一份小小的礼物……"/>
+    <string name="1" value="去舒米那里领香水吧。去之前一定要带上#t4031257#、#t4000006#和#t4000012#哦~ \n\n#t4031257# #b#c4031271##k/5\n#t4000006# #b#c4000006##k/20\n#t4000012# #b#c4000012##k/30"/>
+    <string name="2" value="舒米给的香水还挺管用的吧？"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9352">
+    <string name="name" value="新心新出发！！"/>
+    <string name="0" value="听说为了迎接毕业和入学，管理员准备了一份小小的礼物……"/>
+    <string name="1" value="去林中之城的孔姬那里之前，先准备好#t4031257# 7个和#t4031258# 5朵吧。\n\n#t4031257# #b#c4031272##k/7\n#t4031258# #b#c4031258##k/5"/>
+    <string name="2" value="孔姬给的香水还挺好用的。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9360">
+    <string name="name" value="猴子宠物指令"/>
+    <string name="0" value="如果有猴子宠物的话，不如去找找管理员？他说会告诉我可以对猴子宠物使用的命令……"/>
+    <string name="1" value="他让我把猴子宠物的亲密度提升+2之后再来找他。命令有……坐下、爱你、便便……还有别的什么来着？"/>
+    <string name="2" value="把猴子宠物的亲密度提升了2之后去找他，拿到了写着猴子宠物命令的说明书和一些宠物饲料。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9370">
+    <string name="name" value="怪物的袭击"/>
+    <string name="0" value="#p9010000#说为了村庄的和平有事要拜托……"/>
+    <string name="1" value="很久以前，一位勇士封印了邪恶的怪物，如今封印的力量渐渐减弱，邪恶的怪物们被释放了出来。听说从封印中逃出的怪物们发动袭击，村庄陷入了危机……#b#p9010000##k拜托勇敢的冒险者们从袭击村庄的怪物手中守护村庄，并夺回它们力量的源泉——#b#t4031282# 1个#k带回来。"/>
+    <string name="2" value="多位冒险者齐心协力，村庄又恢复了宁静，但看起来并不会永远安宁。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9371">
+    <string name="name" value="封印邪恶气息"/>
+    <string name="0" value="不知道#t4031282#的封印怎么就解开了……总之，去找据说能封印#t4031282#的#p1061011#，前往#m105040300#吧。"/>
+    <string name="1" value="在#m105040300#见到了#b#p1061011##k。他说要打造能封印#b#t4031282##k的锁，需要精炼过的#b#t4011001# 1个#k。\n\n#t4031282#  #b#c4031282##k / 1\n#t4011001#  #b#c4011001##k / 1"/>
+    <string name="2" value="在#p1061011#的帮助下，封印了邪恶的气息。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9372">
+    <string name="name" value="寻找记忆者..."/>
+    <string name="0" value="击退了袭击村庄的怪物，把#t4031282#交给了#p9010000#。#p9010000#看到危险的#t4031282#，感到了恐惧……"/>
+    <string name="1" value="看到#t4031282#后感到危险的#b#p9010000##k，给我介绍了能封印#b#t4031282##k的人。他的名字叫#b#p1061011##k……据说要找到他，得去位于副本中的村庄#r#m105040300##k……"/>
+    <string name="2" value="在位于副本中的村庄#m105040300#找到了&apos;#p1061011#&apos;。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9386">
+    <string name="name" value="冒险岛3周年纪念派对"/>
+    <string name="0" value="听说冒险岛为迎接3周年要举办活动。去村里找找#b#p9010000##k吧。"/>
+    <string name="1" value="去获取从村庄附近出没的怪物身上掉落的#b#t04031297##k吧。 \n\n#t04031297:# #b#c4031297#/1"/>
+    <string name="2" value="带着派对邀请函前去，确认了我是冒险岛世界的旅行者，并得到了#b#t1002508##k。#b#p9010000##k让我去见见没能来参加派对的明珠港的#b#p1002100##k。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9387">
+    <string name="name" value="获得简的派对参加许可"/>
+    <string name="0" value="住在明珠港的#b#p1002100##k也说想参加3周年纪念派对……  就帮帮#b#p1002100##k去参加派对的事吧。"/>
+    <string name="1" value="#b#p1002100##k想给父亲做一锅蘑菇火锅，好得到参加派对的许可。 \n #e蘑菇火锅的材料#n \n#t04000011:# #b#c04000011#/5#k \n#t04000009:# #b#c04000009#/5#k \n#t04000012:# #b#c04000012#/20#k \n#t04000015:# #b#c04000015#/20 \n #r!注意：#b#t1002508##k绝对不能弄丢。"/>
+    <string name="2" value="帮助#b#p1002100##k去参加派对之后，  #b#t01002508##k被打造得更加强力了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9388">
+    <string name="name" value="帮简跑腿"/>
+    <string name="0" value="住在明珠港的#b#p1002100##k说也想去参加3周年纪念派对.. 我们就帮#b#p1002100##k去参加派对吧。"/>
+    <string name="1" value="#b#p1002100##k说，在完成父亲交代的跑腿之前不能去参加派对。  那我们就帮#b#p1002100##k完成跑腿，好让他能去派对吧。 \n\n#o2230100#  #r#a93881##k\n#o3230100#  #r#a93882##k \n#r!注意：#b#t1002508##k绝对不能丢失。 "/>
+    <string name="2" value="帮助#b#p1002100##k去参加派对之后，  #b#t01002508##k被打造得更加强力了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9389">
+    <string name="name" value="和简一起去派对"/>
+    <string name="0" value="住在明珠港的#b#p1002100##k说也想去参加3周年纪念派对.. 我们就帮#b#p1002100##k去参加派对吧。"/>
+    <string name="1" value="为了和#b#p1002100##k一起去参加派对，必须消灭强大的怪物，向父亲证明自己是强大的旅行者。 \n\n#t04000028:# #b#c04000028:#/3#k \n#t04000046:# #b#c04000046:#/3#k \n#o7130100#  #r#a93891##k\n#o7130101#  #r#a93892##k  \n#r!注意：#b#t1002508##k绝对不能丢失。 "/>
+    <string name="2" value="帮助#b#p1002100##k去参加派对之后，  #b#t01002508##k被打造得更加强力了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9390">
+    <string name="name" value="丢失的冒险岛帽子"/>
+    <string name="0" value="如果在执行任务前弄丢了#b#t01002508##k，就再去村里找冒险岛运营员吧。"/>
+    <string name="1" value="得有一份多余的#b#t01002508##k送给旅行者才行.."/>
+    <string name="2" value="幸好又拿到了#b#t01002508##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9391">
+    <string name="name" value="伊卡路斯丢失的邀请券"/>
+    <string name="0" value="今年儿童节又如期到来了。#b#p9010000##k说为了准备儿童节忙得不可开交。看来人手会很不够，我们去找#b#p9010000##k吧。"/>
+    <string name="1" value="去弄到#b#t04031301##k，交给废弃都市的#b#p1052106##k吧。 \n\n#b#t04031301:# #k#c04031301#/1#k"/>
+    <string name="2" value="帮#b#p1052106##k找回了丢失的#b#t04031301##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9392">
+    <string name="name" value="洛尼丢失的邀请券"/>
+    <string name="0" value="#b#p1052106##k说没有一起逛动物园的朋友。我们就帮#b#p1052106##k和朋友一起去动物园吧。"/>
+    <string name="1" value="去找到#b#t04031304##k，交给住在魔法密林北部森林某处的#b#p1061004##k吧。 \n\n#b#t04031304:# #k#c04031304#/1#k"/>
+    <string name="2" value="帮助#b#p1061004##k在儿童节这天得以去水族馆动物园。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9393">
+    <string name="name" value="为孩子们消灭怪物"/>
+    <string name="0" value="#b#p9010000##k说为了准备儿童节非常忙碌。好像很需要帮忙.. 我们去找#b#p9010000##k吧。"/>
+    <string name="1" value="他说希望我们消灭那些欺负在世界各地旅行的孩子们的怪物。\n\n#o0130101# #r#a93933##k \n#o0210100# #r#a93931##k\n#o0130100# #r#a93932##k "/>
+    <string name="2" value="答应了#b#p9010000##k的请求，获得了#b#t4140103##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9394">
+    <string name="name" value="坎特的委托"/>
+    <string name="0" value="不久前我帮#b#p1061004##k找回了丢失的水族馆邀请券，#b#p1061004##k让我向#b#p9010000##k转达谢意。我们去找#b#p9010000##k吧。"/>
+    <string name="1" value="#b#p9010000##k收到了水下世界动物园的#b#p2060005##k需要帮助的消息，但说自己忙着准备儿童节。我们就代替#b#p9010000##k去帮#b#p2060005##k吧。"/>
+    <string name="2" value="我们就代替#b#p9010000##k去帮#b#p2060005##k吧。#b#p2060005##k说他住在水下世界某处.."/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9395">
+    <string name="name" value="为动物们准备的特餐"/>
+    <string name="0" value="水族馆动物园的饲养员#b#p2060005##k说有事相求。"/>
+    <string name="1" value="#b#p2060005##k让我带些给动物园伙伴们吃的食物来。 \n\n#b#t02010003:# #k#c02010003#/3#k \n#b#t04000029:# #k#c04000029#/30#k \n#b#t04000166:# #k#c04000166#/50#k"/>
+    <string name="2" value="代替#b#p2060005##k给动物园的伙伴们准备了特餐，获得了#b#t04140103##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9396">
+    <string name="name" value="打扫水下世界"/>
+    <string name="0" value="水族馆动物园的饲养员#b#p2060005##k说忙着准备儿童节.."/>
+    <string name="1" value="#b#p2060005##k希望我为了儿童节来动物园的游客们，消灭附近的鱼类。 \n\n#o4230201# #r#a93961##k \n#o4230124# #r#a93963##k\n#o4230123# #r#a93962# "/>
+    <string name="2" value="帮#b#p2060005##k准备了儿童节，获得了#b#t4140103##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9397">
+    <string name="name" value="给太阳公公送礼物"/>
+    <string name="0" value="不久前我帮#b#p1061004##k找回了丢失的水族馆邀请券，#b#p1061004##k让我向#b#p9010000##k转达谢意。我们去找冒险岛运营员吧。"/>
+    <string name="1" value="林中之城的#b#p2071008##k说没有朋友，很孤单。我们就从玩具城买些#b#p2071008##k能玩的玩偶送给他吧。 \n\n#b#t04000108:# #k#c004000108#/50#k \n#b#t04000109:# #k#c04000109#/50#k \n#b#t04000143:# #k#c04000143#/50#k \n#b#t04000147:# #k#c04000147#/10#k"/>
+    <string name="2" value="作为儿童节礼物，我把玩偶送给了#b#p2071008##k，并收到了#b#t4140103##k作为回礼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9398">
+    <string name="name" value="丑陋雕像的秘密"/>
+    <string name="0" value="据说流传已久的关于神秘怪物雕像的传说被证实是真的.. 我们去找#b#p9010000##k，听听与那个传说有关的故事吧。"/>
+    <string name="1" value="我们去找揭开了怪物雕像传说真相的#b#p2040050##k吧。"/>
+    <string name="2" value="我见到了知道怪物水晶雕像秘密的#b#p2040050##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9399">
+    <string name="name" value="神秘的怪物水晶雕像"/>
+    <string name="0" value="据说#b#p2040050##k揭开了不起眼的怪物雕像的秘密。我们去找#b#p2040050##k吧。"/>
+    <string name="1" value="去弄到#b#p2040050##k所说的宝石吧。\n\n#t04020000:# #b#c04020000#/3#k \n#t04020001:# #b#c04020001#/3#k \n#t04020005:# #b#c04020005#/3#k"/>
+    <string name="2" value="把宝石带过去后，他把不起眼的怪物雕像变成了怪物水晶雕像。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9400">
+    <string name="name" value="冒险岛管理员的3周年祝贺"/>
+    <string name="0" value="#b#p9010000##k说，值此冒险岛正式运营3周年之际，想向一直热爱冒险岛的各位转达谢意。"/>
+    <string name="1" value="冒险岛能够三年来一直受到大家的喜爱，全靠各位。"/>
+    <string name="2" value="今后也请多多喜爱冒险岛。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9401">
+    <string name="name" value="汉斯的第一个礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧。"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161002##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向魔法密林的大魔法师#b#p1032001##k大人展示了#b#t04161002##k，他送了我一份小礼物。感觉每天去拜访他、展现诚意，就会有好事发生。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9402">
+    <string name="name" value="汉斯的第二个礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161003##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向#b#p1032001##k大人展示了#b#t04161003##k，他送了我一个冒险岛诞生纪念蛋糕。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9403">
+    <string name="name" value="汉斯的第三个礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧。"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161004##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向#b#p1032001##k大人展示了#b#t04161004##k，他送了我一个冒险岛诞生纪念蛋糕。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9404">
+    <string name="name" value="汉斯的第四个礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧。"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161005##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向#b#p1032001##k大人展示了#b#t04161005##k，他送了我一个冒险岛诞生纪念蛋糕。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9405">
+    <string name="name" value="汉斯的第五个礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧。"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161006##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向#b#p1032001##k大人展示了#b#t04161006##k，他送了我一个冒险岛诞生纪念蛋糕。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9406">
+    <string name="name" value="汉斯的第六个礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧。"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161006##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向#b#p1032001##k大人展示了#b#t04161006##k，他送了我一个冒险岛诞生纪念蛋糕。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9407">
+    <string name="name" value="汉斯的第七个礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧。"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161008##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向#b#p1032001##k大人展示了#b#t04161008##k，他送了我一个冒险岛诞生纪念蛋糕。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9408">
+    <string name="name" value="汉斯的第八个礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧。"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161008##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向#b#p1032001##k大人展示了#b#t04161008##k，他送了我一个冒险岛诞生纪念蛋糕。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9409">
+    <string name="name" value="汉斯的第九个礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧#b#p9010000##k把#b#t04161010##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161010##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向#b#p1032001##k大人展示了#b#t04161010##k，他送了我一个冒险岛诞生纪念蛋糕。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9410">
+    <string name="name" value="汉斯的最后礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人给#b#p9010000##k带来了好消息。我们去找#b#p9010000##k听听吧。"/>
+    <string name="1" value="#b#p9010000##k把#b#t04161011##k交给我，说拿给魔法密林的魔法师#b#p1032001##k大人看，他一定会非常高兴。"/>
+    <string name="2" value="向#b#p1032001##k大人展示了#b#t04161011##k，他送了我一个冒险岛诞生纪念蛋糕。 "/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9411">
+    <string name="name" value="汉斯的特别礼物"/>
+    <string name="0" value="据说魔法密林的大魔法师#b#p1032001##k大人要给真诚的旅行者一份大礼。"/>
+    <string name="1" value="看来你真是个真诚的旅行者啊。"/>
+    <string name="2" value="我的真诚得到了认可，获得了#b#t04031019##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9421">
+    <string name="name" value="制作秘密可口可乐原液"/>
+    <string name="0" value="我们去找知道可口可乐制造法的#b#p9001005##k吧。"/>
+    <string name="1" value="去可乐玩网站 (#bwww.cokeplay.com#k) 就能获得#b#t4031325##k的材料。  \n\n#t4031322:# #b#c4031322#/1#k \n#t4031323:# #b#c4031323#/1#k \n#t4031324:# #b#c4031324#/1#k "/>
+    <string name="2" value="把#b#t4031322#、#t4031323#、#t4031324##k适当混合，试着做出了#b#t4031325##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9422">
+    <string name="name" value="美味的可口可乐"/>
+    <string name="0" value="把#b#t04031325##k拿去交给#b#p9001002##k吧。"/>
+    <string name="1" value="为了帮#b#p9001002##k做可口可乐，我们去把材料找来给他吧。\n\n#t02022000:# #b#c02022000#/1#k \n#t4031325# #b#c4031325#/1#k"/>
+    <string name="2" value="帮#b#p9001002##k制作了可口可乐，获得了#t01092035#。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9423">
+    <string name="name" value="北极熊罗洛的闪亮星星"/>
+    <string name="0" value="我们去找住在可乐城的#b#p9001001##k吧。"/>
+    <string name="1" value="我们就送喜欢星星的#b#p9001001##k一颗闪闪发光的可口可乐宝石来代替星星吧。 \n\n#t04000214:# #b#c04000214#/100#k  "/>
+    <string name="2" value="我向喜欢星星的#b#p9001001##k送上了闪闪发光的#t04000214#。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9424">
+    <string name="name" value="北极熊罗洛看天空"/>
+    <string name="0" value="我们去找住在可乐城的#b#p9001001##k吧。"/>
+    <string name="1" value="为了帮助喜欢星星的#b#p9001001##k能在更近一点的地方看星星，我们帮他做垫脚台吧。 \n\n#t04000221:# #b#c04000221#/200#k "/>
+    <string name="2" value="我帮喜欢星星的#b#p9001001##k能在更近一点的地方看到星星了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9425">
+    <string name="name" value="北极熊罗洛的通天梯1"/>
+    <string name="0" value="我们去找住在可乐城的#b#p9001001##k吧。"/>
+    <string name="1" value="为了帮助喜欢星星的#b#p9001001##k能爬到天空顶端欣赏星星，我们帮他做梯子吧。 \n\n#t04000216:# #b#c04000216#/100#k \n#t04000217:# #b#c04000217#/100#k"/>
+    <string name="2" value="我帮#b#p9001001##k做好梯子，让他能爬到天空顶端了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9426">
+    <string name="name" value="北极熊罗洛的通天梯2"/>
+    <string name="0" value="我们去找住在可乐城的#b#p9001001##k吧。"/>
+    <string name="1" value="为了帮助喜欢星星的#b#p9001001##k能爬到天空顶端欣赏星星，我们帮他做梯子吧。 \n\n#t04000211:# #b#c04000211#/100#k \n#t04000212:# #b#c04000212#/100#k"/>
+    <string name="2" value="我帮#b#p9001001##k爬到天空顶端看到了星星。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9427">
+    <string name="name" value="北极熊波奇的雪橇制作"/>
+    <string name="0" value="我们去找可乐城的#b#p9001002##k吧。"/>
+    <string name="1" value="我们去帮#b#p9001002##k收集做雪橇的材料吧。 \n\n#t04000216:# #b#c04000216#/30#k \n#t04000217:# #b#c04000217#/30#k \n#t04000209:# #b#c04000209#/10#k \n#t04000210:# #b#c04000210#/10#k "/>
+    <string name="2" value="我帮#b#p9001002##k做好了要送给哥哥的雪橇。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9428">
+    <string name="name" value="疼爱弟弟的北极熊普奇"/>
+    <string name="0" value="#b#p9001005##k说因为淘气的弟弟很操心。我们去找住在可乐城的北极熊普奇吧。"/>
+    <string name="1" value="我们帮#b#p9001002##k能安全地在村外走动吧。\n\n#o9500145# #r#a94281##k \n#o9500146# #r#a94282##k"/>
+    <string name="2" value="我帮#b#p9001005##k的弟弟能安全地在村外走动了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9429">
+    <string name="name" value="北极熊兄弟的冰屋建造"/>
+    <string name="0" value="据说可乐城有名的好兄弟波奇和普奇住的冰屋损坏得很严重。我们去找#b#p9001005##k看看有没有能帮忙的事吧。"/>
+    <string name="1" value="我们帮普奇和波奇建新冰屋吧。\n\n#t04000218:# #b#c04000218#/100#k \n#t04000219:# #b#c04000219#/50#k \n#t04000220:# #b#c04000220#/40#k "/>
+    <string name="2" value="我帮北极熊兄弟普奇和波奇建好了冰屋。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9430">
+    <string name="name" value="无聊的北极熊波奇"/>
+    <string name="0" value="我们去找可乐城的#b#p9001002##k吧。"/>
+    <string name="1" value="我们去帮#b#p9001002##k收集和哥哥一起玩的卡片吧。 \n\n#t04000213:# #b#c04000213#/100#k"/>
+    <string name="2" value="我收集了卡片送给#b#p9001002##k，免得他无聊。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9440">
+    <string name="name" value="避暑计划初级第1阶段"/>
+    <string name="0" value="要是被酷暑烦得不行，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="#b#p9010000##k说，一边狩猎怪物一边试着忘掉炎热吧。 \n\n#t04000004:# #b#c04000004#/100#k "/>
+    <string name="2" value="我见到#b#p9010000##k，完成了逃离酷暑计划第1阶段。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9441">
+    <string name="name" value="避暑计划初级第2阶段"/>
+    <string name="0" value="要是被酷暑烦得不行，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="#b#p9010000##k说，希望我们消灭那些因为天气炎热而对旅行者使坏的怪物。 \n\n#o1210100# #r#a94411##k \n#o1120100# #r#a94412##k"/>
+    <string name="2" value="我见到#b#p9010000##k，顺利完成了逃离酷暑计划"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9442">
+    <string name="name" value="避暑计划中级第1阶段"/>
+    <string name="0" value="要是被酷暑烦得不行，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="#b#p9010000##k说，去白雪覆盖的冰峰雪域狩猎，试着忘掉炎热吧。 \n\n#t4000086:# #b#c4000086#/100#k "/>
+    <string name="2" value="我见到#b#p9010000##k，完成了逃离酷暑计划第1阶段。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9443">
+    <string name="name" value="避暑计划中级第2阶段"/>
+    <string name="0" value="要是被酷暑烦得不行，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="#b#p9010000##k说，在清凉的大海里游泳，试着忘掉炎热吧。 \n\n#o3210450# #r#a94431##k \n#o4230201# #r#a94432##k"/>
+    <string name="2" value="我见到#b#p9010000##k，顺利完成了逃离酷暑计划。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9444">
+    <string name="name" value="避暑计划高级第1阶段"/>
+    <string name="0" value="要是被酷暑烦得不行，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="#b#p9010000##k说，去弥漫着凉气的副本里避暑吧。 \n\n#e所需道具数量#n \n#t04000185:# #b#c04000185#/100#k "/>
+    <string name="2" value="我见到#b#p9010000##k，完成了逃离酷暑计划第1阶段。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9445">
+    <string name="name" value="避暑计划高级第2阶段"/>
+    <string name="0" value="要是被酷暑烦得不行，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="#b#p9010000##k说，在冰峰雪域消灭可怕的怪物，试着战胜炎热吧。 \n\n#o7130200# #r#a94451##k \n#o8140000# #r#a94452##k"/>
+    <string name="2" value="我见到#b#p9010000##k，顺利完成了逃离酷暑计划。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9450">
+    <string name="name" value="特奥回忆往事1"/>
+    <string name="0" value="听说去明珠港找#b#p1002001##k就能得到帮助..."/>
+    <string name="1" value="我在明珠港见到了#b#p1002001##k。#b#p1002001##k看到我后，说想起了自己年轻时冒险吃苦的日子，说想帮帮我。他说只要我收集#b#t4000016# 100个#k和#b#t4000004# 50个#k来，就承认我的发展潜力并给予支持... 哼！对将来要成为帅气冒险家的我来说，这点小事算什么。 \n\n#t4000016# #b#c4000016#/100#k\n#t4000004# #b#c4000004#/50#k"/>
+    <string name="2" value="我向在明珠港见到的#b#p1002001##k展示了自己作为冒险家的素质。#b#p1002001##k认可了我的能力，并资助了我旅行所需的资金。我要以这笔资金为基础，一定要成为帅气的冒险家。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9451">
+    <string name="name" value="特奥回忆往事2"/>
+    <string name="0" value="我们再去拜访之前帮过我的#b#p1002001##k吧。"/>
+    <string name="1" value="#b#p1002001##k让我证明自己变得有多强。\n\n#t04000024# #b#c04000024#/80#k\n#t04000020# #b#c04000020#/100#k"/>
+    <string name="2" value="我向#b#p1002001##k证明了自己变得更强了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9470">
+    <string name="name" value="为牛郎织女搭鹊桥！"/>
+    <string name="0" value="我们去天空之城找#b#p2012012##k，听听牛郎织女的故事吧。"/>
+    <string name="1" value="我们帮牛郎和织女架桥，让他们在七夕能相会吧。 \n\n#t04003004# #b#c04003004#/50#k\n#t04003005# #b#c04003005#/20#k"/>
+    <string name="2" value="我帮牛郎和织女渡过银河相会了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9471">
+    <string name="name" value="为牛郎织女搭鹊桥！！"/>
+    <string name="0" value="我们去天空之城找#b#p2012012##k，听听牛郎织女的故事吧。"/>
+    <string name="1" value="我们帮牛郎和织女架桥，让他们在七夕能相会吧。 \n\n#t4000051# #b#c4000051#/70#k\n#t4000052# #b#c4000052#/10#k"/>
+    <string name="2" value="我帮牛郎和织女渡过银河相会了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9472">
+    <string name="name" value="三尾狐的故事"/>
+    <string name="0" value="如果对流传在冒险岛世界的奇怪传闻感到好奇，就去找#b#p2040050##k吧。"/>
+    <string name="1" value="我们帮忙准备为消灭三尾狐的勇士们举行的慰灵祭吧。 \n\n#o1210100# #r#a94721##k \n#t04000017# #b#c04000017#/1#k"/>
+    <string name="2" value="我帮忙准备好了为消灭三尾狐的勇士们举行的慰灵祭。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9473">
+    <string name="name" value="三尾狐的故事"/>
+    <string name="0" value="据说冒险岛世界里还流传着奇怪的传闻。我们再去拜访#b#p2040050##k吧。"/>
+    <string name="1" value="我们帮忙准备为消灭三尾狐的勇士们举行的慰灵祭吧。 \n\n#o1210100# #r#a94731##k \n#t04000017# #b#c04000017#/1#k"/>
+    <string name="2" value="我帮忙准备好了为消灭三尾狐的勇士们举行的慰灵祭。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9474">
+    <string name="name" value="废弃都市的幽灵骚动"/>
+    <string name="0" value="如果对流传在冒险岛世界的奇怪传闻感到好奇，就去找#b#p2040050##k吧。"/>
+    <string name="1" value="我们去消灭出现在废弃都市地铁里的幽灵吧。\n\n#o4230102# #r#a94741##k \n#o3230101# #r#a94742##k \n#t04000035# #b#c04000035#/20#k"/>
+    <string name="2" value="我查明了关于废弃都市出现幽灵的传闻真相。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9475">
+    <string name="name" value="废弃都市的幽灵骚动"/>
+    <string name="0" value="据说废弃都市还有幽灵出没。我们再去拜访#b#p2040050##k吧。"/>
+    <string name="1" value="我们去消灭出现在废弃都市地铁里的幽灵吧。\n\n#o4230102# #r#a94751##k \n#o3230101# #r#a94752##k \n#t04000035# #b#c04000035#/20#k"/>
+    <string name="2" value="我消灭了出现在废弃都市的幽灵。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9476">
+    <string name="name" value="黑山鬼怪骚动"/>
+    <string name="0" value="如果对流传在冒险岛世界的奇怪传闻感到好奇，就去找#b#p2040050##k吧。"/>
+    <string name="1" value="我们让吓人的鬼火不再出现吧。 \n\n#t04000208# #b#c04000208#/70#k  \n#t04000206# #b#c04000206#/30#k \n#t04000207# #b#c04000207#/30#k"/>
+    <string name="2" value="我打听了流传在黑山的传闻。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9477">
+    <string name="name" value="黑山鬼怪骚动"/>
+    <string name="0" value="据说鬼火还在出现。我们再去拜访  #b#p2040050##k吧。"/>
+    <string name="1" value=" 我们让吓人的鬼火不再出现吧。 \n\n#t04000208# #b#c04000208#/70#k  \n#t04000206# #b#c04000206#/30#k \n#t04000207# #b#c04000207#/30#k"/>
+    <string name="2" value="我帮#b#p2040050##k让勇士部落不再出现鬼火。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9490">
+    <string name="name" value="快乐世界旅行"/>
+    <string name="0" value="据说为纪念世界旅行地图开放要举办活动。我们去找#b#p9010000##k吧。"/>
+    <string name="1" value="我们通过世界旅行向导#b#p9000020##k前往#b日本的蘑菇神社#k，去见见#b#p9110002##k吧。"/>
+    <string name="2" value="我见到了在日本（蘑菇神社）的#b#p9110002##k。她说要给我介绍日本，让我再找她说话。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9491">
+    <string name="name" value="美味的团子"/>
+    <string name="0" value="我们再去和#b#p9110002##k搭话吧。"/>
+    <string name="1" value="我们去弄来#b#p9110002##k想吃的、软糯劲道的米糕#b#t2022014##k吧。 \n\n#t2022014# #b#c2022014#/1#k"/>
+    <string name="2" value="我给#b#p9110002##k弄来了好吃的#b#t2022014##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9492">
+    <string name="name" value="美味的鱼糕(串)"/>
+    <string name="0" value="我们再去和#b#p9110002##k搭话吧。"/>
+    <string name="1" value="我们去弄来#b#p9110002##k想吃的热乎乎的#b#t2022021##k吧。 \n\n#t2022021# #b#c2022021#/1#k"/>
+    <string name="2" value="我给#b#p9110002##k弄来了好吃又热乎的#b#t2022021##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9493">
+    <string name="name" value="猎乌鸦"/>
+    <string name="0" value="我们再去和#b#p9110002##k搭话吧。"/>
+    <string name="1" value="我们去消灭破坏樱花树的乌鸦吧。 \n\n#o9400000# #r#a94931##k "/>
+    <string name="2" value="现在樱花应该开满枝头了吧..."/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9494">
+    <string name="name" value="亚希子的最后委托"/>
+    <string name="0" value="#b#p9110002##k说有事相求。我们再去和她搭话吧。"/>
+    <string name="1" value="我们通过世界旅行向导#b#p9000020##k前往上海，去见见#b#p9310011##k吧。 "/>
+    <string name="2" value="我见到了#b#p9310011##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9495">
+    <string name="name" value="小摊老板吕氏的新菜单"/>
+    <string name="0" value="我们再去和#b#p9310011##k搭话吧。"/>
+    <string name="1" value="我们去帮#b#p9310011##k收集新菜单所需的材料吧。\n\n#t04000187# #b#c04000187#/100#k"/>
+    <string name="2" value="我帮了#b#p9310011##k的生意。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9496">
+    <string name="name" value="摄影师赵氏的中国导游"/>
+    <string name="0" value="我们再去和#b#p9310011##k搭话吧。"/>
+    <string name="1" value="我们去见见经常去上海旅行的#b#p9310012##k吧。"/>
+    <string name="2" value="我见到了#b#p9310012##k。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9497">
+    <string name="name" value="帮杨叔叔干活"/>
+    <string name="0" value="我们再去和#b#p9310012##k搭话吧。"/>
+    <string name="1" value="我们去能感受乡村风情的郊外逛逛，消灭破坏农作物的家畜，再去见见农田主人#b#p9310010##k吧。\n\n#o9600002# #r#a94971##k \n#o9600003# #r#a94972##k"/>
+    <string name="2" value="我帮#b#p9310010##k干了农活。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9503">
+    <string name="name" value="清洁海洋！"/>
+    <string name="0" value="据说从维多利亚岛和奥西利亚大陆等地流来的垃圾正在污染水下世界。我们去找#b#p9010000##k，看看有没有能帮忙的事吧。"/>
+    <string name="1" value="我们去收集被丢在弗洛里纳海滩各处木箱里的#b#t04031302##k吧。 \n\n#t04031302:# #b#c4031302#/10#k"/>
+    <string name="2" value="我帮忙收集并妥善处理了被丢在海边的#b#t04031302##k。今后我也要带头为打造干净的冒险岛世界出力。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9504">
+    <string name="name" value="清洁海洋！！"/>
+    <string name="0" value="据说从维多利亚岛和奥西利亚大陆等地流来的垃圾正在污染水下世界。我们去找#b#p9010000##k，看看有没有能帮忙的事吧。"/>
+    <string name="1" value="我们去收集被丢在弗洛里纳海滩各处木箱里的#b#t04031321##k吧。 \n\n#t04031321:# #b#c4031321#/20#k"/>
+    <string name="2" value="我帮忙收集并妥善处理了被丢在海边的#b#t04031321##k。今后我也要带头为打造干净的冒险岛世界出力。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9505">
+    <string name="name" value="海洋日问答1"/>
+    <string name="parent" value="海洋日问答"/>
+    <int name="order" value="1"/>
+    <string name="0" value="想趁着海洋日好好了解大海的话，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="这是关于冒险岛大海的问题。"/>
+    <string name="2" value="我答对了关于冒险岛海底的问题。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9506">
+    <string name="name" value="海洋日问答2"/>
+    <string name="parent" value="海洋日问答"/>
+    <int name="order" value="2"/>
+    <string name="0" value="想趁着海洋日好好了解大海的话，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="这是关于大海高度的问题。"/>
+    <string name="2" value="大海的深度比珠穆朗玛峰还要深。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9507">
+    <string name="name" value="海洋日问答3"/>
+    <string name="parent" value="海洋日问答"/>
+    <int name="order" value="3"/>
+    <string name="0" value="想趁着海洋日好好了解大海的话，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="这是与五大洋有关的问答。"/>
+    <string name="2" value="五大洋是太平洋、大西洋、印度洋、北冰洋、南冰洋。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9508">
+    <string name="name" value="海洋日问答4"/>
+    <string name="parent" value="海洋日问答"/>
+    <int name="order" value="4"/>
+    <string name="0" value="想趁着海洋日好好了解大海的话，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="这是关于大海与天气关系的问题。"/>
+    <string name="2" value="如果没有大海，就不会下雪或下雨。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="9509">
+    <string name="name" value="海洋日问答5"/>
+    <string name="parent" value="海洋日问答"/>
+    <int name="order" value="5"/>
+    <string name="0" value="想趁着海洋日好好了解大海的话，就去找#b#p9010000##k吧。"/>
+    <string name="1" value="这是与海洋环境保护有关的问答。"/>
+    <string name="2" value="我要一直为海洋环境努力。"/>
+    <int name="area" value="50"/>
+  </imgdir>
 </imgdir>

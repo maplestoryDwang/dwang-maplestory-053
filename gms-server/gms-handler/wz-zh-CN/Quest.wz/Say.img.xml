@@ -22222,4 +22222,3283 @@
       </imgdir>
     </imgdir>
   </imgdir>
+  <imgdir name="9100">
+    <imgdir name="1">
+      <string name="0" value="字母饼干 #bMAPLESTORY#k 都收集齐了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="恭喜您!!  恶魔的文书已发放。恶魔的文书只要去找废弃都市工地的&apos;天地&apos;就能解读。解读后会生成魔法箱，拿到废弃都市村子里的蒙蒙塔那儿就能打开。嗯..或者去找玩具城的吉尼也能解读。里面会开出什么，谁也不知道。祝您好运。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="字母饼干不够，或者您已经拿着恶魔的文书了吧？恶魔的文书一次只能持有1个哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="和冒险岛一起度过愉快幸福的中秋节吧。把怪物掉落的饼干字母收集起来，拼成特定的单词就可以了。请把 MAPLESTORY(冒险岛) 饼干拿给我。那我就送给您珍贵的道具。"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9101">
+    <imgdir name="1">
+      <string name="0" value="字母饼干 #bMAPLESTORY#k 都收集齐了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="恭喜您!!  恶魔的文书已发放。恶魔的文书只要去找废弃都市工地的&apos;天地&apos;就能解读。解读后会生成魔法箱，拿到废弃都市村子里的蒙蒙塔那儿就能打开。嗯..或者去找玩具城的吉尼也能解读。里面会开出什么，谁也不知道。祝您好运。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="字母饼干不够，或者您已经拿着恶魔的文书了吧？恶魔的文书一次只能持有1个哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="和冒险岛一起度过愉快幸福的中秋节吧。把怪物掉落的饼干字母收集起来，拼成特定的单词就可以了。请把 MAPLESTORY(冒险岛) 饼干拿给我。那我就送给您珍贵的道具。"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9110">
+    <imgdir name="0">
+      <string name="0" value="和冒险岛一起度过愉快幸福的中秋节吧。把怪物掉落的饼干字母收集起来，拼成特定的单词就可以了。请把 WIZET(维泽特) 饼干拿给我。那我就送给您珍贵的道具。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="字母饼干 #bWIZET#k 都收集齐了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="恭喜您!!  恶魔的文书已发放。恶魔的文书只要去找废弃都市工地的&apos;天地&apos;就能解读。解读后会生成魔法箱，拿到废弃都市村子里的蒙蒙塔那儿就能打开。嗯..或者去找玩具城的吉尼也能解读。里面会开出什么，谁也不知道。祝您好运。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="字母饼干不够，或者您已经拿着恶魔的文书了吧？恶魔的文书一次只能持有1个哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9111">
+    <imgdir name="0">
+      <string name="0" value="和冒险岛一起度过愉快幸福的中秋节吧。把怪物掉落的饼干字母收集起来，拼成特定的单词就可以了。请把 WIZET(维泽特) 饼干拿给我。那我就送给您珍贵的道具。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="字母饼干 WIZET 都收集齐了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="恭喜您!!  恶魔的文书已发放。恶魔的文书只要去找废弃都市工地的&apos;天地&apos;就能解读。解读后会生成魔法箱，拿到废弃都市村子里的蒙蒙塔那儿就能打开。嗯..或者去找玩具城的吉尼也能解读。里面会开出什么，谁也不知道。祝您好运。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="字母饼干不够，或者您已经拿着恶魔的文书了吧？恶魔的文书一次只能持有1个哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9120">
+    <imgdir name="0">
+      <string name="0" value="和冒险岛一起度过愉快幸福的中秋节吧。把怪物掉落的饼干字母收集起来，拼成特定的单词就可以了。请把 NEXON(奈克森) 饼干拿给我。那我就送给您珍贵的道具。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="字母饼干 NEXON 都收集齐了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="恭喜您!!  恶魔的文书已发放。恶魔的文书只要去找废弃都市工地的&apos;天地&apos;就能解读。解读后会生成魔法箱，拿到废弃都市村子里的蒙蒙塔那儿就能打开。嗯..或者去找玩具城的吉尼也能解读。里面会开出什么，谁也不知道。祝您好运。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="字母饼干不够，或者您已经拿着恶魔的文书了吧？恶魔的文书一次只能持有1个哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9121">
+    <imgdir name="0">
+      <string name="0" value="和冒险岛一起度过愉快幸福的中秋节吧。把怪物掉落的饼干字母收集起来，拼成特定的单词就可以了。请把 NEXON(奈克森) 饼干拿给我。那我就送给您珍贵的道具。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="字母饼干 #bNEXON#k 都收集齐了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="恭喜您!!  恶魔的文书已发放。恶魔的文书只要去找废弃都市工地的&apos;天地&apos;就能解读。解读后会生成魔法箱，拿到废弃都市村子里的蒙蒙塔那儿就能打开。嗯..或者去找玩具城的吉尼也能解读。里面会开出什么，谁也不知道。祝您好运。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="字母饼干不够，或者您已经拿着恶魔的文书了吧？恶魔的文书一次只能持有1个哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9130">
+    <imgdir name="1">
+      <string name="0" value="一旦选择就无法撤回，所以请好好选择需要的字母饼干。"/>
+      <imgdir name="yes">
+        <string name="0" value="希望这个字母饼干对您有帮助。祝您中秋丰收、冒险岛愉快。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="&apos;不求多不求少，但愿天天像中秋&apos;有这么一句话嘛。食物和心意都变得丰盛的，就是中秋这样的日子。在这样丰盛的日子里，我想送给大家一份礼物。 "/>
+      <imgdir name="yes">
+        <string name="0" value="请想清楚需要哪种字母，再来和我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="咦？您不需要我送的礼物吗？现在收集的字母里，我可以送您一个特别的~字母哦？当然只有这一次啦。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9140">
+    <imgdir name="0">
+      <string name="0" value="不求多不求少~只愿天天像中秋。丰盛的中秋节，果然还是软软糯糯、甜甜蜜蜜的松饼最合适。我想做中秋松饼~怎么样？要不要一起做？"/>
+      <imgdir name="yes">
+        <string name="0" value="要做一个松饼，需要收集的材料是米粉、蜂蜜、松叶，就这3样。其他材料我这里有很多，只要把这几种材料各收集1个来，我就给您做一个粉色松饼。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="中秋了，要不要试着做做松饼？"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="松饼的材料是米粉、蜂蜜、松叶，就这3种。有没有确认都收集齐了？"/>
+      <imgdir name="yes">
+        <string name="0" value="好啦~ 香甜可口、软软糯糯的粉色松饼完成了。"/>
+        <string name="1" value="啊！还有，收集10个粉色松饼来，我就给您做成金松饼。一定会有好事发生在您身上的。粉色松饼10个。^^"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="材料好像不够呢..要不要确认一下？"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9141">
+    <imgdir name="0">
+      <string name="0" value="拿10个粉色松饼来，我就能给您换成金松饼。想换吗？"/>
+      <imgdir name="no">
+        <string name="0" value="随时想把10个粉色松饼换成金松饼，就来找我吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="把10个粉色松饼换成1个金松饼，没错吧？"/>
+      <imgdir name="yes">
+        <string name="0" value="给您。别只是拿着这个金松饼呀，拿去送给射手村的斯坦长老，顺便拜个中秋怎么样？"/>
+        <string name="1" value="如果想去看望射手村的长辈斯坦长老，就再来找我吧。 "/>
+        <string name="2" value="啊对！差点忘了。一直拿着金松饼的话，以后就做不了金松饼了。送给长辈拜完中秋之后，再收集10个粉色松饼来，我就给您做金松饼。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="材料好像不够呢..要不要确认一下？"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9142">
+    <imgdir name="0">
+      <string name="0" value="要不要把拿着的金松饼送给射手村的长辈，顺便问候一下中秋？"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="说是来给我拜中秋的？"/>
+      <imgdir name="yes">
+        <string name="0" value="哈哈..这可真是谢谢了。我好像得回点什么礼..."/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="还没去给斯坦长老问候吗？"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9150">
+    <imgdir name="0">
+      <string name="0" value="要不要试着做中秋食品油果？只要狩猎怪物，把掉落的几种材料收集来就行了。"/>
+      <imgdir name="yes">
+        <string name="0" value="给我  糯米粉、油瓶、蜜罐收集来，我就能给您做我的特制!!! 油果。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我给您做的油果说不定会很有用呢..."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="要不要确认一下油果材料都收集齐了？"/>
+      <imgdir name="yes">
+        <string name="0" value="用您收集来的材料做好油果了。看起来很好吃吧？"/>
+        <string name="1" value="啊对！还有，收集20个油果来，我就给您做饼干礼盒。去给长辈拜中秋的时候，这个饼干礼盒最棒了。收集20个油果后一定要来找我。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="嗯..油果的材料好像不够。请再确认一次，然后再和我说话吧。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9151">
+    <imgdir name="0">
+      <string name="0" value="想用收集的20个油果做饼干礼盒吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="确认一下油果有没有20个以上，再来和我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="想做饼干礼盒的话，就拿20个油果来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="好，那我们看看能不能做饼干礼盒吧？"/>
+      <imgdir name="yes">
+        <string name="0" value="大概是因为材料好，颜色也漂亮，模样也很出众。要不要拿着这个饼干礼盒去给玩具城的厂长卡胡拜个中秋？"/>
+        <string name="1" value="啊对！差点忘了。一直拿着饼干礼盒的话，以后就做不了饼干礼盒了。送给长辈拜完中秋之后，再收集10个油果来，我就给您做饼干礼盒。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="材料好像不够呢..要不要确认一下？"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9152">
+    <imgdir name="0">
+      <string name="0" value="要不要拿着饼干礼盒，去玩具城的玩具工厂找厂长卡胡，问候一下中秋？"/>
+      <imgdir name="yes">
+        <string name="0" value="厂长卡胡在玩具城钟塔下面的玩具工厂。要去玩具城，在天空之城车站坐开往玩具城的船就行。趁早赶紧去吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="中秋连假里，去给长辈们问候一下也不错呢。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="哈哈~ 真是丰盛的中秋啊..你是来找我的吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="哦..这不是据说很好吃的饼干礼盒吗？真是太感谢了..我也得回点什么..看看..有没有能给的.."/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="还没去给厂长卡胡问候吗？"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="嗯？从你身上感觉到一股邪恶的气息？莫非你身上带着恶魔的文书之类的东西？ "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9160">
+    <imgdir name="1">
+      <string name="0" value="第1个问题。以下哪个不是代表性的中秋食品？\r\n#b#L0# 松饼#l\r\n#L1# 芋头汤#l\r\n#L2# 年糕汤#l\r\n#L3# 华阳炙#k#l"/>
+      <string name="1" value="年糕汤是春节吃的。据说一碗年糕汤就代表长大一岁。那就来解下一题吧？ "/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="说到中秋的代表，那就是松饼啦。那软糯和香甜~"/>
+          <string name="1" value="芋头是碱性食物，和中秋吃的油腻食物搭配得很和谐。"/>
+          <string name="3" value="把各种材料串在签子上，又华丽，营养上也不偏颇的特色菜~ 我最喜欢中秋食品里的华阳炙了。"/>
+          <int name="answer" value="3"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="您好！ 迎接#b中秋#k，我们准备了各种活动。在冒险岛里了解一下中国传统节日中秋的相关常识吧。回味一下它的意义，度过更愉快的中秋怎么样？"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9161">
+    <imgdir name="1">
+      <string name="0" value="第2个问题。蒸代表性中秋食品松饼时，一起放进去的是以下哪个？\r\n#b#L0# 人参#l\r\n#L1# 松叶#l\r\n#L2# 蕨菜#l\r\n#L3# 木炭#l#k"/>
+      <string name="1" value="放入清香的松叶蒸松饼，香气会增添风味，还能起到防腐作用。答对了。要不要也解解下一题？"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="人参与松饼啊...感觉不是般配的组合呢。如果是松树的叶子，应该会有好香气吧。还有防腐效果..."/>
+          <string name="2" value="蕨菜吗？嗯...再往森林香气的感觉想想看。"/>
+          <string name="3" value="木炭据说能去除异味，抗菌作用也很出色。不过就算这样..比起木炭还是..."/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="准备好解冒险岛中秋活动第2个问题时，请再来和我说话。"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9162">
+    <imgdir name="0">
+      <string name="0" value="准备好解冒险岛中秋活动第3个问题时，请再来和我说话。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第3个问题。以下哪个不是中秋的别称？\r\n#b#L0# 嘉俳日#l\r\n#L1# 中秋#l\r\n#L2# 仲秋节#l\r\n#L3# 端午#l#k"/>
+      <string name="1" value="端午据说是即将迎来炎热夏天之前，插秧结束后祈求丰收的祭祀。去下一题吧？"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="说是8月的中间日子，所以叫嘉俳日吧？满月最大最圆地升起的日子就是中秋。"/>
+          <string name="1" value="8月的中秋指的是8月里正中间。据说阴历十五会升起最大最亮的月亮。"/>
+          <string name="2" value="中秋也叫仲秋节。"/>
+          <int name="answer" value="4"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9163">
+    <imgdir name="0">
+      <string name="0" value="准备好解冒险岛中秋活动第4个问题时，请再来和我说话。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第4个问题。以下哪个不属于中国的节日？\r\n#b#L0# 寒食#l\r\n#L1# 中秋#l\r\n#L2# 春节#l\r\n#L3# 释迦诞辰日#k#l"/>
+      <string name="1" value="是的，答对了。释迦诞辰日是佛诞日，不是中国固有的节日。 "/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="寒食是这样的：登上王位的文公想让介子推做官，介子推却进了绵山不肯出来，文公为了逼他出来放火烧山，但他终究没出来，被烧死了。此后为了哀悼他，就流传下了禁火吃冷食的习俗。"/>
+          <string name="1" value="中国代表性的节日之一。阴历8月15日，也叫中秋、嘉俳、仲秋节。"/>
+          <string name="2" value="正月初一叫春节，中国把阴历正月当作春节来过。"/>
+          <int name="answer" value="4"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9164">
+    <imgdir name="0">
+      <string name="0" value="准备好解冒险岛中秋活动第5个问题时，请再来和我说话。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第5个问题。中秋是阴历几月几日？\r\n#L0# #b8月12日#l\r\n#L1# 8月15日#l\r\n#L2# 8月18日#l\r\n#L3# 8月21日#k#l"/>
+      <string name="1" value="答对了。8月的满月日叫中秋、秋夕(秋夕)或嘉俳日，和正月的节日一起是最大的节日。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="不就是阴历8月正中间的那天吗？"/>
+          <string name="2" value="不就是阴历8月正中间的那天吗？"/>
+          <string name="3" value="不就是阴历8月正中间的那天吗？"/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9165">
+    <imgdir name="0">
+      <string name="0" value="准备好解冒险岛中秋活动第6个问题时，请再来和我说话。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第6个问题。以下哪个是中秋写成汉字时的正确写法？\r\n#b#L0# 秋石#l\r\n#L1# 秋席#l\r\n#L2# 秋夕#l\r\n#L3# 秋汐#k#l"/>
+      <string name="1" value="答对了。秋天 秋、傍晚、倾斜 夕字，写作 秋夕。 "/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="秋天[秋]、石头[石]来写&apos;中秋&apos;？好像不对吧？"/>
+          <string name="1" value="秋天[秋]、座位[席]也不是。秋天的秋和...傍晚？倾斜？好好想想。"/>
+          <string name="3" value="秋天[秋]是对的，但...潮水[汐]字也不对。不过和潮水[汐]字很像。"/>
+          <int name="answer" value="3"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9166">
+    <imgdir name="0">
+      <string name="0" value="准备好解冒险岛中秋活动第7个问题时，请再来和我说话。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第7个问题。以下哪个是中秋时玩的传统游戏？\r\n#b#L0# 掷柶游戏#l\r\n#L1# 放风筝#l\r\n#L2# 强羌水越来#l\r\n#L3# 鼠火游戏#k#l"/>
+      <string name="1" value="是的，答对了。月亮皎洁的正月十五或8月中秋，村里的妇女们聚在一起，手拉手围成圆圈，反复唱着强羌水越来的歌词，跳着群舞转圈。可以说是中秋代表性的传统游戏。 "/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="从正月初一到正月十五进行的传统游戏，年初还会用它占卜当年农事的好坏。"/>
+          <string name="1" value="利用风力把风筝放到空中的游戏。自古传承下来的民族传统技艺之一，很受男性喜爱，在日本殖民统治之前曾在中国各地盛行，是民俗游戏。"/>
+          <string name="3" value="阴历正月第一个鼠日晚上，农家进行的风俗之一。"/>
+          <int name="answer" value="3"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9167">
+    <imgdir name="0">
+      <string name="0" value="准备好解冒险岛中秋活动第8个问题时，请再来和我说话。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第8个问题。以下哪个是中秋祭桌摆法红东白西的意思？\r\n#b#L0# 红色水果摆东边，白色水果摆西边#l\r\n#L1# 脯摆东边，食醯摆西边#l\r\n#L2# 按大枣、栗子、梨、柿子的顺序摆桌#l\r\n#L3# 鱼头朝东，鱼尾朝西#k#l"/>
+      <string name="1" value="是的，答对了。红东白西（紅東白西）就是红色摆东边，白色摆西边。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="1" value="左脯右醯（左脯右醯）是说脯（干鱼、肉脯）摆在左边，食醯摆在右边。"/>
+          <string name="2" value="枣栗梨柿（棗栗梨）是指按大枣、栗子、柿子、梨的顺序摆放。"/>
+          <string name="3" value="头东尾西（頭東尾西）是指鱼头朝东、鱼尾朝西摆放。"/>
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9168">
+    <imgdir name="0">
+      <string name="0" value="准备好解冒险岛中秋活动第9个问题时，请再来和我说话。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第9个问题。去祖坟除草，主要在中秋前做的是什么事？\r\n#b#L0# 扫墓#l\r\n#L1# 伐草#l\r\n#L2# 茶礼#l\r\n#L3# 祭需#k#l"/>
+      <string name="1" value="是的，答对了。伐草（伐草）要在扫墓之前提前做完，或者扫墓时一起做。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="这个要在扫墓之前提前做完，或者扫墓时一起做。"/>
+          <string name="2" value="茶礼是指阴历每月初一和十五、节日、祖先生日等进行的祭祀。"/>
+          <string name="3" value="祭祀时用的祭品叫祭需（祭需）。"/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9169">
+    <imgdir name="0">
+      <string name="0" value="准备好解冒险岛中秋活动最后一个问题时，请再来和我说话。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第10个问题。以下哪个是茶礼结束后，参加茶礼的人吃献给祖先的酒或食物的仪式？\r\n#b#L0# 伐草#l\r\n#L1# 祭礼#l\r\n#L2# 忌祭#l\r\n#L3# 饮福#k#l"/>
+      <string name="1" value="是的，答对了。吃献给祖先的酒或食物的仪式叫饮福。"/>
+      <imgdir name="yes">
+        <string name="0" value="剩下的中秋连假也请和冒险岛一起愉快丰盛地度过。"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="伐草就像前面说的，是去祖坟除草。"/>
+          <string name="1" value="敬奉神明祈求福气的礼仪叫祭礼。也叫祭祀。"/>
+          <string name="2" value="忌祭是指每年在亲人去世那天进行的祭祀。"/>
+          <int name="answer" value="4"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9170">
+    <imgdir name="1">
+      <string name="0" value="还记得我说过内拉住在哪里吗？ \r\n#b#L0# 魔法密林#l\r\n#L1# 废弃都市#l\r\n#L2# 射手村#l\r\n#L3# 勇士部落#k#l"/>
+      <string name="1" value="没错。内拉住在废弃都市。 "/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="魔法密林是树木茂盛的地方。内拉不在那里。"/>
+          <string name="2" value="像射手村那样宁静的草原，这世上还有哪里呢..不过内拉不在那里。"/>
+          <string name="3" value="勇士部落，那个地方对内拉来说住着感觉太干燥了吧？"/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="有件事想拜托在废弃都市的内拉。准备好听我的请求后，再来和我说话吧。"/>
+      <imgdir name="no">
+        <string name="0" value="啊，都中秋连假了..内拉过得好吗。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9171">
+    <imgdir name="1">
+      <string name="0" value="您好。我们以前见过吗？奇怪？好像是第一次见面..不过，有什么事吗？"/>
+      <string name="1" value="难道您知道我一直忙到中秋连假，所以来帮我的？嗯？还是..给我送中秋汉服来的？"/>
+      <imgdir name="yes">
+        <string name="0" value="哇啊，谢谢您。还给我送来中秋要穿的汉服..可是我忙得晕头转向..中秋连假都没时间和家人一起过..不过，有人来找我，我真的很开心。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="去见废弃都市的内拉，问候一下中秋，并把内拉的汉服交给她。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="汉服丢了吗？"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="啊对..有东西要交给内拉..要不要一起转交？"/>
+      <imgdir name="yes">
+        <string name="0" value="把中秋要穿的汉服也一起交给废弃都市的内拉吧。希望还来得及...请把我给的汉服转交，也问候一下。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="内拉一定很需要这件汉服..."/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9172">
+    <imgdir name="1">
+      <string name="0" value="哇！20只橙色蘑菇已经全部消灭完回来了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="确实没错。我总算松了口气。多亏你替我做事，我好好休息了。中秋连假的最后一天，能再来找我吗？"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="真的消灭了20只橙色蘑菇吗？按Q查看一下任务进度吧。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="还有什么要找我..的事吗？ \r\n#b#L0# 我来帮你做事，内拉你休息一下吧。#l\r\n#L1# 内拉小姐中秋连假要做什么？#l\r\n#L2# 我想转职成盗贼，该去哪里？#l\r\n#L3# 工地在哪？#l#k"/>
+      <string name="1" value="真、真的吗？那我可以拜托你吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="啊啊..真的忙得晕头转向，一点精神都没有。沿着右边的路一直走，有个橙色蘑菇很多的地方。"/>
+        <string name="1" value="请在那里消灭#r橙色蘑菇 20只#k左右。真是被那些家伙搞得头疼。废弃都市的居民都没法安心走过去了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="咦？你不是说要帮我吗？"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="1" value="我吗？得处理村子周围的橙色蘑菇。还有很多事没做完呢。"/>
+          <string name="2" value="嗯，那边那个融合酒吧..嗯..往右边一直走的话。就是说，仔细看能看到写着Jazz的..融合酒吧。进去后往洗手间下面走下去看看。 "/>
+          <string name="3" value="从这里往左边一直走出去看看。就能去工地。沿着右边的路走也有北边工地。"/>
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9173">
+    <imgdir name="0">
+      <string name="0" value="中秋连假过得好吗？对着月亮许愿了吗？ \r\n#b#L0# 许愿了。#l\r\n#L1# 没有。没能许愿。#k#l"/>
+      <string name="1" value="我就知道。我准备了点东西。 "/>
+      <imgdir name="yes">
+        <string name="0" value="打开我送你的包袱，向月亮许个愿吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="咦？我准备的是给你的东西啊.."/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="希望那个愿望一定实现。和冒险岛一起度过愉快的中秋连假吧。"/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="望着满月许愿了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="希望你和冒险岛一起度过了愉快的中秋连假。以后也请多多喜爱我们冒险岛。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="好像还没向满月许愿呢。双击我给你的包袱，许愿大约10秒吧。"/>
+        </imgdir>
+      </imgdir>
+      <imgdir name="lost">
+        <string name="0" value="嗯？我给你的月亮包袱丢了吗？"/>
+        <imgdir name="yes">
+          <string name="0" value="这次可别再丢了。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9180">
+    <imgdir name="0">
+      <string name="0" value="要不要帮&apos;伊安&apos;愉快地度过中秋连假？"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="知道伊安住在哪里吗？\r\n#b#L0# 魔法密林#l\r\n#L1# 废弃都市#l\r\n#L2# 射手村#l\r\n#L3# 勇士部落#k#l"/>
+      <string name="1" value="没错。伊安住在岩石山勇士部落。"/>
+      <imgdir name="yes">
+        <string name="0" value="好。我给您能直接去勇士部落的勇士部落回归卷轴。现在准备好去她那里时，再来和我说话吧。您知道不能就这么直接跑掉吧？"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="在魔法密林可以去车站。魔法密林车站有开往天空之城的船出航。那里并没有“与猪共舞”。"/>
+          <string name="1" value="废弃都市是城市吧？要见他，得去有岩石山的地方。"/>
+          <string name="2" value="射手村是满是绿色田野的地方。“与猪共舞”住在有岩石山的地方。"/>
+          <int name="answer" value="4"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9181">
+    <imgdir name="0">
+      <string name="0" value="那么，准备好去见那位（勇士部落的伊安）了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="现在双击我给你的勇士部落回归卷轴，就能瞬间移动到勇士部落。请去见到她，帮她愉快地度过中秋连假。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="好的，看来您很忙？希望和冒险岛一起的中秋更加丰盛愉快。 "/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="您好？我是勇士部落的伊安，请问找我有什么事？\r\n#b#L0# 为什么你的长相和勇士部落的人们不一样？#l\r\n#L1# 我是来问候的。祝你度过愉快的中秋连假。#l#k"/>
+      <string name="1" value="有这么多人问候我中秋，我真的很幸福。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="啊..那个...是个很难回答的问题..."/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9182">
+    <imgdir name="1">
+      <string name="0" value="啊？野猪都消灭完回来了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="真的很感谢你帮我~中秋连假的最后一天再来找我吧。一定哦~"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="咦？好像还没完成要消灭的野猪数量。按Q确认一下吧。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="中秋连假想去勇士部落村里给长辈们问安，可是...勇士部落周围的#b野猪#k太闹了，我根本走不开。能不能帮我去给长辈拜完中秋再回来？"/>
+      <imgdir name="yes">
+        <string name="0" value="哇~ 真的太感谢了。野猪在勇士部落周围的野外就能找到。那家伙相当凶，要小心。#r消灭30只野猪#k后回到我这里。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="啊...很忙吗。难道要等中秋过完才能去问候吗。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9183">
+    <imgdir name="0">
+      <string name="0" value="中秋连假过得好吗？对着月亮许愿了吗？ \r\n#b#L0# 许愿了。#l\r\n#L1# 没有。没能许愿。#k#l"/>
+      <string name="1" value="我就知道。我准备了东西。"/>
+      <imgdir name="yes">
+        <string name="0" value="打开我送你的这个神奇包袱，向月亮许愿吧。在月亮消失之前许愿大约10秒，一定会发生好事。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="向月亮许愿，祈愿新的一年也是丰盛的中秋吧。"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="希望那个愿望一定实现。和冒险岛一起度过愉快的中秋连假吧。"/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="望着满月许愿了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="希望你和冒险岛一起度过了愉快的中秋连假。以后也请多多喜爱我们冒险岛。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="好像还没向满月许愿呢。双击我给你的包袱，许愿大约10秒吧。"/>
+        </imgdir>
+      </imgdir>
+      <imgdir name="lost">
+        <string name="0" value="能许愿的月亮包袱丢了吗？"/>
+        <imgdir name="yes">
+          <string name="0" value="这次可别再丢了。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9190">
+    <imgdir name="0">
+      <string name="0" value="要不要去问问住在天空之城的艾尔玛中秋过得怎么样？"/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢。要去天空之城得坐船。开往天空之城的船可以在魔法密林或玩具城乘坐。"/>
+        <string name="1" value="在那之前~！我出一道题，解完再去吧。#b准备好后再来和我说话。#k"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="去天空之城太难了吗？"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="要见艾尔玛就得去天空之城。去天空之城的船在维多利亚岛哪里可以坐？\r\n#b#L0# 魔法密林#l\r\n#L1# 废弃都市#l\r\n#L2# 射手村#l\r\n#L3# 勇士部落#k#l"/>
+      <string name="1" value="没错。在维多利亚岛可以在魔法密林车站坐开往天空之城的船。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="1" value="废弃都市也是盗贼们为了转职会去的地方。"/>
+          <string name="2" value="射手村是弓箭手们的村庄吧？"/>
+          <string name="3" value="勇士部落好像也被叫做战士们的岩石山.. "/>
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9191">
+    <imgdir name="0">
+      <string name="0" value="能去见艾尔玛，看看她中秋过得怎么样吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="如果你在维多利亚，魔法密林回归卷轴会很有用；如果在玩具城附近，玩具城传送胶囊会很有用。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="认真的艾尔玛现在一个人，一定很孤单..要不要去看看她？"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="嗯？你是来问候中秋的？啊啊..我现在事情太多，连玩的时间都没有。要是能帮我收集30个食人花的种子...说不定..？\n\n#i4000058# #t4000058# #b30#k个"/>
+      <imgdir name="yes">
+        <string name="0" value="哇啊！谢谢！多亏你，我好像能稍微轻松点了。中秋都到了，我想去找找还没回来的主人。我做的中秋食品分你一点吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="艾尔玛在天空之城。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="嗯？你是来问候中秋的？啊啊..我现在事情太多，连玩的时间都没有。要是能帮我收集30个食人花的种子...说不定..？  \n\n#i4000058# #t4000058# #b30#k个"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9192">
+    <imgdir name="1">
+      <string name="0" value="卢娜精灵的月亮碎片都收集齐了吗？记得是20个吧？"/>
+      <imgdir name="yes">
+        <string name="0" value="啊..我只要把卢娜精灵的月亮碎片都收集齐的消息告诉主人就行了。真的很感谢。啊对！中秋连假的最后一天再来找我吧。我送点礼物给你。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="咦？卢娜精灵的月亮碎片好像不够。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="上次谢谢你了。话说这次也有件事想拜托...能帮帮我吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="我需要卢娜精灵的月亮碎片。好不容易找到主人，他却说急需卢娜精灵的月亮碎片又跑出去了。"/>
+        <string name="1" value="我这边好像还得一直准备中秋食品，就帮我收集20个卢娜精灵的月亮碎片吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="啊...真是的，一到中秋就太忙了。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9193">
+    <imgdir name="0">
+      <string name="0" value="中秋连假过得好吗？对着月亮许愿了吗？ \r\n#b#L0# 许愿了。#l\r\n#L1# 没有。没能许愿。#k#l"/>
+      <string name="1" value="我就知道。我准备了东西呢。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="希望那个愿望一定实现。和冒险岛一起度过愉快的中秋连假吧。"/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="望着满月许愿了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="希望你和冒险岛一起度过了愉快的中秋连假。以后也请多多喜爱我们冒险岛。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="好像还没向满月许愿呢。双击我给你的包袱，许愿大约10秒吧。"/>
+        </imgdir>
+      </imgdir>
+      <imgdir name="lost">
+        <string name="0" value="这次可别再丢了。 "/>
+        <imgdir name="yes"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9210">
+    <imgdir name="0">
+      <string name="0" value="点心师库克斯又回来了！隔了多久回来啊？2月见过...呜啊啊~ 这段时间我一直急着想展示手艺呢！！"/>
+      <string name="1" value="这次学到了更厉害的！点心技术！！！要不要做一个刻着你名字、盛满爱意的巧克力棒，送给心爱的人？ "/>
+      <imgdir name="yes">
+        <string name="0" value="把心意传达给心爱的人吧~！\n那爱情巧克力棒上，我会刻上你的名字。 "/>
+        <string name="1" value="把#b面粉#k好好揉好，用它烤出棒（饼干）..再裹上大量融化的#b巧克力#k，做出香气满满的#r巧克力棒#k。"/>
+        <string name="2" value="为此需要几种材料吧？打怪物时偶尔能获得这个#b#t4031220##k。它会成为棒的材料。"/>
+        <string name="3" value="甜~~甜的#b#t2020028##k，明珠港、射手村、天空之城、玩具城的杂货商人都在卖。好好记住。只在这4个村庄出售.."/>
+        <string name="4" value="#t4031220#和#t2020028#。拿来这2样，我就用我开发的秘法给你做#t4140000#。\n\n#i4031220# #t4031220# #r1#k个， #i2020028# #t2020028# #r1#k个"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="诶？没有心爱的人吗？趁这次机会用爱情巧克力棒成就爱情怎么样？我只能在这里做到#b2005年11月13日午夜#k为止的点心工作..在那之前好好想想吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="搅啊搅~ ♪ 融化巧克力，把烤得香喷喷的棒扑通~♬ 裹上满满的巧克力~♪"/>
+      <imgdir name="yes">
+        <string name="0" value="#i4140000:#从获得那天起有#r3天#k的#r有效期#k。还有最后一点，制作后要过2小时才能再制作..啊对！！ 拿着#t4140000#的话就不能再做了哦~"/>
+        <string name="1" value="#t4140000#上刻着你的名字，去交给心爱的人吧。你爱情的力量和这神秘的力量很好地融合在一起..一定能保护心爱的人免受危险。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="呜嗯？材料好像不够？再确认一下！ #I"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9220">
+    <imgdir name="1">
+      <string name="0" value="你好？听说我在分饼干就来了？"/>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="您好？热爱冒险岛的各位~ 高考顺利考完了吗？"/>
+      <string name="1" value="到现在为止为了高考学了很多吧.... 而且周围的人也一定为你祈祷高考顺利了吧？"/>
+      <string name="2" value="这段时间专心学习，辛苦了。以后也期待你那样帅气的身影。"/>
+      <string name="3" value="我让魔法密林的温分饼干，当作祝福的意思.... 现在马上去魔法密林见见温怎么样？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b魔法密林#k的#b温#k那里去看看吧。如果你现在的#b位置#k在#b维多利亚岛#k的话，输入#rW键#k就能在世界地图上确认魔法密林的位置。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="哎呀？嗯……  到2005年11月28日为止可以分发的分量，我已经交给精灵之翼了..您随时想来的时候都可以来找我哦。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9230">
+    <imgdir name="1">
+      <string name="0" value="您好？祝您今后所做的每一件事都充满好运。我送给您的是饱含我祝福心意的饼干。"/>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="您好？热爱冒险岛的各位~ 高考顺利考完了吗？"/>
+      <string name="1" value="到目前为止，您一定为了高考付出了很多努力……而且身边的人一定也都在祈祷您能顺利通过高考吧？"/>
+      <string name="2" value="这段时间专心学习，辛苦了。以后也期待你那样帅气的身影。"/>
+      <string name="3" value="听说玩具城的玛塞尔大人为了表达祝福，正在分发饼干呢。您现在要去见见玩具城的玛塞尔大人吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="要去见玩具城的玛塞尔大人的话……请在魔法密林的站台乘坐前往天空之城的船，然后在那边再换乘前往玩具城的船就可以了。"/>
+        <string name="1" value="玛塞尔大人就在那边的武器、防具商店门前，请一定要去见她哦。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="哎呀？嗯……  您说您拿着的是到2005年11月28日为止可以分发的分量..只要在那期间再来找我..我就会让您领到饼干的。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9240">
+    <imgdir name="0">
+      <string name="0" value="您好？热爱冒险岛的各位~ 高考顺利考完了吗？"/>
+      <string name="1" value="到目前为止，您一定为了高考付出了很多努力……而且身边的人一定也都在祈祷您能顺利通过高考吧？"/>
+      <string name="2" value="这段时间专心学习，辛苦了。以后也期待你那样帅气的身影。"/>
+      <string name="3" value="听说冰峰雪域的杰德君正在分发饱含祝福之意的饼干。您要去见见他吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="杰德君他..就在天空之城的冰峰雪域村庄里。他会坐在那边的长椅上等着大家哦。"/>
+        <string name="1" value="首先乘坐飞船到天空之城站台..然后就能从村子里前往冰峰雪域了。请别迷路，一路小心哦。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="啊，您现在不太想去吗？..我说过这似乎是到2005年11月28日为止可以分发的分量..只要在那期间再来找我就行了。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="哟~ 饼干准备得很充足，所以不用那么着急。要不要帮我告诉大家，我也在分发饼干呀？"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9250">
+    <imgdir name="0">
+      <string name="0" value="现在用手机也能购买冒险岛的道具了。它的名字就是冒险岛会... 咦？呃呃？您已经知道了？既然这样，我就出个问题考考您，看您是不是真的知道，来猜猜看吧？"/>
+      <imgdir name="yes">
+        <string name="0" value="再稍微补充说明一下~ 在冒险岛会员商店购买道具的话，还会赠送冒险岛积分和会员商店专属特效哦。"/>
+        <string name="1" value="嗯，出什么题好呢？还是出简单的题目比较好吧？哼哼..请稍等。我再稍微想一想。过一会儿请再来跟我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="噗哈！果然您对冒险岛会员商店不太了解吧？想详细知道的话~ 就去见见罗亚、提亚、莉亚，听听她们的说明吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="OOO OOO是为在线冒险岛用户提供的手机包月服务，伴随各种优惠，让您可以在手机上轻松购买冒险岛道具。O 里应该填什么？ \r\n#b#L0# 冒险岛#l\r\n#L1# 冒险岛现金商店#l\r\n#L2# 冒险岛会员商店#l\r\n#L3# 冒险岛我的商店#k#l"/>
+      <string name="1" value="是的！答对了！它的名字就是冒险岛会员商店！我准备了一份小小的礼物哦！！希望对您有帮助。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="您现在玩的游戏就是冒险岛吧？这是用手机购买冒险岛道具的服务的名字。"/>
+          <string name="1" value="冒险岛的现金商店，只要点击右下角的 Cash Shop 就可以使用了，对吧？"/>
+          <string name="3" value="嗯~！给您个提示吧。第五个字是&apos;员&apos;哦。"/>
+          <int name="answer" value="3"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9270">
+    <imgdir name="1">
+      <string name="0" value="字母 #bHAPPYNEWYEAR#k 都收集齐了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="恭喜您!!  恶魔的文书已发放。恶魔的文书只要去找废弃都市工地的&apos;天地&apos;就能解读。解读后会生成魔法箱，拿到废弃都市村子里的蒙蒙塔那儿就能打开。嗯..或者去找玩具城的吉尼也能解读。里面会开出什么，谁也不知道。祝您好运。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="是不是字母不够，或者您已经拿着恶魔的文书了？恶魔的文书一次只能拿1个哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="请和冒险岛一起愉快地度过幸福的新年吧。收集怪物掉落的字母，拼成特定的单词就可以了。请把 #bHappy New Year（新年快乐）#k 的字母拿来给我。Happy New Year 就是 #b幸福的新年！#k 的意思哦。把字母拿来给我，我就会送给您珍贵的道具。"/>
+      <imgdir name="no">
+        <string name="0" value="活动期间随时都可以参加哦。大家大家 Happy New Year！祝您迎来幸福的新年！"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9280">
+    <imgdir name="0">
+      <string name="0" value="您好！  为了迎接#b新年#k，我们准备了各种活动。重新开始一年总是让人心动的事。一边解答关于冒险岛的简单常识题，一边迎接快乐的新年，怎么样呢？"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第一道题。奥西利亚大陆新追加的水下世界里，那个水中村庄叫什么名字呢？\r\n#b#L0# 玩具城#l\r\n#L1# 天空之城#l\r\n#L2# 水族馆#l\r\n#L3# 多贡斯基地#l#k"/>
+      <string name="1" value="是的，答对了。水族馆是与天空之城塔地下相连的水下世界中的水中村庄，是可以欣赏美丽海底风景的地方。我们马上来解下一道题吧？ "/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="真遗憾，答错了。玩具城是位于天空之城大陆的玩具村庄，是以艾奥斯之塔和赫利俄斯之塔为基础漂浮在空中的村庄。"/>
+          <string name="1" value="真遗憾，答错了。天空之城是奥西利亚大陆的门户，是漂浮在天空中的精灵村庄。"/>
+          <string name="3" value="真遗憾，答错了。多贡斯基地是位于地球防御本部库兰草原另一侧，由追随外星人的人们建造的基地。"/>
+          <int name="answer" value="3"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9281">
+    <imgdir name="0">
+      <string name="0" value="准备好解答冒险岛新年活动的第二道题时，请再来跟我说话吧。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="在冒险岛官方主页上可以查看个人及全体排名。显示排名的菜单叫什么名字呢？\r\n#b#L0# 冒险岛排名#l\r\n#L1# 冒险岛消息#l\r\n#L2# 冒险岛资料室#l\r\n#L3# 冒险岛助手#l#k"/>
+      <string name="1" value="是的，答对了。冒险岛排名是可以查询全体排名、个人排名、按职业排名、按服务器排名等的地方。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="1" value="真遗憾，答错了。冒险岛消息是登载通知大家的新消息的地方。"/>
+          <string name="2" value="真遗憾，答错了。冒险岛资料室是可以下载运行冒险岛所需的执行文件或驱动程序等的地方。"/>
+          <string name="3" value="真遗憾，答错了。冒险岛助手是为您解决游戏过程中遇到的困难的地方。"/>
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9282">
+    <imgdir name="0">
+      <string name="0" value="准备好解答冒险岛新年活动的第三道题时，请再来跟我说话吧。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="第三道题。在天空之城公会办事处帮助创建公会的NPC叫什么名字呢？\r\n#b#L0# 蕾亚#l\r\n#L1# 赫拉克#l\r\n#L2# 赫克尔#l\r\n#L3# 昆#l#k"/>
+      <string name="1" value="是的，答对了。赫拉克是天空之城公会办事处里帮助想要创建公会的人的NPC。通过赫拉克可以创建和解散公会。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="真遗憾，答错了。蕾亚是天空之城公会办事处里帮助创建公会标志的NPC。"/>
+          <string name="2" value="真遗憾，答错了。赫克尔是在天空之城塔的秘密房间里研究出现在天空之城塔的石球的NPC。"/>
+          <string name="3" value="真遗憾，答错了。昆是明珠港为新手说明职业并帮助转职的NPC。"/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9283">
+    <imgdir name="0">
+      <string name="0" value="准备好解答冒险岛新年活动的第四道题时，请再来跟我说话吧。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="以下哪一个才是玩具城钟楼最下层、钟楼动力室里的BOSS怪物呢？\r\n#b#L0# 阿里沙尔#l\r\n#L1# 隆巴德#l\r\n#L2# 扎昆#l\r\n#L3# 帕普拉图斯#l#k"/>
+      <string name="1" value="是的，答对了。帕普拉图斯出现在玩具城钟楼最下层的钟楼动力室，是利用钟楼动力室的力量操纵玩具城所有怪物的怪物。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="真遗憾，答错了。阿里沙尔是出现在废弃塔顶的怪物，那里要通过玩具城的组队任务才能进入。"/>
+          <string name="1" value="真遗憾，答错了。隆巴德是出现在玩具城艾奥斯之塔隐藏塔里的玩具怪物。"/>
+          <string name="2" value="真遗憾，答错了。扎昆是出现在冰峰雪域深处熔岩地带的怪物。"/>
+          <int name="answer" value="4"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9284">
+    <imgdir name="0">
+      <string name="0" value="准备好解答冒险岛新年活动的第五道题时，请再来跟我说话吧。"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="开往新大陆奥西利亚的船每隔几分钟出发一次呢？\r\n#b#L0# 15分钟#l\r\n#L1# 30分钟#l\r\n#L2# 60分钟#l\r\n#L3# 90分钟#l#k"/>
+      <string name="1" value="答对了！恭喜您~ 题目真的很简单吧？那么我就按照约定，送给您丰厚的礼物吧。在那之前，请先确认消耗栏里至少有一个空位。"/>
+      <imgdir name="yes">
+        <string name="0" value="崭新的一年也请与冒险岛一起度过。大家大家新年快乐，福气满满。"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="1" value="哎呀！您选错了答案。我明明只挑选了非常简单的题目……不过请不要失望，再来挑战一次吧。"/>
+          <string name="2" value="哎呀！您选错了答案。我明明只挑选了非常简单的题目……不过请不要失望，再来挑战一次吧。"/>
+          <string name="3" value="哎呀！您选错了答案。我明明只挑选了非常简单的题目……不过请不要失望，再来挑战一次吧。"/>
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9290">
+    <imgdir name="1">
+      <string name="0" value="是谁呀？哎哟，那不是虾吗？是我们家老头子让你送来的？哎呀哎呀，他自己拿来不就行了，还让人白受这份累。谢谢你啊，年轻人。"/>
+      <imgdir name="yes">
+        <string name="0" value="我在这个村子里做陶罐分给大家，可不是我们村里的人我可不给做哦。不过你都这样替我们家老头子跑腿了，以后要是需要陶罐就来找我吧。年轻人你虽是外乡人，我就特别给你做一个……走好呀~"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="有什么事吗？原来是外乡人啊。这里没什么好看的，去别处转转吧。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="呵呵……在这茫茫大海中央见面，更让人觉得高兴啊。你喜欢钓鱼吗？我每天出来在这里钓鱼，觉得非常开心。可是我妻子不太喜欢。我一出海她就说无聊……所以今天我想准备一份送给妻子的礼物，年轻人能不能帮帮我呢？"/>
+      <imgdir name="yes">
+        <string name="0" value="我妻子从年轻时起就非常喜欢虾。今天我要是抓上一大堆虾，把 #t4000166# 带回去，她一定会特别高兴。可在这上面是抓不到虾的。虾不会游到水面附近，只生活在海底，而且还得去更深的海里才行。"/>
+        <string name="1" value="你替我弄到 #b#t4000166##k 20个，送去给我住在林中之城的妻子吧。当然要说是我送去的。明白了吗？我家老婆子住在林中之城。大家都管我妻子叫#b燕子奶奶#k。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我还想看看妻子高兴的样子呢……连老人家的请求都拒绝，你太过分了。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9291">
+    <imgdir name="1">
+      <string name="0" value="你回来了。让我看看。抓虎杰可没想的那么容易吧？你手里拿的那个是虎皮吗？一张、两张、三张……正好十张啊。"/>
+      <imgdir name="yes">
+        <string name="0" value="真是个了不起的人。呵呵。你真是位勇猛的人啊！在我们村子多待一阵子吧。有你在，总觉得心里踏实。哈哈！"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="要是能击退10只虎杰，大家都会认可你的勇猛。你不这么觉得吗？"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="光抓虎杰可不行。得把虎皮带回来。也不需要很多，正好带10个来就行。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="年轻人，你听说过住在黑山的虎杰吗？虎杰是住在黑山的一只体型巨大的老虎，从前是非常有品格的动物。可最近它突然性情大变，开始袭击人们。要是放任这件事不管，不久就会出大事的。所以我才在召集猎杀虎杰的猎人。怎么样，你要不要也挑战一次？"/>
+      <imgdir name="yes">
+        <string name="0" value="虎杰经常出没在黑山的山腰。所以人们都把那里叫做&apos;老虎谷&apos;。你去那里猎杀#b10只虎杰#k，并把#b10张虎皮#k作为证据带回来吧。来试试你的勇猛吧~"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你比外表看起来要胆小啊。也对，再勇猛的人，要对付虎杰也不容易。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9292">
+    <imgdir name="1">
+      <string name="0" value="我给你做得最好的陶罐，稍等一下哦。好了。这个陶罐做得最好了。 "/>
+      <imgdir name="yes">
+        <string name="0" value="拿去吧，好好用哦~"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="哎哟~ 好久不见了。这段时间过得好吗？ \r\n#L0# #b我是来买陶罐的。#k"/>
+      <string name="1" value="陶罐是吧？偶尔是有人来买我的陶罐呢。我特别给你算便宜点。"/>
+      <imgdir name="yes">
+        <string name="0" value="只要付#b5000金币#k，我就给你一个新陶罐。钱准备好后，再来跟我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="你改主意了吗？以后又需要陶罐的话就来找我吧。要是你的话，我随时都愿意卖陶罐给你。"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9300">
+    <imgdir name="0">
+      <string name="0" value="为了迎接民族最大的节日春节，#b2006年1月28日至2006年1月30日#k期间，正在举办所有玩家都能参与的活动哦。我想拜托您一件简单的事，您要不要试一试？"/>
+      <imgdir name="yes">
+        <string name="0" value="好的。首先请您去维多利亚岛各个村庄向贤者们问安。需要问安的几位是：勇士部落的#b#p1022000##k大人、魔法密林的#b#p1032001##k大人、射手村的#b#p1012100##k大人、废弃都市的#b#p1052001##k大人。"/>
+        <string name="1" value="都到新年了，向长辈问安不是理所当然的事吗？只是有一点请务必注意，就是要按照我说的顺序，依次去拜访并问安。还有，向那几位都问安之后，最后他们会给您某样东西，请不要丢掉，带回来比较好。那么就拜托您了~！"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="也不是什么很难的请求，如果您改变主意了，请一定再来参加活动哦~！"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我是在这勇士部落为战士们做各种事情的#b#p1022000##k。找我的人很多，所以总是很忙。你找我有什么事吗？\r\n#L0# #b我是来向您问安的#k"/>
+      <string name="1" value="原来如此……你是说为了迎接新年，来向我问安吗？这么让人高兴的事……！"/>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请去拜访位于#b#m102000000##k的#b#p1022000##k大人，向他致以新年的问安吧。"/>
+        </imgdir>
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+      <int name="ask" value="1"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9301">
+    <imgdir name="0">
+      <string name="0" value="没想到如今还有像你这样敬重长辈的年轻人，真让我吃惊。好……那你把这个带去给魔法密林的#b#p1032001##k吧。我已经很久没听到他的消息了。你去找他，他大概会非常欢迎你的。"/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢你跑到这么远的地方来给我拜年。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="要是你改变主意了，就再来找我吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我是在这魔法密林为魔法师们做各种事情的#b#p1032001##k。找我的人很多，所以总是很忙。你找我有什么事吗？\r\n#b#L0# #b我想向您致以新年的问安。"/>
+      <string name="1" value="原来如此……你是说为了迎接新年，来向我问安吗？这么让人高兴的事……！没想到如今还有像你这样敬重长辈的年轻人，真让我吃惊。而且这还是#b#p1022000##k的贺年卡啊。"/>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="去把这张我写的贺年卡交给位于#b#m101000000##k的#b#p1032001##k吧。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="你找我有什么事？"/>
+        </imgdir>
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+      <imgdir name="lost">
+        <string name="0" value="嗯……看来你把我给你的贺年卡弄丢了。我可是费心写的，可不能丢掉啊~ 这一回我就特别再写一张给你，你把这张贺年卡交给魔法密林的#b#p1032001##k，替我向他拜年吧。他大概会非常欢迎你的。"/>
+        <imgdir name="yes"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9302">
+    <imgdir name="0">
+      <string name="0" value="谢谢你跑到这么远的地方来给我拜年。  好，那你把这个带去给射手村的#b#p1012100##k吧。我已经很久没听到他的消息了。你去找他，他大概会非常欢迎你的。"/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢你跑到这么远的地方来给我拜年。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="要是你改变主意了，就再来找我吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我是在这射手村为弓箭手们做各种事情的#b#p1012100##k。需要我帮忙的人很多，所以总是很忙碌。请问您找我有什么事吗？\r\n#b#L0# 我想向您致以新年的问安。"/>
+      <string name="1" value="原来如此……您是说为了迎接新年，来向我问安吗？这么让人高兴的事……！没想到如今还有像您这样惦记着我们的人，真是让我吃惊。而且这还是#b#p1032001##k大人的贺年卡啊。"/>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="去把这张我写的贺年卡交给位于#b#m100000000##k的#b#p1012100##k吧。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="你找我有什么事？"/>
+        </imgdir>
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+      <imgdir name="lost">
+        <string name="0" value="嗯……看来你把我给你的贺年卡弄丢了。我可是费心写的，可不能丢掉啊~ 这一回我就特别再写一张给你，你把这张贺年卡交给射手村的#b#p1012100##k，替我向他拜年吧。他大概会非常欢迎你的。"/>
+        <imgdir name="yes"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9303">
+    <imgdir name="0">
+      <string name="0" value="谢谢您跑到这么远的地方来给我拜年。来，现在请把这个带去交给废弃都市的#b#p1052001##k大人。我已经很久没听到他的消息了。您去找他，他大概会非常欢迎您的。"/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢您跑到这么远的地方来给我拜年。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="要是您改变主意了，就再来找我吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我是在这废弃都市为盗贼们做各种事情的#b#p1052001##k。找我的人很多，所以总是很忙。你找我有什么事吗？\r\n#b#L0# #b我想向您致以新年的问安。"/>
+      <string name="1" value="原来如此。你是说为了迎接新年，来向我问安吗？这么让人高兴的事……！没想到如今还有像你这样惦记着我们的年轻人，真让我吃惊。而且这还是#b#p1012100##k的贺年卡啊。"/>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请去把这张我写的贺年卡交给位于#b#m103000000##k的#b#p1052001##k大人。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="你找我有什么事？"/>
+        </imgdir>
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+      <imgdir name="lost">
+        <string name="0" value="嗯……看来您把我给您的贺年卡弄丢了。我可是费心写的，可不能丢掉啊~ 这一回我就特别再写一张给您，请您把这张贺年卡交给废弃都市的#b#p1052001##k大人，替我向他拜年吧。他大概会非常欢迎您的。"/>
+        <imgdir name="yes"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9304">
+    <imgdir name="1">
+      <string name="0" value="看来您按照我说的，去拜访了维多利亚岛各个村庄的四位贤者，并致以新年的问安。他们好像把#b#t3993003##k送给您了吧？"/>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="哎呀……您好像已经向我说过的四位贤者问过安了，但中途把收到的东西弄丢了吧。不过现在也还来得及，请再去一趟废弃都市的#b#p1052001##k大人那里吧。他一定会再给您一次的。"/>
+        </imgdir>
+      </imgdir>
+      <imgdir name="lost">
+        <string name="0" value="嗯……看来你把我给你的礼物弄丢了。那可是贵重的东西，不能随便丢掉啊~ 这一回我就特别再给你一次，你把这个#t3993003#拿去给#b#p9010000##k吧。一定会有什么好事的。"/>
+        <imgdir name="yes"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="好……那我就把礼物送给你，作为你来找我们大家的答谢。带着这个回去找#b#p9010000##k吧。一定会有好事的。"/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢你跑到这么远的地方来给我拜年。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="要是你改变主意了，就再来找我吧。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9305">
+    <imgdir name="0">
+      <string name="0" value="好的。如果您能连同这个#t3993003#一起，把从怪物身上能获得的#b#t3993000##k 5个收集来给我，我就送您礼物。这个#b#t3993003##k在那之前就先由我保管吧。那么请加油哦~！"/>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="#b#t3993000##k 5个全都收集来了，真是了不起！好的。那就送您礼物吧。请先确认道具消耗栏里至少有一个空位。"/>
+      <imgdir name="yes">
+        <string name="0" value="刚煮好的#b#t2022006##k 100个您收到了吧？希望它能对您狩猎有所帮助。那么祝您新年福气满满，今后也请多多喜爱冒险岛哦~"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="哎呀……#b#t3993000##k 5个您确定好好带着吗？"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9320">
+    <imgdir name="0">
+      <string name="0" value="你听到传闻了吗？"/>
+      <string name="1" value="他已经离开这里一千天了。那是我在这个世界第一次见到的人。当时的我在明珠港的一个角落里无所事事地闲晃..他发现了我，然后主动跟我搭话。"/>
+      <string name="2" value="他开始问起当时开始出现的怪物们。那时  我知道去野外会很危险，所以只在村子里待着。可他却说要去击退那些危险的怪物。明明不是他自己的出生之地，他却说想为我们生活的冒险岛找回和平.."/>
+      <string name="3" value="其实……我很好奇他的去向。您能听听我的请求吗？如果您愿意帮我……我就再跟您多讲讲关于他的事。"/>
+      <imgdir name="yes">
+        <string name="0" value="那我再多讲一些吧。其实一开始我很困惑。为了拯救别人的世界？我心想为什么呢。嗯，我装作不怎么在意..就告诉他去找那位似乎与他志同道合的万智吧。"/>
+        <string name="1" value="而这一千天里，随风传来的关于他的传闻说，他正在不断击退恶之根源的怪物们，他和另外一些旅行者齐心协力，这个世界正一点点恢复安定。"/>
+        <string name="2" value="我在听着关于他的传闻的这段时间里，开始有了变化。我想着该找些能给村里人哪怕一点点帮助的活儿来做。渐渐地人生观也变了，还遇见了现在的妻子并结了婚。  "/>
+        <string name="3" value="至少我想知道他这个名字，是他给我的人生带来了变化。大概去找#b万智#k的话，就能知道他遇见我之后的去向。请一定把他的名字问出来。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我只是..想知道那个曾试图拯救这个世界的人的名字而已。 "/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="请不要打扰我的冥想…… \r\n#L0# #b您还记得1000天前造访过这里的旅行者吗？#k"/>
+      <string name="1" value="……那..那小子啊，那个不知天高地厚、只有勇气可嘉的小子，现在大概已经遍体鳞伤地倒在哪个角落里了吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="我见到那小子都是500天以前的事了！！不知道，现在他在哪儿..那小子总是浑身伤痕累累才回来，也不掂量掂量自己的斤两，就莽撞地往上冲……"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="最好去战士的村庄见见万智。那个村子四周都被岩石环绕着。就是勇士部落。"/>
+        </imgdir>
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+      <int name="ask" value="1"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9321">
+    <imgdir name="1">
+      <string name="0" value="你是找到那小子的包了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="让我打开看看……各种各样的药水..这是吃剩的吗..啊，这是那小子带着的冒险岛旗子..就给你当纪念吧。那小子带着比这更好的东西走了，应该用不着了。"/>
+        <string name="1" value="这里有个#b日记本#k啊。看那个应该就能知道那小子大概在哪儿了。对你寻找他的下落会有用的，这些药水也拿去用吧.."/>
+        <string name="2" value="现在就打开日记本，看看葛温在哪里..然后立刻出发去那个地方吧！对了！我给你的旗子#r绝对不要丢掉，好好带着。#k葛温那小子身上带着相当不错的东西，你帮了他，他一定会给你什么报答的。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="还没找到包吗？听说钢铁野猪是出现在隐藏地区的…… "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="啊！！对了！我不是说过那小子500天以前来找过我吗？那小子，那时把包弄丢了才回来的……他说里面装着写下今后计划的重大东西……"/>
+      <string name="1" value="他说在最后一场血战中受了重伤，回来的路上被突袭的怪物抢走了包..他还说那包里一定有写着今后计划的日记本……"/>
+      <string name="2" value="我也正渐渐开始担心那小子了..你能帮我把那个包找回来吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="身体恢复之后，那小子压根没想着去找那个包，就这么踏上冒险走了。他是从野猪领那边过来的..大概是那边的怪物吧.. "/>
+        <string name="1" value="要说那一带的话，肯定是那些随处可见的野猪干的好事..我猜得没错的话，包就在野猪身上。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="包里的日记本里一定能知道那小子的目的地……"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9322">
+    <imgdir name="0">
+      <string name="0" value="呜…… \r\n#L0# #b查看倒下的旅行者。#k"/>
+      <string name="1" value="呜..是谁啊？伤得太重，我实在动弹不了..你身上有没有多余的万能药水？"/>
+      <imgdir name="yes">
+        <string name="0" value="呜……能不能..帮我弄一瓶万能药水来？"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="呜.."/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <imgdir name="yes">
+        <string name="0" value="谢谢..我叫#b葛温#k..我进入这个世界好像已经有一千天了..今天是几号？#b2006年1月22日#k正好是我进入冒险岛世界满1000天的日子..啊..在这里再多休息一会儿的话，应该就能完全恢复了..  真的很感谢你.."/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="呜……万、万能药水……"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9323">
+    <imgdir name="0">
+      <string name="0" value="咦？那面旗子不是我带着的那个吗？应该是移动速度+8的旗子..对吧？如果是的话，我就作为感谢，把它的移动速度提升到15..怎么样？"/>
+      <imgdir name="yes">
+        <string name="0" value="正好我手上有能提升移动速度的神秘卷轴..请暂时交给我……"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="这可不是随便就能弄到的卷轴..是非常珍贵的东西..要是你改主意了，就在1月结束之前来找我吧.."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="移动速度+15就可以了呢？"/>
+      <imgdir name="yes">
+        <string name="0" value="成功了！！来，那请把这个好好利用起来吧..在非战斗的情况下，佩戴这面旗子会帮助你快速移动。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="好像没有能帮您提升移动速度的道具啊..真可惜.."/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9324">
+    <imgdir name="1">
+      <string name="0" value="您真的见到他了吗？他叫什么名字？\r\n#b#L0# #b格仁#l\r\n#L1# 九仁#l\r\n#L2# 葛温#l\r\n#L3# 万智#l#k"/>
+      <string name="1" value="葛温，原来是葛温大人啊！！真的太感谢您了。我一定要把他的故事到处讲给大家听。您也是为了这里的和平，和葛温大人并肩作战的吧？请务必加油哦。"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="真的吗？可随风传来的传闻里好像不是这个名字..您真的见到他了吗？"/>
+          <string name="1" value="真的吗？可随风传来的传闻里好像不是这个名字..您真的见到他了吗？"/>
+          <string name="3" value="万智不是勇士部落里那个武人的名字吗！！"/>
+          <int name="answer" value="3"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="我先前跟您说过的那人的名字，您问到了吗？您见到他了吗？请告诉我他的名字。"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9325">
+    <imgdir name="1">
+      <string name="0" value="……不过……我还是再给你一次。别再丢掉了，去把那小子在哪里的下落找到并告诉我！！"/>
+      <imgdir name="yes">
+        <string name="0" value="你站在那儿干什么！！赶快上路吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="有什么事..？还没能从日记本里得到线索吗..？ \r\n#L0# #b其实..我把葛温的日记本弄丢了。#k"/>
+      <string name="1" value="....."/>
+      <imgdir name="yes">
+        <string name="0" value="这本日记本在你眼里也许只是某人的一张便条！！可它对那小子、对我都是重要的东西！！！你这样随便对待的话，我可不能再给你了！！"/>
+        <string name="1" value="……我也是偶然走在路上发现了日记本..可看到它的瞬间我真的火大了！！到底是弄丢了还是丢掉了..我很难再信任你，不过……"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="……既然丢掉了，那就不是再需要的东西了吧..走好.."/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9330">
+    <imgdir name="0">
+      <string name="0" value="您好。我是#p9010000#。您听到传闻了吗？听说为了迎接春节，冒险岛各个大陆都在准备祭桌呢。在维多利亚岛，是射手村的#b#p1012106##k接下了这件事。可是春节都快到了，祭桌用的材料还没全部备齐，他正为此发愁呢。您能不能帮帮#b#p1012106##k呢？"/>
+      <imgdir name="yes">
+        <string name="0" value="请把 #b#t2010000# 5个、#t2022054# 5个、#t2022055# 7个、#t2022056# 9个、#t2022053# 13个#k 带去给射手村的 #b#p1012106##k。有些东西能在商店买到，商店买不到的则可以通过 #b维多利亚岛的怪物#k 获得。明明女士正急得直跺脚，请快一点。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="请度过一个有意义的春节，若改变主意了，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我收到了冒险岛运营者的联系。您把我拜托的东西带来了吧？真是太好了。之前因为弄不到水果，我一直没能准备祭桌呢。这可帮了大忙了。 "/>
+      <imgdir name="yes">
+        <string name="0" value="为迎接春节，我试着做了 #b#t2022058##k。一定很好吃的。不过水果还差很多呢。要让维多利亚岛的所有人一起分享，还得有更多食物才行……看来得再拜托 #b#p9010000##k 一次了。如果您还要收集水果，请去找冒险岛运营者吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把我说过的水果收集好，去找 #b明明女士#k 吧。她正在等着您呢。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="您还没收集齐水果吗？"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9331">
+    <imgdir name="0">
+      <string name="0" value="您还留着帮忙准备祭桌时收到的 #b#t2022058##k 吗？如果还留着，请凑齐 #b#t2022058# 3个#k，带去给在 #b#m102000000##k 的 #b#p1020000##k 先生。听说 #p1020000# 先生非常喜欢 #t2022058#。送他 #t2022058# 顺便拜个年，他一定会很高兴的。"/>
+      <imgdir name="yes">
+        <string name="0" value="一定要带上 #b#t2022058# 3个#k 哦。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="春节的食物要互相分着吃才香呢。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="哦～这是热乎乎的 #t2022058# 啊。看起来真好吃！ #t2022058# 是我最喜欢的食物。你既送来了这么美味的 #t2022058#，还特地跑来拜年，真是太感谢了。听说你最近在准备祭桌？那么，摆祭桌时把红色水果 #t2010000# 和 #t2022055# 放在东边、白色水果 #t2022054# 放在西边，这叫什么你知道吗？\r\n#L0# 枣栗梨柿 #l\r\n#L1# 红东白西 #l\r\n#L2# 左脯右醯 #l\r\n#L3# 鱼东肉西"/>
+      <string name="1" value="原来你知道啊。是我问得太理所当然了？哈哈！话说回来，你不可能不知道嘛。"/>
+      <imgdir name="yes">
+        <string name="0" value="希望新的一年里你也能充满快乐的事。路上小心啊。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请收集 #b饺子 3个#k，去找 #b与猪共舞#k 吧。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="啊～一到春节，就想吃 #b#t2022058##k 了呢。"/>
+        </imgdir>
+        <imgdir name="0">
+          <string name="0" value="枣栗梨柿，是指祭桌上用的枣、栗、梨、柿这几种水果的统称。"/>
+          <string name="2" value="左脯右醯，是指摆祭桌时把肉脯放在左边、把食醯放在右边的做法。"/>
+          <string name="3" value="鱼东肉西，是指摆祭桌时把鱼放在东边、把肉放在西边的做法。"/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+      <int name="ask" value="1"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9332">
+    <imgdir name="0">
+      <string name="0" value="您好，我是 #p9010000#。您听说那消息了吗？为迎接春节，冒险岛各个大陆都要准备祭桌呢。据说在奥西利亚大陆，#m222000000# 的 #b#p2071000##k 接下了这件事。可春节都快到了，他还没凑齐摆祭桌的材料，正愁得不行呢。您愿意帮帮 #b#p2071000##k 吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="请把 #b#t2022057# 10个、#t2010002# 10个、#t4000088# 10个#k 带去给在 #b#m222000000##k 的 #b#p2071000##k。有些东西能在商店买到，商店买不到的则可以通过 #b奥西利亚的怪物#k 获得。 #p2071000# 正急得直跺脚，请快一点。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="请度过一个有意义的春节，若改变主意了，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我从冒险岛运营者那里收到联系了。听说你把我拜托的东西带来了？真是太好了。之前因为弄不到材料，我一直没能准备祭桌呢。这可帮了大忙了。 "/>
+      <imgdir name="yes">
+        <string name="0" value="为迎接春节，我试着做了 #b#t2022058##k。一定很好吃的。不过材料还差很多呢。要让奥西利亚大陆的所有人一起分享，还得有更多食物才行……看来得再拜托 #b#p9010000##k 一次了。如果您还要收集材料，请去找冒险岛运营者吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把我说过的材料收集好，去找 #b朴大爷#k 吧。他正在等着您呢。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="您还没收集齐材料吗？"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9333">
+    <imgdir name="0">
+      <string name="0" value="您还留着帮忙准备祭桌时收到的 #b#t2022058##k 吗？如果还留着，请凑齐 #b#t2022058# 3个#k，带去给在 #b#m221000000##k 的 #b#p2050008##k 大人。听说 #p2050008# 大人非常喜欢 #t2022058#。送他 #t2022058# 顺便拜个年，他一定会很高兴的。"/>
+      <imgdir name="yes">
+        <string name="0" value="一定要带上 #b#t2022058# 3个#k 哦。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="春节的食物要互相分着吃才香呢。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="哦～这是热乎乎的 #t2022058# 啊。看起来真好吃！ #t2022058# 是我最喜欢的食物。你既送来了这么美味的 #t2022058#，还特地跑来拜年，真是太感谢了。听说你最近在准备祭桌？那么，摆祭桌时把鱼放在东边、把肉放在西边，这叫什么你知道吗？\r\n#L0# 枣栗梨柿 #l\r\n#L1# 红东白西 #l\r\n#L2# 左脯右醯 #l\r\n#L3# 鱼东肉西"/>
+      <string name="1" value="原来你知道啊。是我问得太理所当然了？哈哈！话说回来，你不可能不知道嘛。"/>
+      <imgdir name="yes">
+        <string name="0" value="希望新的一年里你也能充满快乐的事。路上小心啊。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请收集 #b饺子 3个#k，去找 #b梅斯特将军#k 吧。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="啊～一到春节，就想吃 #b#t2022058##k 了呢。"/>
+        </imgdir>
+        <imgdir name="0">
+          <string name="0" value="枣栗梨柿，是指祭桌上用的枣、栗、梨、柿这几种水果的统称。"/>
+          <string name="1" value="红东白西，是指在祭桌上把红色水果放在东边、白色水果放在西边的说法。"/>
+          <string name="2" value="左脯右醯，是指摆祭桌时把肉脯放在左边、把食醯放在右边的做法。"/>
+          <int name="answer" value="4"/>
+        </imgdir>
+      </imgdir>
+      <int name="ask" value="1"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9340">
+    <imgdir name="0">
+      <string name="0" value="您想在白色情人节送给心爱的人 #b#t4140102##k 吗？嗯……只要准备几种材料，我就能教您便宜的制作方法哦。比起买那些随处可见的东西，亲手做的不是更能装满爱意吗？怎么样？要不要试着做一次？"/>
+      <imgdir name="yes">
+        <string name="0" value="要制作 #b#t4140102##k，需要好几种材料。从现在开始请把我说的材料好好记住，一样都不能少地带来哦。明白了吗？\n\n#i4031122#  #t4031122# 1个\n#i4031124#   #t4031124# 3个\n#i4031125#  #t4031125# 1个\n\n把我说的材料全部收集来，我就给您做美味的 #b#t4140102##k。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="想在白色情人节向心爱的人表达心意，就送糖果吧。这糖果拥有神秘的力量，能像护身符一样保护持有它的人。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="制作 #t4140102# 所需的材料……都带来了吧？制作还需要再付 #b1000 金币#k。您要做吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="来～给您。请仔细看看 #t4140102#。上面写下了 #b您的名字#k。这东西会在 #b一天#k 里保护持有 #t4140102# 的人。祝您和心爱的人度过愉快的白色情人节。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="您忘记要收集什么材料了吗？我不是叮嘱过您要好好～记住吗。我再告诉您一次，请一定记住。是 #b#t4031122# 1个、#t4031124# 3个、#t4031125# 1个#k 哦。把这些材料带来，我就给您做美味的 #b#t4140102##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9341">
+    <imgdir name="1">
+      <string name="0" value="制作 #t4140201# 所需的材料……都带来了吧？这次是特别需要费心的工序，所以还要多花 #b2500 金币#k 哦？您要做吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="当当～！包装得很漂亮吧。请看。 #t4140201# 上写下了 #b您的名字#k。这东西会在 #b3天#k 里保护持有这个 #t4140201# 的人。祝您和心爱的人度过幸福的白色情人节～"/>
+        <string name="1" value="啊对了！顺便说一句～这个工序相当费功夫，所以我大概 #b4小时一次#k 给您制作。因为其他订单实在太多了～ 4小时后带着草莓糖果来找我，我还能再给您做。不过在那之前不行哦～"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="嗯？是不是材料或者钱不够呢？请确认一下我说过的东西是不~~是都齐全了。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="白色情人节是向心爱的人表达心意的日子。您带着草莓糖果吗？那糖果里装满了爱的力量，能起到护身符一样的作用，您知道吧？"/>
+      <string name="1" value="把那种神秘力量装进糖果里的，正是我这位糕点师库克斯～啦。我会用特别的加工方法，把那颗糖果的有效期再延长一些。您愿意把需要的材料收集来吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="只要相信并跟着我走就行了。我的秘方就是！！把糖果装进篮子再包装起来，让收到的人更加感动。为此还需要几种材料。"/>
+        <string name="1" value="需要1个已经拥有护身符力量的 #b#t4140102##k。您有吧？另外，用来装糖果的 #b#t4031113##k 和用来漂亮包装的 #t4031114##k，从我旁边的 #b可可#k 那里各买 #r1个#k 来应该就可以了。\n\n#i4140102# #t4140102# 1个\n#i4031113#   #t4031113# 1个\n#i4031114#  #t4031114# 1个"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="啊啊～我正把有效期一天的道具合成，延长成有效期三天的道具呢～ 您居然拒绝这次机会……不过还是请在白色情人节过去之前一定要来找我哦。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9350">
+    <imgdir name="1">
+      <string name="0" value="哈哈，你好啊？虽然现在这样在明珠港定居下来了，但当年风光的时候，我可是只要有船能到的地方都去过的老练水手！不过啥？你是来领礼物的？"/>
+      <imgdir name="yes">
+        <string name="0" value="哎呀呀，我倒是忘了。好吧，为了你，我就特别分给你一些从很远很远的地方弄来的、装满大海香气的香水。拿了这个还不够的话，#b6小时#k 后再来吧！"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="快去找明珠港的 #b特奥#k 吧"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="看来您还没把香水瓶准备好呢。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="不是结束，而是新的开始！衷心祝贺大家毕业和入学～当然，冒险岛里的所有人都该一起庆祝吧？为了祝贺大家的毕业和入学，冒险岛准备了小小的礼物。想知道是什么礼物吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="礼物是明珠港的 #b#p1002001##k 准备的。要想从 #b#p1002001##k 那里领到香水，请收集 #b#t4031257# 3个#k 带去。\n\n#i4031257# #t4031257# 3个\n\n#t4031257# 可以从维多利亚岛的怪物那里获得。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="再次祝贺您毕业、入学～ 如果改变主意了，请再来找我吧"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9351">
+    <imgdir name="1">
+      <string name="0" value="#b#t4000006##k 是不是散发着难闻的气味？把它和 #b#t4000012##k 好好混合，就能做出让人力量砰砰涌出的香水……把香水材料交给我，我就给你做能让人力量砰砰涌出的特别香水。"/>
+      <imgdir name="yes">
+        <string name="0" value="来，香水做好了。还需要的话，#b6小时#k 后再去找一次运营者吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="快去找废弃都市的 #b舒米#k 吧"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="材料不够啊……把 #b#t4031257# 5个、#t4000006# 20个、#t4000012# 30个#b 收集来吧"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="不是结束，而是新的开始！衷心祝贺大家毕业和入学～当然，冒险岛里的所有人都该一起庆祝吧？为了祝贺大家的毕业和入学，冒险岛准备了小小的礼物。想知道是什么礼物吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="去废弃都市找 #b#p1052102##k，就会帮您制作香水。请把下面的材料收集好带去。 \n\n #i4031257# #t4031257# 5个\n#i4000006# #t4000006# 20个\n#i4000012# #t4000012# 30个#k\n\n#t4031257# 可以从维多利亚岛的怪物那里获得。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="再次祝贺您毕业、入学～ 如果改变主意了，请再来找我吧"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9352">
+    <imgdir name="1">
+      <string name="0" value="继母让我准备好 #t4031258# 4朵。可是我现在要做的事太多了，实在没法亲自去采花…… 您给我5朵的话，4朵我送给继母，剩下的一朵就用来给您做散发美丽香气的香水……您愿意把 #t4031258# 交给我吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="您大老远跑到这里，辛苦了…… 这个 #t2022062# 请收下。还需要的话，#b6小时#k 后再去找一次运营者吧……"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="快去找林中之城的 #b孔姬#k 吧"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="您还没把 #b#t4031257# 7个#k 和 #b#t4031258# 5朵#k 都收集齐呢。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="不是结束，而是新的开始！衷心祝贺大家毕业和入学～当然，冒险岛里的所有人都该一起庆祝吧？为了祝贺大家的毕业和入学，冒险岛准备了小小的礼物。想知道是什么礼物吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="林中之城的 #b#p2071004##k 说现在正忙着呢。您要不要帮孔姬做点事，再领走香水？她为了继母的差事要去采 #t4031258#，可孔姬因为家务太忙，实在没时间去采 #t4031258#。只要收集 #b#t4031258# 5朵#k 和 #b#t4031272# 7个#k 带去，她就会分给继母，剩下的用来给您做香水。 #t4031258# 和 #t4031272# 在林中之城附近很容易找到。 \n\n#i4031258# #t4031258# 5朵\n#i4031272# #t4031272# 7个"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="再次祝贺您毕业、入学～ 如果改变主意了，请再来找我吧"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9360">
+    <imgdir name="1">
+      <string name="0" value="咦？猴子的亲密度变成 +2 了吗？想查看宠物的信息，双击宠物就能看到信息哦。要不要看看？"/>
+      <imgdir name="yes">
+        <string name="0" value="果然理解得真快。我送您的宠物饲料，以后可以在射手村的丘特、玩具城的佩特里夏……或者杂货商人那里买到。请记得给宠物喂食，别让它饿着哦。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="您好？您带着一只非常可爱的猴子呢。您大概会想知道能对那只猴子使用的指令吧……"/>
+      <imgdir name="yes">
+        <string name="0" value="真是只可爱的猴子呢！想提高猴子的亲密度，只要在聊天窗口输入特定指令就可以了。您问有哪些指令？"/>
+        <string name="1" value="宠物的等级在 1 ~ 30 之间时，可以使用坐下、挨骂、便便、爱你、笑一个、笨蛋等等指令。把宠物的亲密度提高到 #b2#k 再找到我，我就送您一本有用的说明书。"/>
+        <string name="2" value="当然，其他能用的指令也都写在那本说明书里了。那么，请用我教您的指令，和猴子变得更亲近吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来您已经对猴子了如指掌了？什么时候有疑问就来找我吧。我送这本说明书只是一时的事哦。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9370">
+    <imgdir name="0">
+      <string name="0" value="不久前开始，邪恶的怪物们开始袭击村庄了。很久以前有位勇士封印了邪恶的怪物，但最近封印的力量变弱，怪物们似乎被放出来了。请和其他冒险家们齐心协力，从邪恶的怪物手中守护村庄吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="邪恶的怪物们在被封印的期间，似乎对被封印这件事积攒了满腔怒火。也许正因如此，它们成群结队地到处乱窜，见村就袭。因为不知道它们什么时候会袭击哪个村庄，所以需要大家的帮助。 "/>
+        <string name="1" value="一旦听说有村庄遭到怪物侵略，请立刻赶过去，平安守护住村庄。然后把它们力量的根源 #b#t4031282# 1个#k 回收，带来给我。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="必须守护村庄的和平才行……看来您还没准备好呢。等您随时准备好守护村庄，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我又听说变得更凶恶的怪物们袭击村庄了。您击败了袭击村庄的怪物，带回了 #b#t4031282# 1个#k 吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="您终于为村庄重新找回了平静。为表感谢，我为您提升了一些经验和人气。另外还有一件事想拜托您。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="要有 #b#t4031282# 1个#k，才称得上守住了村庄的冒险家。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9371">
+    <imgdir name="0">
+      <string name="0" value="什么，那是！你怎么会拥有 #t4031282#？那绝对不是可以放任不管的东西。得赶快把 #t4031282# 封印起来才行……\r\n#L0# #b我正好听说您能封印 #t4031282#，所以就找来了。"/>
+      <string name="1" value="原来如此。你愿意封印邪恶的气息吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="当然，我也能举行封印仪式，但要封印 #b#t4031282##k，需要更强大的魔法力量。若是 #m101000000# 里 #p1032001# 的魔力，应该就能重新封印 #t4031282#。不过以现在这个状态把 #t4031282# 运到 #m101000000# 太危险了。看来得先做一把封印之锁，临时把 #t4031282# 封印起来。"/>
+        <string name="1" value="封印之锁是在封印想要封住的东西时使用的，但只能用一天，封印之力也很弱，所以用来封印 #b#t4031282##k 还力有未逮，不过把 #t4031282# 运到 #m101000000# 倒是没问题。要制作封印之锁，需要精炼的 #b#t4011001# 1个#k，快一点吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来要封印 #b#t4031282##k，你的力量还不够啊。"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="你来了？来得正好。既然你把材料弄来了，终于可以封印 #b#t4031282##k 了。"/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢你帮我封印了 #b#t4031282##k。为表感谢，我会给你一些经验和道具，请不要推辞，收下吧。不过这封印还不完全，不知道什么时候会再次解开。一旦发现 #b#t4031282##k，就立刻带来给我，帮我把它封印起来。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="要封印的 #b#t4031282# 1个#k 和用来制作封印 #t4031282# 所需之锁的精炼 #b#t4011001# 1个#k，都准备好了吗？"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9372">
+    <imgdir name="0">
+      <string name="0" value="把您手上的 #b#t4031282##k 带去给住在 #b#m105040300##k 的 #b#p1061011##k，就能再次封印邪恶的气息。请您再一次将邪恶的气息彻底封印。"/>
+      <imgdir name="yes">
+        <string name="0" value="还有，以后一旦回收到 #b#t4031282##k，请立刻带去给 #b#p1061011##k 封印。如果不快点封印 #b#t4031282##k，邪恶的怪物们可能会复活哦。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="就这样一直带着 #t4031282# 的话，您可能会有危险……"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="嗯……在很近的地方能感觉到邪恶的气息……你是不是带着什么不好的东西？如果是又晦气又危险的东西，还是赶快扔掉为好。"/>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请去找在 #r#m105040300##k 的 #b#p1061011##k 吧。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9386">
+    <imgdir name="0">
+      <string name="0" value="您好？冒险岛世界诞生已经3年了。为纪念冒险岛诞生3周年，也为了和各位旅行者分享喜悦，我们准备了派对活动。旅行者您也愿意参加3周年纪念派对吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="要参加冒险岛3周年纪念派对，需要证明您是冒险岛世界的旅行者。是冒险岛世界的旅行者的话，就该有 #b#t04031297##k。 #b#t04031297##k 是 #i04031297# 这样画着树叶的红色信封模样。听说怪物们身上有很多。旅行者也请从怪物那里  #b#t04031297##k 1个 带来给我吧。那样我就让您参加派对。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="本希望您一定来参加3周年纪念派对，为会场增光添彩的……"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="您把 #b#t04031297##k 带来了吗？嗯，我看看……确实是冒险岛诞生3周年纪念 #b#t04031297##k 呢。既然您带来了邀请函，我就送您一份能在派对上让您更加闪耀的 #b#t01002508##k 作为礼物。 "/>
+      <imgdir name="yes">
+        <string name="0" value="希望您喜欢 #b#t01002508##k。请戴上 #b#t01002508##k，参加纪念 #e冒险岛世界诞生3周年#n 的众多派对活动。详细内容也可以在冒险岛官网上确认。另外，如果您有时间，请去看看住在明珠港的 #b#p1002100##k。她明明说好要参加派对的……到现在还没消息，我有点担心呢。那就拜托您了。 "/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="要参加派对，应该需要 #b#t04031297# 吧？ #b#t04031297##k 可以从附近狩猎场出现的怪物那里获得。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9387">
+    <imgdir name="0">
+      <string name="0" value="咦，那不是3周年纪念  #b#t01002508##k 吗？我也超想去冒险岛3周年派对，可我父亲不允许……我父亲太严厉了，到现在我一次旅行都没去过。那样的父亲怎么可能允许我去派对呢。 "/>
+      <string name="1" value="而且父亲最近不知因为什么事心情不太好，我连想去派对的话都说不出口。如果能给他做点他喜欢吃的食物，说不定就会同意了……"/>
+      <string name="2" value="求求您，能不能帮我也去成派对呢？如果您帮我，我就用以前学过的炼金术，把旅行者您手上的  #b#t01002508##k 做得更强大。"/>
+      <imgdir name="yes">
+        <string name="0" value="我相信旅行者您一定会帮我的。父亲以前很喜欢母亲做的 &apos;蘑菇火锅&apos;。如果我给他做 &apos;蘑菇火锅&apos;，他一定会高兴地同意我去派对的。为了能做 &apos;蘑菇火锅&apos;，请帮我收集 #b#t4000011# 5个、#t4000009# 5个、#t4000012# 20个、#t4000015# 20个#k 来吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我也想去派对嘛…… 求求您帮帮我（呜呜……）"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="蘑菇都收集齐了吗？嗯……有这么多蘑菇，应该能给父亲做一锅美味的‘蘑菇火锅’，然后得到他的允许了。去派对要穿什么衣服呢？啊，好期待呀。对了，我按照约定，把旅行者您的 #b#t01002508##k 做得更强了，希望您能派上用场。 "/>
+      <imgdir name="yes">
+        <string name="0" value="祝您派对愉快～"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="蘑菇火锅要用的材料是 #b#t4000011# 5个、#t4000009# 5个、#t4000012# 20个、#t4000015# 20个#k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9388">
+    <imgdir name="0">
+      <string name="0" value="咦，那不是3周年纪念 #b#t01002508##k 吗？我也超想去派对，可严厉的父亲不允许……而且我还没完成父亲交代的差事。您能不能替我完成父亲交代的差事，帮我也去成派对呢？如果您帮我，我就用以前学过的炼金术，把旅行者您手上的 #b#t01002508##k 做得更强大。"/>
+      <imgdir name="yes">
+        <string name="0" value="父亲说，为了让旅行者们能安心旅行，要我去击败那些骚扰旅行者的怪物再回来。可是我一遇到怪物就吓得只顾着逃跑了。那些怪物长着只有一只眼睛的大蜥蜴模样，光是看着就很可怕…… 请您替我击败 #b#o2230100# 50只、#o3230100# 50只#k 再回来吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我也一定要去派对。求求您帮我去完成父亲的差事吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="您终于击败怪物回来了！有没有哪里受伤？派对期间这么开心，可不能受伤呀。那么，我按照约定，用我学过的炼金术，把旅行者您的 #b#t01002508##k 做得更加强大。 "/>
+      <imgdir name="yes">
+        <string name="0" value="祝您派对愉快～"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="您替我为了父亲的差事要消灭的怪物是 #b#o2230100# 50只、#o3230100# 50只#k。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="还有，绝对不可以弄丢 #b#t1002508##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9389">
+    <imgdir name="1">
+      <string name="0" value="您真是位勇敢的人。旅行者您消灭怪物的时候，我跟父亲说过了，可他说在看到 #b#t4000028# 3个#k 和 #b#t04000046# 3个#k 之前不会允许。看来我没法和您一起去派对了。您先好好享受派对，我很快也会跟过去的。对了，虽然不能一起去派对，但我按约定用炼金术把旅行者您的 #b#t01002508##k 做得更坚固了。 "/>
+      <imgdir name="yes">
+        <string name="0" value="祝您派对愉快～"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="为了证明您的勇气，要消灭 #b#o7130100# 30只#k 和 #b#o7130101#30只#k，并带上证据  #b#t4000028# 3个#k 和 #b#t04000046# 3个#b 来。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="为了证明您的勇气，要消灭 #b#o7130100# 30只#k 和 #b#o7130101#30只#k，并带上证据  #b#t4000028# 3个#k 和 #b#t04000046# 3个#b 来。还有，绝对不可以弄丢 #b#t1002508##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="咦，那不是3周年纪念 #b#t01002508##k 吗？我也超想去派对，可严厉的父亲不允许……如果我说要和旅行者您这样勇敢的人一起去，他说不定就会同意……您能不能向父亲证明您是强大的旅行者，帮我也去成派对呢？"/>
+      <imgdir name="yes">
+        <string name="0" value="果然我的眼光没错。像旅行者您这样勇敢的人，父亲一定也会满意的。父亲说过，只有真正的勇者才能击败住在深层地下城里的可怕怪物。那些怪物的名字叫 #b#o7130100##k 和 #b#o7130101##k。请您把它们各消灭 #b30只#k，并带上证据 #b#t4000028# 3个#k 和 #b#t04000046# 3个#k 来吧。这段时间我会试着让父亲回心转意的。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9390">
+    <imgdir name="0">
+      <string name="0" value="您好？您把我做的 #b#t01002508##k 弄丢了吗？没有 #b#t01002508##k 的话，就没法享受愉快的派对了……您想再领一份 #b#t01002508##k 吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="我把我留着备用的 #b#t01002508##k 给您吧。嗯……帽子放到哪里去了呢～ 我得再找找帽子。请稍后再跟我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来您不需要 #b#t01002508##k 呢。没有 #b#t01002508##k 的话，就没法享受愉快的派对了……什么时候又需要 #b#t01002508##k 了，就来找我吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="呼，幸好还有备用的#b#t01002508##k。我这就把#b#t01002508##k再给你一次。现在没有多余的帽子了，以后可千万别再弄丢了哦。"/>
+      <imgdir name="yes">
+        <string name="0" value="还有，就像之前跟你说的，请去找一下住在明珠港的#b#p1002100##k吧。他明明说好会来参加派对的……可到现在都没有消息，我有点担心呢。那就拜托你了。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9391">
+    <imgdir name="0">
+      <string name="0" value="你好？今年儿童节又照例到来了，我正为准备过节忙得团团转呢。我打算把冒险岛的孩子们邀请到水族馆动物园作为儿童节礼物，可听说有些孩子把邀请券弄丢了。我这边准备工作太多，实在抽不出时间把邀请券送回去，你能替我去弄一张#b#t04031301##k送给那个孩子吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="真是太感谢你了。弄丢邀请券的孩子是住在废弃都市的#b#p1052106##k。据#b#p1052106##k说，把#b#t04031301##k弄丢的地方是附近的狩猎场。请在附近的狩猎场找到1张#b#t04031301##k，然后送到住在废弃都市的#b#p1052106##k那里。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="那孩子弄丢了#b#t04031301##k，正垂头丧气的，真是太可怜了。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="竟然把儿童节礼物#b#t04031301##k给弄丢了……看来我只能一个人守着这里了……咦，那不就是#b#t04031301##k吗？能把它给我吗？这样我也能去动物园了……"/>
+      <imgdir name="yes">
+        <string name="0" value="哇，真是太谢谢你了。不过我正发愁没有一起去的朋友呢。其实我本来约好和朋友一起去动物园的，可朋友也把#b#t04031301##k弄丢了。你能也帮帮我的朋友吗？如果可以的话，请再跟我搭话吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请找到#b#t04031301##k，送到废弃都市的#b#p1052106##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="得有1张#b#t04031301##k才能去动物园啊……"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9392">
+    <imgdir name="0">
+      <string name="0" value="怎么办啊……没有一起逛动物园的朋友了。我的朋友也把#b#t04031304##k弄丢了呢……你能帮我，让我和朋友一起去动物园吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="真是太感谢你了。我的朋友是住在魔法密林北边森林某处的#b#p1061004##k……请在附近的狩猎场找到1张#b#t04031304##k，送到魔法密林我朋友#b#p1061004##k那里。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我真的很想和#b#p1022101##k一起去水族馆动物园啊……"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我和#b#p1052106##k约好一起去动物园的……结果却把#b#t04031304##k弄丢了……怎么办啊……你说什么？真的吗？你要把#b#t04031304##k给我，真是太感谢了。"/>
+      <imgdir name="yes">
+        <string name="0" value="终于我也能和#b#p1052106##k一起去动物园了。我得赶快去见#b#p1052106##k了。对了，我想向邀请我们去动物园的#b#p9010000##k表示感谢……请代我去找#b#p9010000##k，转达一下我的谢意。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请找到#b#t04031304##k，送到住在魔法密林北边森林某处的#b#p1061004##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="得有1张#b#t04031304##k才能去动物园啊……"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9393">
+    <imgdir name="0">
+      <string name="0" value="你好？又见到你真是太高兴了。哦？#b#p1061004##k说要向我转达感谢？我本来也不是为了让人道谢才做的……#b#p1061004##k能开心就好啦……旅行者也替我高兴，对吧？ "/>
+      <string name="1" value="我希望这世上所有的孩子都能开开心心的，可最近听说怪物们在欺负孩子，真让人担心。我这边忙着准备儿童节的事情脱不开身，你能替我去教训一下那些欺负孩子的怪物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="真是太感谢你了。有旅行者帮忙，我就放心了。旅行者要消灭的怪物是  #b#o0130101##k 40只、#b#o0210100##k 30只、#b#o0130100##k 20只。那么请你一定要打败这些怪物，然后平安回来找我哦。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="要是孩子们受了伤可就糟了……"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="你终于把怪物全都消灭了？呼~真是辛苦你了……这下孩子们可以放心地到处旅行了。非常感谢你为孩子们伸出援手，我准备了谢礼哦。"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#t04140103##k是证明旅行者乐于助人的文书。此外，#b#t04140103##k和护身符一样，在角色死亡时会自动使用，并具有不会损失经验值的神奇功能。那么请你好好利用它，今后也请一定怀着帮助有困难的人、先为他人着想的善良之心去旅行。 "/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="旅行者要消灭的怪物是  #b#o0130101##k 40只、#b#o0210100##k 30只、#b#o0130100##k 20只。请去打败那些欺负孩子的怪物吧。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9394">
+    <imgdir name="0">
+      <string name="0" value="你好？听说你帮#b#p1061004##k去成动物园了？真是太感谢你了……水下世界有一座水族馆动物园，听说住在那里面的#b#p2060005##k最近也为准备儿童节忙得不行。他拜托我帮忙，可我也实在抽不出时间。你能替我过去听听#b#p2060005##k的请求，帮帮他吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p2060005##k是水下世界水族馆动物园的饲养员。为了迎接儿童节来动物园参观的游客，他正忙得不可开交呢。听说他需要帮忙，快去找#b#p2060005##k听听情况，帮帮他吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="也不是什么很难的请求……请你一定要答应哦。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="你好？我是动物园的饲养员#b#p2060005##k。为了迎接儿童节，来这座水族馆动物园的孩子们太多了，要准备的事情一两件可数不完。如果你有空，请一定再来找我搭话哦。"/>
+      <imgdir name="yes">
+        <string name="0" value="那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请去找水下世界动物园里的#b#p2060005##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9395">
+    <imgdir name="0">
+      <string name="0" value="你好？我是动物园的饲养员#b#p2060005##k。儿童节来动物园的游客会很多，要准备的事情可不止一两件。我一个人管理动物园实在太吃力，才去拜托了#b#p9010000##k，可他说很忙，那也没办法了。那么旅行者，你能代替#b#p9010000##k听听我的请求吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="哇，这么爽快就答应帮忙，你真是个好人啊。动物园里住着从#o1210101#到#o8130100#的各种怪物。儿童节到了，得给来动物园的游客们展现好状态才行，可它们一点精神都没有。要是给动物园的伙伴们做顿特别饲料，应该会好一些。要做特别饲料需要#b#t02010003##k 3个、#b#t04000029##k 30个、#b#t04000166##k 50个。#b#t02010003##k在附近的商店就能买到，请一定把所有材料都准备好带来哦。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="哇，你为动物们把特别饲料都准备好了？动物园的伙伴们一定会很喜欢的！来看动物的孩子们也会很高兴的……感谢你的帮助，我准备了一份小小的礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#t4140103##k是证明旅行者乐于助人的文书。此外，#b#t4140103##k和护身符一样，在角色死亡时会自动使用，并具有不会损失经验值的神奇功能。那么请你好好利用它，今后也请一定怀着帮助有困难的人、先为他人着想的善良之心去旅行。 "/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="给动物们的特别饲料需要#b#t02010003##k 3个、#b#t04000029##k 30个、#b#t04000166##k 50个。#b#t02010003##k在商店就能买到。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9396">
+    <imgdir name="0">
+      <string name="0" value="你好？我是动物园的饲养员#b#p2060005##k。这里是能观赏冒险岛各种怪物的动物园。儿童节会有很多孩子来动物园参观，可附近那些鱼很碍事，孩子们想过来可不容易。为了这些要来这里的孩子们，你能替我去消灭村子附近的鱼吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="在这附近妨碍孩子们来动物园的鱼是#b#o4230201##k、#b#o4230124##k和#b#o4230123##k。请把那些鱼各消灭80只。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="要是孩子们在来的路上受伤了可怎么办啊…… "/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="你已经把怪物都消灭了？为了孩子们连难事都毫不推辞，你真是个好心人。为了表示感谢，我准备了一份小小的礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#t4140103##k是证明旅行者以身作则、帮助他人的助手文书。此外，#b#t4140103##k在狩猎时角色死亡会自动使用，并具有不会损失经验值的神奇功能。那么请你好好利用它，今后也请一定怀着帮助有困难的人、先为他人着想的善良之心去旅行。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="是#b#o4230201##k、#b#o4230124##k和#b#o4230123##k。请把那些鱼各消灭80只"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9397">
+    <imgdir name="0">
+      <string name="0" value="你好？听说你帮#b#p1061004##k去成动物园了？真是太感谢你了……真希望这世上所有的孩子都能过个快乐的儿童节。不过我还有一件担心的事……听说有个孩子因为没有朋友，非常孤单……你能帮我给那个孤单的孩子送份礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="听说住在林中之城的#b#p2071008##k在村里没有一起玩的朋友，非常寂寞。要是有些#p2071008#能玩的玩具就好了……请找些能陪#p2071008#玩的玩具送给他吧。什么东西适合给#p2071008#玩呢……#b#t04000108##k 50个、#b#t04000109##k 50个、#b#t04000143##k 50个、#b#t04000147##k 10个左右的话，#p2071008#就不会无聊了。那就请把这些玩具送到住在林中之城的#b#p2071008##k那里吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="没有玩具、独自生活的#b#p2071008##k真是太可怜了。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="明明是儿童节，却没有一起玩的朋友，好寂寞啊……咦，那是什么？真的吗？是给我准备的礼物？太感谢了！有这么多玩具，我好久都不会无聊了。我该怎么报答你呢……之前#b#p9010000##k交给我一样东西，说遇到乐于助人的人就交给他，那就送给你吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#t04140103##k是证明旅行者以身作则、帮助他人的助手文书。此外，#b#t04140103##k在狩猎时角色死亡会自动使用，并具有不会损失经验值的神奇功能。那么请你好好利用它，今后也请一定怀着帮助有困难的人、先为他人着想的善良之心去旅行。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把#b#t04000108##k 50个、#b#t04000109##k 50个、#b#t04000143##k 50个、#b#t04000147##k 10个送到#b#p2071008##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="有#b#t04000108##k 50个、#b#t04000109##k 50个、#b#t04000143##k 50个、#b#t04000147##k 10个左右，就不会无聊了……"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9398">
+    <imgdir name="0">
+      <string name="0" value="你好？看来旅行者也听到消息了。没错。那些在村里各处被发现、毫不起眼的怪物雕像，正如传说中那样，被查明是会散发奇妙光芒、拥有神奇功能的雕像。旅行者也想详细了解那座神奇雕像吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="至今相信那毫不起眼的怪物雕像传说的人并不多。我也不信那个传说，就把那些不起眼的怪物雕像全都给了路过的#b#p2040050##k。不过，为了追寻怪物雕像传说的根源而出发的#b#p2040050##k，据说终于揭开了与雕像有关的秘密。 "/>
+        <string name="1" value="我还没听到详细的情况，如果旅行者有空，请去找#b#p2040050##k听听他的故事吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想知道怪物雕像的神奇功能啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="你好？我就是不久前在旅行中揭开了怪物雕像神奇功能的#b#p2040050##k。旅行的疲惫还没消，你过些时候再来找我，我就把怪物雕像的秘密告诉你。"/>
+      <imgdir name="yes">
+        <string name="0" value="如果对怪物雕像的秘密好奇，请一定要再来找我。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请去找揭开了怪物雕像传说真相的#b#p2040050##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9399">
+    <imgdir name="0">
+      <string name="0" value="你好？我是#b#p2040050##k。这段时间相信那毫不起眼的怪物雕像传说的人并不多。但不管别人怎么说，我一直相信那个怪物雕像的传说。 "/>
+      <string name="1" value="而且在追寻那个传说的旅途中，我揭开了怪物雕像的秘密。旅行者也想了解传说中怪物雕像的秘密吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="这故事会挺长的。为了揭开怪物雕像的传说，我踏上了遥远的旅程，途中偶然来到沙漠，遇到了一位在部落中生活的贤者。从贤者讲述的守护神故事里，我得到了非常重要的线索。 "/>
+        <string name="1" value="那个部落里有一尊守护村子的守护神。那是个很破旧的稻草人偶模样，头上却嵌着一颗巨大的宝石。据说，贤者给这平凡无奇的破旧稻草人偶镶上宝石后，神秘的气息便包围了它，它就成了拥有守护村子之力的守护神。"/>
+        <string name="2" value="那一刻，我想起了怪物雕像背后的一个小洞。于是我把回村路上收集到的宝石嵌进怪物雕像背后。结果，奇妙的光芒忽然包围了怪物雕像，它便拥有了神秘的气息。只要旅行者把宝石给我，我就为你做一尊拥有神秘气息的怪物水晶雕像。  "/>
+        <string name="3" value="要嵌在怪物雕像背后的宝石是#b#t04020000##k 3个、#b#t04020001##k 3个、#b#t04020005##k 3个。把宝石找来交给我，我就为你做成怪物水晶雕像。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想知道那座雕像的神奇功能啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="你终于把宝石找来了。快把宝石给我吧。这样我就把你手上这尊毫不起眼的怪物雕像，变成散发着神秘气息的怪物水晶雕像。"/>
+      <imgdir name="yes">
+        <string name="0" value="好了，毫不起眼的怪物雕像终于变成了散发着神秘气息的怪物水晶雕像。使用怪物水晶雕像，可以在一定时间内把自己的样子变成怪物。不过，被怪物#b攻击或受到伤害时变身就会解除#k，这点请别忘了。 "/>
+        <string name="1" value="那么祝你旅途愉快。还有，如果需要怪物水晶雕像，随时来找我。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="要制作怪物水晶雕像，需要#b#t04020000##k 3个、#b#t04020001##k 3个、#b#t04020005##k 3个。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9400">
+    <imgdir name="0">
+      <string name="0" value="冒险岛诞生至今已经过了3年。为了感谢这段时间一直给予厚爱的各位，我准备了特别的礼物，你愿意收下吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="送给旅行者的礼物是非常特别的魔法。这个魔法会让你变得更加强大。念诵魔法咒语需要一点时间，请稍后再来跟我搭话。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我真的很想报答大家这段时间的厚爱。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我来为你施上#b运营者的祝福#k魔法。"/>
+      <imgdir name="yes">
+        <string name="0" value="已为你施上#b运营者的祝福#k魔法。运营者的祝福魔法会让旅行者角色的攻击力、魔力等各种能力值在1小时内提升一定量。"/>
+        <string name="1" value="另外，运营者的祝福魔法每90分钟只能领取一次。#b即使断开连接，或者技能持续时间结束，也要从第一次领取魔法起过了90分钟才能再次领取#k，请一定记住。需要运营者的祝福魔法时，请再来找我。  "/>
+        <string name="2" value="那么祝你在冒险岛玩得开心。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9401">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我会给你#b#t04161002##k，每天把它送到#b#p1032001##k那里，他一定会认可你的勤奋并给你奖励的。如果把#b#t04161002##k丢掉就无法再领取了，#r千万不要丢掉，今天之内#k去找#b#p1032001##k吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说要送3周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161002##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="怎么失望了？我说得很清楚，只会给#e勤奋的人#n送上大礼。到5月8日为止，每天去找#b#p9010000##k领取#b#t04161002##k吧。让我看看你有多勤奋，我会给你很大的奖励……"/>
+        <string name="1" value="那么明天也去找#b#p9010000##k，领回#b#t04161002##k吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把#b#t04161002##k送到魔法密林的魔法师#b#p1032001##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161002##k，可算不上勤奋的旅行者。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9402">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我会给你#b#t04161003##k，每天把它送到#b#p1032001##k那里，他一定会认可你的勤奋并给你奖励的。如果把#b#t04161003##k丢掉就无法再领取了，#r千万不要丢掉，今天之内#k去找#b#p1032001##k吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说要送3周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161003##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="明天也去找#b#p9010000##k，领回#b#t04161003##k吧。这样我明天也会给你礼物。另外，从4月29日到5月8日每天都来的勤奋旅行者，我会给他很大的奖励。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把#b#t04161003##k送到魔法密林的魔法师#b#p1032001##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161003##k，可算不上勤奋的旅行者。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9403">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我会给你#b#t04161004##k，每天把它送到#b#p1032001##k那里，他一定会认可你的勤奋并给你奖励的。如果把#b#t04161004##k丢掉就无法再领取了，#r千万不要丢掉，今天之内#k去找#b#p1032001##k吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说要送3周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161004##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="明天也去找#b#p9010000##k，领回#b#t04161004##k吧。这样我明天也会给你礼物。另外，从4月29日到5月8日每天都来的勤奋旅行者，我会给他很大的奖励。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把#b#t04161004##k送到魔法密林的魔法师#b#p1032001##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161004##k，可算不上勤奋的旅行者。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9404">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我会给你#b#t04161005##k，每天把它送到#b#p1032001##k那里，他一定会认可你的勤奋并给你奖励的。如果把#b#t04161005##k丢掉就无法再领取了，#r千万不要丢掉，今天之内#k去找#b#p1032001##k吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说要送3周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161005##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="明天也去找#b#p9010000##k，领回#b#t04161005##k吧。这样我明天也会给你礼物。另外，从4月29日到5月8日每天都来的勤奋旅行者，我会给他很大的奖励。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把#b#t04161005##k送到魔法密林的魔法师#b#p1032001##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161005##k，可算不上勤奋的旅行者。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9405">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我会给你#b#t04161006##k，每天把它送到#b#p1032001##k那里，他一定会认可你的勤奋并给你奖励的。如果把#b#t04161006##k丢掉就无法再领取了，#r千万不要丢掉，今天之内#k去找#b#p1032001##k吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说要送3周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161006##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="明天也去找#b#p9010000##k，领回#b#t04161006##k吧。这样我明天也会给你礼物。另外，从4月29日到5月8日每天都来的勤奋旅行者，我会给他很大的奖励。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把#b#t04161006##k送到魔法密林的魔法师#b#p1032001##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161006##k，可算不上勤奋的旅行者。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9406">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我会给你#b#t04161007##k，每天把它送到#b#p1032001##k那里，他一定会认可你的勤奋并给你奖励的。如果把#b#t04161007##k丢掉就无法再领取了，#r千万不要丢掉，今天之内#k去找#b#p1032001##k吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说要送3周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161007##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="明天也去找#b#p9010000##k，领回#b#t04161007##k吧。这样我明天也会给你礼物。另外，从4月29日到5月8日每天都来的勤奋旅行者，我会给他很大的奖励。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把#b#t04161007##k送到魔法密林的魔法师#b#p1032001##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161007##k，可算不上勤奋的旅行者。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9407">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我会给你#b#t04161008##k，每天把它送到#b#p1032001##k那里，他一定会认可你的勤奋并给你奖励的。如果把#b#t04161008##k丢掉就无法再领取了，#r千万不要丢掉，今天之内#k去找#b#p1032001##k吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说要送3周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161008##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="明天也去找#b#p9010000##k，领回#b#t04161008##k吧。这样我明天也会给你礼物。另外，从4月29日到5月8日每天都来的勤奋旅行者，我会给他很大的奖励。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请把#b#t04161008##k送到魔法密林的魔法师#b#p1032001##k那里。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161008##k，可算不上勤奋的旅行者。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9408">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我会给你#b#t04161009##k，每天把它送到#b#p1032001##k那里，他一定会认可你的勤奋并给你奖励的。如果把#b#t04161009##k丢掉就无法再领取了，#r千万不要丢掉，今天之内#k去找#b#p1032001##k吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说要送3周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161009##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="明天也去找#b#p9010000##k，领回#b#t04161009##k吧。这样我明天也会给你礼物。另外，从4月29日到5月8日每天都来的勤奋旅行者，我会给他很大的奖励。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="#b#t04161009##k请拿去交给魔法密林的魔法师#b#p1032001##k大人。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161009##k的话，可算不上诚实的旅行者哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9409">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我把#b#t04161010##k交给您，只要每天拿去送给#b#p1032001##k大人，他一定会认可旅行者您的诚实并给您奖励的。要是把#b#t04161010##k扔掉就再也拿不到了，#r千万不要扔掉，今天之内#k去找#b#p1032001##k大人吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说过要送三周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161010##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="明天也去找#b#p9010000##k领#b#t04161010##k回来吧。那样明天我也会送你礼物。还有，从4月29日到5月8日每天都会来的诚实旅行者，我会给他一份大奖。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="#b#t04161010##k请拿去交给魔法密林的魔法师#b#p1032001##k大人。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161010##k的话，可算不上诚实的旅行者哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9410">
+    <imgdir name="0">
+      <string name="0" value="你好？冒险岛正式运营终于满3年了。为纪念冒险岛世界诞生3周年，非常感谢大家送来的祝贺。另外，为纪念冒险岛3周年，魔法密林的大魔法师#b#p1032001##k传来了要送礼物的好消息。你要领取#b#p1032001##k送的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="#b#p1032001##k传来为纪念冒险岛正式运营3周年要送礼物的好消息，不过他说送礼有一个很小的条件。那就是只送给能证明自己勤奋的旅行者。因为#b#p1032001##k是个非常勤快的人，最讨厌懒惰的人了。"/>
+        <string name="1" value="我把#b#t04161012##k交给您，只要每天拿去送给#b#p1032001##k大人，他一定会认可旅行者您的诚实并给您奖励的。要是把#b#t04161011##k扔掉就再也拿不到了，#r千万不要扔掉，今天之内#k去找#b#p1032001##k大人吧。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你不想领取#b#p1032001##k送的礼物啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="很高兴见到你。我就是说过要送三周年纪念礼物的魔法密林大魔法师#b#p1032001##k。把从#b#p9010000##k那里拿到的#b#t04161012##k交给我，我就送你礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="请愉快地收下我为你准备的最后一份礼物吧。还有，如果你连续十天每天都来找过我，稍后再和我搭话吧 。祝你冒险岛世界之旅愉快。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="#b#t04161011##k请拿去交给魔法密林的魔法师#b#p1032001##k大人。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="没有#b#t04161012##k的话，可算不上诚实的旅行者哦。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9411">
+    <imgdir name="0">
+      <string name="0" value="哦，你来了吗？居然第十天也来找我，你肯定是个诚实的人没错。我就送你一份特别的礼物吧。愿意收下我准备的礼物吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="为你准备的特别礼物还需要一点时间，稍后再来找我搭话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="你是说不愿收下我特意为你准备的礼物吗？"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="作为送给你的特别礼物，我准备了#b#04031019##k。请愉快地收下吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="这段时间每天来找我，辛苦你了。我给你的#b#t04031019##k是非常珍贵的物品，连我的魔法都无法解读。不过玩具城的#b#p9000014##k或废弃都市的#b#p9000007##k应该能解读它，去看看吧。祝你好运。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9421">
+    <imgdir name="1">
+      <string name="0" value="哎呀，材料这么快就收集好了？快给我吧。我会用我知道的制法把材料调配起来。不过偶尔会出错，可能得不到#b#t4031325##k而是别的东西。即使这样也要试试吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="如果拿到了#b#t4031325##k，就送去给我弟弟#b#p9001002##k。还有，如果还需要#b#t4031325##k，就再来找我。那么再见~ "/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="\e可乐玩网站#n (#bwww.cokeplay.com#k)游戏菜单里选择#e冒险岛 ZONE#n就能获得的#b#t4031322# 1个、#t4031323# 1个、#t4031324# 1个#k，给我找来。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="随时~可口可乐♪ 冰凉又带劲的可口可乐最棒了.. 啊，可是这可怎么办。连要分给弟弟波奇的可乐都被我喝光了。不过我可是可乐镇唯一知道怎么制作可口可乐的人哦。  "/>
+      <string name="1" value="只要能做出秘密的可口可乐原液，谁都能轻松做出可口可乐，可那秘密原液不仅材料难找，还得调配得当。你要是不忙，能帮我做#b#t4031325##k吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="要做#t4031325#，需要#b#t4031322##k、#b#t4031323##k还有#b#t4031324##k各1个。要弄到这些材料，得去#e可乐玩网站#n (#bwww.cokeplay.com#k)。"/>
+        <string name="1" value="#e可乐玩网站#n (#bwww.cokeplay.com#k)游戏菜单里选择#e冒险岛 ZONE#n就能获得的#b#t4031322# 1个、#t4031323# 1个、#t4031324# 1个#k，给我找来。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你是没信心收集#b#t4031325##k的材料吧？"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9422">
+    <imgdir name="0">
+      <string name="0" value="啊~好渴。我也想喝冰凉的可口可乐。你说什么？我哥把要给我的#b#t04031325##k做好了？快把#b#t04031325##k给我吧？ "/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。不过光有#b#t04031325##k，是做不出冰凉带劲的可口可乐的。"/>
+        <string name="1" value="为了让我能做可口可乐，你可以去附近的杂货店买#b#t2022000##k 1个#k来...要是已经有了，把那个给我也行。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="本来只要你帮我做出冰凉的可口可乐，我就打算送你一份很棒的礼物的.."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="哇~材料这么快就收集好了？快把材料给我，好让我做可口可乐。"/>
+      <imgdir name="yes">
+        <string name="0" value="得赶紧做出冰凉的可口可乐来喝啦。为表谢意，我送你这个我用瓶盖亲手做的#b#t1092035##k。"/>
+        <string name="1" value="希望这对你有大帮助。那么祝你旅途愉快~"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="为了让我能做可口可乐，你可以去附近的杂货店买#b#t04031325##k和#b#t2022000##k 1个#k来...要是已经有了，把那个给我也行。那就拜托你了。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9423">
+    <imgdir name="0">
+      <string name="0" value="你好~我叫#p9001001#。我特别喜欢用大望远镜仰望天空。你看看那波浪般的银河和五彩斑斓的极光，是不是太美了？要是能拥有那颗闪闪发亮的星星该多好啊？"/>
+      <string name="1" value="你愿意送我一闪一闪的星星吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。不过我也很清楚，星星是摘不下来的。那我换个请求，送我一颗闪亮的宝石来代替星星吧。我见过一种叫#b#t04000214##k的宝石，闪得跟星星一样漂亮.. "/>
+        <string name="1" value="如果能把你从这附近出现的怪物身上得到的#b#t04000214##k送我#b100个#k的话，我会非常开心的。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我想要一闪一闪的星星。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="这么快就收集好#t04000214#了？快把闪闪又漂亮的#b#t04000214##k给我吧。 "/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。不过，果然没有什么能像星星那样闪亮美丽。要是能在更近的地方看星星就好了..., 也没办法了。那么祝你旅途愉快。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="请送我#b#t04000214##k 100个来代替一闪一闪的星星。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9424">
+    <imgdir name="0">
+      <string name="0" value="你好？上次你给我收集来#b#t04000214##k，真是谢谢你。可是闪亮的#t04000214#还是比不上天上闪亮的星星美。用望远镜静静地看着那些漂亮的星星，就会想要更近一点看看嘛.. "/>
+      <string name="1" value="所以呢，你能帮我做一个让我能爬上去的踏板，好让我在更高的地方看星星吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。我想做一个又小又结实的踏板让我爬上去，可是材料不够。你能为我收集#b#t04000221##k来吗？我想收集瓶盖做一个结实的踏板。  "/>
+        <string name="1" value="我听说#b#t04000221##k可以从蘑菇模样的#r#o9500152##k那里得到。请把那个#b#t04000221##k收集#b200个#k来吧。那样我好像就能爬到天边了。拜托啦~"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我想在再近一点的地方看星星。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="啊，我想在再近一点点的地方看星星。哎呀，我拜托的#t04000221#你已经全都收集好了？呀~好开心。快把#b#t04000221##k给我吧。 "/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。得赶紧做好踏板，在更近的地方看星星。你四处旅行虽然忙，也要常常看看这里天空上美丽的星星哦。那么再见~ "/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="请把能从#r#o9500152##k那里得到的#b#t04000221##k收集#b200个#k来吧。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9425">
+    <imgdir name="0">
+      <string name="0" value="啊~我想在更近一点的地方看星星。哎呀！好久不见。上次你帮我用瓶盖做我爬上去的踏板，我一直好感谢你。可是我想在越来越近的地方看星星的心愿越来越大。 "/>
+      <string name="1" value="所以呢，你能帮我爬到天空顶端吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="我就知道如果是你一定会帮我的。要爬到天空顶端，好像需要一架又高又结实的梯子。帮我收集些材料，好让我做梯子吧。 "/>
+        <string name="1" value="请从附近的怪物那里弄来#b#t04000216##k 100个和#b#t04000217##k 100个 。那样我好像就能做出通往天空的梯子了。那就拜托啦~"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我想爬到天空顶端。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我拜托的东西全都收集好了吗？快把可乐罐给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。不过用这些东西要做出通往天空的梯子好像有点难。看起来还需要更多材料，你有时间再来找我搭话吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="为了让我能做出通往天空的梯子，请弄来#b#t04000216##k 100个和#b#t04000217##k 100个。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9426">
+    <imgdir name="0">
+      <string name="0" value="谢谢你又来找我。上次收集来的材料做不出通往天空的梯子。好像还需要更结实点的材料，你能帮我吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。要是有比上次收集的罐子更硬一点、方方正正的东西，做梯子应该会容易些。"/>
+        <string name="1" value="请弄来能从#r#o9500145##k和#r#o9500146##k那里得到的#b#t04000211##k #b100个#k和#b#t04000212##k #b100个#k。拜托啦~"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我想爬到天空顶端。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="我拜托的东西全都收集好了吗？这样的话就足够做出爬到天空顶端的梯子了。快把材料给我，好让我做梯子。"/>
+      <imgdir name="yes">
+        <string name="0" value="终于能做出通往天空的梯子了。真是太谢谢你了。那么祝你旅途愉快。再见~"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="请弄来能从#r#o9500145##k和#r#o9500146##k那里得到的#b#t04000211##k #b100个#k和#b#t04000212##k #b100个#k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9427">
+    <imgdir name="1">
+      <string name="0" value="给哥哥做雪橇的材料这么快就收集好了？我哥要是知道了一定会特别高兴。快把收集好的材料给我，好让我做雪橇。"/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。这样的话就足够做出送给哥哥的雪橇了。哥哥一定会特别高兴吧？那么祝你旅途愉快！再见~"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="为了让我能做雪橇，请收集#b#t04000216# 30个#k和#b#t04000217# 30个#k来。装饰雪橇用的#b#t04000209#10个#k和#b#t04000210#10个#k也拜托你。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="呦吼~坐雪橇总是那么开心。不过最近连坐雪橇都有点腻了。一个人坐实在受够了...要是哥哥也能和我一起坐雪橇就好了..."/>
+      <string name="1" value="哥哥没有雪橇，所以没法和我一起坐雪橇。所以我想送哥哥一架雪橇，你能帮我一下吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="哇哦~谢谢你。做雪橇好像用又结实又轻的材料比较好。可乐罐那种程度应该正合适，怎么样，是个好主意吧？ "/>
+        <string name="1" value="你能替我把#b#t04000216# 30个#k和#b#t04000217# 30个#k拿来吗？对了！装饰雪橇用的#b#t04000209#10个#k和#b#t04000210#10个#k也拜托你。我就只信你，等着你哦~"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我想和哥哥一起坐雪橇... 呜呜~"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9428">
+    <imgdir name="0">
+      <string name="0" value="很高兴见到你~我叫#b#p9001005##k。又小又可爱的#b#p9001002##k就是我弟弟。你也知道波奇吧？波奇太喜欢坐雪橇了，常常跑到村外到处转。 "/>
+      <string name="1" value="不过村外有很多危险的怪物，我很担心。你有时间的话，能帮帮我弟弟波奇，让他能安全地到处走吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="哎呀！你这么爽快地答应了，我太高兴了！村外远处的海豹非常凶暴，我一直很担心它们会伤害我弟弟..."/>
+        <string name="1" value="那些海豹的名字叫#r#o9500145##k和#r#o9500146##k。请把那些怪物#b各打退100只#k。拜托啦~"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我们家波奇要是受伤了可就糟了..."/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="那些可怕的怪物海豹你这么快就全都打退了？真了不起！现在我弟弟波奇就算坐着雪橇跑到村子老远也能放心了。 "/>
+      <imgdir name="yes">
+        <string name="0" value="那么祝你旅途愉快。再见~"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="请把#r#o9500145##k和#r#o9500146##k各打退100只。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9429">
+    <imgdir name="0">
+      <string name="0" value="这可怎么办？前不久冰川融化，我和弟弟波奇住的冰屋严重损坏了。得赶快重新盖房子，可我和弟弟还太小，盖房子太难了。"/>
+      <string name="1" value="你有时间的话，能帮我们重新盖冰屋吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。要盖一座让我们兄弟住得舒服的冰屋，需要大量的冰块。 "/>
+        <string name="1" value="只要拿来#b#t04000218# 100个#k和#b#t04000219# 50个#k和#b#t04000220# 40个#k，好像马上就能盖好房子。拜托你啦。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="靠我们兄弟俩的力气盖冰屋实在太难了。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="哎呀！那不就是我拜托的冰块吗？快把冰块给我，好让我重新盖冰屋。"/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。这样的话盖新冰屋就没问题了。谢谢你帮忙。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="要盖新冰屋，需要#b#t04000218# 100个#k和#b#t04000219# 50个#k和#b#t04000220# 40个#k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9430">
+    <imgdir name="0">
+      <string name="0" value="啊~好无聊。现在连坐雪橇都玩腻了。有没有什么好玩的事呢？要是有能和哥哥普奇一起玩的玩具就好了，你能帮我弄点玩具来吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。听说可乐镇上出了名凶猛的#r#o9500147##k随身带着#b#t04000213##k，要是有那张卡，好像就能和哥哥玩有趣的纸牌游戏了。 "/>
+        <string name="1" value="请给我收集#b#t04000213#100个#k来。拜托了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我想和哥哥玩有趣的游戏。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="哎呀！那不就是我拜托的#b#t04000213##k吗？快把卡给我，好让我和哥哥玩有趣的纸牌游戏，好吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="真是太谢谢你了。有这么多卡，好像就能玩得很开心了。那么再见~"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="请把能和哥哥一起玩的#b#t04000213##k收集#b100个#k来。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9440">
+    <imgdir name="0">
+      <string name="0" value="您好？这么早就开始的暑热让人浑身发懒吧？越是这种时候越要做些更活动身体的事，才能保持健康。为了旅行者您的健康，我准备了避暑计划，您要参加看看吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="您想得真好。避暑计划总共分为2个阶段。第1阶段就当作简单的热身吧。 "/>
+        <string name="1" value="请打退村子附近常见的#r#o0210100##k，并收集#b#t04000004##k#b100个#k作为证据带回来。希望这段时间哪怕只有一会儿，也能让您忘掉暑热、专心狩猎。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="避暑计划会持续到7月23日，要是您改变主意，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="您这么快就回来了？那就快把狩猎的证据交给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="您轻松通过了避暑计划第1阶段呢。狩猎的时候凉快了吗？ 您说好像还差一点？ "/>
+        <string name="1" value="我为旅行者您准备了避暑计划第2阶段，等您做好心理准备，请再来找我。那么请慢走。 "/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="避暑计划第1阶段的任务是收集#b#t04000004# 100个#k带回来。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9441">
+    <imgdir name="0">
+      <string name="0" value="您好？再次见到您真高兴。您准备好执行避暑计划第2阶段了吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="听说因为天气炎热，村子各处出现的怪物变得凶暴，正在骚扰旅行者们。请打退#r#o1210100# 100只#k和#r#o1120100# 80只#k。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="避暑计划会持续到7月23日，等您做好心理准备，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="这么热的天气，您辛苦了。我为旅行者您准备了又甜又凉的西瓜，请好好享用。"/>
+      <imgdir name="yes">
+        <string name="0" value="天气虽热，也别总待在空调或电扇前面，多做些活动来战胜暑热吧。"/>
+        <string name="1" value="还有，避暑计划#b每天可以做一次#k，所以每当被暑热烦到时，就再来找我吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="请打退因天气炎热而变得凶暴的#r#o1210100# 100只#k和#r#o1120100# 80只#k。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9442">
+    <imgdir name="0">
+      <string name="0" value="您好？这么早就开始的暑热让人浑身发懒吧？越是这种时候越要做些更活动身体的事，才能保持健康。为了旅行者您的健康，我准备了避暑计划，您要参加看看吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="您想得真好。天气这么闷热，别只待在屋里，不如到凉快的地方去避暑怎么样？冒险岛世界里有个叫冰峰雪域的地方，那里被白雪覆盖。 "/>
+        <string name="1" value="请去冰峰雪域狩猎，并把#b#t4000086##k收集#b100个#k作为证据带回来。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="避暑计划会持续到7月23日，要是您改变主意，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="您平安回来了。请把在冰峰雪域狩猎的证据交给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="您轻松通过了第1阶段计划呢。狩猎的时候凉快了吗？ 您说好像还差一点？ "/>
+        <string name="1" value="我为旅行者您准备了避暑计划第2阶段，等您做好心理准备，请再来找我。那么请慢走。 "/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="请去冰峰雪域狩猎，并把#b#t4000086##k收集#b100个#k作为证据带回来。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9443">
+    <imgdir name="0">
+      <string name="0" value="您好？再次见到您真高兴。您准备好执行避暑计划第2阶段了吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="天气热的时候，去海边的旅行最棒了吧？所以为旅行者您准备的避暑计划第2阶段！请在水下世界享受游泳，忘掉暑热吧。"/>
+        <string name="1" value="请享受游泳，并打退骚扰旅行者们的#r#o3210450##k 50只和#r#o4230201##k 50只后回来。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="避暑计划会持续到7月23日，等您做好心理准备，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="您平安回来了？水下世界之旅玩得开心吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="这么热的天气，您辛苦了。我为旅行者您准备了清凉的食物，请好好享用。天气虽热，也别总待在空调或电扇前面，多做些活动来战胜暑热吧。 "/>
+        <string name="1" value="还有，避暑计划#b每天可以做一次#k，所以每当被暑热烦到时，就再来找我吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="请在水下世界打退#r#o3210450##k 50只和#r#o4230201##k 50只。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9444">
+    <imgdir name="0">
+      <string name="0" value="您好？这么早就开始的暑热让人浑身发懒吧？越是这种时候越要做些更活动身体的事，才能保持健康。为了旅行者您的健康，我准备了避暑计划，您要参加看看吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="您想得真好。天气这么闷热，别只待在屋里，不如到凉快的地方去避暑怎么样？冒险岛世界的深处有个透着凉意的地下城。 "/>
+        <string name="1" value="请打退在那个地下城能见到的#r#o6230600##k，并收集#b#t04000185# 100个#k作为证据带回来。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="避暑计划会持续到7月23日，要是您改变主意，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="在凉爽的地下城狩猎还愉快吗？ 请把狩猎顺利结束后得到的战利品交给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="您轻松通过了第1阶段计划呢。狩猎的时候凉快了吗？ 您说好像还差一点？ "/>
+        <string name="1" value="我为旅行者您准备了避暑计划第2阶段，等您做好心理准备，请再来找我。那么请慢走。 "/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="避暑计划第1阶段的任务，是在透着凉意的地下城狩猎，并把#b#t04000185# 100个#k作为证据带回来"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9445">
+    <imgdir name="0">
+      <string name="0" value="您好？再次见到您真高兴。您准备好执行避暑计划第2阶段了吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="天气热的时候，去凉快地方的旅行最棒了吧？所以为大家准备的避暑计划第2阶段！ "/>
+        <string name="1" value="请在冰峰雪域打退#r#o7130200##k 60只和#r#o8140000##k 10只后回来。那么祝您平安归来。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="避暑计划会持续到7月23日，等您做好心理准备，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="您这么快就回来了？冰峰雪域之旅玩得开心吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="这么热的天气，您辛苦了。我为旅行者您准备了清凉的食物，请好好享用。天气虽热，也别总待在空调或电扇前面，多做些活动来战胜暑热吧。 "/>
+        <string name="1" value="还有，避暑计划#b每天可以做一次#k，所以每当被暑热烦到时，就再来找我吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="避暑计划第2阶段，是在凉爽的冰峰雪域打退#r#o7130200##k 60只和#r#o8140000##k 10只后回来。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9450">
+    <imgdir name="0">
+      <string name="0" value="喂......你是准备去冒险吗？不过看起来有点弱啊...我年轻的时候...也为了寻找新世界到处旅行过...真怀念那时候啊。没有什么比一场精彩的冒险更让人兴奋了。"/>
+      <string name="1" value="不过一开始既没经验又准备不足，真是吃尽了苦头...看到你，我年轻时冒险受苦的记忆就不断浮现在眼前..."/>
+      <string name="2" value="不知怎的我看你挺顺眼，所以跟你说..如果你能向我证明你作为冒险家的资质，我就资助你的冒险。怎么样..要试试吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="好。那就收集#b#t4000016# 100个#k和#b#t4000004# 50个#k，再来找我吧。把这些全都收集来，我就认可你的资质。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="是吗？我本来想帮你的......改变主意的话就再来找我吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="这可真了不起~这么快就全收集来了。果然我的眼光没错。你以后能成为一名出色的冒险家。我是这么相信的。"/>
+      <imgdir name="yes">
+        <string name="0" value="钱收到了吗？虽然数目不多，但对刚要开始冒险的你来说应该能派上用场。希望不久后能再见到变强的你。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="嗯...看来还没收集齐？难道是我太高估你了？快去收集#b#t4000016# 100个#k和#b#t4000004# 50个#k来吧。你的话一定能做到。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9451">
+    <imgdir name="0">
+      <string name="0" value="好久不见。怎么样，这段时间的冒险还愉快吗？看到你成长得让人认不出来，我很欣慰。我想试试你变得有多强，要试试吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="好。那就收集#b#t04000024# 80个#k和#b#t04000020# 100个#k来吧。那样我就承认你是真的变强了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来你还没什么信心啊。想向我证明你的强悍，就再来找我吧。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="这可真了不起~这么快就全收集来了...果然是变得让人认不出来了。"/>
+      <imgdir name="yes">
+        <string name="0" value="钱收到了吗？虽然帮不上大忙，但到处旅行时应该能派上很大用场。那么请务必保重身体。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="嗯...看来还没收集齐？难道是我太高估你了？快去收集#b#t04000024# 80个#k和#b#t04000020# 100个#k来吧。你的话一定能做到。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9470">
+    <imgdir name="1">
+      <string name="0" value="您好？您是听说了#b#p2012012##k大人的故事才来的吧。您带来帮我朋友喜鹊和乌鸦搭鹊桥的材料了吗？那就快给我吧。 "/>
+      <imgdir name="yes">
+        <string name="0" value="真是太感谢您帮忙了。多亏了您，这次七夕牛郎和织女好像也能顺利相见了。那么祝您旅途愉快。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请收集#b#t04003004# 50个#k和#b#t04003005# 20个#k，转交给住在林中之城的燕子。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="请给我#b#t04003004# 50个#k和#b#t04003005# 20个#k，好帮我朋友喜鹊和乌鸦搭鹊桥。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="您好？我叫#b#p2012012##k。前不久我从住在林中之城的燕子那里听到了牛郎和织女悲伤的爱情故事，旅行者您也要听听吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="据说住在林中之城的#b#p2071006##k从好朋友喜鹊那里听说了牛郎织女的故事。天国的牧童牛郎和玉皇大帝的女儿织女相爱结婚，但婚后两人偷懒，玉皇大帝大怒，就让牛郎住在银河东边、织女住在银河西边，从此分隔两地。"/>
+        <string name="1" value="因为隔着无法跨越的银河彼此思念实在令人惋惜，所以每年农历7月7日，燕子的朋友喜鹊和乌鸦就会搭起鹊桥让他们相见。可是银河太宽，光靠喜鹊和乌鸦的力量很难搭成鹊桥，据说燕子为此非常难过。"/>
+        <string name="2" value="旅行者您如果有时间，请收集#b#t04003004# 50个#k和#b#t04003005# 20个#k，转交给住在林中之城的#b#p2071006##k，好让牛郎和织女能相见的那座桥搭起来。那么就拜托您了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果好奇牛郎织女的故事，请在7月31日之前来找我。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9471">
+    <imgdir name="0">
+      <string name="0" value="您好？我叫#b#p2012012##k。前不久我从住在林中之城的燕子那里听到了牛郎和织女悲伤的爱情故事，旅行者您也要听听吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="据说住在林中之城的#b#p2071006##k从好朋友喜鹊那里听说了牛郎织女的故事。天国的牧童牛郎和玉皇大帝的女儿织女相爱结婚，但婚后两人偷懒，玉皇大帝大怒，就让牛郎住在银河东边、织女住在银河西边，从此分隔两地。"/>
+        <string name="1" value="因为隔着无法跨越的银河彼此思念实在令人惋惜，所以每年农历7月7日，燕子的朋友喜鹊和乌鸦就会搭起鹊桥让他们相见。可是银河太宽，光靠喜鹊和乌鸦的力量很难搭成鹊桥，据说燕子为此非常难过。"/>
+        <string name="2" value="旅行者您如果有时间，请收集#b#t04000051# 70个#k和#b#t04000052# 10个#k，转交给住在林中之城的#b#p2071006##k，好让牛郎和织女能相见的那座桥搭起来。那么就拜托您了。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="您好？您是听说了#b#p2012012##k大人的故事才来的吧。您带来帮我朋友喜鹊和乌鸦搭鹊桥的材料了吗？那就快给我吧。 "/>
+      <imgdir name="yes">
+        <string name="0" value="真是太感谢您帮忙了。多亏了您，这次七夕牛郎和织女好像也能顺利相见了。那么祝您旅途愉快。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请收集#b#t04000051# 70个#k和#b#t04000052# 10个#k，转交给住在林中之城的燕子。"/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="请收集#b#t04000051# 70个#k和#b#t04000052# 10个#k来，好帮我朋友喜鹊和乌鸦搭鹊桥。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9472">
+    <imgdir name="1">
+      <string name="0" value="您这么快就回来了。快把#b#t04000017##k给我，好让我举行慰灵祭。"/>
+      <imgdir name="yes">
+        <string name="0" value="我给您的那包袱里装着勇士们打退的三尾狐的灵魂。当然外表是三尾狐，但它不但不能攻击旅行者，时间一到还会自己消失，所以请不要太过惊讶。那么祝您旅途愉快。"/>
+        <string name="1" value="还有，遗憾的是只举行一次慰灵祭好像很难安抚那些怨魂。您有时间的话，请每天来找我一次，帮我举行慰灵祭。那么请慢走。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="请打退#r#o1210100# 60只#k，并弄来#b#t04000017# 1个#k。 "/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="请打退#r#o1210100# 60只#k，并弄来#b#t04000017# 1个#k。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="您好？我是四处游历冒险岛世界的#b#p2040050##k。旅行者您也听说过最近在村子里流传的奇怪传闻吗？还没听说过？那您要听听我的故事吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="奥西利亚大陆的林中之城里住着一个叫三尾狐的妖怪。它是条长着三条尾巴的狐狸，会施展变身术变成珍贵的道具，然后狠狠攻击那些上前来捡的旅行者。听到这个消息后，好几位勇士合力打退了三尾狐，它再也不能骚扰旅行者了。 "/>
+        <string name="1" value="但很遗憾，在击退三尾狐的过程中，有几位勇士再也不能在冒险岛世界里旅行了。为了祈愿那些牺牲自己击退三尾狐的勇士们能前往好地方，看来得办一场慰灵祭才行。"/>
+        <string name="2" value="要办慰灵祭需要猪。请快点击退 #r#o1210100# 60只#k，并带来 #b#t04000017# 1个#k，好让冤魂们安息。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果好奇在冒险岛世界里流传的传闻，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9473">
+    <imgdir name="1">
+      <string name="0" value="您这么快就回来了。快把#b#t04000017##k给我，好让我举行慰灵祭。"/>
+      <imgdir name="yes">
+        <string name="0" value="而且看来慰藉冤魂还不太够，如果有时间，请每天来找我一次，帮我举办慰灵祭。那么，请慢走。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="请打退#r#o1210100# 60只#k，并弄来#b#t04000017# 1个#k。 "/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="请打退#r#o1210100# 60只#k，并弄来#b#t04000017# 1个#k。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="你好？你又来找我了呢。虽然旅行者你帮了忙，但据说被三尾狐害死的冤魂们还在冒险岛世界里游荡……看来得再办一次慰灵祭，你能帮帮我吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢你。看来得赶紧准备安抚冤魂的慰灵祭。和上次一样，请击退 #r#o1210100# 60只#k，并带来 #b#t04000017# 1个#k。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="我需要旅行者你的帮助……如果改变主意了，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9474">
+    <imgdir name="0">
+      <string name="0" value="您好？我是四处游历冒险岛世界的#b#p2040050##k。旅行者您也听说过最近在村子里流传的奇怪传闻吗？还没听说过？那您要听听我的故事吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="废弃都市里有地铁基地车库。那里是结束运行的地铁为下次运行或维修而聚集的地方，据说去那里探险的旅行者们一个接一个地失去了踪影。传闻那些旅行者在消失前目击到了幽灵，所以旅行者们都不太愿意去废弃都市基地车库冒险了。 "/>
+        <string name="1" value="请旅行者你去那里击退幽灵，别让幽灵怪谈再在冒险岛世界里流传了。请击退在废弃都市地铁出现的 #r#o4230102##k 和 #r#o3230101##k 各 #r100只#k，并带来 #b#t4000035# 20个#k。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果好奇在冒险岛世界里流传的传闻，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="幸好你平安回来了。虽然是因为奇怪的传闻才出发的冒险，但在那里击退幽灵的时候，应该把炎热都忘了吧？那么，快把击退幽灵的证据交给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="我用旅行者你给的桌布做成了假幽灵，扎成了一个包袱。如果周围有人因为天热而烦躁，不如用我送你的幽灵包袱吓他们一跳，怎么样？包袱里的幽灵只是有个样子，不会攻击旅行者，过一段时间就会消失，不用担心。 "/>
+        <string name="1" value="对了！废弃都市地铁里还有幽灵在游荡，看来还需要旅行者你多帮帮忙。请每天来找我一次帮帮我。那么，祝你旅途愉快。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="请击退在废弃都市地铁出现的 #r#o4230102##k 和 #r#o3230101##k 各 #r100只#k，并带来 #b#t4000035# 20个#k。 "/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="请击退在废弃都市地铁出现的 #r#o4230102##k 和 #r#o3230101##k 各 #r100只#k，并带来 #b#t4000035# 20个#k。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9475">
+    <imgdir name="0">
+      <string name="0" value="你好？谢谢你上次击退了幽灵。不过据说目前废弃都市地铁里仍有幽灵出没，吓唬着旅行者们。"/>
+      <imgdir name="yes">
+        <string name="0" value="废弃都市地铁里还是会有披着包袱皮的幽灵突然出现，吓唬旅行者们。请再次前往废弃都市地铁，击退 #r#o4230102##k 和 #r#o3230101##k 各 #r100只#k，并带来 #b#t4000035# 20个#k。那就拜托你了。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="看来旅行者你也怕废弃都市的幽灵啊。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="幸好你平安回来了。真希望幽灵别再出现了，让人担心呢。请把带来的桌布交给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="我用旅行者你给的桌布做成了假幽灵，扎成了一个包袱。如果周围有人因为天热而烦躁，不如用我送你的幽灵包袱吓他们一跳，怎么样？包袱里的幽灵只是有个样子，不会攻击旅行者，过一段时间就会消失，不用担心。 "/>
+        <string name="1" value="对了！废弃都市地铁里还有幽灵在游荡，看来还需要旅行者你多帮帮忙。请每天来找我一次帮帮我。那么，祝你旅途愉快。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="请击退在废弃都市地铁出现的 #r#o4230102##k 和 #r#o3230101##k 各 #r100只#k，并带来 #b#t4000035# 20个#k。 "/>
+        </imgdir>
+        <imgdir name="item">
+          <string name="0" value="请击退在废弃都市地铁出现的 #r#o4230102##k 和 #r#o3230101##k 各 #r100只#k，并带来 #b#t4000035# 20个#k。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9476">
+    <imgdir name="0">
+      <string name="0" value="您好？我是四处游历冒险岛世界的#b#p2040050##k。旅行者您也听说过最近在村子里流传的奇怪传闻吗？还没听说过？那您要听听我的故事吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="奥西利亚大陆的林中之城有个叫黑山的地方。那座山阴气环绕，人们都不愿从那里经过，据说一到晚上还会出现鬼火，让人们吓得发抖。其实鬼火不过是动物骨头里冒出的物质自然燃烧而产生的现象罢了。 "/>
+        <string name="1" value="而且不久前开始，勇士部落附近也有人声称看到了鬼火，旅行者们因此都不太愿意去冒险了。为了让旅行者们不再害怕，得把动物的骨头清理干净才行。 "/>
+        <string name="2" value="为了不让勇士部落出现鬼火，请收集骷髅指挥官骑的马身上掉落的 #b#t04000208# 100个#k、#b#t04000206# 30个#k、#b#t04000207# 30个#k 来。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果好奇在冒险岛世界里流传的传闻，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="这么快就回来了吗？快把找来的骨头交给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="我送你的包袱里会冒出我从前旅行时抓到的鬼怪。那些鬼怪虽然曾经骚扰过人们，但现在力量已经消失，连攻击人都做不到，只会消失而已，所以请不要被吓到。 "/>
+        <string name="1" value="另外，说不定还有动物骨头残留下来变成鬼火，所以请每天来找我一次左右，帮我消除鬼火。那么，请慢走。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="为了不让鬼火出现，请收集 #b#t04000208# 70个#k、#b#t04000206# 30个#k、#b#t04000207# 30个#k 来。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9477">
+    <imgdir name="0">
+      <string name="0" value="你好？真的很感谢你上次的帮忙。不过据说勇士部落还有不少动物骨头，所以会出现鬼火。你能再帮我处理一下动物骨头吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢你。为了不让勇士部落出现鬼火，请收集骷髅指挥官骑的马身上掉落的 #b#t04000208# 100个#k、#b#t04000206# 30个#k、#b#t04000207# 30个#k 来。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="鬼火老是出现，旅行者们都在害怕。如果改变主意了，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="这么快就回来了吗？快把找来的骨头交给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="我送你的包袱里会冒出我从前旅行时抓到的鬼怪。那些鬼怪虽然曾经骚扰过人们，但现在力量已经消失，连攻击人都做不到，只会消失而已，所以请不要被吓到。 "/>
+        <string name="1" value="另外，说不定还有动物骨头残留下来变成鬼火，所以请每天来找我一次左右，帮我消除鬼火。那么，请慢走。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="为了不让鬼火出现，请收集 #b#t04000208# 70个#k、#b#t04000206# 30个#k、#b#t04000207# 30个#k 来。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9490">
+    <imgdir name="1">
+      <string name="0" value="你好？我是 #b#p9110002##k。#b#p9010000##k大人说把我介绍给你了？那么，就由我来为你介绍日本吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="在我为旅行者你制定旅行计划的这段时间，请稍等一下。那么请过一会儿再来跟我说话。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请通过世界旅行向导 #b#p9000020##k 前往 #b日本的蘑菇神社#k，与 #b#p9110002##k 见面吧。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="你好？我是冒险岛运营者。为纪念世界旅行地图开放，我们正在举办活动，截至2006年10月31日，所有完成世界旅行任务的旅行者都将参与抽奖，有机会获得海外旅行。要参加活动吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="日本是樱花美丽的地方。请通过世界旅行向导 #b#p9000020##k 前往 #b日本的蘑菇神社#k，与 #b#p9110002##k 见面，并按他的指引游览日本后回来。那么，祝你旅途愉快。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="本次活动可以参加到10月31日，如果改变主意了，请在期限内再来找我。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9491">
+    <imgdir name="1">
+      <string name="0" value="你把团子带来了吗？快把美味的 #b#t2022014##k 给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="嗯嗯，真好吃。那么这次我给你介绍什么呢……让我稍微想一想。请过一会儿再来跟我说话。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="我想吃美味的 #b#t2022014##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="很高兴又见到你。第一次来日本旅行吗？我来为你介绍日本吧。准备好踏上我介绍的日本之旅了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="你考虑得真好。旅行中不可缺少的就是美食嘛？我来为你介绍美味的食物吧。 "/>
+        <string name="1" value="你知道 #b#t2022014##k 吗？用筋道的年糕做成串，再配上香甜酱汁，堪称一绝的 #b#t2022014##k 真的很好吃。有机会的话，旅行者你也尝一个，并帮我带来 #b#t2022014# 1个#k 吧。在这附近应该很容易找到。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果改变主意了，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9492">
+    <imgdir name="0">
+      <string name="0" value="你又来了。这次要我给你介绍什么呢？最近这种微凉的天气有很合适的日本料理，要我告诉你吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="微凉的天气里，不管怎么说还是热乎乎的 #b#t2022021##k 最棒。先吃一个鱼糕再开始旅行，怎么样？ "/>
+        <string name="1" value="请只给我带来热乎乎的 #b#t2022021# 1个#k。在附近的商店应该很容易买到。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果改变主意了，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="你把 #b#t2022021##k 带来了吗？趁它还没凉，快给我吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="没有汤有点可惜，不过还是很好吃呢。那么，我们正式开始旅行吧？去哪里好呢……我会为旅行者你想个好地方，请过一会儿再来跟我说话。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="我想吃热乎乎的 #b#t2022021##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9493">
+    <imgdir name="1">
+      <string name="0" value="这么快就回来了吗？多亏旅行者你，现在樱花应该会开得很盛吧。"/>
+      <imgdir name="yes">
+        <string name="0" value="真的非常感谢。不过我有一件事想拜托旅行者你。请过一会儿再来跟我说话，我就告诉你。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="请击退破坏日本美丽樱花树的 #r#o9400000##k #b100只#k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value=" 肚子也吃饱了，我们差不多该出发旅行了吧？这里是日本，樱花非常美丽的地方。要不要去看看我推荐的赏樱之旅呢？"/>
+      <imgdir name="yes">
+        <string name="0" value="你考虑得真好。不过樱花可能不像以前那样盛开了，你也许会失望。其实是因为 #r#o9400000##k 在破坏樱花树，所以花开得不多。"/>
+        <string name="1" value="旅行者你既然要赏樱，就顺便在这附近旅行，看到 #r#o9400000##k 就击退 #b100只#k 左右再回来吧。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果改变主意了，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9494">
+    <imgdir name="0">
+      <string name="0" value="我就知道你会再来。你是来听我拜托的事吧？"/>
+      <imgdir name="yes">
+        <string name="0" value="真的很感谢。我从前去中国旅行时受过一位的恩惠，那位说最近需要帮助。我本想亲自去帮忙，但我要守护樱花树，去不了中国。 "/>
+        <string name="1" value="请旅行者你通过世界旅行向导 #b#p9000020##k 前往 #b中国的上海#k，与 #b#p9310011##k 见面，并帮他完成拜托的事。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果改变主意了，请再来跟我说话。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value=" 我就是 #b#p9310011##k。"/>
+      <imgdir name="yes">
+        <string name="0" value="我现在正忙着开发新菜单，请过一会儿再来跟我说话。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请通过世界旅行向导 #b#p9000020##k 前往 #b中国的上海#k，在那里帮助 #b#p9310011##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9495">
+    <imgdir name="1">
+      <string name="0" value="你已经把我新菜单需要的东西收集来了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="真的非常感谢。得赶紧开发新菜单了。对了，我说过要给旅行者你介绍上海吧？介绍哪里好呢？我需要点时间想想，请过一会儿再来跟我说话。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="请收集我新菜单要用的材料 #b#t4000187# 100个#k 来。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="很高兴见到你。第一次来上海吗？我想给你介绍这里那里，但因为开发新菜单，实在抽不出时间。旅行者你既然要逛上海，能不能顺便帮我找找新菜单需要的材料？"/>
+      <imgdir name="yes">
+        <string name="0" value="真的非常感谢。我要开发的新菜单是辣炒鸡爪。请从这附近村庄出现的 #r#o9600001##k 那里收集 #b#t4000187# 100个#k 来。那就拜托你了"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="你要是能逛逛村子、顺便帮我个忙就好了……"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9496">
+    <imgdir name="1">
+      <string name="0" value="你好？我是 #b#p9310012##k。"/>
+      <imgdir name="yes">
+        <string name="0" value="我从事到处旅行拍照的职业，上海好多地方都跑遍了。就由我来为旅行者你介绍上海吧。请过一会儿再来跟我说话，我会为你带路。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="npc">
+          <string name="0" value="请去见见在这附近的 #b#p9310012##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="你又来了。不管怎么想都想不起上海的事呢。我认识一位来过上海很多次的人，你要不要见见她？"/>
+      <imgdir name="yes">
+        <string name="0" value="据说在这附近的 #b#p9310012##k 因为户外拍摄，去过很多好地方。请去见见 #b#p9310012##k 吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="没有人比那位更了解上海了……"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9497">
+    <imgdir name="0">
+      <string name="0" value="你好？我因为到处做户外拍摄，去过很多地方。要不要去我推荐的地方旅行？"/>
+      <imgdir name="yes">
+        <string name="0" value="你考虑得真好。这里是中国的大城市上海外滩。不过只要稍微离开市区到郊外，就能感受到乡村的美好情趣。请到郊外去感受一下那份情趣吧。 "/>
+        <string name="1" value="对了，听说在徐州岔路口务农的 #b#p9310010##k 因为田地遭家畜破坏而很苦恼。你去郊外的时候，请击退 #r#o9600002##k 和 #r#o9600003##k 各 #b50只#k，并去见见 #b#p9310010##k。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果改变主意了，请再来找我。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="你看起来不像这村里的人，是来干什么的？"/>
+      <imgdir name="yes">
+        <string name="0" value="哎呀，真是太谢谢了。你居然帮我教训了破坏田地的动物，真是感谢。不好意思，我还有一件事想拜托，不过向旅行的人开口实在过意不去。如果你愿意帮我，就再来跟我说话吧。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="mob">
+          <string name="0" value="请击退破坏我田地的 #r#o9600002##k 和 #r#o9600003##k 各 #b50只#k。"/>
+        </imgdir>
+        <imgdir name="npc">
+          <string name="0" value="请击退破坏田地的 #r#o9600002##k 和 #r#o9600003##k 各 #b50只#k，并去见见田地主人 #b#p9310010##k。"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9503">
+    <imgdir name="1">
+      <string name="0" value="终于把垃圾收集来了吗？快把海洋垃圾交给我吧。我会把垃圾安全处理掉的。 "/>
+      <string name="1" value="另外，为感谢帮助创造洁净海洋的旅行者你，我送你用郁陵岛清洁海域捕到的鱿鱼做的 #t02022074# 作为礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="真的非常感谢你帮助创造洁净的海洋。不过海边还留着很多垃圾，让人担心。如果想继续帮忙创造洁净海洋，请#e每两个小时一次#n来找我，帮我清理海边。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="必须防止海洋被污染。请打破弗洛里纳海滩各处的木箱，收集掉落的 #b#t04031302##k #b10个#k 来。弗洛里纳海滩可以通过明珠港的 #b#p1002002##k、玩具城的 #b#p2040048##k 或天空之城的 #b#p2010005##k 前往。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="你好？我最近有件烦心事。人们在海边随手丢弃的垃圾正在污染水下世界。据说海洋被污染的原因有80%是陆地上流进去的垃圾。 "/>
+      <string name="1" value="这样下去，水下世界海里生活的鱼都要死光了。看来必须阻止海洋被污染，但只靠我一个人的力量实在不够。旅行者你愿意帮我创造洁净的海洋吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢你百忙之中还抽时间来创造洁净的海洋。弗洛里纳海滩是与海相邻的海岸，那里堆放着很多垃圾，不断流入海里污染海洋。"/>
+        <string name="1" value="请打破弗洛里纳海滩各处的木箱，收集掉落的 #b#t04031302##k #b10个#k 来，我会把它们处理干净，不让海洋被弄脏。那就拜托你了。 "/>
+        <string name="2" value="对了！弗洛里纳海滩可以通过明珠港的 #b#p1002002##k、玩具城的 #b#p2040048##k 或天空之城的 #b#p2010005##k 前往。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="因为 #b#t04031302##k，冒险岛世界正在被污染。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9504">
+    <imgdir name="1">
+      <string name="0" value="终于把垃圾收集来了吗？快把海洋垃圾交给我吧。我会把垃圾安全处理掉的。 "/>
+      <string name="1" value="另外，为感谢帮助创造洁净海洋的旅行者你，我送你用郁陵岛清洁海域捕到的鱿鱼做的 #t02022074# 作为礼物。"/>
+      <imgdir name="yes">
+        <string name="0" value="真的非常感谢你帮助创造洁净的海洋。不过海边还留着很多垃圾，让人担心。如果想继续帮忙创造洁净海洋，请#e每两小时一次#n来找我，帮我清理海边。那就拜托你了。"/>
+      </imgdir>
+      <imgdir name="stop">
+        <imgdir name="item">
+          <string name="0" value="必须防止海洋被污染。请打破弗洛里纳海滩各处的木箱，收集掉落的 #b#t04031321##k #b20个#k 来。弗洛里纳海滩可以通过明珠港的 #b#p1002002##k、玩具城的 #b#p2040048##k 或天空之城的 #b#p2010005##k 前往。 "/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="你好？我最近有件烦心事。人们在海边随手丢弃的垃圾正在污染水下世界。据说海洋被污染的原因有80%是陆地上流进去的垃圾。 "/>
+      <string name="1" value="这样下去，水下世界海里生活的鱼都要死光了。看来必须阻止海洋被污染，但只靠我一个人的力量实在不够。旅行者你愿意帮我创造洁净的海洋吗？ "/>
+      <imgdir name="yes">
+        <string name="0" value="谢谢你百忙之中还抽时间来创造洁净的海洋。弗洛里纳海滩是与海相邻的海岸，那里堆放着很多垃圾，不断流入海里污染海洋。"/>
+        <string name="1" value="请打破弗洛里纳海滩各处的木箱，收集掉落的 #b#t04031321##k #b20个#k 来，我会把它们处理干净，不让海洋被弄脏。那就拜托你了。"/>
+        <string name="2" value="对了！弗洛里纳海滩可以通过明珠港的 #b#p1002002##k、玩具城的 #b#p2040048##k 或天空之城的 #b#p2010005##k 前往。 "/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="因为 #b#t04031321##k，冒险岛世界正在被污染。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9505">
+    <imgdir name="0">
+      <string name="0" value="你好？每年的5月31日是海洋日。为了让大家了解海洋的重要性和更多海洋知识，我准备了一个小测验。想更深入了解海洋的话，要不要挑战一下？"/>
+      <imgdir name="yes">
+        <string name="0" value="不是什么太难的问题，不用紧张，稍微想一想就能轻松答出来。准备好了就再来跟我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果没有海洋，我们就无法生存。希望大家能花点时间了解一下海洋。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="在冒险岛里能体验海底的地方叫什么名字？ \r\n#b#L0# 1. 玩具城#l\r\n#L1# 2. 冰峰雪域#l\r\n#L2# 3.水下世界#l\r\n#L3# 4.林中之城#k#l"/>
+      <string name="1" value="冒险岛世界的海底村庄叫水下世界。很简单吧？那么，我们来看下一题吧？"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="玩具城是用玩具建成的城堡。"/>
+          <string name="1" value="冰峰雪域是被白雪覆盖的地方。"/>
+          <string name="3" value="林中之城是传统童话村。"/>
+          <int name="answer" value="3"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9506">
+    <imgdir name="0">
+      <string name="0" value="准备好解答与海洋有关的第二道题时，请再来跟我说话。"/>
+      <imgdir name="yes">
+        <string name="0" value="不是什么太难的问题，不用紧张，稍微想一想就能轻松答出来。准备好了就再来跟我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果没有海洋，我们就无法生存。希望大家能花点时间了解一下海洋。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="海里最深的地方比珠穆朗玛峰的高度还深？ \r\n#b#L0#1. O#l\r\n#L1#2. X#l"/>
+      <string name="1" value="据说海洋比陆地上最高的山还要深。那么，我们来看下一题吧？"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="1" value="珠穆朗玛峰再高，也深不过海洋。"/>
+          <int name="answer" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9507">
+    <imgdir name="0">
+      <string name="0" value="准备好解答与海洋有关的第三道题了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="不是什么太难的问题，不用紧张，稍微想一想就能轻松答出来。准备好了就再来跟我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果没有海洋，我们就无法生存。希望大家能花点时间了解一下海洋。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="海洋分为湾、海、海峡、大洋，而我们生活的世界被称为五大洋。下列哪一项不属于五大洋？ #b\r\n#L0#1. 印度洋#l \r\n#L1#2. 太平洋#l \r\n#L2#3. 北冰洋#l \r\n#L3#4. 东海#l  "/>
+      <string name="1" value="答对了。五大洋是太平洋、大西洋、印度洋、北冰洋、南大洋吧？那么，我们来看下一题吧？"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="印度洋属于五大洋。"/>
+          <string name="1" value="太平洋属于五大洋。"/>
+          <string name="2" value="北冰洋属于五大洋。"/>
+          <int name="answer" value="4"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9508">
+    <imgdir name="0">
+      <string name="0" value="准备好解答与海洋有关的第四道题了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="不是什么太难的问题，不用紧张，稍微想一想就能轻松答出来。准备好了就再来跟我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果没有海洋，我们就无法生存。希望大家能花点时间了解一下海洋。"/>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <string name="0" value="即使没有海水，也会下雨下雪？ \r\n#b#L0#1. O#l\r\n#L1#2. X#l"/>
+      <string name="1" value="嗯~ 没错。据说下雨下雪也是因为有海水。那么，我们来看下一题吧？"/>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="如果没有海水，就不会下雪或下雨。"/>
+          <int name="answer" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="9509">
+    <imgdir name="1">
+      <string name="0" value="下列哪一项不是保护海洋环境的行为？ #b\r\n#L0#1. 在海边尽量不使用泡沫塑料制品。#l \r\n#L1#2. 把海洋污染的信息告诉周围的人，让他们关心海洋。#l \r\n#L2#3. 在海里钓完鱼后，把鱼线丢进海里再回来。#l \r\n#L3#4. 去江边或海边玩时，带上垃圾袋把垃圾装回来。#l"/>
+      <string name="1" value="可不能随便往海里丢垃圾吧？ "/>
+      <imgdir name="yes">
+        <string name="0" value="海洋相关的题目全都答完了。希望这段时间能让你对海洋有所了解，收获有益。今后也请多多关注保护海洋的方法。当然，一定要付诸行动哦。那么，祝你旅途愉快~"/>
+      </imgdir>
+      <int name="ask" value="1"/>
+      <imgdir name="stop">
+        <imgdir name="0">
+          <string name="0" value="请克制在海边使用泡沫塑料制品。"/>
+          <string name="1" value="要让更多人关心并守护海洋。"/>
+          <string name="3" value="去江边或海边时，要用垃圾袋把垃圾装回来。"/>
+          <int name="answer" value="3"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="0">
+      <string name="0" value="准备好解答与海洋有关的最后一题了吗？"/>
+      <imgdir name="yes">
+        <string name="0" value="不是什么太难的问题，不用紧张，稍微想一想就能轻松答出来。准备好了就再来跟我说话吧。"/>
+      </imgdir>
+      <imgdir name="no">
+        <string name="0" value="如果没有海洋，我们就无法生存。希望大家能花点时间了解一下海洋。"/>
+      </imgdir>
+    </imgdir>
+  </imgdir>
 </imgdir>
