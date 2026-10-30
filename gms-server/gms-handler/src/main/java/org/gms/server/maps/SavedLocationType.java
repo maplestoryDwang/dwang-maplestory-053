@@ -33,6 +33,7 @@ public enum SavedLocationType {
     HAPPYVILLE,
     MONSTER_CARNIVAL,
     DEVELOPER,
+    COKETOWN,
     JAIL;
 
     public static SavedLocationType fromString(String Str) {

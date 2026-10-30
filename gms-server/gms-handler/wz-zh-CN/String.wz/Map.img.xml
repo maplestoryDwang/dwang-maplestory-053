@@ -2174,7 +2174,83 @@
       <string name="streetName" value="神秘岛"/>
       <string name="mapName" value="寒冰平原"/>
     </imgdir>
-    <imgdir name="220000000">
+        <imgdir name="219000000">
+      <string name="mapName" value="可乐镇"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219000001">
+      <string name="mapName" value="可乐镇杂货店"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219000002">
+      <string name="mapName" value="波可的家"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219000003">
+      <string name="mapName" value="露露的家"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219000004">
+      <string name="mapName" value="可乐镇里的空屋"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219000005">
+      <string name="mapName" value="波可的家"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219010000">
+      <string name="mapName" value="可乐滑雪营 &lt;黄&gt;"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219010001">
+      <string name="mapName" value="可乐滑雪营 &lt;小丘1&gt;"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219010100">
+      <string name="mapName" value="可乐滑雪营 &lt;绿&gt;"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219010101">
+      <string name="mapName" value="可乐滑雪营 &lt;小丘2&gt;"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219010200">
+      <string name="mapName" value="可乐滑雪营 &lt;银&gt;"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219010201">
+      <string name="mapName" value="可乐滑雪营 &lt;小丘3&gt;"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219010300">
+      <string name="mapName" value="可乐滑雪营 &lt;金&gt;"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219020000">
+      <string name="mapName" value="可乐山峡Ⅰ"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219020001">
+      <string name="mapName" value="小巷"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219020100">
+      <string name="mapName" value="可乐山峡Ⅱ"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219020200">
+      <string name="mapName" value="可乐山峡Ⅲ"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219020300">
+      <string name="mapName" value="可乐山峡Ⅳ"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+    <imgdir name="219020301">
+      <string name="mapName" value="可乐巨人树林"/>
+      <string name="streetName" value="隐藏地图"/>
+    </imgdir>
+<imgdir name="220000000">
       <string name="streetName" value="玩具城"/>
       <string name="mapName" value="玩具城"/>
       <string name="help0" value="#e[To Enter the Event]#n\n\n  If there&apos;s a notice posted in #b#ein blue#n#k saying that we&apos;re accepting participants for an event, click on #e[Tony]#n and choose #e[Yeah, let&apos;s go!]#n to enter.\n  If you have already clicked on [Tony] when the event starts, then just click on [Yeah, let&apos;s go!] to enter.\n\n  Please read the event notice before entering.\n  Once the event starts, participants will be accepted as #efirst come, first serve#n until the event is full.\n\n#eYou can&apos;t enter an event more than once within 24 hours.#n\n\n  You won&apos;t be able to enter the event if you don&apos;t have any free slots available on your etc. inventory to receive an &apos;Event Trophy,&apos; so make sure to leave a slot available.\n If you already have a #bSecret Scroll#k, please discard it before entering the event..\n\n#r  If you change channels or enter the #bCash Shop#k during the event, you&apos;ll automatically be disqualified from the event."/>

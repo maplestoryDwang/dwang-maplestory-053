@@ -7980,7 +7980,7 @@
   <imgdir name="9421">
     <string name="name" value="制作秘密可口可乐原液"/>
     <string name="0" value="我们去找知道可口可乐制造法的#b#p9001005##k吧。"/>
-    <string name="1" value="去可乐玩网站 (#bwww.cokeplay.com#k) 就能获得#b#t4031325##k的材料。  \n\n#t4031322:# #b#c4031322#/1#k \n#t4031323:# #b#c4031323#/1#k \n#t4031324:# #b#c4031324#/1#k "/>
+    <string name="1" value="请从附近的怪物那里获得#b#t4031325##k的材料。  \n\n#t4031322:# #b#c4031322#/1#k \n#t4031323:# #b#c4031323#/1#k \n#t4031324:# #b#c4031324#/1#k "/>
     <string name="2" value="把#b#t4031322#、#t4031323#、#t4031324##k适当混合，试着做出了#b#t4031325##k。"/>
     <int name="area" value="50"/>
   </imgdir>
