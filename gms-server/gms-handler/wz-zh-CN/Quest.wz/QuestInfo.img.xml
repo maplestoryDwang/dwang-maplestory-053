@@ -4396,6 +4396,111 @@
     <string name="2" value="我向 #b#p1022101##k 询问了传单上所写内容的更多细节。"/>
     <int name="area" value="50"/>
   </imgdir>
+  <imgdir name="4632">
+    <string name="name" value="无聊的北极熊波可做滑雪板 1"/>
+    <string name="parent" value="无聊的北极熊波可"/>
+    <string name="0" value="#b可口可乐村#k的#b#p9001002##k似乎一脸无聊地发着呆。上去和他说说话吧。"/>
+    <string name="1" value="小北极熊波可最近比起滑雪橇，好像对单板滑雪更感兴趣。帮他收集做一块好滑的滑雪板所需的材料吧。\n#t04000018##b#c04000018##k/50\n#t04000209##b#c04000209##k/50\n#t04011002##b#c04011002##k/1"/>
+    <string name="2" value="#b#p9001002##k非常高兴，给了你一点小小的谢礼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4633">
+    <string name="name" value="秘密芬达精华（橙子）"/>
+    <string name="0" value="唯一知道美味可口可乐制法的熊——#b#p9001005##k，最近好像迷上了研究。"/>
+    <string name="1" value="听说#b#p9001005##k除了可口可乐，还在研究美味芬达的制法。为此必须提取精华。去帮帮他吧。\n#t4000216##b#c4000216##k/30\n#t2022002##b#c2022002##k/1\n#t4020006##b#c4020006##k/10"/>
+    <string name="2" value="#b#p9001005##k为感谢你收集来精华材料，给了你谢礼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4634">
+    <string name="name" value="秘密芬达精华（葡萄）"/>
+    <string name="0" value="唯一知道美味可口可乐制法的熊——#b#p9001005##k，最近好像迷上了研究。"/>
+    <string name="1" value="听说#b#p9001005##k除了可口可乐，还在研究美味芬达的制法。为此必须提取精华。去帮帮他吧。\n#t4000217##b#c4000217##k/30\n#t02022002##b#c02022002##k/1\n#t04020001##b#c04020001##k/10"/>
+    <string name="2" value="#b#p9001005##k为感谢你收集来精华材料，给了你谢礼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4635">
+    <string name="name" value="究极芬达精华"/>
+    <string name="parent" value="秘密芬达精华"/>
+    <string name="0" value="唯一知道美味可口可乐制法的熊——#b#p9001005##k，好像又有了什么新发现。"/>
+    <string name="1" value="听说#b#p9001005##k成功提取出了能做出任何口味芬达的究极芬达精华。不过据说要做那种精华需要更多材料。去帮帮他吧。\n#t02022294##b#c02022294##k/1\n#t02022295##b#c02022295##k/1\n#t02022002##b#c02022002##k/1"/>
+    <string name="2" value="#b#p9001005##k为感谢你收集来精华材料，给了你谢礼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4636">
+    <string name="name" value="可口可乐的研究材料（特殊披风）"/>
+    <string name="0" value="只有寒冷北方才见得到的北极熊出现在这里。他怎么会在这儿？上去和他说说话吧。"/>
+    <string name="1" value="从遥远北方尽头的村子——可口可乐村来的北极熊杰洛，似乎是为了推广可口可乐的美味才一路旅行到这里。要做美味的可口可乐，材料不够，只要收集来某种特别的材料，他就能当场合成特殊物品。去帮帮他吧。"/>
+    <string name="2" value="#b#p9110002##k当场把收集来的材料合成好了。听说有时也会失败。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4637">
+    <string name="name" value="可口可乐的研究材料（发髻）"/>
+    <string name="0" value="只有寒冷北方才见得到的北极熊出现在这里。他怎么会在这儿？上去和他说说话吧。"/>
+    <string name="1" value="从遥远北方尽头的村子——可口可乐村来的北极熊杰洛，似乎是为了推广可口可乐的美味才一路旅行到这里。要做美味的可口可乐，材料不够，只要收集来某种特别的材料，他就能当场合成特殊物品。去帮帮他吧。"/>
+    <string name="2" value="#b#p9110002##k当场把收集来的材料合成好了。听说有时也会失败。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4638">
+    <string name="name" value="无聊的北极熊波可做滑雪板 2"/>
+    <string name="parent" value="无聊的北极熊波可做滑雪板 1"/>
+    <string name="0" value="#b可口可乐村#k的#b#p9001002##k朝这边挥着手，好像有话想说。去听听吧。"/>
+    <string name="1" value="#b#p9001002##k好像每天都在玩上次做的滑雪板，玩得很开心。#b#p9001002##k的朋友#b#p9001001##k也说想要那块滑雪板。帮他再收集一份能做一块的材料吧。\n#t04000059##b#c04000059##k/50\n#t04000060##b#c04000060##k/50\n#t04000209##b#c04000209##k/50"/>
+    <string name="2" value="把要的板子材料送去后，#b#p9001002##k非常高兴，给了你谢礼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4639">
+    <string name="name" value="波可的伤药"/>
+    <string name="0" value="#p9001002#好像有事想拜托你。看起来比平时没精神…"/>
+    <string name="1" value="#p9001002#的伙伴皮埃尔好像受伤了。帮他收集治伤所需的药材吧。\n#t04000037##b#c04000037##k/100\n#t04000136##b#c04000136##k/50\n#t04000217##b#c04000217##k/30"/>
+    <string name="2" value="把需要的药材收集来交给波可，他很高兴，作为谢礼给了你药。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4640">
+    <string name="name" value="罗洛的望远镜镜片"/>
+    <string name="0" value="北极熊罗洛最喜欢看星星，据说每天都看，百看不厌。"/>
+    <string name="1" value="#p9001001#想要能看得更清楚的镜片。只要有材料，就能做出比现在看得更清楚的镜片。去帮帮他吧。\n#t04000027##b#c04000027##k/100\n#t04000221##b#c04000221##k/50\n#t04000220##b#c04000220##k/30"/>
+    <string name="2" value="#p9001001#做出了镜片，看起来非常高兴。要是能看到漂亮的流星群就好了。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4641">
+    <string name="name" value="体贴哥哥的波可"/>
+    <string name="0" value="#p9001002#好像有话想说。去听听看吧。"/>
+    <string name="1" value="#p9001002#为了哥哥一直保持精神，瞒着哥哥在做营养剂。可是做营养剂还缺材料。去帮他收集吧。\n#t04000182##b#c04000182##k/150\n#t04000158##b#c04000158##k/150\n#t04000214##b#c04000214##k/150\n#t04000181##b#c04000181##k/150"/>
+    <string name="2" value="把需要的材料交给了#p9001002#。于是#p9001005#非常高兴，给了你谢礼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4642">
+    <string name="name" value="罗洛向流星许愿"/>
+    <string name="parent" value="罗洛的望远镜镜片"/>
+    <string name="0" value="#p9001001#又迷上看星星了。"/>
+    <string name="1" value="#p9001001#正着迷于只能在可口可乐村看到的流星群。可是流星划过时即使许愿也会马上消失，所以他想试试让时间变慢的方法。去帮他收集要的材料吧。\n#t04000145##b#c04000145##k/200\n#t04000146##b#c04000146##k/200"/>
+    <string name="2" value="把#p9001001#要的钟交给了他。虽然是个有点可疑的钟…算了，就这样吧。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4643">
+    <string name="name" value="罗洛的心意"/>
+    <string name="parent" value="罗洛向流星许愿"/>
+    <string name="0" value="#p9001001#高兴地朝这边挥手。去和他说说话吧。"/>
+    <string name="1" value="#p9001001#感谢你上次收集来的钟，让他成功把时间流速变慢了一点点。他想应用这个办法，为总是忙碌的波可和普奇兄弟做点什么。帮他一把吧。\n#t04000149##b#c04000149##k/300\n#t04000211##b#c04000211##k/300\n#t04000212##b#c04000212##k/300"/>
+    <string name="2" value="把形状奇特的壶和方块交给了#p9001001#。罗洛高兴地道谢，并给了你谢礼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4644">
+    <string name="name" value="波可的感谢"/>
+    <string name="parent" value="罗洛的心意"/>
+    <string name="0" value="#p9001002#大声叫住了你。去和他谈谈吧。"/>
+    <string name="1" value="#p9001002#说很喜欢#p9001001#想出的主意，向你道谢。他说兄弟俩都想谢谢你，希望你去收集一些东西。是什么呢？\n#t04000216##b#c04000216##k/300\n#t04000217##b#c04000217##k/300\n#t04000221##b#c04000221##k/300"/>
+    <string name="2" value="把#p9001002#要的东西交给他后，他拜托你把这些原样带去给#p9001005#。"/>
+    <int name="area" value="50"/>
+  </imgdir>
+  <imgdir name="4645">
+    <string name="name" value="要好兄弟普奇和波可的感谢"/>
+    <string name="parent" value="波可的感谢"/>
+    <string name="0" value="#p9001002#让你把托付的东西带去给#p9001005#。去送给他吧。"/>
+    <string name="1" value="见到#p9001005#后，他非常高兴。把#p9001002#托付的东西交给他，他让你稍等一下。"/>
+    <string name="2" value="#p9001005#说非常感激能久违地和弟弟单独相处，并给了你谢礼。"/>
+    <int name="area" value="50"/>
+  </imgdir>
   <imgdir name="4900">
     <string name="name" value="欢迎光临新叶城测验 1"/>
     <string name="parent" value="欢迎光临新叶城测验"/>

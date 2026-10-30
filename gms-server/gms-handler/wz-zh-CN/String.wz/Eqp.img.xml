@@ -10868,7 +10868,11 @@
             <imgdir name="1002743">
                 <string name="name" value="海洋之帽"/>
             </imgdir>
-            <imgdir name="1002745">
+            <imgdir name="1002744">
+        <string name="name" value="零度可口可乐发髻"/>
+        <string name="desc" value="零度可乐活动任务 4637 的奖励头饰。"/>
+      </imgdir>
+      <imgdir name="1002745">
                 <string name="name" value="神奇寶貝帽子"/>
             </imgdir>
             <imgdir name="1002746">
@@ -10887,7 +10891,11 @@
             <imgdir name="1002750">
                 <string name="name" value="Bosshunter Faceguard"/>
             </imgdir>
-            <imgdir name="1002752">
+            <imgdir name="1002751">
+        <string name="name" value="芬达钻头帽"/>
+        <string name="desc" value=""/>
+      </imgdir>
+      <imgdir name="1002752">
                 <string name="name" value="翅膀光环"/>
             </imgdir>
             <imgdir name="1002753">
@@ -17832,8 +17840,13 @@
             <imgdir name="1102160">
                 <string name="name" value="猴子披风"/>
             </imgdir>
-            <imgdir name="1102163">
-                <string name="name" value="贵族披风"/>
+            <imgdir name="1102161">
+        <string name="name" value="可口可乐披风"/>
+        <string name="desc" value=""/>
+      </imgdir>
+      <imgdir name="1102163">
+                <string name="name" value="黄金披风"/>
+      <string name="desc" value="零度可乐活动任务 4636 的奖励披风。"/>
             </imgdir>
             <imgdir name="1102164">
                 <string name="name" value="摇滚电吉他"/>
@@ -96011,7 +96024,7 @@
                 <string name="name" value="Bosshunter Gi"/>
             </imgdir>
             <imgdir name="1052150">
-                <string name="name" value="橘子汁罐"/>
+                <string name="name" value="芬达盔甲"/>
             </imgdir>
             <imgdir name="1052151">
                 <string name="name" value="英雄长袍"/>
@@ -105884,9 +105897,13 @@
                 <string name="name" value="无敌石板盾牌"/>
             </imgdir>
             <imgdir name="1092054">
-                <string name="name" value="橙汁瓶"/>
+                <string name="name" value="维他命卫士盾"/>
             </imgdir>
-            <imgdir name="1092056">
+            <imgdir name="1092055">
+        <string name="name" value="零度可乐盾"/>
+        <string name="desc" value=""/>
+      </imgdir>
+      <imgdir name="1092056">
                 <string name="name" value="透明盾牌"/>
             </imgdir>
             <imgdir name="1092057">

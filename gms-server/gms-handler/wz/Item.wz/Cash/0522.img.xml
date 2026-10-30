@@ -55,4 +55,37 @@
             <int name="cash" value="1"/>
         </imgdir>
     </imgdir>
+  <imgdir name="05220060">
+    <imgdir name="info">
+      <canvas name="icon" format="1" scale="0">
+        <vector name="origin" x="0" y="28"/>
+      </canvas>
+      <canvas name="iconRaw" format="1" scale="0">
+        <vector name="origin" x="0" y="28"/>
+      </canvas>
+      <int name="cash" value="1"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="05220070">
+    <imgdir name="info">
+      <canvas name="icon" format="1" scale="0">
+        <vector name="origin" x="0" y="28"/>
+      </canvas>
+      <canvas name="iconRaw" format="1" scale="0">
+        <vector name="origin" x="0" y="28"/>
+      </canvas>
+      <int name="cash" value="1"/>
+    </imgdir>
+  </imgdir>
+  <imgdir name="05220080">
+    <imgdir name="info">
+      <canvas name="icon" format="1" scale="0">
+        <vector name="origin" x="0" y="28"/>
+      </canvas>
+      <canvas name="iconRaw" format="1" scale="0">
+        <vector name="origin" x="0" y="28"/>
+      </canvas>
+      <int name="cash" value="1"/>
+    </imgdir>
+  </imgdir>
 </imgdir>

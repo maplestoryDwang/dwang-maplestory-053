@@ -5697,6 +5697,11 @@
     <string name="s0" value="怎么样？我的滑雪板是不是很酷？"/>
     <string name="s1" value="没有比滑雪更有趣的事情了"/>
   </imgdir>
+  <imgdir name="9001007">
+    <string name="name" value="北极熊杰洛"/>
+    <string name="s0" value="要不要尝尝美味的可口可乐？"/>
+    <string name="s1" value="来一口清爽的可口可乐吧～！"/>
+  </imgdir>
   <imgdir name="9001008">
     <string name="name" value="波虎"/>
     <string name="n0" value="我要知道, 我要知道... 如果我提供我名字的意思就有可能获得奖牌物品."/>
@@ -6055,6 +6060,15 @@
   </imgdir>
   <imgdir name="9100112">
     <string name="name" value="藏经大师"/>
+  </imgdir>
+  <imgdir name="9100114">
+    <string name="name" value="芬达售货机"/>
+  </imgdir>
+  <imgdir name="9100115">
+    <string name="name" value="水瓶座售货机"/>
+  </imgdir>
+  <imgdir name="9100116">
+    <string name="name" value="零度可乐售货机"/>
   </imgdir>
   <imgdir name="9100117">
     <string name="name" value="快乐百宝箱"/>

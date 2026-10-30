@@ -1487,9 +1487,73 @@
         <string name="desc" value="15分钟之内，物理攻击力上升\n20，魔法攻击力上升30"/>
         <string name="name" value="甜甜的爱心"/>
     </imgdir>
+    <imgdir name="2022286">
+        <string name="desc" value="清爽且回味干净的橙味碳酸饮料。
+10分钟内物理攻击力增加20"/>
+        <string name="name" value="芬达 橙味 500"/>
+    </imgdir>
+    <imgdir name="2022287">
+      <string name="name" value="芬达 葡萄味 500"/>
+      <string name="desc" value="香甜馥郁的葡萄味碳酸饮料。\n10分钟内魔力增加20"/>
+    </imgdir>
+    <imgdir name="2022288">
+        <string name="desc" value="按与汗水相同的矿物质比例制成的运动饮料。
+10分钟内跳跃力增加20"/>
+        <string name="name" value="水瓶座运动饮料 500"/>
+    </imgdir>
+    <imgdir name="2022289">
+      <string name="name" value="维他命卫士 500"/>
+      <string name="desc" value="配合维生素C、烟酸、柠檬酸的清爽柠檬味健康饮料。\n10分钟内物理防御力、魔法防御力增加20"/>
+    </imgdir>
+    <imgdir name="2022290">
+        <string name="desc" value="碳酸刺激清爽强烈、口味扎实的零度可口可乐。
+10分钟内回避率增加10、命中率增加20"/>
+        <string name="name" value="零度可口可乐 500"/>
+    </imgdir>
+    <imgdir name="2022291">
+      <string name="name" value="芬达香水"/>
+      <string name="desc" value="调合了鲜橙与葡萄精华的香水。\n10分钟内魔法防御力、物理防御力、回避率各增加30"/>
+    </imgdir>
+    <imgdir name="2022292">
+      <string name="name" value="水瓶座秘药"/>
+      <string name="desc" value="有效配合氨基酸、柠檬酸、镁的秘药。\n回复80% HP/MP"/>
+    </imgdir>
+    <imgdir name="2022294">
+        <string name="desc" value="浓缩了多汁橙子的精华。
+10分钟内移动速度增加20"/>
+        <string name="name" value="魅惑橙子精华"/>
+    </imgdir>
+    <imgdir name="2022295">
+        <string name="desc" value="浓缩了多汁葡萄的精华。
+10分钟内命中率增加10"/>
+        <string name="name" value="魅惑葡萄精华"/>
+    </imgdir>
     <imgdir name="2022296">
         <string name="desc" value="拥有冒险岛运营者气势的喊声\n30分钟之内物理攻击力上升8，\n魔法攻击力上升12"/>
         <string name="name" value="加油的呐喊"/>
+    </imgdir>
+    <imgdir name="2022297">
+        <string name="desc" value="清爽且回味干净的橙味碳酸饮料。
+10分钟内物理攻击力增加30、命中率增加20"/>
+        <string name="name" value="芬达 橙味 1500"/>
+    </imgdir>
+    <imgdir name="2022298">
+      <string name="name" value="芬达 葡萄味 1500"/>
+      <string name="desc" value="香甜馥郁的葡萄味碳酸饮料。\n10分钟内魔力增加30、回避率增加20"/>
+    </imgdir>
+    <imgdir name="2022299">
+      <string name="name" value="水瓶座 2000"/>
+      <string name="desc" value="依据最新运动科学、按与汗水相同的矿物质比例制成的运动饮料。\n10分钟内跳跃力增加30、移动速度增加20"/>
+    </imgdir>
+    <imgdir name="2022300">
+        <string name="desc" value="配合维生素C、烟酸、柠檬酸的清爽柠檬味健康饮料。
+10分钟内物理防御力、魔法防御力增加30"/>
+        <string name="name" value="维他命卫士 2000"/>
+    </imgdir>
+    <imgdir name="2022301">
+        <string name="desc" value="碳酸刺激清爽强烈、口味扎实的零度可口可乐。
+10分钟内跳跃力增加30、命中率增加30"/>
+        <string name="name" value="零度可口可乐 1500"/>
     </imgdir>
     <imgdir name="2022302">
         <string name="desc" value="15分钟内，物理攻击力上升20，\n魔法攻击力上升30"/>

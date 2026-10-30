@@ -1319,6 +1319,18 @@
     <imgdir name="5220020">
         <string name="name" value="Gachapon for Net Cafe"/>
     </imgdir>
+    <imgdir name="5220060">
+      <string name="name" value="可口可乐扭蛋券 1"/>
+      <string name="desc" value="可在可口可乐活动的扭蛋机使用一次。"/>
+    </imgdir>
+    <imgdir name="5220070">
+      <string name="name" value="可口可乐扭蛋券 2"/>
+      <string name="desc" value="可在可口可乐活动的扭蛋机使用一次。"/>
+    </imgdir>
+    <imgdir name="5220080">
+      <string name="name" value="可口可乐扭蛋券 3"/>
+      <string name="desc" value="可在可口可乐活动的扭蛋机使用一次。"/>
+    </imgdir>
     <imgdir name="5221000">
         <string name="name" value="免费购物券"/>
         <string name="desc" value="这张券可以让你免费在商城里购\n物，不管价格是多少。"/>

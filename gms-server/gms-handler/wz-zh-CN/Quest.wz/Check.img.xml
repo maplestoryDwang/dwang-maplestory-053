@@ -13461,6 +13461,363 @@
       <int name="npc" value="9250052"/>
     </imgdir>
   </imgdir>
+  <imgdir name="4632">
+    <imgdir name="0">
+      <int name="npc" value="9001002"/>
+      <int name="lvmin" value="10"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001002"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000018"/>
+          <int name="count" value="50"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000209"/>
+          <int name="count" value="50"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4011002"/>
+          <int name="count" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4633">
+    <imgdir name="0">
+      <int name="npc" value="9001005"/>
+      <int name="lvmin" value="10"/>
+      <int name="dayByDay" value="1"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001005"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4020006"/>
+          <int name="count" value="10"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000216"/>
+          <int name="count" value="30"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="2022002"/>
+          <int name="count" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4634">
+    <imgdir name="0">
+      <int name="npc" value="9001005"/>
+      <int name="lvmin" value="10"/>
+      <int name="dayByDay" value="1"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001005"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4020001"/>
+          <int name="count" value="10"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="2022002"/>
+          <int name="count" value="1"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4000217"/>
+          <int name="count" value="30"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4635">
+    <imgdir name="0">
+      <int name="npc" value="9001005"/>
+      <int name="lvmin" value="20"/>
+      <int name="dayByDay" value="1"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001005"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="2022002"/>
+          <int name="count" value="1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="2022294"/>
+          <int name="count" value="1"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="2022295"/>
+          <int name="count" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4636">
+    <imgdir name="0">
+      <int name="npc" value="9001007"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001007"/>
+      <string name="endscript" value="q4636e"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="2022286"/>
+          <int name="count" value="1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="2022288"/>
+          <int name="count" value="1"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="2022290"/>
+          <int name="count" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4637">
+    <imgdir name="0">
+      <int name="npc" value="9001007"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001007"/>
+      <string name="endscript" value="q4637e"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="2022297"/>
+          <int name="count" value="1"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="2022300"/>
+          <int name="count" value="1"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="2022301"/>
+          <int name="count" value="1"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4638">
+    <imgdir name="0">
+      <int name="npc" value="9001002"/>
+      <int name="lvmin" value="25"/>
+      <imgdir name="quest">
+        <imgdir name="0">
+          <int name="id" value="4632"/>
+          <int name="state" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001002"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000209"/>
+          <int name="count" value="50"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000059"/>
+          <int name="count" value="50"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4000060"/>
+          <int name="count" value="50"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4639">
+    <imgdir name="0">
+      <int name="npc" value="9001002"/>
+      <int name="lvmin" value="20"/>
+      <int name="dayByDay" value="1"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001002"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000136"/>
+          <int name="count" value="50"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000217"/>
+          <int name="count" value="30"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4000037"/>
+          <int name="count" value="100"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4640">
+    <imgdir name="0">
+      <int name="npc" value="9001001"/>
+      <int name="lvmin" value="25"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001001"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000220"/>
+          <int name="count" value="30"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000221"/>
+          <int name="count" value="50"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4000027"/>
+          <int name="count" value="100"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4641">
+    <imgdir name="0">
+      <int name="npc" value="9001002"/>
+      <int name="lvmin" value="20"/>
+      <int name="dayByDay" value="1"/>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001002"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000181"/>
+          <int name="count" value="150"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000158"/>
+          <int name="count" value="150"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4000182"/>
+          <int name="count" value="150"/>
+        </imgdir>
+        <imgdir name="3">
+          <int name="id" value="4000214"/>
+          <int name="count" value="150"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4642">
+    <imgdir name="0">
+      <int name="npc" value="9001001"/>
+      <int name="lvmin" value="65"/>
+      <imgdir name="quest">
+        <imgdir name="0">
+          <int name="id" value="4640"/>
+          <int name="state" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001001"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000145"/>
+          <int name="count" value="200"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000146"/>
+          <int name="count" value="200"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4643">
+    <imgdir name="0">
+      <int name="npc" value="9001001"/>
+      <int name="lvmin" value="100"/>
+      <imgdir name="quest">
+        <imgdir name="0">
+          <int name="id" value="4642"/>
+          <int name="state" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001001"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000212"/>
+          <int name="count" value="300"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000149"/>
+          <int name="count" value="300"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4000211"/>
+          <int name="count" value="300"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4644">
+    <imgdir name="0">
+      <int name="npc" value="9001002"/>
+      <int name="lvmin" value="100"/>
+      <imgdir name="quest">
+        <imgdir name="0">
+          <int name="id" value="4643"/>
+          <int name="state" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001002"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000221"/>
+          <int name="count" value="200"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000216"/>
+          <int name="count" value="200"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4000217"/>
+          <int name="count" value="200"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
+  <imgdir name="4645">
+    <imgdir name="0">
+      <int name="npc" value="9001005"/>
+      <int name="lvmin" value="100"/>
+      <imgdir name="quest">
+        <imgdir name="0">
+          <int name="id" value="4644"/>
+          <int name="state" value="2"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+    <imgdir name="1">
+      <int name="npc" value="9001005"/>
+      <imgdir name="item">
+        <imgdir name="0">
+          <int name="id" value="4000213"/>
+          <int name="count" value="150"/>
+        </imgdir>
+        <imgdir name="1">
+          <int name="id" value="4000214"/>
+          <int name="count" value="150"/>
+        </imgdir>
+        <imgdir name="2">
+          <int name="id" value="4000219"/>
+          <int name="count" value="150"/>
+        </imgdir>
+      </imgdir>
+    </imgdir>
+  </imgdir>
   <imgdir name="4900">
     <imgdir name="0">
       <int name="npc" value="9201050"/>
