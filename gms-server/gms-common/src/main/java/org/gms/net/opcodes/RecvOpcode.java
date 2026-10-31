@@ -254,7 +254,11 @@ public enum RecvOpcode implements Opcode {
      */
     USE_STAT_CHAIR(0x4A),
 
-    // 0x4B 未使用
+    /**
+     * 使用召唤袋
+     */
+    USE_SUMMON_BAG(0x4B), //
+
 
     /**
      * 宠物食物
@@ -575,7 +579,6 @@ public enum RecvOpcode implements Opcode {
     ITEM_MOVE(0x47), // 移动物品
     USE_ITEM(0x48), // 使用物品
     CANCEL_ITEM_EFFECT(0x49), // 取消物品效果
-    USE_SUMMON_BAG(0x4B), // 使用召唤袋
     PET_FOOD(0x4C), // 宠物食物
     USE_MOUNT_FOOD(0x4D), // 使用坐骑食物
     SCRIPTED_ITEM(0x4E), // 脚本物品
