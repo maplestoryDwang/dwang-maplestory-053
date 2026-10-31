@@ -133,6 +133,17 @@ if ($missingSrc.Count -gt 0) {
     exit 1
 }
 
+# 清单里的哈希和 client-dist 里的实际文件对不上（改完忘了跑 make-manifest.ps1）时，
+# 一定要按实际文件为准：否则客户端一直被判定为“已是最新”，新文件永远同步不过去。
+$stale = 0
+foreach ($w in $want) {
+    $real = HashOf $w.Src
+    if ($real -ne $w.Hash) { $w.Hash = $real; $stale++ }
+}
+if ($stale -gt 0) {
+    Warn ('client-dist 里有 ' + $stale + ' 个文件的哈希和清单 client-dist.sha256 不一致（多半是改完忘了跑 tools\make-manifest.ps1），已按实际文件为准。')
+}
+
 # ---------------------------------------------------------------- 正在跑游戏就别动
 $procs = @(Get-Process -Name 'MapleStory', 'GMSv53', 'GMS053', 'MapleStoryV053', 'Launcher' -ErrorAction SilentlyContinue)
 if ($procs.Count -gt 0 -and -not $DryRun) {

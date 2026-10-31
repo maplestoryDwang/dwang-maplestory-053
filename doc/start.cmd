@@ -232,10 +232,13 @@ if not defined LOCAL_FULL goto :CHECK_FAIL_LOCAL
 if /i "%REMOTE_HASH%"=="%LOCAL_FULL%" (
     rem 块内要用 !VAR!（延迟展开）：%VAR% 里的 ")" 会在解析阶段把 if 块截断
     echo       已经是最新版本：!LOCAL_VER!
-    echo       （代码没变化，直接用现有的 jar 启动，不重新编译）
+    echo       （代码没变化，不重新编译；客户端插件/汉化数据仍会核对一次）
     set "DO_SYNC=0"
     set "DO_BUILD=0"
-    set "DO_CLIENT=0"
+    rem 代码没变也要跑一次客户端同步：sync-client 是按 sha256 逐个比对的，
+    rem 没变化时几秒就结束；漏掉这一步就会一直“版本最新、文件却是旧的”。
+    rem 只有默认的 all 流程这么做；“直接启动”保持不更新。
+    if /i "%STEP%"=="all" set "DO_CLIENT=1"
     call :WRITE_VERSION current
     echo.
     exit /b 0
