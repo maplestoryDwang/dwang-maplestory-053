@@ -4072,7 +4072,6 @@
     </imgdir>
     <imgdir name="1">
       <int name="npc" value="1022006"/>
-      <int name="pettamenessmin" value="2"/>
       <imgdir name="mob">
         <imgdir name="0">
           <int name="id" value="2230111"/>

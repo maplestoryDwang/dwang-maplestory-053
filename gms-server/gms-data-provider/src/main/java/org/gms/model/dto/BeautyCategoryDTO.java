@@ -24,4 +24,5 @@ public class BeautyCategoryDTO {
     private String warningText;
     private List<Integer> options; // 动态计算或查询出来的完整可用外观 ID 列表
     private Map<String, String> dialogs; // 当前 NPC 的台词 Map
+    private int poolId;
 }

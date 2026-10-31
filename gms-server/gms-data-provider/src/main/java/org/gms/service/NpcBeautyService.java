@@ -75,6 +75,8 @@ public class NpcBeautyService {
 
                 dto.setPromptText(cat.getPromptText());
                 dto.setWarningText(cat.getWarningText());
+                dto.setPoolId(mapping.getPoolId());
+
                 uniqueMenuMap.put(cat.getMenuIndex(), dto);
             }
         }
@@ -106,7 +108,8 @@ public class NpcBeautyService {
 
         List<Integer> rawStyleIds = new ArrayList<>();
         for (NpcBeautyPoolDO pool : pools) {
-            if (pool.getGender() == -1 || pool.getGender() == playerGender) {
+            if (targetCat.getPoolId() == pool.getId()) {
+//            if (pool.getGender() == -1 || pool.getGender() == playerGender) {
                 List<NpcBeautyPoolItemDO> items = itemMapper.selectListByQuery(
                         QueryWrapper.create().where(NPC_BEAUTY_POOL_ITEM_D_O.POOL_ID.eq(pool.getId()))
                 );
