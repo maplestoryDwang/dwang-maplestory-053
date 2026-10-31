@@ -20,7 +20,7 @@ function start(){
         return;
     }
     if(QuestID != null && QuestID > 0 && !cm.isQuestCompleted(QuestID)) {
-        cm.sendOkLevel('','...');
+        cm.sendOkLevel('','............（这幅画后面隐藏巨大杀机）');
         return;
     }
     if(em == null) {
