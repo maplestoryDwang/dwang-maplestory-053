@@ -10,14 +10,14 @@
 version=1.1.13
 tag=client-v1.1.13
 built=2026-09-29
-notes=修复：702000000 嵩山镇进图闪退（10-24 删 obj 后索引断档，重排索引）；恢复 h-top03→701010600 传送口
+notes=修复：702000000 嵩山镇进图闪退（删 obj 后索引断档，重排索引）；恢复 h-top03→701010600 传送口
 client_exe=GMSv53.exe,MapleStory.exe,GMS053.exe,MapleStoryV053.exe,MapleStory-sorce.exe
 client_exe_strict=0
 keep_existing=config.ini
 backup_keep=5
 client_exe_size=5439488
 client_exe_sha256=f4ac21ac18b6bd6a8ef16077aec2e9727468f578998e917f6679b5fe26ce23d8
-manifest_built=2026-10-31 21:36:22
+manifest_built=2026-10-31 21:40:38
 file_count=1412
 plugin_count=6
 data_count=1406
