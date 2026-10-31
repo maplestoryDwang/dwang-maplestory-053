@@ -7,7 +7,7 @@ function start() {
     }
 
     else if (cm.getMapId() == 501030104) {
-        cm.sendYesNo("你想要挑战六手邪神? 这需要消耗你一个#r#z4031722##k。");
+        cm.sendYesNo("你想要挑战六手邪神? 这需要消耗你一个#r#z4031722##k。并且你需要持有#r#z4031742##k");
     }
     // 其他地图：背景提示
     else {
@@ -57,6 +57,12 @@ function action(mode, type, selection) {
         }
 
         // 5. 检查是否持有挑战道具
+        if (!cm.haveItem(4031742)) {
+            cm.sendOk("你没有#r#z4031742##k，去完成前置任务来获得吧。");
+            cm.dispose();
+            return;
+        }
+
         if (!cm.haveItem(4031722)) {
             cm.sendOk("你没有#r#z4031722##k，去完成前置任务来获得吧。");
             cm.dispose();
