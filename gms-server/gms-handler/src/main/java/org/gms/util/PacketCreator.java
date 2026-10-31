@@ -3337,7 +3337,7 @@ public class PacketCreator {
         p.writeInt(cid);
         p.writeLong(CharBuffStat.MONSTER_RIDING.getValue());
         p.writeLong(0);
-        p.writeShort(0);
+        p.writeShort(mount.getId() > 0 ? mount.getId() : 1);   // 骑宠类型ID（1..13），不能写 0，否则别人也只看到特效看不到坐骑
         p.writeInt(mount.getItemId());
         p.writeInt(mount.getSkillId());
         p.writeInt(0); //Server Tick value.

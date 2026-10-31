@@ -4175,7 +4175,9 @@ public class Character extends AbstractCharacterObject {
 
         if (this.isRidingBattleship()) {
             List<Pair<CharBuffStat, Integer>> statups = new ArrayList<>(1);
-            statups.add(new Pair<>(CharBuffStat.MONSTER_RIDING, 0));
+            // 同 StatEffect.applyBuffEffect：MONSTER_RIDING 的 16 位 value 必须非 0（骑宠类型ID），否则客户端只播特效不骑上去
+            statups.add(new Pair<>(CharBuffStat.MONSTER_RIDING,
+                    getMapleMount() != null ? getMapleMount().getId() : 1));
             this.sendPacket(PacketCreator.giveBuff(ItemId.BATTLESHIP, 5221006, statups));
             this.announceBattleshipHp();
         }

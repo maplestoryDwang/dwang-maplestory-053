@@ -1349,7 +1349,17 @@ public class StatEffect {
 
             localDuration = sourceid;
             localsourceid = ridingMountId;
-            localstatups = Collections.singletonList(new Pair<>(CharBuffStat.MONSTER_RIDING, 0));
+            // v0.53 客户端 CWvsContext::OnTemporaryStatSet(0x7799E6) -> sub_6E9357(CUserLocal::SetSecondaryStat)
+            // 处理 MONSTER_RIDING(bit46) 时是：sub_6ECB84(statValue != 0)
+            //   sub_6ECB84 = 先播骑宠特效(sub_6E4A65)，再把 m_bRiding = statValue
+            // 也就是说这个 16 位 value 必须是 0 以外的值，否则只会冒出特效、人物不骑上去。
+            // 这个值就是“骑宠类型ID”，即 Mount::getId() = itemId - 1901999（猪=1、银鬃=2 …），
+            // 与 UserInfo 包里的 writeByte(mount.getId()) 是同一个编号。
+            int mountTypeId = givemount.getId();          // 1902000 -> 1, 1902001 -> 2 ... 最多 13
+            if (mountTypeId <= 0) {                        // 没装鞍具时 getId() 会是负数，兜底成 1
+                mountTypeId = 1;
+            }
+            localstatups = Collections.singletonList(new Pair<>(CharBuffStat.MONSTER_RIDING, mountTypeId));
         } else if (isSkillMorph()) {
             for (int i = 0; i < localstatups.size(); i++) {
                 if (localstatups.get(i).getLeft().equals(CharBuffStat.MORPH)) {

@@ -234,6 +234,7 @@ public final class PacketProcessor {
         registerHandler(RecvOpcode.TROCK_ADD_MAP, TrockAddMapHandler.getInstance());
 
 //        registerHandler(RecvOpcode.CANCEL_DEBUFF, new CancelDebuffHandler());
+        registerHandler(RecvOpcode.USE_CATCH_ITEM, new UseCatchItemHandler());
         registerHandler(RecvOpcode.USE_SKILL_BOOK, new SkillBookHandler());
 //        registerHandler(RecvOpcode.SKILL_MACRO, new SkillMacroHandler());
 //        registerHandler(RecvOpcode.NOTE_ACTION, new NoteActionHandler(channelDeps.noteService()));
@@ -281,7 +282,6 @@ public final class PacketProcessor {
 //        registerHandler(RecvOpcode.USE_DEATHITEM, new UseDeathItemHandler());
 //        registerHandler(RecvOpcode.PLAYER_MAP_TRANSFER, new PlayerMapTransitionHandler());
 //        registerHandler(RecvOpcode.USE_MAPLELIFE, new UseMapleLifeHandler());
-//        registerHandler(RecvOpcode.USE_CATCH_ITEM, new UseCatchItemHandler());
 //        registerHandler(RecvOpcode.PARTY_SEARCH_REGISTER, new PartySearchRegisterHandler());
 //        registerHandler(RecvOpcode.PARTY_SEARCH_START, new PartySearchStartHandler());
 //        registerHandler(RecvOpcode.PARTY_SEARCH_UPDATE, new PartySearchUpdateHandler());

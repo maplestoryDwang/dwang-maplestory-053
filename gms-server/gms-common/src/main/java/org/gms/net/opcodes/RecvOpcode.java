@@ -291,7 +291,10 @@ public enum RecvOpcode implements Opcode {
      */
     USE_CASH_ITEM(0x53),
 
-    // 0x54
+    /**
+     * 使用捕捉物品
+     */
+    USE_CATCH_ITEM(0x54), //
 
     /**
      * 使用技能书
