@@ -7,18 +7,18 @@
 # client_exe_strict      : 1 = 校验不一致就直接拒绝（除非 -Force）；0 = 只警告
 # keep_existing          : 这些文件客户端已有时【自动合并】而不是覆盖（新版结构 + 保留用户改过的值，旧的留 .bak 备份）
 # backup_keep            : 客户端目录 _backup_client 里保留几份历史备份
-version=1.1.11
-tag=client-v1.1.11
+version=1.1.12
+tag=client-v1.1.12
 built=2026-09-29
-notes=数据：任务 9100-9513（141 个韩服活动任务汉化，area=50）
+notes=修复：702060000 少林秘室进图闪退（9600025 武林妖僧 attack5/attack6 超出客户端 4 段攻击上限，已删）
 client_exe=GMSv53.exe,MapleStory.exe,GMS053.exe,MapleStoryV053.exe,MapleStory-sorce.exe
 client_exe_strict=0
 keep_existing=config.ini
 backup_keep=5
 client_exe_size=5439488
 client_exe_sha256=f4ac21ac18b6bd6a8ef16077aec2e9727468f578998e917f6679b5fe26ce23d8
-manifest_built=2026-10-31 00:41:31
+manifest_built=2026-10-31 14:06:24
 file_count=1412
 plugin_count=6
 data_count=1406
-data_bytes=138022299
+data_bytes=137495306
