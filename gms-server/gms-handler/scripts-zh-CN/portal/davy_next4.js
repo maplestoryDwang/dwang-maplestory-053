@@ -9,7 +9,11 @@ function enter(pi) {
 
             const LifeFactory = Java.type('org.gms.server.life.LifeFactory');
             if (chests == 0) {
-                boss = LifeFactory.getMonster(9300119); // 普海盗船长 (Lord Pirate)
+//                boss = LifeFactory.getMonster(9300119); // 普海盗船长 (Lord Pirate)
+                // 随机在 9300107, 9300119  里面选一个
+                var bossIds = [9300107, 9300119];
+                var randomBossId = bossIds[Math.floor(Math.random() * bossIds.length)];
+                boss = LifeFactory.getMonster(randomBossId);
             } else if (chests == 1) {
                  boss = LifeFactory.getMonster(9300105); // 生气盗船长
 
@@ -18,9 +22,9 @@ function enter(pi) {
 
             } else {
 //                // 随机在 9300105, 9300106, 9300107 里面选一个
-                var bossIds = [9300105, 9300106, 9300107];
-                var randomBossId = bossIds[Math.floor(Math.random() * bossIds.length)];
-                boss = LifeFactory.getMonster(randomBossId);
+//                var bossIds = [9300105, 9300106, 9300107];
+//                var randomBossId = bossIds[Math.floor(Math.random() * bossIds.length)];
+//                boss = LifeFactory.getMonster(randomBossId);
             }
 
             boss.changeDifficulty(level, true);
@@ -28,6 +32,10 @@ function enter(pi) {
             const Point = Java.type('java.awt.Point');
             pi.getMap(925100500).spawnMonsterOnGroundBelow(boss, new Point(777, 140));
             eim.setProperty("spawnedBoss", "true");
+
+            const mobName = boss.getName();
+            pi.getPlayer().dropMessage(5, "请注意！" + mobName + " 在船上出现了，请尽快击败他！");
+
         }
 
         pi.playPortalSound();

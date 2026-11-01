@@ -353,7 +353,8 @@ public class MapleMap {
     public void setReactorState() {
         for (MapObject o : getMapObjects()) {
             if (o.getType() == MapObjectType.REACTOR) {
-                if (((Reactor) o).getState() < 1) {
+                // 更新了reactor的状态， 掉落物品会导致reactor的状态 + 1然后会无法主动触发triggerReactor 的特效。所以这里要改成小于2.。
+                if (((Reactor) o).getState() < 2) {
                     Reactor mr = (Reactor) o;
                     mr.lockReactor();
                     try {
