@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * 怪物掉落保底信息快照，供脚本层展示。
  * <p>
- * 说明：保底数据只保存在服务器内存中，服务器重启后会清空。
+ * 说明：绑定数据落库在 mob_drop_pity 表，本对象只是给脚本层展示用的快照。
  */
 @Getter
 public class MobDropPityInfo {

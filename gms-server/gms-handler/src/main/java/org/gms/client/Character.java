@@ -123,6 +123,7 @@ import org.gms.server.events.RescueGaga;
 import org.gms.server.events.gm.Fitness;
 import org.gms.server.events.gm.Ola;
 import org.gms.server.life.*;
+import org.gms.server.loot.MobDropPityManager;
 import org.gms.server.maps.*;
 import org.gms.server.maps.MiniGame.MiniGameResult;
 import org.gms.server.minigame.RockPaperScissor;
@@ -6784,7 +6785,12 @@ public class Character extends AbstractCharacterObject {
 
     public static Character loadCharFromDB(final int cid, Client client, boolean channelServer) {
         try {
-            return CHARACTER_INTERNAL_SERVICE.loadCharFromDB(cid, client, channelServer);
+            Character chr = CHARACTER_INTERNAL_SERVICE.loadCharFromDB(cid, client, channelServer);
+            if (chr != null) {
+                // 掉落保底：登录时把该角色的绑定从库加载进内存缓存，之后都在缓存里操作
+                MobDropPityManager.load(cid);
+            }
+            return chr;
         } catch (Exception e) {
             log.error(I18nUtil.getLogMessage("Character.loadCharFromDB.error1"), cid, e);
         }
@@ -7762,6 +7768,10 @@ public class Character extends AbstractCharacterObject {
         log.info(I18nUtil.getLogMessage(notAutosave ? "Character.saveCharToDB.info1" : "Character.saveCharToDB.info2"), name);
 
         Server.getInstance().updateCharacterEntry(this);
+
+        // 掉落保底：和角色其它数据一样的落库时机——正式存档（下线/切频道/手动保存）写回并释放缓存，
+        // 定时自动保存只写回不释放（notAutosave=false），没有改动时内部会直接跳过
+        MobDropPityManager.flush(getId(), notAutosave);
 
         try (Connection con = DatabaseConnection.getConnection()) {
             con.setAutoCommit(false);

@@ -129,7 +129,7 @@ function showDropList() {
 
                 var pity = cm.getMobDropPity(selectedMobId, drop.itemId);
                 if (pity != null) {
-                    text += " | #r[保底 " + pity.getKillCount() + "/" + pity.getTargetKills() + "]#k";
+                    text += " | #r[回响 " + pity.getKillCount() + "/" + pity.getTargetKills() + "]#k";
                 }
                 text += "\r\n";
 
@@ -172,14 +172,14 @@ function openDropDetail() {
     }
 
     if (selectedChance <= 0) {
-        cm.sendOk("该物品没有有效爆率，无法开启保底。");
+        cm.sendOk("该物品没有有效爆率，无法建立共鸣。");
         cm.dispose();
         return;
     }
 
     // 任务道具没有对应任务需求时，即使保底掉出来也看不到，直接禁止开启
     if (selectedQuestId > 0 && !cm.getPlayer().needQuestItem(selectedQuestId, selectedItemId)) {
-        cm.sendOk("该物品是任务道具，但你当前没有对应的任务需求，无法开启保底。");
+        cm.sendOk("该物品是任务道具，但你当前没有对应的任务需求，无法开启共鸣。");
         cm.dispose();
         return;
     }
@@ -191,20 +191,20 @@ function openDropDetail() {
     var itemName = ItemInformationProvider.getInstance().getName(selectedItemId);
 
     if (targetKills <= 0) {
-        cm.sendOk("该物品没有有效爆率，无法开启保底。");
+        cm.sendOk("该物品没有有效爆率，无法建立共鸣。");
         cm.dispose();
         return;
     }
 
-    var text = "#e【 掉落保底 】#n\r\n\r\n";
+    var text = "#e【 物品共鸣 】#n\r\n\r\n";
     text += "怪物：#o" + selectedMobId + "#\r\n";
     text += "物品：#v" + selectedItemId + "# #b" + itemName + "#k\r\n";
     text += "基础爆率：#b" + (selectedChance / 10000).toFixed(4) + "%#k\r\n";
     text += "个人爆率：#r" + percent.toFixed(4) + "%#k\r\n\r\n";
-    text += "开启后，每连续击杀 #r" + targetKills + "#k 只该怪物，\r\n";
-    text += "若期间都没有掉落该物品，第 #r" + targetKills + "#k 只必定掉落 1 个。\r\n";
-    text += "若中途自然掉落，则计数清零重新累计。\r\n\r\n";
-    text += "是否开启保底？（可随时查看 / 关闭）";
+    text += "建立回响后，每连续讨伐 #r" + targetKills + "#k 只该怪物，\r\n";
+    text += "若期间都没有得到该物品，第 #r" + targetKills + "#k 只讨伐将得到物品的回应。\r\n";
+    text += "若中途自然掉落，则回响清零，重新积累。\r\n\r\n";
+    text += "是否与这份物品建立共鸣？（可随时查看 / 解除）";
 
     cm.sendYesNo(text);
 }
@@ -215,16 +215,16 @@ function openDropDetail() {
 function showPityPage(pity) {
     var itemName = ItemInformationProvider.getInstance().getName(pity.getItemId());
 
-    var text = "#e【 掉落保底 - 进度 】#n\r\n\r\n";
+    var text = "#e【 物品共鸣 - 回响进度 】#n\r\n\r\n";
     text += "怪物：#o" + pity.getMobId() + "#\r\n";
     text += "物品：#v" + pity.getItemId() + "# #b" + itemName + "#k\r\n";
     text += "个人爆率：#r" + pity.getPersonalDropPercent().toFixed(4) + "%#k\r\n";
-    text += "保底次数：每 #b" + pity.getTargetKills() + "#k 只\r\n";
-    text += "当前进度：#r" + pity.getKillCount() + " / " + pity.getTargetKills() + "#k";
-    text += "（还差 #b" + pity.getRemainingKills() + "#k 只）\r\n";
+    text += "共鸣周期：每 #b" + pity.getTargetKills() + "#k 只\r\n";
+    text += "当前回响：#r" + pity.getKillCount() + " / " + pity.getTargetKills() + "#k";
+    text += "（再讨伐 #b" + pity.getRemainingKills() + "#k 只，共鸣将回应你）\r\n";
     text += "----------------------------------\r\n";
-    text += "#L1# #b重新绑定#k（按当前个人爆率覆盖计算）#l\r\n";
-    text += "#L2# #r关闭该保底#k#l\r\n";
+    text += "#L1# #b重建共鸣#k（按当前个人爆率重新计算回响）#l\r\n";
+    text += "#L2# #r解除该共鸣#k#l\r\n";
     text += "#L3# 返回物品列表#l";
 
     cm.sendSimple(text);
@@ -242,7 +242,7 @@ function handleDetailSelection(selection) {
             enablePity();
         } else if (selection === 2) {
             cm.setMobDropPity(selectedMobId, selectedItemId, false);
-            cm.sendOk("已关闭 #v" + selectedItemId + "# 的掉落保底。");
+            cm.sendOk("已解除 #v" + selectedItemId + "# 的物品共鸣。");
             cm.dispose();
         } else {
             status = 1;
@@ -258,7 +258,7 @@ function handleDetailSelection(selection) {
 function enablePity() {
     var ok = cm.setMobDropPity(selectedMobId, selectedItemId, true);
     if (!ok) {
-        cm.sendOk("开启保底失败：物品没有有效爆率，或任务道具当前没有任务需求。");
+        cm.sendOk("建立共鸣失败：物品没有有效爆率，或任务道具当前没有任务需求。");
         cm.dispose();
         return;
     }
@@ -266,13 +266,13 @@ function enablePity() {
     var pity = cm.getMobDropPity(selectedMobId, selectedItemId);
     var itemName = ItemInformationProvider.getInstance().getName(selectedItemId);
 
-    var text = "#e【 掉落保底 - 已开启 】#n\r\n\r\n";
+    var text = "#e【 物品共鸣 - 已建立 】#n\r\n\r\n";
     text += "怪物：#o" + selectedMobId + "#\r\n";
     text += "物品：#v" + selectedItemId + "# #b" + itemName + "#k\r\n";
-    text += "保底次数：每 #b" + pity.getTargetKills() + "#k 只\r\n";
-    text += "当前进度：#r" + pity.getKillCount() + " / " + pity.getTargetKills() + "#k\r\n\r\n";
-    text += "之后每击杀一只该怪物都会自动计数，掉落该物品时计数清零。\r\n";
-    text += "保底数据保存在内存中，服务器重启后清空。";
+    text += "共鸣周期：每 #b" + pity.getTargetKills() + "#k 只\r\n";
+    text += "当前回响：#r" + pity.getKillCount() + " / " + pity.getTargetKills() + "#k\r\n\r\n";
+    text += "之后每讨伐一只该怪物都会积累回响，得到该物品时回响清零。\r\n";
+    text += "共鸣数据保存不会丢失，请放心。";
 
     cm.sendOk(text);
     cm.dispose();

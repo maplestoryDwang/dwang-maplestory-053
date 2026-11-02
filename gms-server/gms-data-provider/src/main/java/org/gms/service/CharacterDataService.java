@@ -38,6 +38,7 @@ import static org.gms.dao.entity.table.FamilyCharacterDOTableDef.FAMILY_CHARACTE
 import static org.gms.dao.entity.table.FredstorageDOTableDef.FREDSTORAGE_D_O;
 import static org.gms.dao.entity.table.KeymapDOTableDef.KEYMAP_D_O;
 import static org.gms.dao.entity.table.MonsterbookDOTableDef.MONSTERBOOK_D_O;
+import static org.gms.dao.entity.table.MobDropPityDOTableDef.MOB_DROP_PITY_D_O;
 import static org.gms.dao.entity.table.PlayerdiseasesDOTableDef.PLAYERDISEASES_D_O;
 import static org.gms.dao.entity.table.SavedlocationsDOTableDef.SAVEDLOCATIONS_D_O;
 import static org.gms.dao.entity.table.ServerQueueDOTableDef.SERVER_QUEUE_D_O;
@@ -71,6 +72,7 @@ public class CharacterDataService {
     private final EventstatsMapper eventstatsMapper;
     private final ServerQueueMapper serverQueueMapper;
     private final MonsterbookMapper  monsterBookMapper;
+    private final MobDropPityMapper mobDropPityMapper;
 
     // ----- Characters Base Operations -----
 
@@ -207,6 +209,7 @@ public class CharacterDataService {
         skillmacrosMapper.deleteByQuery(QueryWrapper.create().where(SKILLMACROS_D_O.CHARACTERID.eq(cid)));
         eventstatsMapper.deleteByQuery(QueryWrapper.create().where(EVENTSTATS_D_O.CHARACTERID.eq(cid)));
         serverQueueMapper.deleteByQuery(QueryWrapper.create().where(SERVER_QUEUE_D_O.CHARACTERID.eq(cid)));
+        mobDropPityMapper.deleteByQuery(QueryWrapper.create().where(MOB_DROP_PITY_D_O.CHR_ID.eq(cid)));
     }
 
     // ----- Character Details Queries -----

@@ -67,7 +67,7 @@ function action(mode, type, selection) {
         text += "你想通过猫头鹰的眼睛寻找些什么呢？\r\n\r\n";
         text += "#L1# #b查看当前地图怪物爆率#k#l\r\n";
         text += "#L2# #b查询系统特定物品掉落来源#k#l\r\n";
-        text += "#L3# #b查看 / 管理已开启的掉落保底#k#l";
+        text += "#L3# #b查询共鸣的物品掉落信息#k#l";
 
         cm.sendSimple(text);
     }
