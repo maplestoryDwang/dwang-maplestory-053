@@ -73,6 +73,7 @@ import org.gms.server.StatEffect;
 import org.gms.server.TimerManager;
 import org.gms.server.life.Element;
 import org.gms.server.life.ElementalEffectiveness;
+import org.gms.server.life.LifeFactory;
 import org.gms.server.life.MobSkill;
 import org.gms.server.life.MobSkillFactory;
 import org.gms.server.life.MobSkillId;
@@ -565,7 +566,12 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                                 StatEffect mortal = mortalBlow.getEffect(skillLevel);
                                 if (monster.getHp() <= (monster.getStats().getHp() * mortal.getX()) / 100) {
                                     if (Randomizer.rand(1, 100) <= mortal.getY()) {
-                                        map.damageMonster(player, monster, Integer.MAX_VALUE);  // thanks Conrad for noticing reduced EXP gain from skill kill
+                                        // 更新判断，要除BOSS外必杀
+                                        if (!monster.isBoss() && !LifeFactory.isHpBarBoss(monster.getId())) {
+                                            map.damageMonster(player, monster, Integer.MAX_VALUE);
+                                        } else {
+                                            map.damageMonster(player, monster, totDamageToOneMonster);
+                                        }
                                     }
                                 }
                             }
@@ -631,6 +637,25 @@ public abstract class AbstractDealDamageHandler extends AbstractPacketHandler {
                         } else {
                             int TmpDmg = (player.calculateMaxBaseDamage(player.getTotalWatk()) * (SkillFactory.getSkill(Aran.COMBO_TEMPEST).getEffect(player.getSkillLevel(SkillFactory.getSkill(Aran.COMBO_TEMPEST))).getDamage() / 100));
                             damageMonsterWithSkill(player, map, monster, (int) (Math.floor(Math.random() * (TmpDmg / 5) + TmpDmg * .8)), attack.skill, 0);
+                        }
+                    } else if (attack.skill == Marksman.SNIPE) {
+                        // 一击要害箭(3221007)：技能描述是“瞄准敌人的要害，一击打倒敌人”，
+                        // 但 v0.53 客户端在 CalcDamage::PDamage 里把它写死成固定伤害：
+                        //     99999 - 5000 * rand()  =>  95000 ~ 99999
+                        // （客户端 0x609FFD 起，skill==0x31260F 且 shoot 攻击固定传入 a9=1 才走这段）
+                        // 所以血量超过 10 万的怪物根本秒不掉，看起来就像“技能没生效”。
+                        // 这里按技能描述把结算权交给服务端：**只对普通怪物**一击必杀，BOSS 不生效。
+                        // 说明：
+                        //   1. 伤害传 Integer.MAX_VALUE，Monster#applyAndGetHpDamage 会取 min(curHp, damage)，
+                        //      实际伤害等于怪物当前 HP，经验和伤害统计不会缩水（与致命一击 Mortal Blow 同一写法）。
+                        //   2. 客户端只负责显示自己算出来的 9 万多的数字，怪物死亡包由服务端广播，观感就是秒杀。
+                        //   3. BOSS 判定除了 MonsterStats#isBoss()（Mob.wz 的 boss=1）之外，还要并上
+                        //      LifeFactory#isHpBarBoss()：053 的 Mob.wz 里 8810018（暗黑龙王本体，血量 20.9 亿）、
+                        //      9400711 这类带 BOSS 血条却没写 boss=1 的怪，只靠 isBoss() 会被误判成普通怪。
+                        if (!monster.isBoss() && !LifeFactory.isHpBarBoss(monster.getId())) {
+                            map.damageMonster(player, monster, Integer.MAX_VALUE);
+                        } else {
+                            map.damageMonster(player, monster, totDamageToOneMonster);
                         }
                     } else {
                         if (attack.skill == Aran.BODY_PRESSURE) {

@@ -63,6 +63,18 @@ public class LifeFactory {
         return ret;
     }
 
+    /**
+     * 该怪物是否在客户端 UIWindow.img/MobGage/Mob 里登记了"BOSS 血条"。
+     * <p>
+     * 053 的 Mob.wz 有几只带血条的 BOSS 漏写了 {@code boss=1}（已核对：8810018 暗黑龙王本体
+     * maxHP=2090000000、9400711），只靠 {@link org.gms.server.life.MonsterStats#isBoss()} 会把它们
+     * 当成普通怪物。需要"绝对不碰 BOSS"的逻辑（例如一击必杀类技能）应当用
+     * {@code monster.isBoss() || LifeFactory.isHpBarBoss(monster.getId())} 来判断。
+     */
+    public static boolean isHpBarBoss(int mobId) {
+        return hpbarBosses.contains(mobId);
+    }
+
     public static AbstractLoadedLife getLife(int id, String type) {
         if (type.equalsIgnoreCase("n")) {
             return getNPC(id);
