@@ -2237,12 +2237,15 @@ public class PacketCreator {
      */
     public static Packet spawnPlayerMapObject(Client target, Character chr, boolean enteringField) {
         OutPacket p = OutPacket.create(SendPacketOpcode.SPAWN_PLAYER);
+        // v0.53 CUserRemote::Init @0x711642：id 之后**直接**就是名字，没有 level 字节
         p.writeInt(chr.getId());
-        p.writeByte(chr.getLevel()); //v83
         p.writeString(chr.getName());
         if (chr.getGuildId() < 1) {
             p.writeString("");
-            p.writeBytes(new byte[6]);
+            p.writeShort(0); // logoBG
+            p.writeByte(0);  // logoBGColor
+            p.writeShort(0); // logo
+            p.writeByte(0);  // logoColor
         } else {
             GuildSummary gs = chr.getClient().getWorldServer().getGuildSummary(chr.getGuildId(), chr.getWorld());
             if (gs != null) {
@@ -2253,13 +2256,17 @@ public class PacketCreator {
                 p.writeByte(gs.getLogoColor());
             } else {
                 p.writeString("");
-                p.writeBytes(new byte[6]);
+                p.writeShort(0);
+                p.writeByte(0);
+                p.writeShort(0);
+                p.writeByte(0);
             }
         }
 
-        writeForeignBuffs(p, chr);
-
-        p.writeShort(chr.getJob().getId());
+        // v0.53 的“外来 buff”段只读 8 字节掩码（CUserRemote::Init -> sub_607CA3 -> DecodeBuffer(8)），
+        // 之后才按掩码位逐项读值；v0.83 那一大坨 CHAR_MAGIC_SPAWN 在 053 客户端不存在。
+        // 出生时先写空掩码，后续 buff 由 GIVE_FOREIGN_BUFF(0x86) 单独下发。
+        p.writeLong(0L);
 
                 /* replace "p.writeShort(chr.getJob().getId())" with this snippet for 3rd person FJ animation on all classes
                 if (chr.getJob().isA(Job.HERMIT) || chr.getJob().isA(Job.DAWNWARRIOR2) || chr.getJob().isA(Job.NIGHTWALKER2)) {
@@ -2269,32 +2276,33 @@ public class PacketCreator {
                 }*/
 
         addCharLook(p, chr, false);
-        p.writeInt(chr.getInventory(InventoryType.CASH).countById(ItemId.HEART_SHAPED_CHOCOLATE));
+
+        // 0.53：carryItemEffect(4) + activeEffectItem(4) + chair(4)
+        p.writeInt(0);
         p.writeInt(chr.getItemIdEffect());
         p.writeInt(ItemConstants.getInventoryType(chr.getChair()) == InventoryType.SETUP ? chr.getChair() : 0);
 
-        if (enteringField) {
-            Point spawnPos = new Point(chr.getPosition());
-            spawnPos.y -= 42;
-            p.writePos(spawnPos);
-            p.writeByte(6);
+        // 0.53：坐标是 2+2 的 short（CMovePath / CUserRemote::Init 都按 short 解析），v0.83 的 4+4 会整体错位
+        Point spawnPos = chr.getPosition();
+        p.writeShort(spawnPos.x);
+        p.writeShort(spawnPos.y);
+        p.writeByte(chr.getStance()); // 0.53 不区分“进图下落”动画，直接给真实 stance
+        p.writeShort(0); // foothold id（服务端没有，0 即由客户端自己找地面）
+        p.writeByte(0);  // CUser::Init 的第 4 个参数（校验种子，0 安全）
+
+        // 0.53：宠物只有一格，格式见 CPet::Init(0x5C384F)
+        Pet pet = chr.getPet(0);
+        if (pet != null) {
+            p.writeByte(1);
+            addPetInfo053(p, pet, chr.hasPetNameTag((byte) 0), chr.hasPetChatballoon((byte) 0));
         } else {
-            p.writePos(chr.getPosition());
-            p.writeByte(chr.getStance());
+            p.writeByte(0);
         }
 
-        p.writeShort(0);//chr.getFh()
-        p.writeByte(0);
-        Pet[] pet = chr.getPets();
-        for (byte i = 0; i < pet.length; i++) {
-            if (pet[i] != null) {
-                addPetInfo(p, pet[i], false, chr.hasPetNameTag(i), chr.hasPetChatballoon(i));
-            }
-        }
-        p.writeByte(0); //end of pets
         if (chr.getMapleMount() == null) {
             p.writeInt(1); // mob level
-            p.writeLong(0); // mob exp + tiredness
+            p.writeInt(0); // exp
+            p.writeInt(0); // tiredness
         } else {
             p.writeInt(chr.getMapleMount().getLevel());
             p.writeInt(chr.getMapleMount().getExp());
@@ -2327,14 +2335,56 @@ public class PacketCreator {
         } else {
             p.writeByte(0);
         }
-        addRingLook(p, chr, true);  // crush
-        addRingLook(p, chr, false); // friendship
+        // 0.53 的顺序：crush 戒指(8+8+4) -> friendship 戒指(8+8+4) -> 结婚戒指(4+4+4) -> 1 字节
+        addRingLook053(p, chr, true);  // crush
+        addRingLook053(p, chr, false); // friendship
         addMarriageRingLook(target, p, chr);
-        encodeNewYearCardInfo(p, chr);  // new year seems to crash sometimes...
-        p.writeByte(0);
-        p.writeByte(0);
-        p.writeByte(chr.getTeam());//only needed in specific fields
+        p.writeByte(0); // CUser::Init 最后一个 flag（0 = 不弹 UI）
         return p;
+    }
+
+    /**
+     * v0.53 AvatarLook / 戒指 / 宠物 的小工具。
+     * 客户端在 CUserRemote::Init(0x711642) 里固定按 {8 字节, 8 字节, int} 读一枚戒指，
+     * 所以这里最多只下发一枚，避免多戒指时整包错位。
+     */
+    private static void addRingLook053(final OutPacket p, Character chr, boolean crush) {
+        List<Ring> rings = crush ? chr.getCrushRings() : chr.getFriendshipRings();
+        Ring first = null;
+        if (rings != null) {
+            for (Ring ring : rings) {
+                if (ring.equipped()) {
+                    first = ring;
+                    break;
+                }
+            }
+        }
+        if (first == null) {
+            p.writeByte(0);
+            return;
+        }
+        p.writeByte(1);
+        p.writeInt(first.getRingId());
+        p.writeInt(0);
+        p.writeInt(first.getPartnerRingId());
+        p.writeInt(0);
+        p.writeInt(first.getItemId());
+    }
+
+    /**
+     * v0.53 CPet::Init(0x5C384F)：itemId(4) + name + 8 字节 + x(2) + y(2) + stance(1) + fh(2) + 2 字节。
+     * 与 v0.83 addPetInfo 的唯一区别是坐标宽度。
+     */
+    private static void addPetInfo053(final OutPacket p, Pet pet, boolean hasNameTag, boolean hasChatBalloon) {
+        p.writeInt(pet.getItemId());
+        p.writeString(pet.getName());
+        p.writeLong(pet.getUniqueId());
+        p.writeShort(pet.getPos().x);
+        p.writeShort(pet.getPos().y);
+        p.writeByte(pet.getStance());
+        p.writeShort(pet.getFh());
+        p.writeBool(hasNameTag);
+        p.writeBool(hasChatBalloon);
     }
 
 
@@ -2652,10 +2702,36 @@ public class PacketCreator {
         return mplew;
     }
 
+    /**
+     * 只同步一次姿态（坐下/站起等）。v0.53 的 movePath 前面必须先有 x(2) y(2)，
+     * 否则客户端 CMovePath::Decode 会把 count 当成 x 读。
+     */
+    public static Packet playerStance(Character chr) {
+        OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_PLAYER);
+        p.writeInt(chr.getId());
+        Point pos = chr.getPosition();
+        p.writeShort(pos.x);
+        p.writeShort(pos.y);
+        p.writeByte(1);        // move 数量
+        p.writeByte(0);        // 普通移动
+        p.writeShort(pos.x);
+        p.writeShort(pos.y);
+        p.writeShort(0);       // xwobble
+        p.writeShort(0);       // ywobble
+        p.writeShort(0);       // foothold
+        p.writeByte(chr.getStance());
+        p.writeShort(0);       // duration
+        return p;
+    }
+
+    /**
+     * v0.53 的 MOVE_PLAYER(0x84) 客户端解码（CUserRemote::OnMove -> CMovePath::Decode）
+     * 是 id 之后紧接 movePath：x(2) y(2) count(1) ...，没有 v0.83 的那个 int 占位。
+     * 这里直接把客户端原样的 movePath 字节转发出去，最省事也不会再和 053 的字段宽度打架。
+     */
     public static Packet movePlayer(int chrId, InPacket movementPacket, long movementDataLength) {
         OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_PLAYER);
         p.writeInt(chrId);
-        p.writeInt(0);
         rebroadcastMovementList(p, movementPacket, movementDataLength);
         return p;
     }
@@ -4975,8 +5051,8 @@ public class PacketCreator {
         p.writeInt(chr.getId());
         p.writeBool(isLocal);
         if (isLocal) {
-            // CPet::EncodeEnterPacket(&v17);
-            addPetInfo(p, pet, true, chr.hasPetNameTag(petIndex), chr.hasPetChatballoon(petIndex));
+            // CPet::Init 在 0.53 里坐标是 2+2 的 short（见 addPetInfo053）
+            addPetInfo053(p, pet, chr.hasPetNameTag(petIndex), chr.hasPetChatballoon(petIndex));
         } else {
             p.writeByte(0);
         }

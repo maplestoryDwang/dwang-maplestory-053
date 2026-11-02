@@ -40,35 +40,38 @@ public final class MovePlayerHandler extends AbstractMovementPacketHandler {
 
     @Override
     public void handlePacket(InPacket slea, Client c) {
+        // v0.53 客户端 CUserLocal 的 MOVE_PLAYER(0x35) 包体：
+        //   1 字节前缀（CField+216）+ x(2) + y(2) + count(1) + 每个 move + 尾部 nibble/bounds
+        // 转发给同图其他玩家时，客户端 CUserRemote::OnMove 期望 id 之后就是 x(2) y(2) count(1)...，
+        // 所以这里从 x 开始（含 x/y/count）原样转发。
         slea.readByte();
-        slea.readInt();
-        // log.trace("Movement command received: unk1 {} unk2 {}", new Object[] { unk1, unk2 });
-        List<LifeMovementFragment> res = null;
+        int movementStart = slea.getPosition();
+        slea.readShort(); // x
+        slea.readShort(); // y
+
+        List<LifeMovementFragment> res;
         try {
             res = parseMovement(slea);
         } catch (EmptyMovementException e) {
-            throw new RuntimeException(e);
+            log.warn("Empty movement packet from {}", c.getPlayer().getName());
+            return;
         }
-        // TODO more validation of input data
-        if (res != null) {
-            if (slea.available() != 18) {
-                log.debug("slea.available != 18 (maybe movement parsing error by dwang)");
-//                return;
-            }
-            Character player = c.getPlayer();
-            if (!player.isHidden()) {
-                Packet packet = PacketCreator.movePlayer(player.getId(), res);
-                c.getPlayer().getMap().broadcastMessage(player, packet, false);
-            }
-            // 超速校验
-            // c.getSession().write(MaplePacketCreator.movePlayer(30000, res));
-//            if (CheatingOffense.FAST_MOVE.isEnabled() || CheatingOffense.HIGH_JUMP.isEnabled()) {
-//                checkMovementSpeed (c.getPlayer(), res);
-//            }
-            updatePosition (res, c.getPlayer(), 0);
-            c.getPlayer().getMap().movePlayer(c.getPlayer(), c.getPlayer().getPosition());
+
+        int movementDataLength = slea.getPosition() - movementStart;
+        slea.seek(movementStart);
+
+        Character player = c.getPlayer();
+        Packet packet = PacketCreator.movePlayer(player.getId(), slea, movementDataLength);
+        if (player.isHidden()) {
+            player.getMap().broadcastGMMessage(player, packet, false);
+        } else {
+            player.getMap().broadcastMessage(player, packet, false);
         }
+
+        updatePosition(res, player, 0);
+        player.getMap().movePlayer(player, player.getPosition());
     }
+
 /*
     @Override
     public final void handlePacket(InPacket p, Client c) {

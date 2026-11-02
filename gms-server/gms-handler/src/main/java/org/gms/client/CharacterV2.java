@@ -1345,7 +1345,8 @@ public class Character extends AbstractCharacterObject {
     }
 
     public void broadcastStance() {
-        map.broadcastMessage(this, PacketCreator.movePlayer(id, this.getIdleMovement(), AbstractAnimatedMapObject.IDLE_MOVEMENT_PACKET_LENGTH), false);
+        // 0.53 的 movePath 必须以 x(2) y(2) 开头，idle 那一份是 count-first 的旧格式，这里单独发包
+        map.broadcastMessage(this, PacketCreator.playerStance(this), false);
     }
 
     public MapleMap getWarpMap(int map) {
