@@ -56,9 +56,9 @@ function showPityList() {
     for (var i = 0; i < pities.size(); i++) {
         var pity = pities.get(i);
         text += "#L" + i + "# #v" + pity.getItemId() + "# #b" + getItemName(pity.getItemId()) + "#k\r\n";
-        text += "    怪物：#o" + pity.getMobId() + "#  回响：#r" + pity.getKillCount() + " / " + pity.getTargetKills() + "#k";
-        text += "（再讨伐 " + pity.getRemainingKills() + " 只，共鸣将回应你）#l\r\n";
-        text += "----------------------------------\r\n";
+        text += "    #o" + pity.getMobId() + "#  回响：#r" + pity.getKillCount() + " / " + pity.getTargetKills() + "#k";
+        text += "（剩余" + pity.getRemainingKills() + "只，共鸣将回应你）#l\r\n\r\n";
+//        text += "\t\t\t\t\t\t\t\t----------------------------------\r\n";
     }
 
     cm.sendSimple(text);
