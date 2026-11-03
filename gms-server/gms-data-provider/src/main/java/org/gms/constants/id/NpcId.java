@@ -39,7 +39,9 @@ public class NpcId {
     public static final int GACHAPON_MAX = GACHAPON_NAUTILUS;
 
     // 9100114 - 9100116 是可口可乐的
-    public static final List<Integer> GACHAPON_LIST = List.of(9100110, 9100111, 9100112, 9100113, 9100117);
+    public static final List<Integer> GACHAPON_LIST = List.of(
+            9100100, 9100101, 9100102, 9100103, 9100104, 9100105, 9100106, 9100107, 9100108, 9100109,
+            9100110, 9100111, 9100112, 9100113, 9100117);
 
     public static final int PLAYER_NPC_BASE = 9900000;
 
