@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.gms.client.Character;
 import org.gms.event.DropMessageEvent;
 import org.gms.event.QuestMessageEvent;
+import org.gms.net.packet.Packet;
 import org.gms.net.server.Server;
 import org.gms.net.server.world.World;
 import org.gms.util.PacketCreator;
@@ -51,7 +52,10 @@ public class MessageEventListener {
         for (World world : worlds) {
             Character characterById = world.getPlayerStorage().getCharacterById(cid);
             if (characterById != null) {
-                characterById. sendPacket(PacketCreator.getShowQuestCompletion(questId));
+                Packet packet = PacketCreator.getShowQuestCompletion(questId);
+                if (packet != null) {
+                    characterById.sendPacket(packet);
+                }
             }
         }
     }

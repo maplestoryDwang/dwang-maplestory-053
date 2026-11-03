@@ -102,7 +102,7 @@ public class MonsterInformationProvider {
                         rs.getByte("continent"),
                         rs.getInt("minimum_quantity"),
                         rs.getInt("maximum_quantity"),
-                        rs.getShort("questid")));
+                        rs.getInt("questid")));
             }
         } catch (SQLException e) {
             log.error("Error retrieving global drops", e);
@@ -167,7 +167,7 @@ public class MonsterInformationProvider {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    ret.add(new MonsterDropEntry(rs.getInt("itemid"), rs.getInt("chance"), rs.getInt("minimum_quantity"), rs.getInt("maximum_quantity"), rs.getShort("questid")));
+                    ret.add(new MonsterDropEntry(rs.getInt("itemid"), rs.getInt("chance"), rs.getInt("minimum_quantity"), rs.getInt("maximum_quantity"), rs.getInt("questid")));
                 }
             }
         } catch (SQLException e) {

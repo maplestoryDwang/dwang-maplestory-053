@@ -424,11 +424,17 @@ public class PacketCreator {
 //        }
 //    }
     private static void addQuestInfo(OutPacket p, Character chr) {
-        List<QuestStatus> started = chr.getStartedQuests();
+        // 自定义任务ID（> Short.MAX_VALUE）客户端协议塞不下，不能发包，这里过滤掉
+        List<QuestStatus> started = new ArrayList<>();
+        for (QuestStatus qs : chr.getStartedQuests()) {
+            if (QuestUtils.isClientQuest(qs.getQuestID())) {
+                started.add(qs);
+            }
+        }
         int startedSize = 0;
         for (QuestStatus qs : started) {
 //            if (qs.getInfoNumber() > 0) {
-            if (QuestUtils.qsInfoNumberExist(qs)) {
+            if (QuestUtils.qsInfoNumberExist(qs) && QuestUtils.isClientQuest(QuestUtils.getInfoNumber(qs))) {
                 startedSize++;
             }
             startedSize++;
@@ -438,14 +444,19 @@ public class PacketCreator {
             p.writeShort(qs.getQuestID());
             p.writeString(qs.getProgressData());
 
-            short infoNumber = QuestUtils.getInfoNumber(qs);
-            if (infoNumber > 0) {
+            int infoNumber = QuestUtils.getInfoNumber(qs);
+            if (infoNumber > 0 && QuestUtils.isClientQuest(infoNumber)) {
                 QuestStatus iqs = chr.getQuest(infoNumber);
                 p.writeShort(infoNumber);
                 p.writeString(iqs.getProgressData());
             }
         }
-        List<QuestStatus> completed = chr.getCompletedQuests();
+        List<QuestStatus> completed = new ArrayList<>();
+        for (QuestStatus qs : chr.getCompletedQuests()) {
+            if (QuestUtils.isClientQuest(qs.getQuestID())) {
+                completed.add(qs);
+            }
+        }
         p.writeShort(completed.size());
         for (QuestStatus qs : completed) {
             p.writeShort(qs.getQuestID());
@@ -3434,10 +3445,13 @@ public class PacketCreator {
              p.writeByte(0);*/
 
     /**
-     * @param quest
-     * @return
+     * @param quest 客户端任务ID，必须是 short 范围内的真实任务
+     * @return 自定义任务ID返回 null，调用方需要判空
      */
-    public static Packet forfeitQuest(short quest) {
+    public static Packet forfeitQuest(int quest) {
+        if (!QuestUtils.isClientQuest(quest)) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.SHOW_STATUS_INFO);
         p.writeByte(1);
         p.writeShort(quest);
@@ -3449,10 +3463,13 @@ public class PacketCreator {
     }
 
     /**
-     * @param quest
-     * @return
+     * @param quest 客户端任务ID，必须是 short 范围内的真实任务
+     * @return 自定义任务ID返回 null，调用方需要判空
      */
-    public static Packet completeQuest(short quest, long time) {
+    public static Packet completeQuest(int quest, long time) {
+        if (!QuestUtils.isClientQuest(quest)) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.SHOW_STATUS_INFO);
         p.writeByte(1);
         p.writeShort(quest);
@@ -3463,12 +3480,14 @@ public class PacketCreator {
 
 
     /**
-     * @param quest
-     * @param npc
-     * @return
+     * @param quest 客户端任务ID，必须是 short 范围内的真实任务
+     * @return 自定义任务ID返回 null，调用方需要判空
      */
 
-    public static Packet updateQuestInfo(short quest, int npc) {
+    public static Packet updateQuestInfo(int quest, int npc) {
+        if (!QuestUtils.isClientQuest(quest)) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_QUEST_INFO);
 //        p.writeByte(8); //0x0A in v95
         p.writeByte(6); // start
@@ -3484,7 +3503,10 @@ public class PacketCreator {
         return p;
     }
 
-    public static Packet addQuestTimeLimit(final short quest, final int time) {
+    public static Packet addQuestTimeLimit(final int quest, final int time) {
+        if (!QuestUtils.isClientQuest(quest)) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_QUEST_INFO);
         p.writeByte(6);
         p.writeShort(1);//Size but meh, when will there be 2 at the same time? And it won't even replace the old one :)
@@ -3493,7 +3515,10 @@ public class PacketCreator {
         return p;
     }
 
-    public static Packet removeQuestTimeLimit(final short quest) {
+    public static Packet removeQuestTimeLimit(final int quest) {
+        if (!QuestUtils.isClientQuest(quest)) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_QUEST_INFO);
         p.writeByte(7);
         p.writeShort(1);//Position
@@ -3502,6 +3527,14 @@ public class PacketCreator {
     }
 
     public static Packet updateQuest(Character chr, QuestStatus qs, boolean infoUpdate) {
+        if (infoUpdate) {
+            int infoNumber = QuestUtils.getInfoNumber(qs);
+            if (!QuestUtils.isClientQuest(infoNumber)) {
+                return null;
+            }
+        } else if (!QuestUtils.isClientQuest(qs.getQuestID())) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.SHOW_STATUS_INFO);
         p.writeByte(1);
         if (infoUpdate) {
@@ -4103,6 +4136,9 @@ public class PacketCreator {
     }
 
     public static Packet getShowQuestCompletion(int id) {
+        if (!QuestUtils.isClientQuest(id)) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.QUEST_CLEAR);
         p.writeShort(id);
         return p;
@@ -6872,7 +6908,10 @@ public class PacketCreator {
         return p;
     }
 
-    public static Packet updateQuestFinish(short quest, int npc, short nextquest) { //Check
+    public static Packet updateQuestFinish(int quest, int npc, int nextquest) { //Check
+        if (!QuestUtils.isClientQuest(quest) || !QuestUtils.isClientQuest(nextquest)) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_QUEST_INFO); //0xF2 in v95
 //        p.writeByte(8);//0x0A in v95
         p.writeByte(6);//0x0A in v95
@@ -6889,7 +6928,10 @@ public class PacketCreator {
         return p;
     }
 
-    public static Packet questError(short quest) {
+    public static Packet questError(int quest) {
+        if (!QuestUtils.isClientQuest(quest)) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_QUEST_INFO);
         p.writeByte(0x0A);
         p.writeShort(quest);
@@ -6902,7 +6944,10 @@ public class PacketCreator {
         return p;
     }
 
-    public static Packet questExpire(short quest) {
+    public static Packet questExpire(int quest) {
+        if (!QuestUtils.isClientQuest(quest)) {
+            return null;
+        }
         final OutPacket p = OutPacket.create(SendPacketOpcode.UPDATE_QUEST_INFO);
         p.writeByte(0x0F);
         p.writeShort(quest);

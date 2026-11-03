@@ -183,7 +183,7 @@ public class ReactorActionManager extends AbstractPlayerInteraction {
                         drop = ii.randomizeStats((Equip) ii.getEquipById(d.itemId));
                     }
 
-                    reactor.getMap().dropFromReactor(getPlayer(), reactor, drop, dropPos, (short) d.questid);
+                    reactor.getMap().dropFromReactor(getPlayer(), reactor, drop, dropPos, d.questid);
                 }
             }
         } else {
@@ -215,7 +215,7 @@ public class ReactorActionManager extends AbstractPlayerInteraction {
                         drop = ii.randomizeStats((Equip) ii.getEquipById(d.itemId));
                     }
 
-                    r.getMap().dropFromReactor(getPlayer(), r, drop, dropPos, (short) d.questid);
+                    r.getMap().dropFromReactor(getPlayer(), r, drop, dropPos, d.questid);
                 }
 
                 dropPos.x += 25;

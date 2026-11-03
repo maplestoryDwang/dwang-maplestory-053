@@ -319,16 +319,6 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     @Override
-    public boolean startQuest(short id) {
-        return startQuest((int) id);
-    }
-
-    @Override
-    public boolean completeQuest(short id) {
-        return completeQuest((int) id);
-    }
-
-    @Override
     public boolean startQuest(int id) {
         return startQuest(id, npc);
     }

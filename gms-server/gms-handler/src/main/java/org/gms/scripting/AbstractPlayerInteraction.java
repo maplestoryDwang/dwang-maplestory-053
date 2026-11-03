@@ -539,28 +539,12 @@ public class AbstractPlayerInteraction {
         return completeQuest(id, npc);
     }
 
-    public boolean startQuest(short id) {
-        return startQuest((int) id);
-    }
-
-    public boolean completeQuest(short id) {
-        return completeQuest((int) id);
-    }
-
     public boolean startQuest(int id) {
         return startQuest(id, NpcId.MAPLE_ADMINISTRATOR);
     }
 
     public boolean completeQuest(int id) {
         return completeQuest(id, NpcId.MAPLE_ADMINISTRATOR);
-    }
-
-    public boolean startQuest(short id, int npc) {
-        return startQuest((int) id, npc);
-    }
-
-    public boolean completeQuest(short id, int npc) {
-        return completeQuest((int) id, npc);
     }
 
     public boolean startQuest(int id, int npc) {

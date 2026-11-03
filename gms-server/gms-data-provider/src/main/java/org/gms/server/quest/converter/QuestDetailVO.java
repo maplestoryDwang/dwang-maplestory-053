@@ -15,7 +15,7 @@ import java.util.Map;
 @Data
 public class QuestDetailVO {
     // 1. 基础常用字段
-    private short id;
+    private int id;
     private String name;
     private String parent;
     private String area;

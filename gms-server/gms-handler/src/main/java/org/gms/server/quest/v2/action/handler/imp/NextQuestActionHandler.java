@@ -1,6 +1,7 @@
 package org.gms.server.quest.v2.action.handler.imp;
 
 import org.gms.client.Character;
+import org.gms.net.packet.Packet;
 import org.gms.server.quest.QuestStatus;
 import org.gms.server.quest.QuestRepository;
 import org.gms.server.quest.actions.ext.NextQuestActionData;
@@ -20,6 +21,10 @@ public class NextQuestActionHandler implements IQuestActionHandler<NextQuestActi
     @Override
     public void run(NextQuestActionData actionData, Character chr, Integer extSelection) {
         QuestStatus status = chr.getQuest(QuestRepository.getInstance(actionData.getQuestID()));
-        chr.sendPacket(PacketCreator.updateQuestFinish((short) actionData.getQuestID(), status.getNpc(), (short) actionData.getNextQuest()));
+        // 自定义任务ID（> short）不发包
+        Packet packet = PacketCreator.updateQuestFinish(actionData.getQuestID(), status.getNpc(), actionData.getNextQuest());
+        if (packet != null) {
+            chr.sendPacket(packet);
+        }
     }
 }

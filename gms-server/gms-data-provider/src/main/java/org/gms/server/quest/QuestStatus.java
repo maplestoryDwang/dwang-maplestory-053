@@ -64,7 +64,7 @@ public class QuestStatus {
         }
     }
 
-    private final short questID;
+    private final int questID;
     private Status status;
     //private boolean updated;   //maybe this can be of use for someone?
     private final Map<Integer, String> progress = new LinkedHashMap<>();
@@ -74,7 +74,7 @@ public class QuestStatus {
     private int forfeited = 0, completed = 0;
     private String customData;
 
-    public QuestStatus(short questID, Status status) {
+    public QuestStatus(int questID, Status status) {
         this.questID = questID;
         this.setStatus(status);
         this.completionTime = System.currentTimeMillis();
@@ -85,7 +85,7 @@ public class QuestStatus {
         }
     }
 
-    public QuestStatus(short questID, Status status, int npc) {
+    public QuestStatus(int questID, Status status, int npc) {
         this.questID = questID;
         this.setStatus(status);
         this.setNpc(npc);
@@ -97,7 +97,7 @@ public class QuestStatus {
         }
     }
 
-    public short getQuestID() {
+    public int getQuestID() {
         return questID;
     }
 

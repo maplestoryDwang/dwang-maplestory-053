@@ -12,16 +12,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class QuestRepository {
     private static final Map<Integer, QuestV2> quests = new ConcurrentHashMap<>();
     private static final Map<Integer, Integer> infoNumberQuests = new ConcurrentHashMap<>();
-    private static final Map<Short, Integer> medals = new ConcurrentHashMap<>();
+    private static final Map<Integer, Integer> medals = new ConcurrentHashMap<>();
 
-    private static final Set<Short> exploitableQuests = new HashSet<>();
+    private static final Set<Integer> exploitableQuests = new HashSet<>();
     private static final QuestDataProviderV2 dataProvider = new QuestDataProviderV2();
 
     static {
-        exploitableQuests.add((short) 2338);
-        exploitableQuests.add((short) 3637);
-        exploitableQuests.add((short) 3714);
-        exploitableQuests.add((short) 21752);
+        exploitableQuests.add(2338);
+        exploitableQuests.add(3637);
+        exploitableQuests.add(3714);
+        exploitableQuests.add(21752);
     }
 
     public static void loadAllQuests() {
@@ -37,11 +37,11 @@ public class QuestRepository {
         medals.putAll(container.medals);
     }
 
-    // 可能有自定义ID导致负数
+    // 可能有自定义ID导致负数 (旧版本 short 截断)，现在统一用 int 存储
     public static QuestV2 getInstance(int id) {
         QuestV2 ret = quests.get(id);
         if (ret == null) {
-            ret = new QuestV2((short) id);
+            ret = new QuestV2(id);
             quests.put(id, ret);
         }
         return ret;
@@ -55,12 +55,12 @@ public class QuestRepository {
         return getInstance(id);
     }
 
-    public static int getMedalRequirement(short questId) {
+    public static int getMedalRequirement(int questId) {
         Integer medalId = medals.get(questId);
         return medalId != null ? medalId : -1;
     }
 
-    public static boolean isExploitableQuest(short questid) {
+    public static boolean isExploitableQuest(int questid) {
         return exploitableQuests.contains(questid);
     }
 

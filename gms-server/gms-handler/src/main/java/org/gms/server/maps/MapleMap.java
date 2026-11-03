@@ -845,7 +845,7 @@ public class MapleMap {
 
             int minimum = 1;
             int maximum = 1;
-            short questid = 0;
+            int questid = 0;
             if (de != null) {
                 minimum = Math.max(1, de.Minimum);
                 maximum = Math.max(minimum, de.Maximum);
@@ -975,7 +975,7 @@ public class MapleMap {
         dropFromMonster(chr, mob, true);
     }
 
-    public void dropFromReactor(final Character chr, final Reactor reactor, Item drop, Point dropPos, short questid) {
+    public void dropFromReactor(final Character chr, final Reactor reactor, Item drop, Point dropPos, int questid) {
         spawnDrop(drop, this.calcDropPos(dropPos, reactor.getPosition()), reactor, chr, (byte) (chr.getParty() != null ? 1 : 0), questid);
     }
 
@@ -1312,7 +1312,7 @@ public class MapleMap {
         }
     }
 
-    private void spawnDrop(final Item idrop, final Point dropPosTo, final MapObject dropper, final Character chr, final byte droptype, final short questid) {
+    private void spawnDrop(final Item idrop, final Point dropPosTo, final MapObject dropper, final Character chr, final byte droptype, final int questid) {
         final MapItem mdrop = new MapItem(idrop, dropPosTo, dropper, chr, chr.getClient(), droptype, false, questid);
         mdrop.setDropTime(Server.getInstance().getCurrentTime());
         spawnAndAddRangedMapObject(mdrop, c -> {

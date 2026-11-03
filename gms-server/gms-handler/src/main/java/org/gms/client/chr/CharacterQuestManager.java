@@ -25,7 +25,7 @@ import java.util.concurrent.ScheduledFuture;
 public class CharacterQuestManager {
     private final CharacterV2 parent;
 
-    private final Map<Short, QuestStatus> quests = new LinkedHashMap<>();
+    private final Map<Integer, QuestStatus> quests = new LinkedHashMap<>();
     private final Map<QuestV2, Long> questExpirations = new LinkedHashMap<>();
     private final List<Pair<DelayedQuestUpdate, Object[]>> npcUpdateQuests = new LinkedList<>();
     private final Map<Short, String> area_info = new LinkedHashMap<>();
@@ -62,7 +62,7 @@ public class CharacterQuestManager {
 
     // 怪物计数
     public void raiseQuestMobCount(int id) { /* 原逻辑 */ }
-    private short qsInfoNumber(QuestStatus qs) { /* 原逻辑 */ return 0; }
+    private int qsInfoNumber(QuestStatus qs) { /* 原逻辑 */ return 0; }
     private boolean qsInfoNumberExist(QuestStatus qs) { /* 原逻辑 */ return false; }
 
     // 物品需求

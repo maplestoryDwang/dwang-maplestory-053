@@ -31,17 +31,17 @@ import org.gms.server.quest.requirements.AbstractQuestRequirementData;
 @Getter
 public class InfoNumberRequirementData extends AbstractQuestRequirementData {
 
-    private short infoNumber;
+    private int infoNumber;
     private final int questID;
 
     public InfoNumberRequirementData(int questId, Data data) {
         super(QuestRequirementType.INFO_NUMBER);
         questID = questId;
-        infoNumber = (short) DataTool.getIntConvert(data, 0);
+        infoNumber = DataTool.getIntConvert(data, 0);
 
     }
 
-    public short getInfoNumber() {
+    public int getInfoNumber() {
         return infoNumber;
     }
 }

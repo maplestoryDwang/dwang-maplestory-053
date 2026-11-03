@@ -25,7 +25,7 @@ package org.gms.server.life;
  */
 
 public class MonsterDropEntry {
-    public MonsterDropEntry(int itemId, int chance, int Minimum, int Maximum, short questid) {
+    public MonsterDropEntry(int itemId, int chance, int Minimum, int Maximum, int questid) {
         this.itemId = itemId;
         this.chance = chance;
         this.questid = questid;
@@ -33,6 +33,6 @@ public class MonsterDropEntry {
         this.Maximum = Maximum;
     }
 
-    public short questid;
+    public int questid;
     public int itemId, chance, Minimum, Maximum;
 }

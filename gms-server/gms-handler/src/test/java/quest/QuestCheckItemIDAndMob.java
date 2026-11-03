@@ -122,7 +122,7 @@ public class QuestCheckItemIDAndMob {
         }
     }
 
-    private void checkActions(short questId, String type, Map<QuestActionType, AbstractQuestActionData> startActs, Set<Integer> itemIds, Set<Integer> mobIds, Set<Integer> npcIds, Set<Integer> mapIds, Set<Integer> skillIds) {
+    private void checkActions(int questId, String type, Map<QuestActionType, AbstractQuestActionData> startActs, Set<Integer> itemIds, Set<Integer> mobIds, Set<Integer> npcIds, Set<Integer> mapIds, Set<Integer> skillIds) {
 
         ItemActionData itemActionData = (ItemActionData) startActs.get(QuestActionType.ITEM);
         if (itemActionData != null) {
@@ -163,7 +163,7 @@ public class QuestCheckItemIDAndMob {
 
     }
 
-    private void checkReqs(short questId, String type, Map<QuestRequirementType, AbstractQuestRequirementData> requestsments, Set<Integer> itemIds, Set<Integer> mobIds, Set<Integer> npcIds, Set<Integer> mapIds, Set<Integer> skillIds) {
+    private void checkReqs(int questId, String type, Map<QuestRequirementType, AbstractQuestRequirementData> requestsments, Set<Integer> itemIds, Set<Integer> mobIds, Set<Integer> npcIds, Set<Integer> mapIds, Set<Integer> skillIds) {
         ItemRequirementData itemRequirementData = (ItemRequirementData) requestsments.get(QuestRequirementType.ITEM);
         if (itemRequirementData != null) {
             Set<Integer> needItemIds = itemRequirementData.getItems().keySet();

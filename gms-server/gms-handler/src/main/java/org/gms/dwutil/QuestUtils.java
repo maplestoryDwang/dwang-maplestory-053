@@ -45,11 +45,20 @@ public class QuestUtils {
 
     private static AchievementService achievementService;
     @Getter
-    private static Map<Integer, List<Short>> charQuestCompleteSendCache = new ConcurrentHashMap<>();
+    private static Map<Integer, List<Integer>> charQuestCompleteSendCache = new ConcurrentHashMap<>();
 
     @Autowired
     public QuestUtils(AchievementService achievementService) {
         QuestUtils.achievementService = achievementService;
+    }
+
+    /**
+     * 客户端的 questId 在协议里是 short(2字节)，只有 1..32767 的任务才能发包。
+     * 自定义任务ID（例如直接用 NPCID 9001003 作为 questId）只用于服务端落库，
+     * 绝不能写进发包，否则会被截断成别的任务ID，导致客户端任务窗口/任务状态错乱。
+     */
+    public static boolean isClientQuest(int questId) {
+        return questId > 0 && questId <= Short.MAX_VALUE;
     }
 
     public static boolean canStartQuestByStatus(Character chr, QuestV2 quest) {
@@ -62,8 +71,8 @@ public class QuestUtils {
         QuestStatus mqs = chr.getQuest(quest);
         List<String> ix = quest.getInfoEx(mqs.getStatus());
         if (!ix.isEmpty()) {
-            short questid = mqs.getQuestID();
-            short infoNumber = getInfoNumber(mqs);
+            int questid = mqs.getQuestID();
+            int infoNumber = getInfoNumber(mqs);
             if (infoNumber <= 0) {
                 infoNumber = questid;
             }
@@ -87,7 +96,7 @@ public class QuestUtils {
         }
         Map<QuestRequirementType, AbstractQuestRequirementData> startReqs = quest.getStartReqs();
         String name = quest.getName();
-        short questId = quest.getId();
+        int questId = quest.getId();
         for (AbstractQuestRequirementData r : startReqs.values()) {
             if (!QuestRequirementEvaluator.check(r, chr, npcid)) {
                 log.debug("无法开始任务, name: {}, questId: {}, 不满足: {}", name, questId, r.getType());
@@ -219,8 +228,8 @@ public class QuestUtils {
             return false;
         }
         int timeLimit = quest.getTimeLimit();
-        short id = quest.getId();
-        if (timeLimit > 0) {
+        int id = quest.getId();
+        if (timeLimit > 0 && isClientQuest(id)) {
             chr.sendPacket(PacketCreator.removeQuestTimeLimit(id));
         }
         QuestStatus newStatus = new QuestStatus(quest.getId(), QuestStatus.Status.NOT_STARTED);
@@ -232,7 +241,7 @@ public class QuestUtils {
     public static boolean forceStart(Character chr, int npc, QuestV2 quest) {
         QuestStatus newStatus = new QuestStatus(quest.getId(), QuestStatus.Status.STARTED, npc);
 
-        short questId = quest.getId();
+        int questId = quest.getId();
         int timeLimit = quest.getTimeLimit();
         int timeLimit2 = quest.getTimeLimit2();
         QuestStatus oldStatus = chr.getQuest(questId);
@@ -270,10 +279,10 @@ public class QuestUtils {
 
     public static boolean forceComplete(Character chr, int npc, QuestV2 quest) {
         int timeLimit = quest.getTimeLimit();
-        short id = quest.getId();
+        int id = quest.getId();
 
 
-        if (timeLimit > 0) {
+        if (timeLimit > 0 && isClientQuest(id)) {
             chr.sendPacket(PacketCreator.removeQuestTimeLimit(id));
         }
 
@@ -346,13 +355,13 @@ public class QuestUtils {
     }
 
     public static void expireQuest(Character chr, QuestV2 quest) {
-        if (forfeit(chr, quest)) {
+        if (forfeit(chr, quest) && isClientQuest(quest.getId())) {
             chr.sendPacket(PacketCreator.questExpire(quest.getId()));
         }
     }
 
 
-    public static short getInfoNumber(QuestStatus qs) {
+    public static int getInfoNumber(QuestStatus qs) {
         QuestV2 q = QuestRepository.getInstance(qs.getQuestID());
         QuestStatus.Status s = qs.getStatus();
         return q.getInfoNumber(s);

@@ -88,7 +88,7 @@ public class QuestDataProviderV2 {
 
         Map<Integer, QuestV2> loadedQuests = new LinkedHashMap<>();
         Map<Integer, Integer> loadedInfoNumberQuests = new HashMap<>();
-        Map<Short, Integer> loadedMedals = new HashMap<>();
+        Map<Integer, Integer> loadedMedals = new HashMap<>();
 
         if (questInfo == null) {
             log.error("QuestInfo.img 加载失败！");
@@ -120,13 +120,13 @@ public class QuestDataProviderV2 {
         return new LoadedQuestContainer(loadedQuests, loadedInfoNumberQuests, loadedMedals);
     }
 
-    public QuestV2 buildQuest(int id, Map<Short, Integer> medalMap, HashMap<Integer, String> questCatMap) {
+    public QuestV2 buildQuest(int id, Map<Integer, Integer> medalMap, HashMap<Integer, String> questCatMap) {
         Data reqData = questReq.getChildByPath(String.valueOf(id));
         if (reqData == null) {
             return null;
         }
 
-        QuestV2 quest = new QuestV2((short) id);
+        QuestV2 quest = new QuestV2(id);
 
         // 1. 解析 QuestInfo 基本属性
         if (questInfo != null) {
@@ -263,9 +263,9 @@ public class QuestDataProviderV2 {
     public static class LoadedQuestContainer {
         public final Map<Integer, QuestV2> quests;
         public final Map<Integer, Integer> infoNumberQuests;
-        public final Map<Short, Integer> medals;
+        public final Map<Integer, Integer> medals;
 
-        public LoadedQuestContainer(Map<Integer, QuestV2> quests, Map<Integer, Integer> infoNumberQuests, Map<Short, Integer> medals) {
+        public LoadedQuestContainer(Map<Integer, QuestV2> quests, Map<Integer, Integer> infoNumberQuests, Map<Integer, Integer> medals) {
             this.quests = quests;
             this.infoNumberQuests = infoNumberQuests;
             this.medals = medals;

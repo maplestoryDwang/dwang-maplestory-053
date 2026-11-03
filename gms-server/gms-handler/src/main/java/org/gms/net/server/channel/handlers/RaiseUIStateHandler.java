@@ -26,7 +26,7 @@ public class RaiseUIStateHandler extends AbstractPacketHandler {
                 QuestV2 quest = QuestRepository.getInstanceFromInfoNumber(infoNumber);
                 QuestStatus mqs = chr.getQuest(quest);
 
-                QuestScriptManager.getInstance().raiseOpen(c, (short) infoNumber, mqs.getNpc());
+                QuestScriptManager.getInstance().raiseOpen(c, infoNumber, mqs.getNpc());
 
                 if (mqs.getStatus() == QuestStatus.Status.NOT_STARTED) {
                     QuestUtils.forceStart(chr, 22000, quest);

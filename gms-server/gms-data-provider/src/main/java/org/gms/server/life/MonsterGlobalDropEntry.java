@@ -25,7 +25,7 @@ package org.gms.server.life;
  * @update 谁允许你参数大写的FUCK! dwang
  */
 public class MonsterGlobalDropEntry extends MonsterDropEntry{
-    public MonsterGlobalDropEntry(int itemId, int chance, int continent, int minimum, int maximum, short questid) {
+    public MonsterGlobalDropEntry(int itemId, int chance, int continent, int minimum, int maximum, int questid) {
         super(itemId, chance, maximum, minimum, questid);
         this.continentid = continent;
     }

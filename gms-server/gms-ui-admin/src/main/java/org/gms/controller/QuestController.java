@@ -45,7 +45,7 @@ public class QuestController {
     @GetMapping("/" + ApiConstant.LATEST + "/detail/{id}")
     public ResultBody<QuestDetailVO> getQuestDetail(
             @Parameter(description = "任务ID", required = true, example = "1001")
-            @PathVariable("id") @NotNull(message = "任务ID不能为空") Short id) {
+            @PathVariable("id") @NotNull(message = "任务ID不能为空") Integer id) {
         return ResultBody.success(questApiService.getQuestDetail(id));
     }
 }

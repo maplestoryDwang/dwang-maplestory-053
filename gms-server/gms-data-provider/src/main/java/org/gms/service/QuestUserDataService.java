@@ -82,7 +82,7 @@ public class QuestUserDataService {
             // 1. 构建并保存 QueststatusDO 主表数据
             QueststatusDO queststatusDO = new QueststatusDO();
             queststatusDO.setCharacterid(cid);
-            queststatusDO.setQuest((int) qs.getQuestID());
+            queststatusDO.setQuest(qs.getQuestID());
             queststatusDO.setStatus(qs.getStatus().getId());
             queststatusDO.setTime((int) (qs.getCompletionTime() / 1000));
             queststatusDO.setExpires(qs.getExpirationTime());

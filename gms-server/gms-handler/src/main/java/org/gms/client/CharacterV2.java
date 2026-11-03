@@ -392,7 +392,7 @@ public class Character extends AbstractCharacterObject {
     private final List<WeakReference<MapleMap>> lastVisitedMaps = new LinkedList<>();
     private WeakReference<MapleMap> ownedMap = new WeakReference<>(null);
     @Getter
-    private final Map<Short, QuestStatus> quests;
+    private final Map<Integer, QuestStatus> quests;
     private final Set<Monster> controlled = new LinkedHashSet<>();
     private final Map<Integer, String> entered = new LinkedHashMap<>();
     private final Set<MapObject> visibleMapObjects = Collections.newSetFromMap(new ConcurrentHashMap<>());
@@ -5417,7 +5417,7 @@ public class Character extends AbstractCharacterObject {
 
     public final byte getQuestStatus(final int quest) {
         synchronized (quests) {
-            QuestStatus mqs = quests.get((short) quest);
+            QuestStatus mqs = quests.get(quest);
             if (mqs != null) {
                 return (byte) mqs.getStatus().getId();
             } else {
@@ -5432,7 +5432,7 @@ public class Character extends AbstractCharacterObject {
 
     public QuestStatus getQuest(QuestV2 quest) {
         synchronized (quests) {
-            short questid = quest.getId();
+            int questid = quest.getId();
             QuestStatus qs = quests.get(questid);
             if (qs == null) {
                 qs = new QuestStatus(quest.getId(), QuestStatus.Status.NOT_STARTED);
@@ -6843,7 +6843,7 @@ public class Character extends AbstractCharacterObject {
         }
     }
 
-    private short qsInfoNumber(QuestStatus qs) {
+    private int qsInfoNumber(QuestStatus qs) {
         return QuestUtils.getInfoNumber(qs);
     }
 
@@ -8979,24 +8979,30 @@ public class Character extends AbstractCharacterObject {
 
     private void announceUpdateQuestInternal(Character chr, Pair<DelayedQuestUpdate, Object[]> questUpdate) {
         Object[] objs = questUpdate.getRight();
+        // 自定义任务ID不能进包（客户端 questId 是 short），PacketCreator 会返回 null
+        Packet packet = null;
 
         switch (questUpdate.getLeft()) {
             case UPDATE:
-                sendPacket(PacketCreator.updateQuest(chr, (QuestStatus) objs[0], (Boolean) objs[1]));
+                packet = PacketCreator.updateQuest(chr, (QuestStatus) objs[0], (Boolean) objs[1]);
                 break;
 
             case FORFEIT:
-                sendPacket(PacketCreator.forfeitQuest((Short) objs[0]));
+                packet = PacketCreator.forfeitQuest((Integer) objs[0]);
                 break;
             // 告訴客戶端任務完成
             case COMPLETE:
-                sendPacket(PacketCreator.completeQuest((Short) objs[0], (Long) objs[1]));
+                packet = PacketCreator.completeQuest((Integer) objs[0], (Long) objs[1]);
                 break;
             // 任務完成之後NPC還會有對話
             case INFO:
                 QuestStatus qs = (QuestStatus) objs[0];
-                sendPacket(PacketCreator.updateQuestInfo(qs.getQuestID(), qs.getNpc()));
+                packet = PacketCreator.updateQuestInfo(qs.getQuestID(), qs.getNpc());
                 break;
+        }
+
+        if (packet != null) {
+            sendPacket(packet);
         }
     }
 
@@ -9037,7 +9043,7 @@ public class Character extends AbstractCharacterObject {
             announceUpdateQuest(DelayedQuestUpdate.INFO, qs);
         } else if (qs.getStatus().equals(QuestStatus.Status.COMPLETED)) {
             QuestV2 mquest = QuestRepository.getInstance(qs.getQuestID());
-            short questid = mquest.getId();
+            int questid = mquest.getId();
             if (!mquest.isSameDayRepeatable() && !QuestRepository.isExploitableQuest(questid)) {
                 awardQuestPoint(GameConfig.getServerInt("quest_point_per_quest_complete"));
             }
@@ -9135,7 +9141,10 @@ public class Character extends AbstractCharacterObject {
 
     public void questTimeLimit(final QuestV2 quest, int seconds) {
         registerQuestExpire(quest, SECONDS.toMillis(seconds));
-        sendPacket(PacketCreator.addQuestTimeLimit(quest.getId(), (int) SECONDS.toMillis(seconds)));
+        Packet packet = PacketCreator.addQuestTimeLimit(quest.getId(), (int) SECONDS.toMillis(seconds));
+        if (packet != null) {
+            sendPacket(packet);
+        }
     }
 
     public void questTimeLimit2(final QuestV2 quest, long expires) {

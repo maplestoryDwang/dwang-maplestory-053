@@ -25,6 +25,7 @@ import org.gms.client.Client;
 import org.gms.server.quest.QuestStatus;
 import org.gms.constants.id.MapId;
 import org.gms.dwutil.QuestUtils;
+import org.gms.net.packet.Packet;
 import org.gms.scripting.AbstractPlayerInteraction;
 import org.gms.server.quest.QuestV2;
 import org.gms.server.quest.QuestRepository;
@@ -102,7 +103,7 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
         c.sendPacket(PacketCreator.showIntro("Effect/Direction3.img/goLith/Scene" + c.getPlayer().getGender()));
     }
 
-    public void explorerQuest(short questid, String questName) {
+    public void explorerQuest(int questid, String questName) {
         QuestV2 quest = QuestRepository.getInstance(questid);
         if (isQuestCompleted(questid)) {
             return;
@@ -131,7 +132,10 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
         if (status.equals(infoex)) {
             etm.append("获得 ").append(questName).append(" 勋章！");
             smp.append("你获得了 <").append(questName).append(">").append(rewardstring);
-            getPlayer().sendPacket(PacketCreator.getShowQuestCompletion(quest.getId()));
+            Packet packet = PacketCreator.getShowQuestCompletion(quest.getId());
+            if (packet != null) {
+                getPlayer().sendPacket(packet);
+            }
         } else {
             getPlayer().sendPacket(PacketCreator.earnTitleMessage(status + "/" + infoex + " 区域已探索"));
             etm.append("正在挑战 ").append(questName).append(" 勋章");
@@ -161,7 +165,10 @@ public class MapScriptMethods extends AbstractPlayerInteraction {
         String infoEx = quest.getInfoEx(s, 0);
         if (Integer.toString(qs.getMedalProgress()).equals(infoEx)) {
             showInfoText("站在巅峰的人" + rewardstring);
-            getPlayer().sendPacket(PacketCreator.getShowQuestCompletion(quest.getId()));
+            Packet packet = PacketCreator.getShowQuestCompletion(quest.getId());
+            if (packet != null) {
+                getPlayer().sendPacket(packet);
+            }
         } else {
             showInfoText("站在巅峰的人 勋章挑战正在进行中。 " + status + "/5 已完成");
         }

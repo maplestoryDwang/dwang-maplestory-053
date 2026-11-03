@@ -9,7 +9,7 @@
  */
 
 var status = -1;
-var POINT_QUEST = 10003;   // 可乐积分（自定义数据存数字）
+var POINT_QUEST = 9001003;   // 可乐积分（自定义数据存数字）
 var CAP_ITEM = 4000221;      // 可口可乐瓶盖
 var CAP_POINTS = 100;        // 1 个瓶盖 = 100 积分
 

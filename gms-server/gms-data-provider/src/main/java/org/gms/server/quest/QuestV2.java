@@ -28,7 +28,11 @@ import static java.util.concurrent.TimeUnit.HOURS;
 public class QuestV2 {
     private static final Logger log = LoggerFactory.getLogger(QuestV2.class);
 
-    protected short id;
+    /**
+     * 任务ID。数据库为 int，允许使用 NPCID 等自定义大ID（> Short.MAX_VALUE）。
+     * 注意：客户端协议的 questId 仍是 short，自定义ID不能发包，见 QuestUtils#isClientQuest。
+     */
+    protected int id;
     protected int timeLimit, timeLimit2;
     // 只持有纯数据引用
     protected Map<QuestRequirementType, AbstractQuestRequirementData> startReqs = new EnumMap<>(QuestRequirementType.class);
@@ -49,7 +53,7 @@ public class QuestV2 {
      */
     private String area = "";
 
-    public QuestV2(short id) {
+    public QuestV2(int id) {
         this.id = id;
     }
 
@@ -73,7 +77,7 @@ public class QuestV2 {
 
     // ==================== Getters & Setters ====================
 
-    public short getId() { return id; }
+    public int getId() { return id; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getParentName() { return parent; }
@@ -128,7 +132,7 @@ public class QuestV2 {
         return ((MobRequirementData) req).getMobs().getOrDefault(mid, 0);
     }
 
-    public short getInfoNumber(Status qs) {
+    public int getInfoNumber(Status qs) {
         boolean checkEnd = qs.equals(Status.STARTED);
         Map<QuestRequirementType, AbstractQuestRequirementData> reqs = !checkEnd ? startReqs : completeReqs;
         AbstractQuestRequirementData req = reqs.get(QuestRequirementType.INFO_NUMBER);

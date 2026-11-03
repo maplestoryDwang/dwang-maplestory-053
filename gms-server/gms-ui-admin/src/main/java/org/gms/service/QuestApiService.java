@@ -31,7 +31,7 @@ public class QuestApiService {
         questList.sort(new Comparator<QuestV2>() {
             @Override
             public int compare(QuestV2 o1, QuestV2 o2) {
-                return Short.compare(o1.getId(), o2.getId());
+                return Integer.compare(o1.getId(), o2.getId());
             }
         });
         List<QuestSearchRtnDTO> questSearchRtnDTOS = new ArrayList<>();
@@ -42,7 +42,7 @@ public class QuestApiService {
     }
 
 
-    public QuestDetailVO getQuestDetail(@NotNull(message = "任务ID不能为空") Short id) {
+    public QuestDetailVO getQuestDetail(@NotNull(message = "任务ID不能为空") Integer id) {
         QuestV2 instance = QuestRepository.getInstance(id);
         if (instance == null) {
             return null;
