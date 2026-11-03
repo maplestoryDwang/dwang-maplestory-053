@@ -81,7 +81,6 @@ INSERT INTO `drop_data_global` (`continent`, `itemid`, `minimum_quantity`, `maxi
 (-1, 4031301, 1, 1, 9391, 20000, 'evt9100-9513 9391 水下世界招待卷'),
 (-1, 4031302, 1, 1, 9503, 50000, 'evt9100-9513 9503 海底垃圾'),
 (-1, 4031304, 1, 1, 9392, 20000, 'evt9100-9513 9392 水世界招待卷'),
-(-1, 4031321, 1, 1, 9504, 50000, 'evt9100-9513 9504 海底垃圾');
 
 -- ------------------------------------------------------------
 -- 可选：9101 / 9111 / 9121 重复做的补丁（默认关闭）
@@ -89,10 +88,12 @@ INSERT INTO `drop_data_global` (`continent`, `itemid`, `minimum_quantity`, `maxi
 -- 9101/9111/9121 是主线 9100/9110/9120 的重复版，但 M/S/W 只有一次性任务 9130 产出。
 -- 需要放开时，取消下面 3 行注释后重跑本文件即可（同样幂等）。
 -- ------------------------------------------------------------
--- INSERT INTO `drop_data_global` (`continent`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`, `comments`) VALUES
--- (-1, 3994012, 1, 1, 9101, 20000, 'evt9100-9513 letters 9101 饼干字母 M'),
--- (-1, 3994013, 1, 1, 9101, 20000, 'evt9100-9513 letters 9101 饼干字母 S'),
--- (-1, 3994014, 1, 1, 9111, 20000, 'evt9100-9513 letters 9111 饼干字母 W');
+ INSERT INTO `drop_data_global` (`continent`, `itemid`, `minimum_quantity`, `maximum_quantity`, `questid`, `chance`, `comments`) VALUES
+ (-1, 3994012, 1, 1, 9100, 20000, 'evt9100-9513 letters 9101 饼干字母 M'),
+ (-1, 3994012, 1, 1, 9101, 20000, 'evt9100-9513 letters 9101 饼干字母 M'),
+ (-1, 3994013, 1, 1, 9100, 20000, 'evt9100-9513 letters 9101 饼干字母 S'),
+ (-1, 3994013, 1, 1, 9101, 20000, 'evt9100-9513 letters 9101 饼干字母 S'),
+ (-1, 3994014, 1, 1, 9111, 20000, 'evt9100-9513 letters 9111 饼干字母 W');
 
 -- 回滚：DELETE FROM `drop_data_global` WHERE `comments` LIKE 'evt9100-9513%';
 
@@ -102,3 +103,8 @@ INSERT INTO `drop_data_global` (`continent`, `itemid`, `minimum_quantity`, `maxi
 -- 缺少9352的任务爆率 旧数据有问题
 delete from reactordrops where questid = 9352;
 INSERT INTO `reactordrops` ( `reactorid`, `itemid`, `chance`, `questid`) VALUES ( 2222000, 4031258, 2, 9352);
+
+
+-- 9504黄金海滩扫垃圾
+delete from reactordrops where questid = 9504;
+INSERT INTO `reactordrops` (`reactorid`, `itemid`, `chance`, `questid`) VALUES ( 1102003, 4031321, 2, 9504);

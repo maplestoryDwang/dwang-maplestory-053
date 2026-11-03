@@ -310,22 +310,23 @@ function getRandomReward() {
 
 // ----- NPC 主逻辑 -----
 function start() {
-    cm.sendNext("欢迎光临。哈哈！我能捡到世界上任何能捡到的东西。哈哈！如果您有打不开的东西，就带来给我。哈！");
-    var inv = cm.getInventory(1); // 消耗栏
-    if (inv.count(4031017) < 1) {
+    var inv = cm.getInventory(4); // 其他
+    if (inv.countById(4031017) < 1) {
+        cm.sendNext("欢迎光临。哈哈！我能捡到世界上任何能捡到的东西。哈哈！如果您有打不开的东西，就带来给我。哈！");
         cm.dispose();
         return;
     }
-    cm.sendNext("啊，太棒了。哈哈！您是怎么弄到如此稀有的东西的？嗯？不过，这东西锁得真紧，我可能需要几种材料才能打开。哈哈！");
     // 检查背包空间（消耗栏、装备栏、特殊栏）
-    if (cm.getInventory(1).getSlotLimit() <= cm.getInventory(1).getNumberOfItems() ||
-        cm.getInventory(2).getSlotLimit() <= cm.getInventory(2).getNumberOfItems() ||
-        cm.getInventory(4).getSlotLimit() <= cm.getInventory(4).getNumberOfItems()) {
+    if (cm.getInventory(1).isFull() ||
+        cm.getInventory(2).isFull() ||
+        cm.getInventory(4).isFull()) {
         cm.sendOk("您至少需要在消耗栏、装备栏和特殊栏各留一个空位。哈哈！腾出空间再来找我，哈哈！");
         cm.dispose();
         return;
     }
-    cm.sendSimple("我除了缺1个#t4021005#和5个#t4000010#之外，其他材料都有。您把材料拿来，我就免费帮您打开。哈哈！\r\n#L0# 帮他找材料。#l\r\n#L1# 直接付钱给他（" + COST_MONEY + " 金币）。#l");
+    var text = "啊，太棒了。哈哈！您是怎么弄到如此稀有的东西的？嗯？不过，这东西锁得真紧，我可能需要几种材料才能打开。\r\n";
+    text += "我除了缺1个#t4021005#和5个#t4000010#之外，其他材料都有。您把材料拿来，我就免费帮您打开。哈哈！\r\n#L0# 帮他找材料。#l\r\n#L1# 直接付钱给他（" + COST_MONEY + " 金币）。#l"
+    cm.sendSimple(text);
     status = 1;
 }
 
@@ -346,9 +347,9 @@ function action(mode, type, selection) {
                     return;
                 }
                 // 扣除材料
-                cm.removeItem(4031017, 1);
-                cm.removeItem(4021005, 1);
-                cm.removeItem(4000010, 5);
+                cm.gainItem(4031017, -1);
+                cm.gainItem(4021005, -1);
+                cm.gainItem(4000010, -5);
                 // 给予奖励
                 cm.gainItem(reward.itemId, reward.quantity);
                 cm.sendOk("我免费打开了！哈哈！获得：" + reward.itemId + " x" + reward.quantity + "。回头见。哈哈！");
@@ -373,10 +374,10 @@ function action(mode, type, selection) {
                 }
                 // 扣除金币和箱子
                 cm.gainMeso(-COST_MONEY);
-                cm.removeItem(4031017, 1);
+                cm.gainItem(4031017, -1);
                 // 给予奖励
                 cm.gainItem(reward.itemId, reward.quantity);
-                cm.sendOk("我收下钱，帮您打开了，后会有期。哈哈！获得：" + reward.itemId + " x" + reward.quantity);
+                cm.sendOk("我收下钱，帮您打开了，后会有期朋友。\r\n\r\n恭喜你！获得：#i" + reward.itemId + "# " + "#b#t" + reward.itemId + "##k" + " x " + reward.quantity);
             } else {
                 cm.sendOk("您的金币不够。哈哈！ #b" + COST_MONEY + " 金币#k。哈哈！");
             }

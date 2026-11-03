@@ -622,7 +622,7 @@ public class AbstractPlayerInteraction {
         gainItem(id, (short) 1, false, true);
     }
 
-    public final void gainItem(int id, short quantity, long expiresMin) {
+    public final void gainItemPeriod(int id, short quantity, long expiresMin) {
         // 毫秒数
         long expires = expiresMin * 60 * 1000L;
         this.gainItem(id, quantity, false, true, expires);
