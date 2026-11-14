@@ -2646,4 +2646,7 @@
     <imgdir name="9600062">
         <string name="name" value="英文字母Z"/>
     </imgdir>
+  <imgdir name="9420010">
+    <string name="name" value="首领猴子"/>
+  </imgdir>
 </imgdir>
