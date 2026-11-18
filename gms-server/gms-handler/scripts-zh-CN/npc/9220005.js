@@ -3,9 +3,22 @@
 */
 var status = 0;
 const SNOW_ITEM = 4031875;
+var wxmacQuestId = 5008;
 
 function getEventManager() {
     return cm.getEventManager("Wxmac");
+}
+
+function startWxmac() {
+    if (cm.getQuestCustomData(wxmacQuestId) != "ing") {
+        cm.updateQuestCustomData(wxmacQuestId, "ing");
+    }
+}
+
+function endWxmac() {
+    if (cm.getQuestCustomData(wxmacQuestId) != "end") {
+        cm.updateQuestCustomData(wxmacQuestId, "end");
+    }
 }
 
 
@@ -32,14 +45,19 @@ function start() {
 
     if (cmap == 209000000) { // 幸福村
         var val = qr.getCustomData(); // 任务记录 5008 的自定义数据
-        if (val == null || val == "") {
+        if (val == null || val == "" || val == "end") {
             cm.sendSimple("嘿，那边的人！我是#p9220005#。我在这里做什么？我的工作是确保幸福村永远下雪！但现在我们正面临危机！由于幸福村最近的改建，我们#b#t" + SNOW_ITEM + "##k的库存消失了！\r\n\r\n#b#L0# 什么是#t" + SNOW_ITEM +"#？#l\r\n#L1# 不……没什么兴趣。#l");
             status = 1;
         } else if (val == "ing") {
-            cm.sendSimple("除雪机在超级冰冻地带。那里非常冷而且风很大，你一个人去可不容易，但如果我带你去，就轻松啦！一旦你找到一点永恒之雪，就需要放进除雪机里。你想现在就去超级冰冻地带吗？\r\n#b#L0# 好的，带我去吧！\r\n#L1# 好冷啊！我还是谢了吧……\r\n#l#k");
+            var select = "除雪机在超级冰冻地带。那里非常冷而且风很大，你一个人去可不容易，但如果我带你去，就轻松啦！一旦你找到一点永恒之雪，就需要放进除雪机里。你想现在就去超级冰冻地带吗？\r\n";
+            select += "#b#L0# 好的，带我去吧！#l\r\n";
+            select += "#L1# 好冷啊！我还是谢了吧……\r\n#l";
+            select += "#L2# 我暂时不想收集永恒之雪了(关闭活动道具掉落)\r\n#l";
+            select += "#k";
+            cm.sendSimple(select);
             status = 4;
         } else {
-            cm.sendOk("抱歉，我现在可以带你去超级冰冻地带。");
+            cm.sendOk("您已选择了结束，需要开启可以再来找我。");
             cm.dispose();
         }
     } else if (cmap == 209080000) { // 超级冰冻地带
@@ -76,8 +94,8 @@ function action(mode, type, selection) {
         status = 3;
     } else if (status == 3) {
         if (mode == 1) { // 选择是
-            cm.sendOk("除雪机在超级冰冻地带。由于那里已经有很多永恒之雪，那个地方极其寒冷！冷到如果你不戴上#b魔法手套#k，你会失去双手！手套就在你看到的礼物盒里，打开一个拿一副吧！");
-            qr.setCustomData("ing");
+            cm.sendOk("除雪机在超级冰冻地带。由于那里已经有很多永恒之雪，那个地方极其寒冷！冷到如果你不戴上#b魔法手套#k，你会失去双手！手套就在你看到的礼物盒里，打开一个拿一副吧！对了世界各地也会掉落#b雪球#k噢，如果召唤了雪人，可以使用雪球来攻击，希望你玩的开心！");
+            startWxmac() ;
             cm.dispose();
         } else { // 选择否
             cm.sendOk("啊，真的吗？真扫兴。");
@@ -102,6 +120,10 @@ function action(mode, type, selection) {
                 status = 5;
             }
         }
+    }  else if (status == 4 && selection == 2) { // 关闭掉落
+        endWxmac();
+        cm.sendOk("啊，真的吗？没关系，如果你还想帮忙收集，再次来找我就好了");
+        cm.dispose();
     } else if (status == 5) {
         if (mode == 1) {
             cm.warp(209080000, "st00");
