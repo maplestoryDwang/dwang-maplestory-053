@@ -57,6 +57,9 @@ import org.gms.net.server.guild.Guild;
 import org.gms.net.server.guild.GuildCharacter;
 import org.gms.net.server.task.*;
 import org.gms.net.server.world.World;
+import org.gms.ai.BotLifecycle;
+import org.gms.ai.BotProperties;
+import org.gms.bot.PersistentBotAdapter;
 import org.gms.server.CashItemFactory;
 import org.gms.server.SkillbookInformationProvider;
 import org.gms.server.ThreadManager;
@@ -141,6 +144,27 @@ public class Server {
     private long serverCurrentTime = 0;
 
     private volatile boolean availableDeveloperRoom = false;
+    private final BotLifecycle persistentBot = new BotLifecycle(
+            characterId -> PersistentBotAdapter.open(this, CHARACTER_INTERNAL_SERVICE, characterId));
+
+    public boolean isAccountManagedByBot(int accountId) {
+        return persistentBot.ownsAccount(accountId);
+    }
+
+    private void startPersistentBot() {
+        BotProperties properties = ServerManager.getApplicationContext().getBean(BotProperties.class);
+        if (!properties.isEnabled()) {
+            return;
+        }
+        try {
+            int characterId = properties.getCharacterId();
+            persistentBot.start(characterId);
+            log.info("Persistent bot started for character {}", characterId);
+        } catch (RuntimeException e) {
+            log.error("Persistent bot could not start", e);
+        }
+    }
+
     @Getter
     @Setter
     private boolean online = false;
@@ -741,6 +765,7 @@ public class Server {
             System.exit(0);
         }
 
+        startPersistentBot();
         loginServer = initLoginServer(serviceProperty.getLoginPort());
         log.info(I18nUtil.getLogMessage("Server.init.info6"), serviceProperty.getLoginPort());
 
@@ -1624,6 +1649,11 @@ public class Server {
                 I18nUtil.getLogMessage("Server.shutdownInternal.info2") : I18nUtil.getLogMessage("Server.shutdownInternal.info3"));
         if (getWorlds() == null) {
             return;//already shutdown
+        }
+        try {
+            persistentBot.close();
+        } catch (RuntimeException e) {
+            log.error("Persistent bot shutdown failed", e);
         }
         for (World w : getWorlds()) {
             w.shutdown();

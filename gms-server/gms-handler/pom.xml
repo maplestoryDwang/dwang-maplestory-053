@@ -21,6 +21,11 @@
     <dependencies>
         <dependency>
             <groupId>org.gms</groupId>
+            <artifactId>gms-ai</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gms</groupId>
             <artifactId>gms-data</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

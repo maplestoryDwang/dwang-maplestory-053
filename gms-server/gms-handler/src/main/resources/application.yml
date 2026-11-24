@@ -41,6 +41,10 @@ springdoc:
     enabled: false
 
 gms:
+  ai:
+    enabled: false
+    # 使用专用账号下已存在的普通角色 ID
+    character-id: 0
   service:
     # zh-CN en-US
     language: zh-CN

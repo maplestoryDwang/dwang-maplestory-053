@@ -572,7 +572,8 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
     public int finishLogin() {
         encoderLock.lock();
         try {
-            if (ClientDBUtils.getLoginState(this) > LOGIN_NOTLOGGEDIN) { // 0 = LOGIN_NOTLOGGEDIN, 1= LOGIN_SERVER_TRANSITION, 2 = LOGIN_LOGGEDIN
+            if (Server.getInstance().isAccountManagedByBot(getAccID())
+                    || ClientDBUtils.getLoginState(this) > LOGIN_NOTLOGGEDIN) {
                 loggedIn = false;
                 return 7;
             }
