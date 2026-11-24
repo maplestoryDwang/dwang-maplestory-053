@@ -14,9 +14,10 @@ import java.util.concurrent.ScheduledFuture;
 
 final class BotWalking implements AutoCloseable {
     private static final Logger log = LoggerFactory.getLogger(BotWalking.class);
-    private static final int START_DELAY_MILLIS = 15_000;
-    private static final int MAX_STEP_PIXELS = 24;
-    private static final int PIXELS_PER_SECOND = 100;
+//    private static final int START_DELAY_MILLIS = 15_000;
+    private static final int START_DELAY_MILLIS = 60_000;
+    private static final int MAX_STEP_PIXELS = 60;
+    private static final int PIXELS_PER_SECOND = 125;
     private static final int WALK_RIGHT = 2;
     private static final int WALK_LEFT = 3;
     private static final int STAND_RIGHT = 4;

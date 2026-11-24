@@ -1169,7 +1169,7 @@ public enum SendPacketOpcode implements Opcode {
     SET_BACK_EFFECT(0x80), // 设置背景特效
     SET_MAP_OBJECT_VISIBLE(0x81), // 设置地图对象可见性
     CLEAR_BACK_EFFECT(-1), // 清除背景特效
-    BLOCKED_SERVER(0x84), // 被阻止的服务器
+    BLOCKED_SERVER(-1), // 被阻止的服务器
     FORCED_MAP_EQUIP(-1), // 强制地图装备   没找到
 
     FIELD_OBSTACLE_ONOFF(-1), // 场景障碍物开关                       没找到

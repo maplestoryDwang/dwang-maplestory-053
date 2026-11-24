@@ -2732,6 +2732,10 @@ public class PacketCreator {
         return playerMovement53(chr, position, position, 0);
     }
 
+    private static int movementVelocity(int displacement, int durationMillis) {
+        return durationMillis == 0 ? 0 : (int) Math.round(displacement * 1000.0 / durationMillis);
+    }
+
     public static Packet playerMovement53(Character chr, Point start, Point end, int durationMillis) {
         OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_PLAYER);
         p.writeInt(chr.getId());
@@ -2741,8 +2745,8 @@ public class PacketCreator {
         p.writeByte(0);        // 普通移动
         p.writeShort(end.x);
         p.writeShort(end.y);
-        p.writeShort(0);       // xwobble
-        p.writeShort(0);       // ywobble
+        p.writeShort(movementVelocity(end.x - start.x, durationMillis));
+        p.writeShort(movementVelocity(end.y - start.y, durationMillis));
         p.writeShort(resolveHeadlessFootholdId(chr, end));
         p.writeByte(chr.getStance());
         p.writeShort(durationMillis);
