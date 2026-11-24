@@ -94,6 +94,22 @@ public class FootholdTree {
         }
     }
 
+    public List<Foothold> snapshot() {
+        List<Foothold> result = new LinkedList<>();
+        collectFootholds(result);
+        return List.copyOf(result);
+    }
+
+    private void collectFootholds(List<Foothold> result) {
+        result.addAll(footholds);
+        if (nw != null) {
+            nw.collectFootholds(result);
+            ne.collectFootholds(result);
+            sw.collectFootholds(result);
+            se.collectFootholds(result);
+        }
+    }
+
     private List<Foothold> getRelevants(Point p) {
         return getRelevants(p, new LinkedList<>());
     }
