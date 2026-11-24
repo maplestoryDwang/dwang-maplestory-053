@@ -2728,20 +2728,24 @@ public class PacketCreator {
      * 否则客户端 CMovePath::Decode 会把 count 当成 x 读。
      */
     public static Packet playerStance(Character chr) {
+        Point position = chr.getPosition();
+        return playerMovement53(chr, position, position, 0);
+    }
+
+    public static Packet playerMovement53(Character chr, Point start, Point end, int durationMillis) {
         OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_PLAYER);
         p.writeInt(chr.getId());
-        Point pos = chr.getPosition();
-        p.writeShort(pos.x);
-        p.writeShort(pos.y);
+        p.writeShort(start.x);
+        p.writeShort(start.y);
         p.writeByte(1);        // move 数量
         p.writeByte(0);        // 普通移动
-        p.writeShort(pos.x);
-        p.writeShort(pos.y);
+        p.writeShort(end.x);
+        p.writeShort(end.y);
         p.writeShort(0);       // xwobble
         p.writeShort(0);       // ywobble
-        p.writeShort(resolveHeadlessFootholdId(chr, pos));
+        p.writeShort(resolveHeadlessFootholdId(chr, end));
         p.writeByte(chr.getStance());
-        p.writeShort(0);       // duration
+        p.writeShort(durationMillis);
         return p;
     }
 

@@ -145,7 +145,8 @@ public class Server {
 
     private volatile boolean availableDeveloperRoom = false;
     private final BotLifecycle persistentBot = new BotLifecycle(
-            characterId -> PersistentBotAdapter.open(this, CHARACTER_INTERNAL_SERVICE, characterId));
+            characterId -> PersistentBotAdapter.open(this, CHARACTER_INTERNAL_SERVICE, characterId,
+                    ServerManager.getApplicationContext().getBean(BotProperties.class)));
 
     public boolean isAccountManagedByBot(int accountId) {
         return persistentBot.ownsAccount(accountId);

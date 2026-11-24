@@ -8,6 +8,24 @@ import org.springframework.stereotype.Component;
 public class BotProperties {
     private boolean enabled;
     private int characterId;
+    private Integer walkTargetX;
+    private Integer walkTargetY;
+
+    public Integer getWalkTargetX() {
+        return walkTargetX;
+    }
+
+    public void setWalkTargetX(Integer walkTargetX) {
+        this.walkTargetX = walkTargetX;
+    }
+
+    public Integer getWalkTargetY() {
+        return walkTargetY;
+    }
+
+    public void setWalkTargetY(Integer walkTargetY) {
+        this.walkTargetY = walkTargetY;
+    }
 
     public boolean isEnabled() {
         return enabled;

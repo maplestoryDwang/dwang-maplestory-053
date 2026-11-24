@@ -1,6 +1,7 @@
 package org.gms.bot;
 
 import org.gms.ai.BotLifecycle;
+import org.gms.ai.BotProperties;
 import org.gms.client.Character;
 import org.gms.client.Client;
 import org.gms.net.packet.Packet;
@@ -9,7 +10,6 @@ import org.gms.net.server.channel.Channel;
 import org.gms.net.server.world.World;
 import org.gms.server.maps.MapleMap;
 import org.gms.service.CharacterInternalService;
-
 import org.gms.util.PacketCreator;
 
 import java.awt.Point;
@@ -19,7 +19,8 @@ public final class PersistentBotAdapter {
     private PersistentBotAdapter() {
     }
 
-    public static BotLifecycle.Session open(Server server, CharacterInternalService characters, int characterId) {
+    public static BotLifecycle.Session open(Server server, CharacterInternalService characters, int characterId,
+                                            BotProperties properties) {
         var record = Objects.requireNonNull(characters.findById(characterId), "Unknown bot character ID");
         World world = Objects.requireNonNull(server.getWorld(record.getWorld()), "Bot world is unavailable");
         Channel channel = Objects.requireNonNull(world.getChannel(1), "Bot channel 1 is unavailable");
@@ -48,12 +49,15 @@ public final class PersistentBotAdapter {
 
         channel.addPlayer(character);
         world.addPlayer(character);
+        BotWalking walking = new BotWalking(character, properties.getWalkTargetX(), properties.getWalkTargetY());
         try {
             map.addPlayer(character);
             if (ground != null && character.getMap() == map) {
                 map.broadcastMessage(character, PacketCreator.playerStance(character), false);
             }
+            walking.start();
         } catch (RuntimeException e) {
+            walking.close();
             try {
                 detach(character, map, channel, world);
             } catch (RuntimeException cleanupError) {
@@ -71,6 +75,7 @@ public final class PersistentBotAdapter {
             @Override
             public void close() {
                 try {
+                    walking.close();
                     character.saveCharToDB(true);
                 } finally {
                     detach(character, character.getMap(), channel, world);
