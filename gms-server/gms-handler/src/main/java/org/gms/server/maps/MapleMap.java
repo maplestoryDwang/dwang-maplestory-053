@@ -35,6 +35,7 @@ import org.gms.client.inventory.Item;
 import org.gms.client.inventory.pet.Pet;
 import org.gms.client.status.MonsterStatus;
 import org.gms.client.status.MonsterStatusEffect;
+import org.gms.client.status.Disease;
 import org.gms.config.GameConfig;
 import org.gms.constants.game.GameConstants;
 import org.gms.constants.id.MapId;
@@ -72,6 +73,7 @@ import org.gms.server.events.gm.OxQuiz;
 import org.gms.server.events.gm.Snowball;
 import org.gms.server.life.LifeFactory;
 import org.gms.server.life.LifeFactory.selfDestruction;
+import org.gms.server.life.MobSkill;
 import org.gms.server.life.Monster;
 import org.gms.server.life.MonsterDropEntry;
 import org.gms.server.life.MonsterGlobalDropEntry;
@@ -2370,7 +2372,24 @@ public class MapleMap {
         broadcastMessage(fake ? mist.makeFakeSpawnData(30) : mist.makeSpawnData());
         TimerManager tMan = TimerManager.getInstance();
         final ScheduledFuture<?> poisonSchedule;
-        if (poison) {
+        if (mist.isMobMist()) {
+            // 怪物放的毒雾（MobSkill 131 AREA_POISON，例如骷髅指挥官 7130103）。
+            // 原来这条路径传的是 poison=false/recovery=false，于是直接走到最后的 else → poisonSchedule=null，
+            // 雾只有客户端看得到的一层特效，从来不给玩家上毒。这里补上：每秒给雾范围内的玩家上 POISON。
+            MobSkill mobSkill = mist.getMobSkill();
+            if (mobSkill != null) {
+                Runnable mobPoisonTask = () -> {
+                    List<MapObject> affectedPlayers = getMapObjectsInBox(mist.getBox(), Collections.singletonList(MapObjectType.PLAYER));
+                    for (MapObject mo : affectedPlayers) {
+                        // giveDebuff 内部会判断：已经有该 debuff / 已有 2 个 debuff / 圣光护盾 都会跳过，不会重复上毒
+                        ((Character) mo).giveDebuff(Disease.POISON, mobSkill);
+                    }
+                };
+                poisonSchedule = tMan.register(mobPoisonTask, 1000, 1000);
+            } else {
+                poisonSchedule = null;
+            }
+        } else if (poison) {
             Runnable poisonTask = () -> {
                 List<MapObject> affectedMonsters = getMapObjectsInBox(mist.getBox(), Collections.singletonList(MapObjectType.MONSTER));
                 for (MapObject mo : affectedMonsters) {

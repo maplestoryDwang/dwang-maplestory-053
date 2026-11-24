@@ -293,7 +293,10 @@ public class MobSkill {
     private void spawnMonsterMist(Monster monster) {
         Rectangle mistArea = calculateBoundingBox(monster.getPosition());
         var mist = new Mist(mistArea, monster, this);
-        int mistDuration = x * 100;
+        // 雾的持续时间取 MobSkill 的 time(秒)。原来写的是 x * 100：
+        // 131 等级5 的 x=200 → 20 秒（而 time=15），等级4 的 x=2000 → 200 秒，明显不对。
+        long mistDurationMs = getDuration();
+        int mistDuration = mistDurationMs > 0 ? (int) mistDurationMs : x * 100;
         monster.getMap().spawnMist(mist, mistDuration, false, false, false);
     }
 

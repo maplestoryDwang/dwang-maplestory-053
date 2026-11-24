@@ -127,6 +127,14 @@ public class Mist extends AbstractMapObject {
         return mob;
     }
 
+    /**
+     * 怪物放的毒雾对应的 MobSkill（玩家放的雾是 null）。
+     * 怪物毒雾（MobSkill 131 AREA_POISON）给玩家上毒时要用到它的等级/时长。
+     */
+    public MobSkill getMobSkill() {
+        return skill;
+    }
+
     public Character getOwner() {
         return owner;
     }
@@ -169,6 +177,7 @@ public class Mist extends AbstractMapObject {
     }
 
     public boolean makeChanceResult() {
-        return source.makeChanceResult();
+        // 怪物放的毒雾没有 StatEffect(source)，这里返回 false 而不是 NPE
+        return source != null && source.makeChanceResult();
     }
 }

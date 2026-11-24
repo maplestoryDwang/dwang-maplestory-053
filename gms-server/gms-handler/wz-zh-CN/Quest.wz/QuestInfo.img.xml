@@ -6668,7 +6668,7 @@
     <int name="area" value="30"/>
   </imgdir>
   <imgdir name="8701">
-    <string name="name" value="情比金坚之真心考验(2)"/>
+    <string name="name" value="疯兔子的复活节（黄）"/>
     <string name="0" value="我听说疯狂兔子对复活节不太满意。我应该去和他谈谈，看看怎么回事……"/>
     <string name="1" value="疯兔子要我给他#b10 黄色复活节彩蛋#k和一个#b复活节篮子#k。他也许是只爱生气的兔子，不过他答应会给我不错的报酬……\n\n#t2022065# #b#c2022065#/10#k\n#t4031283# #b#c4031283#/1#k"/>
     <string name="2" value="我把 #b10个黄色复活节彩蛋#k 和 #r复活节篮子#k 交给了他，他给了我一个 #b复活节护符#k 和一些经验值。还不错……"/>
