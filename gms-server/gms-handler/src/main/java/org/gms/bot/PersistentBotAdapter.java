@@ -10,6 +10,9 @@ import org.gms.net.server.world.World;
 import org.gms.server.maps.MapleMap;
 import org.gms.service.CharacterInternalService;
 
+import org.gms.util.PacketCreator;
+
+import java.awt.Point;
 import java.util.Objects;
 
 public final class PersistentBotAdapter {
@@ -36,10 +39,20 @@ public final class PersistentBotAdapter {
         character.setWorldRates();
 
         MapleMap map = character.getMap();
+        Point portal = character.getPosition();
+        Point ground = map.getPointBelow(new Point(portal.x, portal.y - 14));
+        if (ground != null) {
+            character.setPosition(ground);
+        }
+        character.setStance(0);
+
         channel.addPlayer(character);
         world.addPlayer(character);
         try {
             map.addPlayer(character);
+            if (ground != null && character.getMap() == map) {
+                map.broadcastMessage(character, PacketCreator.playerStance(character), false);
+            }
         } catch (RuntimeException e) {
             try {
                 detach(character, map, channel, world);
@@ -85,6 +98,11 @@ public final class PersistentBotAdapter {
         @Override
         public void sendPacket(Packet packet) {
             // There is no socket. Nearby real clients still receive map broadcasts.
+        }
+
+        @Override
+        public boolean isHeadless() {
+            return true;
         }
 
         @Override

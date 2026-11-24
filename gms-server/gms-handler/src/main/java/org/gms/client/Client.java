@@ -375,6 +375,10 @@ public class Client extends ChannelInboundHandlerAdapter implements HasLanguage 
         return chars;
     }
 
+    public boolean isHeadless() {
+        return false;
+    }
+
     public boolean isLoggedIn() {
         return loggedIn;
     }

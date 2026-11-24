@@ -89,6 +89,7 @@ import org.gms.server.maps.AbstractMapObject;
 import org.gms.server.maps.Door;
 import org.gms.server.maps.DoorObject;
 import org.gms.server.maps.Dragon;
+import org.gms.server.maps.Foothold;
 import org.gms.server.maps.HiredMerchant;
 import org.gms.server.maps.MapItem;
 import org.gms.server.maps.MapleMap;
@@ -2298,7 +2299,7 @@ public class PacketCreator {
         p.writeShort(spawnPos.x);
         p.writeShort(spawnPos.y);
         p.writeByte(chr.getStance()); // 0.53 不区分“进图下落”动画，直接给真实 stance
-        p.writeShort(0); // foothold id（服务端没有，0 即由客户端自己找地面）
+        p.writeShort(resolveHeadlessFootholdId(chr, spawnPos));
         p.writeByte(0);  // CUser::Init 的第 4 个参数（校验种子，0 安全）
 
         // 0.53：宠物只有一格，格式见 CPet::Init(0x5C384F)
@@ -2713,6 +2714,15 @@ public class PacketCreator {
         return mplew;
     }
 
+    private static int resolveHeadlessFootholdId(Character chr, Point position) {
+        MapleMap map = chr.getMap();
+        if (!chr.getClient().isHeadless() || map == null) {
+            return 0;
+        }
+        Foothold foothold = map.getFootholds().findBelow(new Point(position.x, position.y - 6));
+        return foothold == null ? 0 : foothold.getId();
+    }
+
     /**
      * 只同步一次姿态（坐下/站起等）。v0.53 的 movePath 前面必须先有 x(2) y(2)，
      * 否则客户端 CMovePath::Decode 会把 count 当成 x 读。
@@ -2729,7 +2739,7 @@ public class PacketCreator {
         p.writeShort(pos.y);
         p.writeShort(0);       // xwobble
         p.writeShort(0);       // ywobble
-        p.writeShort(0);       // foothold
+        p.writeShort(resolveHeadlessFootholdId(chr, pos));
         p.writeByte(chr.getStance());
         p.writeShort(0);       // duration
         return p;
