@@ -57338,7 +57338,7 @@
         <int name="Period" value="0"/>
         <int name="Priority" value="0"/>
         <int name="Gender" value="-1"/>
-        <int name="OnSale" value="0"/>
+        <int name="OnSale" value="1"/>
     </imgdir>
     <imgdir name="5157">
         <int name="SN" value="80000001"/>

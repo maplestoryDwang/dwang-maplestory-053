@@ -20,7 +20,8 @@ public class BossZipanguChecker implements EggChecker {
 
     public static final List<String> BOSS_LIST = List.of(
             "9400014", // 天狗
-            "9500176", // 蓝蘑菇王
+            "9400205", // 蓝蘑菇王
+//            "9500176", // 蓝蘑菇王
             "9400121", // 女老板
             "9400122", // 男老板
             "9400120", // 老板
