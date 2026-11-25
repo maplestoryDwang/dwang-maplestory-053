@@ -3554,6 +3554,16 @@ public class MapleMap {
         this.footholds = footholds;
     }
 
+    private java.util.List<org.gms.ai.NavigationGeometry.Rope> navigationRopes = java.util.List.of();
+
+    public void setNavigationRopes(java.util.List<org.gms.ai.NavigationGeometry.Rope> ropes) {
+        navigationRopes = java.util.List.copyOf(ropes);
+    }
+
+    public java.util.List<org.gms.ai.NavigationGeometry.Rope> getNavigationRopes() {
+        return navigationRopes;
+    }
+
     public FootholdTree getFootholds() {
         return footholds;
     }

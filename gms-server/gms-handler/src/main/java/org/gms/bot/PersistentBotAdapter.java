@@ -32,9 +32,9 @@ public final class PersistentBotAdapter {
         client.setAccID(record.getAccountid());
         Character character = Objects.requireNonNull(Character.loadCharFromDB(characterId, client, true),
                 "Could not load bot character");
-        if (character.gmLevel() != 0 || character.isHidden()) {
-            throw new IllegalArgumentException("Bot must be a visible, non-GM character");
-        }
+//        if (character.gmLevel() != 0 || character.isHidden()) {
+//            throw new IllegalArgumentException("Bot must be a visible, non-GM character");
+//        }
         client.setAccID(character.getAccountId());
         client.setPlayer(character);
         character.setWorldRates();
@@ -85,6 +85,30 @@ public final class PersistentBotAdapter {
             }
 
             @Override
+            public String travel(int world, int channel, int targetMap) {
+                if (client.getWorld() != world || client.getChannel() != channel) {
+                    return "Observer and bot must share world and channel.";
+                }
+                return walking.travelTo(targetMap);
+            }
+
+            @Override
+            public String returnToTown(int world, int channel) {
+                if (client.getWorld() != world || client.getChannel() != channel) {
+                    return "Observer and bot must share world and channel.";
+                }
+                return walking.returnToTown();
+            }
+
+            @Override
+            public String speedTest(int world, int channel) {
+                if (client.getWorld() != world || client.getChannel() != channel) {
+                    return "Observer and Bot must share world and channel.";
+                }
+                return walking.speedTest();
+            }
+
+            @Override
             public boolean testClimb(int world, int channel, int mapId) {
                 return client.getWorld() == world && client.getChannel() == channel
                         && walking.testClimb(mapId);
@@ -97,9 +121,11 @@ public final class PersistentBotAdapter {
             }
 
             @Override
-            public boolean walkThroughPortal(int world, int channel, int mapId, String portalName) {
-                return client.getWorld() == world && client.getChannel() == channel
-                        && walking.walkThroughPortal(mapId, portalName);
+            public String walkThroughPortal(int world, int channel, int mapId, String portalName) {
+                if (client.getWorld() != world || client.getChannel() != channel) {
+                    return "Observer and Bot must share world and channel.";
+                }
+                return walking.walkThroughPortal(mapId, portalName);
             }
 
             @Override

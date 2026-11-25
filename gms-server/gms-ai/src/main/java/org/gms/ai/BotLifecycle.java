@@ -8,13 +8,19 @@ public final class BotLifecycle implements AutoCloseable {
     public interface Session extends AutoCloseable {
         int accountId();
 
+        String speedTest(int world, int channel);
+
+        String travel(int world, int channel, int targetMap);
+
+        String returnToTown(int world, int channel);
+
         String navigate(int world, int channel, int mapId, int x, int y);
 
         boolean testDrop(int world, int channel, int mapId);
 
         boolean testClimb(int world, int channel, int mapId);
 
-        boolean walkThroughPortal(int world, int channel, int mapId, String portalName);
+        String walkThroughPortal(int world, int channel, int mapId, String portalName);
 
         @Override
         void close();
@@ -34,8 +40,8 @@ public final class BotLifecycle implements AutoCloseable {
         session = Objects.requireNonNull(openSession.apply(characterId));
     }
 
-    public synchronized boolean walkThroughPortal(int world, int channel, int mapId, String portalName) {
-        return session != null && session.walkThroughPortal(world, channel, mapId, portalName);
+    public synchronized String walkThroughPortal(int world, int channel, int mapId, String portalName) {
+        return session == null ? "Bot is offline." : session.walkThroughPortal(world, channel, mapId, portalName);
     }
 
     public synchronized boolean testClimb(int world, int channel, int mapId) {
@@ -48,6 +54,18 @@ public final class BotLifecycle implements AutoCloseable {
 
     public synchronized String navigate(int world, int channel, int mapId, int x, int y) {
         return session == null ? "Bot is offline." : session.navigate(world, channel, mapId, x, y);
+    }
+
+    public synchronized String travel(int world, int channel, int targetMap) {
+        return session == null ? "Bot is offline." : session.travel(world, channel, targetMap);
+    }
+
+    public synchronized String returnToTown(int world, int channel) {
+        return session == null ? "Bot is offline." : session.returnToTown(world, channel);
+    }
+
+    public synchronized String speedTest(int world, int channel) {
+        return session == null ? "Bot is offline." : session.speedTest(world, channel);
     }
 
     public synchronized boolean ownsAccount(int accountId) {

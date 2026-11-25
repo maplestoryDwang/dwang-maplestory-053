@@ -113,6 +113,15 @@ public class CommandsExecutor {
         Command botCome = new org.gms.client.command.commands.gm3.BotComeCommand();
         botCome.setRank(3);
         registeredCommands.put("botcome", botCome);
+        Command botGo = new org.gms.client.command.commands.gm3.BotGoToCommand();
+        botGo.setRank(3);
+        registeredCommands.put("botgoto", botGo);
+        Command botReturn = new org.gms.client.command.commands.gm3.BotReturnCommand();
+        botReturn.setRank(3);
+        registeredCommands.put("botreturn", botReturn);
+        Command botSpeed = new org.gms.client.command.commands.gm3.BotSpeedTestCommand();
+        botSpeed.setRank(3);
+        registeredCommands.put("botspeedtest", botSpeed);
     }
 
     public void handle(Client client, String message) {

@@ -51,6 +51,33 @@ public class MapFactory {
     private static final Data nameData = StringInfoProvider.getMapStringData();
     private static final DataProvider mapSource = DataProviderFactory.getDataProvider(WzFiles.MAP);
 
+    public record NavigationPortal(String name, int targetMap) {}
+
+    public static List<NavigationPortal> navigationPortals(int mapId) {
+        Data data = mapSource.getData(getMapName(mapId));
+        if (data == null) {
+            return List.of();
+        }
+        String link = DataTool.getString("link", data.getChildByPath("info"), "");
+        if (!link.isEmpty()) {
+            data = mapSource.getData(getMapName(Integer.parseInt(link)));
+        }
+        Data portals = data.getChildByPath("portal");
+        if (portals == null) {
+            return List.of();
+        }
+        List<NavigationPortal> result = new java.util.ArrayList<>();
+        for (Data portal : portals) {
+            int type = DataTool.getInt("pt", portal, -1);
+            int target = DataTool.getInt("tm", portal, MapId.NONE);
+            String script = DataTool.getString("script", portal, "");
+            if (type == Portal.MAP_PORTAL && target != MapId.NONE && target != mapId && script.isEmpty()) {
+                result.add(new NavigationPortal(DataTool.getString("pn", portal, ""), target));
+            }
+        }
+        return List.copyOf(result);
+    }
+
     private static void loadLifeFromWz(MapleMap map, Data mapData) {
         for (Data life : mapData.getChildByPath("life")) {
             life.getName();
@@ -241,6 +268,17 @@ public class MapFactory {
             fTree.insert(fh);
         }
         map.setFootholds(fTree);
+        java.util.List<org.gms.ai.NavigationGeometry.Rope> ropes = new java.util.ArrayList<>();
+        Data ladderRope = mapData.getChildByPath("ladderRope");
+        if (ladderRope != null) {
+            for (Data rope : ladderRope) {
+                ropes.add(new org.gms.ai.NavigationGeometry.Rope(Integer.parseInt(rope.getName()),
+                        DataTool.getInt("x", rope, 0), DataTool.getInt("y1", rope, 0),
+                        DataTool.getInt("y2", rope, 0), DataTool.getInt("l", rope, 0) != 0,
+                        DataTool.getInt("uf", rope, 0) != 0));
+            }
+        }
+        map.setNavigationRopes(ropes);
         if (mapData.getChildByPath("area") != null) {
             for (Data area : mapData.getChildByPath("area")) {
                 int x1 = DataTool.getInt(area.getChildByPath("x1"));

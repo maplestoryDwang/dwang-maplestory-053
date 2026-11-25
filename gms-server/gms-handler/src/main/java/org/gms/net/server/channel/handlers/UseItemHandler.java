@@ -95,17 +95,7 @@ public final class UseItemHandler extends AbstractPacketHandler {
                 remove(c, slot);
                 return;
             } else if (ItemConstants.isTownScroll(itemId)) {
-                int banMap = chr.getMapId();
-                int banSp = chr.getMap().findClosestPlayerSpawnpoint(chr.getPosition()).getId();
-                long banTime = currentServerTime();
-
-                if (ItemUtils.getItemEffect(toUse.getItemId()).applyTo(chr)) {
-                    if (GameConfig.getServerBoolean("use_banishable_town_scroll")) {
-                        chr.setBanishPlayerData(banMap, banSp, banTime);
-                    }
-
-                    remove(c, slot);
-                }
+                useTownScroll(c, slot, itemId);
                 return;
             } else if (ItemConstants.isAntibanishScroll(itemId)) {
                 if (ItemUtils.getItemEffect(toUse.getItemId()).applyTo(chr)) {
@@ -134,6 +124,37 @@ public final class UseItemHandler extends AbstractPacketHandler {
                 achievementService.recordAchievement(chr.getId(), AchievementCategory.PLAYER_CONSUME_USE,  String.valueOf(itemId), 1);
             }
 
+        }
+    }
+
+    public boolean useTownScroll(Client client, short slot, int itemId) {
+        Character chr = client.getPlayer();
+        if (!chr.isAlive() || !ItemConstants.isTownScroll(itemId)) {
+            return false;
+        }
+        var inventory = chr.getInventory(InventoryType.USE);
+        inventory.lockInventory();
+        try {
+            Item item = inventory.getItem(slot);
+            if (item == null || item.getItemId() != itemId || item.getQuantity() < 1) {
+                return false;
+            }
+            int source = chr.getMapId();
+            var spawn = chr.getMap().findClosestPlayerSpawnpoint(chr.getPosition());
+            if (spawn == null) {
+                return false;
+            }
+            long time = currentServerTime();
+            if (!ItemUtils.getItemEffect(itemId).applyTo(chr)) {
+                return false;
+            }
+            if (GameConfig.getServerBoolean("use_banishable_town_scroll")) {
+                chr.setBanishPlayerData(source, spawn.getId(), time);
+            }
+            remove(client, slot);
+            return true;
+        } finally {
+            inventory.unlockInventory();
         }
     }
 

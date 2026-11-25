@@ -80,6 +80,40 @@ public class Foothold implements Comparable<Foothold> {
         }
     }
 
+    /** A blocking wall must be connected to ground at its lower endpoint. */
+    public boolean isNavigationWall(java.util.Map<Integer, Foothold> byId) {
+        if (!isWall()) {
+            return false;
+        }
+        int lowerY = Math.max(getY1(), getY2());
+        return reachesGround(prev, false, lowerY, byId) || reachesGround(next, true, lowerY, byId);
+    }
+
+    private boolean reachesGround(int linkedId, boolean forward, int lowerY,
+                                  java.util.Map<Integer, Foothold> byId) {
+        Foothold linked = byId.get(linkedId);
+        if (linked == null || !((linked.getX1() == getX1() && linked.getY1() == lowerY)
+                || (linked.getX2() == getX1() && linked.getY2() == lowerY))) {
+            return false;
+        }
+        java.util.Set<Integer> visited = new java.util.HashSet<>();
+        int x = getX1();
+        int y = lowerY;
+        while (linked != null && visited.add(linked.getId())) {
+            if (!((linked.getX1() == x && linked.getY1() == y)
+                    || (linked.getX2() == x && linked.getY2() == y))) {
+                return false;
+            }
+            if (!linked.isWall()) {
+                return true;
+            }
+            x = forward ? linked.getX2() : linked.getX1();
+            y = forward ? linked.getY2() : linked.getY1();
+            linked = byId.get(forward ? linked.getNext() : linked.getPrev());
+        }
+        return false;
+    }
+
     public int getId() {
         return id;
     }

@@ -2750,8 +2750,10 @@ public class PacketCreator {
         p.writeByte(0);        // 普通移动
         p.writeShort(end.x);
         p.writeShort(end.y);
-        p.writeShort(movementVelocity(end.x - start.x, durationMillis));
-        p.writeShort(movementVelocity(end.y - start.y, durationMillis));
+        boolean groundedStand = footholdId != 0 && (chr.getStance() & ~1) == 4;
+        p.writeShort(groundedStand ? 0 : movementVelocity(end.x - start.x, durationMillis));
+        p.writeShort(groundedStand ? 0 : movementVelocity(end.y - start.y, durationMillis));
+        // 053 CMovePath: positive=foothold, negative=ladder/rope ID, zero=airborne.
         p.writeShort(footholdId);
         p.writeByte(chr.getStance());
         p.writeShort(durationMillis);

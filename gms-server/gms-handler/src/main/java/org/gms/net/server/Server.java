@@ -154,6 +154,18 @@ public class Server {
                 observer.getPlayer().getMapId(), position.x, position.y);
     }
 
+    public String travelBot(Client observer, int targetMap) {
+        return persistentBot.travel(observer.getWorld(), observer.getChannel(), targetMap);
+    }
+
+    public String returnBotToTown(Client observer) {
+        return persistentBot.returnToTown(observer.getWorld(), observer.getChannel());
+    }
+
+    public String testBotSpeed(Client observer) {
+        return persistentBot.speedTest(observer.getWorld(), observer.getChannel());
+    }
+
     public boolean testBotClimb(Client observer) {
         return persistentBot.testClimb(observer.getWorld(), observer.getChannel(), observer.getPlayer().getMapId());
     }
@@ -162,7 +174,7 @@ public class Server {
         return persistentBot.testDrop(observer.getWorld(), observer.getChannel(), observer.getPlayer().getMapId());
     }
 
-    public boolean walkBotThroughPortal(Client observer, String portalName) {
+    public String walkBotThroughPortal(Client observer, String portalName) {
         return persistentBot.walkThroughPortal(observer.getWorld(), observer.getChannel(),
                 observer.getPlayer().getMapId(), portalName);
     }
