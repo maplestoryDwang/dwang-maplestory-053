@@ -2737,6 +2737,11 @@ public class PacketCreator {
     }
 
     public static Packet playerMovement53(Character chr, Point start, Point end, int durationMillis) {
+        return playerMovement53(chr, start, end, durationMillis, resolveHeadlessFootholdId(chr, end));
+    }
+
+    public static Packet playerMovement53(Character chr, Point start, Point end, int durationMillis,
+                                          int footholdId) {
         OutPacket p = OutPacket.create(SendPacketOpcode.MOVE_PLAYER);
         p.writeInt(chr.getId());
         p.writeShort(start.x);
@@ -2747,7 +2752,7 @@ public class PacketCreator {
         p.writeShort(end.y);
         p.writeShort(movementVelocity(end.x - start.x, durationMillis));
         p.writeShort(movementVelocity(end.y - start.y, durationMillis));
-        p.writeShort(resolveHeadlessFootholdId(chr, end));
+        p.writeShort(footholdId);
         p.writeByte(chr.getStance());
         p.writeShort(durationMillis);
         return p;

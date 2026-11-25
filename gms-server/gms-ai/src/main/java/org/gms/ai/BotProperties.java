@@ -10,6 +10,15 @@ public class BotProperties {
     private int characterId;
     private Integer walkTargetX;
     private Integer walkTargetY;
+    private boolean jumpTest;
+
+    public boolean isJumpTest() {
+        return jumpTest;
+    }
+
+    public void setJumpTest(boolean jumpTest) {
+        this.jumpTest = jumpTest;
+    }
 
     public Integer getWalkTargetX() {
         return walkTargetX;

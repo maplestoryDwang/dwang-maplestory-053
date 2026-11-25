@@ -45,11 +45,15 @@ public final class PersistentBotAdapter {
         if (ground != null) {
             character.setPosition(ground);
         }
-        character.setStance(0);
+        character.setStance(4);
+
+        org.slf4j.LoggerFactory.getLogger(PersistentBotAdapter.class).info(
+                "Persistent bot spawn character={} map={} spawnpoint={} portal={} ground={}",
+                characterId, map.getId(), character.getInitialSpawnPoint(), portal, character.getPosition());
 
         channel.addPlayer(character);
         world.addPlayer(character);
-        BotWalking walking = new BotWalking(character, properties.getWalkTargetX(), properties.getWalkTargetY());
+        BotWalking walking = new BotWalking(character, properties.getWalkTargetX(), properties.getWalkTargetY(), properties.isJumpTest());
         try {
             map.addPlayer(character);
             if (ground != null && character.getMap() == map) {
@@ -70,6 +74,32 @@ public final class PersistentBotAdapter {
             @Override
             public int accountId() {
                 return character.getAccountId();
+            }
+
+            @Override
+            public String navigate(int world, int channel, int mapId, int x, int y) {
+                if (client.getWorld() != world || client.getChannel() != channel) {
+                    return "Observer and bot must share world and channel.";
+                }
+                return walking.navigate(mapId, new Point(x, y));
+            }
+
+            @Override
+            public boolean testClimb(int world, int channel, int mapId) {
+                return client.getWorld() == world && client.getChannel() == channel
+                        && walking.testClimb(mapId);
+            }
+
+            @Override
+            public boolean testDrop(int world, int channel, int mapId) {
+                return client.getWorld() == world && client.getChannel() == channel
+                        && walking.testDrop(mapId);
+            }
+
+            @Override
+            public boolean walkThroughPortal(int world, int channel, int mapId, String portalName) {
+                return client.getWorld() == world && client.getChannel() == channel
+                        && walking.walkThroughPortal(mapId, portalName);
             }
 
             @Override

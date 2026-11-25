@@ -148,6 +148,25 @@ public class Server {
             characterId -> PersistentBotAdapter.open(this, CHARACTER_INTERNAL_SERVICE, characterId,
                     ServerManager.getApplicationContext().getBean(BotProperties.class)));
 
+    public String navigateBotTo(Client observer) {
+        java.awt.Point position = observer.getPlayer().getPosition();
+        return persistentBot.navigate(observer.getWorld(), observer.getChannel(),
+                observer.getPlayer().getMapId(), position.x, position.y);
+    }
+
+    public boolean testBotClimb(Client observer) {
+        return persistentBot.testClimb(observer.getWorld(), observer.getChannel(), observer.getPlayer().getMapId());
+    }
+
+    public boolean testBotDrop(Client observer) {
+        return persistentBot.testDrop(observer.getWorld(), observer.getChannel(), observer.getPlayer().getMapId());
+    }
+
+    public boolean walkBotThroughPortal(Client observer, String portalName) {
+        return persistentBot.walkThroughPortal(observer.getWorld(), observer.getChannel(),
+                observer.getPlayer().getMapId(), portalName);
+    }
+
     public boolean isAccountManagedByBot(int accountId) {
         return persistentBot.ownsAccount(accountId);
     }

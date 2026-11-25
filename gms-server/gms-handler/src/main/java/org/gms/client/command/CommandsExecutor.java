@@ -101,6 +101,18 @@ public class CommandsExecutor {
 //        registerLv6Commands();
 
         commandInternalService.loadCommands(registeredCommands, commandsNameDesc);
+        Command botPortal = new org.gms.client.command.commands.gm3.BotPortalCommand();
+        botPortal.setRank(3);
+        registeredCommands.put("botportal", botPortal);
+        Command botDrop = new org.gms.client.command.commands.gm3.BotDropCommand();
+        botDrop.setRank(3);
+        registeredCommands.put("botdrop", botDrop);
+        Command botClimb = new org.gms.client.command.commands.gm3.BotClimbCommand();
+        botClimb.setRank(3);
+        registeredCommands.put("botclimb", botClimb);
+        Command botCome = new org.gms.client.command.commands.gm3.BotComeCommand();
+        botCome.setRank(3);
+        registeredCommands.put("botcome", botCome);
     }
 
     public void handle(Client client, String message) {
