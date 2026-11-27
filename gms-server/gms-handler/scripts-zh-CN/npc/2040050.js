@@ -39,8 +39,8 @@ var reqitem = [];
 var cost = 4000;
 
 // 配置项：每天吸怪科技的使用限制时长（分钟）
-var magnetDailyLimitMinutes = IceWolfService.getMobvicLimitNum();
 var IceWolfService = Java.type('org.gms.scripting.event.IceWolfService');
+var magnetDailyLimitMinutes = IceWolfService.getMobvicLimitNum();
 
 var makeditem = [4006000, 4006001, 1102139, 1102140];
 var reqset = [
